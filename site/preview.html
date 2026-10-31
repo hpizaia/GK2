@@ -349,7 +349,7 @@ footer .mark { font-size: 20px; }
       </div>
       <figure class="phone">
         <div class="screen">
-          <img onerror="this.parentNode.classList.add('missing')" src="media/hero.gif" alt="The planner on a phone: goals, raw totals and steps by station" data-i18n-alt="altHero" width="390" height="844">
+          <img onerror="var p=this.getAttribute('data-src-pt');if(this.hasAttribute('data-fallback')&amp;&amp;p&amp;&amp;this.getAttribute('src')!==p){this.src=p}else{this.parentNode.classList.add('missing')}" src="media/hero-en.gif" data-src-en="media/hero-en.gif" data-src-pt="media/hero-pt.gif" data-fallback alt="The planner on a phone: goals, raw totals and steps by station" data-i18n-alt="altHero" width="390" height="844">
           <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="altHero">The planner on a phone: goals, raw totals and steps by station</span></div>
         </div>
       </figure>
@@ -406,28 +406,28 @@ footer .mark { font-size: 20px; }
       <ul class="strip">
         <li>
           <figure class="phone"><div class="screen">
-            <img onerror="this.parentNode.classList.add('missing')" src="media/planner-phone.png" alt="Planner: goals, raw totals and steps by station" data-i18n-alt="a1" loading="lazy" width="390" height="844">
+            <img onerror="this.parentNode.classList.add('missing')" src="media/planner-phone-en.png" data-src-en="media/planner-phone-en.png" data-src-pt="media/planner-phone-pt.png" alt="Planner: goals, raw totals and steps by station" data-i18n-alt="a1" loading="lazy" width="390" height="844">
             <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="a1">Planner: goals, raw totals and steps by station</span></div>
           </div></figure>
           <p class="cap"><b data-i18n="c1t">Planner</b></p>
         </li>
         <li>
           <figure class="phone"><div class="screen">
-            <img onerror="this.parentNode.classList.add('missing')" src="media/recipes-phone.png" alt="Recipes: an item with its recipes and where it is used" data-i18n-alt="a2" loading="lazy" width="390" height="844">
+            <img onerror="this.parentNode.classList.add('missing')" src="media/recipes-phone-en.png" data-src-en="media/recipes-phone-en.png" data-src-pt="media/recipes-phone-pt.png" alt="Recipes: an item with its recipes and where it is used" data-i18n-alt="a2" loading="lazy" width="390" height="844">
             <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="a2">Recipes: an item with its recipes and where it is used</span></div>
           </div></figure>
           <p class="cap"><b data-i18n="c2t">Recipes</b></p>
         </li>
         <li>
           <figure class="phone"><div class="screen">
-            <img onerror="this.parentNode.classList.add('missing')" src="media/tech-phone.png" alt="Technologies: branches, costs and prerequisites" data-i18n-alt="a3" loading="lazy" width="390" height="844">
+            <img onerror="this.parentNode.classList.add('missing')" src="media/tech-phone-en.png" data-src-en="media/tech-phone-en.png" data-src-pt="media/tech-phone-pt.png" alt="Technologies: branches, costs and prerequisites" data-i18n-alt="a3" loading="lazy" width="390" height="844">
             <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="a3">Technologies: branches, costs and prerequisites</span></div>
           </div></figure>
           <p class="cap"><b data-i18n="c3t">Technologies</b></p>
         </li>
         <li>
           <figure class="phone"><div class="screen">
-            <img onerror="this.parentNode.classList.add('missing')" src="media/days-phone.png" alt="Days: the 6-day wheel and what happens today" data-i18n-alt="a4" loading="lazy" width="390" height="844">
+            <img onerror="this.parentNode.classList.add('missing')" src="media/days-phone-en.png" data-src-en="media/days-phone-en.png" data-src-pt="media/days-phone-pt.png" alt="Days: the 6-day wheel and what happens today" data-i18n-alt="a4" loading="lazy" width="390" height="844">
             <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="a4">Days: the 6-day wheel and what happens today</span></div>
           </div></figure>
           <p class="cap"><b data-i18n="c4t">Days</b></p>
@@ -435,7 +435,7 @@ footer .mark { font-size: 20px; }
       </ul>
       <figure class="desk">
         <div class="frame">
-          <img onerror="this.parentNode.classList.add('missing')" src="media/desktop.png" alt="Desktop layout: goals on the left, the plan on the right" data-i18n-alt="a5" loading="lazy" width="1440" height="900">
+          <img onerror="this.parentNode.classList.add('missing')" src="media/desktop-en.png" data-src-en="media/desktop-en.png" data-src-pt="media/desktop-pt.png" alt="Desktop layout: goals on the left, the plan on the right" data-i18n-alt="a5" loading="lazy" width="1440" height="900">
           <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="a5">Desktop layout: goals on the left, the plan on the right</span></div>
         </div>
         <figcaption class="cap" data-i18n="a5">Desktop layout: goals on the left, the plan on the right</figcaption>
@@ -665,19 +665,25 @@ footer .mark { font-size: 20px; }
     if (grp) grp.setAttribute("aria-label", d.langGroup);
     const ver = document.getElementById("ver");
     if (ver) { ver.textContent = "v" + VERSION; ver.title = d.version + " " + VERSION; }
+    // Media follow the language: each screenshot carries data-src-en / data-src-pt.
+    document.querySelectorAll("img[data-src-en]").forEach(function (img) {
+      const want = img.getAttribute("data-src-" + lang) || img.getAttribute("data-src-en");
+      if (img.getAttribute("src") === want) return;
+      img.parentNode.classList.remove("missing");
+      img.src = want;
+    });
   }
 
   document.querySelectorAll(".lang button").forEach(function (b) {
     b.addEventListener("click", function () { saveLang(b.dataset.lang); apply(b.dataset.lang); });
   });
 
-  // Missing screenshots: show the styled placeholder with the alt text.
+  // Missing screenshots: the inline onerror shows the styled placeholder with the alt text (the hero, marked
+  // data-fallback, first retries its data-src-pt file, so a missing hero-en.gif falls back to hero-pt.gif).
   document.querySelectorAll(".screen img, .desk img").forEach(function (img) {
     const box = img.parentNode;
-    const miss = function () { box.classList.add("missing"); };
-    img.addEventListener("error", miss);
     img.addEventListener("load", function () { box.classList.remove("missing"); });
-    if (img.complete && img.naturalWidth === 0) miss();
+    if (img.complete && img.naturalWidth === 0 && img.getAttribute("src")) img.onerror();
   });
 
   apply(readLang());
