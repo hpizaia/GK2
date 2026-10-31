@@ -1,5 +1,6 @@
-/* days.css: the Dias screen (ui/days.js: week wheel, day card, week table) and the planner "Hoje" panel
-   (ui/today.js). A day's colour arrives as --day (inline, from data/days.json); without one the slate/wood tokens
+/* days.css: the Dias screen (ui/days.js: week wheel, day card, week table, "Bilhete do dia") and the planner "Hoje"
+   panel (ui/today.js: "feito hoje" ticks, the note, "Amanhã"). Type in rem (the root size is "Letra grande"); the
+   wheel's SVG hub text keeps px, which are SVG user units there. A day's colour arrives as --day (inline, from data/days.json); without one the slate/wood tokens
    are used. Uses the shared tokens, .card, .btn, .badge, .h2, .hint. */
 .screen-days { padding-block: var(--s4) var(--s6); }
 .days-screen { display: grid; gap: var(--s4); min-width: 0; grid-template-areas: "head" "wheel" "detail" "table"; }
@@ -10,14 +11,14 @@
 .days-table { grid-area: table; min-width: 0; }
 
 /* "Como funciona" */
-.days-how { max-width: 60ch; font-size: 14px; color: var(--ink-2); }
+.days-how { max-width: 60ch; font-size: .875rem; color: var(--ink-2); }
 .days-how summary { display: inline-flex; align-items: center; min-height: var(--tap); cursor: pointer; font-weight: 700; color: var(--accent); }
 .days-how p { margin: 0 0 var(--s2); }
 .days-unsure { color: var(--ink-3); font-style: italic; }
 
 /* the wheel: an SVG ring + hub + arrow behind HTML medallion buttons placed in % of the box */
 .days-wheel-box { display: grid; gap: var(--s3); align-content: start; }
-.days-wheel { position: relative; width: 100%; max-width: 320px; aspect-ratio: 1; margin: 0 auto; -webkit-tap-highlight-color: transparent; }
+.days-wheel { position: relative; width: 100%; max-width: 320px; aspect-ratio: 1; margin: var(--s4) auto var(--s5); -webkit-tap-highlight-color: transparent; }
 .days-wheel-bg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
 .days-band { fill: none; stroke: var(--slate); stroke-width: 17; }
 .days-band-edge { fill: none; stroke: var(--gold); stroke-width: .7; opacity: .8; }
@@ -39,6 +40,14 @@
 .days-med.is-today { width: 62px; height: 62px; border-color: var(--accent); box-shadow: 0 0 0 3px var(--bg), 0 0 14px var(--accent); }
 .days-med.is-today.is-sel { box-shadow: 0 0 0 3px var(--bg), 0 0 0 6px var(--ink), 0 0 16px var(--accent); }
 .days-med:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+/* the day's short name, outside the medallion (below it in the lower half, above it in the upper half) */
+.days-med-name {
+  --off: 30px; position: absolute; transform: translate(-50%, var(--off)); padding: 0 4px; border-radius: 2px;
+  background: var(--bg); color: var(--ink-2); font: 800 .75rem/1rem var(--f-body); letter-spacing: .02em; white-space: nowrap; cursor: pointer;
+}
+.days-med-name.is-up { transform: translate(-50%, calc(-100% - var(--off))); }
+.days-med-name.is-today { --off: 35px; color: var(--accent); }
+.days-med-name.is-sel { color: var(--ink); }
 /* the sprite cell is bigger than its round frame: centred and cropped (an oversized grid item would align to start) */
 .days-ico { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); flex: none; }
 .days-tile, .today-pick { position: relative; }
@@ -46,28 +55,28 @@
 /* "Hoje" bar under the wheel */
 .days-tb { display: grid; gap: var(--s2); padding: var(--s3); max-width: 420px; width: 100%; margin: 0 auto; }
 .days-tb-head { display: flex; align-items: center; gap: var(--s3); min-width: 0; }
-.days-tb-line { margin: 0; min-width: 0; font-size: 16px; color: var(--ink-2); }
+.days-tb-line { margin: 0; min-width: 0; font-size: 1rem; color: var(--ink-2); }
 .days-tb-line b { color: var(--ink); font-weight: 800; }
-.days-tb-sub { display: block; margin-top: 2px; font-size: 13px; color: var(--ink-2); }
+.days-tb-sub { display: block; margin-top: 2px; font-size: .8125rem; color: var(--ink-2); }
 .days-tb-ctl { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--s2); }
 .days-tb-ctl .btn[disabled] { opacity: .45; cursor: default; }
-.days-cal { margin: 0; font-size: 13px; color: var(--ink-2); }
+.days-cal { margin: 0; font-size: .8125rem; color: var(--ink-2); }
 .days-link {
   display: inline-flex; align-items: center; min-height: var(--tap); padding: 0 4px; margin: -12px 0;
-  border: 0; background: transparent; color: var(--accent); font: 700 13px/1 var(--f-body); text-decoration: underline; cursor: pointer;
+  border: 0; background: transparent; color: var(--accent); font: 700 .8125rem/1 var(--f-body); text-decoration: underline; cursor: pointer;
 }
-.days-credit { grid-column: 1 / -1; margin: var(--s2) 0 0; font-size: 12px; color: var(--ink-3); overflow-wrap: anywhere; }
+.days-credit { grid-column: 1 / -1; margin: var(--s2) 0 0; font-size: .75rem; color: var(--ink-3); overflow-wrap: anywhere; }
 
 /* icon tiles (sprite icon or drawn glyph) */
 .days-tile {
   display: inline-grid; place-items: center; flex: none; width: 40px; height: 40px; color: var(--ink);
   background: var(--bg-2); background: color-mix(in srgb, var(--day, var(--bg-2)) 30%, var(--bg-2));
-  border: 1px solid var(--frame); border-radius: var(--r); box-shadow: inset 0 2px 0 var(--bevel-lo);
+  border: 1px solid var(--frame-soft); border-radius: var(--r); box-shadow: inset 0 2px 0 var(--bevel-lo);
 }
 .days-tile.has-ico { overflow: hidden; border-radius: 50%; border: 2px solid var(--day, var(--frame)); background: var(--day, var(--bg-2)); box-shadow: none; }
 .days-tile-lg { width: 48px; height: 48px; }
 .days-glyph { display: block; }
-.days-letter { font: 700 22px/1 var(--f-display); color: var(--accent); }
+.days-letter { font: 700 1.375rem/1 var(--f-display); color: var(--accent); }
 .days-kind-ico { display: block; flex: none; }
 
 /* the selected day */
@@ -77,7 +86,7 @@
   background: var(--slate); border-bottom: 1px solid var(--gold); box-shadow: inset 0 1px 0 var(--bevel-hi);
 }
 .days-card-title { min-width: 0; }
-.days-card-title h2 { margin: 0; font: 800 22px/1.15 var(--f-body); overflow-wrap: anywhere; }
+.days-card-title h2 { margin: 0; font: 800 1.375rem/1.15 var(--f-body); overflow-wrap: anywhere; }
 .days-card-title .row-sub { color: var(--ink-2); }
 .days-today-badge { color: var(--accent-ink); background: var(--accent); border: 1px solid var(--accent); vertical-align: 3px; }
 .days-card-body { display: grid; gap: var(--s3); padding: var(--s3) var(--s4); }
@@ -85,35 +94,35 @@
 .days-group { min-width: 0; }
 .days-group-h {
   display: flex; align-items: center; gap: 6px; margin: 0 0 4px;
-  font: 800 12px/1.3 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: var(--gold);
+  font: 800 .75rem/1.3 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: var(--gold);
 }
 .days-evs { list-style: none; margin: 0; padding: 0; }
 .days-ev { display: grid; gap: 2px; padding: 6px 0; border-top: 1px solid var(--seam); }
 .days-ev:first-child { border-top: 0; }
-.days-ev-text { font-weight: 700; font-size: 16px; line-height: 1.3; overflow-wrap: anywhere; }
+.days-ev-text { font-weight: 700; font-size: 1rem; line-height: 1.3; overflow-wrap: anywhere; }
 .days-ev.is-unsure .days-ev-text { font-weight: 500; }
-.days-ev-who { font-size: 13px; color: var(--ink-2); }
+.days-ev-who { font-size: .8125rem; color: var(--ink-2); }
 .days-unconf { cursor: help; }
 .days-items { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 2px; }
 .days-item {
   display: inline-flex; align-items: center; gap: 6px; min-height: var(--tap); padding: 0 10px 0 4px; max-width: 100%;
-  border: 1px solid var(--seam); border-radius: var(--r); background: var(--bg-2); color: var(--ink); font: 700 14px/1.2 var(--f-body);
+  border: 1px solid var(--seam); border-radius: var(--r); background: var(--bg-2); color: var(--ink); font: 700 .875rem/1.2 var(--f-body);
 }
 button.days-item { cursor: pointer; }
 button.days-item:hover { border-color: var(--accent); }
-.days-mt { margin: 0; padding: 0 var(--s4) var(--s2); font-size: 13px; color: var(--ink-3); font-style: italic; }
+.days-mt { margin: 0; padding: 0 var(--s4) var(--s2); font-size: .8125rem; color: var(--ink-3); font-style: italic; }
 .days-ctl { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--s2); padding: var(--s3) var(--s4) 0; border-top: 1px solid var(--seam); }
 .days-ctl .btn[disabled] { opacity: .45; cursor: default; }
-.days-num { display: inline-grid; gap: 2px; font: 800 11px/1.2 var(--f-body); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+.days-num { display: inline-grid; gap: 2px; font: 800 .6875rem/1.2 var(--f-body); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
 .days-num input {
   width: 96px; min-height: var(--tap); padding: 0 8px; border: 1px solid var(--gold); border-radius: var(--r);
-  background: var(--bg-2); color: var(--accent); text-align: center; font: 800 18px/1 var(--f-body); letter-spacing: 0; text-transform: none;
+  background: var(--bg-2); color: var(--accent); text-align: center; font: 800 1.125rem/1 var(--f-body); letter-spacing: 0; text-transform: none;
   font-variant-numeric: tabular-nums lining-nums; -moz-appearance: textfield; appearance: textfield;
 }
 .days-num input::-webkit-outer-spin-button, .days-num input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .days-ctl { padding-bottom: var(--s3); }
-.days-ev-detail { font-size: 13px; color: var(--ink-2); line-height: 1.35; }
-.days-quote { font-size: 13px; color: var(--ink-2); }
+.days-ev-detail { font-size: .8125rem; color: var(--ink-2); line-height: 1.35; }
+.days-quote { font-size: .8125rem; color: var(--ink-2); }
 .days-quote summary { display: inline-flex; align-items: center; min-height: var(--tap); margin: -8px 0; cursor: pointer; font-weight: 700; color: var(--accent); }
 .days-quote q { display: block; padding: 2px 0 4px var(--s2); border-left: 2px solid var(--gold); font-style: italic; }
 
@@ -128,10 +137,10 @@ button.days-item:hover { border-color: var(--accent); }
 .days-row:hover .days-row-name { color: var(--accent); }
 .days-row.is-sel { background: var(--panel-2); box-shadow: inset 3px 0 0 var(--accent); }
 .days-row-main { min-width: 0; }
-.days-row-name { display: block; font-weight: 800; font-size: 16px; line-height: 1.2; }
+.days-row-name { display: block; font-weight: 800; font-size: 1rem; line-height: 1.2; }
 .days-row-name .badge { margin-left: 6px; }
-.days-row-sum { display: block; font-size: 13px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.days-row-n { font-weight: 800; font-size: 15px; color: var(--ink-3); }
+.days-row-sum { display: block; font-size: .8125rem; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.days-row-n { font-weight: 800; font-size: .9375rem; color: var(--ink-3); }
 .days-row.is-today .days-row-n { color: var(--accent); }
 
 @media (min-width: 900px) {
@@ -139,6 +148,8 @@ button.days-item:hover { border-color: var(--accent); }
   .days-wheel { max-width: 360px; }
   .days-med { width: 58px; height: 58px; }
   .days-med.is-today { width: 68px; height: 68px; }
+  .days-med-name { --off: 33px; }
+  .days-med-name.is-today { --off: 38px; }
   .days-detail { position: sticky; top: calc(var(--hdr-h, 120px) + 16px); }
 }
 
@@ -150,10 +161,10 @@ button.days-item:hover { border-color: var(--accent); }
   background: var(--slate); border-bottom: 1px solid var(--gold); box-shadow: inset 0 1px 0 var(--bevel-hi);
 }
 .today-head .days-tile { width: 36px; height: 36px; }
-.today-line { margin: 0; min-width: 0; font-size: 16px; color: var(--ink-2); }
+.today-line { margin: 0; min-width: 0; font-size: 1rem; color: var(--ink-2); }
 .today-line b { color: var(--ink); font-weight: 800; }
-.today-evs { list-style: none; margin: 0; padding: var(--s1) var(--s3); }
-.today-ev { display: flex; align-items: flex-start; gap: var(--s2); padding: 6px 0; border-top: 1px solid var(--seam); font-size: 15px; line-height: 1.3; }
+.today-evs { list-style: none; margin: 0; padding: 2px var(--s3) 2px var(--s1); }
+.today-ev { display: flex; align-items: center; gap: var(--s1); padding: 2px 0; border-top: 1px solid var(--seam); font-size: .9375rem; line-height: 1.3; }
 .today-ev:first-child { border-top: 0; }
 .today-ev-ico { display: inline-grid; place-items: center; flex: none; width: 24px; height: 20px; color: var(--gold); }
 .today-ev-main { min-width: 0; overflow-wrap: anywhere; font-weight: 700; }
@@ -170,10 +181,10 @@ button.days-item:hover { border-color: var(--accent); }
 }
 .today-pick:hover { border-color: var(--accent); color: var(--accent); }
 .today-pick:has(.days-ico) { overflow: hidden; border-radius: 50%; clip-path: none; border: 2px solid var(--day, var(--frame)); background: var(--day, var(--panel-2)); }
-.today-num { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); margin-top: var(--s2); font-size: 14px; color: var(--ink-2); font-weight: 700; }
+.today-num { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); margin-top: var(--s2); font-size: .875rem; color: var(--ink-2); font-weight: 700; }
 .today-num input {
   width: 96px; min-height: var(--tap); padding: 0 8px; border: 1px solid var(--gold); border-radius: var(--r);
-  background: var(--bg-2); color: var(--accent); text-align: center; font: 800 18px/1 var(--f-body);
+  background: var(--bg-2); color: var(--accent); text-align: center; font: 800 1.125rem/1 var(--f-body);
   font-variant-numeric: tabular-nums lining-nums; -moz-appearance: textfield; appearance: textfield;
 }
 .today .fold-head { margin-bottom: var(--s2); }
@@ -181,5 +192,52 @@ button.days-item:hover { border-color: var(--accent); }
 /* folded "Hoje": one row (medallion, "Hoje: X · N coisas", Avançar, toggle) */
 .today-mini .today-head { border-bottom: 0; gap: var(--s2); padding: 6px 6px 6px var(--s2); cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .today-mini .today-head .days-tile { width: 32px; height: 32px; }
-.today-mini .today-line { flex: 1; font-size: 14px; line-height: 1.25; overflow-wrap: anywhere; }
+.today-mini .today-line { flex: 1; font-size: .875rem; line-height: 1.25; overflow-wrap: anywhere; }
 .today-mini .today-adv-sm { flex: none; }
+
+/* "Feito hoje": a 44 px tick (the .tick look of planner.css) on each of today's events; done = struck through */
+.today-tick { flex: none; }
+.today-ev.is-done .today-ev-main { text-decoration: line-through; text-decoration-thickness: 2px; color: var(--ink-3); font-weight: 500; }
+.today-ev.is-done .today-ev-ico { opacity: .5; }
+.today-all { margin: 0; padding: 6px var(--s3); border-top: 1px solid var(--seam); color: var(--moss); font-size: .9375rem; font-weight: 800; }
+
+/* "Bilhete do dia" (GK.ui.days.noteBox): under today's events and in the Dias day card */
+.today-note-box { padding: 2px var(--s3); border-top: 1px solid var(--seam); }
+.days-note-box { padding: 2px var(--s4); border-bottom: 1px solid var(--seam); background: var(--panel-2); }
+.today-nw { white-space: nowrap; }
+/* folded row: the day on the first line, "2/3 feitas · dia 61" under it (it wrapped there anyway at phone widths) */
+.today-mini .today-sub { display: block; font-size: .8125rem; }
+.today-mini .today-line b { display: block; }
+.day-note { display: flex; align-items: center; gap: var(--s2); min-width: 0; min-height: var(--tap); }
+.day-note-text { flex: 1; min-width: 0; margin: 0; font-size: .9375rem; line-height: 1.35; color: var(--ink); overflow-wrap: anywhere; }
+.day-note-l { font-weight: 800; color: var(--ink-2); }
+.day-note-btn { flex: none; color: var(--accent); }
+.day-note-add {
+  display: inline-flex; align-items: center; gap: 6px; min-height: var(--tap); padding: 0 4px; margin: 0 -4px; max-width: 100%;
+  border: 0; background: transparent; color: var(--ink-2); font: 600 .875rem/1.25 var(--f-body); text-align: left; cursor: pointer;
+  text-decoration: underline; text-decoration-color: var(--seam); text-underline-offset: 3px;
+}
+.day-note-add:hover { color: var(--accent); text-decoration-color: currentColor; }
+.day-note.is-editing { display: grid; gap: 2px; padding: 6px 0; }
+.day-note-ta {
+  display: block; width: 100%; min-height: 4.25rem; padding: 8px 10px; resize: vertical;
+  border: 1px solid var(--gold); border-radius: var(--r); background: var(--bg-2); color: var(--ink);
+  font: 400 1rem/1.4 var(--f-body);   /* 16 px or more: no zoom-in on iPhone */
+}
+.day-note-n { justify-self: end; font-size: .75rem; color: var(--ink-2); }
+
+/* "Amanhã": secondary (smaller, --ink-2), one button that opens the Dias screen on that day */
+.today-tmr {
+  display: grid; gap: 2px; width: 100%; min-height: var(--tap); margin: 0; padding: var(--s2) var(--s3);
+  border: 0; border-top: 1px solid var(--seam); background: transparent; color: var(--ink-2);
+  font: 400 .8125rem/1.3 var(--f-body); text-align: left; cursor: pointer;
+}
+.today-tmr:hover .today-tmr-t b, .today-tmr:hover .today-tmr-go { color: var(--accent); }
+.today-tmr-h { display: flex; align-items: center; gap: var(--s2); min-width: 0; }
+.today-tmr-t { flex: 1; min-width: 0; }
+.today-tmr-t b { font-weight: 800; color: var(--ink-2); }
+.today-tmr-go { flex: none; font-size: 1.125rem; line-height: 1; }
+.today .today-tmr-tile { width: 22px; height: 22px; }
+.today-tmr-ev { display: flex; align-items: center; gap: 6px; min-width: 0; padding-left: 30px; }
+.today-tmr-ico { display: inline-grid; place-items: center; flex: none; width: 14px; color: var(--ink-3); }
+.today-tmr-x { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

@@ -16,10 +16,12 @@ Pastas, pipeline de build, telas e módulos, limites do artifact e camadas de no
 | `tools/exportar-textos/` | Exportador dos textos do jogo (Windows) e `juntar_nomes.py` | sim |
 | `prototype/index.html` | Página de desenvolvimento (com esqueleto HTML), gerada | sim |
 | `dist/index.html` | A página do artifact (sem esqueleto), gerada. `dist/preview.html` é a mesma coisa com esqueleto, para ver localmente | sim |
-| `docs/` | Estes documentos | sim |
-| `historico/` | Arquivos de sessões passadas (ver `historico/README.md`) | sim |
+| `docs/` | Estes documentos, as imagens do README (`docs/media/`) | sim |
+| `docs/projeto/` | Documentos de projeto: [`SPEC.md`](projeto/SPEC.md) (especificação), [`DESIGN.md`](projeto/DESIGN.md) (design), [`BACKLOG.md`](projeto/BACKLOG.md) (pendências), [`AUDITORIA.md`](projeto/AUDITORIA.md) (auditoria da v1.1). Parte do conteúdo descreve a versão 1.2 | sim |
+| `site/` | Página de apresentação do projeto (outro Claude Artifact), ver `site/README.md` | sim |
+| `.github/` | Modelos de issue (`ISSUE_TEMPLATE/`) | sim |
+| `historico/` | Transcrições e arquivos de sessões passadas, só no disco local | não (está no `.gitignore`; o histórico fica no repositório privado `hpizaia/GK2-historico`) |
 | `VERSION`, `CHANGELOG.md` | Versão atual. O changelog é gerado a partir de `data/changelog.json` | sim |
-| `SPEC.md`, `DESIGN.md`, `BACKLOG.md`, `AUDITORIA.md` | Especificação, design, pendências, auditoria | sim |
 | `.claude/launch.json` | Servidores locais `prototype` (porta 8765) e `dist` (porta 8766) | sim |
 | `tradução windows/` | Sobra da cópia do Windows: a `.venv` e um link de compatibilidade para `data/game-texts/gk2_textos.json` | não |
 
@@ -82,9 +84,9 @@ A página publicada é um único HTML hospedado como Claude Artifact, compartilh
 - **CSP sem imagens externas.** Imagens remotas (o CDN do wikily) são bloqueadas. Todos os ícones vão num **sprite embutido** (`data:image/png;base64`, células de 32 px, ~760 KB), e o build zera as URLs remotas no modo artifact. Sem sprite, a página mostra um quadrinho com a letra do item.
 - **Sem esqueleto.** O artifact envolve a página no próprio documento, então `dist/index.html` sai sem doctype, `<html>`, `<head>`, `<body>`, charset ou viewport, e começa no `<title>`. O `prototype/index.html` e o `dist/preview.html` mantêm o esqueleto para uso local.
 - **Tudo inline.** CSS e JS ficam embutidos. Scripts externos só de CDNs permitidos e com versão fixa. Hoje não há nenhum: é JavaScript puro.
-- **Sincronização por conta.** A página declara as capacidades **`db`** e **`user`**. Cada pessoa tem um documento privado `data/users/<id do usuário>/state` (metas, escolhas de receita e de grupo, "tenho", marcações, nomes editados, pesquisadas, vantagens). O `localStorage` é a primeira fonte (abre na hora e funciona offline) e é separado por conta. Se só um lado mudou desde a última versão comum, ele vence; se os dois mudaram, o `GK.store.mergeSynced` mescla campo a campo. Campos que a versão não conhece são preservados. Detalhes no comentário de `src/js/sync.js` e no `SPEC.md`. Sem as capacidades, a página funciona "só neste aparelho". Ao republicar, não mude as capacidades.
+- **Sincronização por conta.** A página declara as capacidades **`db`** e **`user`**. Cada pessoa tem um documento privado `data/users/<id do usuário>/state` (metas, escolhas de receita e de grupo, "tenho", marcações, nomes editados, pesquisadas, vantagens). O `localStorage` é a primeira fonte (abre na hora e funciona offline) e é separado por conta. Se só um lado mudou desde a última versão comum, ele vence; se os dois mudaram, o `GK.store.mergeSynced` mescla campo a campo. Campos que a versão não conhece são preservados. Detalhes no comentário de `src/js/sync.js` e no [`docs/projeto/SPEC.md`](projeto/SPEC.md). Sem as capacidades, a página funciona "só neste aparelho". Ao republicar, não mude as capacidades.
 - **Tamanho.** O limite é 16 MB. Hoje a página tem ~2 MB (o sprite em base64 é quase metade).
-- **Compartilhamento privado.** Por causa da licença dos dados (`docs/dados.md`), o artifact só é compartilhado de forma privada.
+- **Compartilhamento.** O artifact está como "qualquer pessoa com o link" desde 31/10/2026; os dados são usados como conteúdo de fã, com crédito, e o pedido de autorização ao wikily está em andamento (`docs/dados.md`).
 
 ## Nomes e tradução
 

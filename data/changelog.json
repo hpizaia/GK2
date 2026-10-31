@@ -1,5 +1,41 @@
 [
   {
+    "version": "1.4.0",
+    "date": "2026-10-31",
+    "pt": [
+      "Painel Hoje: caixinhas de \"feito hoje\" em cada evento (zeram sozinhas quando o dia muda e sincronizam entre aparelhos), a prévia de amanhã com o que preparar antes de dormir, e um bilhete por dia da semana, também editável na aba Dias",
+      "O texto acompanha o tamanho de letra do celular, e há uma opção \"Letra grande\" no rodapé para ler de longe ao lado do jogo",
+      "No celular, o Planejador mostra Matérias-primas e Etapas logo depois das Metas; Progresso, Vantagens e \"Copiar lista\" ficam no fim",
+      "As abas ficam fixas no topo ao rolar (a busca rola com a página) e cada tela guarda a própria posição de rolagem",
+      "A página mostra o cabeçalho e \"Carregando…\" desde os primeiros bytes, em vez de uma tela vazia",
+      "Metas no celular: os botões − / + e o ✕ ficam numa linha abaixo do nome, e os nomes não quebram mais no meio da palavra",
+      "Matérias-primas mais compactas: \"como obter\" numa linha só (o texto completo fica no \"i\") e \"Já tenho\" na mesma linha; o lápis de renomear fica no botão \"Editar nomes\" do Progresso",
+      "Primeiro uso: uma frase explica o app, a primeira meta adicionada substitui a lista de exemplo (com \"Desfazer\") e o painel Hoje começa como uma linha \"Marcar o dia do jogo\"",
+      "\"Já tenho → Tudo\" mostra um aviso com \"Desfazer\" e leva o foco para a linha seguinte",
+      "Estações das Etapas numeradas 1, 2, 3… na ordem em que aparecem (sem o selo \"etapa N\")",
+      "Seletor de receita mais curto e em português, com os ingredientes primeiro",
+      "Nomes dos dias embaixo dos medalhões (no Hoje e na roda); \"Avançar dia\" com o mesmo nome em todo lugar",
+      "Links do rodapé e botão de tema com área de toque de 44 px; bordas de botões com mais contraste; foco visível em botões e abas",
+      "\"Limpar pesquisadas\" vai para o fim de Tecnologias e só aparece quando há algo marcado"
+    ],
+    "en": [
+      "Today panel: \"done today\" checkboxes on each event (they reset by themselves when the day changes and sync across devices), a preview of tomorrow with what to prepare before sleeping, and one note per weekday, also editable in the Days tab",
+      "Text follows your phone's text size, and a new \"Large text\" switch in the footer makes the app easier to read from a distance beside the game",
+      "On phones, the Planner shows Raw materials and Steps right after Goals; Progress, Perks and \"Copy list\" move to the end",
+      "The tabs stay pinned at the top while you scroll (the search scrolls with the page) and each screen keeps its own scroll position",
+      "The page shows the header and \"Loading…\" from the first bytes instead of a blank screen",
+      "Goals on phones: the − / + buttons and ✕ sit on a line under the name, and names no longer break mid-word",
+      "More compact raw materials: \"how to get\" on one line (full text in the \"i\") and \"Have it\" on the same line; the rename pencil lives behind \"Edit names\" in Progress",
+      "First use: one line explains the app, the first goal you add replaces the example list (with \"Undo\") and the Today panel starts as a single \"Set the game day\" row",
+      "\"Have it → All\" shows a notice with \"Undo\" and moves focus to the next row",
+      "Station cards in Steps are numbered 1, 2, 3… in display order (no more \"stage N\" badge)",
+      "Shorter recipe selector in the UI language, ingredients first",
+      "Day names under the medallions (in Today and on the wheel); \"Next day\" is named the same everywhere",
+      "Footer links and the theme button get 44 px tap areas; higher-contrast button borders; visible focus on buttons and tabs",
+      "\"Clear researched\" moves to the end of Technologies and only shows when something is marked"
+    ]
+  },
+  {
     "version": "1.3.3",
     "date": "2026-10-31",
     "pt": [

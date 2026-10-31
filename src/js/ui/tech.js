@@ -1,6 +1,7 @@
 /* GK.ui.tech: the Tecnologias screen (#tech): branch chips with researched/total counts, the branch list grouped
    by column, a search box over every branch, "Já pesquisei" checkboxes, the tech detail (prerequisites, unlocks,
-   what it leads to, notes, "mark prerequisites as researched") and "Limpar pesquisadas" with inline confirmation.
+   what it leads to, notes, "mark prerequisites as researched") and, at the end (only when something is marked),
+   "Limpar pesquisadas" with inline confirmation.
    Owns: [data-panel="tech"] (its section is created by GK.router.ensureScreens), the route "tech" and its tab label
    "tab.tech", the shared cost markup.
    Exposes: GK.ui.tech.{mount, render, open(techId, {from}), costHtml(cost, {big}), techSlot(tech), badges(tech)}.
@@ -15,7 +16,7 @@ GK.i18n.add({
     "tech.count": "{done} de {total} pesquisadas",
     "tech.branchCount": "{done}/{total}",
     "tech.branches": "Ramos da árvore",
-    "tech.search": "Buscar tecnologia ou o que ela desbloqueia",
+    "tech.search": "Buscar tecnologia ou item",
     "tech.searchLabel": "Buscar nas tecnologias",
     "tech.searchClear": "Limpar busca",
     "tech.results.one": "{n} tecnologia encontrada",
@@ -77,7 +78,7 @@ GK.i18n.add({
     "tech.count": "{done} of {total} researched",
     "tech.branchCount": "{done}/{total}",
     "tech.branches": "Tree branches",
-    "tech.search": "Search a technology or what it unlocks",
+    "tech.search": "Search a technology or item",
     "tech.searchLabel": "Search technologies",
     "tech.searchClear": "Clear search",
     "tech.results.one": "{n} technology found",
@@ -346,7 +347,8 @@ GK.ui.tech = (function () {
         <button type="button" class="btn btn-sm btn-confirm" id="tech-clear-yes" data-clear-yes>${esc(t("tech.clearYes"))}</button>
         <button type="button" class="btn btn-sm btn-ghost" id="tech-clear-no" data-clear-no>${esc(t("tech.clearNo"))}</button></div>`;
     }
-    return `<button type="button" class="btn btn-sm btn-ghost btn-danger" id="tech-clear" data-clear${n ? "" : " disabled"}>${esc(t("tech.clear"))}</button>`;
+    // a rare action: at the end of the screen, and only when something is marked (UX review: it read as an error at the top)
+    return n ? `<button type="button" class="btn btn-sm btn-ghost btn-danger" id="tech-clear" data-clear>${esc(t("tech.clear"))}</button>` : "";
   }
   function render(state, meta) {
     if (!root) return;
@@ -368,10 +370,10 @@ GK.ui.tech = (function () {
             <input type="search" class="search-input" id="tech-q" value="${esc(query)}" placeholder="${esc(t("tech.search"))}" aria-label="${esc(t("tech.searchLabel"))}" autocomplete="off" spellcheck="false" enterkeyhint="search">
             <button type="button" class="search-clear" data-q-clear aria-label="${esc(t("tech.searchClear"))}"${query ? "" : " hidden"}>×</button>
           </div>
-          <div class="tech-clear-box">${clearHtml(state)}</div>
         </div>
         ${chips(done)}
         <div class="tech-list" id="tech-list">${listHtml(state, done)}</div>
+        <div class="tech-clear-box">${clearHtml(state)}</div>
       </div>
       <aside class="tech-detail" id="tech-detail"${detail ? "" : " hidden"}>${detail ? detailHtml(TK.get(detail), state, done) : ""}</aside>
     </div>`;
@@ -462,7 +464,12 @@ GK.ui.tech = (function () {
       if (e.target.closest("[data-q-clear]")) { query = ""; renderList(); const q = root.querySelector("#tech-q"); if (q) { q.value = ""; q.focus(); } return; }
       if (e.target.closest("[data-clear]")) { asking = true; rerender(); const y = root.querySelector("#tech-clear-no"); if (y) y.focus(); return; }
       if (e.target.closest("[data-clear-no]")) { asking = false; rerender(); const c = root.querySelector("#tech-clear"); if (c) c.focus(); return; }
-      if (e.target.closest("[data-clear-yes]")) { asking = false; S.actions.clearResearched(); GK.ui.toast(t("tech.cleared")); return; }
+      if (e.target.closest("[data-clear-yes]")) {
+        asking = false; S.actions.clearResearched(); GK.ui.toast(t("tech.cleared"));
+        // the button is gone: keep the focus on the screen (its title), not on <body>; no keyboard pops up
+        const h = root.querySelector(".tech-main .h2"); if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+        return;
+      }
       const mp = e.target.closest("[data-mark-parents]");
       if (mp) {
         const st = S.get(), done = TK.researchedSet(st.researched);

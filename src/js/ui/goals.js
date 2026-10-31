@@ -1,4 +1,8 @@
 /* GK.ui.goals: the goal list with steppers (press and hold − / + to repeat), the empty state and "Limpar lista".
+   First use (1.3.4): one line saying what the app does above the list while it is empty or the example; the first
+   goal added replaces the example (GK.store addGoal) and this module shows "Exemplo removido · Desfazer"
+   (GK.ui.fmt.undoToast → GK.store.actions.restoreExample). Phones (< 480 px of list width): the stepper and ✕ go on
+   a second line under the name (planner.css, container query on .goal-list).
    Owns: [data-panel="goals"]. Exposes: GK.ui.goals.{mount, render}; registered as a panel.
 */
 GK.i18n.add({
@@ -6,9 +10,11 @@ GK.i18n.add({
     "goals.title": "Metas",
     "goals.clear": "Limpar lista",
     "goals.confirm": "Confirmar limpeza",
-    "goals.example": "Lista de exemplo. Mude as quantidades ou limpe a lista para começar a sua.",
+    "goals.intro": "Diga o que quer fabricar; o app soma tudo o que você precisa juntar.",
+    "goals.example": "Lista de exemplo: a primeira meta que você buscar substitui estas.",
+    "goals.exampleGone": "Exemplo removido",
     "goals.empty.title": "Nada planejado ainda",
-    "goals.empty.body": "Busque acima o que você quer fabricar e o plano completo é montado na hora.",
+    "goals.empty.body": "Busque acima, em português ou inglês, e toque no item para adicioná-lo.",
     "goals.try": "Experimente:",
     "goals.dec": "Diminuir quantidade de {name}",
     "goals.inc": "Aumentar quantidade de {name}",
@@ -19,9 +25,11 @@ GK.i18n.add({
     "goals.title": "Goals",
     "goals.clear": "Clear list",
     "goals.confirm": "Confirm clear",
-    "goals.example": "Example list. Change the amounts or clear it to start your own.",
+    "goals.intro": "Say what you want to craft; the app adds up everything you need to gather.",
+    "goals.example": "Example list: the first goal you search for replaces these.",
+    "goals.exampleGone": "Example removed",
     "goals.empty.title": "Nothing planned yet",
-    "goals.empty.body": "Search above for what you want to craft and the full plan is built right away.",
+    "goals.empty.body": "Search above, in English or Portuguese, and tap an item to add it.",
     "goals.try": "Try:",
     "goals.dec": "Decrease amount of {name}",
     "goals.inc": "Increase amount of {name}",
@@ -66,6 +74,11 @@ GK.ui.goals = (function () {
   function endHold() { stopHold(); setTimeout(() => { swallowClick = false; }, 0); }
   function mount(el) {
     root = el;
+    // the first goal replaced the example list: offer it back
+    GK.store.subscribe((st, meta) => {
+      const snap = meta && meta.exampleReplaced;
+      if (snap) GK.ui.fmt.undoToast(t("goals.exampleGone"), () => GK.store.actions.restoreExample(snap));
+    });
     root.addEventListener("pointerdown", startHold);
     // the buttons are re-rendered on every step, so "leaving" is checked against what is under the pointer
     document.addEventListener("pointermove", (e) => { if (hold && !(e.target.closest && e.target.closest(hold.sel))) stopHold(); });
@@ -106,8 +119,9 @@ GK.ui.goals = (function () {
     const D = GK.data.get();
     const head = `<div class="section-head"><h2 class="h2">${esc(t("goals.title"))} <span class="count">${state.goals.length || ""}</span></h2>
       ${state.goals.length ? `<button type="button" id="goals-clear" class="btn btn-sm ${confirming ? "btn-confirm" : "btn-ghost btn-danger"}" data-clear>${esc(t(confirming ? "goals.confirm" : "goals.clear"))}</button>` : ""}</div>`;
+    const intro = !state.goals.length || state.example ? `<p class="goals-intro">${esc(t("goals.intro"))}</p>` : "";
     if (!state.goals.length) {
-      root.innerHTML = head + `<div class="card empty goal-list">
+      root.innerHTML = head + intro + `<div class="card empty goal-list">
         <p class="empty-title">${esc(t("goals.empty.title"))}</p>
         <p>${esc(t("goals.empty.body"))}</p>
         <p>${esc(t("goals.try"))}</p>
@@ -115,11 +129,11 @@ GK.ui.goals = (function () {
       </div>`;
       return;
     }
-    root.innerHTML = head + `<div class="card list goal-list">` + state.goals.map((g) => {
+    root.innerHTML = head + intro + `<div class="card list goal-list">` + state.goals.map((g) => {
       const it = D.items[g.item], nm = name(it, state.overrides), id = domId(g.item);
       return `<div class="goal">
         ${slot(it, nm)}
-        <div style="min-width:0"><div class="goal-name">${esc(nm)}${GK.ui.fmt.infoButton(g.item, nm)}${GK.ui.fmt.badges(it, state.overrides)}</div><div class="goal-sub">${esc(GK.ui.fmt.stationOf(g.item, state))}</div></div>
+        <div class="goal-main"><div class="goal-name">${esc(nm)}${GK.ui.fmt.infoButton(g.item, nm)}${GK.ui.fmt.badges(it, state.overrides)}</div><div class="goal-sub">${esc(GK.ui.fmt.stationOf(g.item, state))}</div></div>
         <div class="goal-ctl">
           <div class="stepper">
             <button type="button" id="dec-${id}" data-dec="${esc(g.item)}" aria-label="${esc(t("goals.dec", { name: nm }))}">−</button>

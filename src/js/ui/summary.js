@@ -1,5 +1,9 @@
 /* GK.ui.summary: raw totals and steps grouped by station (+ inline name editing, recipe choice, "Já tenho" /
    "tenho N de M", the member choice of group items).
+   Raw rows are two lines (1.3.4): name + "i" | quantity, then "como obter" cut to one line (full text in the row's
+   title and in the "i" detail) beside "Já tenho". The ✎ rename pencils show only in the "Editar nomes" mode
+   (GK.store ui.editNames, toggled in the progress card). "Tudo" shows an undo toast ("Areia: você já tem tudo ·
+   Desfazer") and moves the focus to the next row. Station cards are numbered 1, 2, 3… in display order.
    Collapsible (GK.store ui, per device): "Matérias-primas" (rawCollapsed), "Etapas por estação" (stepsCollapsed)
    and each station card (ui.stationCollapsed[stationKey], key = station id, "#<repeat>" for a card that comes back);
    a folded part keeps its header (with counts) and skips rendering its rows.
@@ -11,6 +15,7 @@ GK.i18n.add({
     "raw.hint": "O que coletar, comprar ou já ter no baú antes de começar.",
     "raw.haveGroup": "Você já tem",
     "raw.have": "Já tenho",
+    "raw.hadBadge": "✓ tenho",
     "raw.expand": "Fabricar",
     "raw.expandLabel": "Voltar a fabricar {name}",
     "raw.check": "Marcar {name} como coletado",
@@ -34,23 +39,22 @@ GK.i18n.add({
     "have.allLabel": "Já tenho todos os {n} de {name}",
     "have.ok": "OK",
     "have.cancel": "Fechar",
+    "have.allToast": "{name}: você já tem tudo",
     "have.clear": "Limpar",
     "have.clearLabel": "Esquecer quantos {name} eu tenho",
     "steps.title": "Etapas por estação",
     "steps.hint": "Siga de cima para baixo: cada estação usa o que as anteriores produziram.",
-    "steps.stage": "etapa {n}",
-    "steps.stages": "etapas {a}–{b}",
-    "steps.runs.one": "{n} execução",
-    "steps.runs.other": "{n} execuções",
-    "steps.yield": "rende {n} cada",
-    "steps.yieldPerk": "rende {n} com {perk}",
+    "steps.order": "Estação {n} de {total}",
+    "steps.runs.one": "{n}\u00a0execução",
+    "steps.runs.other": "{n}\u00a0execuções",
+    "steps.yield": "rende\u00a0{n} cada",
+    "steps.yieldPerk": "rende\u00a0{n} com {perk}",
     "steps.withPerk": "com {perk}",
     "steps.yieldIf": "{n} com {perk}",
-    "steps.recipeName": "receita: {name}",
     "steps.groupLine": "grupo: {name}",
     "steps.again": "de novo",
     "steps.againTitle": "Esta estação aparece de novo: estas etapas dependem de outra estação acima.",
-    "steps.left": "sobra {n}",
+    "steps.left": "sobra\u00a0{n}",
     "steps.per": "Por execução:",
     "steps.have": "Já tenho",
     "steps.haveLabel": "Já tenho {name}: não fabricar",
@@ -71,8 +75,8 @@ GK.i18n.add({
     "fold.expand": "Expandir",
     "fold.collapseX": "Recolher: {name}",
     "fold.expandX": "Expandir: {name}",
-    "fold.done": "{done}/{total} marcadas",
-    "fold.doneSr": "{done} de {total} marcadas",
+    "fold.done": "{done}/{total} marcados",
+    "fold.doneSr": "{done} de {total} marcados",
     "fold.steps.one": "{n} etapa",
     "fold.steps.other": "{n} etapas",
     "fold.stations.one": "{n} estação",
@@ -88,6 +92,7 @@ GK.i18n.add({
     "raw.hint": "What to gather, buy or already have in a chest before you start.",
     "raw.haveGroup": "You already have",
     "raw.have": "Have it",
+    "raw.hadBadge": "✓ have it",
     "raw.expand": "Craft it",
     "raw.expandLabel": "Craft {name} again",
     "raw.check": "Mark {name} as collected",
@@ -111,23 +116,22 @@ GK.i18n.add({
     "have.allLabel": "I have all {n} {name}",
     "have.ok": "OK",
     "have.cancel": "Close",
+    "have.allToast": "{name}: you have it all",
     "have.clear": "Clear",
     "have.clearLabel": "Forget how many {name} I have",
     "steps.title": "Steps by station",
     "steps.hint": "Work top to bottom: each station uses what the ones above produced.",
-    "steps.stage": "stage {n}",
-    "steps.stages": "stages {a}–{b}",
-    "steps.runs.one": "{n} craft",
-    "steps.runs.other": "{n} crafts",
-    "steps.yield": "makes {n} each",
-    "steps.yieldPerk": "makes {n} with {perk}",
+    "steps.order": "Station {n} of {total}",
+    "steps.runs.one": "{n}\u00a0craft",
+    "steps.runs.other": "{n}\u00a0crafts",
+    "steps.yield": "makes\u00a0{n} each",
+    "steps.yieldPerk": "makes\u00a0{n} with {perk}",
     "steps.withPerk": "with {perk}",
     "steps.yieldIf": "{n} with {perk}",
-    "steps.recipeName": "recipe: {name}",
     "steps.groupLine": "group: {name}",
     "steps.again": "again",
     "steps.againTitle": "This station comes back: these steps need another station above.",
-    "steps.left": "{n} left over",
+    "steps.left": "{n}\u00a0left over",
     "steps.per": "Per craft:",
     "steps.have": "Have it",
     "steps.haveLabel": "I have {name}: don't craft it",
@@ -176,6 +180,7 @@ GK.ui.summary = (function () {
   }
   // folding: "raw" | "steps" | "st:<station key>"; the toggle and its header carry the same data-fold value
   const ui = (state) => state.ui || {};
+  const canEdit = (state) => !!ui(state).editNames || !!editing;
   const stationKey = (g) => g.station.id + (g.repeat > 1 ? "#" + g.repeat : "");
   const FOLD_CONTROLS = "button, a, input, select, textarea, label";
   function toggleFold(k) {
@@ -211,7 +216,7 @@ GK.ui.summary = (function () {
       const ho = e.target.closest("[data-have-open]");
       if (ho) { haveOpen = ho.dataset.haveOpen; rerender(); focusId("have-n-" + domId(haveOpen)); return; }
       const ha = e.target.closest("[data-have-all]");
-      if (ha) { haveOpen = null; A.setHave(ha.dataset.haveAll, true); return; }
+      if (ha) { haveAll(ha); return; }
       const hc = e.target.closest("[data-have-cancel]");
       if (hc) { const id = hc.dataset.haveCancel; haveOpen = null; rerender(); focusId("have-" + domId(id)); return; }
       const hx = e.target.closest("[data-have-clear]");
@@ -246,6 +251,24 @@ GK.ui.summary = (function () {
     });
   }
   const rerender = () => render(GK.store.get(), {}, GK.app.plan());
+  // "Tudo": the row leaves the list (or moves to "Você já tem"), so the focus goes to the row that followed it
+  // (its checkbox; else the item's own "↺" button), and a toast offers "Desfazer" (the previous have value back)
+  function haveAll(btn) {
+    const A = GK.store.actions, id = btn.dataset.haveAll, d = domId(id);
+    const prev = GK.store.get().have[id];
+    const rows = [...root.querySelectorAll(".row")], at = rows.indexOf(btn.closest(".row"));
+    const next = rows.slice(at + 1).map((r) => r.querySelector("[data-done]")).filter(Boolean).map((cb) => cb.id);
+    haveOpen = null;
+    A.setHave(id, true);
+    const target = next.map((x) => document.getElementById(x)).find((el) => el && el.id !== "cb-raw-" + d && el.id !== "cb-step-" + d) ||
+      document.getElementById("unhave-" + d);
+    if (target) target.focus();
+    GK.ui.fmt.undoToast(t("have.allToast", { name: name(GK.data.item(id), GK.store.get().overrides) }), () => {
+      A.setHave(id, prev === undefined ? null : prev);
+      const back = document.getElementById("have-" + d) || document.getElementById("have-n-" + d);
+      if (back) back.focus();
+    });
+  }
   // recipes that can actually expand (≥1 input, not noexp); zero-input "zombie production" and
   // grow recipes only describe where a raw material comes from
   const expandable = (r) => r.in.length > 0 && !r.noexp;
@@ -270,13 +293,14 @@ GK.ui.summary = (function () {
   // "Tenho [ 3 ] de 10": opened from "Já tenho" (with Tudo / OK / Fechar) or kept on the row (live, with Limpar)
   function haveField(itemId, nm, total, value, live) {
     const id = domId(itemId), max = 999999;
-    const input = `<input id="have-n-${id}" name="n" data-have-n="${esc(itemId)}"${live ? ' data-have-live="1"' : ""} type="number" inputmode="numeric" min="0" max="${max}" step="1" value="${value == null ? "" : esc(value)}" placeholder="0" aria-label="${esc(t("have.inputLabel", { name: nm, n: total }))}">`;
+    // empty field (no "0" placeholder that reads like a value); "Tudo" first (the common case), Fechar as a small ✕
+    const input = `<input id="have-n-${id}" name="n" data-have-n="${esc(itemId)}"${live ? ' data-have-live="1"' : ""} type="number" inputmode="numeric" min="0" max="${max}" step="1" value="${value == null ? "" : esc(value)}" aria-label="${esc(t("have.inputLabel", { name: nm, n: total }))}">`;
+    const all = live ? "" : `<button type="button" class="btn btn-sm" id="have-all-${id}" data-have-all="${esc(itemId)}" aria-label="${esc(t("have.allLabel", { name: nm, n: total }))}">${esc(t("have.all"))}</button>`;
     const btns = live
       ? `<button type="button" class="btn btn-sm btn-ghost" id="have-x-${id}" data-have-clear="${esc(itemId)}" aria-label="${esc(t("have.clearLabel", { name: nm }))}">${esc(t("have.clear"))}</button>`
       : `<button type="submit" class="btn btn-sm" id="have-ok-${id}">${esc(t("have.ok"))}</button>` +
-        `<button type="button" class="btn btn-sm" id="have-all-${id}" data-have-all="${esc(itemId)}" aria-label="${esc(t("have.allLabel", { name: nm, n: total }))}">${esc(t("have.all"))}</button>` +
-        `<button type="button" class="btn btn-sm btn-ghost" id="have-c-${id}" data-have-cancel="${esc(itemId)}">${esc(t("have.cancel"))}</button>`;
-    return `<form class="have-form" data-have-form="${esc(itemId)}"><label for="have-n-${id}">${esc(t("have.label"))}</label>${input}<span class="have-of tabnum">${esc(t("have.of", { n: num(total) }))}</span>${btns}</form>`;
+        `<button type="button" class="btn btn-sm btn-ghost have-close" id="have-c-${id}" data-have-cancel="${esc(itemId)}" title="${esc(t("have.cancel"))}" aria-label="${esc(t("have.cancel"))}">✕</button>`;
+    return `<form class="have-form" data-have-form="${esc(itemId)}">${all}<label for="have-n-${id}">${esc(t("have.label"))}</label>${input}<span class="have-of tabnum">${esc(t("have.of", { n: num(total) }))}</span>${btns}</form>`;
   }
   // the have controls of a row: [Já tenho] | the opened field | the kept field | (have all) ↺
   function haveControls(itemId, nm, total, state, craftable) {
@@ -295,13 +319,14 @@ GK.ui.summary = (function () {
     const craftable = GK.data.recipesFor(r.item).some(expandable);
     const sub = [];
     if (r.via) sub.push(`<span class="row-group">${esc(r.via.map((g) => t("raw.group", { name: name(D.items[g], state.overrides) })).join(" · "))}</span>`);
+    let full = "";   // "como obter": cut to one line on the row, the whole text in its title (and in the "i" detail)
     if (r.have && r.covered) { /* the field says it */ }
-    else if (r.have) sub.push(`<span class="badge badge-have">${esc(t("raw.have"))}</span>`);
+    else if (r.have) sub.push(`<span class="badge badge-have">${esc(t("raw.hadBadge"))}</span>`);
     else if (r.cycle) sub.push(`<span class="badge badge-warn">${esc(t("raw.cycle"))}</span>`);
     else if (r.reason === "refused") sub.push(`<span class="badge badge-warn">${esc(t("raw.refused"))}</span>`);
     else if (r.reason === "noexp") sub.push(`<span class="badge badge-ex">${esc(t("raw.noexp"))}</span>`);
     else if (it.members && r.reason !== "group") sub.push(esc(t("raw.members", { names: it.members.map((m) => name(D.items[m], state.overrides)).join(", ") })));
-    else if (it.obtain && !r.via) sub.push(esc(name(it.obtain)));
+    else if (it.obtain && !r.via) { full = name(it.obtain); sub.push(esc(full)); }
     const actions = [];
     if (r.reason === "group" && it.members) actions.push(groupChooser(r.item, null, state, D));
     if (r.via) r.via.forEach((g) => actions.push(groupChooser(g, r.item, state, D)));
@@ -313,12 +338,12 @@ GK.ui.summary = (function () {
     actions.push(haveControls(r.item, nm, r.demand || r.qty, state, craftable));
     const goal = r.isGoal ? `<span class="badge badge-goal">${esc(t("steps.goal"))}</span>` : "";
     const qty = `<span class="row-qty">${num(r.qty)}</span>`;
-    return `<div class="row${done ? " is-done" : ""}">
+    return `<div class="row row-raw${done ? " is-done" : ""}">
       <label class="tick"><input type="checkbox" id="${cb}" data-done="${esc(key)}"${done ? " checked" : ""} aria-label="${esc(t("raw.check", { name: nm }))}"></label>
       ${slot(it, nm)}
-      <div class="row-main">${F.nameBlock(it, nm, cb, editing === r.item, goal, state.overrides)}${sub.length ? `<span class="row-sub">${sub.join(" ")}</span>` : ""}</div>
+      <div class="row-main">${F.nameBlock(it, nm, cb, editing === r.item, goal, state.overrides, canEdit(state))}</div>
       ${qty}
-      <div class="row-actions">${actions.join("")}</div>
+      <div class="row-line2">${sub.length ? `<span class="row-sub row-obtain"${full ? ` title="${esc(full)}"` : ""}>${sub.join(" ")}</span>` : ""}<div class="row-actions">${actions.join("")}</div></div>
     </div>`;
   }
   const perkName = (b) => (b && b.perks ? b.perks.map((p) => name(GK.data.perks()[p] || { en: p })).join(" + ") : "");
@@ -326,7 +351,7 @@ GK.ui.summary = (function () {
     return lines.map((i) => {
       const note = i.boosted ? ` <i class="perk-on">(${esc(t("steps.withPerk", { perk: perkName(i.bonus) }))})</i>` : i.note ? ` <i>(${esc(name(i.note))})</i>` : "";
       const grp = i.group ? ` <i>(${esc(t("steps.groupLine", { name: name(D.items[i.group], state.overrides) }))})</i>` : "";
-      return `<b>${i.qty == null ? "?" : num(i.qty)}</b> ${esc(name(D.items[i.item], state.overrides))}${grp}${note}`;
+      return `<b>${i.qty == null ? "?" : num(i.qty)}</b>&nbsp;${esc(name(D.items[i.item], state.overrides))}${grp}${note}`;
     }).join(" · ");
   }
   function stepRow(s, state, D) {
@@ -338,7 +363,6 @@ GK.ui.summary = (function () {
     else if (r.out.bonus && r.out.bonus.add != null) meta.push(t("steps.yield", { n: s.yield }) + ` (${t("steps.yieldIf", { n: "+" + num(r.out.bonus.add), perk: perkName(r.out.bonus) })})`);
     else if (s.yield > 1 || r.out.note) meta.push(t("steps.yield", { n: s.yield }) + (r.out.note ? ` (${name(r.out.note)})` : ""));
     if (s.leftover > 0) meta.push(t("steps.left", { n: s.leftover }));
-    if (s.alts > 1 && !r.quality && F.recipeTag(r)) meta.push(t("steps.recipeName", { name: F.recipeTag(r) }));
     const actions = [];
     if (s.alts > 1) actions.push(chooser(s.item, r, state, false, "steps.recipe"));
     if (!s.isGoal) actions.push(haveControls(s.item, nm, s.demand, state, true));
@@ -353,7 +377,7 @@ GK.ui.summary = (function () {
       <label class="tick"><input type="checkbox" id="${cb}" data-done="${esc(key)}"${done ? " checked" : ""} aria-label="${esc(t("steps.check", { name: nm }))}"></label>
       ${slot(it, nm)}
       <div class="row-main">
-        ${F.nameBlock(it, nm, cb, editing === s.item, extraBadges, state.overrides)}
+        ${F.nameBlock(it, nm, cb, editing === s.item, extraBadges, state.overrides, canEdit(state))}
         <span class="row-sub tabnum">${esc(meta.join(" · "))}</span>
         <span class="row-in">${esc(t("steps.per"))} ${lineList(s.ins, state, D)}</span>
         ${extra}${alt}
@@ -368,7 +392,7 @@ GK.ui.summary = (function () {
       const on = i.bonus && GK.calc.isBonusActive(i.bonus, state.perks);
       const q = on && i.bonus.qty != null ? i.bonus.qty : on && i.bonus.add != null && i.qty != null ? i.qty + i.bonus.add : i.qty;
       const note = on ? ` <i class="perk-on">(${esc(t("steps.withPerk", { perk: perkName(i.bonus) }))})</i>` : i.note ? ` <i>(${esc(name(i.note))})</i>` : "";
-      return `<b>${q == null ? "?" : num(q)}</b> ${esc(name(D.items[i.item], state.overrides))}${note}`;
+      return `<b>${q == null ? "?" : num(q)}</b>&nbsp;${esc(name(D.items[i.item], state.overrides))}${note}`;
     }).join(" · ");
   }
   function render(state, meta, plan) {
@@ -384,15 +408,18 @@ GK.ui.summary = (function () {
     const U = ui(state), shut = U.stationCollapsed || {};
     const doneOf = (keys) => keys.filter((k) => state.done[k]).length;
     const doneBadge = (done, total, cls) => `<span class="${cls} tabnum"><span aria-hidden="true">${num(done)}/${num(total)}</span><span class="sr-only">${esc(t("fold.doneSr", { done, total }))}</span></span>`;
-    const stations = U.stepsCollapsed ? "" : plan.stations.map((g) => {
-      const stage = g.minStage === g.maxStage ? t("steps.stage", { n: g.minStage }) : t("steps.stages", { a: g.minStage, b: g.maxStage });
+    const nSt = plan.stations.length;
+    const stations = U.stepsCollapsed ? "" : plan.stations.map((g, gi) => {
+      // cards numbered in display order (the old depth badge "etapa N" collided with "Etapas" = rows)
+      const numBox = `<span class="station-n tabnum" aria-hidden="true">${num(gi + 1)}</span>`;
+      const numSr = `<span class="sr-only">${esc(t("steps.order", { n: gi + 1, total: nSt }))}: </span>`;
       const stName = name(g.station, state.overrides);
       const sub = g.station.build && !g.station.i18n ? `<span class="station-sub">${esc(t("station.build"))}</span>` : "";
       const again = g.repeat > 1 ? ` <span class="badge badge-again" title="${esc(t("steps.againTitle"))}">${esc(t("steps.again"))}</span>` : "";
       const k = stationKey(g), fk = "st:" + k, open = !shut[k], body = "st-body-" + domId(k);
       const nDone = doneOf(g.steps.map((s) => "step:" + s.item));
       return `<article class="card list station${open ? "" : " is-folded"}">
-        <header class="station-h" data-fold-head="${esc(fk)}">${slot(g.station, stName, true)}<h3>${sub}${esc(stName)}${again}</h3><span class="station-meta"><span class="stage tabnum">${esc(stage)}</span>${doneBadge(nDone, g.steps.length, "station-done" + (nDone === g.steps.length ? " is-all" : ""))}</span>${foldBtn(fk, open, stName, body)}</header>
+        <header class="station-h" data-fold-head="${esc(fk)}">${numBox}${slot(g.station, stName, true)}<h3>${numSr}${sub}${esc(stName)}${again}</h3><span class="station-meta">${doneBadge(nDone, g.steps.length, "station-done" + (nDone === g.steps.length ? " is-all" : ""))}</span>${foldBtn(fk, open, stName, body)}</header>
         ${open ? `<div class="station-rows" id="${body}">${g.steps.map((s) => stepRow(s, state, D)).join("")}</div>` : `<div id="${body}" hidden></div>`}
       </article>`;
     }).join("");

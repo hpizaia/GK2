@@ -1,6 +1,8 @@
 /* GK.app: boot and the render loop. Must stay LAST in src/manifest.json: it boots right away.
    Mounts every panel queued with GK.app.registerPanel (see core.js) in `order`, renders them all on
-   every store change and route change, and starts GK.sync.
+   every store change and route change, and starts GK.sync. Removes the template's "Carregando" line
+   (#boot-msg), applies the "Letra grande" attribute (GK.theme.big, before the first render) and keeps
+   --hdr-h = the height of the sticky bar (the tab band on phones, the header from 900 px).
    Exposes: GK.app.{boot, plan, registerPanel, panels}.
 */
 (function () {
@@ -39,6 +41,7 @@
     S.actions.pruneUnknown((id) => !!GK.data.item(id));
     GK.i18n.set(S.get().lang || GK.i18n.detect());
     GK.theme.init(S.get().theme);
+    GK.theme.big(S.get().ui && S.get().ui.bigText);   // "Letra grande" before the first render (no jump)
     const planRoot = document.querySelector('[data-screen="plan"]');
     GK.router.ensureScreens();   // registered screens without a <section> in the template get one
     mounted = [];
@@ -48,13 +51,21 @@
       if (typeof p.module.mount === "function") p.module.mount(el, planRoot);
       mounted.push(p);
     }
+    S.subscribe((st) => GK.theme.big(st.ui && st.ui.bigText));   // first, so panels render at the new size
     S.subscribe(renderAll);
     GK.router.onChange(() => renderAll(S.get(), { from: "router" }));
-    // keep sticky offsets in sync with the header's real height
-    const top = document.getElementById("top");
-    const setH = () => document.documentElement.style.setProperty("--hdr-h", top.offsetHeight + "px");
-    if (window.ResizeObserver) new ResizeObserver(setH).observe(top); else window.addEventListener("resize", setH);
+    // keep sticky offsets in sync with the real height of the bar that stays on screen
+    const top = document.getElementById("top"), band = document.getElementById("tabs-band");
+    const wide = window.matchMedia ? window.matchMedia("(min-width: 900px)") : { matches: true };
+    const setH = () => {
+      const bar = wide.matches || !band ? top : band;
+      document.documentElement.style.setProperty("--hdr-h", bar.offsetHeight + "px");
+    };
+    if (window.ResizeObserver) { const ro = new ResizeObserver(setH); ro.observe(top); if (band) ro.observe(band); }
+    window.addEventListener("resize", setH);
     setH();
+    const bootMsg = document.getElementById("boot-msg");
+    if (bootMsg) bootMsg.remove();
     if (!had) {
       // First visit: open on a realistic, clearly labelled example plan.
       const ex = [{ item: "crate", qty: 3 }, { item: "furnace-i", qty: 1 }, { item: "master-sword", qty: 1 }].filter((g) => GK.data.item(g.item));

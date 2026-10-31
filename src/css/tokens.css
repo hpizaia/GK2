@@ -1,5 +1,9 @@
-/* tokens.css: design tokens (colours for dark/light/auto, fonts, spacing, radius, tap size). See DESIGN.md §2.
-   Theme contract (GK.theme): dark on bare :root, light under prefers-color-scheme or [data-theme="light"]. */
+/* tokens.css: design tokens (colours for dark/light/auto, fonts, spacing, radius, tap size). See docs/projeto/DESIGN.md §2.
+   Type sizes are not tokens: each rule sets its own size in rem (16 px = 1 rem), so the phone's text size and
+   "Letra grande" (html[data-big], base.css) scale them; spacing, borders, icons and --tap stay in px.
+   Theme contract (GK.theme): dark on bare :root, light under prefers-color-scheme or [data-theme="light"].
+   1.3.x contrast pass (UX review): --frame (controls) went #4a4954 -> #74707f dark (1.85:1 -> 3.4:1 on --panel) and
+   #9a8664 -> #806c4c light (2.4:1 -> 3.4:1 on --bg-2); the old values live on as --frame-soft for cards and slots. */
 /* Layout: sticky slate header with search on a night-teal ground; one column of wood cards on
    phones, two columns ≥900px (goals | plan), raw list beside station cards ≥1180px.
    Dark (night) is the default theme; light = parchment by day. */
@@ -8,7 +12,8 @@
   --bg-2: #161d23;      /* wells, slots, sticky bands */
   --panel: #261e1a;     /* dark umber wood */
   --panel-2: #30261f;   /* raised wood: inputs, buttons */
-  --frame: #4a4954;     /* slate-iron frame */
+  --frame: #74707f;     /* slate-iron frame of controls (buttons, fields, switches): >= 3:1 on --panel, --panel-2, --bg-2 */
+  --frame-soft: #4a4954; /* the quieter frame of cards and icon slots (decoration, no contrast minimum) */
   --seam: #3a2e25;      /* dividers inside wood */
   --slate: #2b2934;     /* GK2 UI header band */
   --ink: #ecd9b6;       /* parchment cream text */
@@ -37,7 +42,7 @@
 }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
-    --bg: #ece0c4; --bg-2: #e3d3b0; --panel: #f6ecd6; --panel-2: #efe2c6; --frame: #9a8664;
+    --bg: #ece0c4; --bg-2: #e3d3b0; --panel: #f6ecd6; --panel-2: #efe2c6; --frame: #806c4c; --frame-soft: #9a8664;
     --seam: #dccaa6; --slate: #d9ccae; --ink: #2b2017; --ink-2: #5e4c38; --ink-3: #64553f;
     --accent: #824810; --accent-ink: #fff6e6; --gold: #6d531c; --moss: #4b6a26; --blood: #9e2c22;
     --grain: rgba(110, 70, 20, .035); --bevel-hi: rgba(255, 255, 255, .55); --bevel-lo: rgba(110, 80, 40, .2);
@@ -46,7 +51,7 @@
   }
 }
 :root[data-theme="light"] {
-  --bg: #ece0c4; --bg-2: #e3d3b0; --panel: #f6ecd6; --panel-2: #efe2c6; --frame: #9a8664;
+  --bg: #ece0c4; --bg-2: #e3d3b0; --panel: #f6ecd6; --panel-2: #efe2c6; --frame: #806c4c; --frame-soft: #9a8664;
   --seam: #dccaa6; --slate: #d9ccae; --ink: #2b2017; --ink-2: #5e4c38; --ink-3: #64553f;
   --accent: #824810; --accent-ink: #fff6e6; --gold: #6d531c; --moss: #4b6a26; --blood: #9e2c22;
   --grain: rgba(110, 70, 20, .035); --bevel-hi: rgba(255, 255, 255, .55); --bevel-lo: rgba(110, 80, 40, .2);

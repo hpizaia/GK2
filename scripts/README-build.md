@@ -84,12 +84,20 @@ order.
 stays valid and no `</script>` or `<!--` can end the block. Read it with
 `JSON.parse(document.getElementById("gk2-data").textContent)`.
 
+**Where the data block sits:** after the markup (after `</footer>` and the toast) and before the modules. The
+shell then paints from the first ~75 KB of the page instead of after the ~1.75 MB of data (UX review #9: `<header`
+moved from byte 1,816,040 to ~73,000 of `dist/preview.html`); the modules still run after the block is parsed, so
+`GK.data.load()` finds it at boot. The build finds the tag by its id wherever it is (both `<!-- @data -->` in src
+mode and `--inject`), so moving it needs no build change. `#boot-msg` ("Carregando o Companheiro… · Loading…",
+static and bilingual because no module has run yet) shows while the page downloads; `app.js` removes it at boot.
+
 ## The page sources (`src/`)
 
 ```
 src/
   manifest.json        {"template": "index.html", "css": [...], "js": [...]}: build order (paths relative to src/)
-  index.html           page template: <title>, metas, fonts, <!-- @css -->, markup,
+  index.html           page template: <title>, metas, fonts, <!-- @css -->, markup (header, tab band, search row,
+                       "Carregando" line, <main>, footer, toast), then
                        <script id="gk2-data" type="application/json"><!-- @data --></script>, <!-- @js -->
   css/                 tokens, base, header, components, planner, screens, recipes (Receitas), tech (Tecnologias
                        + the planner panel), responsive (keep last)

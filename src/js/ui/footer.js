@@ -1,5 +1,7 @@
-/* GK.ui.footer: sync status chip, version line (app version, game versions of the data from meta.data, link to the
-   update history and to the credits screen), data credits.
+/* GK.ui.footer: the "Letra grande" switch (first line: GK.store ui.bigText, per device, applied by GK.theme.big; it is
+   here because the footer is on every screen and the header has no room at 360 px), sync status chip, data credits,
+   version line (app version, game versions of the data from meta.data) and a row of links with 44 px tap areas
+   (update history, credits screen, project site).
    Owns: [data-panel="footer"] and the sync.* texts. Exposes: GK.ui.footer.{mount, render}; registered as a panel.
 */
 GK.i18n.add({
@@ -24,6 +26,9 @@ GK.i18n.add({
     "footer.site": "Site do projeto",
     "footer.dataVersion": "dados: wiki {wiki} · textos do jogo {game}",
     "footer.dataTitle": "Versão do jogo descrita pelas receitas do wiki e versão de onde vieram os nomes oficiais",
+    "footer.links": "Sobre o app",
+    "footer.bigText": "Letra grande",
+    "footer.bigTitle": "Aumenta todo o texto do app, para ler de longe com o celular ao lado do jogo. Soma com o tamanho de letra do celular.",
   },
   en: {
     "sync.loading": "Connecting to your account…",
@@ -46,6 +51,9 @@ GK.i18n.add({
     "footer.site": "Project site",
     "footer.dataVersion": "data: wiki {wiki} · game texts {game}",
     "footer.dataTitle": "Game version described by the wiki recipes, and version the official names come from",
+    "footer.links": "About the app",
+    "footer.bigText": "Large text",
+    "footer.bigTitle": "Makes all the app's text bigger, to read from a distance with the phone beside the game. Adds to your phone's own text size.",
   },
 });
 
@@ -70,6 +78,10 @@ GK.ui.footer = (function () {
   return {
     mount(el) {
       root = el;
+      root.addEventListener("click", (e) => {
+        const b = e.target.closest("#big-text");
+        if (b) GK.store.actions.setUi({ bigText: b.getAttribute("aria-pressed") !== "true" });
+      });
       GK.sync.subscribe(chip);
       setInterval(() => { if (GK.sync.status() === "synced") chip(); }, 30000);
     },
@@ -77,12 +89,17 @@ GK.ui.footer = (function () {
       if (meta && meta.from === "search-toggle") return;
       const link = `<a href="https://wikily.gg/graveyard-keeper-2" target="_blank" rel="noopener">Graveyard Keeper 2 Wiki · Wikily</a>`;
       const dm = GK.data.get().meta, built = dm.built || "", esc = GK.util.esc;
-      // version line: "Companheiro GK2 v1.2.0 · Histórico de atualizações · Créditos" (#changelog, ui/changelog.js; #credits, ui/credits.js)
+      // version line "Companheiro GK2 v1.2.0 · dados: …", then the links row: Histórico (#changelog, ui/changelog.js),
+      // Créditos (#credits, ui/credits.js), Site; each link is a 44 px tap target (UX review: they were 16 px)
       const dv = dm.data && (dm.data.wiki || dm.data.game)
         ? ` · <span title="${esc(t("footer.dataTitle"))}">${esc(t("footer.dataVersion", { wiki: dm.data.wiki || "?", game: dm.data.game || "?" }))}</span>` : "";
       const version = dm.version
-        ? `<p class="foot-version"><span>${esc(t("footer.version", { app: t("app.titlePlain"), version: dm.version }))}</span>${dv} · <a href="#changelog" id="foot-changelog">${esc(t("footer.history"))}</a> · <a href="#credits" id="foot-credits">${esc(t("footer.credits"))}</a> · <a href="https://claude.ai/artifact/Bgn32T3eDPRFydxYoxgWTr" target="_blank" rel="noopener" id="foot-site">${esc(t("footer.site"))}</a></p>` : "";
-      root.innerHTML = `<p class="sync-line"><span class="sync-chip" id="sync-chip"></span></p><p>${t("footer.data", { link })}</p><p>${esc(t("footer.note", { date: built }))}</p>${version}`;
+        ? `<p class="foot-version"><span>${esc(t("footer.version", { app: t("app.titlePlain"), version: dm.version }))}</span>${dv}</p>
+          <nav class="foot-links" aria-label="${esc(t("footer.links"))}"><a href="#changelog" id="foot-changelog">${esc(t("footer.history"))}</a><a href="#credits" id="foot-credits">${esc(t("footer.credits"))}</a><a href="https://claude.ai/artifact/Bgn32T3eDPRFydxYoxgWTr" target="_blank" rel="noopener" id="foot-site">${esc(t("footer.site"))}</a></nav>` : "";
+      // "Letra grande": a pressed-state switch (44 px); app.js puts the focus back on #big-text after the re-render
+      const bigOn = !!(state.ui && state.ui.bigText);
+      const big = `<p class="foot-ctl"><button type="button" class="btn btn-sm toggle big-toggle" id="big-text" aria-pressed="${bigOn}" title="${esc(t("footer.bigTitle"))}"><span class="big-aa" aria-hidden="true">Aa</span>${esc(t("footer.bigText"))}</button></p>`;
+      root.innerHTML = `${big}<p class="sync-line"><span class="sync-chip" id="sync-chip"></span></p><p class="foot-data">${t("footer.data", { link })}</p><p>${esc(t("footer.note", { date: built }))}</p>${version}`;
       chip();
     },
   };

@@ -150,7 +150,7 @@ O lado da interface:
 - **Cores, fontes, espaçamento:** `src/css/tokens.css`. O escuro (noite) fica no `:root` puro; o claro (pergaminho) está definido duas vezes, em `@media (prefers-color-scheme: light)` e em `:root[data-theme="light"]`. Mude os dois blocos do claro juntos.
 - **Fontes:** `--f-display` e `--f-body` nos tokens; o link do Google Fonts está em `src/index.html`.
 - **Nome do app:** `<title>` em `src/index.html` e `app.title*` em `src/js/ui/header.js` (nos dois idiomas).
-- Por que o visual é assim: [`DESIGN.md`](../DESIGN.md). Monte de novo depois de qualquer mudança em `src/`; nunca edite `dist/` nem `prototype/`.
+- Por que o visual é assim: [`docs/projeto/DESIGN.md`](projeto/DESIGN.md). Monte de novo depois de qualquer mudança em `src/`; nunca edite `dist/` nem `prototype/`.
 
 ## 10. Acrescente uma função
 

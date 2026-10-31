@@ -1244,5 +1244,285 @@ class RealData(unittest.TestCase):
             print(f"\n[real data] {so.strip().splitlines()[0] if so.strip() else se.strip()[:300]}", file=sys.stderr)
 
 
+class RealShell(unittest.TestCase):
+    """The app shell (src/index.html, header/footer CSS, router): phones keep the tabs, the page paints early."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.src = ROOT / "src"
+        cls.html = build.assemble(cls.src, payload='{"schema":1}', warn=False)
+        cls.read = lambda self, f: (self.src / f).read_text(encoding="utf-8")
+
+    def test_shell_paints_before_the_data(self):
+        """UX review #9: header, tab band, footer and the "Carregando" line come before the data block; the
+        modules come after it (GK.data.load reads it at boot)."""
+        h = self.html
+        order = [h.index(x) for x in ('<header class="top" id="top">', 'id="tabs-band"', 'id="boot-msg"',
+                                      '<footer class="wrap foot"', '<script id="gk2-data" type="application/json">{"schema":1}</script>',
+                                      "<script>\n")]
+        self.assertEqual(order, sorted(order))
+        self.assertIn('getElementById("boot-msg")', self.read("js/app.js"))
+        # the build still finds the tag by id after the move (legacy --inject path)
+        self.assertEqual(len(build.SCRIPT_RE.findall(h)), 1)
+        self.assertIn('"schema":2', build.fill_data(h, '{"schema":2}', "test"))
+
+    def test_tabs_sticky_mobile(self):
+        """UX review #2: below 900 px only the tab band is sticky (44 px tabs); the header is sticky from 900 px."""
+        hdr, resp = self.read("css/header.css"), self.read("css/responsive.css")
+        band = re.search(r"\.tabs-mob-band \{(.*?)\}", hdr, re.S).group(1)
+        self.assertIn("position: sticky", band)
+        top = re.search(r"\n\.top \{(.*?)\}", hdr, re.S).group(1)
+        self.assertNotIn("sticky", top)
+        wide = resp.split("@media (min-width: 900px) {", 1)[1].split("\n}", 1)[0]
+        self.assertRegex(wide, r"\.top \{ position: sticky;")
+        self.assertIn(".tabs-mob-band { display: none; }", wide)
+        self.assertIn("min-height: var(--tap)", re.search(r"\n\.tab \{(.*?)\}", hdr, re.S).group(1))
+        # the search row sits after the band in the template; ui/header.js moves it into the header from 900 px
+        self.assertLess(self.html.index('id="tabs-band"'), self.html.index('data-panel="search"'))
+        hj = self.read("js/ui/header.js")
+        self.assertIn('matchMedia("(min-width: 900px)")', hj)
+        self.assertIn("top.appendChild(row)", hj)
+        self.assertIn("band.after(row)", hj)
+
+    def test_router_scroll_per_screen(self):
+        """UX review #7: a screen change no longer keeps the old screen's scroll position."""
+        r = self.read("js/router.js")
+        apply = r.split("function apply()", 1)[1].split("function init()", 1)[0]
+        self.assertIn("pos[shown] = window.scrollY", apply)
+        self.assertIn("window.scrollTo(0, want)", apply)
+        self.assertLess(apply.index("window.scrollTo(0, want)"), apply.index("subs.forEach"))   # modules can still place the page
+        self.assertIn('GK.router.forget("days")', self.read("js/ui/days.js"))
+
+    def test_footer_links_tap_area(self):
+        css = self.read("css/components.css")
+        self.assertRegex(css, r"\.foot-links a \{[^}]*min-height: var\(--tap\)")
+        self.assertIn('<nav class="foot-links"', self.read("js/ui/footer.js"))
+
+    def test_control_frame_contrast(self):
+        """UX review, accessibility 2: control borders >= 3:1 against the card they sit on, both themes."""
+        def lum(hx):
+            c = [int(hx[i:i + 2], 16) / 255 for i in (1, 3, 5)]
+            c = [x / 12.92 if x <= 0.03928 else ((x + 0.055) / 1.055) ** 2.4 for x in c]
+            return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+        ratio = lambda a, b: (max(lum(a), lum(b)) + .05) / (min(lum(a), lum(b)) + .05)
+        tok = self.read("css/tokens.css")
+        dark = dict(re.findall(r"--([\w-]+): (#[0-9a-f]{6});", tok.split("@media", 1)[0]))
+        light = dict(re.findall(r"--([\w-]+): (#[0-9a-f]{6});", tok.split(':root[data-theme="light"]', 1)[1]))
+        for name, t in (("dark", dark), ("light", light)):
+            for ground in ("panel", "panel-2", "bg-2"):
+                self.assertGreaterEqual(ratio(t["frame"], t[ground]), 3.0, (name, ground))
+
+
+class PlannerUx(unittest.TestCase):
+    """UX review of the Planejador (docs/revisao-ux/app.md #1, #3, #4, #5, #6, #8, #10): order on phones, compact
+    goal and raw rows, first use, "Tudo" with undo, numbered station cards, short recipe labels."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.src = ROOT / "src"
+        cls.read = lambda self, f: (self.src / f).read_text(encoding="utf-8")
+
+    def test_planner_order_mobile(self):
+        """#1: below 900 px the progress card (perks, "Copiar lista") goes after raw materials, steps and techs."""
+        css = self.read("css/planner.css")
+        phone = css.split("@media (max-width: 899px) {", 1)[1].split("\n}", 1)[0]
+        self.assertIn('.col-plan > [data-panel="checklist"] { order: 10; }', phone)
+        main = self.read("index.html").split("<main>", 1)[1].split("</main>", 1)[0]
+        order = [main.index(x) for x in ('data-slot="planner-top"', 'data-panel="goals"', 'data-panel="checklist"',
+                                         'data-panel="summary"', 'data-slot="planner-extra"')]
+        self.assertEqual(order, sorted(order))   # desktop keeps the DOM order; only CSS reorders the phone column
+        self.assertIn("todayCollapsed: true", self.read("js/store.js"))   # #4c: Hoje starts as one line
+
+    def test_planner_goal_rows_two_lines(self):
+        """#3: a narrow goal list puts the stepper and ✕ under the name; names wrap at whole words."""
+        css = self.read("css/planner.css")
+        self.assertIn("container: goals / inline-size", css)
+        narrow = css.split("@container goals (max-width: 479px) {", 1)[1].split("\n}", 1)[0]
+        self.assertIn("grid-template-columns: 40px minmax(0, 1fr)", narrow)
+        self.assertIn(".goal-ctl { grid-column: 2;", narrow)
+        name = re.search(r"\n\.goal-name \{(.*?)\}", css).group(1)
+        self.assertIn("overflow-wrap: normal", name)
+        self.assertIn("hyphens: auto", name)
+
+    def test_planner_raw_rows_compact(self):
+        """#5: "como obter" on one line (full text in the title), "Já tenho" on the row, ✎ only in "Editar nomes"."""
+        css, s, f = self.read("css/planner.css"), self.read("js/ui/summary.js"), self.read("js/ui/fmt.js")
+        self.assertRegex(css, r"\.row-obtain \{[^}]*text-overflow: ellipsis")
+        self.assertIn('class="row-line2"', s)
+        self.assertIn('class="row-sub row-obtain"', s)
+        self.assertIn("const pencil = canEdit ?", f)
+        self.assertIn("editNames", self.read("js/store.js"))
+        self.assertIn('id="edit-names"', self.read("js/ui/checklist.js"))
+
+    def test_planner_have_all_undo(self):
+        """#6: "Tudo" shows "<item>: você já tem tudo · Desfazer" and moves the focus to the next row."""
+        s, f = self.read("js/ui/summary.js"), self.read("js/ui/fmt.js")
+        body = s.split("function haveAll(btn) {", 1)[1].split("\n  }\n", 1)[0]
+        self.assertIn("GK.ui.fmt.undoToast(", body)
+        self.assertIn("target.focus()", body)
+        self.assertIn('"have.allToast": "{name}: você já tem tudo"', s)
+        self.assertIn("function undoToast(msg, onUndo)", f)
+        self.assertIn('"undo.button": "Desfazer"', f)
+        self.assertIn(".toast-undo[hidden] { display: none; }", self.read("css/screens.css"))
+
+    def test_planner_stations_numbered_and_labels(self):
+        """#8 + #10: cards numbered in display order (no "etapa N" depth badge); recipe labels without the letter
+        or the repeated "receita: …" line."""
+        s, f = self.read("js/ui/summary.js"), self.read("js/ui/fmt.js")
+        self.assertIn('class="station-n tabnum"', s)
+        self.assertNotIn('"steps.stage"', s)
+        self.assertNotIn('"steps.recipeName"', s)
+        self.assertNotIn("String.fromCharCode(65", f)
+        self.assertIn("today-pick-name", self.read("js/ui/today.js"))   # quick win: names under the day medallions
+
+    @unittest.skipUnless(shutil.which("node"), "node not installed")
+    def test_planner_example_replaced_by_first_goal(self):
+        """#4b: the first goal added replaces the example list; restoreExample brings it back (goals + checks)."""
+        harness = "global.window = global;\n" + self.read("js/core.js") + \
+            '\nGK.i18n = { LANGS: [{ code: "pt" }, { code: "en" }] };\n' + self.read("js/store.js") + r"""
+const S = GK.store, metas = [];
+S.subscribe((s, m) => metas.push(m));
+S.actions.seedExample([{ item: "crate", qty: 3 }, { item: "furnace-i", qty: 1 }]);
+S.actions.toggleDone("raw:log", true);
+S.actions.addGoal("wine", 1);
+const snap = metas[metas.length - 1].exampleReplaced;
+const after = { goals: S.get().goals, example: S.get().example, done: S.get().done };
+S.actions.restoreExample(snap);
+const back = { goals: S.get().goals, example: S.get().example, done: S.get().done };
+S.actions.addGoal("wine", 1); S.actions.addGoal("wine", 1);
+const twice = { goals: S.get().goals, replaced: !!metas[metas.length - 1].exampleReplaced };
+console.log(JSON.stringify({ after, back, twice, ui: S.get().ui }));
+"""
+        with tempfile.TemporaryDirectory() as t:
+            p = Path(t) / "h.js"
+            p.write_text(harness, encoding="utf-8")
+            r = subprocess.run(["node", str(p)], capture_output=True, text=True, timeout=60)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        out = json.loads(r.stdout.strip().splitlines()[-1])
+        self.assertEqual(out["after"], {"goals": [{"item": "wine", "qty": 1}], "example": False, "done": {}})
+        self.assertEqual(out["back"], {"goals": [{"item": "crate", "qty": 3}, {"item": "furnace-i", "qty": 1}],
+                                       "example": True, "done": {"raw:log": True}})
+        self.assertEqual(out["twice"], {"goals": [{"item": "wine", "qty": 2}], "replaced": False})
+        self.assertTrue(out["ui"]["todayCollapsed"])
+        self.assertFalse(out["ui"]["editNames"])
+
+
+class TodayFeatures(unittest.TestCase):
+    """docs/revisao-ux/ideias.md #1-#3 in the Hoje panel and the Dias card: "Amanhã", "feito hoje" ticks
+    (GK.store dayDone) and "Bilhete do dia" (GK.store dayNotes). The store / sync rules are tested in test_calc.mjs."""
+
+    KEYS = {
+        "js/ui/today.js": ("today.doneN", "today.check", "today.allDone", "today.tomorrow", "today.tomorrowOpen"),
+        "js/ui/days.js": ("days.note.label", "days.note.add", "days.note.edit", "days.note.editX", "days.note.ta",
+                          "days.note.ph", "days.note.count", "days.note.saved", "days.note.cleared"),
+    }
+
+    @classmethod
+    def setUpClass(cls):
+        cls.src = ROOT / "src"
+        cls.read = lambda self, f: (self.src / f).read_text(encoding="utf-8")
+
+    def lang_keys(self, f):
+        """{lang: {key: text}} of a module's GK.i18n.add block."""
+        block = self.read(f).split("GK.i18n.add({", 1)[1].split("\n});", 1)[0]
+        pt, en = block.split("\n  en: {", 1)
+        grab = lambda b: dict(re.findall(r'^\s+"([a-zA-Z]+\.[\w.]+)": "((?:[^"\\]|\\.)*)",?$', b, re.M))
+        return {"pt": grab(pt), "en": grab(en)}
+
+    def test_i18n_keys_in_both_languages(self):
+        for f, keys in self.KEYS.items():
+            k = self.lang_keys(f)
+            for key in keys:
+                self.assertTrue(k["pt"].get(key), f"{f}: {key} missing in pt")
+                self.assertTrue(k["en"].get(key), f"{f}: {key} missing in en")
+                # same placeholders in both languages
+                self.assertEqual(sorted(re.findall(r"\{\w+\}", k["pt"][key])), sorted(re.findall(r"\{\w+\}", k["en"][key])), key)
+            self.assertEqual(set(k["pt"]), set(k["en"]), f"{f}: pt and en define different keys")
+        self.assertEqual(self.lang_keys("js/ui/days.js")["pt"]["days.note.add"], "Deixar um bilhete para este dia")
+
+    def test_state_and_sync(self):
+        store, sync = self.read("js/store.js"), self.read("js/sync.js")
+        synced = re.search(r"const SYNCED = \[(.*?)\];", store).group(1)
+        self.assertIn('"dayDone"', synced)
+        self.assertIn('"dayNotes"', synced)
+        self.assertIn("const SCHEMA = 4;", store)   # additive optional fields: no migration
+        self.assertIn("dayDone: cleanDone(o.dayDone, day, dayNumber), dayNotes: cleanNotes(o.dayNotes)", store)
+        for fn in ("toggleDayDone(", "setDayNote(", "function keepLate(", "function adoptLate("):
+            self.assertIn(fn, store)
+        self.assertIn("S().keepLate(", sync)
+        self.assertIn("S().adoptLate(", sync)
+        self.assertIn("mergeSynced(S().syncPayload(st), fields, d.updatedAt > st.updatedAt)", sync)
+
+    def test_panel_markup(self):
+        today, days = self.read("js/ui/today.js"), self.read("js/ui/days.js")
+        self.assertIn('<label class="tick today-tick"><input type="checkbox"', today)   # 44 px target (.tick)
+        self.assertIn("data-today-tmr=", today)
+        self.assertIn("DY().open(tm.dataset.todayTmr)", today)
+        self.assertIn('DY().noteBox("today"', today)
+        self.assertIn('noteBox("days"', days)
+        self.assertIn('maxlength="${MAX}"', days)
+
+    def test_css_in_rem(self):
+        css = self.read("css/days.css")
+        for sel in (".today-tmr", ".day-note-ta", ".day-note-add", ".today-all", ".today-tick"):
+            self.assertIn(sel, css)
+        rules = [ln for ln in css.splitlines() if ".days-hub-" not in ln]   # SVG text: px are user units there
+        self.assertEqual([ln for ln in rules if re.search(r"font(-size)?:[^;]*\b\d+px", ln)], [], "font sizes in rem")
+
+
+class TypeScale(unittest.TestCase):
+    """Text follows the phone's text size (docs/revisao-ux/app.md, Acessibilidade 1) and the "Letra grande" switch
+    (ideias.md #13): type sizes in rem, html[data-big] raises the root, ui.bigText is a per-device flag."""
+
+    # px kept on purpose: the letter fallback fills a fixed px icon slot; the phone wordmark is a logo
+    PX_OK = (".slot-letter", ".brand-name { min-width: 0")
+
+    @classmethod
+    def setUpClass(cls):
+        cls.src = ROOT / "src"
+        cls.read = lambda self, f: (self.src / f).read_text(encoding="utf-8")
+
+    def test_type_sizes_in_rem(self):
+        bad = []
+        for f in sorted((self.src / "css").glob("*.css")):
+            if f.name == "days.css":
+                continue   # covered by TodayFeatures.test_css_in_rem
+            for n, ln in enumerate(f.read_text(encoding="utf-8").splitlines(), 1):
+                if any(k in ln for k in self.PX_OK):
+                    continue
+                if re.search(r"(font(-size)?|line-height):[^;]*\b\d+(\.\d+)?px", ln):
+                    bad.append(f"{f.name}:{n}: {ln.strip()[:90]}")
+        self.assertEqual(bad, [], "type sizes in rem (16 px = 1 rem)")
+        # icons, sprite cells and tap targets stay in px
+        tokens, comp = self.read("css/tokens.css"), self.read("css/components.css")
+        self.assertIn("--tap: 44px;", tokens)
+        self.assertIn(".slot img { width: 32px; height: 32px;", comp)
+        self.assertIn("--s: 32px;", comp)
+        self.assertIn("docs/projeto/DESIGN.md", tokens.splitlines()[0])
+
+    def test_big_text_mode(self):
+        base, store = self.read("css/base.css"), self.read("js/store.js")
+        self.assertRegex(base, r"html\[data-big\] \{ font-size: 12[0-5](\.\d+)?%; \}")
+        flags = re.search(r"const UI_FLAGS = \[(.*?)\];", store).group(1)
+        self.assertIn('"bigText"', flags)
+        synced = re.search(r"const SYNCED = \[(.*?)\];", store).group(1)
+        self.assertNotIn("ui", re.findall(r'"(\w+)"', synced))   # per device, never synced
+        theme, app, footer = self.read("js/theme.js"), self.read("js/app.js"), self.read("js/ui/footer.js")
+        self.assertIn('root.setAttribute("data-big", "")', theme)
+        self.assertIn("big };", theme)
+        # applied at boot before the panels mount, and again on every store change
+        self.assertLess(app.index("GK.theme.big(S.get().ui"), app.index("for (const p of GK.app.panels())"))
+        self.assertIn("S.subscribe((st) => GK.theme.big(st.ui && st.ui.bigText));", app)
+        self.assertIn('id="big-text" aria-pressed="${bigOn}"', footer)
+        self.assertIn("setUi({ bigText:", footer)
+        for lang, txt in (("pt", "Letra grande"), ("en", "Large text")):
+            block = footer.split("GK.i18n.add({", 1)[1].split("\n  en: {", 1)[0 if lang == "pt" else 1]
+            self.assertIn(f'"footer.bigText": "{txt}"', block)
+            self.assertIn('"footer.bigTitle": "', block)
+        # the phone tab band shares the row and wraps instead of hiding tabs in a sideways scroll
+        header = self.read("css/header.css")
+        self.assertIn(".tabs-mob-band .tabs { flex-wrap: wrap; overflow-x: visible; }", header)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

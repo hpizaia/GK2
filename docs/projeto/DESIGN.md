@@ -1,8 +1,11 @@
+> Documento de projeto. Parte do conteúdo descreve a versão 1.2;
+> o estado atual está no [README](../../README.pt-BR.md) e no [CHANGELOG](../../CHANGELOG.md).
+
 # Companheiro GK2 — Design
 
 Notes are in English; every user-facing string (and the i18n keys' pt values) is pt-BR first,
 with an EN dictionary alongside. Sources: `src/` (modules, see §5), built by `scripts/build.py` into
-`prototype/index.html` (local) and `dist/index.html` (the Claude Artifact). Status as of 1.2.0.
+`prototype/index.html` (local) and `dist/index.html` (the Claude Artifact). Status as of 1.2.0; §2 (tokens, type, "Letra grande") and the phone layout in §3 match the CSS of 1.4.
 
 ---
 
@@ -52,7 +55,8 @@ cycles and flag them); emoji as icons.
 | `--bg-2` | `#161d23` | `#e3d3b0` | sticky bars, inset wells |
 | `--panel` | `#261e1a` | `#f6ecd6` | wood / parchment cards |
 | `--panel-2` | `#30261f` | `#efe2c6` | raised rows, inputs |
-| `--frame` | `#4a4954` | `#9a8664` | slate-iron borders (light: brown ink) |
+| `--frame` | `#74707f` | `#806c4c` | slate-iron frame of controls: buttons, fields, switches, steppers (≥ 3:1 on `--panel`, `--panel-2`, `--bg-2`) |
+| `--frame-soft` | `#4a4954` | `#9a8664` | the quieter frame of cards and icon slots (decoration, no contrast minimum) |
 | `--seam` | `#3a2e25` | `#dccaa6` | dividers inside panels |
 | `--ink` | `#ecd9b6` | `#2b2017` | text (parchment cream / iron-gall ink) |
 | `--ink-2` | `#b9a587` | `#5e4c38` | secondary text |
@@ -68,7 +72,9 @@ Semantic colours (moss/blood) are separate from the accent. Contrast: `--ink` on
 ≈ 11.8:1 dark, 13.5:1 light; `--accent` on `--bg` ≈ 8.2:1 dark, 5.6:1 light.
 1.2.0 contrast pass (AUDITORIA U2): light `--ink-3` `#75634a` → `#64553f`, `--gold` `#8a6a24` → `#6d531c`,
 `--accent` `#9a5513` → `#824810` (each ≥ 4.5:1 on `--slate`); dark `--blood` `#d0574a` → `#e06a5c`
-(≈ 5:1 on `--panel`). Source of truth: `src/css/tokens.css`. Theme: dark on bare `:root`, light under
+(≈ 5:1 on `--panel`). 1.3.x contrast pass (UX review, Acessibilidade 2): `--frame` went `#4a4954` → `#74707f` dark
+(1.85:1 → 3.4:1 on `--panel`) and `#9a8664` → `#806c4c` light (2.4:1 → 3.4:1 on `--bg-2`); the old values live on as
+`--frame-soft` for `.card` and `.slot`. Source of truth: `src/css/tokens.css`. Theme: dark on bare `:root`, light under
 `prefers-color-scheme: light` or `[data-theme="light"]`, `[data-theme="dark"]` forces dark (`GK.theme`).
 
 ### Typography (Google Fonts, full Portuguese accent support)
@@ -81,14 +87,29 @@ Semantic colours (moss/blood) are separate from the accent. Contrast: `--ink` on
   figures. Quantities use 700 + `font-variant-numeric: tabular-nums lining-nums`.
 - Fallbacks: `"Grenze Gotisch", "UnifrakturCook", Georgia, serif` /
   `"Alegreya Sans", "Segoe UI", system-ui, sans-serif`.
-- Scale (px): 12 caption · 14 meta · 16 body · 18 row name · 22 section · 28 wordmark.
-  Uppercase labels: 12 px, 700, letter-spacing .08em.
+- **Every type size is in `rem`** (16 px = 1 rem): `font-size`, the size in a `font:` shorthand and any `line-height`
+  given as a length. So the phone's own text-size setting and "Letra grande" both scale the whole app. Spacing, borders,
+  radii, shadows, icon and sprite cells (32 px, SVG icons), the 40 px slot and `--tap: 44px` stay in px, and so do
+  the letter fallback inside a slot (`.slot-letter`, it fills a px tile) and the phone wordmark
+  (`clamp(20px, 5.5vw, 26px)`: a logo, never cut to "Companheir…"). `scripts/test_build.py` (`TypeScale`) checks it.
+- Scale (rem, px at the default 16 px root): .625 (10) tiny badge · .6875–.75 (11–12) caption, uppercase labels ·
+  .8125 (13) meta, sub-lines · .875 (14) buttons, hints · .9375 (15) tabs, "per craft" line · 1 (16) body ·
+  1.0625 (17) row name, search · 1.125 (18) history heads · 1.25 (20) progress title, stepper value ·
+  1.375 (22) quantities · 1.5 (24) item name in Receitas · 1.5625 (25) section titles (display) · 1.625 (26) desktop
+  wordmark. Uppercase labels: .75rem, 700–800, letter-spacing .08em. Boxes that hold a number grow with it: the
+  stepper field is `max(46px, 2.3em)` wide (46 px at the default size, "999" still fits with large text).
+- **"Letra grande"** (ideias.md #13, a lighter take on the "No jogo" mode #11): a per-device switch, `GK.store`
+  `ui.bigText` via `setUi`, never synced. It is the first line of the footer (on every screen; the 360 px header has
+  no room): a 44 px `.btn-sm.toggle` "Aa Letra grande" / "Aa Large text" with `aria-pressed`. `GK.theme.big(on)` sets
+  `<html data-big>` at boot, before the first render, and on every store change; `html[data-big] { font-size: 125% }`
+  (16 → 20 px root, multiplied by the phone's own setting). 125 % keeps the phone tab band on one row and the goal rows
+  without sideways scroll at 360 px; with the phone at 125 % as well (25 px root) the last tab wraps to a second row.
 
 ### Spacing, radius, elevation
 - Spacing scale 4 · 8 · 12 · 16 · 24 · 32. Gutter `max(16px, safe-area)`.
 - Radius: **2–4 px** only (pixel-art UI has near-square corners). Cards use a *double frame*
   (1 px `--frame` + inner 1 px highlight) instead of big radii or drop shadows.
-- Touch targets ≥ 44 × 44 px; row height 56 px.
+- Touch targets ≥ 44 × 44 px (`--tap`, px on purpose: a minimum that larger text only grows past); row height 56 px.
 
 ### "Wood & parchment" in CSS only (no images)
 - **Wood panel**: `repeating-linear-gradient(90deg, …)` with 2–3 stripes at 3–5 % alpha for
@@ -112,10 +133,11 @@ Semantic colours (moss/blood) are separate from the accent. Contrast: `--ink` on
 
 ```
 ┌──────────────────────────────────────┐
-│ ✝ Companheiro GK2          [PT|EN]   │  header (slate band, sticky)
-│ [Planejador] [Receitas·] [Tecnol.·]  │  tabs (own overflow-x)
+│ ✝ Companheiro GK2       [◐] [PT|EN]  │  header (slate band): scrolls away
 ├──────────────────────────────────────┤
-│ 🔍 Buscar entre 44 itens…        [×] │  search (sticky under header)
+│ [Planejador][Receitas][Tecnol.][Dias]│  tab band: the only sticky bar (45 px)
+├──────────────────────────────────────┤
+│ 🔍 Buscar item para fabricar…    [×] │  search row: scrolls with the page
 │  ┌ result: [ic] Cerca de madeira II ┐│  results drop down over content
 │  │         Bancada de marcenaria I [+]││
 ├──────────────────────────────────────┤
@@ -142,6 +164,12 @@ Semantic colours (moss/blood) are separate from the accent. Contrast: `--ink` on
 │ Dados: wikily.gg · protótipo         │
 └──────────────────────────────────────┘
 ```
+
+Phones (< 900 px): the header (brand, theme, language) and the search row scroll with the page; only the tab band
+(`.tabs-mob-band`, 44 px tabs + 1 px gold trim = 45 px) stays pinned under the safe area, and its height feeds `--hdr-h`
+(`app.js`, ResizeObserver) for sticky offsets and `scroll-margin-top`. The tabs share the row (`flex: 1 1 auto`, no
+hidden sideways scroll); only with very large text (phone 125 % plus "Letra grande") does the last tab wrap to a
+second row. The footer starts with the "Letra grande" switch, then sync chip, credits, version and links.
 
 ### Desktop (≥ 900 px) — two columns, max-width 1180 px
 

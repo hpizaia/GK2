@@ -1,8 +1,9 @@
 /* GK.store: the single serializable app state, persistence in localStorage and schema migrations.
    Owns: state {schemaVersion, lang, theme, goals, choice, have, done, overrides, showHidden, example, researched,
-   groupChoice, perks, day, dayNumber, dayAnchor, ui, updatedAt, syncBase}.
+   groupChoice, perks, day, dayNumber, dayAnchor, dayDone, dayNotes, ui, updatedAt, syncBase}.
    Exposes: GK.store.{get, load, subscribe, actions, update, clampQty, SCHEMA, THEMES, ISO, SYNCED, syncPayload, syncKey,
-   sanitizeRemote, hasContent, mergeSynced, stamp, useAccount, setSyncBase, storageKey, DAY_IDS, dayOrder, dayFromNumber}. Every change goes through an
+   sanitizeRemote, hasContent, mergeSynced, stamp, useAccount, setSyncBase, storageKey, DAY_IDS, dayOrder, dayFromNumber,
+   doneToday, NOTE_MAX, LATE, keepLate, adoptLate}. Every change goes through an
    action (or update(fn, meta) for module-owned fields); subscribers get (state, meta).
    localStorage: "gk2-companion" (no account) or "gk2-companion:<user id>" once GK.sync knows the account
    (useAccount); the anonymous copy moves into the first account that opens it, once, and is then removed, so a
@@ -17,7 +18,10 @@ GK.store = (function () {
   const ISO = /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?Z$/;
   const EPOCH = "1970-01-01T00:00:00.000Z";
   // Fields that travel to the viewer's account (GK.sync). lang, theme, showHidden and ui stay per device.
-  const SYNCED = ["goals", "choice", "have", "done", "overrides", "example", "researched", "groupChoice", "perks", "day", "dayNumber", "dayAnchor"];
+  const SYNCED = ["goals", "choice", "have", "done", "overrides", "example", "researched", "groupChoice", "perks", "day", "dayNumber", "dayAnchor", "dayDone", "dayNotes"];
+  // synced fields added after schema 4 (1.3.4, optional, no migration): a doc written by an older page has no such
+  // key at all, which GK.sync must not read as "cleared" (keepLate / adoptLate below)
+  const LATE = ["dayDone", "dayNotes"];
   // The 6-day week (Dias tab): the cycle comes from the payload's `days` block (data/days.json: meta.order, else the
   // days in their `order`) when the page has one; DAY_IDS is the fallback cycle (its first six) and the whitelist
   // (any of the seven sins, so a week that swaps one sin for another still validates).
@@ -34,6 +38,25 @@ GK.store = (function () {
   const clampDayNumber = (v) => { const n = typeof v === "string" && v.trim() ? +v : v; return typeof n === "number" && isFinite(n) && n >= 1 ? Math.min(99999, Math.round(n)) : null; };
   // calibration: {number, day} = "HUD day <number> was <day>" (set when the player gives both); null = not calibrated
   const cleanAnchor = (a) => { const n = a && clampDayNumber(a.number), d = a && validDay(a.day); return n != null && d ? { number: n, day: d } : null; };
+  // "Feito hoje" (planner panel Hoje): {day, number, ids} = the event indexes (in data/days.json order) ticked on that
+  // day. It only counts while it is still that day: same weekday and, when both sides have a counter, the same HUD
+  // number (a week later is another day); a tick made before the counter was given adopts it. Else null (= reset).
+  function cleanDone(o, day, num) {
+    if (!o || typeof o !== "object" || Array.isArray(o) || !day || validDay(o.day) !== day) return null;
+    const n = clampDayNumber(o.number);
+    if (n != null && num != null && n !== num) return null;
+    const ids = Array.from(new Set((Array.isArray(o.ids) ? o.ids : []).filter((i) => Number.isInteger(i) && i >= 0 && i < 100))).sort((a, b) => a - b);
+    return ids.length ? { day, number: n != null ? n : num, ids } : null;
+  }
+  // "Bilhete do dia": one short note per weekday, one line (whitespace collapsed), at most NOTE_MAX characters
+  const NOTE_MAX = 200;
+  const cleanNote = (v) => (typeof v === "string" ? v.replace(/\s+/g, " ").trim().slice(0, NOTE_MAX).trim() : "");
+  function cleanNotes(o) {
+    const out = {};
+    if (!o || typeof o !== "object" || Array.isArray(o)) return out;
+    for (const [k, v] of Object.entries(o)) { const s = validDay(k) && cleanNote(v); if (s) out[k] = s; }
+    return out;
+  }
   // weekday of HUD day n from an anchor: order[(anchorIdx + (n - anchor.number)) mod 6]; null when it cannot tell
   function dayFromNumber(n, anchor) {
     const a = cleanAnchor(anchor), num = clampDayNumber(n), order = dayOrder();
@@ -43,10 +66,13 @@ GK.store = (function () {
     return order[(((i + num - a.number) % L) + L) % L];
   }
   // ui: which planner panels are collapsed. stationCollapsed keys come from ui/summary.js ("<station id>[#repeat]").
-  const freshUi = () => ({ todayCollapsed: false, stepsCollapsed: false, rawCollapsed: false, stationCollapsed: {} });
+  // "Hoje" starts folded (one line) until the player opens it (1.3.4); editNames = the ✎ rename pencils are shown
+  // (a contributor mode, off by default).
+  const UI_FLAGS = ["todayCollapsed", "stepsCollapsed", "rawCollapsed", "editNames", "bigText"]; // bigText = "Letra grande" (ui/footer.js, GK.theme.big; absent = off)
+  const freshUi = () => ({ todayCollapsed: true, stepsCollapsed: false, rawCollapsed: false, editNames: false, stationCollapsed: {} });
   function cleanUi(o) {
     const u = freshUi(), src = o && typeof o === "object" && !Array.isArray(o) ? o : {};
-    u.todayCollapsed = !!src.todayCollapsed; u.stepsCollapsed = !!src.stepsCollapsed; u.rawCollapsed = !!src.rawCollapsed;
+    for (const k of UI_FLAGS) if (k in src) u[k] = !!src[k];
     const m = src.stationCollapsed && typeof src.stationCollapsed === "object" && !Array.isArray(src.stationCollapsed) ? src.stationCollapsed : {};
     for (const [k, v] of Object.entries(m)) if (v && k && k.length <= 200) u.stationCollapsed[k] = true;
     return u;
@@ -68,7 +94,9 @@ GK.store = (function () {
     day: null,           // current weekday id as set by the player ("wrath"; Dias tab, synced)
     dayNumber: null,     // the HUD day counter (e.g. 60), optional; null = not given (synced)
     dayAnchor: null,     // {number, day}: calibration "HUD day N was <day>"; a counter alone then gives the day (synced)
-    ui: freshUi(),       // planner panels the player collapsed (per device, never synced; 1.3.1)
+    dayDone: null,       // {day, number, ids: [event index]}: "Feito hoje" ticks; reset when the day changes (synced, 1.3.4)
+    dayNotes: {},        // dayId -> "levar 3 peixes para o Pescador": "Bilhete do dia", ≤ NOTE_MAX chars (synced, 1.3.4)
+    ui: freshUi(),       // planner panels the player collapsed + the rename mode (per device, never synced; 1.3.1)
     updatedAt: "",       // ISO time of the last change to a SYNCED field ("" = never touched; schema 4)
     syncBase: "",        // updatedAt of the last version both this device and the account held (GK.sync; local)
   });
@@ -93,7 +121,7 @@ GK.store = (function () {
   }
   const nonEmpty = (o) => !!o && Object.keys(o).length > 0;
   const hasContent = (s) => (!s.example && s.goals.length > 0) || nonEmpty(s.done) || nonEmpty(s.have) || nonEmpty(s.choice) ||
-    nonEmpty(s.overrides) || nonEmpty(s.researched) || nonEmpty(s.groupChoice) || nonEmpty(s.perks) || !!s.day || !!s.dayAnchor;
+    nonEmpty(s.overrides) || nonEmpty(s.researched) || nonEmpty(s.groupChoice) || nonEmpty(s.perks) || !!s.day || !!s.dayAnchor || nonEmpty(s.dayNotes);
   const trueMap = (o) => { const out = {}; for (const [k, v] of Object.entries(obj(o))) if (v) out[k] = true; return out; };
   // have: true (everything) or a whole number ≥ 1 (partial); anything else is dropped
   const clampHave = (v) => (v === true ? true : typeof v === "number" && isFinite(v) && v >= 1 ? Math.min(999999, Math.round(v)) : null);
@@ -111,12 +139,43 @@ GK.store = (function () {
   // Untrusted input (the account doc): rebuild every synced field from scratch, or null.
   function sanitizeRemote(o, fromV1) {
     if (!o || typeof o !== "object" || Array.isArray(o)) return null;
+    const day = validDay(o.day), dayNumber = clampDayNumber(o.dayNumber);
     return {
       goals: cleanGoals(o.goals), choice: strMap(o.choice), have: haveMap(o.have), done: trueMap(o.done),
       overrides: migrateOverrides(o.overrides, !!fromV1), example: !!o.example,
       researched: trueMap(o.researched), groupChoice: strMap(o.groupChoice), perks: trueMap(o.perks),
-      day: validDay(o.day), dayNumber: clampDayNumber(o.dayNumber), dayAnchor: cleanAnchor(o.dayAnchor),
+      day, dayNumber, dayAnchor: cleanAnchor(o.dayAnchor),
+      dayDone: cleanDone(o.dayDone, day, dayNumber), dayNotes: cleanNotes(o.dayNotes),
     };
+  }
+  // the event indexes ticked "feito hoje" for the state's current day ([] when none / another day)
+  const doneToday = (s) => { const d = s && cleanDone(s.dayDone, validDay(s.day), s.dayNumber); return d ? d.ids : []; };
+  const has = (o, k) => !!o && typeof o === "object" && Object.prototype.hasOwnProperty.call(o, k);
+  /**
+   * The account doc wins (GK.sync), but it was written by a page older than LATE (no dayDone / dayNotes key at all)
+   * while this device has some: keep ours for those fields. raw = the doc's unsanitized `state`, fields = its
+   * sanitized copy, local = our synced payload. Returns the fields to apply (then pushed, with a new stamp) or null.
+   */
+  function keepLate(fields, raw, local) {
+    const out = Object.assign({}, fields);
+    let kept = false;
+    if (!has(raw, "dayNotes") && nonEmpty(cleanNotes(local.dayNotes))) { out.dayNotes = cleanNotes(local.dayNotes); kept = true; }
+    if (!has(raw, "dayDone")) { const dd = cleanDone(local.dayDone, out.day, out.dayNumber); if (dd) { out.dayDone = dd; kept = true; } }
+    return kept ? out : null;
+  }
+  /**
+   * Same version on both sides, but the doc carries LATE fields this copy lacks (an older page kept them in the doc
+   * as unknown fields without ever loading them): adopt them. Returns the payload to apply (same stamp) or null.
+   */
+  function adoptLate(fields, local) {
+    const out = Object.assign({}, local);
+    let got = false;
+    if (!nonEmpty(cleanNotes(local.dayNotes)) && nonEmpty(fields.dayNotes)) { out.dayNotes = fields.dayNotes; got = true; }
+    if (!cleanDone(local.dayDone, validDay(local.day), local.dayNumber)) {
+      const dd = cleanDone(fields.dayDone, validDay(local.day), local.dayNumber);
+      if (dd) { out.dayDone = dd; got = true; }
+    }
+    return got ? out : null;
   }
   /**
    * Merge rule (GK.sync), used only when BOTH this device and the account changed since the last version they
@@ -128,20 +187,27 @@ GK.store = (function () {
    *   day + dayNumber         one pair: the copy with the higher day counter (the game only moves forward), else
    *                           the local one when it has a day, else the remote one
    *   dayAnchor               local when it has one, else remote
+   *   dayDone                 the ticks of the copies that are still on the merged day (above), by union
+   *   dayNotes                union by weekday; on a conflict the copy with the newer updatedAt wins
+   *                           (remoteNewer = true: the account's), else the local one
    * A key deleted on one side can come back from the other side's copy (union): acceptable for checkmarks.
    * Both inputs are sanitized synced payloads; the result is one too.
    */
-  function mergeSynced(local, remote) {
+  function mergeSynced(local, remote, remoteNewer) {
     const L = sanitizeRemote(local) || sanitizeRemote({}), R = sanitizeRemote(remote) || sanitizeRemote({});
     const ov = {};
     for (const lang of new Set(Object.keys(R.overrides).concat(Object.keys(L.overrides)))) ov[lang] = Object.assign({}, R.overrides[lang], L.overrides[lang]);
+    const days = pickDay(L, R);
+    const dl = cleanDone(L.dayDone, days.day, days.dayNumber), dr = cleanDone(R.dayDone, days.day, days.dayNumber);
+    const dayDone = dl && dr ? cleanDone({ day: days.day, number: dl.number != null ? dl.number : dr.number, ids: dl.ids.concat(dr.ids) }, days.day, days.dayNumber) : dl || dr;
     return {
       goals: L.goals, example: L.example,
       choice: Object.assign({}, R.choice, L.choice), overrides: ov,
       done: Object.assign({}, L.done, R.done), have: Object.assign({}, L.have, R.have),
       researched: Object.assign({}, L.researched, R.researched), perks: Object.assign({}, L.perks, R.perks),
       groupChoice: Object.assign({}, L.groupChoice, R.groupChoice),
-      ...pickDay(L, R),
+      ...days, dayDone,
+      dayNotes: remoteNewer ? Object.assign({}, L.dayNotes, R.dayNotes) : Object.assign({}, R.dayNotes, L.dayNotes),
     };
   }
   function pickDay(L, R) {
@@ -239,16 +305,27 @@ GK.store = (function () {
     notify(meta);
   }
   const touchGoals = (s) => { s.example = false; };
+  const fixDone = (s) => { s.dayDone = cleanDone(s.dayDone, validDay(s.day), s.dayNumber); };
   const actions = {
+    // The first goal added to the seeded example REPLACES it (the example goals and their checks go away);
+    // subscribers get meta.exampleReplaced = {goals, done} so the UI can offer "Desfazer" (restoreExample).
+    // Changing a quantity or removing a goal keeps the example list and simply adopts it (touchGoals).
     addGoal(item, qty) {
-      let now = 0;
+      let now = 0, replaced = null;
+      if (state.example && state.goals.length) replaced = { goals: state.goals.map((g) => ({ item: g.item, qty: g.qty })), done: Object.assign({}, state.done) };
       update((s) => {
+        if (replaced) { s.goals = []; s.done = {}; }
         touchGoals(s);
         const g = s.goals.find((x) => x.item === item);
         if (g) { g.qty = clampQty(g.qty + (qty || 1)); now = g.qty; }
         else { s.goals.push({ item, qty: clampQty(qty || 1) }); now = clampQty(qty || 1); }
-      }, { from: "search" });
+      }, replaced ? { from: "search", exampleReplaced: replaced } : { from: "search" });
       return now;
+    },
+    // "Desfazer" after the example was replaced: the example goals and checks come back, still flagged as example
+    restoreExample(snap) {
+      if (!snap || !Array.isArray(snap.goals)) return;
+      update((s) => { s.goals = cleanGoals(snap.goals); s.done = trueMap(snap.done); s.example = s.goals.length > 0; }, { from: "example" });
     },
     setQty(item, qty, meta) { update((s) => { touchGoals(s); const g = s.goals.find((x) => x.item === item); if (g) g.qty = clampQty(qty); }, meta); },
     bumpQty(item, d) { update((s) => { touchGoals(s); const g = s.goals.find((x) => x.item === item); if (g) g.qty = clampQty(g.qty + d); }); },
@@ -273,7 +350,7 @@ GK.store = (function () {
     setUi(patch) {
       update((s) => {
         const u = (s.ui = cleanUi(s.ui)), p = patch && typeof patch === "object" ? patch : {};
-        for (const k of ["todayCollapsed", "stepsCollapsed", "rawCollapsed"]) if (k in p) u[k] = !!p[k];
+        for (const k of UI_FLAGS) if (k in p) u[k] = !!p[k];
         if (p.stationCollapsed && typeof p.stationCollapsed === "object") u.stationCollapsed = cleanUi({ stationCollapsed: p.stationCollapsed }).stationCollapsed;
       }, { from: "ui" });
     },
@@ -299,12 +376,14 @@ GK.store = (function () {
     // Dias: "Hoje é este dia". dayNumber: a number / numeric string sets the HUD counter, null / "" clears it,
     // undefined keeps it. A day together with a counter (given now or already set) calibrates: dayAnchor = {number,
     // day}. setDay(null) clears day and counter (the calibration stays; clearAnchor() drops it).
+    // Every day action ends with fixDone: the "feito hoje" ticks of a day that is no longer today go away.
     setDay(dayId, dayNumber) {
       update((s) => {
         s.day = validDay(dayId);
         if (dayNumber !== undefined) s.dayNumber = clampDayNumber(dayNumber);
         if (!s.day) s.dayNumber = null;
         else if (s.dayNumber != null) s.dayAnchor = { number: s.dayNumber, day: s.day };
+        fixDone(s);
       }, { from: "day" });
     },
     // the HUD counter alone: calibrated -> the weekday follows from the anchor; not calibrated but a day is set ->
@@ -312,12 +391,32 @@ GK.store = (function () {
     setDayNumber(n) {
       update((s) => {
         s.dayNumber = clampDayNumber(n);
-        if (s.dayNumber == null) return;
-        const d = dayFromNumber(s.dayNumber, s.dayAnchor);
-        if (d) s.day = d;
-        else if (validDay(s.day)) s.dayAnchor = { number: s.dayNumber, day: s.day };
+        if (s.dayNumber != null) {
+          const d = dayFromNumber(s.dayNumber, s.dayAnchor);
+          if (d) s.day = d;
+          else if (validDay(s.day)) s.dayAnchor = { number: s.dayNumber, day: s.day };
+        }
+        fixDone(s);
       }, { from: "day" });
       return state.day;
+    },
+    // "Feito hoje": tick / untick event #idx of today's day (on = undefined flips it). No-op without a day.
+    toggleDayDone(idx, on) {
+      const i = typeof idx === "string" && idx.trim() ? +idx : idx;
+      if (!validDay(state.day) || !Number.isInteger(i) || i < 0 || i >= 100) return;
+      update((s) => {
+        const ids = new Set(doneToday(s)), next = on === undefined ? !ids.has(i) : !!on;
+        if (next) ids.add(i); else ids.delete(i);
+        s.dayDone = cleanDone({ day: s.day, number: s.dayNumber, ids: Array.from(ids) }, validDay(s.day), s.dayNumber);
+      }, { from: "day-done" });
+    },
+    // "Bilhete do dia": the note of one weekday ("" / null removes it). Returns the stored text ("" = none).
+    setDayNote(dayId, text) {
+      const id = validDay(dayId);
+      if (!id) return "";
+      const v = cleanNote(text);
+      update((s) => { s.dayNotes = cleanNotes(s.dayNotes); if (v) s.dayNotes[id] = v; else delete s.dayNotes[id]; }, { from: "day-note" });
+      return v;
     },
     // "recalibrar": forget the calibration (the next day + counter pair sets a new one)
     clearAnchor() { update((s) => { s.dayAnchor = null; }, { from: "day" }); },
@@ -329,6 +428,7 @@ GK.store = (function () {
         const order = dayOrder(), i = order.indexOf(s.day);
         s.day = order[(i + 1) % order.length] || order[0];
         if (s.dayNumber != null) s.dayNumber = Math.min(99999, s.dayNumber + 1);
+        fixDone(s);
       }, { from: "day" });
       return true;
     },
@@ -345,5 +445,5 @@ GK.store = (function () {
   };
   return { get: () => state, load, subscribe: (fn) => subs.push(fn), actions, update, clampQty, SCHEMA, THEMES, ISO, SYNCED,
     syncPayload, syncKey, sanitizeRemote, hasContent, mergeSynced, stamp, useAccount, setSyncBase, storageKey: () => key,
-    DAY_IDS, dayOrder, dayFromNumber };
+    DAY_IDS, dayOrder, dayFromNumber, doneToday, NOTE_MAX, LATE, keepLate, adoptLate };
 })();

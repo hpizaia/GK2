@@ -1,8 +1,10 @@
 /* GK.ui.fmt: shared bits of markup for item names, recipes and stations (badges, recipe labels,
-   tech lines, the editable name block). No state, no panel.
-   Exposes: GK.ui.fmt.{badges, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, infoButton}.
+   tech lines, the editable name block) and the "Desfazer" toast. No state, no panel.
+   Exposes: GK.ui.fmt.{badges, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, infoButton, undoToast}.
    infoButton(itemId, name): the 44 px "i" button (data-recipe-open) that opens the item in Receitas; every planner
    panel that shows one handles the click itself (GK.ui.recipes.open(id, {from: "plan"})).
+   undoToast(msg, onUndo): a toast with a "Desfazer" button (its own #toast-undo element, created on first use, after
+   #toast in <body>; it sits above #toast when both show). 6 s, paused while it holds the focus or the pointer.
 */
 GK.i18n.add({
   pt: {
@@ -26,6 +28,7 @@ GK.i18n.add({
     "edit.restored": "Nome original restaurado: {name}",
     "info.label": "Abrir {name} em Receitas",
     "info.title": "Ver em Receitas",
+    "undo.button": "Desfazer",
   },
   en: {
     "recipe.hidden": "hidden",
@@ -48,6 +51,7 @@ GK.i18n.add({
     "edit.restored": "Original name restored: {name}",
     "info.label": "Open {name} in Recipes",
     "info.title": "See in Recipes",
+    "undo.button": "Undo",
   },
 });
 
@@ -70,8 +74,9 @@ GK.ui.fmt = (function () {
     return rs.length > 1 ? t("search.recipes", { station: label, n: rs.length }) : label;
   }
   // what sets a recipe apart from its siblings: the quality grade ("ouro"), else its own name ("Board (Sawhorse)").
-  // "<X> from <Y>" names only restate the inputs the label already lists: left out (recipeLabels adds them back
-  // when two options would otherwise read the same).
+  // "<X> from <Y>" names only restate the inputs the label already lists: left out. The selector labels show only
+  // the grade (recipe names are mostly English and repeat the station); recipeLabels adds the name back when two
+  // options would otherwise read the same.
   function recipeTag(r) {
     if (r.quality) return t("quality." + r.quality);
     return r.name && !/ from /i.test(r.name.en || "") ? name(r.name) : "";
@@ -82,25 +87,29 @@ GK.ui.fmt = (function () {
     if (b.qty != null) return b.qty;
     return b.add != null && base != null ? base + b.add : base;
   }
-  // "C · ouro · Forno da Cozinha: 2 Abóbora (ouro) + 10 Combustível → 7 (oculta, circular)"
-  function recipeLabel(r, idx, state) {
+  // short, in the UI language, ingredients first (1.3.4: no letter, no English recipe name), so a closed <select>
+  // cut at ~180 px still shows what goes in: "1 Tora → 4 · Cavalete",
+  // "2 Abóbora (ouro) + 10 Combustível → 7 · Forno da Cozinha · ouro (oculta, circular)".
+  // opts.noStation: leave the station out (every option of the list uses the same one: the card already says it).
+  function recipeLabel(r, idx, state, opts) {
     const D = GK.data.get();
-    const ins = r.in.length ? r.in.map((i) => `${num(qtyOf(i.qty, i.bonus, state))} ${name(D.items[i.item], state.overrides)}`).join(" + ") : "—";
+    const ins = r.in.length ? r.in.map((i) => `${num(qtyOf(i.qty, i.bonus, state))}\u00a0${name(D.items[i.item], state.overrides)}`).join(" + ") : "—";
     const tags = [];
     if (!r.listed) tags.push(t("recipe.hidden"));
     if (r.cyc) tags.push(t("recipe.cyc"));
     if (r.example) tags.push(t("steps.example"));
-    const tag = recipeTag(r), out = qtyOf(r.out.qty, r.out.bonus, state);
-    return `${String.fromCharCode(65 + (idx % 26))} · ${tag ? tag + " · " : ""}${name(r.station, state.overrides)}: ${ins}${out ? " → " + num(out) : ""}${tags.length ? " (" + tags.join(", ") + ")" : ""}`;
+    const out = qtyOf(r.out.qty, r.out.bonus, state);
+    const st = opts && opts.noStation ? "" : " · " + name(r.station, state.overrides);
+    return `${ins}${out ? " → " + num(out) : ""}${st}${r.quality ? " · " + t("quality." + r.quality) : ""}${tags.length ? " (" + tags.join(", ") + ")" : ""}`;
   }
-  // labels for a list of options; the letter is the recipe's place in `all` (the item's full list, best first).
-  // Two options never read the same: a repeat gets the recipe's own name, then its id.
+  // labels for a list of options (`all` = the item's full list, kept for callers). The station is left out when
+  // every option uses the same one. Two options never read the same: a repeat gets the recipe's own name, then its id.
   function recipeLabels(list, state, all) {
-    const ref = all || list;
-    const out = list.map((r) => recipeLabel(r, Math.max(0, ref.indexOf(r)), state));
-    const body = (s) => s.replace(/^[A-Z] · /, "");   // the letter alone does not tell two recipes apart
-    const dup = (k) => out.some((x, j) => j !== k && body(x) === body(out[k]));
-    const extra = out.map((s, k) => (dup(k) && list[k].name && !list[k].quality && !recipeTag(list[k]) ? " — " + name(list[k].name) : ""));
+    const sid = (r) => (r.station && (r.station.id || r.station.en)) || "";
+    const noStation = list.length > 1 && list.every((r) => sid(r) === sid(list[0]));
+    const out = list.map((r, k) => recipeLabel(r, k, state, { noStation }));
+    const dup = (k) => out.some((x, j) => j !== k && x === out[k]);
+    const extra = out.map((s, k) => (dup(k) && list[k].name && !list[k].quality ? " — " + name(list[k].name) : ""));
     extra.forEach((x, k) => { out[k] += x; });
     const ids = out.map((s, k) => (dup(k) ? " [" + list[k].id + "]" : ""));
     ids.forEach((x, k) => { out[k] += x; });
@@ -124,7 +133,8 @@ GK.ui.fmt = (function () {
   }
   // name + pencil + inline edit form when editing. The name is plain text: only the checkbox (and its 44 px
   // .tick box) toggles "done" (AUDITORIA U3). labelFor is kept for callers; it is no longer used.
-  function nameBlock(it, nm, labelFor, editing, extraBadges, overrides) {
+  // canEdit: show the ✎ pencil (the "Editar nomes" mode of the progress card, GK.store ui.editNames).
+  function nameBlock(it, nm, labelFor, editing, extraBadges, overrides, canEdit) {
     const lang = GK.i18n.lang();
     if (editing) {
       const id = GK.util.domId(it.id);
@@ -135,7 +145,37 @@ GK.ui.fmt = (function () {
         ${edited(it, overrides) ? `<button type="button" class="btn btn-sm btn-ghost" data-edit-reset="${esc(it.id)}">${esc(t("edit.reset"))}</button>` : ""}
       </form>`;
     }
-    return `<span class="row-name"><span class="row-label">${esc(nm)}</span><button type="button" class="edit-ico" data-edit="${esc(it.id)}" title="${esc(t("edit.button"))}" aria-label="${esc(t("edit.label", { name: nm }))}">✎</button>${infoButton(it.id, nm)}${extraBadges || ""}${badges(it, overrides)}</span>`;
+    const pencil = canEdit ? `<button type="button" class="edit-ico" data-edit="${esc(it.id)}" title="${esc(t("edit.button"))}" aria-label="${esc(t("edit.label", { name: nm }))}">✎</button>` : "";
+    return `<span class="row-name"><span class="row-label">${esc(nm)}</span>${pencil}${infoButton(it.id, nm)}${extraBadges || ""}${badges(it, overrides)}</span>`;
   }
-  return { badges, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, infoButton };
+  // "Areia: você já tem tudo [Desfazer]": the undo toast (see the header)
+  let undoTimer = null;
+  function undoToast(msg, onUndo) {
+    if (typeof document === "undefined") return;
+    let el = document.getElementById("toast-undo");
+    const hide = () => { clearTimeout(undoTimer); if (el) { el.hidden = true; el._undo = null; } };
+    const arm = () => { clearTimeout(undoTimer); undoTimer = setTimeout(hide, 6000); };
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "toast-undo"; el.className = "toast toast-undo"; el.hidden = true;
+      el.setAttribute("role", "status"); el.setAttribute("aria-live", "polite");
+      document.body.appendChild(el);
+      el.addEventListener("click", (e) => {
+        if (!e.target.closest("[data-undo]")) return;
+        const f = el._undo; hide();
+        if (typeof f === "function") f();
+      });
+      // WCAG 2.2.1: no time-out while the player is on it
+      el.addEventListener("focusin", () => clearTimeout(undoTimer));
+      el.addEventListener("pointerenter", () => clearTimeout(undoTimer));
+      el.addEventListener("focusout", () => { if (!el.hidden) arm(); });
+      el.addEventListener("pointerleave", () => { if (!el.hidden) arm(); });
+    }
+    el.innerHTML = `<span class="toast-msg">${esc(msg)}</span><button type="button" class="btn btn-sm toast-undo-btn" id="toast-undo-btn" data-undo>${esc(t("undo.button"))}</button>`;
+    el._undo = onUndo; el.hidden = false;
+    const plain = document.getElementById("toast");
+    if (plain) plain.hidden = true;
+    arm();
+  }
+  return { badges, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, infoButton, undoToast };
 })();

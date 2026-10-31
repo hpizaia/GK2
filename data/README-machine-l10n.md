@@ -135,4 +135,4 @@ Ingredient lists keep the source's "N Name" form, without plurals ("com 2 Placa 
 
 ## Regenerating
 
-The generator (name table, templates for obtain sentences, hand-translated sentences, coverage validator) ran from Claude's session scratchpad and is **not** in this repo, because `scripts/` belongs to another agent. If the dataset changes, the simplest path is to ask for a re-run, or to recover the generator from the session archive (`historico/sessao-2026-10-30-companheiro-gk2.zip`) and add it to `scripts/` (open item in `BACKLOG.md`). A name that is not in this file falls back to English.
+The generator (name table, templates for obtain sentences, hand-translated sentences, coverage validator) ran from Claude's session scratchpad and is **not** in this repo, because `scripts/` belongs to another agent. If the dataset changes, the simplest path is to ask for a re-run, or to recover the generator from the session archive (`historico/sessao-2026-10-30-companheiro-gk2.zip`) and add it to `scripts/` (open item in `docs/projeto/BACKLOG.md`). A name that is not in this file falls back to English.

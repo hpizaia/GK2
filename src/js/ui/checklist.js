@@ -1,4 +1,6 @@
-/* GK.ui.checklist: progress bar, perk toggles ("Vantagens"), copy as text, clear checks, export edited names.
+/* GK.ui.checklist: progress bar, perk toggles ("Vantagens"), copy as text, clear checks, export edited names, and
+   the "Editar nomes" switch (GK.store ui.editNames: shows the ✎ rename pencils on the planner rows; a contributor
+   tool, off by default). On phones this card comes last in the planner (planner.css, CSS order).
    Owns: [data-panel="checklist"] and the change handler of every [data-done] checkbox on the planner.
    Exposes: GK.ui.checklist.{mount, render, asText, exportNames}; registered as a panel.
 */
@@ -18,6 +20,8 @@ GK.i18n.add({
     "stats.stations.one": "{n} estação",
     "stats.stations.other": "{n} estações",
     "export.button": "Exportar nomes editados ({n})",
+    "names.edit": "Editar nomes",
+    "names.editTitle": "Mostra o lápis ✎ ao lado de cada nome, para corrigir traduções",
     "export.copied": "Nomes editados copiados (JSON)",
     "export.fail": "Não deu para copiar automaticamente. O JSON está selecionado abaixo: copie com o menu do sistema.",
     "copy.header": "Graveyard Keeper 2 · lista de crafting",
@@ -44,6 +48,8 @@ GK.i18n.add({
     "stats.stations.one": "{n} station",
     "stats.stations.other": "{n} stations",
     "export.button": "Export edited names ({n})",
+    "names.edit": "Edit names",
+    "names.editTitle": "Shows the ✎ pencil next to each name, to fix translations",
     "export.copied": "Edited names copied (JSON)",
     "export.fail": "Couldn't copy automatically. The JSON is selected below: copy it with your system menu.",
     "copy.header": "Graveyard Keeper 2 · crafting list",
@@ -110,6 +116,7 @@ GK.ui.checklist = (function () {
       if (b.id === "copy-list") copyOrShow(asText(GK.store.get(), GK.app.plan()), t("progress.copied"), "progress.copyFail");
       if (b.id === "export-names") copyOrShow(exportNames(GK.store.get()), t("export.copied"), "export.fail");
       if (b.dataset.perk) GK.store.actions.setPerk(b.dataset.perk, b.getAttribute("aria-pressed") !== "true");
+      if (b.id === "edit-names") GK.store.actions.setUi({ editNames: b.getAttribute("aria-pressed") !== "true" });
     });
   }
   // "Vantagens: [Economizador de Calor] [Cremador]": only the perks this plan's recipes mention
@@ -129,6 +136,8 @@ GK.ui.checklist = (function () {
     const keys = keysOf(plan), total = keys.length, done = keys.filter((k) => state.done[k]).length;
     const pct = total ? Math.round((done / total) * 100) : 0;
     const exportBtn = nEdited ? `<button type="button" class="btn btn-sm btn-ghost" id="export-names">${esc(t("export.button", { n: nEdited }))}</button>` : "";
+    const namesOn = !!(state.ui && state.ui.editNames);
+    const namesBtn = `<button type="button" class="btn btn-sm btn-ghost toggle names-toggle" id="edit-names" aria-pressed="${namesOn}" title="${esc(t("names.editTitle"))}">✎ ${esc(t("names.edit"))}</button>`;
     if (!state.goals.length) { root.innerHTML = `<div class="card progress"><div class="progress-actions">${exportBtn}</div><div id="copy-box" hidden></div></div>`; return; }
     root.innerHTML = `<div class="card progress">
       <div class="progress-top">
@@ -141,7 +150,7 @@ GK.ui.checklist = (function () {
       <div class="progress-actions">
         <button type="button" class="btn btn-sm" id="copy-list">${esc(t("progress.copy"))}</button>
         <button type="button" class="btn btn-sm btn-ghost" id="clear-done"${done ? "" : " disabled"}>${esc(t("progress.clear"))}</button>
-        ${exportBtn}
+        ${namesBtn}${exportBtn}
       </div>
       <div id="copy-box" hidden></div>
     </div>`;

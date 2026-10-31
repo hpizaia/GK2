@@ -408,6 +408,75 @@ await test("store: current weekday (day, dayNumber)", () => {
   eq(M.dayAnchor, { number: 3, day: "lust" }, "merge: anchor from remote when local has none");
 });
 
+await test("store: \"feito hoje\" ticks reset when the day changes", () => {
+  const env = makeEnv(), S = env.GK.store, A = S.actions, st = () => S.get();
+  env.GK.data.load(JSON.parse(JSON.stringify(PAYLOAD)));
+  const W = S.dayOrder();
+  check(S.SYNCED.indexOf("dayDone") >= 0 && S.SYNCED.indexOf("dayNotes") >= 0, "dayDone / dayNotes are synced");
+  eq([st().dayDone, st().dayNotes], [null, {}], "fresh state");
+  A.toggleDayDone(0, true); eq(st().dayDone, null, "no day: no tick");
+  A.setDay(W[5], 61);
+  A.toggleDayDone(0, true); A.toggleDayDone("2", true); A.toggleDayDone(2, true);
+  eq(st().dayDone, { day: W[5], number: 61, ids: [0, 2] }, "ticks on today (string index, double tick)");
+  eq(S.doneToday(st()), [0, 2], "doneToday");
+  check(!!st().updatedAt, "a tick stamps updatedAt");
+  A.toggleDayDone(0); eq(S.doneToday(st()), [2], "toggle without `on` flips");
+  A.toggleDayDone(-1, true); A.toggleDayDone(1.5, true); A.toggleDayDone(100, true); eq(S.doneToday(st()), [2], "bad indexes ignored");
+  A.setDay(W[5]); eq(S.doneToday(st()), [2], "the same day picked again keeps the ticks");
+  A.advanceDay(); eq([st().day, st().dayDone, S.doneToday(st())], [W[0], null, []], "advance resets");
+  A.toggleDayDone(1, true); A.setDay(W[3]); eq(st().dayDone, null, "another day picked resets");
+  A.toggleDayDone(1, true); A.setDay(null); eq(st().dayDone, null, "forgetting the day resets");
+  // the counter: a tick made before it was given adopts it; a different number (a week later) is another day
+  A.clearAnchor(); A.setDay(W[2], ""); A.toggleDayDone(0, true);
+  eq(st().dayDone, { day: W[2], number: null, ids: [0] }, "tick without a counter");
+  A.setDayNumber(30); eq(st().dayDone, { day: W[2], number: 30, ids: [0] }, "the first counter is adopted (same day)");
+  A.setDayNumber(""); eq(S.doneToday(st()), [0], "clearing the counter keeps the ticks");
+  A.setDayNumber(30); A.setDayNumber(36); eq([st().day, st().dayDone], [W[2], null], "counter a week later: same weekday, reset");
+  A.toggleDayDone(3, true); A.setDayNumber(37); eq([st().day, st().dayDone], [W[3], null], "counter on the next day resets");
+  // stale or bad ticks from untrusted input
+  eq(S.sanitizeRemote({ day: "wrath", dayNumber: 61, dayDone: { day: "wrath", number: 61, ids: [3, 1, 1, "2", -1, 7.5] } }).dayDone, { day: "wrath", number: 61, ids: [1, 3] }, "sanitize ids");
+  eq(S.sanitizeRemote({ day: "lust", dayDone: { day: "wrath", ids: [1] } }).dayDone, null, "ticks of another day dropped");
+  eq(S.sanitizeRemote({ day: "wrath", dayNumber: 67, dayDone: { day: "wrath", number: 61, ids: [1] } }).dayDone, null, "ticks of another week dropped");
+  eq([S.sanitizeRemote({ dayDone: { day: "wrath", ids: [1] } }).dayDone, S.sanitizeRemote({ day: "wrath", dayDone: [1] }).dayDone, S.sanitizeRemote({ day: "wrath", dayDone: { day: "wrath", ids: [] } }).dayDone], [null, null, null], "no day / not an object / empty");
+});
+
+await test("store: \"bilhete do dia\" notes", () => {
+  const env = makeEnv(), S = env.GK.store, A = S.actions, st = () => S.get();
+  env.GK.data.load(JSON.parse(JSON.stringify(PAYLOAD)));
+  eq(A.setDayNote("wrath", "  levar 3 peixes\n para o   Pescador "), "levar 3 peixes para o Pescador", "one line, trimmed");
+  eq(st().dayNotes, { wrath: "levar 3 peixes para o Pescador" }, "stored by weekday");
+  check(!!st().updatedAt && S.hasContent(st()), "a note stamps and counts as content");
+  eq(A.setDayNote("lust", "x".repeat(250)).length, S.NOTE_MAX, "capped at NOTE_MAX");
+  eq(A.setDayNote("monday", "no"), "", "unknown day ignored");
+  A.setDayNote("lust", "   "); eq(Object.keys(st().dayNotes), ["wrath"], "blank removes it");
+  A.advanceDay(); A.setDay("sloth"); eq(st().dayNotes.wrath, "levar 3 peixes para o Pescador", "notes do not reset with the day");
+  eq(S.sanitizeRemote({ dayNotes: { wrath: " a ", x: "b", lust: 5, envy: "" } }).dayNotes, { wrath: "a" }, "sanitize notes");
+  eq(S.sanitizeRemote({ dayNotes: "x" }).dayNotes, {}, "not an object");
+});
+
+await test("mergeSynced: dayDone and dayNotes", () => {
+  const S = GK.store, san = (o) => S.sanitizeRemote(o);
+  const L = san({ day: "wrath", dayNumber: 61, dayDone: { day: "wrath", number: 61, ids: [0] }, dayNotes: { wrath: "L", lust: "L" } });
+  const R = san({ day: "wrath", dayNumber: 61, dayDone: { day: "wrath", number: 61, ids: [2] }, dayNotes: { lust: "R", envy: "R" } });
+  eq(S.mergeSynced(L, R).dayDone, { day: "wrath", number: 61, ids: [0, 2] }, "same day: ticks by union");
+  eq(S.mergeSynced(L, R).dayNotes, { lust: "L", envy: "R", wrath: "L" }, "notes: union, local wins when it is newer");
+  eq(S.mergeSynced(L, R, true).dayNotes, { wrath: "L", lust: "R", envy: "R" }, "notes: union, remote wins when it is newer");
+  const R2 = san({ day: "gluttony", dayNumber: 62, dayDone: { day: "gluttony", number: 62, ids: [0] } });
+  eq([S.mergeSynced(L, R2).day, S.mergeSynced(L, R2).dayDone], ["gluttony", { day: "gluttony", number: 62, ids: [0] }], "the other side moved on: its ticks, ours are stale");
+  const R3 = san({ day: "gluttony", dayNumber: 62 });
+  eq(S.mergeSynced(L, R3).dayDone, null, "moved on with no ticks: reset");
+  eq(S.mergeSynced(L, san({})).dayDone, L.dayDone, "remote without the fields keeps ours");
+  eq(S.mergeSynced(L, san({})).dayNotes, L.dayNotes, "remote without notes keeps ours");
+  eq(S.mergeSynced(san({}), L).dayNotes, L.dayNotes, "local without notes takes the remote ones");
+  // a doc from an older page (no dayDone / dayNotes key at all)
+  const raw = { goals: [], day: "wrath", dayNumber: 61 };
+  eq(S.keepLate(san(raw), raw, L), Object.assign(san(raw), { dayNotes: L.dayNotes, dayDone: L.dayDone }), "keepLate: keep ours when the doc lacks the keys");
+  eq(S.keepLate(san(raw), Object.assign({ dayNotes: {}, dayDone: null }, raw), L), null, "keepLate: an explicit empty value is a real clear");
+  eq(S.keepLate(san({ day: "lust" }), { day: "lust" }, san({ day: "wrath", dayDone: { day: "wrath", ids: [1] } })), null, "keepLate: ticks of a day that is no longer today are not kept");
+  eq(S.adoptLate(L, san({ day: "wrath", dayNumber: 61 })), Object.assign(san({ day: "wrath", dayNumber: 61 }), { dayNotes: L.dayNotes, dayDone: L.dayDone }), "adoptLate: take what the doc carried");
+  eq(S.adoptLate(san({}), L), null, "adoptLate: nothing to adopt");
+});
+
 // ---------------------------------------------------------------- sync (fake db + user capabilities)
 function fakeClaude(env, uid, initialDoc) {
   const db = { doc: initialDoc ? JSON.parse(JSON.stringify(initialDoc)) : null, writes: [], subs: 0, unsubs: 0, listener: null, failNext: 0, silent: false };
@@ -537,6 +606,59 @@ await test("localStorage per account: the anonymous plan moves once, another acc
   env2.GK.data.load(JSON.parse(JSON.stringify(PAYLOAD)));
   check(env2.GK.store.load(), "next visit loads the last account's copy");
   eq(env2.GK.store.get().goals, [{ item: "crate", qty: 7 }], "A again");
+});
+
+await test("sync: a doc from an older page does not wipe dayDone / dayNotes (and vice versa)", async () => {
+  // the account doc is newer but predates the fields: ours stay and the result is pushed with a new stamp
+  const env = makeEnv();
+  env.localStorage.setItem("gk2-companion.account", "u6");
+  env.localStorage.setItem("gk2-companion:u6", JSON.stringify({ schemaVersion: 4, goals: [], day: "wrath", dayNumber: 61,
+    dayDone: { day: "wrath", number: 61, ids: [1] }, dayNotes: { wrath: "sermão" }, updatedAt: "2026-05-01T00:00:00.000Z", syncBase: "2026-05-01T00:00:00.000Z" }));
+  const old = { v: 4, updatedAt: "2026-05-05T00:00:00.000Z", state: { goals: [{ item: "wine", qty: 2 }], day: "wrath", dayNumber: 61 } };
+  const { db } = await bootSync(env, "u6", old);
+  const s = env.GK.store.get();
+  eq(s.goals, [{ item: "wine", qty: 2 }], "the account's goals win");
+  eq([s.dayNotes, s.dayDone], [{ wrath: "sermão" }, { day: "wrath", number: 61, ids: [1] }], "our note and ticks stay");
+  check(s.updatedAt > old.updatedAt, "stamped newer than the doc");
+  await env.clock.tick(10);
+  const w = db.writes[db.writes.length - 1];
+  eq(w && [w.state.dayNotes, w.state.dayDone, w.state.goals], [{ wrath: "sermão" }, { day: "wrath", number: 61, ids: [1] }, [{ item: "wine", qty: 2 }]], "pushed");
+  // a newer doc that clears them explicitly does clear them (the merged copy was stamped with the real clock)
+  db.push({ v: 4, updatedAt: "2999-01-01T00:00:00.000Z", state: Object.assign({}, w.state, { dayNotes: {}, dayDone: null }) });
+  await flushMicro();
+  eq([env.GK.store.get().dayNotes, env.GK.store.get().dayDone], [{}, null], "an explicit clear from the account applies");
+  // same version, but an older page carried the fields along in the doc without loading them: adopt them
+  const env2 = makeEnv();
+  env2.localStorage.setItem("gk2-companion.account", "u7");
+  env2.localStorage.setItem("gk2-companion:u7", JSON.stringify({ schemaVersion: 4, goals: [{ item: "crate", qty: 1 }], day: "lust",
+    updatedAt: "2026-05-02T00:00:00.000Z", syncBase: "2026-05-02T00:00:00.000Z" }));
+  const f2 = await bootSync(env2, "u7", { v: 4, updatedAt: "2026-05-02T00:00:00.000Z", state: { goals: [{ item: "crate", qty: 1 }], day: "lust",
+    dayNotes: { lust: "vender peixes" }, dayDone: { day: "lust", ids: [0] } } });
+  eq([env2.GK.store.get().dayNotes, env2.GK.store.get().dayDone], [{ lust: "vender peixes" }, { day: "lust", number: null, ids: [0] }], "adopted from the doc");
+  eq(env2.GK.store.get().updatedAt, "2026-05-02T00:00:00.000Z", "same version kept");
+  await env2.clock.tick(3000);
+  eq(f2.db.writes.length, 0, "nothing pushed back");
+});
+
+await test("sync: notes and ticks travel and merge between two devices", async () => {
+  const env = makeEnv();
+  const base = "2026-05-01T00:00:00.000Z";
+  env.localStorage.setItem("gk2-companion.account", "u8");
+  env.localStorage.setItem("gk2-companion:u8", JSON.stringify({ schemaVersion: 4, goals: [], day: "envy", dayNumber: 40,
+    dayDone: { day: "envy", number: 40, ids: [0] }, dayNotes: { envy: "phone" }, updatedAt: "2026-05-02T00:00:00.000Z", syncBase: base }));
+  const doc = { v: 4, updatedAt: "2026-05-03T00:00:00.000Z", state: { goals: [], day: "envy", dayNumber: 40,
+    dayDone: { day: "envy", number: 40, ids: [2] }, dayNotes: { envy: "pc", pride: "pc" } } };
+  const { db } = await bootSync(env, "u8", doc);
+  const s = env.GK.store.get();
+  eq(s.dayDone, { day: "envy", number: 40, ids: [0, 2] }, "ticks by union");
+  eq(s.dayNotes, { envy: "pc", pride: "pc" }, "notes: the newer copy (the account's) wins a conflict");
+  await env.clock.tick(10);
+  const w = db.writes[db.writes.length - 1];
+  eq(w && w.state.dayDone, { day: "envy", number: 40, ids: [0, 2] }, "merged copy pushed");
+  env.GK.store.actions.advanceDay();
+  await env.clock.tick(2000);
+  const w2 = db.writes[db.writes.length - 1];
+  eq(w2 && [w2.state.day, w2.state.dayNumber, w2.state.dayDone], ["pride", 41, null], "advancing resets the ticks on the account too");
 });
 
 // ---------------------------------------------------------------- done

@@ -1,12 +1,13 @@
 /* GK.ui.search: search box and results dropdown (debounced; only the dropdown re-renders while typing).
    ARIA combobox (APG "list autocomplete"): focus stays in the input, ↓/↑ move the active option
    (aria-activedescendant), Enter adds it (or the first one), Esc clears; the count is announced politely.
+   Placeholder = the purpose ("Buscar item para fabricar…"), not the item count (1.3.4).
    Owns: [data-panel="search"]. Exposes: GK.ui.search.{mount, render, add}; registered as a panel.
 */
 GK.i18n.add({
   pt: {
     "search.label": "Buscar item para fabricar",
-    "search.placeholder": "Buscar entre {n} itens…",
+    "search.placeholder": "Buscar item para fabricar…",
     "search.clear": "Limpar busca",
     "search.none": "Nada encontrado para “{q}”. Tente outro nome, em português ou inglês.",
     "search.noneHidden": "Nada visível para “{q}”, mas há itens ocultos que combinam.",
@@ -26,7 +27,7 @@ GK.i18n.add({
   },
   en: {
     "search.label": "Search for an item to craft",
-    "search.placeholder": "Search {n} items…",
+    "search.placeholder": "Search for an item to craft…",
     "search.clear": "Clear search",
     "search.none": "Nothing found for “{q}”. Try another name, in English or Portuguese.",
     "search.noneHidden": "Nothing visible for “{q}”, but some hidden items match.",
@@ -138,7 +139,7 @@ GK.ui.search = (function () {
     input.addEventListener("focus", () => { if (input.value.trim()) renderResults(); });
   }
   function render(state, meta2) {
-    input.placeholder = t("search.placeholder", { n: GK.data.get().visibleCount });
+    input.placeholder = t("search.placeholder");
     root.querySelector("#q-label").textContent = t("search.label");
     clearBtn.setAttribute("aria-label", t("search.clear"));
     if (!pop.hidden || (meta2 && meta2.from === "search-toggle")) renderResults();

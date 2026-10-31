@@ -1,3 +1,6 @@
+> Documento de projeto. Parte do conteúdo descreve a versão 1.2;
+> o estado atual está no [README](../../README.pt-BR.md) e no [CHANGELOG](../../CHANGELOG.md).
+
 # Companheiro GK2 — Planejador de Crafting (spec 1.2)
 
 Esta é a especificação do que existe na versão 1.2.0. A v1 original (só o Planejador, protótipo em arquivo único) está no histórico do git. Pendências: `BACKLOG.md`.

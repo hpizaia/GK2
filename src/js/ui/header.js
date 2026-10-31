@@ -1,5 +1,8 @@
 /* GK.ui.header: brand, tab bar (rendered from the GK.router registry), theme and language switches.
-   Owns: the [data-slot] elements of <header class="top"> and the mobile tab band.
+   Owns: the [data-slot] elements of <header class="top"> and the mobile tab band (#tabs-band), and where the
+   planner search row ([data-panel="search"], content by ui/search.js) sits: phones (< 900 px) keep it after the
+   sticky tab band, so it scrolls with the page while the tabs stay; from 900 px it is moved into the sticky header
+   (the desktop layout). Tapping the tab of the screen already shown scrolls back to the top.
    Exposes: GK.ui.header.{mount, render}; registered as a panel.
 */
 GK.i18n.add({
@@ -52,7 +55,25 @@ GK.ui.header = (function () {
     GK.theme.set(m);
     GK.store.actions.setTheme(m);
   }
+  // the search row: inside the sticky header on wide screens, after the tab band on phones
+  function placeSearch(wide) {
+    const row = document.querySelector('[data-panel="search"]'), top = document.getElementById("top"), band = document.getElementById("tabs-band");
+    if (!row || !top || !band) return;
+    if (wide) { if (row.parentNode !== top) top.appendChild(row); }
+    else if (band.nextElementSibling !== row) band.after(row);
+  }
   function mount() {
+    const mq = window.matchMedia && window.matchMedia("(min-width: 900px)");
+    placeSearch(!!(mq && mq.matches));
+    if (mq) { const f = (e) => placeSearch(e.matches); if (mq.addEventListener) mq.addEventListener("change", f); else mq.addListener(f); }
+    // a tap on the current screen's tab (no hashchange) goes back to the top of that screen
+    document.addEventListener("click", (e) => {
+      const a = e.target.closest && e.target.closest('.tab[aria-current="page"]');
+      if (!a || e.ctrlKey || e.metaKey || e.shiftKey) return;
+      e.preventDefault();
+      const still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: still ? "auto" : "smooth" });
+    });
     document.querySelector('[data-slot="theme"]').addEventListener("click", (e) => {
       const b = e.target.closest("[data-theme-set]");
       if (b) setTheme(b.dataset.themeSet);

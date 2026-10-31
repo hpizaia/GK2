@@ -1,3 +1,6 @@
+> Documento de projeto. Parte do conteúdo descreve a versão 1.2;
+> o estado atual está no [README](../../README.pt-BR.md) e no [CHANGELOG](../../CHANGELOG.md).
+
 # Auditoria — Companheiro GK2 (v1.1)
 
 Data: 2026-10-30. Escopo: `prototype/index.html` (página única atual), `scripts/`, `data/`, `tools/exportar-textos/`, docs.

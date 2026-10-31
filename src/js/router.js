@@ -1,10 +1,14 @@
 /* GK.router: hash routes with bare tokens (#plan, #recipes, #tech, #changelog: the artifact viewer only
    passes a plain #token). Owns the route registry and the visible screen ([data-screen]).
-   Exposes: GK.router.{register, tabs, tab, TABS, init, ensureScreens, current, onChange}.
+   Exposes: GK.router.{register, tabs, tab, TABS, init, ensureScreens, current, onChange, forget}.
    A new screen is one call from its own module:
      GK.router.register({ id: "recipes", labelKey: "rc.tab", screen: "recipes", order: 20 })
    tab: false makes a route-only screen (no entry in the tab bar). A missing <section data-screen> is
    created in <main> by ensureScreens() (with data-panel=<screen> for GK.app.registerPanel).
+   Scroll: each screen keeps its own scroll position. Changing screens saves the one being left and opens the
+   next one where it was (the top on a first visit), before the onChange listeners run, so a module that places
+   the page itself (the Receitas list, "‹ Voltar" returns, #changelog) still wins. forget(screen) drops a saved
+   position, so the next visit starts at the top (GK.ui.days.open uses it).
 */
 GK.i18n.add({
   pt: {
@@ -50,14 +54,26 @@ GK.router = (function () {
       main.appendChild(s);
     }
   }
+  const pos = {};      // screen -> last scrollY while it was shown
+  let shown = null;    // the screen on display (null before the first apply)
   function apply() {
     current = parse();
     const screen = tab(current).screen;
+    const moved = shown !== null && screen !== shown;
+    if (moved) pos[shown] = window.scrollY;
     document.querySelectorAll("[data-screen]").forEach((s) => { s.hidden = s.dataset.screen !== screen; });
+    shown = screen;
+    const want = moved ? pos[screen] || 0 : null;
+    if (want !== null) window.scrollTo(0, want);
+    const got = window.scrollY;
     subs.forEach((f) => f(current));
+    // the screen may have been too short for the old position until its render: try once more, unless a
+    // listener placed the page itself
+    if (want && window.scrollY === got && got < want) window.scrollTo(0, want);
   }
   function init() { ensureScreens(); window.addEventListener("hashchange", apply); apply(); }
-  return { TABS, register, tabs, tab, init, ensureScreens, current: () => current, onChange: (f) => subs.push(f) };
+  const forget = (screen) => { delete pos[screen]; };
+  return { TABS, register, tabs, tab, init, ensureScreens, current: () => current, onChange: (f) => subs.push(f), forget };
 })();
 
 // the planner is the default route; its panels live in the template (src/index.html)

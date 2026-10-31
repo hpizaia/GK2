@@ -1,7 +1,8 @@
 /* GK.sync: keeps the planner in the viewer's own private db document
    (Claude Artifact `db` + `user` capabilities):
        data/users/<user id>/state  =  { v, updatedAt, state: {goals, choice, have, done, overrides, example,
-                                                              researched, groupChoice, perks, …} }
+                                                              researched, groupChoice, perks, day, dayNumber,
+                                                              dayAnchor, dayDone, dayNotes, …} }
    localStorage stays the first source (instant render, offline), keyed by account (GK.store.useAccount).
    Reconciling a snapshot with the local copy (base = the last version both held, state.syncBase):
      - same updatedAt                 nothing to do
@@ -11,6 +12,10 @@
                                       done/have/researched/perks/groupChoice, local wins for goals/choice/overrides),
                                       stamp it newer than both and push it
      - no base yet (first sync)       the newer updatedAt wins (an EPOCH plan is pushed only to an empty account)
+   dayDone / dayNotes (1.3.4, GK.store.LATE) are absent from docs written by older pages, and absent is not "empty":
+     - the account wins but its doc has no such key   keep this device's value (keepLate), stamp, push
+     - same updatedAt, the doc has them, we don't     adopt the doc's (adoptLate; an older page carried them along)
+     - merge                                          dayDone by union on the merged day, dayNotes newer side wins
    Forward compatibility: the doc's `v` is read and kept (max of ours and theirs), and top-level fields of
    `state` this version does not know (written by a newer page) are written back untouched.
    One subscription (recreated once, with backoff, after it dies; again on `online`), one write in flight,
@@ -101,20 +106,31 @@ GK.sync = (function () {
       const localChanged = !!st.updatedAt && (!base || st.updatedAt > base);
       const remoteChanged = !base || d.updatedAt > base;
       if (d.updatedAt === st.updatedAt) {    // same version (or our echo)
-        lastPushed = JSON.stringify(S().syncPayload(st));
+        const adopt = S().adoptLate(fields, S().syncPayload(st));
+        if (adopt) S().actions.applyRemote(adopt, d.updatedAt);
+        lastPushed = JSON.stringify(S().syncPayload(S().get()));
         if (authoritative) S().setSyncBase(d.updatedAt);
       } else if (base && localChanged && remoteChanged) {
         // both edited since the version they shared: merge (rule in GK.store.mergeSynced), then push
-        const merged = S().mergeSynced(S().syncPayload(st), fields);
+        const merged = S().mergeSynced(S().syncPayload(st), fields, d.updatedAt > st.updatedAt);
         const at = S().stamp(d.updatedAt > st.updatedAt ? d.updatedAt : st.updatedAt);
         S().actions.applyRemote(merged, at);
         lastSeenAt = at;
         pushLocal = true; lastPushed = null;
       } else if (!st.updatedAt || d.updatedAt > st.updatedAt) {
-        lastSeenAt = d.updatedAt;
-        S().actions.applyRemote(fields, d.updatedAt);
-        lastPushed = JSON.stringify(S().syncPayload(S().get()));
-        if (authoritative) S().setSyncBase(d.updatedAt);
+        const kept = S().keepLate(fields, d.state, S().syncPayload(st));
+        if (kept) {
+          // the account wins, but its doc predates dayDone / dayNotes: ours stay, and the result is pushed
+          const at = S().stamp(d.updatedAt);
+          S().actions.applyRemote(kept, at);
+          lastSeenAt = at;
+          pushLocal = true; lastPushed = null;
+        } else {
+          lastSeenAt = d.updatedAt;
+          S().actions.applyRemote(fields, d.updatedAt);
+          lastPushed = JSON.stringify(S().syncPayload(S().get()));
+          if (authoritative) S().setSyncBase(d.updatedAt);
+        }
       } else { pushLocal = true; lastPushed = null; }   // local is newer
     } else {                                  // no doc, or a body that fails validation: push local if it has content
       pushLocal = !!st.updatedAt;

@@ -1,10 +1,15 @@
-/* base.css: reset, body ground and noise overlay, links, focus ring, .sr-only, .tabnum, .wrap gutter. */
+/* base.css: reset, root font size ("Letra grande"), body ground and noise overlay, links, focus ring, .sr-only, .tabnum,
+   .wrap gutter. Type is in rem everywhere (DESIGN.md §2), so the root size below scales the whole app. */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
+/* "Letra grande" (footer switch, GK.store ui.bigText, set by GK.theme.big): 16 -> 20 px base, on top of the phone's
+   own text size (a percentage of it). 125 % still keeps the phone tab band on one row and the goal rows without
+   sideways scroll at 360 px; with the phone's text at 125 % as well the last tab wraps to a second row. */
+html[data-big] { font-size: 125%; }
 body {
   margin: 0; min-height: 100vh;
   background: var(--bg); color: var(--ink);
-  font: 400 16px/1.45 var(--f-body);
+  font: 400 1rem/1.45 var(--f-body);
   overflow-x: hidden;
 }
 body::before { /* paints the safe-area band above the sticky header */

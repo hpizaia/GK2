@@ -14,8 +14,12 @@ carry `data-i18n="key"` (text), `data-i18n-alt="key"` (image alt) and `data-html
 The chosen language is kept in `localStorage` (`gk2-site-lang`). The version in the footer comes from
 `const VERSION` in the same script; bump it together with `/VERSION`.
 
+Page order: hero (subtitle with the phone-next-to-the-game pitch, the app button, a trust line and a
+one-line personal note), what it does, screenshots, save your progress / home screen, how it's built, a
+final "Open the app" block (`fnTitle`, `fnNote`), footer.
+
 The footer carries the **Credits** block (`crTitle`, `cr1`–`cr5`, `crAsk`): fan project, free and
-non-profit, not affiliated, made with Claude Code, © Lazy Bear Games / tinyBuild, recipe data from the
+non-profit, not affiliated, made with Claude Code (the data is not AI-made), © Lazy Bear Games / tinyBuild, recipe data from the
 Wikily wiki, removal on request via GitHub issues. Keep it in step with the "Credits and rights"
 section of the main README.
 
@@ -23,24 +27,39 @@ section of the main README.
 
 Every picture exists once per language, and the page shows the one that matches the chosen language:
 
-| English | Portuguese | what it shows |
-|---|---|---|
-| `media/hero-en.gif` | `media/hero-pt.gif` | hero animation in the phone frame (360×780) |
-| `media/planner-phone-en.png` | `media/planner-phone-pt.png` | `#plan`: goals, progress, start of raw materials |
-| `media/recipes-phone-en.png` | `media/recipes-phone-pt.png` | `#recipes` with the Master Sword detail open |
-| `media/tech-phone-en.png` | `media/tech-phone-pt.png` | `#tech`: the technology tree |
-| `media/days-phone-en.png` | `media/days-phone-pt.png` | `#days`: the week wheel with a day and counter set |
-| `media/desktop-en.png` | `media/desktop-pt.png` | the planner at desktop width |
+| English | Portuguese | size | what it shows |
+|---|---|---|---|
+| `media/hero-en.gif` | `media/hero-pt.gif` | 390×844 / 360×780 | hero animation in the phone frame |
+| `media/hero-en-still.webp` | `media/hero-pt-still.webp` | same as the GIF | one frame of the hero GIF (goals filled in), shown instead of the GIF when the visitor asks for reduced motion |
+| `media/planner-phone-en.webp` | `media/planner-phone-pt.webp` | 480×1039 | `#plan`: goals, progress, start of raw materials |
+| `media/recipes-phone-en.webp` | `media/recipes-phone-pt.webp` | 480×1039 | `#recipes` with the Master Sword detail open |
+| `media/tech-phone-en.webp` | `media/tech-phone-pt.webp` | 480×1039 | `#tech`: the technology tree |
+| `media/days-phone-en.webp` | `media/days-phone-pt.webp` | 480×1039 | `#days`: the week wheel with a day and counter set |
+| `media/desktop-en.webp` | `media/desktop-pt.webp` | 2176×1360 | the planner at desktop width (hidden on screens under 600 px) |
 
-Phone shots are 750×1624 (a 375×812 viewport at 2x) and are shown in a 9:19 frame, cropped from the
-top; the desktop shot is 2880×1800 (1440×900 at 2x) in a 16:10 frame. All are dark theme with the
-demo plan (3 Iron Sword, 2 Beehive, 6 Conveyor Belt; Day of Wrath, counter 61).
+Phone shots are captured at 750×1624 (a 375×812 viewport at 2x), then saved as WebP 480 px wide
+(quality 80), and shown in a 9:19 frame, cropped from the top. The desktop shot is captured at 2880×1800
+(1440×900 at 2x) and saved as WebP 2176 px wide, in a 16:10 frame. All are dark theme with the demo plan
+(3 Iron Sword, 2 Beehive, 6 Conveyor Belt; Day of Wrath, counter 61). Converting a new capture:
+
+```sh
+ffmpeg -i planner-phone-en.png -vf scale=480:-1 -c:v libwebp -quality 80 planner-phone-en.webp
+ffmpeg -i desktop-en.png -vf scale=2176:-1:flags=lanczos -c:v libwebp -quality 80 desktop-en.webp
+# hero still: pick a frame with the plan filled in (frame 48 of hero-en.gif, frame 3 of hero-pt.gif today)
+ffmpeg -i hero-en.gif -vf "select=eq(n\,48)" -frames:v 1 -c:v libwebp -quality 82 hero-en-still.webp
+```
+
+When a hero GIF is re-recorded, extract its still again.
 
 How the switch picks media: each `<img>` in the hero and in `#screens` has `data-src-en` and
-`data-src-pt`; `src` starts on the English file (the default language), and `apply(lang)` sets
-`img.src` from `data-src-<lang>`. A file that fails to load shows a styled placeholder with its
-caption instead of a broken image. The hero is marked `data-fallback`: if `hero-en.gif` fails, it
-loads `hero-pt.gif` first and only shows the placeholder if that fails too.
+`data-src-pt`. The screenshots' `src` starts on the English file (they are `loading="lazy"`, so only the
+language in use is fetched), and `apply(lang)` sets `img.src` from `data-src-<lang>`. The hero `<img>` has
+**no** `src`: a small inline script right after it picks the language (saved choice, else the browser
+language) and sets `src` while the page is parsed, so a visitor downloads only one GIF; it also has
+`data-still-en` / `data-still-pt`, used instead of the GIF under `prefers-reduced-motion: reduce`. A
+`<noscript>` copy shows the English GIF without JavaScript. A file that fails to load shows a styled
+placeholder with its caption instead of a broken image. The hero is marked `data-fallback`: if the English
+file fails, it loads the Portuguese one first and only shows the placeholder if that fails too.
 
 ## Regenerate preview.html
 
@@ -79,24 +98,27 @@ Publish `site/index.html` with the Artifact tool and map each media file from `s
   "icon": "map",
   "description": "A free, fan-made crafting planner for Graveyard Keeper 2, in English and Brazilian Portuguese.",
   "files": {
-    "media/hero-en.gif":           "site/media/hero-en.gif",
-    "media/hero-pt.gif":           "site/media/hero-pt.gif",
-    "media/planner-phone-en.png":  "site/media/planner-phone-en.png",
-    "media/planner-phone-pt.png":  "site/media/planner-phone-pt.png",
-    "media/recipes-phone-en.png":  "site/media/recipes-phone-en.png",
-    "media/recipes-phone-pt.png":  "site/media/recipes-phone-pt.png",
-    "media/tech-phone-en.png":     "site/media/tech-phone-en.png",
-    "media/tech-phone-pt.png":     "site/media/tech-phone-pt.png",
-    "media/days-phone-en.png":     "site/media/days-phone-en.png",
-    "media/days-phone-pt.png":     "site/media/days-phone-pt.png",
-    "media/desktop-en.png":        "site/media/desktop-en.png",
-    "media/desktop-pt.png":        "site/media/desktop-pt.png"
+    "media/hero-en.gif":              "site/media/hero-en.gif",
+    "media/hero-pt.gif":              "site/media/hero-pt.gif",
+    "media/hero-en-still.webp":       "site/media/hero-en-still.webp",
+    "media/hero-pt-still.webp":       "site/media/hero-pt-still.webp",
+    "media/planner-phone-en.webp":    "site/media/planner-phone-en.webp",
+    "media/planner-phone-pt.webp":    "site/media/planner-phone-pt.webp",
+    "media/recipes-phone-en.webp":    "site/media/recipes-phone-en.webp",
+    "media/recipes-phone-pt.webp":    "site/media/recipes-phone-pt.webp",
+    "media/tech-phone-en.webp":       "site/media/tech-phone-en.webp",
+    "media/tech-phone-pt.webp":       "site/media/tech-phone-pt.webp",
+    "media/days-phone-en.webp":       "site/media/days-phone-en.webp",
+    "media/days-phone-pt.webp":       "site/media/days-phone-pt.webp",
+    "media/desktop-en.webp":          "site/media/desktop-en.webp",
+    "media/desktop-pt.webp":          "site/media/desktop-pt.webp"
   }
 }
 ```
 
 Later updates: publish the same `file_path` again (or pass the artifact's `url` from another
-session); files left out of `files` are kept, so only list media that changed. Keep each file under
+session); files left out of `files` are kept, so only list media that changed, and remove a file that is
+no longer used by mapping its path to `null` (for example `"media/desktop-en.png": null`). Keep each file under
 15 MB and the whole page under 16 MB. The artifact starts private; share it from the page's menu.
 
 ## Publish on GitHub Pages

@@ -123,8 +123,14 @@ p { margin: 0; }
   grid-template-columns: minmax(0, 1fr);
   padding-block: var(--s7) var(--s7);
 }
-@media (min-width: 860px) {
+@media (min-width: 720px) {
   .hero .wrap { grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); }
+}
+@media (min-width: 720px) and (max-width: 979px) {
+  .hero h1 { font-size: clamp(52px, 8.4vw, 80px); }
+}
+@media (max-width: 599px) {
+  .hero .wrap { padding-block: var(--s6) var(--s7); }
 }
 .eyebrow {
   font: 700 12px/1.3 var(--f-body); letter-spacing: .12em; text-transform: uppercase; color: var(--gold);
@@ -138,6 +144,7 @@ p { margin: 0; }
 .hero h1 .alt {
   display: block; font-size: .42em; font-weight: 600; color: var(--ink-3); margin-top: var(--s2); letter-spacing: .01em;
 }
+@media (max-width: 599px) { .hero h1 .alt { display: none; } }  /* the alternative name only costs height on a phone */
 .trim {
   height: 6px; max-width: 220px; margin-block: var(--s5);
   border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); opacity: .8;
@@ -157,7 +164,17 @@ p { margin: 0; }
 .btn-ghost { background: var(--panel-2); color: var(--ink); }
 .btn-ghost:hover { border-color: var(--gold); }
 .btn svg { flex: none; }
-.note { margin-top: var(--s4); color: var(--ink-2); font-size: 15px; max-width: 52ch; }
+.ghlink {
+  display: inline-flex; align-items: center; gap: var(--s2); min-height: 48px; padding: 0 var(--s2);
+  color: var(--ink-2); font-size: 15px; font-weight: 700;
+}
+.ghlink:hover { color: var(--ink); }
+.ghlink svg { flex: none; }
+.trust { margin-top: var(--s3); color: var(--ink-2); font-size: 15px; line-height: 1.45; max-width: 52ch; }
+.motive {
+  margin-top: var(--s4); padding-left: var(--s3); border-left: 2px solid var(--gold);
+  color: var(--ink-2); font-size: 15px; font-style: italic; line-height: 1.45; max-width: 52ch;
+}
 .tally {
   display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); margin-top: var(--s5);
   padding: 0; list-style: none; color: var(--ink-2); font-size: 15px;
@@ -182,6 +199,8 @@ p { margin: 0; }
   border-radius: 15px; background: var(--panel);
 }
 .screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.screen img:not([src]) { visibility: hidden; }
+.screen noscript img { position: absolute; inset: 0; }
 .ph {
   position: absolute; inset: 0; display: none;
   flex-direction: column; align-items: center; justify-content: center; gap: var(--s2);
@@ -249,6 +268,8 @@ section { padding-block: var(--s7) 0; }
   box-shadow: inset 0 0 0 1px var(--seam), 0 18px 40px -20px var(--shadow);
 }
 .desk .frame img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+/* On a phone the desktop capture is unreadable (and the heaviest file): hide it, so lazy loading never fetches it. */
+@media (max-width: 599px) { .desk { display: none; } }
 
 /* ---- notes ---- */
 .pair { display: grid; gap: var(--s4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
@@ -266,7 +287,21 @@ section { padding-block: var(--s7) 0; }
 .plate ol.steps li::marker { color: var(--gold); font-weight: 800; }
 .plate ol.steps b { color: var(--ink); }
 .plate .small { font-size: 14px; color: var(--ink-3); }
+.plate .small b { color: var(--ink-2); }
+.plate ol.steps .btn { margin-top: var(--s2); display: flex; width: max-content; max-width: 100%; }
 .plate .more { font-weight: 700; }
+
+/* ---- final call to action ---- */
+.final .box {
+  display: grid; justify-items: center; gap: var(--s4); text-align: center;
+  padding: var(--s6) var(--s5);
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 0%, var(--glow), transparent 70%),
+    var(--bg-2);
+  border: 1px solid var(--frame); border-top: 3px double var(--gold); border-radius: var(--r);
+}
+.final h2 { font-family: var(--f-display); font-weight: 700; font-size: clamp(30px, 4.4vw, 40px); line-height: 1.05; }
+.final p { color: var(--ink-2); font-size: 15px; }
 
 /* ---- footer ---- */
 footer {
@@ -280,7 +315,7 @@ footer .wrap {
   display: grid; gap: var(--s3); font-size: 14px; color: var(--ink-2);
 }
 footer .row { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); align-items: baseline; justify-content: space-between; }
-footer .ver { font-variant-numeric: tabular-nums lining-nums; color: var(--ink-3); }
+footer .ver { font-variant-numeric: tabular-nums lining-nums; color: var(--ink-2); }
 footer .mark { font-size: 20px; }
 .credits {
   display: grid; gap: var(--s2); max-width: 72ch;
@@ -320,28 +355,41 @@ footer .mark { font-size: 20px; }
         <p class="eyebrow" data-i18n="eyebrow">Graveyard Keeper 2 · fan-made crafting planner</p>
         <h1><span data-i18n="name">GK2 Companion</span><span class="alt" data-i18n="altName">Companheiro GK2</span></h1>
         <div class="trim" aria-hidden="true"></div>
-        <p class="pitch" data-i18n="pitch">Plan what to craft, see every ingredient, know what day it is.</p>
+        <p class="pitch" data-i18n="pitch">Keep it on your phone next to the game. Pick what you want to craft and it lists every raw material and each step by station, in order.</p>
         <div class="ctas">
           <a class="btn btn-primary" href="https://claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn" target="_blank" rel="noopener">
             <span data-i18n="open">Open the app</span>
             <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h8v8h-2V6.4l-6.3 6.3-1.4-1.4L9.6 5H5z" fill="currentColor"/></svg>
           </a>
-          <a class="btn btn-ghost" href="https://github.com/hpizaia/GK2" target="_blank" rel="noopener">
-            <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            <span>GitHub</span>
+          <a class="ghlink" href="https://github.com/hpizaia/GK2" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            <span data-i18n="gh">Code on GitHub</span>
           </a>
         </div>
-        <p class="note" data-i18n="note">Free, no install, works on your phone. Your progress syncs across devices when you're signed in to Claude; otherwise it stays on this device.</p>
+        <p class="trust" data-i18n="trust">Free · No ads · No account needed · Fan-made, not affiliated with Lazy Bear Games</p>
+        <p class="motive" data-i18n="motive">I kept forgetting what I still had to gather, so I made this for my phone. Maybe it helps you too. — Hugo</p>
         <ul class="tally">
           <li><b>690</b><span data-i18n="tItems">items</span></li>
           <li><b>695</b><span data-i18n="tRecipes">recipes</span></li>
           <li><b>226</b><span data-i18n="tTechs">technologies</span></li>
-          <li><b>6</b><span data-i18n="tDays">days a week</span></li>
+          <li><b>2</b><span data-i18n="tLangs">languages</span></li>
         </ul>
       </div>
       <figure class="phone">
         <div class="screen">
-          <img onerror="var p=this.getAttribute('data-src-pt');if(this.hasAttribute('data-fallback')&amp;&amp;p&amp;&amp;this.getAttribute('src')!==p){this.src=p}else{this.parentNode.classList.add('missing')}" src="media/hero-en.gif" data-src-en="media/hero-en.gif" data-src-pt="media/hero-pt.gif" data-fallback alt="The planner on a phone: goals, raw totals and steps by station" data-i18n-alt="altHero" width="390" height="844">
+          <img id="hero-img" onerror="var p=this.getAttribute('data-src-pt');if(this.hasAttribute('data-fallback')&amp;&amp;p&amp;&amp;this.getAttribute('src')!==p){this.src=p}else{this.parentNode.classList.add('missing')}" data-src-en="media/hero-en.gif" data-src-pt="media/hero-pt.gif" data-still-en="media/hero-en-still.webp" data-still-pt="media/hero-pt-still.webp" data-fallback alt="The planner on a phone: goals, raw totals and steps by station" data-i18n-alt="altHero" width="390" height="844">
+          <script>
+          // Runs while the page is parsed: load only the hero in the visitor's language (a still frame if they asked for reduced motion).
+          (function () {
+            var img = document.getElementById("hero-img"), lang = "en", still = false, v = null;
+            try { v = localStorage.getItem("gk2-site-lang"); } catch (e) {}
+            if (v === "pt" || v === "en") lang = v;
+            else { try { if (/^pt\b/i.test(navigator.language || "")) lang = "pt"; } catch (e) {} }
+            try { still = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+            img.src = img.getAttribute((still ? "data-still-" : "data-src-") + lang);
+          })();
+          </script>
+          <noscript><img src="media/hero-en.gif" alt="The planner on a phone: goals, raw totals and steps by station" width="390" height="844"></noscript>
           <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="altHero">The planner on a phone: goals, raw totals and steps by station</span></div>
         </div>
       </figure>
@@ -358,7 +406,7 @@ footer .mark { font-size: 20px; }
         <article class="card">
           <span class="slot" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M6 3h12v18H6z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span>
           <h3 data-i18n="c1t">Planner</h3>
-          <p data-i18n="c1p">Add goals and quantities. Get raw totals and steps grouped by station, in crafting order. Mark "have N of M", set perks, choose alternative recipes.</p>
+          <p data-i18n="c1p">Add what you want to build. See every raw material to gather and what to craft at each station, in order. Tick off what you already have, and pick perks or alternative recipes.</p>
         </article>
         <article class="card">
           <span class="slot" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M3 5h7a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H3zM21 5h-7a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h7z"/></svg></span>
@@ -378,12 +426,12 @@ footer .mark { font-size: 20px; }
         <article class="card">
           <span class="slot" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M3 4h11v8H8l-3 3v-3H3z"/><path d="M14 9h7v8h-2v3l-3-3h-5v-3"/></svg></span>
           <h3 data-i18n="c5t">English and Portuguese</h3>
-          <p data-i18n="c5p">Switch languages at any time. Brazilian Portuguese names come from the game's own files; anything unofficial is labelled, and you can rename it.</p>
+          <p data-i18n="c5p">Switch languages at any time. Brazilian Portuguese names come from the game's own files; anything unofficial is labeled, and you can rename it.</p>
         </article>
         <article class="card">
           <span class="slot" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M14.5 3.5a8.5 8.5 0 1 0 6 13A7 7 0 0 1 14.5 3.5z"/><path d="M17 5l1 2 2 1-2 1-1 2-1-2-2-1 2-1z" fill="currentColor" stroke="none"/></svg></span>
           <h3 data-i18n="c6t">Themes and sync</h3>
-          <p data-i18n="c6p">Night, parchment or follow your system. Signed in to Claude, your plan opens the same on phone and computer.</p>
+          <p data-i18n="c6p">Night, parchment or follow your system. When you're signed in to Claude, your plan opens the same on phone and computer.</p>
         </article>
       </div>
     </div>
@@ -398,36 +446,36 @@ footer .mark { font-size: 20px; }
       <ul class="strip">
         <li>
           <figure class="phone"><div class="screen">
-            <img onerror="this.parentNode.classList.add('missing')" src="media/planner-phone-en.png" data-src-en="media/planner-phone-en.png" data-src-pt="media/planner-phone-pt.png" alt="Planner: goals, raw totals and steps by station" data-i18n-alt="a1" loading="lazy" width="390" height="844">
+            <img onerror="this.parentNode.classList.add('missing')" src="media/planner-phone-en.webp" data-src-en="media/planner-phone-en.webp" data-src-pt="media/planner-phone-pt.webp" alt="Planner: goals, raw totals and steps by station" data-i18n-alt="a1" loading="lazy" decoding="async" width="480" height="1039">
             <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="a1">Planner: goals, raw totals and steps by station</span></div>
           </div></figure>
-          <p class="cap"><b data-i18n="c1t">Planner</b></p>
+          <p class="cap" data-i18n="cap1" data-html><b>Planner:</b> everything to gather, step by step</p>
         </li>
         <li>
           <figure class="phone"><div class="screen">
-            <img onerror="this.parentNode.classList.add('missing')" src="media/recipes-phone-en.png" data-src-en="media/recipes-phone-en.png" data-src-pt="media/recipes-phone-pt.png" alt="Recipes: an item with its recipes and where it is used" data-i18n-alt="a2" loading="lazy" width="390" height="844">
+            <img onerror="this.parentNode.classList.add('missing')" src="media/recipes-phone-en.webp" data-src-en="media/recipes-phone-en.webp" data-src-pt="media/recipes-phone-pt.webp" alt="Recipes: an item with its recipes and where it is used" data-i18n-alt="a2" loading="lazy" decoding="async" width="480" height="1039">
             <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="a2">Recipes: an item with its recipes and where it is used</span></div>
           </div></figure>
-          <p class="cap"><b data-i18n="c2t">Recipes</b></p>
+          <p class="cap" data-i18n="cap2" data-html><b>Recipes:</b> how to make it and what it’s used in</p>
         </li>
         <li>
           <figure class="phone"><div class="screen">
-            <img onerror="this.parentNode.classList.add('missing')" src="media/tech-phone-en.png" data-src-en="media/tech-phone-en.png" data-src-pt="media/tech-phone-pt.png" alt="Technologies: branches, costs and prerequisites" data-i18n-alt="a3" loading="lazy" width="390" height="844">
+            <img onerror="this.parentNode.classList.add('missing')" src="media/tech-phone-en.webp" data-src-en="media/tech-phone-en.webp" data-src-pt="media/tech-phone-pt.webp" alt="Technologies: branches, costs and prerequisites" data-i18n-alt="a3" loading="lazy" decoding="async" width="480" height="1039">
             <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="a3">Technologies: branches, costs and prerequisites</span></div>
           </div></figure>
-          <p class="cap"><b data-i18n="c3t">Technologies</b></p>
+          <p class="cap" data-i18n="cap3" data-html><b>Technologies:</b> what to research next</p>
         </li>
         <li>
           <figure class="phone"><div class="screen">
-            <img onerror="this.parentNode.classList.add('missing')" src="media/days-phone-en.png" data-src-en="media/days-phone-en.png" data-src-pt="media/days-phone-pt.png" alt="Days: the 6-day wheel and what happens today" data-i18n-alt="a4" loading="lazy" width="390" height="844">
+            <img onerror="this.parentNode.classList.add('missing')" src="media/days-phone-en.webp" data-src-en="media/days-phone-en.webp" data-src-pt="media/days-phone-pt.webp" alt="Days: the 6-day wheel and what happens today" data-i18n-alt="a4" loading="lazy" decoding="async" width="480" height="1039">
             <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="a4">Days: the 6-day wheel and what happens today</span></div>
           </div></figure>
-          <p class="cap"><b data-i18n="c4t">Days</b></p>
+          <p class="cap" data-i18n="cap4" data-html><b>Days:</b> what happens today</p>
         </li>
       </ul>
       <figure class="desk">
         <div class="frame">
-          <img onerror="this.parentNode.classList.add('missing')" src="media/desktop-en.png" data-src-en="media/desktop-en.png" data-src-pt="media/desktop-pt.png" alt="Desktop layout: goals on the left, the plan on the right" data-i18n-alt="a5" loading="lazy" width="1440" height="900">
+          <img onerror="this.parentNode.classList.add('missing')" src="media/desktop-en.webp" data-src-en="media/desktop-en.webp" data-src-pt="media/desktop-pt.webp" alt="Desktop layout: goals on the left, the plan on the right" data-i18n-alt="a5" loading="lazy" decoding="async" width="2176" height="1360">
           <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="a5">Desktop layout: goals on the left, the plan on the right</span></div>
         </div>
         <figcaption class="cap" data-i18n="a5">Desktop layout: goals on the left, the plan on the right</figcaption>
@@ -438,44 +486,54 @@ footer .mark { font-size: 20px; }
   <section id="save" aria-labelledby="h-save">
     <div class="wrap pair">
       <div class="plate">
-        <h2 id="h-save" data-i18n="svTitle">Keep your progress</h2>
-        <p data-i18n="svLead">Three steps, once. After that the app just opens where you left it.</p>
+        <h2 id="h-save" data-i18n="svTitle">Save your progress (optional)</h2>
+        <p data-i18n="svLead">The app works right away, no account needed. To keep your plan safe and the same on phone and PC, sign in to Claude.</p>
         <ol class="steps">
-          <li data-i18n="sv1" data-html>Open the app at <a href="https://claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn" target="_blank" rel="noopener">claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn</a>. It is a web page; there is nothing to install.</li>
-          <li data-i18n="sv2" data-html>Sign in to Claude when the page asks (a free account is enough). Your plan is then saved in your account and opens the same on your phone and computer. The footer shows <b>Synced</b> when it is.</li>
-          <li data-i18n="sv3" data-html>Not signed in? Everything still works, but the plan lives only in that browser (the footer says <b>This device only</b>). iPhones can wipe that after a few days without use, so sign in if you don't want to lose it.</li>
+          <li><span data-i18n="sv1">Open the app. It's a web page, so there is nothing to install.</span>
+            <a class="btn btn-primary" href="https://claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn" target="_blank" rel="noopener"><span data-i18n="open">Open the app</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h8v8h-2V6.4l-6.3 6.3-1.4-1.4L9.6 5H5z" fill="currentColor"/></svg></a></li>
+          <li data-i18n="sv2" data-html>Sign in at claude.ai with a free account. Claude is Anthropic's AI app; you don't have to chat with it. The app's footer then shows <b>Synced</b>.</li>
         </ol>
+        <p class="small" data-i18n="sv3" data-html>Not signed in? Everything still works, but the plan stays only in that browser (the app's footer says <b>This device only</b>). iPhones can wipe it after a few days without use.</p>
         <p class="small" data-i18n="svNote">Your plan is tied to your own Claude account. It isn't public and other players can't see it.</p>
       </div>
       <div class="plate">
         <h2 data-i18n="hsTitle">Put it on your home screen</h2>
         <p data-i18n="hsLead">Then it's one tap away, like an app.</p>
         <ol class="steps">
-          <li data-i18n="hs1" data-html><b>iPhone (Safari):</b> open the app, tap the Share button, then <b>Add to Home Screen</b>.</li>
+          <li data-i18n="hs1" data-html><b>iPhone (Safari):</b> open the app, tap Share (or ⋯, then Share), then <b>Add to Home Screen</b>.</li>
           <li data-i18n="hs2" data-html><b>Android (Chrome):</b> open the app, tap the ⋮ menu, then <b>Add to Home screen</b>.</li>
-          <li data-i18n="hs3" data-html><b>Computer:</b> bookmark the link.</li>
         </ol>
         <p class="small" data-i18n="hsNote">Playing on PC? Keep the app open on your phone next to the game, signed in with the same account.</p>
       </div>
     </div>
   </section>
 
-  <section id="built" aria-label="About">
+  <section id="built" aria-labelledby="h-built">
     <div class="wrap pair">
       <div class="plate">
-        <h2 data-i18n="bTitle">How it's built</h2>
+        <h2 id="h-built" data-i18n="bTitle">How it's built</h2>
         <ul>
           <li data-i18n="b1">One HTML file. No server, no account of its own.</li>
           <li data-i18n="b2">Items, recipes and techs come from wikily.gg.</li>
           <li data-i18n="b3">Official names in both languages come from the game's text files.</li>
-          <li data-i18n="b4">Built with Claude Code, with several agents splitting data, interface and review.</li>
+          <li data-i18n="b4">Built with Claude Code, an AI coding tool, under the author's direction, and tested in the game.</li>
         </ul>
         <a class="more" href="https://github.com/hpizaia/GK2#readme" target="_blank" rel="noopener" data-i18n="bLink">Read the README</a>
       </div>
       <div class="plate">
         <h2 data-i18n="rTitle">Run it yourself</h2>
-        <p data-i18n="rP">Want your own copy, with its own saved plan? The guide shows how to duplicate the app as your own Claude artifact, or build it from the source.</p>
+        <p data-i18n="rP">Want to change something, or make one for another game? The guide shows how to copy it.</p>
         <a class="more" href="https://github.com/hpizaia/GK2/blob/main/docs/duplicate.md" target="_blank" rel="noopener" data-i18n="rLink">How to make your own copy</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="start" class="final" aria-labelledby="h-start">
+    <div class="wrap">
+      <div class="box">
+        <h2 id="h-start" data-i18n="fnTitle">Ready to plan your next build?</h2>
+        <a class="btn btn-primary" href="https://claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn" target="_blank" rel="noopener"><span data-i18n="open">Open the app</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h8v8h-2V6.4l-6.3 6.3-1.4-1.4L9.6 5H5z" fill="currentColor"/></svg></a>
+        <p data-i18n="fnNote">Free. Opens in your phone's browser.</p>
       </div>
     </div>
   </section>
@@ -485,7 +543,7 @@ footer .mark { font-size: 20px; }
   <div class="wrap">
     <div class="row">
       <span class="mark"><svg width="14" height="14" aria-hidden="true"><use href="#i-cross"/></svg><span data-i18n="name">GK2 Companion</span></span>
-      <span class="ver" id="ver">v1.3.3</span>
+      <span class="ver" id="ver">v1.4.0</span>
     </div>
     <div class="credits" id="credits">
       <h2 id="h-credits" data-i18n="crTitle">Credits</h2>
@@ -494,7 +552,7 @@ footer .mark { font-size: 20px; }
         <li data-i18n="cr2">Not affiliated with or endorsed by Lazy Bear Games or tinyBuild.</li>
         <li data-i18n="cr3">Graveyard Keeper 2, its art, icons and names © Lazy Bear Games / tinyBuild, used as fan content with credit.</li>
         <li data-i18n="cr4" data-html>Recipe data from the <a href="https://wikily.gg/graveyard-keeper-2" target="_blank" rel="noopener">Graveyard Keeper 2 Wiki on Wikily</a> (© NX Software).</li>
-        <li data-i18n="cr5">Made with AI: built with Claude Code (Anthropic) under the author's direction, and tested in the game.</li>
+        <li data-i18n="cr5">Built with an AI coding tool (Claude Code) under my direction and tested in the game. The data isn't AI-made: recipes come from the wiki, names from the game's own files.</li>
       </ul>
       <p class="ask" data-i18n="crAsk" data-html>Should anything be removed or changed? Say so in a <a href="https://github.com/hpizaia/GK2/issues" target="_blank" rel="noopener">GitHub issue</a> and it will be.</p>
     </div>
@@ -504,7 +562,7 @@ footer .mark { font-size: 20px; }
 <script>
 (function () {
   "use strict";
-  const VERSION = "1.3.3";
+  const VERSION = "1.4.0";
   const KEY = "gk2-site-lang";
 
   const I18N = {
@@ -512,15 +570,17 @@ footer .mark { font-size: 20px; }
       name: "GK2 Companion",
       altName: "Companheiro GK2",
       eyebrow: "Graveyard Keeper 2 · fan-made crafting planner",
-      pitch: "Plan what to craft, see every ingredient, know what day it is.",
+      pitch: "Keep it on your phone next to the game. Pick what you want to craft and it lists every raw material and each step by station, in order.",
       open: "Open the app",
-      note: "Free, no install, works on your phone. Your progress syncs across devices when you're signed in to Claude; otherwise it stays on this device.",
-      tItems: "items", tRecipes: "recipes", tTechs: "technologies", tDays: "days a week",
+      gh: "Code on GitHub",
+      trust: "Free · No ads · No account needed · Fan-made, not affiliated with Lazy Bear Games",
+      motive: "I kept forgetting what I still had to gather, so I made this for my phone. Maybe it helps you too. — Hugo",
+      tItems: "items", tRecipes: "recipes", tTechs: "technologies", tLangs: "languages",
       altHero: "The planner on a phone: goals, raw totals and steps by station",
       fTitle: "What it does",
       fLead: "Pick what you want to make. The app works out the rest, down to the last log and the last workbench.",
       c1t: "Planner",
-      c1p: "Add goals and quantities. Get raw totals and steps grouped by station, in crafting order. Mark “have N of M”, set perks, choose alternative recipes.",
+      c1p: "Add what you want to build. See every raw material to gather and what to craft at each station, in order. Tick off what you already have, and pick perks or alternative recipes.",
       c2t: "Recipes",
       c2p: "All <span class=\"num\">690</span> items and <span class=\"num\">695</span> recipes, with search and filters. Each item shows how to make it and everything it is used in.",
       c3t: "Technologies",
@@ -528,9 +588,9 @@ footer .mark { font-size: 20px; }
       c4t: "Days",
       c4p: "The game's 6-day wheel and what happens on each day. A “Today” panel in the planner, and a one-time calibration against the in-game day counter.",
       c5t: "English and Portuguese",
-      c5p: "Switch languages at any time. Brazilian Portuguese names come from the game's own files; anything unofficial is labelled, and you can rename it.",
+      c5p: "Switch languages at any time. Brazilian Portuguese names come from the game's own files; anything unofficial is labeled, and you can rename it.",
       c6t: "Themes and sync",
-      c6p: "Night, parchment or follow your system. Signed in to Claude, your plan opens the same on phone and computer.",
+      c6p: "Night, parchment or follow your system. When you're signed in to Claude, your plan opens the same on phone and computer.",
       sTitle: "On your phone",
       sLead: "Made for a phone next to the game, and it works just as well on a desktop.",
       a1: "Planner: goals, raw totals and steps by station",
@@ -538,34 +598,39 @@ footer .mark { font-size: 20px; }
       a3: "Technologies: branches, costs and prerequisites",
       a4: "Days: the 6-day wheel and what happens today",
       a5: "Desktop layout: goals on the left, the plan on the right",
+      cap1: "<b>Planner:</b> everything to gather, step by step",
+      cap2: "<b>Recipes:</b> how to make it and what it’s used in",
+      cap3: "<b>Technologies:</b> what to research next",
+      cap4: "<b>Days:</b> what happens today",
       bTitle: "How it's built",
       b1: "One HTML file. No server, no account of its own.",
       b2: "Items, recipes and techs come from wikily.gg.",
       b3: "Official names in both languages come from the game's text files.",
-      b4: "Built with Claude Code, with several agents splitting data, interface and review.",
+      b4: "Built with Claude Code, an AI coding tool, under the author's direction, and tested in the game.",
       bLink: "Read the README",
       rTitle: "Run it yourself",
-      rP: "Want your own copy, with its own saved plan? The guide shows how to duplicate the app as your own Claude artifact, or build it from the source.",
+      rP: "Want to change something, or make one for another game? The guide shows how to copy it.",
       rLink: "How to make your own copy",
-      svTitle: "Keep your progress",
-      svLead: "Three steps, once. After that the app just opens where you left it.",
-      sv1: "Open the app at <a href=\"https://claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn\" target=\"_blank\" rel=\"noopener\">claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn</a>. It is a web page; there is nothing to install.",
-      sv2: "Sign in to Claude when the page asks (a free account is enough). Your plan is then saved in your account and opens the same on your phone and computer. The footer shows <b>Synced</b> when it is.",
-      sv3: "Not signed in? Everything still works, but the plan lives only in that browser (the footer says <b>This device only</b>). iPhones can wipe that after a few days without use, so sign in if you don't want to lose it.",
+      svTitle: "Save your progress (optional)",
+      svLead: "The app works right away, no account needed. To keep your plan safe and the same on phone and PC, sign in to Claude.",
+      sv1: "Open the app. It's a web page, so there is nothing to install.",
+      sv2: "Sign in at claude.ai with a free account. Claude is Anthropic's AI app; you don't have to chat with it. The app's footer then shows <b>Synced</b>.",
+      sv3: "Not signed in? Everything still works, but the plan stays only in that browser (the app's footer says <b>This device only</b>). iPhones can wipe it after a few days without use.",
       svNote: "Your plan is tied to your own Claude account. It isn't public and other players can't see it.",
       hsTitle: "Put it on your home screen",
       hsLead: "Then it's one tap away, like an app.",
-      hs1: "<b>iPhone (Safari):</b> open the app, tap the Share button, then <b>Add to Home Screen</b>.",
+      hs1: "<b>iPhone (Safari):</b> open the app, tap Share (or ⋯, then Share), then <b>Add to Home Screen</b>.",
       hs2: "<b>Android (Chrome):</b> open the app, tap the ⋮ menu, then <b>Add to Home screen</b>.",
-      hs3: "<b>Computer:</b> bookmark the link.",
       hsNote: "Playing on PC? Keep the app open on your phone next to the game, signed in with the same account.",
       crTitle: "Credits",
       cr1: "A fan project by Hugo Pizaia, a Brazilian fan, made to make playing more fun. Free and non-profit: no ads, nothing sold.",
       cr2: "Not affiliated with or endorsed by Lazy Bear Games or tinyBuild.",
       cr3: "Graveyard Keeper 2, its art, icons and names © Lazy Bear Games / tinyBuild, used as fan content with credit.",
       cr4: "Recipe data from the <a href=\"https://wikily.gg/graveyard-keeper-2\" target=\"_blank\" rel=\"noopener\">Graveyard Keeper 2 Wiki on Wikily</a> (© NX Software).",
-      cr5: "Made with AI: built with Claude Code (Anthropic) under the author's direction, and tested in the game.",
+      cr5: "Built with an AI coding tool (Claude Code) under my direction and tested in the game. The data isn't AI-made: recipes come from the wiki, names from the game's own files.",
       crAsk: "Should anything be removed or changed? Say so in a <a href=\"https://github.com/hpizaia/GK2/issues\" target=\"_blank\" rel=\"noopener\">GitHub issue</a> and it will be.",
+      fnTitle: "Ready to plan your next build?",
+      fnNote: "Free. Opens in your phone's browser.",
       langGroup: "Language",
       version: "Version"
     },
@@ -573,15 +638,17 @@ footer .mark { font-size: 20px; }
       name: "Companheiro GK2",
       altName: "GK2 Companion",
       eyebrow: "Graveyard Keeper 2 · planejador de crafting feito por fã",
-      pitch: "Planeje o que fabricar, veja cada ingrediente, saiba que dia é hoje.",
+      pitch: "Deixe no celular, do lado do jogo. Escolha o que quer fabricar e ele lista cada matéria-prima e cada etapa por estação, na ordem.",
       open: "Abrir o app",
-      note: "Grátis, sem instalar, funciona no celular. Com login no Claude, seu progresso sincroniza entre aparelhos; sem login, fica salvo neste aparelho.",
-      tItems: "itens", tRecipes: "receitas", tTechs: "tecnologias", tDays: "dias na semana",
+      gh: "Código no GitHub",
+      trust: "Grátis · Sem anúncios · Não precisa de conta · Feito por fã, sem vínculo com a Lazy Bear Games",
+      motive: "Eu vivia esquecendo o que ainda faltava juntar, então fiz isto para o meu celular. Talvez ajude você também. — Hugo",
+      tItems: "itens", tRecipes: "receitas", tTechs: "tecnologias", tLangs: "idiomas",
       altHero: "O planejador no celular: metas, matérias-primas e etapas por estação",
       fTitle: "O que faz",
       fLead: "Escolha o que quer fabricar. O app calcula o resto, até a última tora e a última bancada.",
       c1t: "Planejador",
-      c1p: "Adicione metas e quantidades. Veja as matérias-primas totais e as etapas por estação, na ordem de fabricação. Marque “tenho N de M”, ative vantagens, escolha receitas alternativas.",
+      c1p: "Adicione o que quer construir. Veja cada matéria-prima para juntar e o que fabricar em cada estação, na ordem. Marque o que você já tem e escolha vantagens ou receitas alternativas.",
       c2t: "Receitas",
       c2p: "Todos os <span class=\"num\">690</span> itens e <span class=\"num\">695</span> receitas, com busca e filtros. Cada item mostra como fabricar e onde ele é usado.",
       c3t: "Tecnologias",
@@ -599,34 +666,39 @@ footer .mark { font-size: 20px; }
       a3: "Tecnologias: ramos, custos e pré-requisitos",
       a4: "Dias: a roda de 6 dias e o que acontece hoje",
       a5: "No computador: metas à esquerda, o plano à direita",
+      cap1: "<b>Planejador:</b> tudo o que juntar, passo a passo",
+      cap2: "<b>Receitas:</b> como fazer e onde é usado",
+      cap3: "<b>Tecnologias:</b> o que pesquisar em seguida",
+      cap4: "<b>Dias:</b> o que acontece hoje",
       bTitle: "Como foi feito",
       b1: "Um único arquivo HTML. Sem servidor, sem conta própria.",
       b2: "Itens, receitas e tecnologias vêm do wikily.gg.",
       b3: "Os nomes oficiais nos dois idiomas vêm dos arquivos de texto do jogo.",
-      b4: "Feito com o Claude Code, com vários agentes dividindo dados, interface e revisão.",
+      b4: "Feito com o Claude Code, uma ferramenta de programação com IA, sob a direção do autor, e testado no jogo.",
       bLink: "Ler o README",
       rTitle: "Tenha a sua cópia",
-      rP: "Quer uma cópia só sua, com o próprio plano salvo? O guia mostra como duplicar o app como um artifact seu no Claude, ou montar a partir do código.",
+      rP: "Quer mudar algo, ou fazer um para outro jogo? O guia mostra como copiar.",
       rLink: "Como fazer a sua cópia",
-      svTitle: "Não perca o seu progresso",
-      svLead: "Três passos, uma vez só. Depois o app abre onde você parou.",
-      sv1: "Abra o app em <a href=\"https://claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn\" target=\"_blank\" rel=\"noopener\">claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn</a>. É uma página web; não tem nada para instalar.",
-      sv2: "Entre com a sua conta do Claude quando a página pedir (a conta gratuita basta). O plano passa a ficar salvo na sua conta e abre igual no celular e no computador. No rodapé aparece <b>Sincronizado</b> quando está tudo certo.",
-      sv3: "Sem login? Tudo funciona, mas o plano fica só naquele navegador (o rodapé mostra <b>Só neste aparelho</b>). O iPhone pode apagar isso depois de alguns dias sem uso, então entre com a conta se não quiser perder.",
+      svTitle: "Guarde o seu progresso (opcional)",
+      svLead: "O app funciona na hora, sem conta. Para guardar o plano e ver o mesmo no celular e no PC, entre no Claude.",
+      sv1: "Abra o app. É uma página web, então não tem nada para instalar.",
+      sv2: "Entre em claude.ai com uma conta grátis. O Claude é o app de IA da Anthropic; você não precisa conversar com ele. Aí o rodapé do app mostra <b>Sincronizado</b>.",
+      sv3: "Sem login? Tudo funciona, mas o plano fica só naquele navegador (o rodapé do app mostra <b>Só neste aparelho</b>). O iPhone pode apagar isso depois de alguns dias sem uso.",
       svNote: "O plano fica na sua própria conta do Claude. Não é público e outros jogadores não veem.",
       hsTitle: "Coloque na tela de início",
       hsLead: "Aí ele fica a um toque, como um app.",
-      hs1: "<b>iPhone (Safari):</b> abra o app, toque no botão Compartilhar e depois em <b>Adicionar à Tela de Início</b>.",
+      hs1: "<b>iPhone (Safari):</b> abra o app, toque em Compartilhar (ou ⋯ e depois Compartilhar) e em <b>Adicionar à Tela de Início</b>.",
       hs2: "<b>Android (Chrome):</b> abra o app, toque no menu ⋮ e depois em <b>Adicionar à tela inicial</b>.",
-      hs3: "<b>Computador:</b> salve o link nos favoritos.",
       hsNote: "Joga no PC? Deixe o app aberto no celular do lado do jogo, com a mesma conta.",
       crTitle: "Créditos",
       cr1: "Projeto de fã de Hugo Pizaia, um fã brasileiro, feito para deixar a jogatina mais divertida. Gratuito e sem fins lucrativos: sem anúncios, nada à venda.",
-      cr2: "Sem vínculo com a Lazy Bear Games nem com a tinyBuild, e sem endosso delas.",
+      cr2: "Sem vínculo com a Lazy Bear Games nem com a tinyBuild, e sem apoio oficial delas.",
       cr3: "Graveyard Keeper 2, a arte, os ícones e os nomes © Lazy Bear Games / tinyBuild, usados como conteúdo de fã, com crédito.",
       cr4: "Receitas da <a href=\"https://wikily.gg/graveyard-keeper-2\" target=\"_blank\" rel=\"noopener\">wiki do Graveyard Keeper 2 no Wikily</a> (© NX Software).",
-      cr5: "Feito com IA: com o Claude Code (Anthropic), sob a direção do autor, e testado no jogo.",
-      crAsk: "Algo precisa sair ou mudar? Avise numa <a href=\"https://github.com/hpizaia/GK2/issues\" target=\"_blank\" rel=\"noopener\">issue no GitHub</a> que sai ou muda.",
+      cr5: "Feito com uma ferramenta de programação com IA (Claude Code), sob a minha direção, e testado no jogo. Os dados não são gerados por IA: as receitas vêm da wiki e os nomes, dos arquivos do jogo.",
+      crAsk: "Algo precisa sair ou mudar? Abra uma <a href=\"https://github.com/hpizaia/GK2/issues\" target=\"_blank\" rel=\"noopener\">issue no GitHub</a> que eu tiro ou corrijo.",
+      fnTitle: "Pronto para planejar a próxima construção?",
+      fnNote: "Grátis. Abre no navegador do celular.",
       langGroup: "Idioma",
       version: "Versão"
     }
@@ -638,6 +710,7 @@ footer .mark { font-size: 20px; }
     return "en";
   }
   function saveLang(l) { try { localStorage.setItem(KEY, l); } catch (e) {} }
+  function reduceMotion() { try { return matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } }
 
   function apply(lang) {
     const d = I18N[lang] || I18N.en;
@@ -656,11 +729,14 @@ footer .mark { font-size: 20px; }
     });
     const grp = document.querySelector(".lang");
     if (grp) grp.setAttribute("aria-label", d.langGroup);
+    document.title = d.name;
     const ver = document.getElementById("ver");
     if (ver) { ver.textContent = "v" + VERSION; ver.title = d.version + " " + VERSION; }
-    // Media follow the language: each screenshot carries data-src-en / data-src-pt.
+    // Media follow the language: each screenshot carries data-src-en / data-src-pt. The hero also has
+    // data-still-en / data-still-pt, a single frame shown instead of the GIF when reduced motion is asked for.
+    const still = reduceMotion();
     document.querySelectorAll("img[data-src-en]").forEach(function (img) {
-      const want = img.getAttribute("data-src-" + lang) || img.getAttribute("data-src-en");
+      const want = (still && img.getAttribute("data-still-" + lang)) || img.getAttribute("data-src-" + lang) || img.getAttribute("data-src-en");
       if (img.getAttribute("src") === want) return;
       img.parentNode.classList.remove("missing");
       img.src = want;

@@ -2,47 +2,68 @@
 /* ---------- planner layout ---------- */
 .planner { display: grid; gap: var(--s5); padding-block: var(--s4) var(--s6); }
 .col-plan { display: grid; gap: var(--s5); min-width: 0; }
+/* phones (one column): Hoje (one line) → Metas → Matérias-primas → Etapas → Tecnologias que faltam → Progresso,
+   Vantagens and "Copiar lista" last. The DOM keeps the desktop order (progress on top of the right column). */
+@media (max-width: 899px) {
+  .col-plan > [data-panel="checklist"] { order: 10; }
+}
 .summary-grid { display: grid; gap: var(--s5); min-width: 0; }
 .summary-grid > * { min-width: 0; }
 
 /* goals */
 .goals { display: grid; gap: var(--s2); }
-.goal-list { margin-top: var(--s3); }
+.goal-list { margin-top: var(--s3); container: goals / inline-size; }
+.goals-intro { margin: var(--s2) 0 0; font-size: .9375rem; line-height: 1.35; color: var(--ink-2); max-width: 60ch; }
+.goals-intro + .goal-list { margin-top: var(--s2); }
 .goal {
   display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: center; gap: var(--s2) var(--s2);
   min-height: 64px; padding: var(--s2) var(--s1) var(--s2) var(--s3); border-top: 1px solid var(--seam);
 }
 .goal:first-child { border-top: 0; }
-.goal-name { font-weight: 700; font-size: 16px; line-height: 1.2; overflow-wrap: break-word; }
-.goal-sub { font-size: 13px; color: var(--ink-2); }
+.goal-main { min-width: 0; }
+/* whole words (hyphenated when the language allows), never "Supriment / os" */
+.goal-name { font-weight: 700; font-size: 1rem; line-height: 1.2; overflow-wrap: normal; hyphens: auto; -webkit-hyphens: auto; }
+/* a narrow list (phones, and the desktop's left column): stepper and ✕ on a second line under the name */
+@container goals (max-width: 479px) {
+  .goal { grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px; padding-block: 6px; }
+  .goal > .slot { align-self: start; margin-top: 2px; }
+  .goal-ctl { grid-column: 2; justify-content: space-between; margin-left: -4px; }
+}
+@supports not (container-type: inline-size) {
+  @media (max-width: 479px) {
+    .goal { grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px; padding-block: 6px; }
+    .goal-ctl { grid-column: 2; justify-content: space-between; }
+  }
+}
+.goal-sub { font-size: .8125rem; color: var(--ink-2); }
 .goal-ctl { display: flex; align-items: center; gap: 2px; }
 .goal-ctl .btn { padding: 0; width: var(--tap); }
 .stepper { display: inline-flex; align-items: stretch; }
 .stepper button {
   width: var(--tap); min-height: var(--tap); border: 1px solid var(--frame); background: var(--panel-2); color: var(--ink);
-  font-size: 22px; font-weight: 700; line-height: 1; cursor: pointer; box-shadow: inset 0 1px 0 var(--bevel-hi), inset 0 -2px 0 var(--bevel-lo);
+  font-size: 1.375rem; font-weight: 700; line-height: 1; cursor: pointer; box-shadow: inset 0 1px 0 var(--bevel-hi), inset 0 -2px 0 var(--bevel-lo);
   touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; /* press and hold */
 }
 .stepper button:first-child { border-radius: var(--r) 0 0 var(--r); }
 .stepper button:last-child { border-radius: 0 var(--r) var(--r) 0; }
 .stepper input {
-  width: 46px; min-height: var(--tap); border: 1px solid var(--gold); border-left: 0; border-right: 0; /* ≥ 3:1 on --bg-2 */
-  background: var(--bg-2); color: var(--accent); text-align: center; font-weight: 800; font-size: 20px;
+  width: max(46px, 2.3em); min-height: var(--tap); border: 1px solid var(--gold); border-left: 0; border-right: 0; /* ≥ 3:1 on --bg-2 */
+  background: var(--bg-2); color: var(--accent); text-align: center; font-weight: 800; font-size: 1.25rem;
   font-variant-numeric: tabular-nums lining-nums; -moz-appearance: textfield; appearance: textfield;
 }
 .stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-.example-note { margin: var(--s2) 0 0; padding: var(--s2) var(--s3); font-size: 14px; color: var(--ink-2); border: 1px dashed var(--gold); border-radius: var(--r); }
+.example-note { margin: var(--s2) 0 0; padding: var(--s2) var(--s3); font-size: .875rem; color: var(--ink-2); border: 1px dashed var(--gold); border-radius: var(--r); }
 .empty { padding: var(--s4); }
 .empty p { margin: 0 0 var(--s3); color: var(--ink-2); }
 .plan-empty { display: none; } /* phones: the goals empty state already says it */
-.empty-title { font: 700 20px/1.2 var(--f-display); color: var(--ink) !important; }
+.empty-title { font: 700 1.25rem/1.2 var(--f-display); color: var(--ink) !important; }
 .try { display: flex; flex-wrap: wrap; gap: var(--s2); }
 
 /* progress */
 .progress { padding: var(--s3) var(--s4) var(--s4); display: grid; gap: var(--s2); }
 .progress-top { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s3); flex-wrap: wrap; }
-.progress-label { font: 700 20px/1.1 var(--f-display); }
-.progress-num { font-weight: 800; font-size: 15px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.progress-label { font: 700 1.25rem/1.1 var(--f-display); }
+.progress-num { font-weight: 800; font-size: .9375rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .bar { height: 16px; background: var(--bg-2); border: 1px solid var(--frame); border-radius: 2px; box-shadow: inset 0 2px 0 var(--bevel-lo); overflow: hidden; }
 .bar-fill {
   height: 100%; width: 0; background:
@@ -50,10 +71,10 @@
     linear-gradient(180deg, var(--bevel-hi), transparent 60%), var(--moss);
   transition: width .3s ease;
 }
-.stats { font-size: 14px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.stats { font-size: .875rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .progress-actions { display: flex; flex-wrap: wrap; gap: var(--s2); }
-.copy-fallback { width: 100%; min-height: 160px; background: var(--bg-2); color: var(--ink); border: 1px solid var(--frame); border-radius: var(--r); padding: var(--s2); font-size: 13px; }
-.warn { padding: var(--s3) var(--s4); border: 1px solid var(--blood); border-radius: var(--r); color: var(--ink); background: var(--panel); font-size: 14px; }
+.copy-fallback { width: 100%; min-height: 160px; background: var(--bg-2); color: var(--ink); border: 1px solid var(--frame); border-radius: var(--r); padding: var(--s2); font-size: .8125rem; }
+.warn { padding: var(--s3) var(--s4); border: 1px solid var(--blood); border-radius: var(--r); color: var(--ink); background: var(--panel); font-size: .875rem; }
 
 /* rows (raw + steps) */
 .list { overflow: hidden; }
@@ -70,22 +91,37 @@
 }
 .tick input:checked { background: var(--moss); border-color: var(--moss); box-shadow: inset 0 0 0 3px var(--bg-2); }
 .row-main { min-width: 0; display: block; } /* plain text: only .tick toggles "done" */
-.row-name { display: block; font-weight: 700; font-size: 17px; line-height: 1.2; overflow-wrap: anywhere; }
-.row-sub { display: block; font-size: 13px; color: var(--ink-2); line-height: 1.35; margin-top: 2px; }
-.row-in { display: block; font-size: 13px; color: var(--ink-3); margin-top: 2px; }
-.row-in b { color: var(--ink-2); font-weight: 700; }
-.row-qty { font-weight: 800; font-size: 22px; color: var(--accent); font-variant-numeric: tabular-nums lining-nums; text-align: right; padding-left: var(--s2); white-space: nowrap; }
-.row-qty small { font-size: 14px; color: var(--ink-3); font-weight: 700; margin-right: 1px; }
+.row-name { display: block; font-weight: 700; font-size: 1.0625rem; line-height: 1.2; overflow-wrap: break-word; hyphens: auto; -webkit-hyphens: auto; }
+.row-sub { display: block; font-size: .8125rem; color: var(--ink-2); line-height: 1.35; margin-top: 2px; }
+.row-in { display: block; font-size: .9375rem; line-height: 1.35; color: var(--ink-2); margin-top: 2px; } /* read while crafting */
+.row-in b { color: var(--ink); font-weight: 700; }
+.row-qty { font-weight: 800; font-size: 1.375rem; color: var(--accent); font-variant-numeric: tabular-nums lining-nums; text-align: right; padding-left: var(--s2); white-space: nowrap; }
+.row-qty small { font-size: .875rem; color: var(--ink-3); font-weight: 700; margin-right: 1px; }
 .row-actions { grid-column: 3 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); margin-top: var(--s2); }
+/* raw rows (1.3.4, ≈ 72 px): line 1 = name + "i" | quantity; line 2 = "como obter" on ONE line | "Já tenho".
+   Wider controls (recipe / group choosers, the "tenho N de M" field) wrap below. */
+.row-raw { padding-block: 6px 5px; row-gap: 0; min-height: 0; }
+.row-raw > .tick, .row-raw > .slot { grid-row: 1 / span 2; }
+.row-raw > .row-main { grid-column: 3; grid-row: 1; align-self: end; }
+.row-raw > .row-qty { grid-column: 4; grid-row: 1; align-self: end; line-height: 1; }
+.row-line2 { grid-column: 3 / -1; grid-row: 2; display: flex; flex-wrap: wrap; align-items: center; gap: 4px var(--s2); min-width: 0; min-height: 40px; }
+/* the lone "Já tenho" keeps its 44 px box but borrows 2 px of the row's padding above and below */
+.row-line2 > .row-actions > .btn:only-child { margin-block: -2px; }
+.row-line2 .row-sub { flex: 1 1 7em; min-width: 0; margin: 0; }
+.row-obtain { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row-line2 .row-actions { grid-column: auto; margin: 0 0 0 auto; justify-content: flex-end; }
+.row-line2 .row-actions:empty { display: none; }
 .row.is-done .row-name, .row.is-done .row-qty { text-decoration: line-through; text-decoration-thickness: 2px; color: var(--ink-3); }
 .row.is-done .slot { opacity: .5; }
-.select-wrap { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-2); max-width: 100%; }
+.select-wrap { display: inline-flex; align-items: center; gap: 6px; font-size: .8125rem; color: var(--ink-2); max-width: 100%; }
+.row-actions .select-wrap { flex: 1 1 14em; }
+.row-actions .select-wrap select { flex: 1; }
 .select-wrap select {
   min-height: var(--tap); max-width: 100%; min-width: 0; padding: 0 28px 0 8px; border: 1px solid var(--frame); border-radius: var(--r);
-  background: var(--panel-2); color: var(--ink); font-size: 13px; font-weight: 700;
+  background: var(--panel-2); color: var(--ink); font-size: .8125rem; font-weight: 700;
 }
-.tech { font-size: 12px; color: var(--ink-3); }
-.raw-group-label { padding: var(--s2) var(--s4) 0; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); border-top: 1px solid var(--seam); }
+.tech { font-size: .8125rem; color: var(--ink-3); }
+.raw-group-label { padding: var(--s2) var(--s4) 0; font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); border-top: 1px solid var(--seam); }
 
 /* stations */
 .stations { display: grid; gap: var(--s4); }
@@ -95,26 +131,32 @@
   box-shadow: inset 0 1px 0 var(--bevel-hi);
 }
 /* station names are data (with roman numerals): body face, since blackletter I/II/U blur together */
-.station-h h3 { margin: 0; flex: 1; min-width: 0; font: 800 17px/1.2 var(--f-body); letter-spacing: .01em; }
-.stage { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); white-space: nowrap; } /* --gold on --slate was 3.2:1 (light) */
+.station-h h3 { margin: 0; flex: 1; min-width: 0; font: 800 1.0625rem/1.2 var(--f-body); letter-spacing: .01em; overflow-wrap: break-word; hyphens: auto; -webkit-hyphens: auto; }
+/* card number in display order ("1", "2"…): the order to follow, top to bottom */
+.station-n {
+  display: inline-grid; place-items: center; flex: none; min-width: 28px; height: 28px; padding: 0 4px;
+  font: 800 1rem/1 var(--f-body); color: var(--ink); background: var(--bg-2); border: 1px solid var(--gold); border-radius: var(--r);
+}
+.station-h .station-n + .slot { margin-left: calc(var(--s3) * -1 + 6px); }
 .badge-again { color: var(--ink-2); border: 1px solid var(--ink-2); font-family: var(--f-body); vertical-align: 2px; }
 
 /* "tenho N de M" */
-.have-form { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-2); font-weight: 700; }
+.have-form { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: .8125rem; color: var(--ink-2); font-weight: 700; }
 .have-form input {
   width: 72px; min-height: var(--tap); padding: 0 6px; border: 1px solid var(--gold); border-radius: var(--r);
-  background: var(--bg-2); color: var(--accent); text-align: center; font-weight: 800; font-size: 17px;
+  background: var(--bg-2); color: var(--accent); text-align: center; font-weight: 800; font-size: 1.0625rem;
   font-variant-numeric: tabular-nums lining-nums; -moz-appearance: textfield; appearance: textfield;
 }
 .have-form input::-webkit-outer-spin-button, .have-form input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .have-of { white-space: nowrap; }
+.have-close { width: var(--tap); padding: 0; font-size: 1rem; }
 .row-group { color: var(--ink-2); font-style: italic; }
 .row-in i.perk-on, .row-extra i.perk-on { color: var(--moss); font-style: normal; font-weight: 700; }
 .badge-q { color: var(--accent); border: 1px solid var(--accent); }
 
 /* perk toggles in the progress card */
 .perks { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
-.perks-label { font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); margin-right: 2px; }
+.perks-label { font-size: .8125rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); margin-right: 2px; }
 
 /* future planner modules mount here (GK.app.registerPanel(m, { slot: "planner-extra" })); empty = no gap */
 #planner-extra:empty { display: none; }
@@ -140,5 +182,16 @@
 .fold-sum { margin-bottom: 0; cursor: pointer; }
 .station-h[data-fold-head] { cursor: pointer; padding-right: var(--s1); -webkit-tap-highlight-color: transparent; }
 .station-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex: none; }
-.station-done { font-size: 13px; font-weight: 800; color: var(--ink); white-space: nowrap; }
+.station-done { font-size: .8125rem; font-weight: 800; color: var(--ink); white-space: nowrap; }
 .station.is-folded .station-h { border-bottom: 0; }
+
+/* "Hoje" without a day, folded: one quiet row "Marcar o dia do jogo" (ui/today.js) */
+.today-mark .today-head { min-height: 52px; padding-left: var(--s3); }
+.today-mark .today-line b { font-weight: 700; color: var(--ink); }
+/* day picker: the sin's name under each medallion (6 columns, fits 360 px) */
+.today-ask .today-picks { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; }
+.today-pick-cell { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; cursor: pointer; }
+.today-pick-name { max-width: 100%; font-size: .75rem; font-weight: 700; line-height: 1.2; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.today-pick-cell:hover .today-pick-name { color: var(--ink); }
+/* the rename mode switch in the progress card: discreet until on */
+.names-toggle[aria-pressed="false"] { color: var(--ink-2); }

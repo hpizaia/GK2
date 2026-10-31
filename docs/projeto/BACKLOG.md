@@ -1,3 +1,6 @@
+> Documento de projeto. Parte do conteúdo descreve a versão 1.2;
+> o estado atual está no [README](../../README.pt-BR.md) e no [CHANGELOG](../../CHANGELOG.md).
+
 # Backlog — Companheiro GK2
 
 Estado em 2026-10-30. Em publicação: 1.2.0 (abas Receitas e Tecnologias, cálculo avançado, sincronização mais segura). Publicada antes: 1.1 (tema, sincronização por conta, traduções oficiais).

@@ -736,7 +736,8 @@ GK.ui.recipes = (function () {
     const entering = !wasHere;
     wasHere = true;
     showView(state, false);
-    if (entering && meta && meta.from === "router") window.scrollTo(0, V.item ? 0 : listScroll);
+    // entering: an open detail starts at its top; the list is where GK.router left it (its per-screen scroll memory)
+    if (entering && meta && meta.from === "router" && V.item) window.scrollTo(0, 0);
     if (pendingFocus) {
       pendingFocus = false;
       const h = V.item && document.getElementById("rc-detail-h");

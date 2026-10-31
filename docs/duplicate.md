@@ -150,7 +150,7 @@ The interface side:
 - **Colours, fonts, spacing:** `src/css/tokens.css`. Dark (night) is on bare `:root`; light (parchment) is defined twice, under `@media (prefers-color-scheme: light)` and under `:root[data-theme="light"]`. Change both light blocks together.
 - **Fonts:** `--f-display` and `--f-body` in the tokens; the Google Fonts link is in `src/index.html`.
 - **Name of the app:** `<title>` in `src/index.html` and `app.title*` in `src/js/ui/header.js` (both languages).
-- Design rationale: [`DESIGN.md`](../DESIGN.md). Rebuild after any change in `src/`; never edit `dist/` or `prototype/`.
+- Design rationale: [`docs/projeto/DESIGN.md`](projeto/DESIGN.md). Rebuild after any change in `src/`; never edit `dist/` or `prototype/`.
 
 ## 10. Add a feature
 

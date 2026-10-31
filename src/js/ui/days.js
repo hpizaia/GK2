@@ -3,14 +3,17 @@
    stands out of the ring with an arrow pointing at it), a "Hoje" bar (current day, HUD day counter with calibration,
    "Avançar dia", "Esquecer o dia"), the selected day's card (events grouped by kind, "não confirmado" for medium/low
    confidence, source in the tooltip, unlock quest, detail, the official game text) with "Hoje é este dia", a compact
-   6-row week table, "Como funciona" and the data credit line.
+   6-row week table, "Como funciona" and the data credit line. Each medallion on the wheel carries its short name
+   ("Gula", "Ira"), so two similar reds never depend on colour alone. Under its header the day card holds that
+   weekday's "Bilhete do dia" (one short note, GK.store dayNotes; noteBox below, shared with ui/today.js).
    Data: the payload's `days` block (data/days.json, embedded by scripts/build.py). GK.data does not keep that block
    itself, so this module wraps GK.data.load once to keep it as GK.data.get().days (no-op if data.js ever does).
    Owns: [data-panel="days"] (section created by GK.router.ensureScreens), the route "days" and its tab "tab.days",
-   the shared week helpers below. State: GK.store day / dayNumber / dayAnchor (setDay, setDayNumber, advanceDay,
-   clearAnchor).
-   Exposes: GK.ui.days.{mount, render, open(dayId), week(), day(id), current(state), glyph(day, px), medal(day, px),
-   kindIcon(kind, px), kinds, eventText(ev), whoText(ev), confidenceBadge(ev), tile(day, px), numberToast(anchorBefore)}.
+   the shared week helpers below. State: GK.store day / dayNumber / dayAnchor / dayNotes (setDay, setDayNumber,
+   advanceDay, clearAnchor, setDayNote).
+   Exposes: GK.ui.days.{mount, render, open(dayId), week(), day(id), current(state), next(day), glyph(day, px),
+   medal(day, px), kindIcon(kind, px), kinds, eventText(ev), whoText(ev), confidenceBadge(ev), tile(day, px),
+   numberToast(anchorBefore), noteBox(prefix, rerender)}.
    ui/today.js (the planner "Hoje" panel) uses the helpers.
 */
 GK.i18n.add({
@@ -67,6 +70,15 @@ GK.i18n.add({
     "days.kind.other": "Outros",
     "days.count.one": "{n} coisa",
     "days.count.other": "{n} coisas",
+    "days.note.label": "Bilhete",
+    "days.note.add": "Deixar um bilhete para este dia",
+    "days.note.edit": "Editar",
+    "days.note.editX": "Editar o bilhete de {name}",
+    "days.note.ta": "Bilhete para {name}",
+    "days.note.ph": "ex.: levar 3 peixes para o Pescador",
+    "days.note.count": "{n}/{max} · Enter salva",
+    "days.note.saved": "Bilhete salvo: {name}",
+    "days.note.cleared": "Bilhete apagado: {name}",
   },
   en: {
     "tab.days": "Days",
@@ -121,6 +133,15 @@ GK.i18n.add({
     "days.kind.other": "Other",
     "days.count.one": "{n} thing",
     "days.count.other": "{n} things",
+    "days.note.label": "Note",
+    "days.note.add": "Leave a note for this day",
+    "days.note.edit": "Edit",
+    "days.note.editX": "Edit the note for {name}",
+    "days.note.ta": "Note for {name}",
+    "days.note.ph": "e.g. bring 3 fish to the Fisherman",
+    "days.note.count": "{n}/{max} · Enter saves",
+    "days.note.saved": "Note saved: {name}",
+    "days.note.cleared": "Note removed: {name}",
   },
 });
 
@@ -246,6 +267,8 @@ GK.ui.days = (function () {
   }
   const day = (id) => { const w = week(); return (w && id && w.days.find((d) => d.id === id)) || null; };
   const current = (state) => day(state.day);
+  // the day after d in the wheel cycle (wraps)
+  const next = (d) => { const w = week(), i = w && d ? w.days.indexOf(d) : -1; return i >= 0 ? w.days[(i + 1) % w.days.length] : null; };
   const eventText = (ev) => name(ev);
   const whoText = (ev) => (ev.who ? name(ev.who) : "");
   function confidenceBadge(ev) {
@@ -261,12 +284,104 @@ GK.ui.days = (function () {
     else GK.ui.toast(t("days.numToast", { n: st.dayNumber, name: name(d.name) }));
   }
 
+  // ---- "Bilhete do dia": one short note per weekday (GK.store dayNotes), shown and edited in the day card and in
+  // ui/today.js. noteBox(prefix, rerender) remembers which day is being edited (ids are prefixed, so the two copies
+  // never clash). html(d, state) draws the note line with "Editar", the quiet "Deixar um bilhete" link, or the
+  // textarea (≤ NOTE_MAX, saved on Enter or when it loses focus; Esc cancels), with a toast. bind(root) once;
+  // sig(id) for the caller's re-render memo; keep() before a re-render keeps what is being typed.
+  function noteBox(pfx, rerender) {
+    let editing = null;
+    const ID = { edit: pfx + "-note-edit", ta: pfx + "-note-ta", n: pfx + "-note-n" };
+    const MAX = GK.store.NOTE_MAX || 200;
+    const noteOf = (id) => (GK.store.get().dayNotes || {})[id] || "";
+    function html(d, state) {
+      const txt = (state.dayNotes || {})[d.id] || "";
+      if (editing === d.id) {
+        return `<div class="day-note is-editing">
+          <label class="sr-only" for="${ID.ta}">${esc(t("days.note.ta", { name: name(d.name) }))}</label>
+          <textarea class="day-note-ta" id="${ID.ta}" data-note-ta="${esc(d.id)}" rows="2" maxlength="${MAX}" enterkeyhint="done" placeholder="${esc(t("days.note.ph"))}" aria-describedby="${ID.n}">${esc(txt)}</textarea>
+          <span class="day-note-n tabnum" id="${ID.n}">${esc(t("days.note.count", { n: txt.length, max: MAX }))}</span>
+        </div>`;
+      }
+      if (!txt) return `<div class="day-note is-empty"><button type="button" class="day-note-add" id="${ID.edit}" data-note-edit="${esc(d.id)}"><span aria-hidden="true">✎</span> ${esc(t("days.note.add"))}</button></div>`;
+      return `<div class="day-note">
+        <p class="day-note-text"><span class="day-note-l">${esc(t("days.note.label"))}:</span> ${esc(txt)}</p>
+        <button type="button" class="btn btn-ghost btn-sm day-note-btn" id="${ID.edit}" data-note-edit="${esc(d.id)}" aria-label="${esc(t("days.note.editX", { name: name(d.name) }))}"><span aria-hidden="true">✎</span> ${esc(t("days.note.edit"))}</button>
+      </div>`;
+    }
+    function focusEdit() { const b = document.getElementById(ID.edit); if (b) b.focus({ preventScroll: true }); }
+    function save(ta, refocus) {
+      const id = ta.dataset.noteTa, before = noteOf(id), d = day(id);
+      editing = null;
+      const after = GK.store.actions.setDayNote(id, ta.value);
+      rerender();
+      if (d && after !== before) GK.ui.toast(t(after ? "days.note.saved" : "days.note.cleared", { name: name(d.name) }));
+      if (refocus) focusEdit();
+    }
+    function bind(root) {
+      root.addEventListener("click", (e) => {
+        const b = e.target.closest("[data-note-edit]");
+        if (!b || !root.contains(b)) return;
+        editing = b.dataset.noteEdit;
+        rerender();
+        const ta = document.getElementById(ID.ta);
+        if (ta) { ta.focus({ preventScroll: true }); ta.setSelectionRange(ta.value.length, ta.value.length); }
+      });
+      root.addEventListener("keydown", (e) => {
+        const ta = e.target.closest && e.target.closest("[data-note-ta]");
+        if (!ta) return;
+        if (e.key === "Enter" && !e.isComposing) { e.preventDefault(); save(ta, true); }
+        else if (e.key === "Escape") { e.preventDefault(); editing = null; rerender(); focusEdit(); }
+      });
+      root.addEventListener("input", (e) => {
+        const ta = e.target.closest && e.target.closest("[data-note-ta]"), n = ta && document.getElementById(ID.n);
+        if (n) n.textContent = t("days.note.count", { n: ta.value.length, max: MAX });
+      });
+      // leaving the field saves it, after the tap that moved the focus has landed (saving re-renders the panel, and
+      // the button under the finger must still get its click); a field re-created meanwhile and focused again wins
+      root.addEventListener("focusout", (e) => {
+        const ta = e.target.closest && e.target.closest("[data-note-ta]");
+        if (!ta || editing !== ta.dataset.noteTa) return;
+        const go = () => {
+          const a = document.activeElement;
+          if (editing === ta.dataset.noteTa && !(a && a.matches && a.matches("[data-note-ta]"))) save(ta, false);
+        };
+        if (down) pend = go; else setTimeout(go, 0);
+      });
+    }
+    let down = false, pend = null;
+    if (typeof document !== "undefined" && document.addEventListener) {
+      const up = () => { down = false; if (pend) { const f = pend; pend = null; setTimeout(f, 0); } };
+      document.addEventListener("pointerdown", () => { down = true; }, true);
+      document.addEventListener("pointerup", up, true);
+      document.addEventListener("pointercancel", up, true);
+    }
+    // what is being typed survives a re-render that happens meanwhile (a sync snapshot, a store change)
+    function keep() {
+      const ta = document.getElementById(ID.ta);
+      if (!ta || !editing) return () => {};
+      const v = ta.value, a = ta.selectionStart, b = ta.selectionEnd, had = document.activeElement === ta;
+      return () => {
+        const nt = document.getElementById(ID.ta);
+        if (!nt) return;
+        nt.value = v;
+        const n = document.getElementById(ID.n); if (n) n.textContent = t("days.note.count", { n: v.length, max: MAX });
+        if (had) { nt.focus({ preventScroll: true }); try { nt.setSelectionRange(a, b); } catch (e) { /* ignore */ } }
+      };
+    }
+    const sig = (id) => [editing === id ? "e" : "", noteOf(id)].join(":");
+    return { html, bind, keep, sig, editing: () => editing };
+  }
+
   // ---- screen state ----
   let root = null, sel = null, lastDay, memo = "", dirty = true;
+  const notes = noteBox("days", () => rerender());
   const isOn = () => GK.router.current() === "days";
 
   // ---- wheel: ring + medallions (HTML buttons over an SVG), Gluttony at 12 o'clock, counter-clockwise ----
   const R_RING = 33, R_OUT = 40.5;   // % of the wheel box
+  // "Dia da Gula" -> "Gula", "Day of Gluttony" -> "Gluttony": the label beside each medallion
+  const shortName = (d) => { const n = name(d.name); return n.replace(/^(dia d[aoe]s?|day of)\s+/i, "") || n; };
   const angle = (i, n) => -Math.PI / 2 - i * ((2 * Math.PI) / n);
   const at = (r, a) => [50 + r * Math.cos(a), 50 + r * Math.sin(a)].map((v) => Math.round(v * 100) / 100);
   function wheel(w, state) {
@@ -275,7 +390,9 @@ GK.ui.days = (function () {
       const isSel = d.id === sel, isToday = !!cur && d.id === cur.id;
       const [x, y] = at(isToday ? R_OUT : R_RING, angle(i, n));
       const label = t(isToday ? "days.medToday" : "days.med", { name: name(d.name), n: d.events.length });
-      return `<button type="button" class="days-med${isSel ? " is-sel" : ""}${isToday ? " is-today" : ""}${spritePos(d) ? " has-ico" : ""}" id="days-med-${esc(d.id)}" data-day="${esc(d.id)}" aria-pressed="${isSel}" aria-label="${esc(label)}" title="${esc(name(d.name))}" style="left:${x}%;top:${y}%${d.color ? `;--day:${esc(d.color)}` : ""}">${medal(d, isToday ? 60 : 50)}</button>`;
+      // the short name under (lower half) or above (upper half) the medallion, so the colours are never the only cue
+      const tag = `<span class="days-med-name${y < 50 ? " is-up" : ""}${isSel ? " is-sel" : ""}${isToday ? " is-today" : ""}" data-day="${esc(d.id)}" aria-hidden="true" style="left:${x}%;top:${y}%">${esc(shortName(d))}</span>`;
+      return `<button type="button" class="days-med${isSel ? " is-sel" : ""}${isToday ? " is-today" : ""}${spritePos(d) ? " has-ico" : ""}" id="days-med-${esc(d.id)}" data-day="${esc(d.id)}" aria-pressed="${isSel}" aria-label="${esc(label)}" title="${esc(name(d.name))}" style="left:${x}%;top:${y}%${d.color ? `;--day:${esc(d.color)}` : ""}">${medal(d, isToday ? 60 : 50)}</button>${tag}`;
     }).join("");
     let arrow = "";
     if (cur) {
@@ -363,6 +480,7 @@ GK.ui.days = (function () {
           <span class="row-sub">${esc(name(d.sin))}${otherSin && otherSin !== name(d.sin) ? ` · <span lang="${lang === "en" ? "pt-BR" : "en"}">${esc(otherSin)}</span>` : ""} · ${esc(t("days.count", { n: d.events.length }))}</span>
         </div>
       </header>
+      <div class="days-note-box">${notes.html(d, state)}</div>
       <div class="days-card-body">${eventsByKind(d, state)}</div>
       ${machine ? `<p class="days-mt">${esc(t("days.machineNote"))}</p>` : ""}
       <div class="days-ctl">
@@ -407,10 +525,11 @@ GK.ui.days = (function () {
     if (curId !== lastDay) { if (!sel || !lastDay || sel === lastDay) sel = curId || sel; lastDay = curId; }
     if (!sel || !day(sel)) sel = curId || w.days[0].id;
     const a = state.dayAnchor;
-    const sig = [sel, curId, state.dayNumber, a ? a.number + a.day : "", GK.i18n.lang(), JSON.stringify(state.overrides[GK.i18n.lang()] || {})].join("|");
+    const sig = [sel, curId, state.dayNumber, a ? a.number + a.day : "", GK.i18n.lang(), JSON.stringify(state.overrides[GK.i18n.lang()] || {}), notes.sig(sel)].join("|");
     if (!dirty && sig === memo) return;
     dirty = false; memo = sig;
     const open = [...root.querySelectorAll("details")].filter((x) => x.open).map((x) => x.dataset.k);
+    const typed = notes.keep();
     root.innerHTML = `<div class="days-screen">
       <div class="days-head">
         <div class="section-head"><h2 class="h2">${esc(t("days.title"))}</h2></div>
@@ -424,6 +543,7 @@ GK.ui.days = (function () {
     </div>`;
     // keep open <details> open across re-renders (same position = same key)
     root.querySelectorAll("details").forEach((x, i) => { x.dataset.k = sel + ":" + i; if (open.indexOf(x.dataset.k) >= 0) x.open = true; });
+    typed();
   }
   // re-render keeping focus on the element that had it (same id)
   function rerender() {
@@ -448,7 +568,9 @@ GK.ui.days = (function () {
   }
   function mount(el) {
     root = el;
+    notes.bind(root);
     root.addEventListener("click", (e) => {
+      if (e.target.closest("[data-note-edit]")) return;   // noteBox
       const ro = e.target.closest("[data-recipe-open]");
       if (ro) { GK.ui.recipes.open(ro.dataset.recipeOpen, { from: "days" }); return; }
       const s = e.target.closest("[data-set-day]");
@@ -489,13 +611,15 @@ GK.ui.days = (function () {
     });
   }
   function open(id) {
-    if (day(id)) sel = id;
+    // the requested day stays selected even on the first visit (the "follow today" rule in render must not take it)
+    if (day(id)) { sel = id; const st = GK.store.get(); lastDay = current(st) ? st.day : null; }
     dirty = true;
     if (isOn()) { render(GK.store.get(), {}); window.scrollTo(0, 0); return; }
+    GK.router.forget("days");   // opens at the top, not where the Dias screen was left
     location.hash = "#days";
     window.scrollTo(0, 0);
   }
-  return { mount, render, open, week, day, current, glyph, medal, kindIcon, kinds: KINDS, eventText, whoText, confidenceBadge, tile, numberToast };
+  return { mount, render, open, week, day, current, next, noteBox, glyph, medal, kindIcon, kinds: KINDS, eventText, whoText, confidenceBadge, tile, numberToast };
 })();
 
 GK.router.register({ id: "days", labelKey: "tab.days", screen: "days", order: 40 });

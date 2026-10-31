@@ -1,5 +1,5 @@
 ---
-name: "Day event (Evento do dia)"
+name: "Day event / Evento do dia"
 about: "Something on the Days tab does not match the game / Algo na aba Dias não bate com o jogo"
 title: "[days] "
 labels: days

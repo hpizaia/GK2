@@ -3,7 +3,9 @@
    (:root:not([data-theme="dark"])) and on :root[data-theme="light"].
    "auto" gives the attribute back to the host (the Claude artifact viewer may set data-theme itself);
    "light"/"dark" win, and a host change is undone by a MutationObserver (only when the value differs).
-   Exposes: GK.theme.{init, set, next, mode, effective}.
+   Also the "Letra grande" switch (GK.store ui.bigText, per device): big(on) sets <html data-big>, and base.css
+   raises the root font size (every type size is in rem). app.js applies it at boot, before the first render.
+   Exposes: GK.theme.{init, set, next, mode, effective, big}.
 */
 GK.theme = (function () {
   const root = document.documentElement;
@@ -59,5 +61,10 @@ GK.theme = (function () {
     set(m);
   }
   const next = (m) => GK.store.THEMES[(GK.store.THEMES.indexOf(m) + 1) % GK.store.THEMES.length];
-  return { init, set, next, mode: () => mode, effective };
+  // "Letra grande": only touches the attribute when it changes (it reflows the whole page)
+  function big(on) {
+    if (!!on === root.hasAttribute("data-big")) return;
+    if (on) root.setAttribute("data-big", ""); else root.removeAttribute("data-big");
+  }
+  return { init, set, next, mode: () => mode, effective, big };
 })();

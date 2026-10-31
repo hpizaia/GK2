@@ -14,11 +14,12 @@
 <!-- @css -->
 </head>
 <body>
+<!-- "Letra grande" before first paint (GK.theme.big applies the same attribute at boot; this only avoids a flash) -->
+<script>try{var k="gk2-companion",a=localStorage.getItem(k+".account"),s=JSON.parse(localStorage.getItem(a?k+":"+a:k)||localStorage.getItem(k)||"null");if(s&&s.ui&&s.ui.bigText)document.documentElement.setAttribute("data-big","")}catch(e){}</script>
 
-<!-- ===================== DATA (filled by scripts/build.py; schema in scripts/README-build.md) ===================== -->
-<script id="gk2-data" type="application/json"><!-- @data --></script>
-
-<!-- ===================== APP SHELL ===================== -->
+<!-- ===================== APP SHELL =====================
+     The shell comes first and the ~1.75 MB data block after the footer, so the header, the tab band and the
+     "Carregando" line paint from the first bytes downloaded (UX review, Top 10 #9). -->
 <header class="top" id="top">
   <div class="wrap top-row">
     <a class="brand" href="#plan" id="brand">
@@ -26,7 +27,7 @@
         <rect x="4" y="0" width="3" height="13" fill="var(--gold)"/><rect x="0" y="3" width="11" height="3" fill="var(--gold)"/>
         <rect x="5" y="1" width="1" height="11" fill="var(--accent)"/><rect x="1" y="4" width="9" height="1" fill="var(--accent)"/>
       </svg>
-      <span class="brand-name" data-slot="brand"></span>
+      <span class="brand-name" data-slot="brand">Companheiro <b>GK2</b></span>
       <span class="brand-sub" data-slot="tagline"></span>
     </a>
     <nav class="tabs tabs-desk" data-slot="tabs"></nav>
@@ -36,9 +37,12 @@
       <div class="lang" role="group" data-slot="lang"></div>
     </div>
   </div>
-  <div class="wrap search-row" data-panel="search"></div>
 </header>
-<div class="tabs-mob-band"><nav class="wrap tabs" data-slot="tabs"></nav></div>
+<!-- phones (< 900 px): the tab band is the sticky bar and the header scrolls away; ui/header.js moves the
+     search row into the header from 900 px, where the whole header stays sticky as before -->
+<div class="tabs-mob-band" id="tabs-band"><nav class="wrap tabs" data-slot="tabs"></nav></div>
+<div class="wrap search-row" data-panel="search"></div>
+<p class="wrap boot-msg" id="boot-msg">Carregando o Companheiro… <span lang="en">· Loading…</span></p>
 
 <main>
   <section class="wrap planner" data-screen="plan">
@@ -58,6 +62,10 @@
 
 <footer class="wrap foot" data-panel="footer"></footer>
 <div class="toast" role="status" aria-live="polite" hidden id="toast"></div>
+
+<!-- ===================== DATA (filled by scripts/build.py; schema in scripts/README-build.md) =====================
+     After the shell, before the modules: GK.data.load() reads it at boot, once the parser has passed it. -->
+<script id="gk2-data" type="application/json"><!-- @data --></script>
 
 <!-- ===================== MODULES ===================== -->
 <!-- @js -->
