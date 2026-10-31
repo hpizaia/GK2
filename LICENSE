@@ -1,0 +1,44 @@
+MIT License
+
+Copyright (c) 2026 Hugo Pizaia
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+Scope of this licence (fan project notice)
+
+The MIT licence above applies to the CODE of this project only: the files under
+src/, scripts/, tools/, site/ (the page markup and scripts) and the
+documentation written for this project.
+
+It does NOT cover third-party material that the repository contains or embeds:
+
+- data/ (items, recipes, stations, technologies, days): taken from the
+  Graveyard Keeper 2 Wiki on Wikily, (c) NX Software, no open licence;
+- the icon files and the icon sprite (data/sprite.*), the game's item names and
+  texts (data/game-texts/, the names*.json layers) and any screenshots or
+  recordings of the game (docs/media/, site/media/): Graveyard Keeper 2
+  (c) Lazy Bear Games / tinyBuild, used here as non-commercial fan content
+  with credit;
+- the generated pages dist/ and prototype/, which embed all of the above.
+
+Those parts are not licensed by this file and may not be reused commercially.
+This is an unofficial fan project, not affiliated with or endorsed by Lazy Bear
+Games or tinyBuild.

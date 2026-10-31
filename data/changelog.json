@@ -1,0 +1,118 @@
+[
+  {
+    "version": "1.3.3",
+    "date": "2026-10-31",
+    "pt": [
+      "Link para o site do projeto no rodapé"
+    ],
+    "en": [
+      "Link to the project site in the footer"
+    ]
+  },
+  {
+    "version": "1.3.2",
+    "date": "2026-10-31",
+    "pt": [
+      "Tela de Créditos, ligada no rodapé: quem fez, por quê, de onde vêm dados e ícones, e que o app foi feito com IA, sem fins lucrativos"
+    ],
+    "en": [
+      "Credits screen, linked from the footer: who made it, why, where the data and icons come from, and that the app was made with AI, not for profit"
+    ]
+  },
+  {
+    "version": "1.3.1",
+    "date": "2026-10-31",
+    "pt": [
+      "Recolher o painel Hoje, as etapas por estação e cada estação; o app lembra o que você recolheu"
+    ],
+    "en": [
+      "Collapse the Today panel, the steps by station and each station; the app remembers what you collapsed"
+    ]
+  },
+  {
+    "version": "1.3.0",
+    "date": "2026-10-31",
+    "pt": [
+      "Aba Dias: a roda da semana como no jogo, com os 6 dias e o que acontece em cada um (batalhas, navio mercante, ressurreição, pedidos da cidade, missa)",
+      "Painel \"Hoje\" no topo do Planejador: marque o dia atual, avance o dia e veja o que dá para fazer",
+      "Calibração pelo contador do jogo: informe uma vez \"dia N = X\" e depois só digite o número",
+      "Dia atual e calibração sincronizam com a sua conta",
+      "Eventos vindos só de guias aparecem como \"não confirmado\""
+    ],
+    "en": [
+      "Days tab: the in-game week wheel with the 6 days and what happens on each (battles, trade ship, resurrection, town orders, mass)",
+      "\"Today\" panel at the top of the Planner: set the current day, advance it and see what you can do",
+      "Calibration by the game's day counter: enter \"day N = X\" once, then just type the number",
+      "Current day and calibration sync with your account",
+      "Events sourced only from guides are marked \"unconfirmed\""
+    ]
+  },
+  {
+    "version": "1.2.0",
+    "date": "2026-10-31",
+    "pt": [
+      "Aba Receitas: todos os itens, receitas alternativas e \"Usado em\"",
+      "Aba Tecnologias: as 226 tecnologias, com \"Já pesquisei\"",
+      "Painel \"Tecnologias que faltam\" no Planejador, com a soma de pontos por cor",
+      "\"Tenho N de M\": desconta o que você já tem",
+      "Escolha do item em grupos (\"Brema ou carpa\")",
+      "Vantagens (perks) no Progresso ajustam as quantidades",
+      "Seletor de receitas mostra os ingredientes e a qualidade (prata/ouro)",
+      "Etapas na ordem certa: nenhuma estação depende de outra mais abaixo",
+      "Segure + ou − para repetir",
+      "Busca acessível, alvos de toque maiores e contraste melhor",
+      "Sincronização mais segura: junta as mudanças de dois aparelhos e separa o plano por conta",
+      "Versão e histórico no rodapé; ícones das tecnologias; zonas e notas em português; \"não oficial\" sem hífen",
+      "Botão \"i\" ao lado dos itens abre a receita; tecnologias e desbloqueios levam de uma tela à outra, com \"Voltar\"",
+      "Bônus de rendimento das vantagens em 117 receitas (\"rende 3, 5 com Cozinheiro II\"); as três \"Maestria em Bronze\" viram I, II e III; versões dos dados no rodapé"
+    ],
+    "en": [
+      "Recipes tab: every item, alternative recipes and \"Used in\"",
+      "Technologies tab: all 226 technologies, with \"Researched\"",
+      "\"Missing technologies\" panel in the Planner, with point totals per colour",
+      "\"I have N of M\": subtracts what you already have",
+      "Pick the item for groups (\"Bream or carp\")",
+      "Perks in Progress adjust the amounts",
+      "Recipe picker shows the ingredients and the quality (silver/gold)",
+      "Steps in the right order: no station depends on one further down",
+      "Hold + or − to repeat",
+      "Accessible search, larger tap targets and better contrast",
+      "Safer sync: merges changes from two devices and keeps each account's plan apart",
+      "Version and history in the footer; technology icons; zone names and notes translated to Portuguese",
+      "An \"i\" button next to items opens the recipe; technologies and unlocks link screens together, with \"Back\"",
+      "Perk yield bonuses on 117 recipes (\"yields 3, 5 with Cook II\"); the three \"Bronze Mastery\" techs become I, II and III; data versions in the footer"
+    ]
+  },
+  {
+    "version": "1.1.0",
+    "date": "2026-10-30",
+    "pt": [
+      "Tema claro, escuro ou automático",
+      "Sincronização do progresso por conta",
+      "Zonas, notas e itens com os nomes oficiais do jogo"
+    ],
+    "en": [
+      "Light, dark or automatic theme",
+      "Progress sync per account",
+      "Zones, notes and items with the game's official names"
+    ]
+  },
+  {
+    "version": "1.0.0",
+    "date": "2026-10-30",
+    "pt": [
+      "Primeira versão: planejador de crafting",
+      "820 itens e 695 receitas",
+      "Nomes oficiais do jogo",
+      "Ícones embutidos",
+      "Português e inglês"
+    ],
+    "en": [
+      "First release: crafting planner",
+      "820 items and 695 recipes",
+      "Official names from the game",
+      "Built-in icons",
+      "Portuguese and English"
+    ]
+  }
+]

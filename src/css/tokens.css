@@ -1,0 +1,55 @@
+/* tokens.css: design tokens (colours for dark/light/auto, fonts, spacing, radius, tap size). See DESIGN.md §2.
+   Theme contract (GK.theme): dark on bare :root, light under prefers-color-scheme or [data-theme="light"]. */
+/* Layout: sticky slate header with search on a night-teal ground; one column of wood cards on
+   phones, two columns ≥900px (goals | plan), raw list beside station cards ≥1180px.
+   Dark (night) is the default theme; light = parchment by day. */
+:root {
+  --bg: #11171c;        /* night ground, teal-navy */
+  --bg-2: #161d23;      /* wells, slots, sticky bands */
+  --panel: #261e1a;     /* dark umber wood */
+  --panel-2: #30261f;   /* raised wood: inputs, buttons */
+  --frame: #4a4954;     /* slate-iron frame */
+  --seam: #3a2e25;      /* dividers inside wood */
+  --slate: #2b2934;     /* GK2 UI header band */
+  --ink: #ecd9b6;       /* parchment cream text */
+  --ink-2: #b9a587;
+  --ink-3: #9a8a72;
+  --accent: #e3a24e;    /* lantern amber */
+  --accent-ink: #1d1309;
+  --gold: #a8853c;      /* trim */
+  --moss: #8fae5e;      /* done / collected */
+  --blood: #e06a5c;     /* remove / warning */
+  --grain: rgba(255, 225, 180, .028);
+  --bevel-hi: rgba(255, 235, 200, .07);
+  --bevel-lo: rgba(0, 0, 0, .38);
+  --shadow: rgba(0, 0, 0, .45);
+  --noise-o: .07;
+
+  --f-display: "Grenze Gotisch", "UnifrakturCook", Georgia, serif;
+  --f-body: "Alegreya Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px;
+  --r: 3px;
+  --tap: 44px;
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #ece0c4; --bg-2: #e3d3b0; --panel: #f6ecd6; --panel-2: #efe2c6; --frame: #9a8664;
+    --seam: #dccaa6; --slate: #d9ccae; --ink: #2b2017; --ink-2: #5e4c38; --ink-3: #64553f;
+    --accent: #824810; --accent-ink: #fff6e6; --gold: #6d531c; --moss: #4b6a26; --blood: #9e2c22;
+    --grain: rgba(110, 70, 20, .035); --bevel-hi: rgba(255, 255, 255, .55); --bevel-lo: rgba(110, 80, 40, .2);
+    --shadow: rgba(80, 50, 20, .16); --noise-o: .05;
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #ece0c4; --bg-2: #e3d3b0; --panel: #f6ecd6; --panel-2: #efe2c6; --frame: #9a8664;
+  --seam: #dccaa6; --slate: #d9ccae; --ink: #2b2017; --ink-2: #5e4c38; --ink-3: #64553f;
+  --accent: #824810; --accent-ink: #fff6e6; --gold: #6d531c; --moss: #4b6a26; --blood: #9e2c22;
+  --grain: rgba(110, 70, 20, .035); --bevel-hi: rgba(255, 255, 255, .55); --bevel-lo: rgba(110, 80, 40, .2);
+  --shadow: rgba(80, 50, 20, .16); --noise-o: .05;
+  color-scheme: light;
+}

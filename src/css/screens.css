@@ -1,0 +1,52 @@
+/* screens.css: secondary screens (soon placeholder, update history, credits), footer, sync chip, toast. */
+/* soon screen + footer + toast */
+.soon-screen { padding-block: var(--s6); }
+.soon-card { padding: var(--s5); max-width: 560px; }
+.soon-card h2 { margin: 0 0 var(--s2); font: 700 28px/1.1 var(--f-display); }
+.soon-card p { color: var(--ink-2); margin: 0 0 var(--s4); }
+.foot { padding-block: var(--s5) var(--s6); font-size: 13px; color: var(--ink-3); border-top: 1px solid var(--seam); }
+.foot p { margin: 0 0 4px; }
+.foot .sync-line { margin-bottom: var(--s3); }
+.foot .foot-version { margin-top: var(--s3); color: var(--ink-2); }
+.foot .foot-version a { font-weight: 700; }
+.sync-chip {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 2px 10px 2px 8px;
+  border: 1px solid var(--seam); border-radius: var(--r); background: var(--bg-2); color: var(--ink-2);
+  font: 700 12px/1.2 var(--f-body); letter-spacing: .03em;
+}
+.sync-chip::before { content: ""; width: 8px; height: 8px; flex: none; background: var(--ink-3); }
+.sync-chip[data-state="synced"]::before { background: var(--moss); }
+.sync-chip[data-state="syncing"]::before, .sync-chip[data-state="loading"]::before { background: var(--accent); }
+.sync-chip[data-state="error"] { border-color: var(--blood); color: var(--ink); }
+.sync-chip[data-state="error"]::before { background: var(--blood); }
+.toast {
+  position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+  z-index: 50; max-width: calc(100% - 32px); padding: 10px 16px; border-radius: var(--r);
+  background: var(--slate); color: var(--ink); border: 1px solid var(--gold); box-shadow: 0 6px 20px var(--shadow);
+  font-weight: 700; font-size: 15px;
+}
+
+/* update history (#changelog, ui/changelog.js) */
+.screen-changelog { padding-block: var(--s5) var(--s6); }
+.cl-card { padding: var(--s4) var(--s5) var(--s5); max-width: 720px; }
+.cl-back { margin: 0 0 var(--s3) calc(var(--s3) * -1); text-decoration: none; color: var(--accent); }
+.cl-list { list-style: none; margin: var(--s4) 0 0; padding: 0; display: grid; gap: var(--s4); }
+.cl-entry { border-top: 1px solid var(--seam); padding-top: var(--s3); }
+.cl-entry:first-child { border-top: 0; padding-top: 0; }
+.cl-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px var(--s2); margin: 0 0 var(--s2); font: 800 18px/1.25 var(--f-body); }
+.cl-head .badge { margin-left: 0; vertical-align: 1px; }
+.cl-date { font-size: 14px; font-weight: 700; color: var(--ink-3); }
+.cl-notes { margin: 0; padding-left: 1.25em; color: var(--ink-2); }
+.cl-notes li { margin: 2px 0; overflow-wrap: anywhere; }
+
+/* credits (#credits, ui/credits.js): the .cl-card / .cl-back look, short sections with a seam between them */
+.screen-credits { padding-block: var(--s5) var(--s6); }
+.cr-list { display: grid; gap: var(--s4); margin: var(--s4) 0 0; }
+.cr-sec { border-top: 1px solid var(--seam); padding-top: var(--s3); }
+.cr-sec:first-child { border-top: 0; padding-top: 0; }
+.cr-head { margin: 0 0 var(--s2); font: 800 18px/1.25 var(--f-body); }
+.cr-sec p { margin: 0 0 var(--s2); color: var(--ink-2); max-width: 65ch; overflow-wrap: anywhere; }
+.cr-sec p:last-child { margin-bottom: 0; }
+.cr-sec a { font-weight: 700; }
+.cr-thanks { margin: var(--s4) 0 0; padding-top: var(--s3); border-top: 1px solid var(--seam); color: var(--ink); font-weight: 700; }
+.cr-version { margin: var(--s2) 0 0; font-size: 13px; color: var(--ink-3); }

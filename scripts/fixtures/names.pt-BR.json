@@ -1,0 +1,20 @@
+{
+  "_meta": {"note": "fixture"},
+  "Log": {"pt": "Tora", "source": "gk1-wiki", "confidence": "likely"},
+  "Plank": {"pt": "Tábua", "source": "https://graveyardkeeper.fandom.com/pt-br/wiki/T%C3%A1bua", "confidence": "official"},
+  "Stone": {"pt": "Pedra", "source": "gk1-wiki", "confidence": "likely"},
+  "iron ore": {"pt": "Minério de ferro", "source": "gk1-wiki", "confidence": "likely"},
+  "Coal": {"pt": "Carvão", "source": "gk1-wiki", "confidence": "official"},
+  "Nail": {"pt": "Prego", "source": "forum", "confidence": "guess"},
+  "Wooden Box": {"pt": "Caixa de madeira", "source": "gk1-wiki", "confidence": "likely"},
+  "Simple Coffin": "Caixão simples",
+  "Beet": {"pt": "Beterraba", "source": "gk1-wiki", "confidence": "probably"},
+  "Workbench": {"pt": "Bancada", "source": "gk1-wiki", "confidence": "official"},
+  "Sawhorse": {"pt": "Cavalete", "source": "gk1-wiki", "confidence": "likely"},
+  "Furnace": {"pt": "Fornalha", "source": "gk1-wiki", "confidence": "official"},
+  "Anvil": {"pt": "Bigorna", "source": "gk1-wiki", "confidence": "official"},
+  "Wood": {"pt": "Madeira", "source": "gk1-wiki", "confidence": "official"},
+  "Carpentry": {"pt": "Carpintaria", "source": "gk1-wiki", "confidence": "likely"},
+  "Fertilizer": {"pt": "Fertilizante", "source": "machine", "confidence": "guess"},
+  "Unicorn Horn": {"pt": "Chifre de unicórnio", "source": "gk1-wiki", "confidence": "likely"}
+}

@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Generated from index.html (the Claude Artifact page). Do not edit by hand; see README.md. -->
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>GK2 Companion</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="A free, fan-made crafting planner for Graveyard Keeper 2, in English and Brazilian Portuguese.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;0,800;1,400&family=Grenze+Gotisch:wght@600;700;800&display=swap">
+<style>
+/* Layout: slate top band, a night hero with the blackletter wordmark beside a phone frame,
+   a wood-panel feature grid (3 / 2 / 1 columns), a phone-frame strip that scrolls inside itself,
+   two short parchment-trimmed notes, a quiet footer. Dark (night) first, light = parchment by day.
+   Palette and type follow the app's own tokens (src/css/tokens.css). */
+:root {
+  --bg: #11171c;        /* night ground, teal-navy */
+  --bg-2: #161d23;      /* wells */
+  --panel: #261e1a;     /* dark umber wood */
+  --panel-2: #30261f;   /* raised wood */
+  --frame: #4a4954;     /* slate-iron frame */
+  --seam: #3a2e25;
+  --slate: #2b2934;     /* GK2 UI header band */
+  --ink: #ecd9b6;       /* parchment cream */
+  --ink-2: #b9a587;
+  --ink-3: #9a8a72;
+  --accent: #e3a24e;    /* lantern amber */
+  --accent-ink: #1d1309;
+  --gold: #a8853c;      /* trim */
+  --moss: #8fae5e;
+  --glow: rgba(227, 162, 78, .16);
+  --grain: rgba(255, 225, 180, .028);
+  --bevel-hi: rgba(255, 235, 200, .07);
+  --bevel-lo: rgba(0, 0, 0, .38);
+  --shadow: rgba(0, 0, 0, .45);
+
+  --f-display: "Grenze Gotisch", "UnifrakturCook", Georgia, serif;
+  --f-body: "Alegreya Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 56px;
+  --r: 3px;
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #ece0c4; --bg-2: #e3d3b0; --panel: #f6ecd6; --panel-2: #efe2c6; --frame: #9a8664;
+    --seam: #dccaa6; --slate: #d9ccae; --ink: #2b2017; --ink-2: #5e4c38; --ink-3: #64553f;
+    --accent: #824810; --accent-ink: #fff6e6; --gold: #6d531c; --moss: #4b6a26;
+    --glow: rgba(190, 120, 40, .14);
+    --grain: rgba(110, 70, 20, .035); --bevel-hi: rgba(255, 255, 255, .55); --bevel-lo: rgba(110, 80, 40, .2);
+    --shadow: rgba(80, 50, 20, .16);
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #ece0c4; --bg-2: #e3d3b0; --panel: #f6ecd6; --panel-2: #efe2c6; --frame: #9a8664;
+  --seam: #dccaa6; --slate: #d9ccae; --ink: #2b2017; --ink-2: #5e4c38; --ink-3: #64553f;
+  --accent: #824810; --accent-ink: #fff6e6; --gold: #6d531c; --moss: #4b6a26;
+  --glow: rgba(190, 120, 40, .14);
+  --grain: rgba(110, 70, 20, .035); --bevel-hi: rgba(255, 255, 255, .55); --bevel-lo: rgba(110, 80, 40, .2);
+  --shadow: rgba(80, 50, 20, .16);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 17px;
+  line-height: 1.55;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+p { margin: 0; }
+
+.wrap {
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-left: var(--gutter-l);
+  padding-right: var(--gutter-r);
+}
+
+/* ---- top band ---- */
+.band {
+  background: var(--slate);
+  border-bottom: 1px solid var(--frame);
+  box-shadow: inset 0 -1px 0 var(--gold);
+}
+.band .wrap {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s4);
+  padding-block: var(--s2);
+  min-height: 52px;
+}
+.mark {
+  font-family: var(--f-display); font-weight: 700; font-size: 22px; letter-spacing: .01em;
+  color: var(--ink); text-decoration: none; display: inline-flex; align-items: center; gap: var(--s2);
+}
+.mark svg { color: var(--gold); flex: none; }
+.lang {
+  display: inline-flex; border: 1px solid var(--frame); background: var(--bg-2); padding: 2px; gap: 2px;
+}
+.lang button {
+  font: 700 13px/1 var(--f-body); letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink-2); background: transparent; border: 0; min-width: 44px; min-height: 36px;
+  padding: 0 var(--s3); cursor: pointer;
+}
+.lang button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+
+/* ---- hero ---- */
+.hero {
+  background:
+    radial-gradient(ellipse 70% 60% at 85% 10%, var(--glow), transparent 70%),
+    var(--bg);
+  border-bottom: 1px solid var(--seam);
+}
+.hero .wrap {
+  display: grid; gap: var(--s6); align-items: center;
+  grid-template-columns: minmax(0, 1fr);
+  padding-block: var(--s7) var(--s7);
+}
+@media (min-width: 860px) {
+  .hero .wrap { grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); }
+}
+.eyebrow {
+  font: 700 12px/1.3 var(--f-body); letter-spacing: .12em; text-transform: uppercase; color: var(--gold);
+}
+.hero h1 {
+  font-family: var(--f-display); font-weight: 800;
+  font-size: clamp(52px, 11vw, 104px); line-height: .92; letter-spacing: -.005em;
+  margin-top: var(--s3);
+  color: var(--ink);
+}
+.hero h1 .alt {
+  display: block; font-size: .42em; font-weight: 600; color: var(--ink-3); margin-top: var(--s2); letter-spacing: .01em;
+}
+.trim {
+  height: 6px; max-width: 220px; margin-block: var(--s5);
+  border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); opacity: .8;
+}
+.pitch { font-size: clamp(20px, 2.6vw, 25px); line-height: 1.35; max-width: 30ch; font-weight: 500; }
+.ctas { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s5); }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+  min-height: 48px; padding: 0 var(--s5);
+  font: 700 17px/1 var(--f-body); text-decoration: none;
+  border: 1px solid var(--frame);
+  clip-path: polygon(0 3px, 3px 3px, 3px 0, calc(100% - 3px) 0, calc(100% - 3px) 3px, 100% 3px, 100% calc(100% - 3px), calc(100% - 3px) calc(100% - 3px), calc(100% - 3px) 100%, 3px 100%, 3px calc(100% - 3px), 0 calc(100% - 3px));
+  box-shadow: inset 0 1px 0 var(--bevel-hi), inset 0 -2px 0 var(--bevel-lo);
+}
+.btn-primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn-primary:hover { filter: brightness(1.07); }
+.btn-ghost { background: var(--panel-2); color: var(--ink); }
+.btn-ghost:hover { border-color: var(--gold); }
+.btn svg { flex: none; }
+.note { margin-top: var(--s4); color: var(--ink-2); font-size: 15px; max-width: 52ch; }
+.tally {
+  display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); margin-top: var(--s5);
+  padding: 0; list-style: none; color: var(--ink-2); font-size: 15px;
+}
+.tally b {
+  color: var(--accent); font-weight: 800; font-size: 20px;
+  font-variant-numeric: tabular-nums lining-nums; margin-right: 4px;
+}
+
+/* ---- phone frames + image fallback ---- */
+.phone {
+  position: relative; margin: 0;
+  width: 100%; max-width: 300px; aspect-ratio: 9 / 19;
+  background: var(--bg-2);
+  border: 1px solid var(--frame);
+  border-radius: 22px; padding: 8px;
+  box-shadow: inset 0 0 0 1px var(--seam), 0 18px 40px -18px var(--shadow);
+}
+.hero .phone { justify-self: center; max-width: 290px; }
+.screen {
+  position: relative; width: 100%; height: 100%; overflow: hidden;
+  border-radius: 15px; background: var(--panel);
+}
+.screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.ph {
+  position: absolute; inset: 0; display: none;
+  flex-direction: column; align-items: center; justify-content: center; gap: var(--s2);
+  padding: var(--s4); text-align: center;
+  color: var(--ink-3); font-size: 14px; line-height: 1.35;
+  background:
+    repeating-linear-gradient(90deg, var(--grain) 0 2px, transparent 2px 11px),
+    var(--panel);
+}
+.ph strong { font-family: var(--f-display); font-weight: 700; font-size: 30px; color: var(--gold); line-height: 1; }
+.missing img { visibility: hidden; }
+.missing .ph { display: flex; }
+
+/* ---- sections ---- */
+section { padding-block: var(--s7) 0; }
+.sec-head { display: grid; gap: var(--s2); margin-bottom: var(--s5); max-width: 62ch; }
+.sec-head h2 { font-family: var(--f-display); font-weight: 700; font-size: clamp(30px, 4.4vw, 40px); line-height: 1.05; }
+.sec-head p { color: var(--ink-2); }
+
+.grid {
+  display: grid; gap: var(--s4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+}
+@media (min-width: 980px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.card {
+  min-width: 0;
+  background:
+    repeating-linear-gradient(90deg, var(--grain) 0 2px, transparent 2px 9px, var(--grain) 9px 10px, transparent 10px 23px),
+    var(--panel);
+  border: 1px solid var(--frame);
+  box-shadow: inset 0 0 0 1px var(--seam), inset 0 1px 0 1px var(--bevel-hi), inset 0 -2px 0 1px var(--bevel-lo);
+  border-radius: var(--r);
+  padding: var(--s5);
+  display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: var(--s2) var(--s4); align-content: start;
+}
+.slot {
+  width: 44px; height: 44px; display: grid; place-items: center;
+  background: var(--bg-2); border: 1px solid var(--frame); color: var(--accent);
+  box-shadow: inset 0 2px 0 var(--bevel-lo);
+  grid-row: span 2;
+}
+.card h3 { font-size: 20px; font-weight: 800; line-height: 1.2; align-self: center; }
+.card p { color: var(--ink-2); font-size: 16px; }
+.card .num { color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums lining-nums; }
+
+/* ---- screenshots strip ---- */
+.strip {
+  display: flex; gap: var(--s4); overflow-x: auto; scroll-snap-type: x mandatory;
+  padding-bottom: var(--s3); margin: 0; list-style: none; padding-left: 0;
+  scrollbar-color: var(--frame) transparent;
+}
+.strip li { flex: 0 0 min(240px, 72vw); scroll-snap-align: start; display: grid; gap: var(--s2); }
+.strip .phone { max-width: none; }
+.cap { font-size: 15px; color: var(--ink-2); padding-inline: var(--s1); }
+.cap b { color: var(--ink); font-weight: 700; }
+@media (min-width: 1040px) {
+  .strip { overflow: visible; }
+  .strip li { flex: 1 1 0; }
+}
+.desk { margin: var(--s5) 0 0; display: grid; gap: var(--s2); }
+.desk .frame {
+  position: relative; aspect-ratio: 16 / 10; max-width: 100%;
+  border: 1px solid var(--frame); border-top-width: 22px; border-radius: 6px;
+  background: var(--panel); overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--seam), 0 18px 40px -20px var(--shadow);
+}
+.desk .frame img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+/* ---- notes ---- */
+.pair { display: grid; gap: var(--s4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+.plate {
+  min-width: 0; padding: var(--s5); border-left: 3px double var(--gold);
+  background: var(--bg-2);
+  display: grid; gap: var(--s3); align-content: start;
+}
+.plate h2 { font-family: var(--f-display); font-weight: 700; font-size: 30px; line-height: 1.05; }
+.plate p { color: var(--ink-2); max-width: 60ch; }
+.plate ul { margin: 0; padding-left: 1.1em; color: var(--ink-2); display: grid; gap: var(--s1); }
+.plate li::marker { color: var(--gold); }
+.plate ol.steps { margin: 0; padding-left: 1.4em; color: var(--ink-2); display: grid; gap: var(--s2); min-width: 0; }
+.plate ol.steps li { overflow-wrap: anywhere; }
+.plate ol.steps li::marker { color: var(--gold); font-weight: 800; }
+.plate ol.steps b { color: var(--ink); }
+.plate .small { font-size: 14px; color: var(--ink-3); }
+.plate .more { font-weight: 700; }
+
+/* ---- footer ---- */
+footer {
+  margin-top: var(--s7);
+  background: var(--slate);
+  border-top: 1px solid var(--frame);
+  box-shadow: inset 0 1px 0 var(--gold);
+}
+footer .wrap {
+  padding-block: var(--s5) var(--s6);
+  display: grid; gap: var(--s3); font-size: 14px; color: var(--ink-2);
+}
+footer .row { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); align-items: baseline; justify-content: space-between; }
+footer .ver { font-variant-numeric: tabular-nums lining-nums; color: var(--ink-3); }
+footer .mark { font-size: 20px; }
+.credits {
+  display: grid; gap: var(--s2); max-width: 72ch;
+  padding: var(--s4) 0 0; border-top: 1px solid var(--frame);
+}
+.credits h2 { font-family: var(--f-display); font-weight: 700; font-size: 22px; line-height: 1.1; color: var(--ink); }
+.credits ul { margin: 0; padding-left: 1.1em; display: grid; gap: var(--s1); }
+.credits li { overflow-wrap: anywhere; }
+.credits li::marker { color: var(--gold); }
+.credits .ask { color: var(--ink); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn, .lang button, .btn-ghost { transition: filter .15s, border-color .15s, background-color .15s; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-cross" viewBox="0 0 20 20"><path d="M8 1h4v5h5v4h-5v9H8v-9H3V6h5z" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<header class="band">
+  <div class="wrap">
+    <span class="mark"><svg width="16" height="16" aria-hidden="true"><use href="#i-cross"/></svg><span data-i18n="name">GK2 Companion</span></span>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" id="lang-en" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" id="lang-pt" data-lang="pt" aria-pressed="false">PT</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow" data-i18n="eyebrow">Graveyard Keeper 2 · fan-made crafting planner</p>
+        <h1><span data-i18n="name">GK2 Companion</span><span class="alt" data-i18n="altName">Companheiro GK2</span></h1>
+        <div class="trim" aria-hidden="true"></div>
+        <p class="pitch" data-i18n="pitch">Plan what to craft, see every ingredient, know what day it is.</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="https://claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn" target="_blank" rel="noopener">
+            <span data-i18n="open">Open the app</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3h8v8h-2V6.4l-6.3 6.3-1.4-1.4L9.6 5H5z" fill="currentColor"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/hpizaia/GK2" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            <span>GitHub</span>
+          </a>
+        </div>
+        <p class="note" data-i18n="note">Free, no install, works on your phone. Your progress syncs across devices when you're signed in to Claude; otherwise it stays on this device.</p>
+        <ul class="tally">
+          <li><b>820</b><span data-i18n="tItems">items</span></li>
+          <li><b>695</b><span data-i18n="tRecipes">recipes</span></li>
+          <li><b>226</b><span data-i18n="tTechs">technologies</span></li>
+          <li><b>6</b><span data-i18n="tDays">days a week</span></li>
+        </ul>
+      </div>
+      <figure class="phone">
+        <div class="screen">
+          <img onerror="this.parentNode.classList.add('missing')" src="media/hero.gif" alt="The planner on a phone: goals, raw totals and steps by station" data-i18n-alt="altHero" width="390" height="844">
+          <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="altHero">The planner on a phone: goals, raw totals and steps by station</span></div>
+        </div>
+      </figure>
+    </div>
+  </div>
+
+  <section id="features" aria-labelledby="h-features">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="h-features" data-i18n="fTitle">What it does</h2>
+        <p data-i18n="fLead">Pick what you want to make. The app works out the rest, down to the last log and the last workbench.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <span class="slot" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M6 3h12v18H6z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span>
+          <h3 data-i18n="c1t">Planner</h3>
+          <p data-i18n="c1p">Add goals and quantities. Get raw totals and steps grouped by station, in crafting order. Mark "have N of M", set perks, choose alternative recipes.</p>
+        </article>
+        <article class="card">
+          <span class="slot" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M3 5h7a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H3zM21 5h-7a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h7z"/></svg></span>
+          <h3 data-i18n="c2t">Recipes</h3>
+          <p data-i18n="c2p" data-html>All <span class="num">820</span> items and <span class="num">695</span> recipes, with search and filters. Each item shows how to make it and everything it is used in.</p>
+        </article>
+        <article class="card">
+          <span class="slot" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M10 3h4v4h-4zM3 17h4v4H3zM10 17h4v4h-4zM17 17h4v4h-4zM12 7v10M5 17v-4h14v4"/></svg></span>
+          <h3 data-i18n="c3t">Technologies</h3>
+          <p data-i18n="c3p" data-html>All <span class="num">226</span> techs in 6 branches. The planner lists the ones you still need, in research order, with the red, green and blue point totals.</p>
+        </article>
+        <article class="card">
+          <span class="slot" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none"/><path d="M12 3v6.5M12 14.5V21M4.2 7.5l5.6 3.2M14.2 13.3l5.6 3.2M4.2 16.5l5.6-3.2M14.2 10.7l5.6-3.2"/></svg></span>
+          <h3 data-i18n="c4t">Days</h3>
+          <p data-i18n="c4p">The game's 6-day wheel and what happens on each day. A "Today" panel in the planner, and a one-time calibration against the in-game day counter.</p>
+        </article>
+        <article class="card">
+          <span class="slot" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M3 4h11v8H8l-3 3v-3H3z"/><path d="M14 9h7v8h-2v3l-3-3h-5v-3"/></svg></span>
+          <h3 data-i18n="c5t">English and Portuguese</h3>
+          <p data-i18n="c5p">Switch languages at any time. Brazilian Portuguese names come from the game's own files; anything unofficial is labelled, and you can rename it.</p>
+        </article>
+        <article class="card">
+          <span class="slot" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M14.5 3.5a8.5 8.5 0 1 0 6 13A7 7 0 0 1 14.5 3.5z"/><path d="M17 5l1 2 2 1-2 1-1 2-1-2-2-1 2-1z" fill="currentColor" stroke="none"/></svg></span>
+          <h3 data-i18n="c6t">Themes and sync</h3>
+          <p data-i18n="c6p">Night, parchment or follow your system. Signed in to Claude, your plan opens the same on phone and computer.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="screens" aria-labelledby="h-screens">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="h-screens" data-i18n="sTitle">On your phone</h2>
+        <p data-i18n="sLead">Made for a phone next to the game, and it works just as well on a desktop.</p>
+      </div>
+      <ul class="strip">
+        <li>
+          <figure class="phone"><div class="screen">
+            <img onerror="this.parentNode.classList.add('missing')" src="media/planner-phone.png" alt="Planner: goals, raw totals and steps by station" data-i18n-alt="a1" loading="lazy" width="390" height="844">
+            <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="a1">Planner: goals, raw totals and steps by station</span></div>
+          </div></figure>
+          <p class="cap"><b data-i18n="c1t">Planner</b></p>
+        </li>
+        <li>
+          <figure class="phone"><div class="screen">
+            <img onerror="this.parentNode.classList.add('missing')" src="media/recipes-phone.png" alt="Recipes: an item with its recipes and where it is used" data-i18n-alt="a2" loading="lazy" width="390" height="844">
+            <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="a2">Recipes: an item with its recipes and where it is used</span></div>
+          </div></figure>
+          <p class="cap"><b data-i18n="c2t">Recipes</b></p>
+        </li>
+        <li>
+          <figure class="phone"><div class="screen">
+            <img onerror="this.parentNode.classList.add('missing')" src="media/tech-phone.png" alt="Technologies: branches, costs and prerequisites" data-i18n-alt="a3" loading="lazy" width="390" height="844">
+            <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="a3">Technologies: branches, costs and prerequisites</span></div>
+          </div></figure>
+          <p class="cap"><b data-i18n="c3t">Technologies</b></p>
+        </li>
+        <li>
+          <figure class="phone"><div class="screen">
+            <img onerror="this.parentNode.classList.add('missing')" src="media/days-phone.png" alt="Days: the 6-day wheel and what happens today" data-i18n-alt="a4" loading="lazy" width="390" height="844">
+            <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="a4">Days: the 6-day wheel and what happens today</span></div>
+          </div></figure>
+          <p class="cap"><b data-i18n="c4t">Days</b></p>
+        </li>
+      </ul>
+      <figure class="desk">
+        <div class="frame">
+          <img onerror="this.parentNode.classList.add('missing')" src="media/desktop.png" alt="Desktop layout: goals on the left, the plan on the right" data-i18n-alt="a5" loading="lazy" width="1440" height="900">
+          <div class="ph" aria-hidden="true"><strong>GK2</strong><span data-i18n="a5">Desktop layout: goals on the left, the plan on the right</span></div>
+        </div>
+        <figcaption class="cap" data-i18n="a5">Desktop layout: goals on the left, the plan on the right</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="save" aria-labelledby="h-save">
+    <div class="wrap pair">
+      <div class="plate">
+        <h2 id="h-save" data-i18n="svTitle">Keep your progress</h2>
+        <p data-i18n="svLead">Three steps, once. After that the app just opens where you left it.</p>
+        <ol class="steps">
+          <li data-i18n="sv1" data-html>Open the app at <a href="https://claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn" target="_blank" rel="noopener">claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn</a>. It is a web page; there is nothing to install.</li>
+          <li data-i18n="sv2" data-html>Sign in to Claude when the page asks (a free account is enough). Your plan is then saved in your account and opens the same on your phone and computer. The footer shows <b>Synced</b> when it is.</li>
+          <li data-i18n="sv3" data-html>Not signed in? Everything still works, but the plan lives only in that browser (the footer says <b>This device only</b>). iPhones can wipe that after a few days without use, so sign in if you don't want to lose it.</li>
+        </ol>
+        <p class="small" data-i18n="svNote">Your plan is private: nobody else can see it, not even the author.</p>
+      </div>
+      <div class="plate">
+        <h2 data-i18n="hsTitle">Put it on your home screen</h2>
+        <p data-i18n="hsLead">Then it opens like an app, full screen, with one tap.</p>
+        <ol class="steps">
+          <li data-i18n="hs1" data-html><b>iPhone (Safari):</b> open the app, tap the Share button, then <b>Add to Home Screen</b>.</li>
+          <li data-i18n="hs2" data-html><b>Android (Chrome):</b> open the app, tap the ⋮ menu, then <b>Add to Home screen</b> (or <b>Install app</b>).</li>
+          <li data-i18n="hs3" data-html><b>Computer:</b> bookmark the link, or in Chrome use <b>Install</b> in the address bar.</li>
+        </ol>
+        <p class="small" data-i18n="hsNote">Playing on PC? Keep the app open on your phone next to the game, signed in with the same account.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="built" aria-label="About">
+    <div class="wrap pair">
+      <div class="plate">
+        <h2 data-i18n="bTitle">How it's built</h2>
+        <ul>
+          <li data-i18n="b1">One HTML file. No server, no account of its own.</li>
+          <li data-i18n="b2">Items, recipes and techs come from wikily.gg.</li>
+          <li data-i18n="b3">Official names in both languages come from the game's text files.</li>
+          <li data-i18n="b4">Built with Claude Code, with several agents splitting data, interface and review.</li>
+        </ul>
+        <a class="more" href="https://github.com/hpizaia/GK2#readme" target="_blank" rel="noopener" data-i18n="bLink">Read the README</a>
+      </div>
+      <div class="plate">
+        <h2 data-i18n="rTitle">Run it yourself</h2>
+        <p data-i18n="rP">Want your own copy, with its own saved plan? The guide shows how to duplicate the app as your own Claude artifact, or build it from the source.</p>
+        <a class="more" href="https://github.com/hpizaia/GK2/blob/main/docs/duplicate.md" target="_blank" rel="noopener" data-i18n="rLink">How to make your own copy</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <span class="mark"><svg width="14" height="14" aria-hidden="true"><use href="#i-cross"/></svg><span data-i18n="name">GK2 Companion</span></span>
+      <span class="ver" id="ver">v1.3.3</span>
+    </div>
+    <div class="credits" id="credits">
+      <h2 id="h-credits" data-i18n="crTitle">Credits</h2>
+      <ul>
+        <li data-i18n="cr1">A fan project by Hugo Pizaia, a Brazilian fan, made to make playing more fun. Free and non-profit: no ads, nothing sold.</li>
+        <li data-i18n="cr2">Not affiliated with or endorsed by Lazy Bear Games or tinyBuild.</li>
+        <li data-i18n="cr3">Graveyard Keeper 2, its art, icons and names © Lazy Bear Games / tinyBuild, used as fan content with credit.</li>
+        <li data-i18n="cr4" data-html>Recipe data from the <a href="https://wikily.gg/graveyard-keeper-2" target="_blank" rel="noopener">Graveyard Keeper 2 Wiki on Wikily</a> (© NX Software).</li>
+        <li data-i18n="cr5">Made with AI: built with Claude Code (Anthropic) under the author's direction, and tested in the game.</li>
+      </ul>
+      <p class="ask" data-i18n="crAsk" data-html>Should anything be removed or changed? Say so in a <a href="https://github.com/hpizaia/GK2/issues" target="_blank" rel="noopener">GitHub issue</a> and it will be.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  const VERSION = "1.3.3";
+  const KEY = "gk2-site-lang";
+
+  const I18N = {
+    en: {
+      name: "GK2 Companion",
+      altName: "Companheiro GK2",
+      eyebrow: "Graveyard Keeper 2 · fan-made crafting planner",
+      pitch: "Plan what to craft, see every ingredient, know what day it is.",
+      open: "Open the app",
+      note: "Free, no install, works on your phone. Your progress syncs across devices when you're signed in to Claude; otherwise it stays on this device.",
+      tItems: "items", tRecipes: "recipes", tTechs: "technologies", tDays: "days a week",
+      altHero: "The planner on a phone: goals, raw totals and steps by station",
+      fTitle: "What it does",
+      fLead: "Pick what you want to make. The app works out the rest, down to the last log and the last workbench.",
+      c1t: "Planner",
+      c1p: "Add goals and quantities. Get raw totals and steps grouped by station, in crafting order. Mark “have N of M”, set perks, choose alternative recipes.",
+      c2t: "Recipes",
+      c2p: "All <span class=\"num\">820</span> items and <span class=\"num\">695</span> recipes, with search and filters. Each item shows how to make it and everything it is used in.",
+      c3t: "Technologies",
+      c3p: "All <span class=\"num\">226</span> techs in 6 branches. The planner lists the ones you still need, in research order, with the red, green and blue point totals.",
+      c4t: "Days",
+      c4p: "The game's 6-day wheel and what happens on each day. A “Today” panel in the planner, and a one-time calibration against the in-game day counter.",
+      c5t: "English and Portuguese",
+      c5p: "Switch languages at any time. Brazilian Portuguese names come from the game's own files; anything unofficial is labelled, and you can rename it.",
+      c6t: "Themes and sync",
+      c6p: "Night, parchment or follow your system. Signed in to Claude, your plan opens the same on phone and computer.",
+      sTitle: "On your phone",
+      sLead: "Made for a phone next to the game, and it works just as well on a desktop.",
+      a1: "Planner: goals, raw totals and steps by station",
+      a2: "Recipes: an item with its recipes and where it is used",
+      a3: "Technologies: branches, costs and prerequisites",
+      a4: "Days: the 6-day wheel and what happens today",
+      a5: "Desktop layout: goals on the left, the plan on the right",
+      bTitle: "How it's built",
+      b1: "One HTML file. No server, no account of its own.",
+      b2: "Items, recipes and techs come from wikily.gg.",
+      b3: "Official names in both languages come from the game's text files.",
+      b4: "Built with Claude Code, with several agents splitting data, interface and review.",
+      bLink: "Read the README",
+      rTitle: "Run it yourself",
+      rP: "Want your own copy, with its own saved plan? The guide shows how to duplicate the app as your own Claude artifact, or build it from the source.",
+      rLink: "How to make your own copy",
+      svTitle: "Keep your progress",
+      svLead: "Three steps, once. After that the app just opens where you left it.",
+      sv1: "Open the app at <a href=\"https://claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn\" target=\"_blank\" rel=\"noopener\">claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn</a>. It is a web page; there is nothing to install.",
+      sv2: "Sign in to Claude when the page asks (a free account is enough). Your plan is then saved in your account and opens the same on your phone and computer. The footer shows <b>Synced</b> when it is.",
+      sv3: "Not signed in? Everything still works, but the plan lives only in that browser (the footer says <b>This device only</b>). iPhones can wipe that after a few days without use, so sign in if you don't want to lose it.",
+      svNote: "Your plan is private: nobody else can see it, not even the author.",
+      hsTitle: "Put it on your home screen",
+      hsLead: "Then it opens like an app, full screen, with one tap.",
+      hs1: "<b>iPhone (Safari):</b> open the app, tap the Share button, then <b>Add to Home Screen</b>.",
+      hs2: "<b>Android (Chrome):</b> open the app, tap the ⋮ menu, then <b>Add to Home screen</b> (or <b>Install app</b>).",
+      hs3: "<b>Computer:</b> bookmark the link, or in Chrome use <b>Install</b> in the address bar.",
+      hsNote: "Playing on PC? Keep the app open on your phone next to the game, signed in with the same account.",
+      crTitle: "Credits",
+      cr1: "A fan project by Hugo Pizaia, a Brazilian fan, made to make playing more fun. Free and non-profit: no ads, nothing sold.",
+      cr2: "Not affiliated with or endorsed by Lazy Bear Games or tinyBuild.",
+      cr3: "Graveyard Keeper 2, its art, icons and names © Lazy Bear Games / tinyBuild, used as fan content with credit.",
+      cr4: "Recipe data from the <a href=\"https://wikily.gg/graveyard-keeper-2\" target=\"_blank\" rel=\"noopener\">Graveyard Keeper 2 Wiki on Wikily</a> (© NX Software).",
+      cr5: "Made with AI: built with Claude Code (Anthropic) under the author's direction, and tested in the game.",
+      crAsk: "Should anything be removed or changed? Say so in a <a href=\"https://github.com/hpizaia/GK2/issues\" target=\"_blank\" rel=\"noopener\">GitHub issue</a> and it will be.",
+      langGroup: "Language",
+      version: "Version"
+    },
+    pt: {
+      name: "Companheiro GK2",
+      altName: "GK2 Companion",
+      eyebrow: "Graveyard Keeper 2 · planejador de crafting feito por fã",
+      pitch: "Planeje o que fabricar, veja cada ingrediente, saiba que dia é hoje.",
+      open: "Abrir o app",
+      note: "Grátis, sem instalar, funciona no celular. Com login no Claude, seu progresso sincroniza entre aparelhos; sem login, fica salvo neste aparelho.",
+      tItems: "itens", tRecipes: "receitas", tTechs: "tecnologias", tDays: "dias na semana",
+      altHero: "O planejador no celular: metas, matérias-primas e etapas por estação",
+      fTitle: "O que faz",
+      fLead: "Escolha o que quer fabricar. O app calcula o resto, até a última tora e a última bancada.",
+      c1t: "Planejador",
+      c1p: "Adicione metas e quantidades. Veja as matérias-primas totais e as etapas por estação, na ordem de fabricação. Marque “tenho N de M”, ative vantagens, escolha receitas alternativas.",
+      c2t: "Receitas",
+      c2p: "Todos os <span class=\"num\">820</span> itens e <span class=\"num\">695</span> receitas, com busca e filtros. Cada item mostra como fabricar e onde ele é usado.",
+      c3t: "Tecnologias",
+      c3p: "As <span class=\"num\">226</span> tecnologias nos 6 ramos. O planejador lista as que ainda faltam, na ordem de pesquisa, com a soma de pontos vermelhos, verdes e azuis.",
+      c4t: "Dias",
+      c4p: "A roda de 6 dias do jogo e o que acontece em cada um. Um painel “Hoje” no planejador e uma calibração única pelo contador de dias do jogo.",
+      c5t: "Português e inglês",
+      c5p: "Troque de idioma quando quiser. Os nomes em português vêm dos próprios arquivos do jogo; o que não é oficial leva um selo, e você pode renomear.",
+      c6t: "Temas e sincronização",
+      c6p: "Noite, pergaminho ou o tema do sistema. Com login no Claude, o plano abre igual no celular e no computador.",
+      sTitle: "No celular",
+      sLead: "Feito para ficar no celular ao lado do jogo, e funciona igual no computador.",
+      a1: "Planejador: metas, matérias-primas e etapas por estação",
+      a2: "Receitas: um item com suas receitas e onde é usado",
+      a3: "Tecnologias: ramos, custos e pré-requisitos",
+      a4: "Dias: a roda de 6 dias e o que acontece hoje",
+      a5: "No computador: metas à esquerda, o plano à direita",
+      bTitle: "Como foi feito",
+      b1: "Um único arquivo HTML. Sem servidor, sem conta própria.",
+      b2: "Itens, receitas e tecnologias vêm do wikily.gg.",
+      b3: "Os nomes oficiais nos dois idiomas vêm dos arquivos de texto do jogo.",
+      b4: "Feito com o Claude Code, com vários agentes dividindo dados, interface e revisão.",
+      bLink: "Ler o README",
+      rTitle: "Tenha a sua cópia",
+      rP: "Quer uma cópia só sua, com o próprio plano salvo? O guia mostra como duplicar o app como um artifact seu no Claude, ou montar a partir do código.",
+      rLink: "Como fazer a sua cópia",
+      svTitle: "Não perca o seu progresso",
+      svLead: "Três passos, uma vez só. Depois o app abre onde você parou.",
+      sv1: "Abra o app em <a href=\"https://claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn\" target=\"_blank\" rel=\"noopener\">claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn</a>. É uma página web; não tem nada para instalar.",
+      sv2: "Entre com a sua conta do Claude quando a página pedir (a conta gratuita basta). O plano passa a ficar salvo na sua conta e abre igual no celular e no computador. No rodapé aparece <b>Sincronizado</b> quando está tudo certo.",
+      sv3: "Sem login? Tudo funciona, mas o plano fica só naquele navegador (o rodapé mostra <b>Só neste aparelho</b>). O iPhone pode apagar isso depois de alguns dias sem uso, então entre com a conta se não quiser perder.",
+      svNote: "O seu plano é privado: ninguém mais vê, nem o autor.",
+      hsTitle: "Coloque na tela de início",
+      hsLead: "Aí ele abre como um app, em tela cheia, com um toque.",
+      hs1: "<b>iPhone (Safari):</b> abra o app, toque no botão Compartilhar e depois em <b>Adicionar à Tela de Início</b>.",
+      hs2: "<b>Android (Chrome):</b> abra o app, toque no menu ⋮ e depois em <b>Adicionar à tela inicial</b> (ou <b>Instalar app</b>).",
+      hs3: "<b>Computador:</b> salve o link nos favoritos, ou no Chrome use <b>Instalar</b> na barra de endereço.",
+      hsNote: "Joga no PC? Deixe o app aberto no celular do lado do jogo, com a mesma conta.",
+      crTitle: "Créditos",
+      cr1: "Projeto de fã de Hugo Pizaia, um fã brasileiro, feito para deixar a jogatina mais divertida. Gratuito e sem fins lucrativos: sem anúncios, nada à venda.",
+      cr2: "Sem vínculo com a Lazy Bear Games nem com a tinyBuild, e sem endosso delas.",
+      cr3: "Graveyard Keeper 2, a arte, os ícones e os nomes © Lazy Bear Games / tinyBuild, usados como conteúdo de fã, com crédito.",
+      cr4: "Receitas da <a href=\"https://wikily.gg/graveyard-keeper-2\" target=\"_blank\" rel=\"noopener\">wiki do Graveyard Keeper 2 no Wikily</a> (© NX Software).",
+      cr5: "Feito com IA: com o Claude Code (Anthropic), sob a direção do autor, e testado no jogo.",
+      crAsk: "Algo precisa sair ou mudar? Avise numa <a href=\"https://github.com/hpizaia/GK2/issues\" target=\"_blank\" rel=\"noopener\">issue no GitHub</a> que sai ou muda.",
+      langGroup: "Idioma",
+      version: "Versão"
+    }
+  };
+
+  function readLang() {
+    try { const v = localStorage.getItem(KEY); if (v === "pt" || v === "en") return v; } catch (e) {}
+    return "en";
+  }
+  function saveLang(l) { try { localStorage.setItem(KEY, l); } catch (e) {} }
+
+  function apply(lang) {
+    const d = I18N[lang] || I18N.en;
+    document.documentElement.lang = lang === "pt" ? "pt-BR" : "en";
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      const v = d[el.getAttribute("data-i18n")];
+      if (v == null) return;
+      if (el.hasAttribute("data-html")) el.innerHTML = v; else el.textContent = v;
+    });
+    document.querySelectorAll("[data-i18n-alt]").forEach(function (el) {
+      const v = d[el.getAttribute("data-i18n-alt")];
+      if (v != null) el.alt = v;
+    });
+    document.querySelectorAll(".lang button").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.lang === lang));
+    });
+    const grp = document.querySelector(".lang");
+    if (grp) grp.setAttribute("aria-label", d.langGroup);
+    const ver = document.getElementById("ver");
+    if (ver) { ver.textContent = "v" + VERSION; ver.title = d.version + " " + VERSION; }
+  }
+
+  document.querySelectorAll(".lang button").forEach(function (b) {
+    b.addEventListener("click", function () { saveLang(b.dataset.lang); apply(b.dataset.lang); });
+  });
+
+  // Missing screenshots: show the styled placeholder with the alt text.
+  document.querySelectorAll(".screen img, .desk img").forEach(function (img) {
+    const box = img.parentNode;
+    const miss = function () { box.classList.add("missing"); };
+    img.addEventListener("error", miss);
+    img.addEventListener("load", function () { box.classList.remove("missing"); });
+    if (img.complete && img.naturalWidth === 0) miss();
+  });
+
+  apply(readLang());
+})();
+</script>
+</body>
+</html>

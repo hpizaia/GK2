@@ -1,0 +1,750 @@
+/* GK.ui.recipes: the Receitas screen (#recipes). Browse every item (own search box, category and station
+   chips with counts, hidden-items toggle, 60 rows per page) and an item detail (recipes with inputs, unlock,
+   mastery, time/energy, by-products; group members; how to obtain; "Usado em"; add to goals; pick the
+   recipe the planner uses). Only the bare #recipes hash reaches the page, so the open item lives in module
+   state and in sessionStorage (gk2-recipes-view).
+   Owns: [data-panel="recipes"] and the "recipes" route.
+   Exposes: GK.ui.recipes.{mount, render, open(itemId, {from})}; registered as a panel. open(id, {from: "plan"})
+   (the planner's "i" buttons, the Tecnologias unlock rows) shows the detail with a "← Voltar: <screen>" button that
+   returns to that screen at its old scroll position and focuses the button that opened the detail.
+*/
+GK.i18n.add({
+  pt: {
+    "rc.tab": "Receitas",
+    "rc.title": "Receitas",
+    "rc.hint": "Tudo o que dá para fabricar no jogo. Busque ou filtre e toque num item para ver as receitas e onde ele é usado.",
+    "rc.searchLabel": "Buscar item nas receitas",
+    "rc.placeholder": "Buscar entre {n} itens…",
+    "rc.clear": "Limpar busca",
+    "rc.filters": "Filtros",
+    "rc.filtersOn.one": "{n} ativo",
+    "rc.filtersOn.other": "{n} ativos",
+    "rc.cat": "Categoria",
+    "rc.station": "Estação",
+    "rc.all": "Ver todas ({n})",
+    "rc.less": "Ver menos",
+    "rc.noCat": "Sem categoria",
+    "rc.noRecipe": "Sem receita (coleta, compra…)",
+    "rc.clearFilters": "Limpar filtros",
+    "rc.removeFilter": "Remover filtro: {name}",
+    "rc.count.one": "{n} item",
+    "rc.count.other": "{n} itens",
+    "rc.none": "Nenhum item com esses filtros.",
+    "rc.noneQ": "Nada encontrado para “{q}”. Tente outro nome, em português ou inglês, ou limpe os filtros.",
+    "rc.more": "Mostrar mais ({n} restantes)",
+    "rc.hiddenShow": "Mostrando itens ocultos",
+    "rc.hiddenMore": "Mostrar itens ocultos (+{n})",
+    "rc.hiddenNone": "Mostrar itens ocultos",
+    "rc.recipes.one": "{n} receita",
+    "rc.recipes.other": "{n} receitas",
+    "rc.raw": "Sem receita",
+    "rc.open": "Ver receitas de {name}",
+    "rc.back": "← Voltar à lista",
+    "rc.backTo": "← Voltar: {name}",
+    "rc.toList": "Lista",
+    "rc.unofficial": "não oficial",
+    "rc.unofficialTitle": "Tradução não oficial do nome",
+    "rc.edited": "editado",
+    "rc.editedTitle": "Nome editado por você",
+    "rc.hidden": "oculto",
+    "rc.hiddenTitle": "Oculto na wiki ou não é um item de verdade",
+    "rc.unobt": "não obtenível",
+    "rc.unobtTitle": "Nada fornece este item na versão atual do jogo",
+    "rc.kind.building": "Construção",
+    "rc.kind.station": "Estação de trabalho",
+    "rc.kind.group": "Grupo de itens",
+    "rc.kind.quality-variant": "Variante de qualidade",
+    "rc.kind.virtual": "Item virtual",
+    "rc.kind.action": "Ação ou efeito",
+    "rc.addGoal": "Adicionar às metas",
+    "rc.qty": "Quantidade de {name}",
+    "rc.dec": "Diminuir quantidade",
+    "rc.inc": "Aumentar quantidade",
+    "rc.inGoals": "Nas metas: {n}",
+    "rc.toPlan": "Ver no Planejador",
+    "rc.obtain": "Como obter",
+    "rc.members": "Qualquer um destes serve",
+    "rc.memberOf": "Faz parte de",
+    "rc.runes": "Runas",
+    "rc.recipesTitle": "Como fabricar",
+    "rc.noRecipes": "Nenhuma receita fabrica este item: ele é coletado, comprado ou obtido de outra forma.",
+    "rc.recipeN": "Receita {l}",
+    "rc.makes": "rende {n}",
+    "rc.makesVar": "rendimento varia",
+    "rc.bonusYield": "Rende {n} com {perk}",
+    "rc.bonusAdd": "Rende +{n} com {perk}",
+    "rc.bonusOn": "vantagem ligada",
+    "rc.makesNote": "Rende: {note}",
+    "rc.star": "Qualidade: prata com {silver} ciclos bem-sucedidos, ouro com {gold}",
+    "rc.noInputs": "Sem ingredientes",
+    "rc.alt": "Também em: {names}",
+    "rc.tech": "Requer {tech}",
+    "rc.quest": "Missão: {tech}",
+    "rc.perk": "Vantagem: {tech}",
+    "rc.mastery": "Maestria: {type} {level}",
+    "rc.ext": "Extensão na estação: {ext}",
+    "rc.time.one": "Tempo: {n} ciclo",
+    "rc.time.other": "Tempo: {n} ciclos",
+    "rc.energy": "Energia: {n} por ciclo",
+    "rc.energyTotal": "Energia: {n} por ciclo ({total} no total)",
+    "rc.runesNeed": "Runas exigidas",
+    "rc.extra": "Subprodutos (não somados no plano)",
+    "rc.example": "mistura de exemplo",
+    "rc.exampleTitle": "Alquimia: qualquer combinação de ingredientes com as mesmas runas funciona",
+    "rc.hiddenRecipe": "oculta na wiki",
+    "rc.cyc": "circular",
+    "rc.noexp": "colheita",
+    "rc.default": "padrão",
+    "rc.inUse": "Em uso no planejador",
+    "rc.use": "Usar esta receita no planejador",
+    "rc.useDefault": "Voltar à receita padrão",
+    "rc.used": "O planejador vai usar {station} para {name}",
+    "rc.usedDefault": "Receita padrão de volta para {name}",
+    "rc.usedIn": "Usado em",
+    "rc.usedInNone": "Nenhuma receita usa este item.",
+    "rc.uses": "usa {n}",
+    "rc.via": "via {group}",
+    "rc.madeHere": "Fabricado aqui",
+    "rc.showAll": "Mostrar todos ({n})",
+    "rc.added": "Adicionado às metas: {name} ×{n}",
+    "rc.bumped": "{name}: agora {n} nas metas",
+    "rune.red": "Vermelha",
+    "rune.green": "Verde",
+    "rune.blue": "Azul",
+  },
+  en: {
+    "rc.tab": "Recipes",
+    "rc.title": "Recipes",
+    "rc.hint": "Everything you can craft in the game. Search or filter, then tap an item to see its recipes and where it is used.",
+    "rc.searchLabel": "Search items in the recipes",
+    "rc.placeholder": "Search {n} items…",
+    "rc.clear": "Clear search",
+    "rc.filters": "Filters",
+    "rc.filtersOn.one": "{n} on",
+    "rc.filtersOn.other": "{n} on",
+    "rc.cat": "Category",
+    "rc.station": "Station",
+    "rc.all": "Show all ({n})",
+    "rc.less": "Show fewer",
+    "rc.noCat": "No category",
+    "rc.noRecipe": "No recipe (gather, buy…)",
+    "rc.clearFilters": "Clear filters",
+    "rc.removeFilter": "Remove filter: {name}",
+    "rc.count.one": "{n} item",
+    "rc.count.other": "{n} items",
+    "rc.none": "No items match these filters.",
+    "rc.noneQ": "Nothing found for “{q}”. Try another name, in English or Portuguese, or clear the filters.",
+    "rc.more": "Show more ({n} left)",
+    "rc.hiddenShow": "Showing hidden items",
+    "rc.hiddenMore": "Show hidden items (+{n})",
+    "rc.hiddenNone": "Show hidden items",
+    "rc.recipes.one": "{n} recipe",
+    "rc.recipes.other": "{n} recipes",
+    "rc.raw": "No recipe",
+    "rc.open": "See the recipes for {name}",
+    "rc.back": "← Back to the list",
+    "rc.backTo": "← Back: {name}",
+    "rc.toList": "List",
+    "rc.unofficial": "unofficial",
+    "rc.unofficialTitle": "Unofficial name translation",
+    "rc.edited": "edited",
+    "rc.editedTitle": "Name edited by you",
+    "rc.hidden": "hidden",
+    "rc.hiddenTitle": "Hidden on the wiki, or not a real item",
+    "rc.unobt": "unobtainable",
+    "rc.unobtTitle": "Nothing gives this item in the current game version",
+    "rc.kind.building": "Building",
+    "rc.kind.station": "Work station",
+    "rc.kind.group": "Item group",
+    "rc.kind.quality-variant": "Quality variant",
+    "rc.kind.virtual": "Virtual item",
+    "rc.kind.action": "Action or effect",
+    "rc.addGoal": "Add to goals",
+    "rc.qty": "Amount of {name}",
+    "rc.dec": "Decrease amount",
+    "rc.inc": "Increase amount",
+    "rc.inGoals": "In goals: {n}",
+    "rc.toPlan": "See in the Planner",
+    "rc.obtain": "How to get it",
+    "rc.members": "Any of these works",
+    "rc.memberOf": "Part of",
+    "rc.runes": "Runes",
+    "rc.recipesTitle": "How to make it",
+    "rc.noRecipes": "No recipe makes this item: it is gathered, bought or obtained some other way.",
+    "rc.recipeN": "Recipe {l}",
+    "rc.makes": "makes {n}",
+    "rc.makesVar": "yield varies",
+    "rc.bonusYield": "Makes {n} with {perk}",
+    "rc.bonusAdd": "Makes +{n} with {perk}",
+    "rc.bonusOn": "perk on",
+    "rc.makesNote": "Makes: {note}",
+    "rc.star": "Quality: silver at {silver} successful ticks, gold at {gold}",
+    "rc.noInputs": "No ingredients",
+    "rc.alt": "Also at: {names}",
+    "rc.tech": "Needs {tech}",
+    "rc.quest": "Quest: {tech}",
+    "rc.perk": "Perk: {tech}",
+    "rc.mastery": "Mastery: {type} {level}",
+    "rc.ext": "Station extension: {ext}",
+    "rc.time.one": "Time: {n} tick",
+    "rc.time.other": "Time: {n} ticks",
+    "rc.energy": "Energy: {n} per tick",
+    "rc.energyTotal": "Energy: {n} per tick ({total} in total)",
+    "rc.runesNeed": "Runes needed",
+    "rc.extra": "By-products (not counted in the plan)",
+    "rc.example": "example mix",
+    "rc.exampleTitle": "Alchemy: any mix of ingredients with the same runes works",
+    "rc.hiddenRecipe": "hidden on the wiki",
+    "rc.cyc": "circular",
+    "rc.noexp": "harvest",
+    "rc.default": "default",
+    "rc.inUse": "Used by the planner",
+    "rc.use": "Use this recipe in the planner",
+    "rc.useDefault": "Back to the default recipe",
+    "rc.used": "The planner will use {station} for {name}",
+    "rc.usedDefault": "Default recipe restored for {name}",
+    "rc.usedIn": "Used in",
+    "rc.usedInNone": "No recipe uses this item.",
+    "rc.uses": "uses {n}",
+    "rc.via": "via {group}",
+    "rc.madeHere": "Made here",
+    "rc.showAll": "Show all ({n})",
+    "rc.added": "Added to goals: {name} ×{n}",
+    "rc.bumped": "{name}: now {n} in goals",
+    "rune.red": "Red",
+    "rune.green": "Green",
+    "rune.blue": "Blue",
+  },
+});
+
+GK.ui.recipes = (function () {
+  const { t, name, num, edited } = GK.i18n, { esc, slot } = GK.util;
+  const PAGE = 60, CHIPS = 8, LIST_CAP = 40, SKEY = "gk2-recipes-view";
+  const UNOFFICIAL = { guess: 1, machine: 1, missing: 1 };
+  const BUILD = { id: "build", i18n: "station.build" }, NONE = { id: "none", i18n: "rc.noRecipe" }, NOCAT = { i18n: "rc.noCat" };
+
+  let root, browseEl, detailEl, input, clearBtn, listEl, chipsEl, metaEl, moreEl, filtersEl;
+  let IX = null;                 // lazy index, built on the first visit
+  // view state (also in sessionStorage)
+  const V = { item: null, stack: [], q: "", cat: null, st: null, from: null };   // from: route that opened the detail
+  let fromScroll = 0, returnTo = null, pendingFocus = false;
+  let shown = PAGE, results = [], expanded = { cat: false, st: false };
+  let addQty = 1, usedAll = false, hereAll = false, listScroll = 0, sortCache = { key: "", ids: [] };
+
+  /* ---------- persistence ---------- */
+  function save() {
+    try { window.sessionStorage.setItem(SKEY, JSON.stringify(V)); } catch (e) { /* storage blocked */ }
+  }
+  function restore() {
+    try {
+      const o = JSON.parse(window.sessionStorage.getItem(SKEY) || "null");
+      if (!o || typeof o !== "object") return;
+      const D = GK.data.get();
+      if (typeof o.q === "string") V.q = o.q.slice(0, 80);
+      if (typeof o.cat === "string") V.cat = o.cat;
+      if (typeof o.st === "string") V.st = o.st;
+      if (typeof o.item === "string" && D.items[o.item]) V.item = o.item;
+      if (Array.isArray(o.stack)) V.stack = o.stack.filter((id) => typeof id === "string" && D.items[id]).slice(-30);
+      if (typeof o.from === "string" && o.from !== "recipes" && GK.router.TABS.some((r) => r.id === o.from) && V.item) V.from = o.from;
+    } catch (e) { /* corrupt or blocked */ }
+  }
+  const saveSoon = GK.util.debounce(save, 300);
+
+  /* ---------- index (lazy) ---------- */
+  const stKey = (s) => (!s ? "none" : s.build ? "build" : s.id);
+  function buildIndex() {
+    const D = GK.data.get();
+    IX = { rows: {}, cats: {}, stations: { build: BUILD, none: NONE }, byStation: {}, memberOf: {} };
+    for (const it of Object.values(D.items)) {
+      if (it.stub) continue;
+      const rs = GK.data.recipesFor(it.id), st = new Set();
+      for (const r of rs) { st.add(stKey(r.station)); r.alt.forEach((a) => st.add(stKey(a))); }
+      if (!rs.length) st.add("none");
+      for (const k of st) if (!IX.stations[k]) IX.stations[k] = D.stations[k] || { id: k, pt: k, en: k };
+      const cat = it.cat ? it.cat.en : "";
+      if (!(cat in IX.cats)) IX.cats[cat] = it.cat || NOCAT;
+      const main = (it.defaultRecipe && D.recipeById[it.defaultRecipe]) || rs[0] || null;
+      IX.rows[it.id] = { id: it.id, cat, st: [...st], n: rs.length, main: main ? main.station : null, hidden: it.hidden };
+      if (it.members) for (const m of it.members) (IX.memberOf[m] = IX.memberOf[m] || []).push(it.id);
+    }
+    for (const r of D.recipes) {
+      const ids = new Set([r.station.id].concat(r.alt.map((a) => a.id)));
+      for (const id of ids) (IX.byStation[id] = IX.byStation[id] || []).push(r);
+    }
+  }
+
+  /* ---------- browse ---------- */
+  function sortedIds(state) {
+    const lang = GK.i18n.lang(), ov = state.overrides && state.overrides[lang];
+    const key = lang + "|" + (ov ? JSON.stringify(ov) : "");
+    if (sortCache.key === key) return sortCache.ids;
+    const D = GK.data.get(), coll = new Intl.Collator(GK.i18n.meta(lang).locale, { sensitivity: "base", numeric: true });
+    const label = {};
+    for (const id in IX.rows) label[id] = name(D.items[id], state.overrides);
+    sortCache = { key, ids: Object.keys(IX.rows).sort((a, b) => coll.compare(label[a], label[b])) };
+    return sortCache.ids;
+  }
+  function compute(state) {
+    const D = GK.data.get(), q = V.q.trim();
+    const base = q
+      ? GK.calc.search(q, D, { lang: GK.i18n.lang(), overrides: state.overrides, showHidden: true, limit: 100000 }).results.map((r) => r.id)
+      : sortedIds(state);
+    const catN = {}, stN = {}, out = [];
+    let hiddenN = 0;
+    for (const id of base) {
+      const row = IX.rows[id];
+      if (!row) continue;
+      const okCat = !V.cat || row.cat === V.cat, okSt = !V.st || row.st.indexOf(V.st) >= 0;
+      if (row.hidden && !state.showHidden) { if (okCat && okSt) hiddenN++; continue; }
+      if (okSt) catN[row.cat] = (catN[row.cat] || 0) + 1;
+      if (okCat) for (const k of row.st) stN[k] = (stN[k] || 0) + 1;
+      if (okCat && okSt) out.push(row);
+    }
+    return { rows: out, catN, stN, hiddenN };
+  }
+  function chips(kind, counts, labels, selected, state) {
+    const lbl = (k) => name(labels[k] || { pt: k, en: k }, state.overrides);
+    let list = Object.keys(counts).filter((k) => counts[k] > 0 || k === selected);
+    if (selected != null && list.indexOf(selected) < 0) list.push(selected);
+    list.sort((a, b) => (b === selected) - (a === selected) || (counts[b] || 0) - (counts[a] || 0) || lbl(a).localeCompare(lbl(b)));
+    const total = list.length, open = expanded[kind];
+    if (!open) list = list.slice(0, CHIPS);
+    const html = list.map((k) => `<button type="button" class="chip" data-chip="${kind}" data-key="${esc(k)}" aria-pressed="${k === selected}">${esc(lbl(k))} <span class="chip-n">${num(counts[k] || 0)}</span></button>`).join("");
+    const more = total > CHIPS ? `<button type="button" class="chip chip-more" data-chip-more="${kind}" aria-expanded="${open}">${esc(open ? t("rc.less") : t("rc.all", { n: total }))}</button>` : "";
+    return `<div class="chip-group" role="group" aria-labelledby="rc-${kind}-h"><h3 class="chip-h" id="rc-${kind}-h">${esc(t(kind === "cat" ? "rc.cat" : "rc.station"))}</h3><div class="chips">${html}${more}</div></div>`;
+  }
+  function rowHtml(row, state) {
+    const D = GK.data.get(), it = D.items[row.id], nm = name(it, state.overrides);
+    let sub;
+    if (!row.n) sub = t("rc.raw");
+    else {
+      // with a station filter on, name that station (it may be an alternative, not the default one)
+      const s = V.st && V.st !== "none" && stKey(row.main) !== V.st && IX.stations[V.st] ? IX.stations[V.st] : row.main;
+      const st = name(s, state.overrides);
+      sub = (s && s.build && !s.i18n ? t("station.build") + " · " + st : st) + " · " + t("rc.recipes", { n: row.n });
+    }
+    const hid = row.hidden ? `<span class="badge badge-hidden">${esc(t(it.unobtainable ? "rc.unobt" : "rc.hidden"))}</span>` : "";
+    return `<button type="button" class="rc-row" id="rc-row-${GK.util.domId(row.id)}" data-open="${esc(row.id)}" aria-label="${esc(t("rc.open", { name: nm }))}">
+      ${slot(it, nm)}<span class="rc-row-main"><span class="rc-row-name">${esc(nm)}${hid}</span><span class="rc-row-sub">${esc(sub)}</span></span><span class="rc-chev" aria-hidden="true">›</span></button>`;
+  }
+  function renderMore() {
+    const left = results.length - shown;
+    moreEl.hidden = left <= 0;
+    if (left > 0) moreEl.textContent = t("rc.more", { n: left });
+  }
+  function updateList(reset) {
+    const state = GK.store.get(), D = GK.data.get();
+    if (reset) shown = PAGE;
+    const c = compute(state);
+    results = c.rows;
+    chipsEl.innerHTML = chips("cat", c.catN, IX.cats, V.cat, state) + chips("st", c.stN, IX.stations, V.st, state);
+    const nOn = (V.cat != null ? 1 : 0) + (V.st != null ? 1 : 0);
+    filtersEl.querySelector(".rc-filters-n").textContent = nOn ? t("rc.filtersOn", { n: nOn }) : "";
+    const active = [];
+    if (V.cat != null) active.push(["cat", name(IX.cats[V.cat] || NOCAT, state.overrides)]);
+    if (V.st != null) active.push(["st", name(IX.stations[V.st] || { pt: V.st, en: V.st }, state.overrides)]);
+    const hiddenBtn = state.showHidden || c.hiddenN
+      ? `<button type="button" class="hidden-toggle" id="rc-hidden" data-rc-hidden aria-pressed="${state.showHidden}">${esc(state.showHidden ? t("rc.hiddenShow") : t("rc.hiddenMore", { n: c.hiddenN }))}</button>` : "";
+    metaEl.innerHTML = `<span class="rc-count tabnum" aria-live="polite">${esc(t("rc.count", { n: results.length }))}</span>` +
+      active.map(([k, l]) => `<button type="button" class="chip chip-active" data-unfilter="${k}" aria-label="${esc(t("rc.removeFilter", { name: l }))}">${esc(l)} <span aria-hidden="true">×</span></button>`).join("") +
+      (active.length > 1 ? `<button type="button" class="btn btn-sm btn-ghost" data-clear-filters>${esc(t("rc.clearFilters"))}</button>` : "") + hiddenBtn;
+    listEl.innerHTML = results.length ? results.slice(0, shown).map((r) => rowHtml(r, state)).join("")
+      : `<p class="rc-empty">${esc(V.q.trim() ? t("rc.noneQ", { q: V.q.trim() }) : t("rc.none"))}</p>`;
+    renderMore();
+  }
+  function showMore() {
+    const state = GK.store.get();
+    listEl.insertAdjacentHTML("beforeend", results.slice(shown, shown + PAGE).map((r) => rowHtml(r, state)).join(""));
+    const first = listEl.children[shown];
+    shown += PAGE;
+    renderMore();
+    if (first) first.focus({ preventScroll: true });
+  }
+  function staticLabels() {
+    input.placeholder = t("rc.placeholder", { n: GK.data.get().visibleCount });
+    root.querySelector("#rc-q-label").textContent = t("rc.searchLabel");
+    clearBtn.setAttribute("aria-label", t("rc.clear"));
+    clearBtn.hidden = !input.value;
+    root.querySelector(".rc-title").textContent = t("rc.title");
+    root.querySelector(".rc-hint").textContent = t("rc.hint");
+    filtersEl.querySelector(".rc-filters-t").textContent = t("rc.filters");
+  }
+
+  /* ---------- detail ---------- */
+  const expandable = (r) => r.in.length > 0 && !r.noexp;
+  function current(id, state) {
+    const D = GK.data.get(), c = state.choice[id] && D.recipeById[state.choice[id]];
+    if (c && c.out.item === id) return c;
+    const it = D.items[id];
+    return it && it.defaultRecipe ? D.recipeById[it.defaultRecipe] || null : null;
+  }
+  function badges(it, state) {
+    const b = [];
+    if (edited(it, state.overrides)) b.push(`<span class="badge badge-edited" title="${esc(t("rc.editedTitle"))}">${esc(t("rc.edited"))}</span>`);
+    else if (GK.i18n.lang() !== "en" && UNOFFICIAL[it.tr]) b.push(`<span class="badge" title="${esc(t("rc.unofficialTitle"))}">${esc(t("rc.unofficial"))}</span>`);
+    if (it.unobtainable) b.push(`<span class="badge badge-warn" title="${esc(t("rc.unobtTitle"))}">${esc(t("rc.unobt"))}</span>`);
+    else if (it.hidden) b.push(`<span class="badge badge-hidden" title="${esc(t("rc.hiddenTitle"))}">${esc(t("rc.hidden"))}</span>`);
+    return b.join("");
+  }
+  function stationLabel(s, state) {
+    const st = name(s, state.overrides);
+    return s && s.build && !s.i18n ? t("station.build") + " · " + st : st;
+  }
+  function runes(o) {
+    return Object.keys(o || {}).map((k) => `<span class="rune rune-${esc(k)}">${esc(t("rune." + k))} <b>${num(o[k])}</b></span>`).join("");
+  }
+  // one tappable line: icon, qty, name, note
+  function line(l, state, sub) {
+    const D = GK.data.get(), it = D.items[l.item], nm = name(it, state.overrides);
+    const q = l.qty == null ? "?" : num(l.qty);
+    return `<li><button type="button" class="rc-line" data-open="${esc(l.item)}" aria-label="${esc(q + " × " + nm + " · " + t("rc.open", { name: nm }))}">
+      ${slot(it, nm, true)}<span class="rc-line-q tabnum">${esc(q)}<small>×</small></span>
+      <span class="rc-line-main"><span class="rc-line-name">${esc(nm)}</span>${l.note ? `<span class="rc-line-note">${esc(name(l.note))}</span>` : ""}${sub ? `<span class="rc-line-note">${esc(sub)}</span>` : ""}</span>
+      <span class="rc-chev" aria-hidden="true">›</span></button></li>`;
+  }
+  function itemLine(id, state, sub) {
+    const D = GK.data.get(), it = D.items[id], nm = name(it, state.overrides);
+    return `<li><button type="button" class="rc-line" data-open="${esc(id)}" aria-label="${esc(t("rc.open", { name: nm }))}">
+      ${slot(it, nm, true)}<span class="rc-line-main"><span class="rc-line-name">${esc(nm)}${it.hidden ? `<span class="badge badge-hidden">${esc(t(it.unobtainable ? "rc.unobt" : "rc.hidden"))}</span>` : ""}</span>${sub ? `<span class="rc-line-note">${esc(sub)}</span>` : ""}</span>
+      <span class="rc-chev" aria-hidden="true">›</span></button></li>`;
+  }
+  // "Rende 5 com Cozinheiro II" (made_text, exported as out.note; the perk chip lives in the planner's Progresso)
+  function yieldLines(r, state) {
+    const out = [], b = r.out.bonus;
+    if (b && (b.qty != null || b.add != null)) {
+      const perk = b.perks.map((p) => name(GK.data.perks()[p] || { en: p })).join(" + ");
+      const on = GK.calc.isBonusActive(b, state.perks);
+      const txt = b.qty != null ? t("rc.bonusYield", { n: b.qty, perk }) : t("rc.bonusAdd", { n: b.add, perk });
+      out.push(`<span class="${on ? "perk-on" : ""}">${esc(txt)}${on ? ` · ✓ ${esc(t("rc.bonusOn"))}` : ""}</span>`);
+    } else if (r.out.note) out.push(esc(t("rc.makesNote", { note: name(r.out.note) })));
+    if (r.star && (r.star.silver != null || r.star.gold != null)) {
+      out.push(esc(t("rc.star", { silver: r.star.silver != null ? r.star.silver : "?", gold: r.star.gold != null ? r.star.gold : "?" })));
+    }
+    return out;
+  }
+  function unlockLines(r) {
+    const out = [];
+    if (r.tech) {
+      const key = r.tech.type === "quest" ? "rc.quest" : r.tech.type === "perk" ? "rc.perk" : "rc.tech";
+      const canLink = r.tech.id && r.tech.type === "technology" && GK.ui.tech && typeof GK.ui.tech.open === "function";
+      const tn = esc(name(r.tech));
+      const txt = esc(t(key, { tech: "\u0000" })).replace("\u0000", canLink ? `<button type="button" class="rc-link" data-tech="${esc(r.tech.id)}">${tn}</button>` : `<b>${tn}</b>`);
+      out.push(txt);
+    }
+    if (r.mastery) out.push(esc(t("rc.mastery", { type: name(r.mastery.type), level: r.mastery.level == null ? "" : r.mastery.level })));
+    if (r.ext) out.push(esc(t("rc.ext", { ext: name(r.ext) })));
+    if (r.ticks != null) out.push(esc(t("rc.time", { n: r.ticks })));
+    if (r.energy != null) out.push(esc(r.ticks != null ? t("rc.energyTotal", { n: r.energy, total: num(r.energy * r.ticks) }) : t("rc.energy", { n: r.energy })));
+    return out;
+  }
+  function recipeCard(r, idx, it, state, cur, many) {
+    const D = GK.data.get(), stName = stationLabel(r.station, state);
+    const tags = [];
+    if (r.id === it.defaultRecipe) tags.push(`<span class="badge badge-goal">${esc(t("rc.default"))}</span>`);
+    if (r.example) tags.push(`<span class="badge badge-ex" title="${esc(t("rc.exampleTitle"))}">${esc(t("rc.example"))}</span>`);
+    if (r.noexp) tags.push(`<span class="badge badge-ex">${esc(t("rc.noexp"))}</span>`);
+    if (!r.listed) tags.push(`<span class="badge badge-hidden">${esc(t("rc.hiddenRecipe"))}</span>`);
+    if (r.cyc) tags.push(`<span class="badge badge-warn">${esc(t("rc.cyc"))}</span>`);
+    const rname = r.name && name(r.name) !== name(it) && (GK.i18n.lang() === "en" || r.name.pt !== r.name.en) ? `<p class="rc-rname">${esc(name(r.name))}</p>` : "";
+    const alt = r.alt.length ? `<p class="rc-meta-line">${esc(t("rc.alt", { names: r.alt.map((a) => name(a, state.overrides)).join(", ") }))}</p>` : "";
+    const ins = r.in.length ? `<ul class="rc-lines">${r.in.map((l) => line(l, state)).join("")}</ul>` : `<p class="rc-meta-line">${esc(t("rc.noInputs"))}</p>`;
+    const meta = yieldLines(r, state).concat(unlockLines(r)).map((h) => `<li>${h}</li>`).join("");
+    const rn = r.runes ? `<div class="rc-runes"><span class="rc-k">${esc(t("rc.runesNeed"))}</span> ${runes(r.runes)}</div>` : "";
+    const extra = r.extra.length ? `<div class="rc-extra"><span class="rc-k">${esc(t("rc.extra"))}</span><ul class="rc-lines">${r.extra.map((l) => line(l, state)).join("")}</ul></div>` : "";
+    let act = "";
+    if (cur && cur.id === r.id) act = `<span class="rc-inuse">✓ ${esc(t("rc.inUse"))}</span>`;
+    else if (expandable(r) && (many || !it.defaultRecipe)) act = `<button type="button" class="btn btn-sm" id="rc-use-${GK.util.domId(r.id)}" data-use="${esc(r.id)}">${esc(t("rc.use"))}</button>`;
+    const yieldTxt = r.out.qty == null ? t("rc.makesVar") : t("rc.makes", { n: r.out.qty });
+    return `<article class="card list rc-recipe">
+      <header class="station-h">${slot(r.station, stName, true)}<h4><span class="station-sub">${esc(t("rc.recipeN", { l: String.fromCharCode(65 + (idx % 26)) }))}</span>${esc(stName)}</h4><span class="rc-yield tabnum">${esc(yieldTxt)}</span></header>
+      <div class="rc-recipe-body">
+        ${tags.length ? `<div class="rc-tags">${tags.join("")}</div>` : ""}${rname}${alt}${ins}
+        ${meta ? `<ul class="rc-meta">${meta}</ul>` : ""}${rn}${extra}
+        ${act ? `<div class="rc-act">${act}</div>` : ""}
+      </div>
+    </article>`;
+  }
+  function detailHtml(id, state) {
+    const D = GK.data.get(), it = D.items[id], nm = name(it, state.overrides), lang = GK.i18n.lang();
+    const other = lang === "en" ? it.pt : it.en;
+    const prev = V.stack.length ? D.items[V.stack[V.stack.length - 1]] : null;
+    const fromTab = V.from ? GK.router.TABS.find((r) => r.id === V.from) : null;
+    const backTxt = prev ? t("rc.backTo", { name: name(prev, state.overrides) }) : fromTab ? t("rc.backTo", { name: t(fromTab.labelKey) }) : t("rc.back");
+    const nav = `<nav class="rc-nav">
+      <button type="button" class="btn btn-ghost rc-back" id="rc-back" data-back>${esc(backTxt)}</button>
+      ${prev || fromTab ? `<button type="button" class="btn btn-sm btn-ghost" id="rc-tolist" data-tolist>${esc(t("rc.toList"))}</button>` : ""}</nav>`;
+    const catTxt = [it.cat ? name(it.cat) : "", it.kind !== "item" ? t("rc.kind." + it.kind) : ""].filter(Boolean).join(" · ");
+    const g = state.goals.find((x) => x.item === id);
+    const goal = `<div class="rc-goal">
+      <div class="stepper">
+        <button type="button" id="rc-dec" data-qty-d="-1" aria-label="${esc(t("rc.dec"))}">−</button>
+        <input id="rc-qty" type="number" inputmode="numeric" min="1" max="999" value="${addQty}" aria-label="${esc(t("rc.qty", { name: nm }))}">
+        <button type="button" id="rc-inc" data-qty-d="1" aria-label="${esc(t("rc.inc"))}">+</button>
+      </div>
+      <button type="button" class="btn rc-add" id="rc-add" data-add-goal>${esc(t("rc.addGoal"))}</button>
+      ${g ? `<a class="rc-ingoals" href="#plan">${esc(t("rc.inGoals", { n: g.qty }))} · ${esc(t("rc.toPlan"))}</a>` : ""}
+    </div>`;
+    const info = [];
+    const rs = GK.data.recipesFor(id);
+    if (it.obtain && (!rs.length || it.raw || it.unobtainable)) info.push(`<div class="rc-info"><h3 class="rc-k">${esc(t("rc.obtain"))}</h3><p>${esc(name(it.obtain))}</p></div>`);
+    if (it.runes) info.push(`<div class="rc-info"><h3 class="rc-k">${esc(t("rc.runes"))}</h3><div class="rc-runes">${runes(it.runes)}</div></div>`);
+    if (it.members && it.members.length) info.push(`<div class="rc-info"><h3 class="rc-k">${esc(t("rc.members"))}</h3><ul class="rc-lines">${it.members.map((m) => itemLine(m, state)).join("")}</ul></div>`);
+    const groups = IX.memberOf[id] || [];
+    if (groups.length) info.push(`<div class="rc-info"><h3 class="rc-k">${esc(t("rc.memberOf"))}</h3><ul class="rc-lines">${groups.map((gid) => itemLine(gid, state)).join("")}</ul></div>`);
+
+    const head = `<article class="card rc-item">
+      <header class="rc-item-h">${slot(it, nm)}<div class="rc-item-t">
+        <h2 class="rc-name" id="rc-detail-h" tabindex="-1">${esc(nm)}</h2>
+        ${other && other !== nm ? `<p class="rc-other" lang="${lang === "en" ? "pt-BR" : "en"}">${esc(other)}</p>` : ""}
+        ${catTxt ? `<p class="rc-cat">${esc(catTxt)}</p>` : ""}
+        ${badges(it, state) ? `<div class="rc-badges">${badges(it, state)}</div>` : ""}
+      </div></header>
+      ${goal}${info.join("")}
+    </article>`;
+
+    const cur = current(id, state), many = rs.filter(expandable).length > 1;
+    const chosen = state.choice[id] && cur && cur.id === state.choice[id] && cur.id !== it.defaultRecipe;
+    // a group with no recipe of its own: its members (in the header card) already say how to get it
+    const recipes = !rs.length && it.members ? "" : `<section class="rc-sec" aria-labelledby="rc-recipes-h">
+      <div class="section-head"><h3 class="h2" id="rc-recipes-h">${esc(t("rc.recipesTitle"))} <span class="count">${rs.length || ""}</span></h3>
+        ${chosen ? `<button type="button" class="btn btn-sm btn-ghost" id="rc-use-default" data-use-default>${esc(t("rc.useDefault"))}</button>` : ""}</div>
+      ${rs.length ? `<div class="rc-recipes">${rs.map((r, i) => recipeCard(r, i, it, state, cur, many)).join("")}</div>` : `<p class="hint">${esc(t("rc.noRecipes"))}</p>`}
+    </section>`;
+
+    // used in: direct consumers, then recipes that take a group this item belongs to
+    const used = [];
+    const seen = new Map();
+    // one row per output + station + amount (eleven "Supplies: Vegetables" recipes collapse into one)
+    const push = (r, qty, via) => {
+      const k = [r.out.item, r.station.id, qty, via || ""].join("|");
+      if (seen.has(k)) { seen.get(k).n++; return; }
+      const u = { r, qty, via, n: 1 }; seen.set(k, u); used.push(u);
+    };
+    for (const r of D.usedIn[id] || []) push(r, r.in.find((l) => l.item === id).qty);
+    for (const gid of groups) for (const r of D.usedIn[gid] || []) push(r, r.in.find((l) => l.item === gid).qty, gid);
+    const loc = GK.i18n.meta(lang).locale;
+    used.sort((a, b) => (D.items[a.r.out.item].hidden - D.items[b.r.out.item].hidden) ||
+      name(D.items[a.r.out.item], state.overrides).localeCompare(name(D.items[b.r.out.item], state.overrides), loc));
+    const usedShow = usedAll ? used : used.slice(0, LIST_CAP);
+    const usedHtml = `<section class="rc-sec" aria-labelledby="rc-used-h">
+      <h3 class="h2" id="rc-used-h">${esc(t("rc.usedIn"))} <span class="count">${used.length || ""}</span></h3>
+      ${used.length ? `<div class="card list"><ul class="rc-lines rc-lines-card">${usedShow.map((u) => itemLine(u.r.out.item, state,
+        [stationLabel(u.r.station, state), t("rc.uses", { n: u.qty }), u.via ? t("rc.via", { group: name(D.items[u.via], state.overrides) }) : "", u.n > 1 ? t("rc.recipes", { n: u.n }) : ""].filter(Boolean).join(" · "))).join("")}</ul>
+        ${used.length > usedShow.length ? `<button type="button" class="btn btn-ghost rc-more" id="rc-used-more" data-used-more>${esc(t("rc.showAll", { n: used.length }))}</button>` : ""}</div>`
+        : `<p class="hint">${esc(t("rc.usedInNone"))}</p>`}
+    </section>`;
+
+    // a station item: what is made there
+    let here = "";
+    const made = D.stations[id] ? IX.byStation[id] || [] : [];
+    if (made.length) {
+      const list = hereAll ? made : made.slice(0, LIST_CAP);
+      here = `<section class="rc-sec" aria-labelledby="rc-here-h">
+        <h3 class="h2" id="rc-here-h">${esc(t("rc.madeHere"))} <span class="count">${made.length}</span></h3>
+        <div class="card list"><ul class="rc-lines rc-lines-card">${list.map((r) => itemLine(r.out.item, state,
+          r.in.map((l) => `${num(l.qty)} ${name(D.items[l.item], state.overrides)}`).join(" + ") + (r.out.qty ? " → " + num(r.out.qty) : ""))).join("")}</ul>
+          ${made.length > list.length ? `<button type="button" class="btn btn-ghost rc-more" id="rc-here-more" data-here-more>${esc(t("rc.showAll", { n: made.length }))}</button>` : ""}</div>
+      </section>`;
+    }
+    return nav + `<div class="rc-detail-grid"><div class="rc-detail-a">${head}</div><div class="rc-detail-b">${recipes}${usedHtml}${here}</div></div>`;
+  }
+  function renderDetail(state) {
+    if (!V.item || !GK.data.item(V.item)) { V.item = null; return false; }
+    detailEl.innerHTML = detailHtml(V.item, state);
+    return true;
+  }
+
+  /* ---------- navigation ---------- */
+  const visible = () => GK.router.tab(GK.router.current()).screen === "recipes";
+  function showView(state, focusDetail) {
+    const hasDetail = V.item && renderDetail(state);
+    browseEl.hidden = !!hasDetail;
+    detailEl.hidden = !hasDetail;
+    if (!hasDetail) { detailEl.innerHTML = ""; updateList(false); }
+    if (hasDetail && focusDetail) {
+      window.scrollTo(0, 0);
+      const h = document.getElementById("rc-detail-h"); if (h) h.focus({ preventScroll: true });
+    }
+  }
+  function openItem(id, fromList) {
+    if (!GK.data.item(id)) return;
+    if (!IX) buildIndex();
+    if (V.item === id) return;
+    if (fromList || !V.item) { listScroll = browseEl.hidden ? listScroll : window.scrollY; V.stack = []; V.from = null; }
+    else { V.stack.push(V.item); if (V.stack.length > 30) V.stack.shift(); }
+    V.item = id; addQty = 1; usedAll = false; hereAll = false;
+    save();
+    showView(GK.store.get(), true);
+  }
+  // back to the screen that opened the detail (GK.ui.recipes.open(id, {from})), where it was
+  function backToOrigin() {
+    const route = V.from, item = V.item;
+    V.item = null; V.stack = []; V.from = null;
+    save();
+    returnTo = { route, y: fromScroll, item };
+    location.hash = route;
+  }
+  function back(toList) {
+    const from = V.item;
+    if (!toList && !V.stack.length && V.from) { backToOrigin(); return; }
+    if (toList) V.from = null;
+    if (!toList && V.stack.length) {
+      V.item = V.stack.pop(); addQty = 1; usedAll = false; hereAll = false;
+      save(); showView(GK.store.get(), true);
+      return;
+    }
+    V.item = null; V.stack = [];
+    save();
+    showView(GK.store.get(), false);
+    window.scrollTo(0, listScroll);
+    const row = from && document.getElementById("rc-row-" + GK.util.domId(from));
+    if (row) row.focus({ preventScroll: true });
+  }
+  // deep link from other modules: GK.ui.recipes.open("crate", {from: "plan"})
+  function open(itemId, opts) {
+    if (!GK.data.item(itemId)) return false;
+    if (!IX) buildIndex();
+    const cur = GK.router.current();
+    const from = opts && opts.from && opts.from !== "recipes" && cur !== "recipes" ? opts.from : null;
+    if (from) fromScroll = window.scrollY;
+    if (V.item !== itemId || from || V.stack.length) {
+      V.stack = []; V.item = itemId; addQty = 1; usedAll = false; hereAll = false;
+      V.from = from;
+      save();
+    }
+    if (cur !== "recipes") { pendingFocus = true; location.hash = "recipes"; }
+    else showView(GK.store.get(), true);
+    return true;
+  }
+
+  /* ---------- events ---------- */
+  function onClick(e) {
+    const A = GK.store.actions;
+    const el = e.target.closest("button, a");
+    if (!el || !root.contains(el)) return;
+    const d = el.dataset;
+    if (d.open) { openItem(d.open, !!el.closest(".rc-browse")); return; }
+    if ("back" in d) { back(false); return; }
+    if ("tolist" in d) { back(true); return; }
+    if (d.chip) {
+      const k = d.key, f = d.chip === "cat" ? "cat" : "st";
+      V[f] = V[f] === k ? null : k;
+      save(); updateList(true);
+      const again = chipsEl.querySelector(`[data-chip="${d.chip}"][data-key="${CSS.escape(k)}"]`);
+      if (again) again.focus({ preventScroll: true });
+      return;
+    }
+    if (d.chipMore) { expanded[d.chipMore] = !expanded[d.chipMore]; updateList(false); const b = chipsEl.querySelector(`[data-chip-more="${d.chipMore}"]`); if (b) b.focus({ preventScroll: true }); return; }
+    if (d.unfilter) { V[d.unfilter] = null; save(); updateList(true); input.focus({ preventScroll: true }); return; }
+    if ("clearFilters" in d) { V.cat = null; V.st = null; save(); updateList(true); return; }
+    if ("rcHidden" in d) { A.setShowHidden(!GK.store.get().showHidden); const b = document.getElementById("rc-hidden"); if (b) b.focus({ preventScroll: true }); return; }
+    if (el === moreEl) { showMore(); return; }
+    if (el === clearBtn) { input.value = ""; V.q = ""; save(); clearBtn.hidden = true; updateList(true); input.focus(); return; }
+    if (d.qtyD) { const i = document.getElementById("rc-qty"); addQty = GK.store.clampQty((+i.value || 1) + +d.qtyD); i.value = addQty; return; }
+    if ("addGoal" in d) {
+      const i = document.getElementById("rc-qty"); addQty = GK.store.clampQty(i ? i.value : addQty);
+      const before = GK.store.get().goals.find((g) => g.item === V.item);
+      const n = A.addGoal(V.item, addQty);
+      const nm = name(GK.data.item(V.item), GK.store.get().overrides);
+      GK.ui.toast(before ? t("rc.bumped", { name: nm, n }) : t("rc.added", { name: nm, n }));
+      const b = document.getElementById("rc-add"); if (b) b.focus({ preventScroll: true });
+      return;
+    }
+    if (d.use) {
+      const r = GK.data.recipe(d.use); if (!r) return;
+      A.chooseRecipe(r.out.item, r.id === GK.data.item(r.out.item).defaultRecipe ? null : r.id);
+      GK.ui.toast(t("rc.used", { station: name(r.station, GK.store.get().overrides), name: name(GK.data.item(r.out.item), GK.store.get().overrides) }));
+      return;
+    }
+    if ("useDefault" in d) { A.chooseRecipe(V.item, null); GK.ui.toast(t("rc.usedDefault", { name: name(GK.data.item(V.item), GK.store.get().overrides) })); return; }
+    if ("usedMore" in d) { usedAll = true; renderDetail(GK.store.get()); return; }
+    if ("hereMore" in d) { hereAll = true; renderDetail(GK.store.get()); return; }
+    if (d.tech && GK.ui.tech && typeof GK.ui.tech.open === "function") { GK.ui.tech.open(d.tech, { from: "recipes" }); return; }
+  }
+
+  function mount(el) {
+    root = el;
+    root.classList.add("rc-screen");
+    root.innerHTML = `<div class="rc-browse">
+        <div class="rc-top">
+          <h2 class="h2 rc-title"></h2>
+          <p class="hint rc-hint"></p>
+          <div class="search-box rc-search">
+            <svg width="18" height="18" viewBox="0 0 9 9" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M2 0h3v1H2zM1 1h1v1H1zM5 1h1v1H5zM0 2h1v3H0zM6 2h1v3H6zM1 5h1v1H1zM5 5h1v1H5zM2 6h3v1H2zM6 6h1v1H6zM7 7h1v1H7zM8 8h1v1H8z"/></svg>
+            <label class="sr-only" for="rc-q" id="rc-q-label"></label>
+            <input id="rc-q" class="search-input" type="search" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
+            <button type="button" class="search-clear" id="rc-q-clear" hidden>×</button>
+          </div>
+        </div>
+        <div class="rc-layout">
+          <details class="card rc-filters" id="rc-filters"><summary><span class="rc-filters-t"></span> <span class="rc-filters-n"></span></summary><div class="rc-chips"></div></details>
+          <div class="rc-results">
+            <div class="rc-meta-row"></div>
+            <div class="card list rc-list"></div>
+            <button type="button" class="btn rc-more" id="rc-more" hidden></button>
+          </div>
+        </div>
+      </div>
+      <div class="rc-detail" hidden></div>`;
+    browseEl = root.querySelector(".rc-browse"); detailEl = root.querySelector(".rc-detail");
+    input = root.querySelector("#rc-q"); clearBtn = root.querySelector("#rc-q-clear");
+    listEl = root.querySelector(".rc-list"); chipsEl = root.querySelector(".rc-chips"); metaEl = root.querySelector(".rc-meta-row");
+    moreEl = root.querySelector("#rc-more"); filtersEl = root.querySelector("#rc-filters");
+    restore();
+    input.value = V.q;
+    // filters open beside the list on wide screens, folded on phones
+    const wide = window.matchMedia ? window.matchMedia("(min-width: 900px)") : null;
+    if (wide) {
+      filtersEl.open = wide.matches;
+      const onWide = () => { if (wide.matches) filtersEl.open = true; };
+      if (wide.addEventListener) wide.addEventListener("change", onWide); else if (wide.addListener) wide.addListener(onWide);
+    }
+    const typed = GK.util.debounce(() => { V.q = input.value; saveSoon(); updateList(true); }, 90);
+    input.addEventListener("input", () => { clearBtn.hidden = !input.value; typed(); });
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && input.value) { input.value = ""; V.q = ""; save(); clearBtn.hidden = true; updateList(true); }
+      else if (e.key === "Enter") { e.preventDefault(); V.q = input.value; save(); updateList(true); input.blur(); }
+    });
+    root.addEventListener("click", onClick);
+    // back on the screen that opened the detail: its old scroll position, focus on the opener (after its render)
+    GK.router.onChange((id) => {
+      if (!returnTo || id !== returnTo.route) { if (id !== "recipes") returnTo = null; return; }
+      const r = returnTo; returnTo = null;
+      setTimeout(() => {
+        window.scrollTo(0, r.y);
+        const scr = document.querySelector(`[data-screen="${GK.router.tab(r.route).screen}"]`);
+        const b = scr && r.item && scr.querySelector(`[data-recipe-open="${CSS.escape(r.item)}"]`);
+        if (b) b.focus({ preventScroll: true });
+      }, 0);
+    });
+    root.addEventListener("input", (e) => {
+      if (e.target.id === "rc-qty" && e.target.value !== "") addQty = GK.store.clampQty(e.target.value);
+    });
+    root.addEventListener("change", (e) => {
+      if (e.target.id === "rc-qty") { addQty = GK.store.clampQty(e.target.value); e.target.value = addQty; }
+    });
+    root.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && e.target.id === "rc-qty") { e.preventDefault(); const b = document.getElementById("rc-add"); if (b) b.click(); }
+    });
+  }
+  let wasHere = false;
+  function render(state, meta) {
+    const here = visible();
+    if (!here) { wasHere = false; return; }
+    if (!IX) buildIndex();
+    staticLabels();
+    const entering = !wasHere;
+    wasHere = true;
+    showView(state, false);
+    if (entering && meta && meta.from === "router") window.scrollTo(0, V.item ? 0 : listScroll);
+    if (pendingFocus) {
+      pendingFocus = false;
+      const h = V.item && document.getElementById("rc-detail-h");
+      if (h) h.focus({ preventScroll: true });
+    }
+  }
+  return { mount, render, open };
+})();
+
+GK.router.register({ id: "recipes", labelKey: "rc.tab", screen: "recipes", order: 20, tab: true });
+GK.app.registerPanel(GK.ui.recipes, { id: "recipes", panel: "recipes", order: 62 });

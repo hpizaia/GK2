@@ -1,0 +1,33 @@
+# cache bruto da API do wikily (19 MB, regenerável com scripts/fetch_dataset.py)
+data/raw/
+# ícones baixados (regeneráveis com scripts/fetch_icons.py; o sprite fica versionado)
+data/icons/
+
+# export do jogo (tools/exportar-textos/): só gk2_textos.json e o relatório ficam no git.
+# O resto fica no disco, fora do git (dump completo do jogo, 11 idiomas, ~11 MB).
+data/game-texts/gk2_textos_todos.json
+data/game-texts/*.csv
+data/game-texts/_resumo.json
+data/game-texts/_raw_*.bin
+data/game-texts/gk2_exportacao_log.txt
+# saídas do exportador quando roda dentro de tools/exportar-textos/
+tools/exportar-textos/gk2_textos*.json
+tools/exportar-textos/gk2_textos*.csv
+tools/exportar-textos/_resumo.json
+tools/exportar-textos/_raw_*.bin
+tools/exportar-textos/gk2_exportacao_log.txt
+# pasta antiga trazida do Windows: só sobra a .venv e um link de compatibilidade
+tradução windows/
+
+# ambientes virtuais
+.venv/
+venv/
+
+# backups automáticos do build e caches
+*.bak
+__pycache__/
+*.pyc
+.DS_Store
+
+# transcrições e auditoria privada: nunca no repositório público
+historico/

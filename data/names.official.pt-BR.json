@@ -1,0 +1,7408 @@
+{
+ "Advanced Detail": {
+  "pt": "Detalhe Avançado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "detail_2_iron",
+  "en_game": "Advanced Detail"
+ },
+ "Advanced Rod": {
+  "pt": "Vara Avançada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "advanced_rod",
+  "en_game": "Advanced Rod"
+ },
+ "Alchemist's bag": {
+  "pt": "Bolsa de Alquimista",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bag_alchemy",
+  "en_game": "Alchemist's bag"
+ },
+ "Alchemist's Clothes": {
+  "pt": "Traje de Alquimista",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hero_clothes_9004",
+  "en_game": "Alchemist's Clothes"
+ },
+ "Alchemist's Kit": {
+  "pt": "Kit de Alquimista",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_kit_2",
+  "en_game": "Alchemist's Kit"
+ },
+ "Alchemist's note": {
+  "pt": "Notas do Alquimista",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "note_lab_tower",
+  "en_game": "Alchemist's note"
+ },
+ "Alchemy Flasks": {
+  "pt": "Frascos de alquimia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_flask",
+  "en_game": "Alchemy Flasks"
+ },
+ "Alchemy Flasks I": {
+  "pt": "Frascos de Alquimia I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_bottle_1",
+  "en_game": "Alchemy Flasks I"
+ },
+ "Alchemy Flasks II": {
+  "pt": "Frascos de Alquimia II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_bottle_2",
+  "en_game": "Alchemy Flasks II"
+ },
+ "Alcohol": {
+  "pt": "Álcool",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alcohol",
+  "en_game": "Alcohol"
+ },
+ "Alkali": {
+  "pt": "Alcalino",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alkali",
+  "en_game": "Alkali"
+ },
+ "Amateur Rod": {
+  "pt": "Vara Amadora",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "amateur_rod",
+  "en_game": "Amateur Rod"
+ },
+ "Anchovy": {
+  "pt": "Anchova",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_anchovy",
+  "en_game": "Anchovy"
+ },
+ "Apple": {
+  "pt": "Maçã",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "apple",
+  "en_game": "Apple"
+ },
+ "Apple Cider": {
+  "pt": "Cidra de maçã",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "apple_cider",
+  "en_game": "Apple Cider"
+ },
+ "Apple Juice": {
+  "pt": "Suco de Maçã",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "apple_juice",
+  "en_game": "Apple Juice"
+ },
+ "Apple Tree Seedling": {
+  "pt": "Muda de macieira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "apple_seedling",
+  "en_game": "Apple Tree Seedling"
+ },
+ "Archer Tower I": {
+  "pt": "Torre dos Arqueiros I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tower_1_fight",
+  "en_game": "Archer Tower I"
+ },
+ "Archer Tower II": {
+  "pt": "Torre dos Arqueiros II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tower_2_fight",
+  "en_game": "Archer Tower II"
+ },
+ "Archer Tower III": {
+  "pt": "Torre dos Arqueiros III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tower_3_fight",
+  "en_game": "Archer Tower III"
+ },
+ "Ash": {
+  "pt": "Cinzas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "ash",
+  "en_game": "Ash"
+ },
+ "Baked apple": {
+  "pt": "Maçã assada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_baked_apple",
+  "en_game": "Baked apple"
+ },
+ "Baked fish": {
+  "pt": "Peixe assado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_baked_fish",
+  "en_game": "Baked fish"
+ },
+ "Baked meat": {
+  "pt": "Carne cozida",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_baked_meat",
+  "en_game": "Baked meat"
+ },
+ "Baked mushrooms": {
+  "pt": "Cogumelos assados",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_baked_mushroom",
+  "en_game": "Baked mushrooms"
+ },
+ "Baked pumpkin": {
+  "pt": "Abóbora assada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_pumpkin_baked",
+  "en_game": "Baked pumpkin"
+ },
+ "Baked salmon": {
+  "pt": "Salmão assado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_baked_salmon",
+  "en_game": "Baked salmon"
+ },
+ "Barricade I": {
+  "pt": "Barricada I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "barricade_1_fight",
+  "en_game": "Barricade I"
+ },
+ "Barricade II": {
+  "pt": "Barricada II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "barricade_2_fight",
+  "en_game": "Barricade II"
+ },
+ "Barricade III": {
+  "pt": "Barricada III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "barricade_3_fight",
+  "en_game": "Barricade III"
+ },
+ "Basic Rod": {
+  "pt": "Vara Básica",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "basic_rod",
+  "en_game": "Basic Rod"
+ },
+ "Battle Bow": {
+  "pt": "Arco de Batalha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bow_2",
+  "en_game": "Battle Bow"
+ },
+ "Battle Pike": {
+  "pt": "Pique de Batalha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "pike_2",
+  "en_game": "Battle Pike"
+ },
+ "Beer": {
+  "pt": "Cerveja",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "beer",
+  "en_game": "Beer"
+ },
+ "Beeswax": {
+  "pt": "Cera de abelha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "beeswax",
+  "en_game": "Beeswax"
+ },
+ "Beet": {
+  "pt": "Beterraba",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "beet",
+  "en_game": "Beet"
+ },
+ "Beet Seed": {
+  "pt": "Semente de Beterraba",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "beet_seed",
+  "en_game": "Beet Seed"
+ },
+ "Beet slices": {
+  "pt": "Fatias de beterraba",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_beet_sliced",
+  "en_game": "Beet slices"
+ },
+ "Berry": {
+  "pt": "Frutinha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "berry",
+  "en_game": "Berry"
+ },
+ "Berry Cider": {
+  "pt": "Cidra de frutinha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "berry_cider",
+  "en_game": "Berry Cider"
+ },
+ "Berry Juice": {
+  "pt": "Suco de frutinhas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "berry_juice",
+  "en_game": "Berry Juice"
+ },
+ "Berry Pie": {
+  "pt": "Torta de Frutinha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "berry_pie",
+  "en_game": "Berry Pie"
+ },
+ "Berry smoothie": {
+  "pt": "Vitamina de frutinhas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_smothie",
+  "en_game": "Berry smoothie"
+ },
+ "Berserker Potion": {
+  "pt": "Poção de Fúria",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "berserk_potion",
+  "en_game": "Berserker Potion"
+ },
+ "Berserker Potion II": {
+  "pt": "Poção de Fúria II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "berserk_potion_2",
+  "en_game": "Berserker Potion II"
+ },
+ "Berserker Potion III": {
+  "pt": "Poção de Fúria III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "berserk_potion_3",
+  "en_game": "Berserker Potion III"
+ },
+ "Big universal bag": {
+  "pt": "Grande Bolsa Universal",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bag_universal_big",
+  "en_game": "Big universal bag"
+ },
+ "Blacksmith's Clothes": {
+  "pt": "Traje de Ferreiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hero_clothes_9005",
+  "en_game": "Blacksmith's Clothes"
+ },
+ "Blank Hardcover Notebook": {
+  "pt": "Livro de capa dura em branco",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "notebook_hard",
+  "en_game": "Blank Hardcover Notebook"
+ },
+ "Blank Softcover Notebook": {
+  "pt": "Caderno de capa mole em branco",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "notebook",
+  "en_game": "Blank Softcover Notebook"
+ },
+ "Blood": {
+  "pt": "Sangue",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "blood",
+  "en_game": "Blood"
+ },
+ "Blue Crystal": {
+  "pt": "Cristal azul",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "crystal_goddess",
+  "en_game": "Blue Crystal"
+ },
+ "Blue Techbook": {
+  "pt": "Livro Azul de Tecnologia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "techbook_b_1",
+  "en_game": "Blue Techbook"
+ },
+ "Blue Techbook II": {
+  "pt": "Livro Azul de Tecnologia II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "techbook_b_2",
+  "en_game": "Blue Techbook II"
+ },
+ "Blueberry": {
+  "pt": "Mirtilos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "berry_blue",
+  "en_game": "Blueberry"
+ },
+ "Blueberry Cider": {
+  "pt": "Cidra de Mirtilo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "blueberry_cider",
+  "en_game": "Blueberry Cider"
+ },
+ "Blueberry Juice": {
+  "pt": "Suco de Mirtilo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "blue_berry_juice",
+  "en_game": "Blueberry Juice"
+ },
+ "Blueberry Seedling": {
+  "pt": "Muda de mirtilo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "blueberry_seedling",
+  "en_game": "Blueberry Seedling"
+ },
+ "Board": {
+  "pt": "Placa",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "flitch",
+  "en_game": "Board"
+ },
+ "Bones": {
+  "pt": "Ossos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bones",
+  "en_game": "Bones"
+ },
+ "Brain": {
+  "pt": "Cérebro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "brain",
+  "en_game": "Brain"
+ },
+ "Bread": {
+  "pt": "Pão",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bread",
+  "en_game": "Bread"
+ },
+ "Breadcrumb Bait": {
+  "pt": "Isca: Miolo de Pão",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "breadcrumb_bite",
+  "en_game": "Breadcrumb Bait"
+ },
+ "Bream": {
+  "pt": "Brema",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_bream",
+  "en_game": "Bream"
+ },
+ "Brick": {
+  "pt": "Bloco",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "brick",
+  "en_game": "Brick"
+ },
+ "Bronze Armor": {
+  "pt": "Armadura de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "armor_1",
+  "en_game": "Bronze Armor"
+ },
+ "Bronze Axe": {
+  "pt": "Machado de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "axe_1",
+  "en_game": "Bronze Axe"
+ },
+ "Bronze Chisel": {
+  "pt": "Cinzel de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "chisel_basic",
+  "en_game": "Bronze Chisel"
+ },
+ "Bronze Detail": {
+  "pt": "Detalhe de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "details_1_bronze",
+  "en_game": "Bronze Detail"
+ },
+ "Bronze Gear": {
+  "pt": "Engrenagem de bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bronze_gear",
+  "en_game": "Bronze Gear"
+ },
+ "Bronze Hammer": {
+  "pt": "Martelo de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hammer_1",
+  "en_game": "Bronze Hammer"
+ },
+ "Bronze Ingot": {
+  "pt": "Lingote de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "ingot_bronze",
+  "en_game": "Bronze Ingot"
+ },
+ "Bronze Nails": {
+  "pt": "Pregos de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "nails_bronze",
+  "en_game": "Bronze Nails"
+ },
+ "Bronze Pickaxe": {
+  "pt": "Picareta de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "pickaxe_1",
+  "en_game": "Bronze Pickaxe"
+ },
+ "Bronze Scrap": {
+  "pt": "Sucata de Cobre",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bronze_scrap",
+  "en_game": "Bronze Scrap"
+ },
+ "Bronze Shovel": {
+  "pt": "Pá de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "shovel_1",
+  "en_game": "Bronze Shovel"
+ },
+ "Bronze Sword": {
+  "pt": "Espada de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sword_1",
+  "en_game": "Bronze Sword"
+ },
+ "Bronze Talisman": {
+  "pt": "Talismã de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tool_talisman_1",
+  "en_game": "Bronze Talisman"
+ },
+ "Bronze tools": {
+  "pt": "Ferramentas de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "small_instruments_1",
+  "en_game": "Bronze tools"
+ },
+ "Bronze Zombie Collar": {
+  "pt": "Coleira de zumbi - Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "collar_bronze",
+  "en_game": "Bronze Zombie Collar"
+ },
+ "Brown Mushroom": {
+  "pt": "Cogumelo Marrom",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "mushroom_brown",
+  "en_game": "Brown Mushroom"
+ },
+ "Builder's bag": {
+  "pt": "Bolsa de Construtor",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bag_builder",
+  "en_game": "Builder's bag"
+ },
+ "Building Kit I": {
+  "pt": "Kit de Construção I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "building_kit_1",
+  "en_game": "Building Kit I"
+ },
+ "Building Kit II": {
+  "pt": "Kit de Construção II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "building_kit_2",
+  "en_game": "Building Kit II"
+ },
+ "Burger": {
+  "pt": "Hambúrguer",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_burger",
+  "en_game": "Burger"
+ },
+ "Burial Certificate I": {
+  "pt": "Certidão de Sepultamento I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "body_certificate:1",
+  "en_game": "Burial Certificate I"
+ },
+ "Burial Certificate II": {
+  "pt": "Certidão de Sepultamento II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "body_certificate:2",
+  "en_game": "Burial Certificate II"
+ },
+ "Burial Certificate III": {
+  "pt": "Certidão de Sepultamento III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "body_certificate:3",
+  "en_game": "Burial Certificate III"
+ },
+ "Bush Seedling": {
+  "pt": "Muda de arbusto",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "berry_seedling",
+  "en_game": "Bush Seedling"
+ },
+ "Butcher's Kit": {
+  "pt": "Kit de Açougueiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "surgical_kit_1",
+  "en_game": "Butcher's Kit"
+ },
+ "Cabbage": {
+  "pt": "Repolho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cabbage:1",
+  "en_game": "Cabbage"
+ },
+ "Cabbage seed": {
+  "pt": "Semente de Repolho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cabbage_seed:1",
+  "en_game": "Cabbage seed"
+ },
+ "Cabbage soup": {
+  "pt": "Sopa de repolho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_cabbage_soup",
+  "en_game": "Cabbage soup"
+ },
+ "Cacao": {
+  "pt": "Cacau",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cacao",
+  "en_game": "Cacao"
+ },
+ "Carp": {
+  "pt": "Carpa",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_carp",
+  "en_game": "Carp"
+ },
+ "Carrot": {
+  "pt": "Cenoura",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "carrot",
+  "en_game": "Carrot"
+ },
+ "Carrot cutlet": {
+  "pt": "Escalope com cenouras",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_carrot_cutlet",
+  "en_game": "Carrot cutlet"
+ },
+ "Carrot seed": {
+  "pt": "Semente de Cenoura",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "carrot_seed",
+  "en_game": "Carrot seed"
+ },
+ "Carrot soup": {
+  "pt": "Sopa de cenoura",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_carrot_soup",
+  "en_game": "Carrot soup"
+ },
+ "Carved Marble": {
+  "pt": "Mármore Esculpido",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "marble_plate_3",
+  "en_game": "Carved Marble"
+ },
+ "Carved Stone": {
+  "pt": "Pedra Esculpida",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "stone_plate_3",
+  "en_game": "Carved Stone"
+ },
+ "Carved Wood": {
+  "pt": "Madeira Entalhada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "carved_wood",
+  "en_game": "Carved Wood"
+ },
+ "Catfish": {
+  "pt": "Bagre",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_catfish",
+  "en_game": "Catfish"
+ },
+ "Celestial Salmon": {
+  "pt": "Salmão Celestial",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_celestial_salmon",
+  "en_game": "Celestial Salmon"
+ },
+ "Charged hypno-device": {
+  "pt": "Hipno dispositivo carregado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hypno_device_charged",
+  "en_game": "Charged hypno-device"
+ },
+ "Cheese": {
+  "pt": "Queijo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cheese",
+  "en_game": "Cheese"
+ },
+ "Chicken Egg": {
+  "pt": "Ovo de Galinha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "egg_chicken",
+  "en_game": "Chicken Egg"
+ },
+ "Chocolate": {
+  "pt": "Chocolate",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "chocolate",
+  "en_game": "Chocolate"
+ },
+ "Clay": {
+  "pt": "Argila",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "clay",
+  "en_game": "Clay"
+ },
+ "Clay Molds": {
+  "pt": "Urnas de argila",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "clay_molds",
+  "en_game": "Clay Molds"
+ },
+ "Clay Plate": {
+  "pt": "Placa de Argila",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "ceramic_1",
+  "en_game": "Clay Plate"
+ },
+ "Clay Urn": {
+  "pt": "Urna de Argila",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "ceramic_2",
+  "en_game": "Clay Urn"
+ },
+ "Clean Paper": {
+  "pt": "Papel em Branco",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "clean_paper",
+  "en_game": "Clean Paper"
+ },
+ "Coal": {
+  "pt": "Carvão",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "coal",
+  "en_game": "Coal"
+ },
+ "Comet's Tail": {
+  "pt": "Cauda de cometa",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "comets_tail",
+  "en_game": "Comet's Tail"
+ },
+ "Comfortable Chair": {
+  "pt": "Cadeira confortável",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "chair_comfortable",
+  "en_game": "Comfortable Chair"
+ },
+ "Copper Nugget": {
+  "pt": "Pepita de Cobre",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "nugget_copper",
+  "en_game": "Copper Nugget"
+ },
+ "Copper Trinkets": {
+  "pt": "Artefatos de Cobre",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "trinkets_bronze",
+  "en_game": "Copper Trinkets"
+ },
+ "Corpse": {
+  "pt": "Cadáver",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "body_corpse",
+  "en_game": "Corpse"
+ },
+ "Crate": {
+  "pt": "Caixote",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_empty",
+  "en_game": "Crate"
+ },
+ "Croissant": {
+  "pt": "Croissant",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_croissant",
+  "en_game": "Croissant"
+ },
+ "Crop Boosting Fertilizer I": {
+  "pt": "Fertilizante de Lavoura I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fertilize_add_cells_1",
+  "en_game": "Crop Boosting Fertilizer I"
+ },
+ "Crucian": {
+  "pt": "Cruciana",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_crucian",
+  "en_game": "Crucian"
+ },
+ "Damage Potion": {
+  "pt": "Poção de Dano",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "damage_potion",
+  "en_game": "Damage Potion"
+ },
+ "Damage Potion II": {
+  "pt": "Poção de Dano II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "damage_potion_2",
+  "en_game": "Damage Potion II"
+ },
+ "Damage Potion III": {
+  "pt": "Poção de Dano III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "damage_potion_3",
+  "en_game": "Damage Potion III"
+ },
+ "Deck of Cards": {
+  "pt": "Baralho de cartas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "card_deck",
+  "en_game": "Deck of Cards"
+ },
+ "Defender's Emblem": {
+  "pt": "Emblema do Defensor",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "shield_squad",
+  "en_game": "Defender's Emblem"
+ },
+ "Dictionary": {
+  "pt": "Dicionário",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tool_book_2",
+  "en_game": "Dictionary"
+ },
+ "Dough": {
+  "pt": "Massa",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "dough",
+  "en_game": "Dough"
+ },
+ "Dream Dust": {
+  "pt": "Pó dos Sonhos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "powder_dreams",
+  "en_game": "Dream Dust"
+ },
+ "Dynamite": {
+  "pt": "Dinamite",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "dynamite",
+  "en_game": "Dynamite"
+ },
+ "Eel": {
+  "pt": "Enguia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_eel",
+  "en_game": "Eel"
+ },
+ "Elder Catfish": {
+  "pt": "Bagre Ancestral",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_elder_catfish",
+  "en_game": "Elder Catfish"
+ },
+ "Elder's meal": {
+  "pt": "Refeição do Ancião",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_elder_catfish",
+  "en_game": "Elder's meal"
+ },
+ "Elegant Prosthetic Hand": {
+  "pt": "Mão prostética elegante",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hand_prothesis_elegant",
+  "en_game": "Elegant Prosthetic Hand"
+ },
+ "Empty Bottle": {
+  "pt": "Garrafa Vazia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bottle_empty",
+  "en_game": "Empty Bottle"
+ },
+ "Engineering Details": {
+  "pt": "Detalhes de Engenharia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "detail_2_steel",
+  "en_game": "Engineering Details"
+ },
+ "Engineering Kit": {
+  "pt": "Kit de Engenharia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "engineering_kit",
+  "en_game": "Engineering Kit"
+ },
+ "Exhumation Certificate": {
+  "pt": "Certidão de Exumação",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "exhume_certificate",
+  "en_game": "Exhumation Certificate"
+ },
+ "Explosive Dust": {
+  "pt": "Pó Explosivo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "dust_explosive",
+  "en_game": "Explosive Dust"
+ },
+ "Fabric": {
+  "pt": "Tecido",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fabric_flax",
+  "en_game": "Fabric"
+ },
+ "Fairy's Swamp Map": {
+  "pt": "Mapa do Pântano das Fadas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fairy_swamp_map",
+  "en_game": "Fairy's Swamp Map"
+ },
+ "Faith": {
+  "pt": "Fé",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "faith",
+  "en_game": "Faith"
+ },
+ "Fancy Incense": {
+  "pt": "Incenso Elegante",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "incense_advanced",
+  "en_game": "Fancy Incense"
+ },
+ "Farmer's bag": {
+  "pt": "Bolsa de Agricultor",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bag_farming",
+  "en_game": "Farmer's bag"
+ },
+ "Farmer's Clothes": {
+  "pt": "Traje de Fazendeiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hero_clothes_9002",
+  "en_game": "Farmer's Clothes"
+ },
+ "Farming Fertilizer I": {
+  "pt": "Fertilizante de Agricultura I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fertilize_farming_1",
+  "en_game": "Farming Fertilizer I"
+ },
+ "Farming Fertilizer II": {
+  "pt": "Fertilizante de Agricultura II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fertilize_farming_2",
+  "en_game": "Farming Fertilizer II"
+ },
+ "Farming Fertilizer III": {
+  "pt": "Fertilizante de Agricultura III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fertilize_farming_3",
+  "en_game": "Farming Fertilizer III"
+ },
+ "Fat": {
+  "pt": "Gordura",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fat",
+  "en_game": "Fat"
+ },
+ "Fine Jewelry": {
+  "pt": "Joias de Luxo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "jewelry",
+  "en_game": "Fine Jewelry"
+ },
+ "Firefly": {
+  "pt": "Vagalume",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fireflight",
+  "en_game": "Firefly"
+ },
+ "Firewood": {
+  "pt": "Lenha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "firewood",
+  "en_game": "Firewood"
+ },
+ "Fish nuggets": {
+  "pt": "Nuggets de peixe",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_fish_nuggets",
+  "en_game": "Fish nuggets"
+ },
+ "Fish soup": {
+  "pt": "Sopa de peixe",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_fish_soup",
+  "en_game": "Fish soup"
+ },
+ "Fisherman's bag": {
+  "pt": "Bolsa de Pescador",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bag_fishing",
+  "en_game": "Fisherman's bag"
+ },
+ "Fisherman's pie": {
+  "pt": "Torta do Pescador",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_fisherman_pie",
+  "en_game": "Fisherman's pie"
+ },
+ "Flax": {
+  "pt": "Linho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "flax",
+  "en_game": "Flax"
+ },
+ "Flax Seed": {
+  "pt": "Semente de linho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "flax_seed",
+  "en_game": "Flax Seed"
+ },
+ "Flax Thread": {
+  "pt": "Fio de Linho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "thread_flax",
+  "en_game": "Flax Thread"
+ },
+ "Flesh": {
+  "pt": "Carne",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "flesh",
+  "en_game": "Flesh"
+ },
+ "Flour": {
+  "pt": "Farinha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "flour",
+  "en_game": "Flour"
+ },
+ "Food bag": {
+  "pt": "Bolsa de Alimentos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bag_food",
+  "en_game": "Food bag"
+ },
+ "Forest Pass": {
+  "pt": "Passe da Floresta",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "forest_pass",
+  "en_game": "Forest Pass"
+ },
+ "Fortified Barricade I": {
+  "pt": "Barricada Reforçada I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "barricade_wall_1_fight",
+  "en_game": "Fortified Barricade I"
+ },
+ "Fortified Barricade II": {
+  "pt": "Barricada Reforçada II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "barricade_wall_2_fight",
+  "en_game": "Fortified Barricade II"
+ },
+ "Fortified Barricade III": {
+  "pt": "Barricada Reforçada III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "barricade_wall_3_fight",
+  "en_game": "Fortified Barricade III"
+ },
+ "Fragrance": {
+  "pt": "Fragrância",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fragrance",
+  "en_game": "Fragrance"
+ },
+ "Fried golden carp": {
+  "pt": "Carpa Dourada Frita",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_golden_carp",
+  "en_game": "Fried golden carp"
+ },
+ "Frog": {
+  "pt": "Sapo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_frog",
+  "en_game": "Frog"
+ },
+ "Fuel": {
+  "pt": "Combustível",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fire",
+  "en_game": "Fuel"
+ },
+ "Furniture Kit I": {
+  "pt": "Kit de Mobília I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "furniture_kit_1",
+  "en_game": "Furniture Kit I"
+ },
+ "Furniture Kit II": {
+  "pt": "Kit de Mobília II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "furniture_kit_2",
+  "en_game": "Furniture Kit II"
+ },
+ "Gem": {
+  "pt": "Gema",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "gem",
+  "en_game": "Gem"
+ },
+ "Glass": {
+  "pt": "Vidro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "glass",
+  "en_game": "Glass"
+ },
+ "Glass Containers": {
+  "pt": "Recipientes de vidro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "glass_containers",
+  "en_game": "Glass Containers"
+ },
+ "Glossary": {
+  "pt": "Glossário",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tool_book_3",
+  "en_game": "Glossary"
+ },
+ "Golden ingot": {
+  "pt": "Lingote de ouro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "ingot_gold",
+  "en_game": "Golden ingot"
+ },
+ "Golden nugget": {
+  "pt": "Pepita de ouro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "gold_nugget",
+  "en_game": "Golden nugget"
+ },
+ "Golden Talisman": {
+  "pt": "Talismã de Ouro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tool_talisman_3",
+  "en_game": "Golden Talisman"
+ },
+ "Golden Zombie Collar": {
+  "pt": "Coleira de zumbi - Ouro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "collar_gold",
+  "en_game": "Golden Zombie Collar"
+ },
+ "Goldfish": {
+  "pt": "Peixinho-dourado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_goldfish",
+  "en_game": "Goldfish"
+ },
+ "Good Alchemist's kit": {
+  "pt": "Kit de Qualidade de Alquimista",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_kit_3",
+  "en_game": "Good Alchemist's kit"
+ },
+ "Grape Seeds": {
+  "pt": "Sementes de Uva",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grape_seed",
+  "en_game": "Grape Seeds"
+ },
+ "Grapes": {
+  "pt": "Uvas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grape",
+  "en_game": "Grapes"
+ },
+ "Grated beets": {
+  "pt": "Beterraba ralada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_beet_grated",
+  "en_game": "Grated beets"
+ },
+ "Gravestone I": {
+  "pt": "Lápide I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_top_stn_1",
+  "en_game": "Gravestone I"
+ },
+ "Gravestone II": {
+  "pt": "Lápide II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_top_stn_2",
+  "en_game": "Gravestone II"
+ },
+ "Green Scroll": {
+  "pt": "Pergaminho de residência",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "green_scroll",
+  "en_game": "Green Scroll"
+ },
+ "Green Techbook": {
+  "pt": "Livro Verde de Tecnologia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "techbook_g_1",
+  "en_game": "Green Techbook"
+ },
+ "Green Techbook II": {
+  "pt": "Livro Verde de Tecnologia II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "techbook_g_2",
+  "en_game": "Green Techbook II"
+ },
+ "Gudgeon": {
+  "pt": "Gróbio",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_gudgeon",
+  "en_game": "Gudgeon"
+ },
+ "Guts": {
+  "pt": "Entranhas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "guts",
+  "en_game": "Guts"
+ },
+ "Hands": {
+  "pt": "Mãos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hand_tool",
+  "en_game": "Hands"
+ },
+ "Headstart Fertilizer I": {
+  "pt": "Fertilizante de Germinação I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fertilize_start_bonus_1",
+  "en_game": "Headstart Fertilizer I"
+ },
+ "Headstart Fertilizer II": {
+  "pt": "Fertilizante de Germinação II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fertilize_start_bonus_2",
+  "en_game": "Headstart Fertilizer II"
+ },
+ "Healing Potion": {
+  "pt": "Poção de Cura",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "heal_potion",
+  "en_game": "Healing Potion"
+ },
+ "Healing Potion II": {
+  "pt": "Poção de Cura II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "heal_potion_2",
+  "en_game": "Healing Potion II"
+ },
+ "Healing Potion III": {
+  "pt": "Poção de Cura III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "heal_potion_3",
+  "en_game": "Healing Potion III"
+ },
+ "Heart": {
+  "pt": "Coração",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "heart",
+  "en_game": "Heart"
+ },
+ "Heavenly salmon": {
+  "pt": "Salmão Divino",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_heavenly_salmon",
+  "en_game": "Heavenly salmon"
+ },
+ "Heavy Bow": {
+  "pt": "Arco Pesado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bow_3",
+  "en_game": "Heavy Bow"
+ },
+ "Herring": {
+  "pt": "Leucisco",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_dace",
+  "en_game": "Herring"
+ },
+ "Honey": {
+  "pt": "Mel",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "honey",
+  "en_game": "Honey"
+ },
+ "Hop Seeds": {
+  "pt": "Sementes de Lúpulo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hop_seed",
+  "en_game": "Hop Seeds"
+ },
+ "Hops": {
+  "pt": "Lúpulo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hop",
+  "en_game": "Hops"
+ },
+ "Hypno-device": {
+  "pt": "Hipno Dispositivo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hypno_device",
+  "en_game": "Hypno-device"
+ },
+ "Ink": {
+  "pt": "Tinta",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "ink",
+  "en_game": "Ink"
+ },
+ "Inquisitor's note": {
+  "pt": "Anotação encontrada na masmorra da Inquisição",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "intro_prison_note",
+  "en_game": "Inquisitor's note"
+ },
+ "Inquisitor's Note I": {
+  "pt": "Nota do Inquisidor I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "inq_note_1",
+  "en_game": "Inquisitor's Note I"
+ },
+ "Inquisitor's Note II": {
+  "pt": "Nota do Inquisidor II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "inq_note_2",
+  "en_game": "Inquisitor's Note II"
+ },
+ "Inquisitor’s medallion": {
+  "pt": "Medalhão do inquisidor",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "intro_prison_medallion",
+  "en_game": "Inquisitor’s medallion"
+ },
+ "Insect Bait": {
+  "pt": "Isca: Inseto",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "insect_bite",
+  "en_game": "Insect Bait"
+ },
+ "Iron Armor": {
+  "pt": "Armadura de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "armor_2",
+  "en_game": "Iron Armor"
+ },
+ "Iron Axe": {
+  "pt": "Machado de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "axe_2",
+  "en_game": "Iron Axe"
+ },
+ "Iron Chisel": {
+  "pt": "Cinzel de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "chisel_iron",
+  "en_game": "Iron Chisel"
+ },
+ "Iron Detail": {
+  "pt": "Detalhe de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "detail_1_iron",
+  "en_game": "Iron Detail"
+ },
+ "Iron Hammer": {
+  "pt": "Martelo de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hammer_2",
+  "en_game": "Iron Hammer"
+ },
+ "Iron Ingot": {
+  "pt": "Lingote de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "ingot_iron",
+  "en_game": "Iron Ingot"
+ },
+ "Iron Kit I": {
+  "pt": "Kit de Ferro I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "iron_kit_1",
+  "en_game": "Iron Kit I"
+ },
+ "Iron Kit II": {
+  "pt": "Kit de Ferro II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "iron_kit_2",
+  "en_game": "Iron Kit II"
+ },
+ "Iron Nails": {
+  "pt": "Pregos de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "nails_iron",
+  "en_game": "Iron Nails"
+ },
+ "Iron Ore": {
+  "pt": "Minério de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "iron_ore",
+  "en_game": "Iron Ore"
+ },
+ "Iron Pickaxe": {
+  "pt": "Picareta de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "pickaxe_2",
+  "en_game": "Iron Pickaxe"
+ },
+ "Iron Shovel": {
+  "pt": "Pá de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "shovel_2",
+  "en_game": "Iron Shovel"
+ },
+ "Iron Sword": {
+  "pt": "Espada de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sword_2",
+  "en_game": "Iron Sword"
+ },
+ "Iron tools": {
+  "pt": "Ferramentas de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "small_instruments_2",
+  "en_game": "Iron tools"
+ },
+ "Jug of Milk": {
+  "pt": "Jarra de Leite",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "jug_milk",
+  "en_game": "Jug of Milk"
+ },
+ "Keeper's Clothes": {
+  "pt": "Traje de Coveiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hero_clothes_9001",
+  "en_game": "Keeper's Clothes"
+ },
+ "Key from the Inquisition dungeon": {
+  "pt": "Anotação encontrada na masmorra da Inquisição",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "intro_prison_key",
+  "en_game": "Key from the Inquisition dungeon"
+ },
+ "Keys for Looters": {
+  "pt": "Chaves para saqueadores",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "keys_looters",
+  "en_game": "Keys for Looters"
+ },
+ "King's signet": {
+  "pt": "Sinete do rei",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "intro_prison_kings_signet",
+  "en_game": "King's signet"
+ },
+ "Knight's Spear": {
+  "pt": "Lança do Cavaleiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "pike_3",
+  "en_game": "Knight's Spear"
+ },
+ "Kraken Jr": {
+  "pt": "Kraken Jr",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_kraken_jr",
+  "en_game": "Kraken Jr"
+ },
+ "Kraken steak": {
+  "pt": "Bife de Kraken",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_kraken_jr",
+  "en_game": "Kraken steak"
+ },
+ "Lace": {
+  "pt": "Renda",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "frill",
+  "en_game": "Lace"
+ },
+ "Lacquer": {
+  "pt": "Verniz",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "lacquer",
+  "en_game": "Lacquer"
+ },
+ "Lasagna": {
+  "pt": "Lasanha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_lasagna",
+  "en_game": "Lasagna"
+ },
+ "Leaf": {
+  "pt": "Folha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "leaf",
+  "en_game": "Leaf"
+ },
+ "Leather Scroll": {
+  "pt": "Pergaminho de Couro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "skroll_skin_pig",
+  "en_game": "Leather Scroll"
+ },
+ "Lens": {
+  "pt": "Lente",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "lence",
+  "en_game": "Lens"
+ },
+ "Light Pike": {
+  "pt": "Pique Leve",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "pike_1",
+  "en_game": "Light Pike"
+ },
+ "Live Bait": {
+  "pt": "Isca viva",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "ultimate_bite",
+  "en_game": "Live Bait"
+ },
+ "Log": {
+  "pt": "Tora",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wood",
+  "en_game": "Log"
+ },
+ "Love Novel": {
+  "pt": "Livro de romance",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "book_love",
+  "en_game": "Love Novel"
+ },
+ "Luxury Drapes": {
+  "pt": "Cortinas de luxo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "drape_luxury",
+  "en_game": "Luxury Drapes"
+ },
+ "Mackerel": {
+  "pt": "Cavala",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_mackerel",
+  "en_game": "Mackerel"
+ },
+ "Magic bell": {
+  "pt": "Sino Mágico",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "quest_bell",
+  "en_game": "Magic bell"
+ },
+ "Magnificent Candle": {
+  "pt": "Vela Magnífica",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "candle_master",
+  "en_game": "Magnificent Candle"
+ },
+ "Marble": {
+  "pt": "Mármore",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "1h_marble",
+  "en_game": "Marble"
+ },
+ "Marble Cross I": {
+  "pt": "Cruz de Mármore I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_top_mrb_1",
+  "en_game": "Marble Cross I"
+ },
+ "Marble Cross II": {
+  "pt": "Cruz de Mármore II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_top_mrb_2",
+  "en_game": "Marble Cross II"
+ },
+ "Marble Fence I": {
+  "pt": "Cerca de Mármore I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_bot_mrb_1",
+  "en_game": "Marble Fence I"
+ },
+ "Marble Fence II": {
+  "pt": "Cerca de Mármore II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_bot_mrb_2",
+  "en_game": "Marble Fence II"
+ },
+ "Marble Kit": {
+  "pt": "Kit de Mármore",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "marble_kit",
+  "en_game": "Marble Kit"
+ },
+ "Marble Plate": {
+  "pt": "Placa de Mármore",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "marble_plate_1",
+  "en_game": "Marble Plate"
+ },
+ "Master Armor": {
+  "pt": "Armadura Mestra",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "armor_4",
+  "en_game": "Master Armor"
+ },
+ "Master Surgeon's Kit": {
+  "pt": "Kit de Mestre Cirurgião",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "surgical_kit_3",
+  "en_game": "Master Surgeon's Kit"
+ },
+ "Master Sword": {
+  "pt": "Espada Mestra",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sword_4",
+  "en_game": "Master Sword"
+ },
+ "Mead": {
+  "pt": "Hidromel",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "mead",
+  "en_game": "Mead"
+ },
+ "Melted Fat": {
+  "pt": "Gordura Derretida",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "melted_fat",
+  "en_game": "Melted Fat"
+ },
+ "Minced Meat": {
+  "pt": "Carne Moída",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "minced_meat",
+  "en_game": "Minced Meat"
+ },
+ "Miracle growth elixir": {
+  "pt": "Elixir de Crescimento Milagroso",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "miracle_growing_elixir",
+  "en_game": "Miracle growth elixir"
+ },
+ "Muffin": {
+  "pt": "Bolinho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_muffin",
+  "en_game": "Muffin"
+ },
+ "Music Notes": {
+  "pt": "Notas Musicais",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "music_notes",
+  "en_game": "Music Notes"
+ },
+ "Mysterious Chest": {
+  "pt": "Baú misterioso",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "chest_myst",
+  "en_game": "Mysterious Chest"
+ },
+ "Mysterious fish fillet": {
+  "pt": "Filé de Peixe Misterioso",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fillet_fish_myst",
+  "en_game": "Mysterious fish fillet"
+ },
+ "Mythic Carp": {
+  "pt": "Carpa Mítica",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_mythic_carp",
+  "en_game": "Mythic Carp"
+ },
+ "Necronomicon": {
+  "pt": "Necronomicon",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "necromonicon",
+  "en_game": "Necronomicon"
+ },
+ "Night flower": {
+  "pt": "Flor noturna",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "flower_night",
+  "en_game": "Night flower"
+ },
+ "No Bait": {
+  "pt": "Sem iscas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "no_bait",
+  "en_game": "No Bait"
+ },
+ "Oiled Beam": {
+  "pt": "Viga engraxada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "oiled_beam",
+  "en_game": "Oiled Beam"
+ },
+ "Oiled Plank": {
+  "pt": "Tábua engordurada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "oiled_plank",
+  "en_game": "Oiled Plank"
+ },
+ "Onion": {
+  "pt": "Cebola",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "onion:1",
+  "en_game": "Onion"
+ },
+ "Onion rings": {
+  "pt": "Anéis de cebola",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_onion_rings",
+  "en_game": "Onion rings"
+ },
+ "Onion seed": {
+  "pt": "Semente de Cebola",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "onion_seed:1",
+  "en_game": "Onion seed"
+ },
+ "Paint": {
+  "pt": "Tinta",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "quest_paint",
+  "en_game": "Paint"
+ },
+ "Paper glop": {
+  "pt": "Mistureba de papel",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "paper_liquid",
+  "en_game": "Paper glop"
+ },
+ "Peat": {
+  "pt": "Turfa",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fertilizer:peat",
+  "en_game": "Peat"
+ },
+ "Philosopher Stone": {
+  "pt": "Pedra Filosofal",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "philosopher_stone",
+  "en_game": "Philosopher Stone"
+ },
+ "Piece of stone": {
+  "pt": "Pedaço de Pedra",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "stone_plate_1",
+  "en_game": "Piece of stone"
+ },
+ "Pike": {
+  "pt": "Lúcio",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_pike",
+  "en_game": "Pike"
+ },
+ "Pilgrim's Clothes": {
+  "pt": "Traje de Peregrino",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hero_clothes_9006",
+  "en_game": "Pilgrim's Clothes"
+ },
+ "Po-ta-to": {
+  "pt": "Ba-ta-ta",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "potato",
+  "en_game": "Po-ta-to"
+ },
+ "Polished Bronze": {
+  "pt": "Bronze Polido",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "polished_bronze",
+  "en_game": "Polished Bronze"
+ },
+ "Polished Marble": {
+  "pt": "Mármore Polido",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "marble_plate_2",
+  "en_game": "Polished Marble"
+ },
+ "Polished Stone": {
+  "pt": "Pedra Polida",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "stone_plate_2",
+  "en_game": "Polished Stone"
+ },
+ "Portal fragment Envy": {
+  "pt": "Fragmento de Portal: Inveja",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "portal_stone_envy",
+  "en_game": "Portal fragment Envy"
+ },
+ "Portal fragment Gluttony": {
+  "pt": "Fragmento de Portal: Gula",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "portal_stone_gluttony",
+  "en_game": "Portal fragment Gluttony"
+ },
+ "Portal fragment Greed": {
+  "pt": "Fragmento de Portal: Ganância",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "portal_stone_greed",
+  "en_game": "Portal fragment Greed"
+ },
+ "Portal fragment Lust": {
+  "pt": "Fragmento de Portal: Luxúria",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "portal_stone_lust",
+  "en_game": "Portal fragment Lust"
+ },
+ "Portal fragment Pride": {
+  "pt": "Fragmento de Portal: Orgulho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "portal_stone_pride",
+  "en_game": "Portal fragment Pride"
+ },
+ "Portal fragment Sloth": {
+  "pt": "Fragmento de Portal: Preguiça",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "portal_stone_sloth",
+  "en_game": "Portal fragment Sloth"
+ },
+ "Portal fragment Wrath": {
+  "pt": "Fragmento de Portal: Ira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "portal_stone_wrath",
+  "en_game": "Portal fragment Wrath"
+ },
+ "Potion bag": {
+  "pt": "Bolsa de Poções",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bag_potions",
+  "en_game": "Potion bag"
+ },
+ "PR Agreement": {
+  "pt": "Acordo de RP",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "agreement_frontman",
+  "en_game": "PR Agreement"
+ },
+ "Prayer for Old God": {
+  "pt": "Oração do Deus Antigo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "prayer_old_god",
+  "en_game": "Prayer for Old God"
+ },
+ "Prayer for Storms": {
+  "pt": "Oração das tempestades",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "prayer_storms",
+  "en_game": "Prayer for Storms"
+ },
+ "Precious Trinkets": {
+  "pt": "Artefatos Preciosos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "trinkets_gold",
+  "en_game": "Precious Trinkets"
+ },
+ "Preservative": {
+  "pt": "Conservante",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "preservative",
+  "en_game": "Preservative"
+ },
+ "Pretty Candle": {
+  "pt": "Vela Bonita",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "candle_advanced",
+  "en_game": "Pretty Candle"
+ },
+ "Priest's Clothes": {
+  "pt": "Traje de Sacerdote",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hero_clothes_9008",
+  "en_game": "Priest's Clothes"
+ },
+ "Primer": {
+  "pt": "Cartilha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tool_book_1",
+  "en_game": "Primer"
+ },
+ "Printed Money": {
+  "pt": "Cédulas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "printed_money",
+  "en_game": "Printed Money"
+ },
+ "Printed Poetry": {
+  "pt": "Poesia impressa",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "book_poetry",
+  "en_game": "Printed Poetry"
+ },
+ "Pro Rod": {
+  "pt": "Vara Profissional",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "pro_rod",
+  "en_game": "Pro Rod"
+ },
+ "Prosthetic Hand": {
+  "pt": "Mão prostética",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hand_prothesis",
+  "en_game": "Prosthetic Hand"
+ },
+ "Pumpkin": {
+  "pt": "Abóbora",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "pumpkin",
+  "en_game": "Pumpkin"
+ },
+ "Pumpkin Seeds": {
+  "pt": "Sementes de Abóbora",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "pumpkin_seed",
+  "en_game": "Pumpkin Seeds"
+ },
+ "Pumpkin soup": {
+  "pt": "Sopa de abóbora",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_pumpkin_soup",
+  "en_game": "Pumpkin soup"
+ },
+ "Reanimation Liquid": {
+  "pt": "Líquido de reanimação",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "resurrection_liquid",
+  "en_game": "Reanimation Liquid"
+ },
+ "Red Eye": {
+  "pt": "Olho vermelho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "red_eye",
+  "en_game": "Red Eye"
+ },
+ "Red Mushroom": {
+  "pt": "Cogumelo Vermelho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "mushroom_red",
+  "en_game": "Red Mushroom"
+ },
+ "Red Techbook": {
+  "pt": "Livro Vermelho de Tecnologia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "techbook_r_1",
+  "en_game": "Red Techbook"
+ },
+ "Red Techbook II": {
+  "pt": "Livro Vermelho de Tecnologia II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "techbook_r_2",
+  "en_game": "Red Techbook II"
+ },
+ "Reinforced Beam": {
+  "pt": "Viga reforçada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "reinforced_beam",
+  "en_game": "Reinforced Beam"
+ },
+ "Reinforced Bow": {
+  "pt": "Arco Reforçado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bow_1",
+  "en_game": "Reinforced Bow"
+ },
+ "Reinforced Plank": {
+  "pt": "Tábua reforçada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "reinforced_plank",
+  "en_game": "Reinforced Plank"
+ },
+ "Resurrection Note": {
+  "pt": "Notas sobre Ressurreição",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "note_resurrection",
+  "en_game": "Resurrection Note"
+ },
+ "Rhododendron": {
+  "pt": "Rododendro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "flower_rhod",
+  "en_game": "Rhododendron"
+ },
+ "Rhododendron Seedling": {
+  "pt": "Muda de rododendro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "rhod_seedling",
+  "en_game": "Rhododendron Seedling"
+ },
+ "Rich growth elixir": {
+  "pt": "Elixir de Crescimento Forte",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "rich_growing_elixir",
+  "en_game": "Rich growth elixir"
+ },
+ "River fish fillet": {
+  "pt": "Filé de Peixe de Água Doce",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fillet_fish_river",
+  "en_game": "River fish fillet"
+ },
+ "Roach": {
+  "pt": "Rutilo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_roach",
+  "en_game": "Roach"
+ },
+ "Royal Pardon": {
+  "pt": "Perdão Real",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "royal_pardon",
+  "en_game": "Royal Pardon"
+ },
+ "Rusty Armor": {
+  "pt": "Armadura Enferrujada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "armor_0",
+  "en_game": "Rusty Armor"
+ },
+ "Rusty Axe": {
+  "pt": "Machado Enferrujado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "axe_0",
+  "en_game": "Rusty Axe"
+ },
+ "Rusty Hammer": {
+  "pt": "Martelo Enferrujado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hammer_0",
+  "en_game": "Rusty Hammer"
+ },
+ "Rusty Pickaxe": {
+  "pt": "Picareta Enferrujada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "pickaxe_0",
+  "en_game": "Rusty Pickaxe"
+ },
+ "Rusty Shovel": {
+  "pt": "Pá Enferrujada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "shovel_0",
+  "en_game": "Rusty Shovel"
+ },
+ "Rusty Sword": {
+  "pt": "Espada Enferrujada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sword_0",
+  "en_game": "Rusty Sword"
+ },
+ "Salmon": {
+  "pt": "Salmão",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_salmon",
+  "en_game": "Salmon"
+ },
+ "Salt": {
+  "pt": "Sal",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "salt",
+  "en_game": "Salt"
+ },
+ "Sand": {
+  "pt": "Areia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sand",
+  "en_game": "Sand"
+ },
+ "Sandwich": {
+  "pt": "Sanduíche",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_sandwich",
+  "en_game": "Sandwich"
+ },
+ "Science": {
+  "pt": "Ciência",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "science",
+  "en_game": "Science"
+ },
+ "Science Kit I": {
+  "pt": "Kit de Ciência I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "science_kit_1",
+  "en_game": "Science Kit I"
+ },
+ "Science Kit II": {
+  "pt": "Kit de Ciência II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "science_kit_2",
+  "en_game": "Science Kit II"
+ },
+ "Sculpture Kit I": {
+  "pt": "Kit de Escultura I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sculpture_kit_1",
+  "en_game": "Sculpture Kit I"
+ },
+ "Sculpture Kit II": {
+  "pt": "Kit de Escultura II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sculpture_kit_2",
+  "en_game": "Sculpture Kit II"
+ },
+ "Sea fish fillet": {
+  "pt": "Filé de Peixe de Água Salgada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fillet_fish_sea",
+  "en_game": "Sea fish fillet"
+ },
+ "Secret combination": {
+  "pt": "Combinação secreta",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "doctor_meeting_code",
+  "en_game": "Secret combination"
+ },
+ "Seed oil": {
+  "pt": "Óleo de semente",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "seed_oil",
+  "en_game": "Seed oil"
+ },
+ "Short Log": {
+  "pt": "Tora Pequena",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wood1",
+  "en_game": "Short Log"
+ },
+ "Signed PR Agreement": {
+  "pt": "Acordo de RP assinado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "agreement_frontman_signed",
+  "en_game": "Signed PR Agreement"
+ },
+ "Signed Printed Money": {
+  "pt": "Cédulas assinadas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "printed_money_signed",
+  "en_game": "Signed Printed Money"
+ },
+ "Silver Talisman": {
+  "pt": "Talismã de Prata",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tool_talisman_2",
+  "en_game": "Silver Talisman"
+ },
+ "Silverfin": {
+  "pt": "Prateado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_silverfin",
+  "en_game": "Silverfin"
+ },
+ "Simple Bow": {
+  "pt": "Arco Simples",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bow_0",
+  "en_game": "Simple Bow"
+ },
+ "Simple Candle": {
+  "pt": "Vela Simples",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "candle_basic",
+  "en_game": "Simple Candle"
+ },
+ "Simple Incense": {
+  "pt": "Incenso Simples",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "incense_basic",
+  "en_game": "Simple Incense"
+ },
+ "Skin": {
+  "pt": "Pele",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "skin_1_1",
+  "en_game": "Skin"
+ },
+ "Skull": {
+  "pt": "Caveira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "skull",
+  "en_game": "Skull"
+ },
+ "Small Printing Press": {
+  "pt": "Prensa móvel pequena",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "small_printing_press",
+  "en_game": "Small Printing Press"
+ },
+ "Soldier's ale": {
+  "pt": "Cerveja do Soldado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_soldier_ale",
+  "en_game": "Soldier's ale"
+ },
+ "Soldier's stew": {
+  "pt": "Ensopado do Soldado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_soldier_stew",
+  "en_game": "Soldier's stew"
+ },
+ "Special Clothes": {
+  "pt": "Traje Especial",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hero_clothes_9007",
+  "en_game": "Special Clothes"
+ },
+ "Special Wood": {
+  "pt": "Madeira Especial",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wood_2",
+  "en_game": "Special Wood"
+ },
+ "Speech Writing Device": {
+  "pt": "Escriba mecânico",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "speech_writing_device",
+  "en_game": "Speech Writing Device"
+ },
+ "Spices": {
+  "pt": "Especiarias",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "spices",
+  "en_game": "Spices"
+ },
+ "Spiked Barricade I": {
+  "pt": "Barricada com Espinhos I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "barricade_spike_1_fight",
+  "en_game": "Spiked Barricade I"
+ },
+ "Spiked Barricade II": {
+  "pt": "Barricada com Espinhos II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "barricade_spike_2_fight",
+  "en_game": "Spiked Barricade II"
+ },
+ "Spiked Barricade III": {
+  "pt": "Barricada com Espinhos III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "barricade_spike_3_fight",
+  "en_game": "Spiked Barricade III"
+ },
+ "Starter Alchemist's Kit": {
+  "pt": "Kit Inicial de Alquimista",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_kit_1",
+  "en_game": "Starter Alchemist's Kit"
+ },
+ "Steel Armor": {
+  "pt": "Armadura de Aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "armor_3",
+  "en_game": "Steel Armor"
+ },
+ "Steel Axe": {
+  "pt": "Machado de Aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "axe_3",
+  "en_game": "Steel Axe"
+ },
+ "Steel Detail": {
+  "pt": "Detalhe de Aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "detail_1_steel",
+  "en_game": "Steel Detail"
+ },
+ "Steel Hammer": {
+  "pt": "Martelo de Aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "hammer_3",
+  "en_game": "Steel Hammer"
+ },
+ "Steel Ingot": {
+  "pt": "Lingote de aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "ingot_steel",
+  "en_game": "Steel Ingot"
+ },
+ "Steel Pickaxe": {
+  "pt": "Picareta de Aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "pickaxe_3",
+  "en_game": "Steel Pickaxe"
+ },
+ "Steel Screws": {
+  "pt": "Parafusos de Aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "screw_steel",
+  "en_game": "Steel Screws"
+ },
+ "Steel Shovel": {
+  "pt": "Pá de Aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "shovel_3",
+  "en_game": "Steel Shovel"
+ },
+ "Steel Sword": {
+  "pt": "Espada de Aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sword_3",
+  "en_game": "Steel Sword"
+ },
+ "Steel tools": {
+  "pt": "Ferramentas de Aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "small_instruments_3",
+  "en_game": "Steel tools"
+ },
+ "Steel Zombie Collar": {
+  "pt": "Coleira de zumbi - Aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "collar_steel",
+  "en_game": "Steel Zombie Collar"
+ },
+ "Stick": {
+  "pt": "Vareta",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "stick",
+  "en_game": "Stick"
+ },
+ "Stone": {
+  "pt": "Pedra",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "1h_stone",
+  "en_game": "Stone"
+ },
+ "Stone Fence I": {
+  "pt": "Cerca de Pedra I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_bot_stn_1",
+  "en_game": "Stone Fence I"
+ },
+ "Stone Fence II": {
+  "pt": "Cerca de Pedra II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_bot_stn_2",
+  "en_game": "Stone Fence II"
+ },
+ "Stone Kit": {
+  "pt": "Kit de Pedra",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "stone_kit_1",
+  "en_game": "Stone Kit"
+ },
+ "Stone Marbles": {
+  "pt": "Ornamentos de Mármore",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "trinkets_stone",
+  "en_game": "Stone Marbles"
+ },
+ "Supply: Appliances I": {
+  "pt": "Suprimentos: Aparelhagem I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_appliances_1",
+  "en_game": "Supply: Appliances I"
+ },
+ "Supply: Appliances II": {
+  "pt": "Suprimentos: Aparelhagem II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_appliances_2",
+  "en_game": "Supply: Appliances II"
+ },
+ "Supply: Beer": {
+  "pt": "Suprimento: Cerveja",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_beer",
+  "en_game": "Supply: Beer"
+ },
+ "Supply: Building materials I": {
+  "pt": "Suprimentos: Materiais de Construção I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_building_kit_1",
+  "en_game": "Supply: Building materials I"
+ },
+ "Supply: Building materials II": {
+  "pt": "Suprimentos: Materiais de Construção II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_building_kit_2",
+  "en_game": "Supply: Building materials II"
+ },
+ "Supply: Clothes I": {
+  "pt": "Suprimentos: Roupas I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_clothes_1",
+  "en_game": "Supply: Clothes I"
+ },
+ "Supply: Clothes II": {
+  "pt": "Suprimentos: Roupas II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_clothes_2",
+  "en_game": "Supply: Clothes II"
+ },
+ "Supply: Cutlery I": {
+  "pt": "Suprimentos: Talheres I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_cutlery_1",
+  "en_game": "Supply: Cutlery I"
+ },
+ "Supply: Cutlery II": {
+  "pt": "Suprimentos: Talheres II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_cutlery_2",
+  "en_game": "Supply: Cutlery II"
+ },
+ "Supply: Engineering Mechanism": {
+  "pt": "Suprimentos: Mecanismo de Engenharia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_engineering_mechanism",
+  "en_game": "Supply: Engineering Mechanism"
+ },
+ "Supply: Fabric": {
+  "pt": "Suprimentos: Tecido",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_fabric",
+  "en_game": "Supply: Fabric"
+ },
+ "Supply: Flour Sack": {
+  "pt": "Suprimentos: Saco de Farinha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_flour",
+  "en_game": "Supply: Flour Sack"
+ },
+ "Supply: Furniture I": {
+  "pt": "Suprimentos: Mobília I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_furniture_1",
+  "en_game": "Supply: Furniture I"
+ },
+ "Supply: Furniture II": {
+  "pt": "Suprimentos: Mobília II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_furniture_2",
+  "en_game": "Supply: Furniture II"
+ },
+ "Supply: Iron": {
+  "pt": "Suprimento: Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_iron_ingot",
+  "en_game": "Supply: Iron"
+ },
+ "Supply: Iron Tools": {
+  "pt": "Suprimentos: Ferramentas de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_tools_iron",
+  "en_game": "Supply: Iron Tools"
+ },
+ "Supply: Kitchen Utensils": {
+  "pt": "Suprimentos: Utensílios de Cozinha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_kitchen_utensils",
+  "en_game": "Supply: Kitchen Utensils"
+ },
+ "Supply: Preserves I": {
+  "pt": "Suprimentos: Conservas I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_preserves_1",
+  "en_game": "Supply: Preserves I"
+ },
+ "Supply: Preserves II": {
+  "pt": "Suprimentos: Conservas II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_preserves_2",
+  "en_game": "Supply: Preserves II"
+ },
+ "Supply: Steel Tools": {
+  "pt": "Suprimentos: Ferramentas de Aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_tools_steel",
+  "en_game": "Supply: Steel Tools"
+ },
+ "Supply: Vegetables": {
+  "pt": "Suprimentos: Vegetais",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_vegetables",
+  "en_game": "Supply: Vegetables"
+ },
+ "Supply: Wine": {
+  "pt": "Suprimento: Vinho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "box_vine",
+  "en_game": "Supply: Wine"
+ },
+ "Surgeon's Error": {
+  "pt": "Erro de Cirurgião",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "surgeon_mistake",
+  "en_game": "Surgeon's Error"
+ },
+ "Surgeon's Kit": {
+  "pt": "Kit de Cirurgião",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "surgical_kit_2",
+  "en_game": "Surgeon's Kit"
+ },
+ "Swamp Ghost": {
+  "pt": "Fantasma do Pântano",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_swamp_ghost",
+  "en_game": "Swamp Ghost"
+ },
+ "Swamp mushroom": {
+  "pt": "Cogumelo pantaneiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "mushroom_green",
+  "en_game": "Swamp mushroom"
+ },
+ "Tableware": {
+  "pt": "Talheres",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tableware",
+  "en_game": "Tableware"
+ },
+ "Tannin Liquid": {
+  "pt": "Líquido de Tanino",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "liquid_harden",
+  "en_game": "Tannin Liquid"
+ },
+ "Third Eye Salt": {
+  "pt": "Sal do Terceiro Olho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "third_eye_salt",
+  "en_game": "Third Eye Salt"
+ },
+ "Tin": {
+  "pt": "Estanho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "lead",
+  "en_game": "Tin"
+ },
+ "Toast with onions": {
+  "pt": "Torradas com cebola",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_onion_toast",
+  "en_game": "Toast with onions"
+ },
+ "Tool bag": {
+  "pt": "Bolsa de Ferramentas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bag_tools",
+  "en_game": "Tool bag"
+ },
+ "Tooth": {
+  "pt": "Dente",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tooth",
+  "en_game": "Tooth"
+ },
+ "Town Gratitude": {
+  "pt": "Gratidão do Povoado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "town_gratitude",
+  "en_game": "Town Gratitude"
+ },
+ "Trilogy": {
+  "pt": "Trilogia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "trilogy",
+  "en_game": "Trilogy"
+ },
+ "Trout": {
+  "pt": "Truta",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_trout",
+  "en_game": "Trout"
+ },
+ "Tuna": {
+  "pt": "Atum",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fish_tuna",
+  "en_game": "Tuna"
+ },
+ "Umami": {
+  "pt": "Umami",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "quality_food_gold",
+  "en_game": "Umami"
+ },
+ "Universal bag": {
+  "pt": "Bolsa Universal",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bag_universal",
+  "en_game": "Universal bag"
+ },
+ "Urn with Ashes I": {
+  "pt": "Urna com Cinzas I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "urn_ashes_1",
+  "en_game": "Urn with Ashes I"
+ },
+ "Urn with Ashes II": {
+  "pt": "Urna com Cinzas II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "urn_ashes_2",
+  "en_game": "Urn with Ashes II"
+ },
+ "Vegetable soup": {
+  "pt": "Sopa de vegetais",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_vegetabe_soup",
+  "en_game": "Vegetable soup"
+ },
+ "Victory Banner": {
+  "pt": "Estandarte da Vitória",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "flag_reward",
+  "en_game": "Victory Banner"
+ },
+ "Violin": {
+  "pt": "Violino",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "violine",
+  "en_game": "Violin"
+ },
+ "Water": {
+  "pt": "Água",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "water",
+  "en_game": "Water"
+ },
+ "Weak growth elixir": {
+  "pt": "Elixir de Crescimento Fraco",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "weak_growing_elixir",
+  "en_game": "Weak growth elixir"
+ },
+ "Wheat": {
+  "pt": "Trigo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wheat",
+  "en_game": "Wheat"
+ },
+ "Wheat seed": {
+  "pt": "Semente de Trigo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wheat_seed",
+  "en_game": "Wheat seed"
+ },
+ "Wine": {
+  "pt": "Vinho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grape_wine",
+  "en_game": "Wine"
+ },
+ "Wood wedge": {
+  "pt": "Cunha de Madeira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wood_wedge",
+  "en_game": "Wood wedge"
+ },
+ "Wooden beam": {
+  "pt": "Viga de Madeira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wooden_beam",
+  "en_game": "Wooden beam"
+ },
+ "Wooden Cross I": {
+  "pt": "Cruz de Madeira I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_top_wd_1",
+  "en_game": "Wooden Cross I"
+ },
+ "Wooden Cross II": {
+  "pt": "Cruz de Madeira II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_top_wd_2",
+  "en_game": "Wooden Cross II"
+ },
+ "Wooden Fence I": {
+  "pt": "Cerca de Madeira I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_bot_wd_1",
+  "en_game": "Wooden Fence I"
+ },
+ "Wooden Fence II": {
+  "pt": "Cerca de Madeira II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_bot_wd_2",
+  "en_game": "Wooden Fence II"
+ },
+ "Wooden Joint": {
+  "pt": "Articulação de Madeira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wooden_joint",
+  "en_game": "Wooden Joint"
+ },
+ "Wooden Kit I": {
+  "pt": "Kit de Madeira I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wooden_kit_1",
+  "en_game": "Wooden Kit I"
+ },
+ "Wooden Kit II": {
+  "pt": "Kit de Madeira II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wooden_kit_2",
+  "en_game": "Wooden Kit II"
+ },
+ "Wooden Plank": {
+  "pt": "Placa de Madeira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wooden_plank",
+  "en_game": "Wooden Plank"
+ },
+ "Wooden Sign": {
+  "pt": "Placa de Madeira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_top_wd_0",
+  "en_game": "Wooden Sign"
+ },
+ "Wooden Trinkets": {
+  "pt": "Artefatos de Madeira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "trinkets_wood",
+  "en_game": "Wooden Trinkets"
+ },
+ "Yogurt": {
+  "pt": "Iogurte",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_yogurt",
+  "en_game": "Yogurt"
+ },
+ "Zombie": {
+  "pt": "Zumbi",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "body_zombie",
+  "en_game": "Zombie"
+ },
+ "Zombie goo": {
+  "pt": "Gosma zumbi",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zombie_goo",
+  "en_game": "Zombie goo"
+ },
+ "Zombie Mechanism": {
+  "pt": "Mecanismo zumbi",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zombie_mechanism",
+  "en_game": "Zombie Mechanism"
+ },
+ "Zombie Motivator Potion": {
+  "pt": "Poção Motivadora de Zumbis",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "motivator_potion",
+  "en_game": "Zombie Motivator Potion"
+ },
+ "Zombie Motivator Potion II": {
+  "pt": "Poção Motivadora de Zumbis II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "motivator_potion_2",
+  "en_game": "Zombie Motivator Potion II"
+ },
+ "Zombie Motivator Potion III": {
+  "pt": "Poção Motivadora de Zumbis III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "motivator_potion_3",
+  "en_game": "Zombie Motivator Potion III"
+ },
+ "Zombie Power": {
+  "pt": "Poder Zumbi",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zombie_power",
+  "en_game": "Zombie Power"
+ },
+ "Alchemy Workbench": {
+  "pt": "Bancada de Alquimia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_workbench",
+  "en_game": "Alchemy Workbench"
+ },
+ "Assembly bench": {
+  "pt": "Banco de Montagem",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_assemblybench",
+  "en_game": "Assembly bench"
+ },
+ "Assembly bench I": {
+  "pt": "Bancada de Montagem I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_assemblybench_t1",
+  "en_game": "Assembly bench I"
+ },
+ "Assembly bench II": {
+  "pt": "Banco de Montagem II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_assemblybench_t2",
+  "en_game": "Assembly bench II"
+ },
+ "Assembly bench III": {
+  "pt": "Banco de Montagem III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_assemblybench_t3",
+  "en_game": "Assembly bench III"
+ },
+ "Autopsy Table I": {
+  "pt": "Mesa de Autópsia I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "autopsy_table_1",
+  "en_game": "Autopsy Table I"
+ },
+ "Autopsy Table II": {
+  "pt": "Mesa de Autópsia II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "autopsy_table_2",
+  "en_game": "Autopsy Table II"
+ },
+ "Beehive": {
+  "pt": "Colmeia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "honey_home_empty",
+  "en_game": "Beehive"
+ },
+ "Beet Bed": {
+  "pt": "Canteiro de Beterraba",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_beet",
+  "en_game": "Beet Bed"
+ },
+ "Bioreactor": {
+  "pt": "Biorreator",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_bioreactor",
+  "en_game": "Bioreactor"
+ },
+ "Brewing Stand": {
+  "pt": "Fogareiro de Fermentação",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "brewing_stand",
+  "en_game": "Brewing Stand"
+ },
+ "Cabbage Bed": {
+  "pt": "Canteiro de Repolho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_cabbage",
+  "en_game": "Cabbage Bed"
+ },
+ "Carrot Bed": {
+  "pt": "Canteiro de Cenoura",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_carrot",
+  "en_game": "Carrot Bed"
+ },
+ "Chopping Spot": {
+  "pt": "Lugar de Cortar Madeira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "chopping_spot",
+  "en_game": "Chopping Spot"
+ },
+ "Circular Saw": {
+  "pt": "Serra Circular",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "circular_saw",
+  "en_game": "Circular Saw"
+ },
+ "Clay Digger Stand": {
+  "pt": "Banca de Extração de Argila",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "clay_zombie_crafter",
+  "en_game": "Clay Digger Stand"
+ },
+ "Compost Pile": {
+  "pt": "Monte de Compostagem",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "compost_pile_1",
+  "en_game": "Compost Pile"
+ },
+ "Compost Pile II": {
+  "pt": "Monte de Compostagem II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "compost_pile_2",
+  "en_game": "Compost Pile II"
+ },
+ "Compost Pile Upgrade": {
+  "pt": "Melhoria do Monte de Compostagem",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_compost_pile_upgrade_s",
+  "en_game": "Compost Pile Upgrade"
+ },
+ "Corpse Dumping Point": {
+  "pt": "Local de descarte de cadáveres",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "morgue_entrance_door_broken",
+  "en_game": "Corpse Dumping Point"
+ },
+ "Crematorium I": {
+  "pt": "Crematório I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "crematorium_1_s",
+  "en_game": "Crematorium I"
+ },
+ "Crematorium II": {
+  "pt": "Crematório II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "crematorium_2_s",
+  "en_game": "Crematorium II"
+ },
+ "Distillation Cube": {
+  "pt": "Cubo de Destilação",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "distillation_cube",
+  "en_game": "Distillation Cube"
+ },
+ "Embalming Table I": {
+  "pt": "Mesa de Embalsamamento I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "embalm_table_1",
+  "en_game": "Embalming Table I"
+ },
+ "Embalming Table II": {
+  "pt": "Mesa de Embalsamamento II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "embalm_table_2",
+  "en_game": "Embalming Table II"
+ },
+ "Fermentation Barrel": {
+  "pt": "Barril de Fermentação",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fermentation_barrel",
+  "en_game": "Fermentation Barrel"
+ },
+ "Firewood shed I": {
+  "pt": "Lenheiro I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "firewood_shed_1",
+  "en_game": "Firewood shed I"
+ },
+ "Firewood shed II": {
+  "pt": "Lenheiro II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "firewood_shed_2",
+  "en_game": "Firewood shed II"
+ },
+ "Flask shelf": {
+  "pt": "Prateleira de frascos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_flask_1_shed",
+  "en_game": "Flask shelf"
+ },
+ "Flax Bed": {
+  "pt": "Canteiro de Linho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_linum",
+  "en_game": "Flax Bed"
+ },
+ "Formulation Bench": {
+  "pt": "Mesa de Formulações",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "formulation_bench",
+  "en_game": "Formulation Bench"
+ },
+ "Furnace I": {
+  "pt": "Fornalha I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "furnace_1",
+  "en_game": "Furnace I"
+ },
+ "Furnace II": {
+  "pt": "Fornalha II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "furnace_2",
+  "en_game": "Furnace II"
+ },
+ "Garden Bed": {
+  "pt": "Canteiro do Jardim",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_empty",
+  "en_game": "Garden Bed"
+ },
+ "Garden Well II": {
+  "pt": "Poço do Jardim II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "well_garden_2",
+  "en_game": "Garden Well II"
+ },
+ "Garden Well Upgrade": {
+  "pt": "Melhoria do Poço do Jardim",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "well_garden_upgrade_s",
+  "en_game": "Garden Well Upgrade"
+ },
+ "Grapes Bed": {
+  "pt": "Canteiro de Uvas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_grapes",
+  "en_game": "Grapes Bed"
+ },
+ "Hops Bed": {
+  "pt": "Canteiro de Lúpulo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_hop",
+  "en_game": "Hops Bed"
+ },
+ "Iron Anvil": {
+  "pt": "Bigorna de ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "iron_anvil",
+  "en_game": "Iron Anvil"
+ },
+ "Jewelry Table": {
+  "pt": "Mesa de Joias",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "jeweler_table",
+  "en_game": "Jewelry Table"
+ },
+ "Kiln": {
+  "pt": "Forno",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "brick_kiln_1",
+  "en_game": "Kiln"
+ },
+ "Kitchen I": {
+  "pt": "Cozinha I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_kitchen_t1",
+  "en_game": "Kitchen I"
+ },
+ "Kitchen II": {
+  "pt": "Cozinha II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "kitchen_table_2",
+  "en_game": "Kitchen II"
+ },
+ "Kitchen Oven": {
+  "pt": "Forno da Cozinha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "kitchen_oven",
+  "en_game": "Kitchen Oven"
+ },
+ "Kitchen Oven II": {
+  "pt": "Forno da Cozinha II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "kitchen_oven_up_s",
+  "en_game": "Kitchen Oven II"
+ },
+ "Kitchen Table": {
+  "pt": "Mesa da Cozinha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "kitchen_table",
+  "en_game": "Kitchen Table"
+ },
+ "Kitchen Table II": {
+  "pt": "Mesa da Cozinha II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "kitchen_table_up_s",
+  "en_game": "Kitchen Table II"
+ },
+ "Laboratory I": {
+  "pt": "Laboratório I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_mix",
+  "en_game": "Laboratory I"
+ },
+ "Laboratory II": {
+  "pt": "Laboratório II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_mix_2",
+  "en_game": "Laboratory II"
+ },
+ "Locked door": {
+  "pt": "Porta trancada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "base_locked_door_tower",
+  "en_game": "Locked door"
+ },
+ "Locked hatch": {
+  "pt": "Escotilha trancada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "base_hatch_under_locked",
+  "en_game": "Locked hatch"
+ },
+ "Lumberjack stand": {
+  "pt": "Banca de Lenhador",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sawmill_wood_crafter",
+  "en_game": "Lumberjack stand"
+ },
+ "Millstone": {
+  "pt": "Pedra de Moinho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "millstone",
+  "en_game": "Millstone"
+ },
+ "Old door": {
+  "pt": "Porta Antiga",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "basement_resurrection_door",
+  "en_game": "Old door"
+ },
+ "Onion Bed": {
+  "pt": "Canteiro de Cebola",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_onion",
+  "en_game": "Onion Bed"
+ },
+ "Paper Press": {
+  "pt": "Prensa de papel",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "paper_press",
+  "en_game": "Paper Press"
+ },
+ "Potter's Wheel": {
+  "pt": "Torno de Oleiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "potter_wheel_1",
+  "en_game": "Potter's Wheel"
+ },
+ "PR Machine I": {
+  "pt": "Máquina de RP I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "panic_reduction_machine_1",
+  "en_game": "PR Machine I"
+ },
+ "PR Machine II": {
+  "pt": "Máquina de RP II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "panic_reduction_machine_2",
+  "en_game": "PR Machine II"
+ },
+ "PR Machine III": {
+  "pt": "Máquina de RP III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "panic_reduction_machine_3",
+  "en_game": "PR Machine III"
+ },
+ "PR Machine IV": {
+  "pt": "Máquina de RP IV",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "panic_reduction_machine_4",
+  "en_game": "PR Machine IV"
+ },
+ "PR Machine V": {
+  "pt": "Máquina de RP V",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "panic_reduction_machine_5",
+  "en_game": "PR Machine V"
+ },
+ "Printing Press": {
+  "pt": "Prensa móvel",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "newspaper_press",
+  "en_game": "Printing Press"
+ },
+ "Pumpkin Bed": {
+  "pt": "Canteiro de abóbora",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_pumpkin",
+  "en_game": "Pumpkin Bed"
+ },
+ "Resurrection device": {
+  "pt": "Dispositivo de Ressurreição",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "power_switch_table_broken",
+  "en_game": "Resurrection device"
+ },
+ "Resurrection Table I": {
+  "pt": "Mesa de Ressurreição I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "resurrection_table_1",
+  "en_game": "Resurrection Table I"
+ },
+ "Sand Digger Stand": {
+  "pt": "Banca de Extração de Areia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sand_zombie_crafter",
+  "en_game": "Sand Digger Stand"
+ },
+ "Sawhorse": {
+  "pt": "Cavalete",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sawhorse",
+  "en_game": "Sawhorse"
+ },
+ "Sewing Table": {
+  "pt": "Mesa de Costura",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sewing_table",
+  "en_game": "Sewing Table"
+ },
+ "Sluice Box": {
+  "pt": "Calha de Lavagem",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sluice_box",
+  "en_game": "Sluice Box"
+ },
+ "Smithy I": {
+  "pt": "Forja I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_furnace_t1",
+  "en_game": "Smithy I"
+ },
+ "Smithy II": {
+  "pt": "Forja II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_furnace_t2",
+  "en_game": "Smithy II"
+ },
+ "Spinning Wheel": {
+  "pt": "Roda de Fiar",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "spinning_wheel",
+  "en_game": "Spinning Wheel"
+ },
+ "Steel Anvil": {
+  "pt": "Bigorna de aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "steel_anvil",
+  "en_game": "Steel Anvil"
+ },
+ "Stonemason's Workbench": {
+  "pt": "Bancada do Canteiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "mf_hammer_0",
+  "en_game": "Stonemason's Workbench"
+ },
+ "Underground well": {
+  "pt": "Poço Subterrâneo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "base_well_nun_broken",
+  "en_game": "Underground well"
+ },
+ "Vine Press": {
+  "pt": "Prensa de Vinho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "vine_press",
+  "en_game": "Vine Press"
+ },
+ "Vine Trellis": {
+  "pt": "Treliça de Videira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "vineyard_empty",
+  "en_game": "Vine Trellis"
+ },
+ "Vineyard Bridge": {
+  "pt": "Ponte do Vinhedo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bridge_vineyard",
+  "en_game": "Vineyard Bridge"
+ },
+ "Weaving Loom": {
+  "pt": "Tear",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "weaving_loom",
+  "en_game": "Weaving Loom"
+ },
+ "Wheat Bed": {
+  "pt": "Canteiro de Trigorigo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_wheat",
+  "en_game": "Wheat Bed"
+ },
+ "Wine Barrel": {
+  "pt": "Barril de Vinho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wine_barrel",
+  "en_game": "Wine Barrel"
+ },
+ "Wooden Anvil": {
+  "pt": "Bigorna de Madeira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wooden_anvil",
+  "en_game": "Wooden Anvil"
+ },
+ "Woodworking Workbench I": {
+  "pt": "Bancada de Carpintaria I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "woodworking_workbench_1",
+  "en_game": "Woodworking Workbench I"
+ },
+ "Woodworking Workbench II": {
+  "pt": "Bancada de Carpintaria II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "woodworking_workbench_2",
+  "en_game": "Woodworking Workbench II"
+ },
+ "Writing Desk": {
+  "pt": "Escrivaninha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "writing_desk_1",
+  "en_game": "Writing Desk"
+ },
+ "Zombie Marble Quarry": {
+  "pt": "Pedreira Zumbi: Mármore",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "quarry_marble_scaffolding",
+  "en_game": "Zombie Marble Quarry"
+ },
+ "Zombie Miner": {
+  "pt": "Mineiro Zumbi",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "mine_ore_coal_crafter",
+  "en_game": "Zombie Miner"
+ },
+ "Zombie Stone Quarry": {
+  "pt": "Pedreira Zumbi: Pedra",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "quarry_stone_scaffolding",
+  "en_game": "Zombie Stone Quarry"
+ },
+ "Building": {
+  "pt": "Engenharia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_tab_Building",
+  "en_game": "Building"
+ },
+ "Church": {
+  "pt": "Igreja",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "builder_church",
+  "en_game": "Church"
+ },
+ "Clothes": {
+  "pt": "Roupas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cust_type_body_switcher",
+  "en_game": "Clothes"
+ },
+ "Farming": {
+  "pt": "Agricultura",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_tab_Farming",
+  "en_game": "Farming"
+ },
+ "Graveyard": {
+  "pt": "Cemitério",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wz_graveyard",
+  "en_game": "Graveyard"
+ },
+ "Ingredients": {
+  "pt": "Ingredientes",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "ui_ingridients",
+  "en_game": "Ingredients"
+ },
+ "Valuables": {
+  "pt": "Itens Valiosos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "34_port_looters_order_8",
+  "en_game": "Valuables"
+ },
+ "Alchemy, Advanced": {
+  "pt": "Alquimia Avançada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_lab_2",
+  "en_game": "Alchemy, Advanced"
+ },
+ "Alchemy, Basic": {
+  "pt": "Alquimia Básica",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_lab_1",
+  "en_game": "Alchemy, Basic"
+ },
+ "Alchemy, Distillation": {
+  "pt": "Alquimia, Destilação",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_distillation",
+  "en_game": "Alchemy, Distillation"
+ },
+ "Anyway...": {
+  "pt": "Enfim...",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cooking_meat_minced",
+  "en_game": "Anyway..."
+ },
+ "Appliances I": {
+  "pt": "Aparelhagem I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_box_appliances_1",
+  "en_game": "Appliances I"
+ },
+ "Appliances II": {
+  "pt": "Aparelhagem II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_box_appliances_2",
+  "en_game": "Appliances II"
+ },
+ "Archers Tower": {
+  "pt": "Torre dos Arqueiros",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "towers_1",
+  "en_game": "Archers Tower"
+ },
+ "Archers Tower II": {
+  "pt": "Torre dos Arqueiros II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "towers_2",
+  "en_game": "Archers Tower II"
+ },
+ "Archers Tower III": {
+  "pt": "Torre dos Arqueiros III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "towers_3",
+  "en_game": "Archers Tower III"
+ },
+ "Autopsy, Advanced": {
+  "pt": "Autópsia Avançada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "autopsy_guts_brain_heart",
+  "en_game": "Autopsy, Advanced"
+ },
+ "Autopsy, Basic": {
+  "pt": "Autópsia Básica",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "autopsy_1",
+  "en_game": "Autopsy, Basic"
+ },
+ "Autopsy, Master": {
+  "pt": "Autópsia Mestre",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "autopsy_upgrades_2",
+  "en_game": "Autopsy, Master"
+ },
+ "Battle Potions I": {
+  "pt": "Poções de Batalha I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_battle_potions_1",
+  "en_game": "Battle Potions I"
+ },
+ "Battle Potions II": {
+  "pt": "Poções de Batalha II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_battle_potions_2",
+  "en_game": "Battle Potions II"
+ },
+ "Battle Potions III": {
+  "pt": "Poções de Batalha III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_battle_potions_3",
+  "en_game": "Battle Potions III"
+ },
+ "Bed Improvement": {
+  "pt": "Melhoria da Cama",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sleeping_bed_2",
+  "en_game": "Bed Improvement"
+ },
+ "Beekeeping": {
+  "pt": "Apicultura",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_honey",
+  "en_game": "Beekeeping"
+ },
+ "Beet dishes": {
+  "pt": "Pratos de beterraba",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cooking_beet",
+  "en_game": "Beet dishes"
+ },
+ "Bellows": {
+  "pt": "Fole",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "furnace_bellows_1",
+  "en_game": "Bellows"
+ },
+ "Body Places I": {
+  "pt": "Espaços para Corpos I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "body_places_1",
+  "en_game": "Body Places I"
+ },
+ "Body Places II": {
+  "pt": "Espaços para Corpos II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "body_places_2",
+  "en_game": "Body Places II"
+ },
+ "Books I": {
+  "pt": "Livros",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "writing_books_1",
+  "en_game": "Books I"
+ },
+ "Books II": {
+  "pt": "Livros II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "writing_books_2",
+  "en_game": "Books II"
+ },
+ "Brewing": {
+  "pt": "Poções",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_beer",
+  "en_game": "Brewing"
+ },
+ "Brick Making": {
+  "pt": "Preparação de Tijolos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "brick_making",
+  "en_game": "Brick Making"
+ },
+ "Bronze Blades": {
+  "pt": "Espadas de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bronze_edges",
+  "en_game": "Bronze Blades"
+ },
+ "Bronze Equipment": {
+  "pt": "Equipamento de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bronze_weapons",
+  "en_game": "Bronze Equipment"
+ },
+ "Bronze Forge": {
+  "pt": "Forja de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bronze_ingots",
+  "en_game": "Bronze Forge"
+ },
+ "Bronze Instruments": {
+  "pt": "Instrumentos de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bronze_instruments",
+  "en_game": "Bronze Instruments"
+ },
+ "Bronze Melting": {
+  "pt": "Derretimento de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bronze_ingot_scrap",
+  "en_game": "Bronze Melting"
+ },
+ "Bronze Polishing": {
+  "pt": "Maestria em Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bronze_polishing",
+  "en_game": "Bronze Polishing"
+ },
+ "Bronze Weapons": {
+  "pt": "Armas de Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bronze_heads",
+  "en_game": "Bronze Weapons"
+ },
+ "Bronze Works": {
+  "pt": "Maestria em Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bronze_details",
+  "en_game": "Bronze Craft"
+ },
+ "Cabbage dishes": {
+  "pt": "Pratos de repolho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cooking_cabbage",
+  "en_game": "Cabbage dishes"
+ },
+ "Carrot dishes": {
+  "pt": "Pratos de cenoura",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cooking_carrot",
+  "en_game": "Carrot dishes"
+ },
+ "Ceramic Firing": {
+  "pt": "Queima de Cerâmica",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "ceramic_firing",
+  "en_game": "Ceramic Firing"
+ },
+ "Chasing Fairy Lights": {
+  "pt": "O Caça-Fadas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "28_base_fairy_summon",
+  "en_game": "Chasing Fairy Lights"
+ },
+ "Chopping": {
+  "pt": "Corte",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "chooping",
+  "en_game": "Chopping"
+ },
+ "Church Carpets": {
+  "pt": "Tapetes de Igreja",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "church_upgrade_2",
+  "en_game": "Church Carpets"
+ },
+ "Church Cleaning": {
+  "pt": "Limpeza da Igreja",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "church_upgrade_1_bench_1",
+  "en_game": "Church Cleaning"
+ },
+ "Church Furniture I": {
+  "pt": "Mobiliário de Igreja I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "church_passive_buidlings_1",
+  "en_game": "Church Furniture I"
+ },
+ "Church Furniture II": {
+  "pt": "Mobiliário de Igreja II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "church_passive_buidlings_2",
+  "en_game": "Church Furniture II"
+ },
+ "Church Furniture III": {
+  "pt": "Mobiliário de Igreja III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "church_passive_buidlings_3",
+  "en_game": "Church Furniture III"
+ },
+ "Church Illumination": {
+  "pt": "Iluminação de Igreja",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "church_upgrade_3",
+  "en_game": "Church Illumination"
+ },
+ "Church Lighting I": {
+  "pt": "Luz de Igreja I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "candles_1",
+  "en_game": "Church Lighting I"
+ },
+ "Church Lighting II": {
+  "pt": "Luz de Igreja II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "candles_2",
+  "en_game": "Church Lighting II"
+ },
+ "Church Lighting III": {
+  "pt": "Luz de Igreja III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "candles_3",
+  "en_game": "Church Lighting III"
+ },
+ "Church Music I": {
+  "pt": "Música de Igreja I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "church_music_chore",
+  "en_game": "Church Music I"
+ },
+ "Church Music II": {
+  "pt": "Música de Igreja II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "church_music_organ",
+  "en_game": "Church Music II"
+ },
+ "Church Smells I": {
+  "pt": "Aromas de Igreja I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "incense_1",
+  "en_game": "Church Smells I"
+ },
+ "Church Smells II": {
+  "pt": "Aromas de Igreja II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "incense_2",
+  "en_game": "Church Smells II"
+ },
+ "Cider Brewery": {
+  "pt": "Produção de Cidra",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_sider",
+  "en_game": "Cider Brewery"
+ },
+ "Clothes I": {
+  "pt": "Roupas I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_clothes_1",
+  "en_game": "Clothes I"
+ },
+ "Clothes II": {
+  "pt": "Roupas II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_clothes_2",
+  "en_game": "Clothes II"
+ },
+ "Cold Pressing": {
+  "pt": "Prensagem a Frio",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_vine_press",
+  "en_game": "Cold Pressing"
+ },
+ "Columbariums I": {
+  "pt": "Columbários I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "modules_columbarium_1",
+  "en_game": "Columbariums I"
+ },
+ "Columbariums II": {
+  "pt": "Columbários II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "modules_columbarium_2",
+  "en_game": "Columbariums II"
+ },
+ "Congregation Trouble": {
+  "pt": "Problemas na Congregação",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "43_astrologer_pr_tower",
+  "en_game": "Congregation Trouble"
+ },
+ "Conveyors": {
+  "pt": "Esteiras",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_conveyors",
+  "en_game": "Conveyors"
+ },
+ "Crafting Potions": {
+  "pt": "Produção de Poções",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_hardener",
+  "en_game": "Crafting Potions"
+ },
+ "Delicate Work": {
+  "pt": "Trabalho Delicado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_jeweler_table",
+  "en_game": "Delicate Work"
+ },
+ "Embalming I": {
+  "pt": "Embalsamamento I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "embalming_basic",
+  "en_game": "Embalming I"
+ },
+ "Embalming III": {
+  "pt": "Embalsamamento III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "embalming_master",
+  "en_game": "Embalming III"
+ },
+ "Fertilizers I": {
+  "pt": "Fertilizantes I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fertilizer_1",
+  "en_game": "Fertilizers I"
+ },
+ "Fertilizers II": {
+  "pt": "Fertilizantes II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fertilizer_2",
+  "en_game": "Fertilizers II"
+ },
+ "Fertilizers III": {
+  "pt": "Fertilizantes III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fertilizer_3",
+  "en_game": "Fertilizers III"
+ },
+ "Fertilizers IV": {
+  "pt": "Fertilizantes IV",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fertilizer_4",
+  "en_game": "Fertilizers IV"
+ },
+ "First dishes": {
+  "pt": "Primeiros pratos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cooking_fire",
+  "en_game": "First dishes"
+ },
+ "First snacks": {
+  "pt": "Primeiros lanches",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cooking_wild",
+  "en_game": "First snacks"
+ },
+ "Fishing I": {
+  "pt": "Pesca I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fishing_1",
+  "en_game": "Fishing I"
+ },
+ "Fishing II": {
+  "pt": "Pesca",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fishing_2",
+  "en_game": "Fishing II"
+ },
+ "Fishing III": {
+  "pt": "Pesca III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fishing_3",
+  "en_game": "Fishing III"
+ },
+ "Fishing IV": {
+  "pt": "Pesca IV",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fishing_4",
+  "en_game": "Fishing IV"
+ },
+ "Flour Supplies": {
+  "pt": "Suprimentos de Farinha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_flour_supplies",
+  "en_game": "Flour Supplies"
+ },
+ "Garden Improvement I": {
+  "pt": "Melhoria do Jardim I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_improve_1",
+  "en_game": "Garden Improvement I"
+ },
+ "Garden Improvement II": {
+  "pt": "Melhoria do Jardim II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_improve_2",
+  "en_game": "Garden Improvement II"
+ },
+ "Gardening": {
+  "pt": "Jardinagem",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_bed",
+  "en_game": "Gardening"
+ },
+ "Glass Blowing": {
+  "pt": "Vidro de Sopro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "glass_blowing_2",
+  "en_game": "Glass Blowing"
+ },
+ "Gluttony and Pride": {
+  "pt": "Gula e Orgulho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "158_astrologer_palace_help",
+  "en_game": "Gluttony and Pride"
+ },
+ "Graveyard Decor I": {
+  "pt": "Decoração de Cemitério I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "modules_decor_1",
+  "en_game": "Graveyard Decor I"
+ },
+ "Graveyard Decor II": {
+  "pt": "Decoração de Cemitério II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "modules_decor_2",
+  "en_game": "Graveyard Decor II"
+ },
+ "Graveyard Keeper I": {
+  "pt": "Coveiro I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyards_1",
+  "en_game": "Graveyard Keeper I"
+ },
+ "Graveyard Keeper II": {
+  "pt": "Coveiro II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyards_2",
+  "en_game": "Graveyard Keeper II"
+ },
+ "Graveyard Keeper III": {
+  "pt": "Coveiro III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyards_3",
+  "en_game": "Graveyard Keeper III"
+ },
+ "Graveyard Keeper IV": {
+  "pt": "Coveiro IV",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "modules_grave_4",
+  "en_game": "Graveyard Keeper IV"
+ },
+ "Graveyard Path and Fence I": {
+  "pt": "Caminhos e Cercas de Cemitério I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_improvement_1",
+  "en_game": "Graveyard Path and Fence I"
+ },
+ "Graveyard Path and Fence II": {
+  "pt": "Caminhos e Cercas de Cemitério II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_improvement_2",
+  "en_game": "Graveyard Path and Fence II"
+ },
+ "Houses Repairing": {
+  "pt": "Reforma de Casas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_house_repair",
+  "en_game": "Houses Repairing"
+ },
+ "I Love You, Man": {
+  "pt": "Eu Te Amo, Cara",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "118_astrologer_project_ask",
+  "en_game": "I Love You, Man"
+ },
+ "Iron Equipment": {
+  "pt": "Equipamento de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "iron_armor",
+  "en_game": "Iron Equipment"
+ },
+ "Iron Forge": {
+  "pt": "Forja de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "iron_ingots",
+  "en_game": "Iron Forge"
+ },
+ "Iron Instruments I": {
+  "pt": "Instrumentos de Ferro I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "iron_instruments_1",
+  "en_game": "Iron Instruments I"
+ },
+ "Iron Instruments II": {
+  "pt": "Instrumentos de Ferro II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "iron_instruments_2",
+  "en_game": "Iron Instruments II"
+ },
+ "Iron Products": {
+  "pt": "Produtos de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "iron_products",
+  "en_game": "Iron Products"
+ },
+ "Iron Smithing": {
+  "pt": "Metalurgia do Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_iron_anvil",
+  "en_game": "Iron Smithing"
+ },
+ "Iron Weapons": {
+  "pt": "Armas de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "iron_weapons",
+  "en_game": "Iron Weapons"
+ },
+ "Iron Works": {
+  "pt": "Maestria em Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "iron_details",
+  "en_game": "Iron Works"
+ },
+ "Jack in a Boat": {
+  "pt": "O Barco de Jailson",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "12_village_boat_wood",
+  "en_game": "Jack in a Boat"
+ },
+ "Kitchen Supplies": {
+  "pt": "Suprimentos da Cozinha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_kitchen_supplies",
+  "en_game": "Kitchen Supplies"
+ },
+ "Lenses": {
+  "pt": "Lentes",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "lenses",
+  "en_game": "Lenses"
+ },
+ "Lust and Envy": {
+  "pt": "Luxúria e Inveja",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "160_linda_palace_help",
+  "en_game": "Lust and Envy"
+ },
+ "Marble Carving": {
+  "pt": "Escultura em Mármore",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "marble_carving",
+  "en_game": "Marble Carving"
+ },
+ "Marble Gravestones I": {
+  "pt": "Lápides de Mármore I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_buildings_marble_1",
+  "en_game": "Marble Gravestones I"
+ },
+ "Marble Gravestones II": {
+  "pt": "Lápides de Mármore II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_buildings_marble_2",
+  "en_game": "Marble Gravestones II"
+ },
+ "Marble Polishing": {
+  "pt": "Polimento de Mármore",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "polished_marble",
+  "en_game": "Marble Polishing"
+ },
+ "Masterwork Equipment": {
+  "pt": "Equipamento de Alta Qualidade",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "master_armor",
+  "en_game": "Masterwork Equipment"
+ },
+ "Mead Making": {
+  "pt": "Preparação Hidromel",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_mead",
+  "en_game": "Mead Making"
+ },
+ "Mixed Graveyard I": {
+  "pt": "Cemitério Misto I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "modules_mixed_1",
+  "en_game": "Mixed Graveyard I"
+ },
+ "Mixed Graveyard II": {
+  "pt": "Cemitério Misto II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "modules_mixed_2",
+  "en_game": "Mixed Graveyard II"
+ },
+ "Mixed Graveyard III": {
+  "pt": "Cemitério Misto III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "modules_mixed_3",
+  "en_game": "Mixed Graveyard III"
+ },
+ "Mysterious fish dishes": {
+  "pt": "Pratos de Peixes Misteriosos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cooking_fish_myst",
+  "en_game": "Mysterious fish dishes"
+ },
+ "Newspaper": {
+  "pt": "Jornal",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "newspaper",
+  "en_game": "Newspaper"
+ },
+ "Oh no!": {
+  "pt": "Ah, não!",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cooking_meat",
+  "en_game": "Oh no!"
+ },
+ "Oiled wood": {
+  "pt": "Madeira untada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "oiled_wood",
+  "en_game": "Oiled wood"
+ },
+ "Onion dishes": {
+  "pt": "Pratos de cebola",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cooking_onion",
+  "en_game": "Onion dishes"
+ },
+ "Orchardry": {
+  "pt": "Pomaria",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graden_trees",
+  "en_game": "Orchardry"
+ },
+ "Oven II": {
+  "pt": "Forno II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "kitchen_oven_2",
+  "en_game": "Oven II"
+ },
+ "Pastries": {
+  "pt": "Confeitaria",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cooking_pastries",
+  "en_game": "Pastries"
+ },
+ "Pottery I": {
+  "pt": "Olaria I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "pottery_basic",
+  "en_game": "Pottery I"
+ },
+ "Practical Potions": {
+  "pt": "Poções Práticas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_organs_1",
+  "en_game": "Practical Potions"
+ },
+ "Preservation Supplies": {
+  "pt": "Suprimentos de Conservação",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_preserve_supplies",
+  "en_game": "Preservation Supplies"
+ },
+ "Preservation Supplies II": {
+  "pt": "Suprimentos de Conservação II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_preserve_2_supplies",
+  "en_game": "Preservation Supplies II"
+ },
+ "Press for Cash": {
+  "pt": "Imprimir Dinheiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "124_village_money_januarius",
+  "en_game": "Press for Cash"
+ },
+ "Pumpkin dishes": {
+  "pt": "Pratos de abóbora",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cooking_pumpkin",
+  "en_game": "Pumpkin dishes"
+ },
+ "Reanimation": {
+  "pt": "Reanimação",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "autopsy_resurection",
+  "en_game": "Reanimation"
+ },
+ "Reanimation II": {
+  "pt": "Reanimação II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "resurrection_advanced",
+  "en_game": "Reanimation II"
+ },
+ "Reanimation III": {
+  "pt": "Reanimação III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "resurrection_master",
+  "en_game": "Reanimation III"
+ },
+ "Reinforced Barricades": {
+  "pt": "Barricadas Reforçadas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "barricades_3",
+  "en_game": "Reinforced Barricades"
+ },
+ "Religious Writing I": {
+  "pt": "Escrita Religiosa I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sermons_money_faith",
+  "en_game": "Religious Writing I"
+ },
+ "Religious Writing II": {
+  "pt": "Escrita Religiosa II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sermons_war_trade",
+  "en_game": "Religious Writing II"
+ },
+ "Rhyme and Printed": {
+  "pt": "Prensa e Verso",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "77_astrologer_printing_book",
+  "en_game": "Rhyme and Printed"
+ },
+ "River fish dishes": {
+  "pt": "Pratos de Peixes de Água Doce",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cooking_fish_river",
+  "en_game": "River fish dishes"
+ },
+ "Robust Barricades": {
+  "pt": "Barricadas Robustas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "barricades_2",
+  "en_game": "Robust Barricades"
+ },
+ "Sea fish dishes": {
+  "pt": "Pratos de Peixes de Água Salgada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cooking_fish_sea",
+  "en_game": "Sea fish dishes"
+ },
+ "Self-Help Books": {
+  "pt": "Livros de Autoajuda",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_self_books",
+  "en_game": "Self-Help Books"
+ },
+ "Self-Help Books II": {
+  "pt": "Livros de Autoajuda II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_self_books_2",
+  "en_game": "Self-Help Books II"
+ },
+ "Sewing Basics": {
+  "pt": "Fundamentos da Costura",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_sewing",
+  "en_game": "Sewing Basics"
+ },
+ "Simple Barricades": {
+  "pt": "Barricadas Simples",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "barricades_1",
+  "en_game": "Simple Barricades"
+ },
+ "Skin and Bones": {
+  "pt": "Pele e Ossos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "autopsy_skin_bones",
+  "en_game": "Skin and Bones"
+ },
+ "Skull and Teeth": {
+  "pt": "Crânio e Dentes",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "autopsy_skull_teeth",
+  "en_game": "Skull and Teeth"
+ },
+ "Smithy: Bellows": {
+  "pt": "Foles de ferraria",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_furnace_bellows",
+  "en_game": "Smithy: Bellows"
+ },
+ "Smithy: Hammer": {
+  "pt": "Martelo do ferreiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_furnace_hammer",
+  "en_game": "Smithy: Hammer"
+ },
+ "Soldier's food": {
+  "pt": "Comida de soldado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cooking_soldier",
+  "en_game": "Soldier's food"
+ },
+ "Steel Casting": {
+  "pt": "Fundição de Aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "steel_casting",
+  "en_game": "Steel Casting"
+ },
+ "Steel Equipment": {
+  "pt": "Equipamento de Aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "steel_armor",
+  "en_game": "Steel Equipment"
+ },
+ "Steel Instruments I": {
+  "pt": "Instrumentos de Aço I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_steel_instruments_1",
+  "en_game": "Steel Instruments I"
+ },
+ "Steel Instruments II": {
+  "pt": "Instrumentos de Aço II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_steel_instruments_2",
+  "en_game": "Steel Instruments II"
+ },
+ "Steel Smithing": {
+  "pt": "Metalurgia de Aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "steel_products",
+  "en_game": "Steel Smithing"
+ },
+ "Steel Weapons": {
+  "pt": "Armas de Aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "steel_weapons",
+  "en_game": "Steel Weapons"
+ },
+ "Steel Works": {
+  "pt": "Metalurgia do Aço",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_steel_works",
+  "en_game": "Steel Works"
+ },
+ "Stone Carving": {
+  "pt": "Escultura em Pedra",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "stone_carving",
+  "en_game": "Stone Carving"
+ },
+ "Stone Gravestones I": {
+  "pt": "Lápides de Pedra I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_buildings_stone_1",
+  "en_game": "Stone Gravestones I"
+ },
+ "Stone Gravestones II": {
+  "pt": "Lápides de Pedra II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_buildings_stone_2",
+  "en_game": "Stone Gravestones II"
+ },
+ "Stone Polishing": {
+  "pt": "Polimento de Pedra",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "polished_stone",
+  "en_game": "Stone Polishing"
+ },
+ "Storytelling I": {
+  "pt": "Contação de Histórias I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_storytelling",
+  "en_game": "Storytelling I"
+ },
+ "Suit Up!": {
+  "pt": "Vista-se bem!",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_customization",
+  "en_game": "Suit Up!"
+ },
+ "The Concept of Marble": {
+  "pt": "O Conceito de Mármore",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_marble_concept",
+  "en_game": "The Concept of Marble"
+ },
+ "The Concept of Stone": {
+  "pt": "O Conceito de Pedra",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "stone_basic",
+  "en_game": "The Concept of Stone"
+ },
+ "The Concept of Wood": {
+  "pt": "O Conceito de Madeira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wood_basic",
+  "en_game": "The Concept of Wood"
+ },
+ "Tool Rack": {
+  "pt": "Suporte de Ferramentas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tool_rack",
+  "en_game": "Tool Rack"
+ },
+ "Tool Rack II": {
+  "pt": "Suporte de Ferramentas II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tool_rack_2",
+  "en_game": "Tool Rack II"
+ },
+ "Transmutation I": {
+  "pt": "Transmutação I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_item_star_1",
+  "en_game": "Transmutation I"
+ },
+ "Vegetable dishes": {
+  "pt": "Pratos de vegetais",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cooking_vegetables",
+  "en_game": "Vegetable dishes"
+ },
+ "Vegetable Supplies": {
+  "pt": "Suprimentos de Vegetais",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_vegetables_supply",
+  "en_game": "Vegetable Supplies"
+ },
+ "Vineyard": {
+  "pt": "Vinhedo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wz_vineyard",
+  "en_game": "Vineyard"
+ },
+ "Vineyard Improvement": {
+  "pt": "Melhoria do Vinhedo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_vineyard_improvement",
+  "en_game": "Vineyard Improvement"
+ },
+ "Ways of Stone": {
+  "pt": "Trabalho em Pedra",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_ways_of_stone",
+  "en_game": "Ways of Stone"
+ },
+ "Well-Deserved Rest": {
+  "pt": "Um Descanso Merecido",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "117_crossroad_calm_ask",
+  "en_game": "Well-Deserved Rest"
+ },
+ "Winemaking": {
+  "pt": "Vinicultura",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_wine",
+  "en_game": "Winemaking"
+ },
+ "Wood Carving": {
+  "pt": "Escultura em Madeira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_carved_wood",
+  "en_game": "Wood Carving"
+ },
+ "Wooden Gravestones I": {
+  "pt": "Lápides de Madeira I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_buildings_wood_1",
+  "en_game": "Wooden Gravestones I"
+ },
+ "Wooden Gravestones II": {
+  "pt": "Lápides de Madeira II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_buildings_wood_2",
+  "en_game": "Wooden Gravestones II"
+ },
+ "Woodworking I": {
+  "pt": "Carpintaria I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "work_with_wood_1",
+  "en_game": "Woodworking I"
+ },
+ "Woodworking II": {
+  "pt": "Carpintaria II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "work_with_wood_2",
+  "en_game": "Woodworking II"
+ },
+ "Wrath and Sloth": {
+  "pt": "Fúria e Preguiça",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "159_crossroad_palace_help",
+  "en_game": "Wrath and Sloth"
+ },
+ "Writing Basic": {
+  "pt": "Escrita Básica",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sermons_writing_basic",
+  "en_game": "Writing Basic"
+ },
+ "Writing Supplies": {
+  "pt": "Suprimentos para escrita",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "writing_items",
+  "en_game": "Writing Supplies"
+ },
+ "Writing Tools I": {
+  "pt": "Ferramentas de Escrita I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "writing_tools_1",
+  "en_game": "Writing Tools I"
+ },
+ "Writing Tools II": {
+  "pt": "Ferramentas de Escrita II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "writing_tools_2",
+  "en_game": "Writing Tools II"
+ },
+ "Zombie Assistant": {
+  "pt": "Assistente Zumbi",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zombie_zavhoz",
+  "en_game": "Zombie Assistant"
+ },
+ "Zombie Delivery": {
+  "pt": "Entrega Zumbi",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_zombie_delivery",
+  "en_game": "Zombie Delivery"
+ },
+ "Zombie Digging": {
+  "pt": "Escavação Zumbi",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "builder_clay_sand",
+  "en_game": "Zombie Digging"
+ },
+ "Zombie Gardening": {
+  "pt": "Jardinagem Zumbi",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zombie_gardening",
+  "en_game": "Zombie Gardening"
+ },
+ "Zombie Gears": {
+  "pt": "Engrenagens de Zumbi",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_zombie_carousel",
+  "en_game": "Zombie Gears"
+ },
+ "Zombie Lumberjack": {
+  "pt": "Lenhador Zumbi",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zombie_wood",
+  "en_game": "Zombie Lumberjack"
+ },
+ "Zombie Lumberjack II": {
+  "pt": "Lenhador Zumbi II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zombie_wood_2",
+  "en_game": "Zombie Lumberjack II"
+ },
+ "Zombie Marble Mining": {
+  "pt": "Mineração Zumbi: Mármore",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zombie_marble",
+  "en_game": "Zombie Marble Mining"
+ },
+ "Zombie Mechanisms": {
+  "pt": "Mecanismos Zumbi",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tech_zombie_mechanisms",
+  "en_game": "Zombie Mechanisms"
+ },
+ "Zombie Mining": {
+  "pt": "Mineração Zumbi",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zombie_mining",
+  "en_game": "Zombie Mining"
+ },
+ "Zombie Stone Mining": {
+  "pt": "Mineração Zumbi: Pedra",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zombie_stone",
+  "en_game": "Zombie Stone Mining"
+ },
+ "Zombie Vineyard": {
+  "pt": "Vinhedo Zumbi",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zombie_vineyard",
+  "en_game": "Zombie Vineyard"
+ },
+ "Acid": {
+  "pt": "Ácido",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "acid",
+  "en_game": "Acid"
+ },
+ "Albedo Tear": {
+  "pt": "Lágrima de Albedo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_albedo",
+  "en_game": "Albedo Tear"
+ },
+ "Alchemy Tools I": {
+  "pt": "Ferramentas de Alquimia I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tool_mix",
+  "en_game": "Alchemy Tools I"
+ },
+ "Alchemy Tools II": {
+  "pt": "Ferramentas de Alquimia II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tool_grind",
+  "en_game": "Alchemy Tools II"
+ },
+ "Alum": {
+  "pt": "Alúmen",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alum",
+  "en_game": "Alum"
+ },
+ "Anima Mundi Fragment": {
+  "pt": "Fragmento de Almessência Mundi",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_anima_mundi",
+  "en_game": "Anima Mundi Fragment"
+ },
+ "Apple Tree": {
+  "pt": "Macieira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_appletree_place",
+  "en_game": "Apple Tree"
+ },
+ "Aqua Vitae": {
+  "pt": "Água da Vida",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "aqua_vitae",
+  "en_game": "Aqua Vitae"
+ },
+ "Assembly bench: Auto-hammer": {
+  "pt": "Banco de Montagem: Martelo Automático",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_assemblybench_hammer",
+  "en_game": "Assembly bench: Auto-hammer"
+ },
+ "Assembly bench: Drill press": {
+  "pt": "Banco de Montagem: Furadeira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_assemblybench_press",
+  "en_game": "Assembly bench: Drill press"
+ },
+ "Assembly bench: Lathe": {
+  "pt": "Banco de Montagem: Tomo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_assemblybench_turning",
+  "en_game": "Assembly bench: Lathe"
+ },
+ "Assembly bench: Sewing machine": {
+  "pt": "Banco de Montagem: Máquina de Costura",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_assemblybench_machine",
+  "en_game": "Assembly bench: Sewing machine"
+ },
+ "Assembly bench: Spinning wheel": {
+  "pt": "Banco de Montagem: Roda de Fiar",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_assemblybench_wheel",
+  "en_game": "Assembly bench: Spinning wheel"
+ },
+ "Autopsy Tools I": {
+  "pt": "Ferramenta de Autópsia I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tool_drainage",
+  "en_game": "Autopsy Tools I"
+ },
+ "Autopsy Tools II": {
+  "pt": "Ferramenta de Autópsia II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tool_surgeon",
+  "en_game": "Autopsy Tools II"
+ },
+ "Basic Prayer": {
+  "pt": "Oração Básica",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "basic_prayer",
+  "en_game": "Basic Prayer"
+ },
+ "Battle Loot": {
+  "pt": "Espólios de batalha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "loot_battle_purse",
+  "en_game": "Battle Loot"
+ },
+ "Berry Bush": {
+  "pt": "Arbusto de Frutinhas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bush_ashberry_clr1_xxs",
+  "en_game": "Berry Bush"
+ },
+ "Black Oil": {
+  "pt": "Óleo Cru",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "black_oil",
+  "en_game": "Black Oil"
+ },
+ "Blueberry Bush": {
+  "pt": "Arbusto de mirtilo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bush_blueberry_clr1_xxs",
+  "en_game": "Blueberry Bush"
+ },
+ "Boiled Egg": {
+  "pt": "Ovo Cozido",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "boiled_egg",
+  "en_game": "Boiled Egg"
+ },
+ "Bookshelf": {
+  "pt": "Estante de Livros",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bookshelf_1",
+  "en_game": "Bookshelf"
+ },
+ "Bowl of sauerkraut": {
+  "pt": "Pote de chucrute",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_cabbage_bowl",
+  "en_game": "Bowl of sauerkraut"
+ },
+ "Brimstone": {
+  "pt": "Enxofre",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "brimstone",
+  "en_game": "Brimstone"
+ },
+ "Broken ceramic": {
+  "pt": "Cerâmica quebrada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "ceramic_broken",
+  "en_game": "Broken ceramic"
+ },
+ "Cake": {
+  "pt": "Bolo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_cake",
+  "en_game": "Cake"
+ },
+ "Camphor": {
+  "pt": "Cânfora",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "camphor",
+  "en_game": "Camphor"
+ },
+ "Candelabra I": {
+  "pt": "Candelabro I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "candle_1",
+  "en_game": "Candelabra I"
+ },
+ "Candelabra II": {
+  "pt": "Candelabro II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "candle_2",
+  "en_game": "Candelabra II"
+ },
+ "Candelabra III": {
+  "pt": "Candelabro III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "candle_3",
+  "en_game": "Candelabra III"
+ },
+ "Carpet": {
+  "pt": "Tapete",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "carpet",
+  "en_game": "Carpet"
+ },
+ "Casting Table": {
+  "pt": "Mesa de Fundição",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "furnace_casting_table_1",
+  "en_game": "Casting Table"
+ },
+ "Catalyst": {
+  "pt": "Catalisador",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "catalyst",
+  "en_game": "Catalyst"
+ },
+ "Ceramic Plate": {
+  "pt": "Placa de Cerâmica",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "ceramic_fired_1",
+  "en_game": "Ceramic Plate"
+ },
+ "Ceramic Urn": {
+  "pt": "Urna de Cerâmica",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "ceramic_fired_2",
+  "en_game": "Ceramic Urn"
+ },
+ "Chaos Spagyric Root": {
+  "pt": "Raiz Espagírica do Caos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_spagyric",
+  "en_game": "Chaos Spagyric Root"
+ },
+ "Chest": {
+  "pt": "Baú",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "chest",
+  "en_game": "Chest"
+ },
+ "Choir": {
+  "pt": "Coro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zmb_choir_unlock_s",
+  "en_game": "Choir"
+ },
+ "Church Shrine I": {
+  "pt": "Santuário da Igreja I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "altar_1",
+  "en_game": "Church Shrine I"
+ },
+ "Church Shrine II": {
+  "pt": "Santuário da Igreja II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "altar_2",
+  "en_game": "Church Shrine II"
+ },
+ "Church Shrine III": {
+  "pt": "Santuário da Igreja III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "altar_3",
+  "en_game": "Church Shrine III"
+ },
+ "Church Smells III": {
+  "pt": "Aromas de Igreja III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "incense_3",
+  "en_game": "Church Smells III"
+ },
+ "Cinnabar": {
+  "pt": "Cinábrio",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cinnabar",
+  "en_game": "Cinnabar"
+ },
+ "Columbarium Area I": {
+  "pt": "Área do Columbário I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_module_columbarium_1",
+  "en_game": "Columbarium Area I"
+ },
+ "Columbarium Area II": {
+  "pt": "Área do Columbário II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_module_columbarium_2",
+  "en_game": "Columbarium Area II"
+ },
+ "Columbarium I": {
+  "pt": "Columbário I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_columbarium_1",
+  "en_game": "Columbarium I"
+ },
+ "Columbarium II": {
+  "pt": "Columbário II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_columbarium_2",
+  "en_game": "Columbarium II"
+ },
+ "Combat Prayer": {
+  "pt": "Oração de Combate",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "prayer_combat",
+  "en_game": "Combat Prayer"
+ },
+ "Combo Prayer": {
+  "pt": "Oração combinada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "prayer_combo",
+  "en_game": "Combo Prayer"
+ },
+ "Confession Booth I": {
+  "pt": "Confessionário I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "confession_1",
+  "en_game": "Confession Booth I"
+ },
+ "Confession Booth II": {
+  "pt": "Confessionário II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "confession_2",
+  "en_game": "Confession Booth II"
+ },
+ "Confession Booth III": {
+  "pt": "Confessionário III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "confession_3",
+  "en_game": "Confession Booth III"
+ },
+ "Coniunctio Salt": {
+  "pt": "Sal de Conjunção",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_conjunctio",
+  "en_game": "Coniunctio Salt"
+ },
+ "Conveyor Belt": {
+  "pt": "Esteira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_cell",
+  "en_game": "Conveyor Belt"
+ },
+ "Conveyor Chest I": {
+  "pt": "Baú de Esteira I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_chest_t1",
+  "en_game": "Conveyor Chest I"
+ },
+ "Conveyor Chest II": {
+  "pt": "Baú de Esteira II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_chest_t2",
+  "en_game": "Conveyor Chest II"
+ },
+ "Conveyor Splitter": {
+  "pt": "Divisor de Esteira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_splitter",
+  "en_game": "Conveyor Splitter"
+ },
+ "Copper Detail": {
+  "pt": "Detalhe de cobre",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "details_1_copper",
+  "en_game": "Copper Detail"
+ },
+ "Copper Ingot": {
+  "pt": "Lingote de cobre",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "ingot_copper",
+  "en_game": "Copper Ingot"
+ },
+ "Copper Nails": {
+  "pt": "Pregos de cobre",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "nails_copper",
+  "en_game": "Copper Nails"
+ },
+ "Copper Scrap": {
+  "pt": "Sucata de cobre",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "copper_scrap",
+  "en_game": "Copper Scrap"
+ },
+ "Corpse Pallet I": {
+  "pt": "Palete para Corpos I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "pallet_corpse_1",
+  "en_game": "Corpse Pallet I"
+ },
+ "Corpse Pallet II": {
+  "pt": "Palete para Corpos II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "pallet_corpse_2",
+  "en_game": "Corpse Pallet II"
+ },
+ "Crypt": {
+  "pt": "Cripta",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_crypt",
+  "en_game": "Crypt"
+ },
+ "Dresser with mirror": {
+  "pt": "Guarda-Roupa com Espelho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "customization_enable_s",
+  "en_game": "Dresser with mirror"
+ },
+ "Dye": {
+  "pt": "Corante",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "dye",
+  "en_game": "Dye"
+ },
+ "Embalming Tools": {
+  "pt": "Ferramenta de Embalsamar",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tool_embalm",
+  "en_game": "Embalming Tools"
+ },
+ "Empty Glass Bottle": {
+  "pt": "Garrafa de Vidro Vazia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "glass_bottle_empty",
+  "en_game": "Empty Glass Bottle"
+ },
+ "Empty Grave": {
+  "pt": "Túmulo Vazio",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grave_empty",
+  "en_game": "Empty Grave"
+ },
+ "Energy Potion": {
+  "pt": "Poção de Energia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "energy_potion",
+  "en_game": "Energy Potion"
+ },
+ "Energy Potion II": {
+  "pt": "Poção de Energia II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "energy_potion_2",
+  "en_game": "Energy Potion II"
+ },
+ "Energy Potion III": {
+  "pt": "Poção de Energia III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "energy_potion_3",
+  "en_game": "Energy Potion III"
+ },
+ "Energy Potion Scroll": {
+  "pt": "Pergaminho de Poção de Energia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "energy_potion_scroll",
+  "en_game": "Energy Potion Scroll"
+ },
+ "Everlasting Needles": {
+  "pt": "Agulhas Eternas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "ev_needles",
+  "en_game": "Everlasting Needles"
+ },
+ "Expand graveyard I": {
+  "pt": "Expandir Cemitério I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "unlock_graveyard_zone_1_s",
+  "en_game": "Expand graveyard I"
+ },
+ "Expand graveyard II": {
+  "pt": "Expandir Cemitério II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "unlock_graveyard_zone_2_s",
+  "en_game": "Expand graveyard II"
+ },
+ "Expand graveyard III": {
+  "pt": "Expandir Cemitério III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "unlock_graveyard_zone_3_s",
+  "en_game": "Expand graveyard III"
+ },
+ "Expand Military Building Area": {
+  "pt": "Expandir a Zona de Construção Militar",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "town_guard_barracks_module_2_s",
+  "en_game": "Expand Military Building Area"
+ },
+ "Exterior Bench I": {
+  "pt": "Banco Externo I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_bench_1",
+  "en_game": "Exterior Bench I"
+ },
+ "Exterior Bench II": {
+  "pt": "Banco Externo II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_bench_2",
+  "en_game": "Exterior Bench II"
+ },
+ "Exterior Bench III": {
+  "pt": "Banco Externo III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_bench_3",
+  "en_game": "Exterior Bench III"
+ },
+ "Factory Lantern": {
+  "pt": "Lanterna da Fábrica",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "canveyor_lantern",
+  "en_game": "Factory Lantern"
+ },
+ "Faith Prayer": {
+  "pt": "Oração de Fé",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "faith_prayer_tier_1_test",
+  "en_game": "Faith Prayer"
+ },
+ "Fine Tool Rack": {
+  "pt": "Suporte de Ferramentas Refinado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "tool_rack_fine",
+  "en_game": "Fine Tool Rack"
+ },
+ "Fishing Line": {
+  "pt": "Linha de pesca",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "thread_metal",
+  "en_game": "Fishing Line"
+ },
+ "Fix the Attic": {
+  "pt": "Consertar o Sótão",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "home_attic_s",
+  "en_game": "Fix the Attic"
+ },
+ "Flower Bed I": {
+  "pt": "Canteiro de Flores I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_flowerbed_1",
+  "en_game": "Flower Bed I"
+ },
+ "Flower Bed II": {
+  "pt": "Canteiro de Flores II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_flowerbed_2",
+  "en_game": "Flower Bed II"
+ },
+ "Flower Bed III": {
+  "pt": "Canteiro de Flores III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_flowerbed_3",
+  "en_game": "Flower Bed III"
+ },
+ "Folio": {
+  "pt": "Fólio",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_recipe_book",
+  "en_game": "Folio"
+ },
+ "Fried egg": {
+  "pt": "Ovo frito",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "fried_egg",
+  "en_game": "Fried egg"
+ },
+ "Garden Storage II": {
+  "pt": "Depósito do Jardim II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_bags_storage_2",
+  "en_game": "Garden Storage II"
+ },
+ "Garden Storage III": {
+  "pt": "Depósito do Jardim III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_bags_storage_3",
+  "en_game": "Garden Storage III"
+ },
+ "Garden Upgrade I": {
+  "pt": "Melhoria do Jardim I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_farming_base_1_s",
+  "en_game": "Garden Upgrade I"
+ },
+ "Garden Upgrade II": {
+  "pt": "Melhoria do Jardim II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_farming_base_2_s",
+  "en_game": "Garden Upgrade II"
+ },
+ "Gardener Stand": {
+  "pt": "Banca do Jardineiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_crafter",
+  "en_game": "Gardener Stand"
+ },
+ "Glue": {
+  "pt": "Cola",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "glue",
+  "en_game": "Glue"
+ },
+ "Grape pie": {
+  "pt": "Torta de uva",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_grape_pie",
+  "en_game": "Grape pie"
+ },
+ "Grave Area I": {
+  "pt": "Área de Túmulos I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_module_grave_1",
+  "en_game": "Grave Area I"
+ },
+ "Grave Area II": {
+  "pt": "Área de Túmulos II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_module_grave_2",
+  "en_game": "Grave Area II"
+ },
+ "Grave Area III": {
+  "pt": "Área de Túmulos III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_module_grave_3",
+  "en_game": "Grave Area III"
+ },
+ "Grave Area IV": {
+  "pt": "Área de Túmulos IV",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_module_grave_4",
+  "en_game": "Grave Area IV"
+ },
+ "Green jelly": {
+  "pt": "Geleia verde",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_green_jelly",
+  "en_game": "Green jelly"
+ },
+ "Green mold": {
+  "pt": "Mofo verde",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "mold_green",
+  "en_game": "Green mold"
+ },
+ "Grow potion": {
+  "pt": "Poção de Crescimento",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grow_potion",
+  "en_game": "Grow potion"
+ },
+ "Gunpowder": {
+  "pt": "Pólvora",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "powder_gun",
+  "en_game": "Gunpowder"
+ },
+ "Hardening Bucket": {
+  "pt": "Cadinho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bucket_anvil",
+  "en_game": "Hardening Bucket"
+ },
+ "Harvest Prayer": {
+  "pt": "Oração de Colheita",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "prayer_harvest",
+  "en_game": "Harvest Prayer"
+ },
+ "Healing Potion Scroll": {
+  "pt": "Pergaminho de Poção de Cura",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "heal_potion_scroll",
+  "en_game": "Healing Potion Scroll"
+ },
+ "Home Renovation": {
+  "pt": "Reforma da Casa",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "home_upgrade_s",
+  "en_game": "Home Renovation"
+ },
+ "Homunculus": {
+  "pt": "Homúnculo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "homunculus",
+  "en_game": "Homunculus"
+ },
+ "Hypno Prayer": {
+  "pt": "Oração hipnotizante",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "prayer_hypno",
+  "en_game": "Hypno Prayer"
+ },
+ "Imported Components": {
+  "pt": "Componentes Importados",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "imported_components",
+  "en_game": "Imported Components"
+ },
+ "Improve the Church I": {
+  "pt": "Melhorar a Igreja I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "upgrade_church_1_s",
+  "en_game": "Improve the Church I"
+ },
+ "Improve the Church II": {
+  "pt": "Melhorar a Igreja II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "upgrade_church_2_s",
+  "en_game": "Improve the Church II"
+ },
+ "Improve the Church III": {
+  "pt": "Melhorar a Igreja III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "upgrade_church_3_s",
+  "en_game": "Improve the Church III"
+ },
+ "Injection for Corpses": {
+  "pt": "Injeção para cadáveres",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "embalm_white_red",
+  "en_game": "Injection for Corpses"
+ },
+ "Injection for Zombies": {
+  "pt": "Injeção para zumbis",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "embalm_red_white",
+  "en_game": "Injection for Zombies"
+ },
+ "Interior Bench I": {
+  "pt": "Banco Interno I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bench_1",
+  "en_game": "Interior Bench I"
+ },
+ "Interior Bench II": {
+  "pt": "Banco Interno II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bench_2",
+  "en_game": "Interior Bench II"
+ },
+ "Interior Bench III": {
+  "pt": "Banco Interno III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bench_3",
+  "en_game": "Interior Bench III"
+ },
+ "Inventory": {
+  "pt": "Inventário",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "inventory",
+  "en_game": "Inventory"
+ },
+ "Iron Scrap": {
+  "pt": "Sucara de Ferro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "iron_scrap",
+  "en_game": "Iron Scrap"
+ },
+ "Kebab with fish and mushrooms": {
+  "pt": "Kebab com peixe e cogumelos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_kebab_fish_mushrooms",
+  "en_game": "Kebab with fish and mushrooms"
+ },
+ "Kebab with fish and onion": {
+  "pt": "Kebab com peixe e cebola",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_kebab_fish_onion",
+  "en_game": "Kebab with fish and onion"
+ },
+ "Kebab with fish and pumpkin": {
+  "pt": "Kebab com peixe e abóbora",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_kebab_fish_pumpkin",
+  "en_game": "Kebab with fish and pumpkin"
+ },
+ "Key to the Resurrection Room": {
+  "pt": "Chave da Sala de Ressurreição",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "key_resurrection",
+  "en_game": "Key to the Resurrection Room"
+ },
+ "Kitchen: Millstone": {
+  "pt": "Cozinha: Pedra de Moinho",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_kitchen_millstone",
+  "en_game": "Kitchen: Millstone"
+ },
+ "Kitchen: Sealing Machine": {
+  "pt": "Cozinha: Seladora",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_kitchen_conservat",
+  "en_game": "Kitchen: Sealing Machine"
+ },
+ "Kitchen: Stove": {
+  "pt": "Cozinha: Fogão",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_kitchen_stove",
+  "en_game": "Kitchen: Stove"
+ },
+ "Krotowuha": {
+  "pt": "Krotowuha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "krotowuha_potion",
+  "en_game": "Krotowuha"
+ },
+ "Krotowuha Scroll": {
+  "pt": "Pergaminho de Krotowuha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "krotowuha_potion_scroll",
+  "en_game": "Krotowuha Scroll"
+ },
+ "Laboratory III": {
+  "pt": "Laboratório III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_mix_3",
+  "en_game": "Laboratory III"
+ },
+ "Lantern I": {
+  "pt": "Lanterna I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_lantern_1",
+  "en_game": "Lantern I"
+ },
+ "Lantern II": {
+  "pt": "Lanterna II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_lantern_2",
+  "en_game": "Lantern II"
+ },
+ "Large Chest": {
+  "pt": "Baú Grande",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "chest_good_place",
+  "en_game": "Large Chest"
+ },
+ "Life water": {
+  "pt": "Água da vida",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "mwater_drop",
+  "en_game": "Life water"
+ },
+ "Lifting Crane": {
+  "pt": "Guindaste",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "lifting_crane_s",
+  "en_game": "Lifting Crane"
+ },
+ "Mash drop": {
+  "pt": "Gota de mosto",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "mash",
+  "en_game": "Mash drop"
+ },
+ "Master Rod": {
+  "pt": "Vara Mestra",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "master_rod",
+  "en_game": "Master Rod"
+ },
+ "Mercurius Vivus": {
+  "pt": "Mercurius Vivus",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_mercurius",
+  "en_game": "Mercurius Vivus"
+ },
+ "Mixed Area I": {
+  "pt": "Área Mista I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_module_mixed_2",
+  "en_game": "Mixed Area I"
+ },
+ "Mixed Area II": {
+  "pt": "Área Mista II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_module_mixed_3",
+  "en_game": "Mixed Area II"
+ },
+ "Mixed Area III": {
+  "pt": "Área Mista III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_module_mixed_1",
+  "en_game": "Mixed Area III"
+ },
+ "Money Prayer": {
+  "pt": "Oração de Dinheiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "money_prayer_tier_1_test",
+  "en_game": "Money Prayer"
+ },
+ "Monument I": {
+  "pt": "Monumento I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_monument_0",
+  "en_game": "Monument I"
+ },
+ "Monument II": {
+  "pt": "Monumento II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_monument_1",
+  "en_game": "Monument II"
+ },
+ "Monument III": {
+  "pt": "Monumento III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_monument_3",
+  "en_game": "Monument III"
+ },
+ "Moonshine": {
+  "pt": "Aguardente",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "moonshine",
+  "en_game": "Moonshine"
+ },
+ "Mortificatio Oil": {
+  "pt": "Óleo Mortificatio",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_mortificartio",
+  "en_game": "Mortificatio Oil"
+ },
+ "Natural Resin": {
+  "pt": "Resina Natural",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "natural_resin",
+  "en_game": "Natural Resin"
+ },
+ "Nigredo Ash": {
+  "pt": "Freixo de Nigredo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_nigredo",
+  "en_game": "Nigredo Ash"
+ },
+ "Omelet": {
+  "pt": "Omelete",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_omelette",
+  "en_game": "Omelet"
+ },
+ "Open the hatch": {
+  "pt": "Abra a escotilha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "quest_base_hatch_unlock",
+  "en_game": "Open the hatch"
+ },
+ "Orchard": {
+  "pt": "Pomar",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_extension_trees_bushes",
+  "en_game": "Orchard"
+ },
+ "Organ": {
+  "pt": "Órgão",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zmb_organ_unlock_s",
+  "en_game": "Organ"
+ },
+ "Organ Randomizer": {
+  "pt": "Aleatorizador de Órgãos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "organ_randomizer",
+  "en_game": "Organ Randomizer"
+ },
+ "Organ Restorer": {
+  "pt": "Restaurador de Órgãos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "organ_restoration",
+  "en_game": "Organ Restorer"
+ },
+ "Pancakes": {
+  "pt": "Panquecas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_pancakes",
+  "en_game": "Pancakes"
+ },
+ "Pasta": {
+  "pt": "Massa",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_pasta",
+  "en_game": "Pasta"
+ },
+ "Philosophic Sulfur": {
+  "pt": "Enxofre Filosófico",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_sulfur",
+  "en_game": "Philosophic Sulfur"
+ },
+ "Polishing Paste": {
+  "pt": "Pasta de Polimento",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "polishing_paste",
+  "en_game": "Polishing Paste"
+ },
+ "Porter Station": {
+  "pt": "Posto de Carregadores",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "porter_station",
+  "en_game": "Porter Station"
+ },
+ "Prayer for Excellence": {
+  "pt": "Oração da excelência",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "prayer_excellence",
+  "en_game": "Prayer for Excellence"
+ },
+ "Prayer for Likes": {
+  "pt": "Oração das afinidades",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "prayer_likes",
+  "en_game": "Prayer for Likes"
+ },
+ "Prayer for Music": {
+  "pt": "Oração da música",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "prayer_music",
+  "en_game": "Prayer for Music"
+ },
+ "Prayer for Repose": {
+  "pt": "Oração do repouso",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "prayer_repose",
+  "en_game": "Prayer for Repose"
+ },
+ "Prayer for Speed": {
+  "pt": "Oração da celeridade",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "prayer_speed",
+  "en_game": "Prayer for Speed"
+ },
+ "Prima Materia Dust": {
+  "pt": "Pó de Matéria Primordial",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_prima_materia",
+  "en_game": "Prima Materia Dust"
+ },
+ "Quicksilver": {
+  "pt": "Mercúrio",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "quicksilver",
+  "en_game": "Quicksilver"
+ },
+ "Quintessence Vial": {
+  "pt": "Frasco Quintessência",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_quintessence",
+  "en_game": "Quintessence Vial"
+ },
+ "Red jelly": {
+  "pt": "Gelatina vermelha",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_red_jelly",
+  "en_game": "Red jelly"
+ },
+ "Repair Bridge": {
+  "pt": "Consertar ponte",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bridge_vineyard_repair",
+  "en_game": "Repair Bridge"
+ },
+ "Resin": {
+  "pt": "Resina",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "resin",
+  "en_game": "Resin"
+ },
+ "Rhododendron Bush": {
+  "pt": "Arbusto de Rododendro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bush_rhodod_clr1_xxs",
+  "en_game": "Rhododendron Bush"
+ },
+ "Rubedo Crystallis": {
+  "pt": "Rubedo Crystallis",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_rubedo",
+  "en_game": "Rubedo Crystallis"
+ },
+ "Scary Idol": {
+  "pt": "Ídolo Apavorante",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "scary_idol",
+  "en_game": "Scary Idol"
+ },
+ "Scroll Cabinet": {
+  "pt": "Armário de Pergaminhos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_scroll_closet",
+  "en_game": "Scroll Cabinet"
+ },
+ "Separatio Membrane": {
+  "pt": "Membrana Divisória",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "alchemy_separatio",
+  "en_game": "Separatio Membrane"
+ },
+ "Shrimp Bait": {
+  "pt": "Isca: Camarão",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "shrimp_bite",
+  "en_game": "Shrimp Bait"
+ },
+ "Simple Chest": {
+  "pt": "Baú Simples",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "chest_rough_place",
+  "en_game": "Simple Chest"
+ },
+ "Simple iron part": {
+  "pt": "Peça de Ferro simples",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "detail_1",
+  "en_game": "Simple iron part"
+ },
+ "Simple Pike": {
+  "pt": "Pique Simples",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "pike_0",
+  "en_game": "Simple Pike"
+ },
+ "Slug": {
+  "pt": "Lesma",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "slug",
+  "en_game": "Slug"
+ },
+ "Smithy: Grindstone": {
+  "pt": "Pedra de amolar",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_furnace_stone",
+  "en_game": "Smithy: Grindstone"
+ },
+ "Smithy: Press": {
+  "pt": "Prensa de forja",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_furnace_press",
+  "en_game": "Smithy: Press"
+ },
+ "Solution for Corpses": {
+  "pt": "Solução para cadáveres",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "embalm_white",
+  "en_game": "Solution for Corpses"
+ },
+ "Solution for Zombies": {
+  "pt": "Solução para zumbis",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "embalm_red",
+  "en_game": "Solution for Zombies"
+ },
+ "Speed Potion": {
+  "pt": "Poção de Velocidade",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "speed_potion",
+  "en_game": "Speed Potion"
+ },
+ "Speed Potion Scroll": {
+  "pt": "Pergaminho de Poção de Velocidade",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "speed_potion_scroll",
+  "en_game": "Speed Potion Scroll"
+ },
+ "Story": {
+  "pt": "História",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "story",
+  "en_game": "Story"
+ },
+ "Study Table": {
+  "pt": "Mesa de Estudo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "test_survey_wgo",
+  "en_game": "Study Table"
+ },
+ "Summon Fairy": {
+  "pt": "Convoque a Fada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "quest_summon_fairy",
+  "en_game": "Summon Fairy"
+ },
+ "Supply Pallet": {
+  "pt": "Palete de Suprimentos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_storage_t1_p",
+  "en_game": "Supply Pallet"
+ },
+ "Supply Pallet II": {
+  "pt": "Palete de Suprimentos II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_storage_upgrade_u",
+  "en_game": "Supply Pallet II"
+ },
+ "Supply Station": {
+  "pt": "Estação de Suprimentos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_cell_station",
+  "en_game": "Supply Station"
+ },
+ "Tablet \"Beet\"": {
+  "pt": "Placa \"Beterraba\"",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_tablet_beet",
+  "en_game": "Tablet \"Beet\""
+ },
+ "Tablet \"Cabbage\"": {
+  "pt": "Placa \"Repolho\"",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_tablet_cabbage",
+  "en_game": "Tablet \"Cabbage\""
+ },
+ "Tablet \"Carrot\"": {
+  "pt": "Placa \"Cenoura\"",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_tablet_carrot",
+  "en_game": "Tablet \"Carrot\""
+ },
+ "Tablet \"Flax\"": {
+  "pt": "Placa \"Linho\"",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_tablet_flax",
+  "en_game": "Tablet \"Flax\""
+ },
+ "Tablet \"Grapes\"": {
+  "pt": "Placa \"Uvas\"",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_tablet_grape",
+  "en_game": "Tablet \"Grapes\""
+ },
+ "Tablet \"Hops\"": {
+  "pt": "Placa \"Lúpulo\"",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_tablet_hop",
+  "en_game": "Tablet \"Hops\""
+ },
+ "Tablet \"Onion\"": {
+  "pt": "Placa \"Cebola\"",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_tablet_onion",
+  "en_game": "Tablet \"Onion\""
+ },
+ "Tablet \"Pumpkin\"": {
+  "pt": "Placa \"Abóbora\"",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_tablet_pumpkin",
+  "en_game": "Tablet \"Pumpkin\""
+ },
+ "Tablet \"Wheat\"": {
+  "pt": "Placa \"Trigo\"",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "garden_tablet_wheat",
+  "en_game": "Tablet \"Wheat\""
+ },
+ "Temptation": {
+  "pt": "Tentação",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "temptation",
+  "en_game": "Temptation"
+ },
+ "Timber stockpile": {
+  "pt": "Reserva de Madeira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sawmill_wood_container",
+  "en_game": "Timber stockpile"
+ },
+ "Transmutation Potion I": {
+  "pt": "Poção de Transmutação I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "quality_items_silver",
+  "en_game": "Transmutation Potion I"
+ },
+ "Transmutation Potion II": {
+  "pt": "Poção de Transmutação II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "quality_items_gold",
+  "en_game": "Transmutation Potion II"
+ },
+ "Underground Conveyor": {
+  "pt": "Esteira Subterrânea",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "conveyor_cell_underground",
+  "en_game": "Underground Conveyor"
+ },
+ "Unholy Idol": {
+  "pt": "Ídolo Profano",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "sinful_idol",
+  "en_game": "Unholy Idol"
+ },
+ "Upgrade Bed": {
+  "pt": "Melhorar Canteiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bed_upgrade_s",
+  "en_game": "Upgrade Bed"
+ },
+ "Upgrade Fence I": {
+  "pt": "Melhorar Cerca I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "upgrade_graveyard_fence_1_s",
+  "en_game": "Upgrade Fence I"
+ },
+ "Upgrade Fence II": {
+  "pt": "Melhorar Cerca II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "upgrade_graveyard_fence_2_s",
+  "en_game": "Upgrade Fence II"
+ },
+ "Upgrade PR Machine I": {
+  "pt": "Melhorar a Máquina de RP I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "upgrade_pr_machine_1",
+  "en_game": "Upgrade PR Machine I"
+ },
+ "Upgrade PR Machine II": {
+  "pt": "Melhorar a Máquina de RP II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "upgrade_pr_machine_2",
+  "en_game": "Upgrade PR Machine II"
+ },
+ "Upgrade PR Machine III": {
+  "pt": "Melhorar a Máquina de RP III",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "upgrade_pr_machine_3",
+  "en_game": "Upgrade PR Machine III"
+ },
+ "Upgrade PR Machine IV": {
+  "pt": "Melhorar a Máquina de RP IV",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "upgrade_pr_machine_4",
+  "en_game": "Upgrade PR Machine IV"
+ },
+ "Upgrade Road and Paths": {
+  "pt": "Melhorar Estradas e Caminhos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "upgrade_graveyard_road_1_s",
+  "en_game": "Upgrade Road and Paths"
+ },
+ "Upgrade Sawmill": {
+  "pt": "Melhorar Serraria",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "upgrade_sawmill",
+  "en_game": "Upgrade Sawmill"
+ },
+ "Vegetable salad": {
+  "pt": "Salada",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "cook_vegetable_salad",
+  "en_game": "Vegetable salad"
+ },
+ "Victory Flag": {
+  "pt": "Bandeira de Vitória",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "flag_blue",
+  "en_game": "Victory Flag"
+ },
+ "Vineyard Upgrade": {
+  "pt": "Melhoria do Vinhedo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "vineyard_upgrade_s",
+  "en_game": "Vineyard Upgrade"
+ },
+ "Votive Candle Stand I": {
+  "pt": "Suporte para Velas Votivas I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "candle_stand_1",
+  "en_game": "Votive Candle Stand I "
+ },
+ "Votive Candle Stand II": {
+  "pt": "Suporte para Velas Votivas II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "candle_stand_2",
+  "en_game": "Votive Candle Stand II"
+ },
+ "Walkway Area I": {
+  "pt": "Área de Circulação I",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_module_alley_1",
+  "en_game": "Walkway Area I"
+ },
+ "Walkway Area II": {
+  "pt": "Área de Circulação II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "graveyard_module_alley_2",
+  "en_game": "Walkway Area II"
+ },
+ "Wanted Poster": {
+  "pt": "Cartaz de Procurado",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "paper_wanted",
+  "en_game": "Wanted Poster"
+ },
+ "Wooden Billet": {
+  "pt": "Tarugo de Madeira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wood_billet",
+  "en_game": "Wooden Billet"
+ },
+ "Worms Bait": {
+  "pt": "Isca: Minhocas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "worms_bite",
+  "en_game": "Worms Bait"
+ },
+ "Written Softcover Book": {
+  "pt": "Caderno de capa mole escrito",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "book",
+  "en_game": "Written Softcover Book"
+ },
+ "Zombie Carousel": {
+  "pt": "Carrossel de Zumbis",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zombie_carousel",
+  "en_game": "Zombie Carousel"
+ },
+ "Zombie Supplier Station": {
+  "pt": "Posto de Suprimentos Zumbi",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zombie_supplier_station",
+  "en_game": "Zombie Supplier Station"
+ },
+ "Zombie Supply Porter": {
+  "pt": "Zumbi Entregador de Suprimentos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zombie_conveyor_transporter_station",
+  "en_game": "Zombie Supply Porter"
+ },
+ "_meta": {
+  "source": "data/game-texts/gk2_textos.json",
+  "game_version": "1.011",
+  "matched": 1004,
+  "missing_keys": [],
+  "unmatched": [
+   "(action / effect, not an item)",
+   "(no wiki item page)",
+   "Alchemy",
+   "Anatomy",
+   "Bags",
+   "Battle",
+   "Book writing",
+   "Books & paper",
+   "Building materials",
+   "Building: Alchemy Lab",
+   "Building: Assembly benches",
+   "Building: Barracks",
+   "Building: Benches and lanterns",
+   "Building: Church",
+   "Building: Crafting station",
+   "Building: Factory",
+   "Building: Farming",
+   "Building: Garden",
+   "Building: Garden tablets",
+   "Building: Graves and columbaria",
+   "Building: Graveyard",
+   "Building: Graveyard areas",
+   "Building: Home",
+   "Building: Kitchens",
+   "Building: Metalwork",
+   "Building: Monuments and flower beds",
+   "Building: Morgue",
+   "Building: Sawmill",
+   "Building: Smithies",
+   "Building: Supply Storage",
+   "Building: Vineyard",
+   "Building: Workshop",
+   "Building: Writing Basement",
+   "Building: Yard",
+   "Crafting materials",
+   "Drinks",
+   "Fish",
+   "Fishing gear",
+   "Food",
+   "Foraging",
+   "Metals & ores",
+   "Misc",
+   "Potions",
+   "Quest items",
+   "Resources",
+   "Smithing",
+   "Tools",
+   "Town supplies",
+   "Weapons & armor",
+   "Fabric (Building)",
+   "Fabric (Farming)",
+   "Jeweler perk",
+   "+10 zombie limit for 1 week",
+   "+20 zombie limit for 2 weeks",
+   "+30 zombie limit for 3 weeks",
+   "+50 zombie limit for 4 weeks",
+   "+80 zombie limit for 5 weeks",
+   "Anchovy or Mackerel",
+   "Any Newspaper",
+   "Any Story",
+   "Bowl of sauerkraut (bronze)",
+   "Bowl of sauerkraut (gold)",
+   "Bowl of sauerkraut (silver)",
+   "Bream or Carp",
+   "Crucian or Herring",
+   "Eel or Trout",
+   "Grape Juice (bronze)",
+   "Grape Juice (gold)",
+   "Grape Juice (silver)",
+   "Newspaper (bronze)",
+   "Newspaper (gold)",
+   "Newspaper (silver or gold)",
+   "Newspaper (silver)",
+   "Open (Corpse Dumping Point)",
+   "Open (Old door)",
+   "Pike or Catfish",
+   "Repair (Resurrection device)",
+   "Repair (Underground well)",
+   "Roach or Gudgeon",
+   "Story (bronze)",
+   "Story (gold)",
+   "Story (silver)",
+   "Tuna or Salmon",
+   "Vegetable salad (bronze)",
+   "Vegetable salad (gold)",
+   "Vegetable salad (silver)",
+   "Village toilet"
+  ],
+  "added_2026_10_30": "zones, perk names used in recipe notes, Grape Juice, and icon-tagged item names (matched_by en-text-fuzzy); perk names of the recipe yield notes (made_text: Cook II, Blacksmith...)"
+ },
+ "Body parts": {
+  "pt": "Partes do corpo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "ui_body_parts",
+  "matched_by": "en-text",
+  "en_game": "Body Parts"
+ },
+ "Bronze Craft": {
+  "pt": "Maestria em Bronze",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "bronze_details",
+  "matched_by": "en-text",
+  "en_game": "Bronze Craft"
+ },
+ "Alchemy Lab": {
+  "pt": "Laboratório de Alquimia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wz_alchemy_lab",
+  "matched_by": "en-text",
+  "en_game": "Alchemy Lab",
+  "gameKeys": [
+   "builder_alchemy_lab",
+   "wz_alchemy_lab"
+  ]
+ },
+ "Barracks": {
+  "pt": "Casernas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wz_town_guard_barracks",
+  "matched_by": "en-text",
+  "en_game": "Barracks",
+  "gameKeys": [
+   "builder_military_base",
+   "wz_town_guard_barracks"
+  ]
+ },
+ "Factory": {
+  "pt": "Fábrica",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wz_conveyor",
+  "matched_by": "en-text",
+  "en_game": "Factory",
+  "gameKeys": [
+   "wz_conveyor",
+   "builder_conveyor"
+  ]
+ },
+ "Garden": {
+  "pt": "Jardim",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wz_garden",
+  "matched_by": "en-text",
+  "en_game": "Garden",
+  "gameKeys": [
+   "builder_garden",
+   "wz_garden"
+  ]
+ },
+ "Home": {
+  "pt": "Casa",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wz_home",
+  "matched_by": "en-text",
+  "en_game": "Home",
+  "gameKeys": [
+   "builder_home",
+   "wz_home"
+  ]
+ },
+ "Morgue": {
+  "pt": "Necrotério",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wz_morgue",
+  "matched_by": "en-text",
+  "en_game": "Morgue",
+  "gameKeys": [
+   "builder_morgue",
+   "wz_morgue"
+  ]
+ },
+ "Old Mine": {
+  "pt": "Mina Antiga",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wz_mine",
+  "matched_by": "en-text",
+  "en_game": "Old Mine"
+ },
+ "Quarry": {
+  "pt": "Pedreira",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wz_carrier",
+  "matched_by": "en-text",
+  "en_game": "Quarry",
+  "gameKeys": [
+   "wz_carrier",
+   "builder_carrier"
+  ]
+ },
+ "Riverside": {
+  "pt": "Margem do Rio",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wz_sand_clay_zone",
+  "matched_by": "en-text",
+  "en_game": "Riverside"
+ },
+ "Sawmill": {
+  "pt": "Serraria",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wz_sawmill",
+  "matched_by": "en-text",
+  "en_game": "Sawmill"
+ },
+ "Supply Storage": {
+  "pt": "Depósito de Suprimentos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "builder_conveyor_storage",
+  "matched_by": "en-text",
+  "en_game": "Supply Storage"
+ },
+ "Village": {
+  "pt": "Aldeia",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wz_village",
+  "matched_by": "en-text",
+  "en_game": "Village"
+ },
+ "Vineyard Basement": {
+  "pt": "Adega do Vinhedo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "builder_vineyard_basement",
+  "matched_by": "en-text",
+  "en_game": "Vineyard Basement"
+ },
+ "Writing Basement": {
+  "pt": "Porão de Escrita",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wz_basement_writing",
+  "matched_by": "en-text",
+  "en_game": "Writing Basement"
+ },
+ "Yard": {
+  "pt": "Pátio",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "wz_yard",
+  "matched_by": "en-text",
+  "en_game": "Yard",
+  "gameKeys": [
+   "builder_yard",
+   "wz_yard"
+  ]
+ },
+ "Alchemist": {
+  "pt": "Alquimista",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_alchemist",
+  "matched_by": "en-text",
+  "en_game": "Alchemist",
+  "gameKeys": [
+   "Alchemy_t1",
+   "perk_alchemist"
+  ]
+ },
+ "Cremator": {
+  "pt": "Cremador",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_cremator",
+  "matched_by": "en-text",
+  "en_game": "Cremator"
+ },
+ "Farmer II": {
+  "pt": "Fazendeiro II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_farmer_2",
+  "matched_by": "en-text",
+  "en_game": "Farmer II"
+ },
+ "Glassworker": {
+  "pt": "Vidraceiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_glassworker",
+  "matched_by": "en-text",
+  "en_game": "Glassworker"
+ },
+ "Gold Digger": {
+  "pt": "Garimpeiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_golddigger",
+  "matched_by": "en-text",
+  "en_game": "Gold Digger",
+  "gameKeys": [
+   "perk_golddigger",
+   "zperk_gold"
+  ]
+ },
+ "Grape Master": {
+  "pt": "Senhor das Uvas",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_grapemaster",
+  "matched_by": "en-text",
+  "en_game": "Grape Master"
+ },
+ "Heat Saver": {
+  "pt": "Economizador de Calor",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_heat_saver",
+  "matched_by": "en-text",
+  "en_game": "Heat Saver"
+ },
+ "Magpie’s Eye": {
+  "pt": "Olho de Pega",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zperk_magpies_eye",
+  "matched_by": "en-text",
+  "en_game": "Magpie’s Eye"
+ },
+ "Mason": {
+  "pt": "Pedreiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_mason",
+  "matched_by": "en-text",
+  "en_game": "Mason",
+  "gameKeys": [
+   "perk_mason",
+   "zperk_mason"
+  ]
+ },
+ "Seed Master": {
+  "pt": "Mestre sementeiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_seedmaster",
+  "matched_by": "en-text",
+  "en_game": "Seed Master"
+ },
+ "Organ Improver": {
+  "pt": "Aprimorador de Órgãos",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "organ_improver_red",
+  "matched_by": "en-text-fuzzy",
+  "en_game": "Organ Improver",
+  "gameKeys": [
+   "organ_improver_red",
+   "organ_improver_white"
+  ],
+  "note": "game text carries an icon tag (Organ Improver <sprite name=\"rskull\">); matched after stripping it"
+ },
+ "Alchemic Powder": {
+  "pt": "Pó Alquímico",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "powder_r",
+  "matched_by": "en-text-fuzzy",
+  "en_game": "Alchemic Powder",
+  "gameKeys": [
+   "powder_r",
+   "powder_r_r",
+   "powder_r_r_r",
+   "powder_g",
+   "powder_g_g",
+   "powder_g_g_g",
+   "powder_b",
+   "powder_b_b",
+   "powder_b_b_b",
+   "powder_r_g",
+   "powder_r_b",
+   "powder_g_b",
+   "powder_r_r_g",
+   "powder_r_g_g",
+   "powder_r_r_b",
+   "powder_r_b_b",
+   "powder_g_g_b",
+   "powder_g_b_b",
+   "powder_r_g_b"
+  ],
+  "note": "game text carries an icon tag (Alchemic Powder <sprite name=\"rune_r\">); matched after stripping it"
+ },
+ "Toxic Potion": {
+  "pt": "Poção Tóxica",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "exp_red_potion",
+  "matched_by": "en-text-fuzzy",
+  "en_game": "Toxic Potion",
+  "gameKeys": [
+   "exp_red_potion",
+   "exp_green_potion",
+   "exp_blue_potion",
+   "exp_orange_potion",
+   "exp_yellow_potion",
+   "exp_potion_r_1",
+   "exp_potion_g_1",
+   "exp_potion_b_1"
+  ],
+  "note": "game text carries an icon tag (Toxic <sprite name=\"talent_red\"> Potion); matched after stripping it"
+ },
+ "Toxic Potion II": {
+  "pt": "Poção Tóxica II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "exp_red_potion_2",
+  "matched_by": "en-text-fuzzy",
+  "en_game": "Toxic Potion II",
+  "gameKeys": [
+   "exp_red_potion_2",
+   "exp_green_potion_2",
+   "exp_blue_potion_2",
+   "exp_orange_potion_2",
+   "exp_yellow_potion_2",
+   "exp_potion_r_2",
+   "exp_potion_g_2",
+   "exp_potion_b_2"
+  ],
+  "note": "game text carries an icon tag (Toxic <sprite name=\"talent_red\"> Potion II); matched after stripping it"
+ },
+ "Grape Juice": {
+  "pt": "Suco de Uva",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "grape_juice",
+  "matched_by": "en-text",
+  "en_game": "Grape Juice"
+ },
+ "Axeman": {
+  "pt": "Lenhador",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_axeman",
+  "matched_by": "en-text",
+  "en_game": "Axeman",
+  "gameKeys": [
+   "perk_axeman",
+   "zperk_axeman"
+  ]
+ },
+ "Blacksmith": {
+  "pt": "Ferreiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_blacksmith",
+  "matched_by": "en-text",
+  "en_game": "Blacksmith",
+  "gameKeys": [
+   "perk_blacksmith",
+   "zperk_blacksmith_1"
+  ]
+ },
+ "Brewer": {
+  "pt": "Cervejeiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_brewer",
+  "matched_by": "en-text",
+  "en_game": "Brewer",
+  "gameKeys": [
+   "perk_brewer",
+   "zperk_brewer"
+  ]
+ },
+ "Carpenter": {
+  "pt": "Carpinteiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_carpenter",
+  "matched_by": "en-text",
+  "en_game": "Carpenter",
+  "gameKeys": [
+   "perk_carpenter",
+   "zperk_carpenter"
+  ]
+ },
+ "Compost Chemist": {
+  "pt": "Químico da Compostagem",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_compost_chemist",
+  "matched_by": "en-text",
+  "en_game": "Compost Chemist"
+ },
+ "Cook": {
+  "pt": "Cozinheiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_cook",
+  "matched_by": "en-text",
+  "en_game": "Cook"
+ },
+ "Cook II": {
+  "pt": "Cozinheiro II",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_cook_2",
+  "matched_by": "en-text",
+  "en_game": "Cook II",
+  "gameKeys": [
+   "perk_cook_2",
+   "insp_cook_2",
+   "insp_vegy_cook_2"
+  ]
+ },
+ "Cube distillations": {
+  "pt": "Destilação em Cubo",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_cube_distillations",
+  "matched_by": "en-text",
+  "en_game": "Cube distillations"
+ },
+ "Engineer": {
+  "pt": "Engenheiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_engineer",
+  "matched_by": "en-text",
+  "en_game": "Engineer"
+ },
+ "Fireman": {
+  "pt": "Foguista",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_fireman",
+  "matched_by": "en-text",
+  "en_game": "Fireman"
+ },
+ "Fish Filleter": {
+  "pt": "Peixaria",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_fishcutter",
+  "matched_by": "en-text",
+  "en_game": "Fish Filleter"
+ },
+ "Gear Master": {
+  "pt": "Mestre das engrenagens",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_gearmaster",
+  "matched_by": "en-text",
+  "en_game": "Gear Master"
+ },
+ "Miller": {
+  "pt": "Moleiro",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zperk_miller",
+  "matched_by": "en-text",
+  "en_game": "Miller"
+ },
+ "Paper maker": {
+  "pt": "Criador de Papel",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_paper_maker",
+  "matched_by": "en-text",
+  "en_game": "Paper maker",
+  "gameKeys": [
+   "perk_paper_maker",
+   "zperk_paper"
+  ]
+ },
+ "Tailor": {
+  "pt": "Alfaiate",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "zperk_tailor",
+  "matched_by": "en-text",
+  "en_game": "Tailor",
+  "gameKeys": [
+   "zperk_tailor",
+   "Tailor_t1"
+  ]
+ },
+ "Wine Master": {
+  "pt": "Vinicultor",
+  "source": "game-files",
+  "confidence": "official",
+  "gameKey": "perk_winemaster",
+  "matched_by": "en-text",
+  "en_game": "Wine Master"
+ }
+}

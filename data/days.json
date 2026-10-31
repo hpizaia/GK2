@@ -1,0 +1,926 @@
+{
+ "meta": {
+  "schema": 1,
+  "week_length": 6,
+  "order": [
+   "gluttony",
+   "sloth",
+   "lust",
+   "envy",
+   "pride",
+   "wrath"
+  ],
+  "order_confidence": "likely",
+  "order_note": {
+   "en": "The game never writes the order. wikily.gg numbers the days Gluttony=1 ... Wrath=6, and four web guides agree on the same cycle (two of them start counting at Wrath). Which weekday a new game starts on, and how the game's day counter maps to a weekday, are unknown.",
+   "pt": "O jogo nunca escreve a ordem. O wikily.gg numera Gula=1 ... Ira=6, e quatro guias da web concordam com o mesmo ciclo (dois começam a contar pela Ira). Não se sabe em que dia um jogo novo começa nem como o contador de dias do jogo se converte em dia da semana."
+  },
+  "wheel": {
+   "direction": "clockwise",
+   "direction_confidence": "medium",
+   "current_marker": "the current day's medallion sticks out of the ring (arrow)",
+   "highlight": "today's and tomorrow's glyphs are lit",
+   "centre_picture": "each day's own picture in the centre unlocks with a story step",
+   "source": "https://gamer-guides.com/wiki/graveyard-keeper-2/mechanic/the-six-day-week/ ; wikily:pages/calendar"
+  },
+  "greed": {
+   "sin": {
+    "en": "Greed",
+    "pt": "Ganância"
+   },
+   "note": {
+    "en": "Greed is the 7th sin and portal fragment but has no day: \"six looks better on the wheel of time\".",
+    "pt": "A Ganância é o 7º pecado e fragmento de portal, mas não tem dia: \"seis fica melhor na roda do tempo\"."
+   },
+   "source": "game-text:113_sewers_god_34 ; game-text:113_sewers_god_35"
+  },
+  "lore_note": {
+   "en": "In the story the Astrologer complains that the days of the week are 'a total mess' and 'changing places'; no source reports the order actually changing during play.",
+   "pt": "Na história, o Astrólogo reclama que os dias da semana estão 'bagunçados' e 'trocando de lugar'; nenhuma fonte relata a ordem mudando de fato durante o jogo.",
+   "source": "game-text:108_astrologer_pieces_10 ; game-text:158_astrologer_palace_help_6"
+  },
+  "sources": [
+   "game-text: data/game-texts/gk2_textos.json (game 1.011, lng_en + lng_pt-br)",
+   "wikily:pages/calendar = https://wikily.gg/api/wikis/graveyard-keeper-2/pages/calendar (rev 2026-09-30)",
+   "wikily:<dataset>/<key> = https://wikily.gg/api/wikis/graveyard-keeper-2/datasets/<dataset>/list",
+   "web:https://gamer-guides.com/wiki/graveyard-keeper-2/mechanic/the-six-day-week/",
+   "web:https://www.gamebrief.net/blog/graveyard-keeper-2-calendar-workshop-hours-guide-2026",
+   "web:https://roonby.com/2026/10/07/graveyard-keeper-2-days-of-the-week-explained-guide-what-to-do/",
+   "web:https://prodigygamers.com/?p=37204",
+   "icons: media.wikily.gg day_<id>.png (official game sprites), copied to data/icons/day__<id>.png"
+  ],
+  "credits": "Day data partly from the Graveyard Keeper 2 Wiki by Wikily (https://wikily.gg/graveyard-keeper-2), © NX Software. Game content © Lazy Bear Games / tinyBuild.",
+  "legend": {
+   "tr": "official = verbatim game text; likely = built from official words (e.g. 'Dia da' + official sin); machine = written for this app (not from the game)",
+   "confidence": "high = a game text says it; medium = only wikily / a web guide; low = one unverified guide",
+   "source": "first source; 'also' lists the rest. game-text:<key> | wikily:<dataset or page>/<key> | web:<url>"
+  },
+  "built": "2026-10-30",
+  "notes": {
+   "pt": "A semana tem 6 dias, cada um com o símbolo de um pecado (a Ganância fica de fora). O jogo não escreve os nomes: a roda no canto da tela mostra só os símbolos, e o dia atual fica destacado.",
+   "en": "The week has 6 days, each shown by a sin's glyph (Greed has no day). The game never writes the names: the wheel in the screen corner only shows the glyphs, with the current day marked."
+  }
+ },
+ "days": [
+  {
+   "id": "gluttony",
+   "order": 0,
+   "sin": {
+    "en": "Gluttony",
+    "pt": "Gula"
+   },
+   "sin_tr": "official",
+   "name": {
+    "en": "Day of Gluttony",
+    "pt": "Dia da Gula"
+   },
+   "tr": "likely",
+   "sprite": "day_gluttony",
+   "glyph": "trident / fork-like symbol (ψ), gold on a brown-orange disc",
+   "glyph_pt": "tridente / garfo (ψ), dourado em disco marrom-alaranjado",
+   "color": "#8a3e03",
+   "prev": "wrath",
+   "next": "sloth",
+   "events": [
+    {
+     "kind": "other",
+     "en": "PR Machine: load Newspapers and Charged Hypno-devices to raise the zombie limit.",
+     "pt": "Máquina de RP: carregue Jornais e Hipno dispositivos carregados para subir o limite de zumbis.",
+     "tr": "machine",
+     "who": null,
+     "who_pt": null,
+     "source": "game-text:tut_pr_machine_charge",
+     "also": [
+      "game-text:pr_machine_available_tomorrow",
+      "wikily:pages/calendar"
+     ],
+     "confidence": "high",
+     "items": [
+      "newspaper",
+      "charged-hypno-device"
+     ],
+     "unlock": {
+      "key": "43_astrologer_pr_tower",
+      "en": "Congregation Trouble",
+      "pt": "Problemas na Congregação",
+      "tr": "official"
+     },
+     "detail": {
+      "en": "The only day the machine takes a load: +10 for 1 week (PR Machine I) up to +80 for 5 weeks (PR Machine V).",
+      "pt": "Único dia em que a máquina aceita carga: de +10 por 1 semana (Máquina I) a +80 por 5 semanas (Máquina V)."
+     },
+     "quote": {
+      "key": "tut_pr_machine_charge",
+      "en": "Place Newspapers and Charged Hypno Devices on the PR Machine every Gluttony to increase the limit for the week.",
+      "pt": "Coloque Jornais e Dispositivos Hipnóticos Carregados na Máquina de RP todo Gula para aumentar o limite da semana."
+     }
+    }
+   ],
+   "mentions": [
+    {
+     "key": "tut_pr_machine_charge",
+     "en": "Place Newspapers and Charged Hypno Devices on the PR Machine every Gluttony to increase the limit for the week.",
+     "pt": "Coloque Jornais e Dispositivos Hipnóticos Carregados na Máquina de RP todo Gula para aumentar o limite da semana."
+    },
+    {
+     "key": "pr_machine_available_tomorrow",
+     "en": "PR Machine available on Gluttony",
+     "pt": "Máquina de RP disponível em Gula"
+    }
+   ]
+  },
+  {
+   "id": "sloth",
+   "order": 1,
+   "sin": {
+    "en": "Sloth",
+    "pt": "Preguiça"
+   },
+   "sin_tr": "official",
+   "name": {
+    "en": "Day of Sloth",
+    "pt": "Dia da Preguiça"
+   },
+   "tr": "likely",
+   "sprite": "day_sloth",
+   "glyph": "crescent moon, gold on a blue disc",
+   "glyph_pt": "lua crescente, dourada em disco azul",
+   "color": "#15619f",
+   "prev": "gluttony",
+   "next": "lust",
+   "events": [
+    {
+     "kind": "battle",
+     "en": "Battle day: most Town battles can only be started today.",
+     "pt": "Dia de batalha: a maioria das batalhas do Povoado só pode ser iniciada hoje.",
+     "tr": "machine",
+     "who": "Herbert",
+     "who_pt": "Norberto",
+     "source": "game-text:battle_planer_other_day",
+     "also": [
+      "wikily:battles",
+      "wikily:pages/calendar"
+     ],
+     "confidence": "high",
+     "items": [],
+     "unlock": {
+      "key": "15_guards_fightback_win",
+      "en": "First... Sludge?",
+      "pt": "Primeira... borra?",
+      "tr": "official"
+     },
+     "detail": null,
+     "quote": {
+      "key": "battle_planer_other_day",
+      "en": "Battle available on Sloth",
+      "pt": "Batalha disponível em Preguiça"
+     }
+    },
+    {
+     "kind": "event",
+     "en": "The bell rings in the morning and most zombies withdraw to the town centre.",
+     "pt": "O sino toca de manhã e a maioria dos zumbis recua para o centro do Povoado.",
+     "tr": "machine",
+     "who": null,
+     "who_pt": null,
+     "source": "game-text:70_guards_bells_10",
+     "also": [
+      "game-text:16_foreman_letter_foreman_22_3",
+      "game-text:49_pre_A4_fights_4"
+     ],
+     "confidence": "high",
+     "items": [],
+     "unlock": null,
+     "detail": null,
+     "quote": {
+      "key": "70_guards_bells_10",
+      "en": "It rings every Sloth morning, and most of them seem to withdraw back to the town center.",
+      "pt": "Ele toca toda manhã de Preguiça, e a maioria deles parece recuar de volta para o centro do Povoado."
+     }
+    },
+    {
+     "kind": "battle",
+     "en": "Exceptions: the Sewer battles and two story battles can be fought on any day.",
+     "pt": "Exceções: as batalhas dos Esgotos e duas batalhas da história valem em qualquer dia.",
+     "tr": "machine",
+     "who": null,
+     "who_pt": null,
+     "source": "wikily:battles",
+     "also": [
+      "wikily:pages/calendar"
+     ],
+     "confidence": "medium",
+     "items": [],
+     "unlock": null,
+     "detail": {
+      "en": "Any day: Break Through to the Port, Sewer Brawl I and II, Break Through to the Bathhouse Basement, Sewerena. After Herbert hands over the red banner, battles stay open until the end of the next Sloth.",
+      "pt": "Qualquer dia: Break Through to the Port, Sewer Brawl I e II, Break Through to the Bathhouse Basement, Sewerena. Depois que o Norberto entrega o estandarte vermelho, as batalhas ficam abertas até o fim da próxima Preguiça."
+     },
+     "quote": null
+    }
+   ],
+   "mentions": [
+    {
+     "key": "battle_planer_other_day",
+     "en": "Battle available on Sloth",
+     "pt": "Batalha disponível em Preguiça"
+    },
+    {
+     "key": "49_pre_A4_fights_4",
+     "en": "Good thing we get a break every Sloth.",
+     "pt": "Ainda bem que temos folga a cada Preguiça."
+    },
+    {
+     "key": "16_foreman_letter_foreman_22_3",
+     "en": "Oh! Like they withdraw on Sloth morning, when the bell rings.",
+     "pt": "Ah! Tipo quando eles recuam na manhã de Preguiça, quando o sino toca."
+    },
+    {
+     "key": "70_guards_bells_10",
+     "en": "It rings every Sloth morning, and most of them seem to withdraw back to the town center.",
+     "pt": "Ele toca toda manhã de Preguiça, e a maioria deles parece recuar de volta para o centro do Povoado."
+    }
+   ]
+  },
+  {
+   "id": "lust",
+   "order": 2,
+   "sin": {
+    "en": "Lust",
+    "pt": "Luxúria"
+   },
+   "sin_tr": "official",
+   "name": {
+    "en": "Day of Lust",
+    "pt": "Dia da Luxúria"
+   },
+   "tr": "likely",
+   "sprite": "day_lust",
+   "glyph": "Venus symbol (♀), gold on a red disc",
+   "glyph_pt": "símbolo de Vênus (♀), dourado em disco vermelho",
+   "color": "#ba1010",
+   "prev": "sloth",
+   "next": "envy",
+   "events": [
+    {
+     "kind": "merchant",
+     "en": "Trade ship at the Main Pier: the Trademaster has new exotic goods.",
+     "pt": "Navio mercante no Cais Principal: o Gerente Comercial tem produtos exóticos novos.",
+     "tr": "machine",
+     "who": "Trademaster",
+     "who_pt": "Gerente Comercial",
+     "source": "game-text:36_port_trademaster_lenses_5",
+     "also": [
+      "game-text:35_port_pop_new_people_4",
+      "game-text:quest_closed_36_port_trademaster_lenses_d"
+     ],
+     "confidence": "high",
+     "items": [],
+     "unlock": {
+      "key": "36_port_trademaster_lenses",
+      "en": "Crystal Clear",
+      "pt": "Cristalino",
+      "tr": "official"
+     },
+     "detail": null,
+     "quote": {
+      "key": "36_port_trademaster_lenses_5",
+      "en": "Stop by every Lust, and I'll have new exotic goods ready for you.",
+      "pt": "Venha a cada Luxúria, e eu terei novos produtos exóticos prontos para você."
+     }
+    },
+    {
+     "kind": "npc",
+     "en": "Linda (Dockside Club) takes Green Scrolls: more citizens and a higher Likes limit.",
+     "pt": "Linda (Clube do Cais) recebe Pergaminhos Verdes: mais moradores e limite maior de curtidas.",
+     "tr": "machine",
+     "who": "Linda",
+     "who_pt": "Linda",
+     "source": "game-text:tut_town_houses",
+     "also": [
+      "wikily:pages/calendar",
+      "wikily:characters/linda"
+     ],
+     "confidence": "high",
+     "items": [
+      "green-scroll"
+     ],
+     "unlock": {
+      "key": "35_port_pop_new_people_1",
+      "en": "New people?",
+      "pt": "Gente nova?",
+      "tr": "official"
+     },
+     "detail": null,
+     "quote": {
+      "key": "tut_town_houses",
+      "en": "Houses give Green Scrolls. Deliver them to Linda every Lust to increase citizen reputation and your maximum Likes limit.",
+      "pt": "As casas fornecem Pergaminhos Verdes. Entregue-os à Linda todo Luxúria para aumentar reputação dos cidadãos e o seu limite máximo de curtidas."
+     }
+    },
+    {
+     "kind": "npc",
+     "en": "Davy the Dagger (Dockside Club) takes looter orders, paid in Keys for Looters.",
+     "pt": "Orlando, Olha a Faca (Clube do Cais) aceita encomendas aos saqueadores, pagas com chaves.",
+     "tr": "machine",
+     "who": "Davy the Dagger",
+     "who_pt": "Orlando, Olha a Faca",
+     "source": "game-text:34_port_looters_keys_7",
+     "also": [
+      "wikily:pages/looter-orders",
+      "wikily:characters/davy-dagger"
+     ],
+     "confidence": "high",
+     "items": [
+      "keys-for-looters"
+     ],
+     "unlock": {
+      "key": "34_port_looters_meet",
+      "en": "Wharf Rats",
+      "pt": "Ratos do Porto",
+      "tr": "official"
+     },
+     "detail": null,
+     "quote": {
+      "key": "34_port_looters_keys_7",
+      "en": "I'm here every Lust, collecting new orders.",
+      "pt": "Estou aqui todo Luxúria, coletando novos pedidos."
+     }
+    },
+    {
+     "kind": "quest",
+     "en": "High Price: buy the Lust portal fragment from the Trademaster (1 gold).",
+     "pt": "Preço Salgado: compre o fragmento de portal da Luxúria com o Gerente Comercial (1 ouro).",
+     "tr": "machine",
+     "who": "Trademaster",
+     "who_pt": "Gerente Comercial",
+     "source": "game-text:quest_open_125_astrologer_third_buy_d",
+     "also": [
+      "game-text:125_astrologer_third_10",
+      "wikily:quests/high-price"
+     ],
+     "confidence": "high",
+     "items": [
+      "portal-fragment-lust"
+     ],
+     "unlock": {
+      "key": "125_astrologer_third_ask",
+      "en": "High Price",
+      "pt": "Preço Salgado",
+      "tr": "official"
+     },
+     "detail": null,
+     "quote": {
+      "key": "quest_open_125_astrologer_third_buy_d",
+      "en": "I need to buy the third portal fragment from the Trade Master at the Main Pier. The ship with the fragment comes every Lust",
+      "pt": "Preciso comprar o terceiro fragmento do portal com o Mestre do Comércio no Cais Principal. O navio com o fragmento chega a cada Luxúria"
+     }
+    },
+    {
+     "kind": "quest",
+     "en": "Concept for a Concert: Linda's concert can only start today.",
+     "pt": "Conceito para um Concerto: o show da Linda só pode começar hoje.",
+     "tr": "machine",
+     "who": "Linda",
+     "who_pt": "Linda",
+     "source": "game-text:67_port_incense_6",
+     "also": [
+      "wikily:quests/concept-for-a-concert"
+     ],
+     "confidence": "high",
+     "items": [],
+     "unlock": {
+      "key": "68_port_concert_start",
+      "en": "Concept for a Concert",
+      "pt": "Conceito para um Concerto",
+      "tr": "official"
+     },
+     "detail": null,
+     "quote": {
+      "key": "67_port_incense_6",
+      "en": "Be sure to come by on Lust... I want you to hear how amazing I sound!",
+      "pt": "Não se esqueça de passar aqui em Luxúria... quero que você ouça como eu toco bem!"
+     }
+    },
+    {
+     "kind": "other",
+     "en": "At the very end of the day the Resurrection Lab gets its power back for Envy.",
+     "pt": "No fim do dia, o Laboratório de Ressurreição recarrega para o dia da Inveja.",
+     "tr": "machine",
+     "who": null,
+     "who_pt": null,
+     "source": "wikily:pages/calendar",
+     "also": [],
+     "confidence": "medium",
+     "items": [],
+     "unlock": null,
+     "detail": null,
+     "quote": null
+    }
+   ],
+   "mentions": [
+    {
+     "key": "quest_open_125_astrologer_third_buy_d",
+     "en": "I need to buy the third portal fragment from the Trade Master at the Main Pier. The ship with the fragment comes every Lust",
+     "pt": "Preciso comprar o terceiro fragmento do portal com o Mestre do Comércio no Cais Principal. O navio com o fragmento chega a cada Luxúria"
+    },
+    {
+     "key": "tut_town_houses",
+     "en": "Houses give Green Scrolls. Deliver them to Linda every Lust to increase citizen reputation and your maximum Likes limit.",
+     "pt": "As casas fornecem Pergaminhos Verdes. Entregue-os à Linda todo Luxúria para aumentar reputação dos cidadãos e o seu limite máximo de curtidas."
+    },
+    {
+     "key": "34_port_looters_keys_7",
+     "en": "I'm here every Lust, collecting new orders.",
+     "pt": "Estou aqui todo Luxúria, coletando novos pedidos."
+    },
+    {
+     "key": "35_port_pop_new_people_4",
+     "en": "Once a week, on Lust, a merchant ship docks at the port.",
+     "pt": "Uma vez por semana, no Luxúria, um navio mercante atraca no porto."
+    },
+    {
+     "key": "36_port_trademaster_lenses_5",
+     "en": "Stop by every Lust, and I'll have new exotic goods ready for you.",
+     "pt": "Venha a cada Luxúria, e eu terei novos produtos exóticos prontos para você."
+    },
+    {
+     "key": "67_port_incense_6",
+     "en": "Be sure to come by on Lust... I want you to hear how amazing I sound!",
+     "pt": "Não se esqueça de passar aqui em Luxúria... quero que você ouça como eu toco bem!"
+    },
+    {
+     "key": "125_astrologer_third_10",
+     "en": "Fine. Come back on Lust with the money, and it's yours.",
+     "pt": "Certo. Volte aqui em Luxúria com o dinheiro e será seu."
+    }
+   ]
+  },
+  {
+   "id": "envy",
+   "order": 3,
+   "sin": {
+    "en": "Envy",
+    "pt": "Inveja"
+   },
+   "sin_tr": "official",
+   "name": {
+    "en": "Day of Envy",
+    "pt": "Dia da Inveja"
+   },
+   "tr": "likely",
+   "sprite": "day_envy",
+   "glyph": "circle with two horns on top, like ♉ (bull's head), gold on a green disc",
+   "glyph_pt": "círculo com dois chifres (♉), dourado em disco verde",
+   "color": "#038603",
+   "prev": "lust",
+   "next": "pride",
+   "events": [
+    {
+     "kind": "other",
+     "en": "Resurrection day: the storm powers the lab; one use raises a zombie on every prepared table.",
+     "pt": "Dia de ressurreição: a tempestade energiza o laboratório; um uso ressuscita um zumbi em cada mesa pronta.",
+     "tr": "machine",
+     "who": null,
+     "who_pt": null,
+     "source": "game-text:tut_resurrection_day",
+     "also": [
+      "game-text:tut_resurrection_device",
+      "game-text:resurrection_available_tomorrow",
+      "game-text:resurrection_no_power",
+      "game-text:137_base_resurection_room_9",
+      "game-text:137_base_resurection_room_11",
+      "wikily:pages/calendar"
+     ],
+     "confidence": "high",
+     "items": [
+      "reanimation-liquid",
+      "bronze-zombie-collar",
+      "steel-zombie-collar",
+      "golden-zombie-collar"
+     ],
+     "unlock": {
+      "key": null,
+      "en": "After repairing the Resurrection device",
+      "pt": "Depois de consertar o Dispositivo de Ressurreição",
+      "tr": "machine"
+     },
+     "detail": {
+      "en": "Each table needs a corpse with all 6 organs, 1 Reanimation Liquid and a good enough collar. Once used, the power is gone until the next Envy.",
+      "pt": "Cada mesa precisa de um corpo com os 6 órgãos, 1 Líquido de reanimação e uma coleira adequada. Depois de usar, só no próximo dia da Inveja."
+     },
+     "quote": {
+      "key": "tut_resurrection_day",
+      "en": "Here you can resurrect zombies every Envy. Prepare everything in advance.",
+      "pt": "Aqui você pode ressuscitar seus zumbis todo Inveja. Deixe tudo preparado com antecedência!"
+     }
+    },
+    {
+     "kind": "npc",
+     "en": "Blue Crystals (the Goddess's tears) appear by her statue in the Heart of the Swamp.",
+     "pt": "Cristais azuis (lágrimas da Deusa) surgem junto à estátua no Coração do Pântano.",
+     "tr": "machine",
+     "who": "Goddess of Nature",
+     "who_pt": "Deusa",
+     "source": "game-text:quest_closed_63_swamp_goddess_speak_d",
+     "also": [
+      "game-text:63_swamp_goddess_32_c_3",
+      "wikily:pages/calendar"
+     ],
+     "confidence": "high",
+     "items": [
+      "blue-crystal"
+     ],
+     "unlock": {
+      "key": "62_swamp_fairy_find",
+      "en": "Heart of the Swamp",
+      "pt": "Coração do Pântano",
+      "tr": "official"
+     },
+     "detail": {
+      "en": "A pile of 4; a new pile only comes after the last one is collected. Every zombie collar needs one.",
+      "pt": "Uma pilha de 4; outra só aparece depois de pegar a anterior. Toda coleira de zumbi usa um."
+     },
+     "quote": {
+      "key": "quest_closed_63_swamp_goddess_speak_d",
+      "en": "I can collect blue crystals near the Goddess statue after every Envy. Also, I need to restore the magic portal. And last but not least, I need to find the Ancient God.",
+      "pt": "Posso coletar cristais azuis perto da estátua da Deusa a cada Inveja. Além disso, preciso restaurar o portal mágico. E, por último, mas não menos importante, preciso encontrar o Deus Ancestral."
+     }
+    },
+    {
+     "kind": "church",
+     "en": "Exception: the Prayer for Storms sermon (God of the storms) allows resurrection on any day.",
+     "pt": "Exceção: o sermão Oração das tempestades (Deus das Tempestades) libera ressurreição em qualquer dia.",
+     "tr": "machine",
+     "who": null,
+     "who_pt": null,
+     "source": "game-text:buff_storm_d",
+     "also": [
+      "game-text:buff_storm",
+      "game-text:prayer_storms",
+      "wikily:sermons/prayer-for-storms"
+     ],
+     "confidence": "high",
+     "items": [],
+     "unlock": null,
+     "detail": {
+      "en": "The buff lasts 1 h 30 min of game time (wikily).",
+      "pt": "O efeito dura 1 h 30 min de jogo (wikily)."
+     },
+     "quote": {
+      "key": "buff_storm_d",
+      "en": "You can resurrect zombies every time you need it.",
+      "pt": "Você pode ressuscitar zumbis sempre que precisar."
+     }
+    },
+    {
+     "kind": "npc",
+     "en": "Albert, the Plague Doctor, may give 2 free zombies to resurrect (unconfirmed).",
+     "pt": "Alberto, o Médico da Peste, pode dar 2 zumbis grátis para ressuscitar (não confirmado).",
+     "tr": "machine",
+     "who": "Albert (Plague Doctor)",
+     "who_pt": "Alberto (Médico da Peste)",
+     "source": "web:https://roonby.com/2026/10/07/graveyard-keeper-2-days-of-the-week-explained-guide-what-to-do/",
+     "also": [
+      "web:https://prodigygamers.com/?p=37204"
+     ],
+     "confidence": "low",
+     "items": [],
+     "unlock": null,
+     "detail": null,
+     "quote": null
+    }
+   ],
+   "mentions": [
+    {
+     "key": "quest_closed_63_swamp_goddess_speak_d",
+     "en": "I can collect blue crystals near the Goddess statue after every Envy. Also, I need to restore the magic portal. And last but not least, I need to find the Ancient God.",
+     "pt": "Posso coletar cristais azuis perto da estátua da Deusa a cada Inveja. Além disso, preciso restaurar o portal mágico. E, por último, mas não menos importante, preciso encontrar o Deus Ancestral."
+    },
+    {
+     "key": "tut_resurrection_day",
+     "en": "Here you can resurrect zombies every Envy. Prepare everything in advance.",
+     "pt": "Aqui você pode ressuscitar seus zumbis todo Inveja. Deixe tudo preparado com antecedência!"
+    },
+    {
+     "key": "tut_resurrection_device",
+     "en": "During Envy the room is powered. Use the Resurrection Device to bring zombies back to life.",
+     "pt": "Durante Inveja, a sala recebe energia. Use o Dispositivo de Ressurreição para trazer zumbis de volta à vida."
+    },
+    {
+     "key": "63_swamp_goddess_32_c_3",
+     "en": "I shed them every Envy. Grieving over what has happened to this world.",
+     "pt": "Eu as derramo a cada Inveja, lamentando pelo que aconteceu com este mundo."
+    },
+    {
+     "key": "137_base_resurection_room_9",
+     "en": "Every Envy when it storms, lightning strikes the tower.",
+     "pt": "Todo Inveja quando chove, um relâmpago atinge a torre."
+    },
+    {
+     "key": "137_base_resurection_room_11",
+     "en": "Wait... there’s a lightning storm every Envy?",
+     "pt": "Pera... tem uma tempestade todo Inveja?"
+    },
+    {
+     "key": "resurrection_available_tomorrow",
+     "en": "Resurrection available on Envy",
+     "pt": "Ressurreição disponível em Inveja"
+    },
+    {
+     "key": "resurrection_no_power",
+     "en": "There is not enough power for resurrection. Need to wait for the next Envy",
+     "pt": "Não há energia suficiente para realizar a ressurreição. Preciso esperar até o próximo Inveja."
+    }
+   ]
+  },
+  {
+   "id": "pride",
+   "order": 4,
+   "sin": {
+    "en": "Pride",
+    "pt": "Orgulho"
+   },
+   "sin_tr": "official",
+   "name": {
+    "en": "Day of Pride",
+    "pt": "Dia do Orgulho"
+   },
+   "tr": "likely",
+   "sprite": "day_pride",
+   "glyph": "radiant sun with eight rays, gold on a purple disc",
+   "glyph_pt": "sol com oito raios, dourado em disco roxo",
+   "color": "#732fa6",
+   "prev": "envy",
+   "next": "wrath",
+   "events": [
+    {
+     "kind": "other",
+     "en": "Town orders can only be accepted today, at the order board.",
+     "pt": "Pedidos do povoado só podem ser aceitos hoje, no quadro de pedidos.",
+     "tr": "machine",
+     "who": null,
+     "who_pt": null,
+     "source": "game-text:tut_commerce_day",
+     "also": [
+      "game-text:ui_order_possible_days",
+      "game-text:tut_commerce_urgent",
+      "wikily:pages/calendar"
+     ],
+     "confidence": "high",
+     "items": [],
+     "unlock": {
+      "key": "58_port_supplies_order",
+      "en": "Workshop Hours",
+      "pt": "Horário da Oficina",
+      "tr": "official"
+     },
+     "detail": {
+      "en": "Urgent orders must be completed in full within one week; others can be delivered on any day.",
+      "pt": "Pedidos urgentes precisam ser concluídos em até uma semana; os demais podem ser entregues em qualquer dia."
+     },
+     "quote": {
+      "key": "tut_commerce_day",
+      "en": "You can only accept town orders on Pride. Completing them rewards Likes and coins.",
+      "pt": "Você só pode aceitar pedidos do povoado em Orgulho. Ao concluí-los, você recebe curtidas e moedas."
+     }
+    },
+    {
+     "kind": "merchant",
+     "en": "Every trader's weekly Likes limit resets.",
+     "pt": "O limite semanal de curtidas de cada comerciante é reiniciado.",
+     "tr": "machine",
+     "who": null,
+     "who_pt": null,
+     "source": "game-text:tt_trade_hap_likes",
+     "also": [
+      "wikily:pages/calendar"
+     ],
+     "confidence": "high",
+     "items": [],
+     "unlock": null,
+     "detail": null,
+     "quote": {
+      "key": "tt_trade_hap_likes",
+      "en": "Maximum Likes you can get from this vendor this week. Resets every Pride",
+      "pt": "Máximo de curtidas que você pode obter deste fornecedor nesta semana. Reinicia a cada Orgulho"
+     }
+    },
+    {
+     "kind": "other",
+     "en": "Town Warehouse payout: crate goods fill your orders, the rest is sold; collect the money at the board.",
+     "pt": "Pagamento do Armazém do Povoado: as caixas abastecem os pedidos, o resto é vendido; o dinheiro fica no quadro.",
+     "tr": "machine",
+     "who": null,
+     "who_pt": null,
+     "source": "wikily:pages/calendar",
+     "also": [],
+     "confidence": "medium",
+     "items": [],
+     "unlock": null,
+     "detail": {
+      "en": "Repeatable orders finished since the last Pride can be accepted again.",
+      "pt": "Pedidos repetíveis concluídos desde o último Orgulho podem ser aceitos de novo."
+     },
+     "quote": null
+    }
+   ],
+   "mentions": [
+    {
+     "key": "ui_order_possible_days",
+     "en": "Orders can only be accepted on Pride. Orders cannot be accepted on other days.",
+     "pt": "Pedidos só podem ser aceitos em Orgulho. Pedidos não podem ser aceitos em outros dias."
+    },
+    {
+     "key": "tut_commerce_day",
+     "en": "You can only accept town orders on Pride. Completing them rewards Likes and coins.",
+     "pt": "Você só pode aceitar pedidos do povoado em Orgulho. Ao concluí-los, você recebe curtidas e moedas."
+    },
+    {
+     "key": "tt_trade_hap_likes",
+     "en": "Maximum Likes you can get from this vendor this week. Resets every Pride",
+     "pt": "Máximo de curtidas que você pode obter deste fornecedor nesta semana. Reinicia a cada Orgulho"
+    }
+   ]
+  },
+  {
+   "id": "wrath",
+   "order": 5,
+   "sin": {
+    "en": "Wrath",
+    "pt": "Ira"
+   },
+   "sin_tr": "official",
+   "name": {
+    "en": "Day of Wrath",
+    "pt": "Dia da Ira"
+   },
+   "tr": "likely",
+   "sprite": "day_wrath",
+   "glyph": "circle topped by an upward arrow / flame (like ♂), gold on a crimson disc",
+   "glyph_pt": "círculo com seta / chama para cima (♂), dourado em disco carmim",
+   "color": "#7f222c",
+   "prev": "pride",
+   "next": "gluttony",
+   "events": [
+    {
+     "kind": "church",
+     "en": "Mass day: hold one sermon at the Church.",
+     "pt": "Dia de missa: faça um sermão na Igreja.",
+     "tr": "machine",
+     "who": null,
+     "who_pt": null,
+     "source": "game-text:tut_sermons_day",
+     "also": [
+      "game-text:prayer_available_tomorrow",
+      "game-text:43_astrologer_pr_tower_2",
+      "game-text:quest_closed_19_base_ceremony_sermon_d",
+      "wikily:pages/calendar",
+      "wikily:pages/church-and-sermons"
+     ],
+     "confidence": "high",
+     "items": [],
+     "unlock": {
+      "key": "17_village_nun_tavern",
+      "en": "Holy Moly!",
+      "pt": "Çasinhora!",
+      "tr": "official"
+     },
+     "detail": {
+      "en": "Only the very first sermon (Holy Moly!) can be held on another day.",
+      "pt": "Só o primeiro sermão (Çasinhora!) pode ser feito em outro dia."
+     },
+     "quote": {
+      "key": "tut_sermons_day",
+      "en": "Every Wrath you can hold a sermon at the Church.",
+      "pt": "Realize uma cerimônia na Igreja todo dia Ira."
+     }
+    },
+    {
+     "kind": "npc",
+     "en": "Agatha (Crossroads): set the weekly corpse delivery (none, a few or lots).",
+     "pt": "Agatha (Encruzilhada): defina a entrega semanal de corpos (nenhum, poucos ou muitos).",
+     "tr": "machine",
+     "who": "Agatha (the Nun)",
+     "who_pt": "Agatha (a Freira)",
+     "source": "game-text:51_crossroad_fixed_delivery_6",
+     "also": [
+      "game-text:51_crossroad_fixed_delivery_7",
+      "wikily:pages/calendar"
+     ],
+     "confidence": "high",
+     "items": [],
+     "unlock": {
+      "key": "51_crossroad_fixed_delivery_1",
+      "en": "Corpse Delivery",
+      "pt": "Entrega de Corpos",
+      "tr": "official"
+     },
+     "detail": null,
+     "quote": {
+      "key": "51_crossroad_fixed_delivery_6",
+      "en": "You may ask me every Wrath how many corpses you'll need for the week.",
+      "pt": "Você pode me falar todo Ira quantos corpos irá precisar para a semana."
+     }
+    },
+    {
+     "kind": "npc",
+     "en": "Early story: the Nun comes by to check on the church repairs.",
+     "pt": "Início da história: a Freira passa para ver a reforma da igreja.",
+     "tr": "machine",
+     "who": "Agatha (the Nun)",
+     "who_pt": "Agatha (a Freira)",
+     "source": "game-text:17_village_nun_meeting_14",
+     "also": [],
+     "confidence": "high",
+     "items": [],
+     "unlock": {
+      "key": "17_village_nun_tavern",
+      "en": "Holy Moly!",
+      "pt": "Çasinhora!",
+      "tr": "official"
+     },
+     "detail": null,
+     "quote": {
+      "key": "17_village_nun_meeting_14",
+      "en": "I'll come by every Wrath to check your progress.",
+      "pt": "Vou passar aqui todo Ira para verificar seu progresso."
+     }
+    },
+    {
+     "kind": "quest",
+     "en": "The Nun with the Hairy Ass: Agatha hands over a couple of poor corpses on this day.",
+     "pt": "A Freira do Burro Peludo: Agatha entrega alguns corpos pobres neste dia.",
+     "tr": "machine",
+     "who": "Agatha (the Nun)",
+     "who_pt": "Agatha (a Freira)",
+     "source": "game-text:42_crossroad_nun_donkey_12_a_11",
+     "also": [
+      "game-text:42_crossroad_nun_donkey_12_a_10"
+     ],
+     "confidence": "medium",
+     "items": [],
+     "unlock": {
+      "key": "42_crossroad_nun_donkey",
+      "en": "The Nun with the Hairy Ass",
+      "pt": "A Freira do Burro Peludo",
+      "tr": "official"
+     },
+     "detail": null,
+     "quote": {
+      "key": "42_crossroad_nun_donkey_12_a_11",
+      "en": "Come on Wrath and take them.",
+      "pt": "Venha no Ira e pegue-os."
+     }
+    },
+    {
+     "kind": "other",
+     "en": "End of day: a running PR Machine program counts down one week.",
+     "pt": "Fim do dia: o programa ativo da Máquina de RP desconta uma semana.",
+     "tr": "machine",
+     "who": null,
+     "who_pt": null,
+     "source": "wikily:pages/calendar",
+     "also": [],
+     "confidence": "medium",
+     "items": [],
+     "unlock": null,
+     "detail": null,
+     "quote": null
+    }
+   ],
+   "mentions": [
+    {
+     "key": "tut_sermons_day",
+     "en": "Every Wrath you can hold a sermon at the Church.",
+     "pt": "Realize uma cerimônia na Igreja todo dia Ira."
+    },
+    {
+     "key": "prayer_available_tomorrow",
+     "en": "Ceremony available on Wrath",
+     "pt": "Cerimônia disponível em Ira"
+    },
+    {
+     "key": "17_village_nun_meeting_14",
+     "en": "I'll come by every Wrath to check your progress.",
+     "pt": "Vou passar aqui todo Ira para verificar seu progresso."
+    },
+    {
+     "key": "42_crossroad_nun_donkey_12_a_11",
+     "en": "Come on Wrath and take them.",
+     "pt": "Venha no Ira e pegue-os."
+    },
+    {
+     "key": "43_astrologer_pr_tower_2",
+     "en": "So, you know why fewer people showed up last time at Wrath service?",
+     "pt": "Então, você sabe por que menos pessoas apareceram no último culto de Ira?"
+    },
+    {
+     "key": "51_crossroad_fixed_delivery_6",
+     "en": "You may ask me every Wrath how many corpses you'll need for the week.",
+     "pt": "Você pode me falar todo Ira quantos corpos irá precisar para a semana."
+    }
+   ]
+  }
+ ]
+}

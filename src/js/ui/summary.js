@@ -1,0 +1,420 @@
+/* GK.ui.summary: raw totals and steps grouped by station (+ inline name editing, recipe choice, "Já tenho" /
+   "tenho N de M", the member choice of group items).
+   Collapsible (GK.store ui, per device): "Matérias-primas" (rawCollapsed), "Etapas por estação" (stepsCollapsed)
+   and each station card (ui.stationCollapsed[stationKey], key = station id, "#<repeat>" for a card that comes back);
+   a folded part keeps its header (with counts) and skips rendering its rows.
+   Owns: [data-panel="summary"]. Exposes: GK.ui.summary.{mount, render, stationKey}; registered as a panel.
+*/
+GK.i18n.add({
+  pt: {
+    "raw.title": "Matérias-primas",
+    "raw.hint": "O que coletar, comprar ou já ter no baú antes de começar.",
+    "raw.haveGroup": "Você já tem",
+    "raw.have": "Já tenho",
+    "raw.expand": "Fabricar",
+    "raw.expandLabel": "Voltar a fabricar {name}",
+    "raw.check": "Marcar {name} como coletado",
+    "raw.cycle": "receita circular",
+    "raw.refused": "receita sem ganho",
+    "raw.noexp": "colheita: rendimento varia",
+    "raw.members": "Serve qualquer um: {names}",
+    "raw.asRaw": "Matéria-prima (não fabricar)",
+    "raw.recipe": "Fabricar com",
+    "raw.unhave": "Ainda preciso",
+    "raw.unhaveLabel": "Ainda preciso de {name}",
+    "raw.haveLabel": "Já tenho {name}",
+    "raw.use": "Usar:",
+    "raw.useLabel": "Qual item usar para {name}",
+    "raw.useAny": "Qualquer um ({names})",
+    "raw.group": "(grupo) {name}",
+    "have.label": "Tenho",
+    "have.of": "de {n}",
+    "have.inputLabel": "Quantos {name} você já tem (de {n})",
+    "have.all": "Tudo",
+    "have.allLabel": "Já tenho todos os {n} de {name}",
+    "have.ok": "OK",
+    "have.cancel": "Fechar",
+    "have.clear": "Limpar",
+    "have.clearLabel": "Esquecer quantos {name} eu tenho",
+    "steps.title": "Etapas por estação",
+    "steps.hint": "Siga de cima para baixo: cada estação usa o que as anteriores produziram.",
+    "steps.stage": "etapa {n}",
+    "steps.stages": "etapas {a}–{b}",
+    "steps.runs.one": "{n} execução",
+    "steps.runs.other": "{n} execuções",
+    "steps.yield": "rende {n} cada",
+    "steps.yieldPerk": "rende {n} com {perk}",
+    "steps.withPerk": "com {perk}",
+    "steps.yieldIf": "{n} com {perk}",
+    "steps.recipeName": "receita: {name}",
+    "steps.groupLine": "grupo: {name}",
+    "steps.again": "de novo",
+    "steps.againTitle": "Esta estação aparece de novo: estas etapas dependem de outra estação acima.",
+    "steps.left": "sobra {n}",
+    "steps.per": "Por execução:",
+    "steps.have": "Já tenho",
+    "steps.haveLabel": "Já tenho {name}: não fabricar",
+    "steps.recipe": "Receita",
+    "steps.recipeLabel": "Receita de {name}",
+    "steps.tech": "Requer {tech}",
+    "steps.techQuest": "Missão: {tech}",
+    "steps.techPerk": "Vantagem: {tech}",
+    "steps.ext": "Extensão: {ext}",
+    "steps.mastery": "Maestria: {type} {level}",
+    "steps.alt": "ou: {names}",
+    "steps.extra": "Também rende (não somado):",
+    "steps.example": "mistura de exemplo",
+    "steps.exampleTitle": "Alquimia: qualquer combinação de ingredientes com as mesmas runas funciona",
+    "steps.goal": "meta",
+    "steps.check": "Marcar {name} como feito",
+    "fold.collapse": "Recolher",
+    "fold.expand": "Expandir",
+    "fold.collapseX": "Recolher: {name}",
+    "fold.expandX": "Expandir: {name}",
+    "fold.done": "{done}/{total} marcadas",
+    "fold.doneSr": "{done} de {total} marcadas",
+    "fold.steps.one": "{n} etapa",
+    "fold.steps.other": "{n} etapas",
+    "fold.stations.one": "{n} estação",
+    "fold.stations.other": "{n} estações",
+    "fold.raw.one": "{n} matéria-prima",
+    "fold.raw.other": "{n} matérias-primas",
+    "plan.empty": "Adicione uma meta para ver os ingredientes e as etapas.",
+    "cycle.warn": "Receita circular em {names}. Esses itens foram tratados como matéria-prima.",
+    "refused.warn": "A receita escolhida para {names} consome o próprio item sem ganho líquido; foi tratada como matéria-prima. Escolha outra receita na lista.",
+  },
+  en: {
+    "raw.title": "Raw materials",
+    "raw.hint": "What to gather, buy or already have in a chest before you start.",
+    "raw.haveGroup": "You already have",
+    "raw.have": "Have it",
+    "raw.expand": "Craft it",
+    "raw.expandLabel": "Craft {name} again",
+    "raw.check": "Mark {name} as collected",
+    "raw.cycle": "circular recipe",
+    "raw.refused": "no net gain",
+    "raw.noexp": "harvest: yield varies",
+    "raw.members": "Any of: {names}",
+    "raw.asRaw": "Raw material (don't craft)",
+    "raw.recipe": "Craft with",
+    "raw.unhave": "Still need it",
+    "raw.unhaveLabel": "I still need {name}",
+    "raw.haveLabel": "I have {name}",
+    "raw.use": "Use:",
+    "raw.useLabel": "Which item to use for {name}",
+    "raw.useAny": "Any ({names})",
+    "raw.group": "(group) {name}",
+    "have.label": "I have",
+    "have.of": "of {n}",
+    "have.inputLabel": "How many {name} you already have (of {n})",
+    "have.all": "All",
+    "have.allLabel": "I have all {n} {name}",
+    "have.ok": "OK",
+    "have.cancel": "Close",
+    "have.clear": "Clear",
+    "have.clearLabel": "Forget how many {name} I have",
+    "steps.title": "Steps by station",
+    "steps.hint": "Work top to bottom: each station uses what the ones above produced.",
+    "steps.stage": "stage {n}",
+    "steps.stages": "stages {a}–{b}",
+    "steps.runs.one": "{n} craft",
+    "steps.runs.other": "{n} crafts",
+    "steps.yield": "makes {n} each",
+    "steps.yieldPerk": "makes {n} with {perk}",
+    "steps.withPerk": "with {perk}",
+    "steps.yieldIf": "{n} with {perk}",
+    "steps.recipeName": "recipe: {name}",
+    "steps.groupLine": "group: {name}",
+    "steps.again": "again",
+    "steps.againTitle": "This station comes back: these steps need another station above.",
+    "steps.left": "{n} left over",
+    "steps.per": "Per craft:",
+    "steps.have": "Have it",
+    "steps.haveLabel": "I have {name}: don't craft it",
+    "steps.recipe": "Recipe",
+    "steps.recipeLabel": "Recipe for {name}",
+    "steps.tech": "Needs {tech}",
+    "steps.techQuest": "Quest: {tech}",
+    "steps.techPerk": "Perk: {tech}",
+    "steps.ext": "Extension: {ext}",
+    "steps.mastery": "Mastery: {type} {level}",
+    "steps.alt": "or: {names}",
+    "steps.extra": "Also yields (not counted):",
+    "steps.example": "example mix",
+    "steps.exampleTitle": "Alchemy: any mix of ingredients with the same runes works",
+    "steps.goal": "goal",
+    "steps.check": "Mark {name} as done",
+    "fold.collapse": "Collapse",
+    "fold.expand": "Expand",
+    "fold.collapseX": "Collapse: {name}",
+    "fold.expandX": "Expand: {name}",
+    "fold.done": "{done}/{total} checked",
+    "fold.doneSr": "{done} of {total} checked",
+    "fold.steps.one": "{n} step",
+    "fold.steps.other": "{n} steps",
+    "fold.stations.one": "{n} station",
+    "fold.stations.other": "{n} stations",
+    "fold.raw.one": "{n} raw material",
+    "fold.raw.other": "{n} raw materials",
+    "plan.empty": "Add a goal to see the ingredients and steps.",
+    "cycle.warn": "Circular recipe in {names}. Those items were treated as raw materials.",
+    "refused.warn": "The recipe chosen for {names} consumes the item itself with no net gain, so it was treated as a raw material. Pick another recipe from the list.",
+  },
+});
+
+GK.ui.summary = (function () {
+  const { t, name, num } = GK.i18n, { esc, slot, domId } = GK.util;
+  const F = GK.ui.fmt;
+  let root, editing = null; // item id whose name is being edited
+  let haveOpen = null;      // item id whose "tenho N de M" field was just opened from "Já tenho"
+  const focusId = (id) => { const el = document.getElementById(id); if (el) { el.focus(); if (el.select) el.select(); } };
+  function applyHave(id, raw) {
+    const A = GK.store.actions, v = String(raw == null ? "" : raw).trim();
+    haveOpen = null;
+    const n = Math.round(+v.replace(",", "."));
+    if (!v || !(n > 0)) A.setHave(id, null); else A.setHave(id, n);
+  }
+  // folding: "raw" | "steps" | "st:<station key>"; the toggle and its header carry the same data-fold value
+  const ui = (state) => state.ui || {};
+  const stationKey = (g) => g.station.id + (g.repeat > 1 ? "#" + g.repeat : "");
+  const FOLD_CONTROLS = "button, a, input, select, textarea, label";
+  function toggleFold(k) {
+    const A = GK.store.actions, u = ui(GK.store.get());
+    if (k === "raw") A.setUi({ rawCollapsed: !u.rawCollapsed });
+    else if (k === "steps") A.setUi({ stepsCollapsed: !u.stepsCollapsed });
+    else if (k.indexOf("st:") === 0) A.toggleStation(k.slice(3));
+  }
+  // the 44 px toggle at a header's right (chevron drawn in CSS: .fold-btn); stable id so focus survives re-renders
+  function foldBtn(k, open, label, bodyId) {
+    return `<button type="button" class="btn fold-btn" id="fold-${domId(k)}" data-fold="${esc(k)}" aria-expanded="${open}" aria-controls="${bodyId}" title="${esc(t(open ? "fold.collapse" : "fold.expand"))}" aria-label="${esc(t(open ? "fold.collapseX" : "fold.expandX", { name: label }))}"></button>`;
+  }
+  function mount(el) {
+    root = el;
+    root.addEventListener("click", (e) => {
+      const A = GK.store.actions;
+      const fb = e.target.closest("[data-fold]");
+      if (fb) { toggleFold(fb.dataset.fold); return; }
+      const fh = e.target.closest("[data-fold-head]");
+      if (fh && !e.target.closest(FOLD_CONTROLS)) { toggleFold(fh.dataset.foldHead); return; }
+      const ro = e.target.closest("[data-recipe-open]");
+      if (ro) { GK.ui.recipes.open(ro.dataset.recipeOpen, { from: "plan" }); return; }
+      const ed = e.target.closest("[data-edit]");
+      if (ed) { editing = ed.dataset.edit; rerender(); focusId("edit-" + domId(editing)); return; }
+      if (e.target.closest("[data-edit-cancel]")) { editing = null; rerender(); return; }
+      const rs = e.target.closest("[data-edit-reset]");
+      if (rs) {
+        const id = rs.dataset.editReset; editing = null;
+        A.setOverride(GK.i18n.lang(), id, "");
+        GK.ui.toast(t("edit.restored", { name: name(GK.data.item(id)) }));
+        return;
+      }
+      const ho = e.target.closest("[data-have-open]");
+      if (ho) { haveOpen = ho.dataset.haveOpen; rerender(); focusId("have-n-" + domId(haveOpen)); return; }
+      const ha = e.target.closest("[data-have-all]");
+      if (ha) { haveOpen = null; A.setHave(ha.dataset.haveAll, true); return; }
+      const hc = e.target.closest("[data-have-cancel]");
+      if (hc) { const id = hc.dataset.haveCancel; haveOpen = null; rerender(); focusId("have-" + domId(id)); return; }
+      const hx = e.target.closest("[data-have-clear]");
+      if (hx) { haveOpen = null; A.setHave(hx.dataset.haveClear, null); return; }
+      const b = e.target.closest("[data-have]");
+      if (b) A.toggleHave(b.dataset.have);
+    });
+    root.addEventListener("submit", (e) => {
+      const hf = e.target.closest("[data-have-form]");
+      if (hf) { e.preventDefault(); applyHave(hf.dataset.haveForm, hf.elements.n.value); return; }
+      const f = e.target.closest("[data-edit-form]");
+      if (!f) return;
+      e.preventDefault();
+      const id = f.dataset.editForm, it = GK.data.item(id), v = f.elements.v.value.trim();
+      const original = it[GK.i18n.lang()] || it.en;
+      editing = null;
+      GK.store.actions.setOverride(GK.i18n.lang(), id, v && v !== original ? v : "");
+      GK.ui.toast(t(v && v !== original ? "edit.saved" : "edit.restored", { name: v || original }));
+    });
+    root.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && e.target.closest("[data-edit-form]")) { editing = null; rerender(); }
+      if (e.key === "Escape" && e.target.closest("[data-have-form]")) { const id = e.target.closest("[data-have-form]").dataset.haveForm; haveOpen = null; rerender(); focusId("have-" + domId(id)); }
+    });
+    root.addEventListener("change", (e) => {
+      const s = e.target.closest("[data-choice]");
+      if (s) { GK.store.actions.chooseRecipe(s.dataset.choice, s.value); return; }
+      const g = e.target.closest("[data-group]");
+      if (g) { GK.store.actions.setGroupChoice(g.dataset.group, g.value || null); return; }
+      // a field that stays on the row ("tenho [3] de 10"): apply on change; a freshly opened one waits for OK / Enter
+      const n = e.target.closest("[data-have-n]");
+      if (n && n.dataset.haveLive) applyHave(n.dataset.haveN, n.value);
+    });
+  }
+  const rerender = () => render(GK.store.get(), {}, GK.app.plan());
+  // recipes that can actually expand (≥1 input, not noexp); zero-input "zombie production" and
+  // grow recipes only describe where a raw material comes from
+  const expandable = (r) => r.in.length > 0 && !r.noexp;
+  function chooser(itemId, current, state, withRaw, labelKey) {
+    const id = domId(itemId), D = GK.data.get(), nm = name(D.items[itemId], state.overrides);
+    const all = GK.data.recipesFor(itemId);
+    const shown = all.filter((r) => expandable(r) || (current && r.id === current.id));
+    const labels = F.recipeLabels(shown, state, all);
+    const opts = (withRaw ? `<option value=""${current ? "" : " selected"}>${esc(t("raw.asRaw"))}</option>` : "") +
+      shown.map((r, k) => `<option value="${esc(r.id)}"${current && r.id === current.id ? " selected" : ""}>${esc(labels[k])}</option>`).join("");
+    return `<span class="select-wrap"><label for="choice-${id}">${esc(t(labelKey))}</label><select id="choice-${id}" data-choice="${esc(itemId)}" aria-label="${esc(t("steps.recipeLabel", { name: nm }))}">${opts}</select></span>`;
+  }
+  // "Usar: [Carpa ▾]" for a group item (group = the group's id, current = chosen member or null)
+  function groupChooser(groupId, current, state, D) {
+    const g = D.items[groupId], nm = name(g, state.overrides), id = domId(groupId);
+    const members = (g.members || []).filter((m) => D.items[m]);
+    const any = t("raw.useAny", { names: members.map((m) => name(D.items[m], state.overrides)).join(", ") });
+    const opts = `<option value=""${current ? "" : " selected"}>${esc(any)}</option>` +
+      members.map((m) => `<option value="${esc(m)}"${m === current ? " selected" : ""}>${esc(name(D.items[m], state.overrides))}</option>`).join("");
+    return `<span class="select-wrap"><label for="group-${id}">${esc(t("raw.use"))}</label><select id="group-${id}" data-group="${esc(groupId)}" aria-label="${esc(t("raw.useLabel", { name: nm }))}">${opts}</select></span>`;
+  }
+  // "Tenho [ 3 ] de 10": opened from "Já tenho" (with Tudo / OK / Fechar) or kept on the row (live, with Limpar)
+  function haveField(itemId, nm, total, value, live) {
+    const id = domId(itemId), max = 999999;
+    const input = `<input id="have-n-${id}" name="n" data-have-n="${esc(itemId)}"${live ? ' data-have-live="1"' : ""} type="number" inputmode="numeric" min="0" max="${max}" step="1" value="${value == null ? "" : esc(value)}" placeholder="0" aria-label="${esc(t("have.inputLabel", { name: nm, n: total }))}">`;
+    const btns = live
+      ? `<button type="button" class="btn btn-sm btn-ghost" id="have-x-${id}" data-have-clear="${esc(itemId)}" aria-label="${esc(t("have.clearLabel", { name: nm }))}">${esc(t("have.clear"))}</button>`
+      : `<button type="submit" class="btn btn-sm" id="have-ok-${id}">${esc(t("have.ok"))}</button>` +
+        `<button type="button" class="btn btn-sm" id="have-all-${id}" data-have-all="${esc(itemId)}" aria-label="${esc(t("have.allLabel", { name: nm, n: total }))}">${esc(t("have.all"))}</button>` +
+        `<button type="button" class="btn btn-sm btn-ghost" id="have-c-${id}" data-have-cancel="${esc(itemId)}">${esc(t("have.cancel"))}</button>`;
+    return `<form class="have-form" data-have-form="${esc(itemId)}"><label for="have-n-${id}">${esc(t("have.label"))}</label>${input}<span class="have-of tabnum">${esc(t("have.of", { n: num(total) }))}</span>${btns}</form>`;
+  }
+  // the have controls of a row: [Já tenho] | the opened field | the kept field | (have all) ↺
+  function haveControls(itemId, nm, total, state, craftable) {
+    const v = state.have[itemId], id = domId(itemId);
+    if (v === true) {
+      const lbl = craftable ? t("raw.expandLabel", { name: nm }) : t("raw.unhaveLabel", { name: nm });
+      return `<button type="button" class="btn btn-sm" id="unhave-${id}" data-have="${esc(itemId)}" aria-label="${esc(lbl)}">↺ ${esc(t(craftable ? "raw.expand" : "raw.unhave"))}</button>`;
+    }
+    if (typeof v === "number") return haveField(itemId, nm, total, v, true);
+    if (haveOpen === itemId) return haveField(itemId, nm, total, null, false);
+    return `<button type="button" class="btn btn-sm toggle" id="have-${id}" data-have-open="${esc(itemId)}" aria-label="${esc(t("raw.haveLabel", { name: nm }))}">${esc(t("raw.have"))}</button>`;
+  }
+  function rawRow(r, state, D) {
+    const it = D.items[r.item], nm = name(it, state.overrides), key = "raw:" + r.item, cb = "cb-raw-" + domId(r.item);
+    const done = !!state.done[key];
+    const craftable = GK.data.recipesFor(r.item).some(expandable);
+    const sub = [];
+    if (r.via) sub.push(`<span class="row-group">${esc(r.via.map((g) => t("raw.group", { name: name(D.items[g], state.overrides) })).join(" · "))}</span>`);
+    if (r.have && r.covered) { /* the field says it */ }
+    else if (r.have) sub.push(`<span class="badge badge-have">${esc(t("raw.have"))}</span>`);
+    else if (r.cycle) sub.push(`<span class="badge badge-warn">${esc(t("raw.cycle"))}</span>`);
+    else if (r.reason === "refused") sub.push(`<span class="badge badge-warn">${esc(t("raw.refused"))}</span>`);
+    else if (r.reason === "noexp") sub.push(`<span class="badge badge-ex">${esc(t("raw.noexp"))}</span>`);
+    else if (it.members && r.reason !== "group") sub.push(esc(t("raw.members", { names: it.members.map((m) => name(D.items[m], state.overrides)).join(", ") })));
+    else if (it.obtain && !r.via) sub.push(esc(name(it.obtain)));
+    const actions = [];
+    if (r.reason === "group" && it.members) actions.push(groupChooser(r.item, null, state, D));
+    if (r.via) r.via.forEach((g) => actions.push(groupChooser(g, r.item, state, D)));
+    if (!r.have && craftable && state.have[r.item] !== true) {
+      const h = GK.calc.howToMake(r.item, D, state.choice, state.have, state.perks);
+      const cur = h.r && (h.leaf !== "free" && h.leaf !== "noexp") ? h.r : null;
+      actions.push(chooser(r.item, cur, state, !it.defaultRecipe, "raw.recipe"));
+    }
+    actions.push(haveControls(r.item, nm, r.demand || r.qty, state, craftable));
+    const goal = r.isGoal ? `<span class="badge badge-goal">${esc(t("steps.goal"))}</span>` : "";
+    const qty = `<span class="row-qty">${num(r.qty)}</span>`;
+    return `<div class="row${done ? " is-done" : ""}">
+      <label class="tick"><input type="checkbox" id="${cb}" data-done="${esc(key)}"${done ? " checked" : ""} aria-label="${esc(t("raw.check", { name: nm }))}"></label>
+      ${slot(it, nm)}
+      <div class="row-main">${F.nameBlock(it, nm, cb, editing === r.item, goal, state.overrides)}${sub.length ? `<span class="row-sub">${sub.join(" ")}</span>` : ""}</div>
+      ${qty}
+      <div class="row-actions">${actions.join("")}</div>
+    </div>`;
+  }
+  const perkName = (b) => (b && b.perks ? b.perks.map((p) => name(GK.data.perks()[p] || { en: p })).join(" + ") : "");
+  function lineList(lines, state, D) {
+    return lines.map((i) => {
+      const note = i.boosted ? ` <i class="perk-on">(${esc(t("steps.withPerk", { perk: perkName(i.bonus) }))})</i>` : i.note ? ` <i>(${esc(name(i.note))})</i>` : "";
+      const grp = i.group ? ` <i>(${esc(t("steps.groupLine", { name: name(D.items[i.group], state.overrides) }))})</i>` : "";
+      return `<b>${i.qty == null ? "?" : num(i.qty)}</b> ${esc(name(D.items[i.item], state.overrides))}${grp}${note}`;
+    }).join(" · ");
+  }
+  function stepRow(s, state, D) {
+    const it = D.items[s.item], nm = name(it, state.overrides), key = "step:" + s.item, cb = "cb-step-" + domId(s.item);
+    const done = !!state.done[key], r = s.recipe;
+    const meta = [t("steps.runs", { n: s.runs })];
+    if (s.outBonus) meta.push(t("steps.yieldPerk", { n: s.yield, perk: perkName(s.outBonus) }));
+    else if (r.out.bonus && r.out.bonus.qty != null) meta.push(t("steps.yield", { n: s.yield }) + ` (${t("steps.yieldIf", { n: r.out.bonus.qty, perk: perkName(r.out.bonus) })})`);
+    else if (r.out.bonus && r.out.bonus.add != null) meta.push(t("steps.yield", { n: s.yield }) + ` (${t("steps.yieldIf", { n: "+" + num(r.out.bonus.add), perk: perkName(r.out.bonus) })})`);
+    else if (s.yield > 1 || r.out.note) meta.push(t("steps.yield", { n: s.yield }) + (r.out.note ? ` (${name(r.out.note)})` : ""));
+    if (s.leftover > 0) meta.push(t("steps.left", { n: s.leftover }));
+    if (s.alts > 1 && !r.quality && F.recipeTag(r)) meta.push(t("steps.recipeName", { name: F.recipeTag(r) }));
+    const actions = [];
+    if (s.alts > 1) actions.push(chooser(s.item, r, state, false, "steps.recipe"));
+    if (!s.isGoal) actions.push(haveControls(s.item, nm, s.demand, state, true));
+    const tech = F.techLine(r);
+    if (tech.length) actions.push(`<span class="tech">${esc(tech.join(" · "))}</span>`);
+    const extraBadges = (s.isGoal ? `<span class="badge badge-goal">${esc(t("steps.goal"))}</span>` : "") +
+      (r.quality && s.alts > 1 ? ` <span class="badge badge-q" title="${esc(name(r.name || {}) || "")}">${esc(t("quality." + r.quality))}</span>` : "") +
+      (r.example ? ` <span class="badge badge-ex" title="${esc(t("steps.exampleTitle"))}">${esc(t("steps.example"))}</span>` : "");
+    const alt = r.alt.length ? `<span class="row-alt">${esc(t("steps.alt", { names: r.alt.map((a) => name(a, state.overrides)).join(", ") }))}</span>` : "";
+    const extra = r.extra.length ? `<span class="row-extra">${esc(t("steps.extra"))} ${extraList(r.extra, state, D)}</span>` : "";
+    return `<div class="row${done ? " is-done" : ""}">
+      <label class="tick"><input type="checkbox" id="${cb}" data-done="${esc(key)}"${done ? " checked" : ""} aria-label="${esc(t("steps.check", { name: nm }))}"></label>
+      ${slot(it, nm)}
+      <div class="row-main">
+        ${F.nameBlock(it, nm, cb, editing === s.item, extraBadges, state.overrides)}
+        <span class="row-sub tabnum">${esc(meta.join(" · "))}</span>
+        <span class="row-in">${esc(t("steps.per"))} ${lineList(s.ins, state, D)}</span>
+        ${extra}${alt}
+      </div>
+      <span class="row-qty"><small>×</small>${num(s.need)}</span>
+      ${actions.length ? `<div class="row-actions">${actions.join("")}</div>` : ""}
+    </div>`;
+  }
+  // by-products: an active perk replaces the note with "4 Cinzas (com Cremador)"
+  function extraList(lines, state, D) {
+    return lines.map((i) => {
+      const on = i.bonus && GK.calc.isBonusActive(i.bonus, state.perks);
+      const q = on && i.bonus.qty != null ? i.bonus.qty : on && i.bonus.add != null && i.qty != null ? i.qty + i.bonus.add : i.qty;
+      const note = on ? ` <i class="perk-on">(${esc(t("steps.withPerk", { perk: perkName(i.bonus) }))})</i>` : i.note ? ` <i>(${esc(name(i.note))})</i>` : "";
+      return `<b>${q == null ? "?" : num(q)}</b> ${esc(name(D.items[i.item], state.overrides))}${note}`;
+    }).join(" · ");
+  }
+  function render(state, meta, plan) {
+    if (meta && meta.from === "search-toggle") return;
+    const D = GK.data.get();
+    if (!state.goals.length) { root.innerHTML = `<div class="card empty plan-empty"><p>${esc(t("plan.empty"))}</p></div>`; return; }
+    const loc = GK.i18n.meta(GK.i18n.lang()).locale;
+    const byName = (a, b) => name(D.items[a.item], state.overrides).localeCompare(name(D.items[b.item], state.overrides), loc);
+    const plain = plan.raw.filter((r) => !r.have).sort(byName), had = plan.raw.filter((r) => r.have).sort(byName);
+    const nmList = (ids) => ids.map((id) => name(D.items[id], state.overrides)).join(", ");
+    const warn = (plan.cycles.length ? `<div class="warn" role="note">${esc(t("cycle.warn", { names: nmList(plan.cycles) }))}</div>` : "") +
+      (plan.refused.length ? `<div class="warn" role="note">${esc(t("refused.warn", { names: nmList(plan.refused) }))}</div>` : "");
+    const U = ui(state), shut = U.stationCollapsed || {};
+    const doneOf = (keys) => keys.filter((k) => state.done[k]).length;
+    const doneBadge = (done, total, cls) => `<span class="${cls} tabnum"><span aria-hidden="true">${num(done)}/${num(total)}</span><span class="sr-only">${esc(t("fold.doneSr", { done, total }))}</span></span>`;
+    const stations = U.stepsCollapsed ? "" : plan.stations.map((g) => {
+      const stage = g.minStage === g.maxStage ? t("steps.stage", { n: g.minStage }) : t("steps.stages", { a: g.minStage, b: g.maxStage });
+      const stName = name(g.station, state.overrides);
+      const sub = g.station.build && !g.station.i18n ? `<span class="station-sub">${esc(t("station.build"))}</span>` : "";
+      const again = g.repeat > 1 ? ` <span class="badge badge-again" title="${esc(t("steps.againTitle"))}">${esc(t("steps.again"))}</span>` : "";
+      const k = stationKey(g), fk = "st:" + k, open = !shut[k], body = "st-body-" + domId(k);
+      const nDone = doneOf(g.steps.map((s) => "step:" + s.item));
+      return `<article class="card list station${open ? "" : " is-folded"}">
+        <header class="station-h" data-fold-head="${esc(fk)}">${slot(g.station, stName, true)}<h3>${sub}${esc(stName)}${again}</h3><span class="station-meta"><span class="stage tabnum">${esc(stage)}</span>${doneBadge(nDone, g.steps.length, "station-done" + (nDone === g.steps.length ? " is-all" : ""))}</span>${foldBtn(fk, open, stName, body)}</header>
+        ${open ? `<div class="station-rows" id="${body}">${g.steps.map((s) => stepRow(s, state, D)).join("")}</div>` : `<div id="${body}" hidden></div>`}
+      </article>`;
+    }).join("");
+    const rawDone = doneOf(plan.raw.map((r) => "raw:" + r.item)), stepDone = doneOf(plan.steps.map((s) => "step:" + s.item));
+    const rawSum = `${t("fold.raw", { n: plan.raw.length })} · ${t("fold.done", { done: rawDone, total: plan.raw.length })}`;
+    const stepSum = `${t("fold.steps", { n: plan.steps.length })} · ${t("fold.stations", { n: plan.stations.length })} · ${t("fold.done", { done: stepDone, total: plan.steps.length })}`;
+    root.innerHTML = `${warn}<div class="summary-grid">
+      <section aria-labelledby="raw-h"${U.rawCollapsed ? ' class="is-folded"' : ""}>
+        <div class="fold-head" data-fold-head="raw"><h2 class="h2" id="raw-h">${esc(t("raw.title"))} <span class="count">${plan.raw.length}</span></h2>${foldBtn("raw", !U.rawCollapsed, t("raw.title"), "raw-body")}</div>
+        ${U.rawCollapsed ? `<p class="hint fold-sum tabnum" data-fold-head="raw">${esc(rawSum)}</p><div id="raw-body" hidden></div>` : `<p class="hint">${esc(t("raw.hint"))}</p>
+        <div class="card list" id="raw-body">${plain.map((r) => rawRow(r, state, D)).join("")}
+          ${had.length ? `<div class="raw-group-label">${esc(t("raw.haveGroup"))}</div>` + had.map((r) => rawRow(r, state, D)).join("") : ""}
+        </div>`}
+      </section>
+      <section aria-labelledby="steps-h"${U.stepsCollapsed ? ' class="is-folded"' : ""}>
+        <div class="fold-head" data-fold-head="steps"><h2 class="h2" id="steps-h">${esc(t("steps.title"))} <span class="count">${plan.steps.length}</span></h2>${foldBtn("steps", !U.stepsCollapsed, t("steps.title"), "steps-body")}</div>
+        ${U.stepsCollapsed ? `<p class="hint fold-sum tabnum" data-fold-head="steps">${esc(stepSum)}</p><div class="stations" id="steps-body" hidden></div>` : `<p class="hint">${esc(t("steps.hint"))}</p>
+        <div class="stations" id="steps-body">${stations}</div>`}
+      </section>
+    </div>`;
+  }
+  return { mount, render, stationKey };
+})();
+
+GK.app.registerPanel(GK.ui.summary, { id: "summary", panel: "summary", order: 50 });

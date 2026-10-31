@@ -1,0 +1,19 @@
+[
+  {"id": "log", "name": "Log", "kind": "item", "category": "Wood", "icon": "https://example.test/log.png", "is_raw": true, "obtain": "Chopped from trees.", "listed": true},
+  {"id": "plank", "name": "Plank", "kind": "item", "category": "Wood", "icon": "https://example.test/plank.png", "is_raw": false, "obtain": null},
+  {"id": "stone", "name": "Stone", "kind": "item", "category": "Stone", "icon": null, "is_raw": true, "obtain": ["Mined from rocks", "Sold by the Mason"]},
+  {"id": "iron-ore", "name": "Iron Ore", "kind": "item", "category": "Metals & ores", "icon": "https://example.test/ore.png", "is_raw": true, "obtain": "Gathered from iron ore deposits."},
+  {"id": "iron-ingot", "name": "Iron Ingot", "kind": "item", "category": "Metals & ores", "icon": "https://example.test/ingot.png", "is_raw": false},
+  {"id": "coal", "name": "Coal", "kind": "item", "category": "Fuel", "icon": "https://example.test/coal.png", "is_raw": false},
+  {"id": "nail", "name": "Nail", "kind": "item", "category": "Tools", "icon": "", "is_raw": false},
+  {"id": "wooden-box", "name": "Wooden Box", "kind": "item", "category": "Furniture", "icon": "https://example.test/box.png", "is_raw": false},
+  {"id": "simple-coffin", "name": "Simple Coffin", "kind": "item", "category": "Furniture", "icon": "https://example.test/coffin.png", "is_raw": false},
+  {"id": "beet-seed", "name": "Beet Seed", "kind": "item", "category": "Seeds", "icon": "https://example.test/seed.png", "is_raw": false},
+  {"id": "beet", "name": "Beet", "kind": "item", "category": "Crops", "icon": "https://example.test/beet.png", "is_raw": true},
+  {"id": "fertilizer", "name": "Fertilizer", "kind": "item", "category": "Crops", "icon": null, "is_raw": false},
+  {"id": "water-bucket", "name": "Water Bucket", "kind": "item", "category": "Liquids", "icon": null, "is_raw": false},
+  {"id": "workbench", "name": "Workbench", "kind": "station", "category": "Building: Workshop", "icon": "https://example.test/workbench.png", "is_raw": false},
+  {"id": "ancient-coin", "name": "Ancient Coin", "kind": "item", "category": "Valuables", "icon": null, "is_raw": true, "unobtainable": true, "listed": false,
+   "obtain": "Found in the old crypt </script><script>alert(1)</script> <!-- really"},
+  {"id": "rope", "name": "Rope", "icon": ""}
+]

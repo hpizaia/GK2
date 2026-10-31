@@ -1,0 +1,22 @@
+/* responsive.css: breakpoints (900px two columns, 1180px wide) and reduced motion. Keep LAST in the manifest. */
+@media (min-width: 900px) {
+  .tabs-desk { display: flex; }
+  .plan-empty { display: block; }
+  .tabs-mob-band { display: none; }
+  .brand-sub { display: inline; }
+  .search-row { max-width: 640px; margin: 0 auto; }
+  .results { left: var(--gutter-l); right: var(--gutter-r); }
+  .planner { grid-template-columns: minmax(300px, 380px) minmax(0, 1fr); align-items: start; }
+  .col-goals { position: sticky; top: calc(var(--hdr-h, 120px) + 16px); max-height: calc(100vh - var(--hdr-h, 120px) - 32px); overflow-y: auto; }
+}
+@media (min-width: 900px) and (max-width: 1179px) {
+  .brand-sub { display: none; }   /* make room for the theme switch beside the tabs (labels from 1180px) */
+}
+@media (min-width: 1180px) {
+  .summary-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
+  .theme-seg .theme-txt { position: static; width: auto; height: auto; overflow: visible; clip: auto; }
+  .theme-seg button { padding: 0 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

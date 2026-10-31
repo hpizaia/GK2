@@ -1,0 +1,11 @@
+{
+  "Beet Seed": {"pt": "Semente de beterraba", "source": "machine", "confidence": "guess"},
+  "Plank": {"pt": "Prancha", "source": "machine", "confidence": "guess"},
+  "Water Bucket": {"pt": "Balde de água", "source": "machine", "confidence": "guess"},
+  "Garden Bed": {"pt": "Canteiro", "source": "machine", "confidence": "guess"},
+  "Nail": {"pt": "Prego (máquina)", "source": "machine", "confidence": "guess"},
+  "__obtain": {
+    "Chopped from trees.": "Cortado de árvores.",
+    "50% chance": "50% de chance"
+  }
+}
