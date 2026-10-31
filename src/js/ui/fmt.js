@@ -103,16 +103,23 @@ GK.ui.fmt = (function () {
     return `${ins}${out ? " → " + num(out) : ""}${st}${r.quality ? " · " + t("quality." + r.quality) : ""}${tags.length ? " (" + tags.join(", ") + ")" : ""}`;
   }
   // labels for a list of options (`all` = the item's full list, kept for callers). The station is left out when
-  // every option uses the same one. Two options never read the same: a repeat gets the recipe's own name, then its id.
+  // every option uses the same one. Two options never read the same: a repeat gets a short tag, then a number.
+  // The tag is the recipe's own name cut before " from " (1.4.1): "Improve organ I from Any Skin" made the Pele
+  // selector 440-640 px wide on a 390 px phone; the cut keeps "Improve organ I" / "Improve organ II" apart.
+  function shortTag(r) {
+    const n = r.name ? name(r.name) : "";
+    const cut = n.split(/ from /i)[0].trim();
+    return cut.length > 28 ? cut.slice(0, 27).trimEnd() + "…" : cut;
+  }
   function recipeLabels(list, state, all) {
     const sid = (r) => (r.station && (r.station.id || r.station.en)) || "";
     const noStation = list.length > 1 && list.every((r) => sid(r) === sid(list[0]));
     const out = list.map((r, k) => recipeLabel(r, k, state, { noStation }));
     const dup = (k) => out.some((x, j) => j !== k && x === out[k]);
-    const extra = out.map((s, k) => (dup(k) && list[k].name && !list[k].quality ? " — " + name(list[k].name) : ""));
+    const extra = out.map((s, k) => (dup(k) && list[k].name && !list[k].quality && shortTag(list[k]) ? " — " + shortTag(list[k]) : ""));
     extra.forEach((x, k) => { out[k] += x; });
-    const ids = out.map((s, k) => (dup(k) ? " [" + list[k].id + "]" : ""));
-    ids.forEach((x, k) => { out[k] += x; });
+    const nth = out.map((s, k) => (dup(k) ? " #" + (k + 1) : ""));
+    nth.forEach((x, k) => { out[k] += x; });
     return out;
   }
   function techLine(r) {

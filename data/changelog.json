@@ -1,5 +1,29 @@
 [
   {
+    "version": "1.5.0",
+    "date": "2026-10-31",
+    "pt": [
+      "Cartão \"Próximo passo\" no topo do Planejador: uma frase com o que fazer agora, botão \"Feito\" que marca a linha na lista, \"Voltar um passo\" e contagem \"8 de 12\"",
+      "Listas separadas de metas (\"Lista: Igreja ▾\"): cada lista tem as próprias metas e marcações; tecnologias, vantagens e dias valem para todas. Com uma lista só, aparece apenas \"Criar outra lista\"",
+      "Recentes na busca: ao tocar na busca vazia, os últimos itens adicionados aparecem como atalho",
+      "Detalhe do item: bloco \"Onde conseguir\" (quem vende, onde pescar, isca) e, nas comidas, o balão de energia e efeito no estilo da ficha do jogo; a pilha aparece no canto do ícone",
+      "Rodapé enxuto: só \"Letra grande\", os três links e uma linha de versão. Os créditos dos dados foram para a tela Créditos",
+      "Aviso quando o jogo recebe um patch antes dos dados do app (hoje: jogo 1.011, receitas da wiki 1.010), no rodapé e numa faixa fechável sob as abas",
+      "QR code na tela Créditos, no computador, para abrir o app no celular",
+      "Correções no celular: espaço entre a quantidade e \"Já tenho\"; o seletor \"Fabricar com\" da Pele não estoura mais a largura"
+    ],
+    "en": [
+      "\"Next step\" card at the top of the Planner: one line with what to do now, a \"Done\" button that ticks the row in the list, \"Back one step\" and an \"8 of 12\" count",
+      "Separate goal lists (\"List: Church ▾\"): each list has its own goals and ticks; technologies, perks and days are shared. With a single list only \"Create another list\" shows",
+      "Recent items in the search: tapping the empty search shows the last items you added as shortcuts",
+      "Item detail: a \"Where to get\" block (who sells it, where to fish, bait) and, for food, the energy and effect bubble in the style of the game's item card; the stack size sits in the icon corner",
+      "Leaner footer: only \"Large text\", the three links and one version line. Data credits moved to the Credits screen",
+      "Notice when the game gets a patch before the app's data (today: game 1.011, wiki recipes 1.010), in the footer and in a closable band under the tabs",
+      "QR code on the Credits screen, on desktop, to open the app on your phone",
+      "Phone fixes: space between the quantity and \"Have it\"; the Skin row's \"Craft with\" selector no longer overflows the width"
+    ]
+  },
+  {
     "version": "1.4.0",
     "date": "2026-10-31",
     "pt": [

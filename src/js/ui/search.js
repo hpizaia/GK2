@@ -2,6 +2,9 @@
    ARIA combobox (APG "list autocomplete"): focus stays in the input, ↓/↑ move the active option
    (aria-activedescendant), Enter adds it (or the first one), Esc clears; the count is announced politely.
    Placeholder = the purpose ("Buscar item para fabricar…"), not the item count (1.3.4).
+   "Recentes": focusing the box while it is empty opens the same popup with the last RECENT_SHOWN items added to goals
+   (GK.store state.recents, newest first) as options; typing replaces them with the results; tap / Enter adds (same
+   action as a result). No recents = the popup stays closed, as before.
    Owns: [data-panel="search"]. Exposes: GK.ui.search.{mount, render, add}; registered as a panel.
 */
 GK.i18n.add({
@@ -17,6 +20,7 @@ GK.i18n.add({
     "search.recipes": "{station} · {n} receitas",
     "search.inList": "na lista: {n}",
     "search.add": "+ Adicionar",
+    "search.recent": "Recentes",
     "search.hiddenShow": "Mostrar itens ocultos",
     "search.hiddenMore.one": "Mostrar itens ocultos (+{n})",
     "search.hiddenMore.other": "Mostrar itens ocultos (+{n})",
@@ -37,6 +41,7 @@ GK.i18n.add({
     "search.recipes": "{station} · {n} recipes",
     "search.inList": "in list: {n}",
     "search.add": "+ Add",
+    "search.recent": "Recent",
     "search.hiddenShow": "Show hidden items",
     "search.hiddenMore.one": "Show hidden items (+{n})",
     "search.hiddenMore.other": "Show hidden items (+{n})",
@@ -51,6 +56,7 @@ GK.ui.search = (function () {
   const { t, name } = GK.i18n, { esc, slot } = GK.util;
   let root, input, pop, list, meta, status, clearBtn;
   let active = -1;   // index of the highlighted option (aria-activedescendant), -1 = none
+  const RECENT_SHOWN = 6;
   const options = () => [...list.querySelectorAll('[role="option"]')];
   function setOpen(open) {
     pop.hidden = !open;
@@ -67,7 +73,8 @@ GK.ui.search = (function () {
   function renderResults() {
     const q = input.value;
     clearBtn.hidden = !q;
-    if (!q.trim()) { list.innerHTML = ""; meta.innerHTML = ""; status.textContent = ""; setOpen(false); return; }
+    list.setAttribute("aria-labelledby", "q-label");
+    if (!q.trim()) { if (!renderRecent()) { list.innerHTML = ""; meta.innerHTML = ""; status.textContent = ""; setOpen(false); } return; }
     const st = GK.store.get(), D = GK.data.get();
     const { results, hiddenCount } = GK.calc.search(q, D, { lang: GK.i18n.lang(), overrides: st.overrides, showHidden: st.showHidden });
     const toggle = (st.showHidden || hiddenCount)
@@ -94,6 +101,24 @@ GK.ui.search = (function () {
     setOpen(true);
     setActive(-1);
   }
+  // the empty box, focused: the recents as options (icon + name, one line). false = none to show
+  function renderRecent() {
+    if (document.activeElement !== input) return false;
+    const st = GK.store.get(), ids = (st.recents || []).filter((id) => !!GK.data.item(id)).slice(0, RECENT_SHOWN);
+    if (!ids.length) return false;
+    meta.innerHTML = `<div class="results-meta"><span id="q-recent-h">${esc(t("search.recent"))}</span></div>`;
+    list.setAttribute("aria-labelledby", "q-recent-h");
+    list.innerHTML = ids.map((id, k) => {
+      const it = GK.data.item(id), nm = name(it, st.overrides);
+      return `<li class="result result-recent" role="option" id="q-opt-${k}" aria-selected="false" data-add="${esc(id)}">
+        ${slot(it, nm)}<span class="result-name">${esc(nm)}</span><span class="result-add" aria-hidden="true">${esc(t("search.add"))}</span>
+      </li>`;
+    }).join("");
+    status.textContent = "";
+    setOpen(true);
+    setActive(-1);
+    return true;
+  }
   const renderSoon = GK.util.debounce(renderResults, 70);
   function add(id) {
     const before = GK.store.get().goals.find((g) => g.item === id);
@@ -117,12 +142,17 @@ GK.ui.search = (function () {
     input.addEventListener("input", () => { clearBtn.hidden = !input.value; renderSoon(); });
     input.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
+        if (!input.value.trim()) {                     // the recents: Enter adds only the one picked with ↓/↑
+          const o = !pop.hidden && active >= 0 && options()[active];
+          if (o) { e.preventDefault(); add(o.dataset.add); }
+          return;
+        }
         renderResults();
         const opts = options(), o = opts[active >= 0 ? active : 0];
         if (o) { e.preventDefault(); add(o.dataset.add); }
       } else if (e.key === "Escape") { if (input.value) { e.preventDefault(); input.value = ""; renderResults(); } else setOpen(false); }
       else if (e.key === "ArrowDown") {
-        if (pop.hidden && input.value.trim()) renderResults();
+        if (pop.hidden) renderResults();
         if (options().length) { e.preventDefault(); setActive(active + 1); }
       } else if (e.key === "ArrowUp") {
         if (options().length) { e.preventDefault(); setActive(active <= 0 ? -1 : active - 1); }
@@ -133,10 +163,12 @@ GK.ui.search = (function () {
     list.addEventListener("mousedown", (e) => { if (e.target.closest('[role="option"]')) e.preventDefault(); });
     list.addEventListener("click", (e) => { const o = e.target.closest("[data-add]"); if (o) add(o.dataset.add); });
     meta.addEventListener("click", (e) => { if (e.target.closest("[data-hidden-toggle]")) GK.store.actions.setShowHidden(!GK.store.get().showHidden); });
-    clearBtn.addEventListener("click", () => { input.value = ""; renderResults(); input.focus(); });
+    clearBtn.addEventListener("click", () => { input.value = ""; input.focus(); renderResults(); });
     // e.target may have been re-rendered away (detached) by the click itself: not an outside click
     document.addEventListener("click", (e) => { if (e.target.isConnected && !root.contains(e.target)) setOpen(false); });
-    input.addEventListener("focus", () => { if (input.value.trim()) renderResults(); });
+    input.addEventListener("focus", () => renderResults());
+    // a tap on the box after Esc closed the popup brings it back (results, or the recents when empty)
+    input.addEventListener("click", () => { if (pop.hidden) renderResults(); });
   }
   function render(state, meta2) {
     input.placeholder = t("search.placeholder");

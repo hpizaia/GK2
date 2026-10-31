@@ -91,6 +91,40 @@ Special item kinds:
 - `virtual`: an item referenced only by name, with no wiki page (prayers, Story, Newspaper, Injection/Solution...).
 - `action`: a recipe "output" that is not an item: PR-machine zombie-limit buffs, repairs, opening doors, Summon Fairy.
 
+### facts.json
+
+`scripts/build_facts.py` reads `raw/api-items-all.json` (no download), `game-texts/gk2_textos.json` and
+`names.official.pt-BR.json`, and writes `facts.json`; `scripts/build.py` merges it into `gk2.json` and the page when
+it exists (src mode or the default inputs). Re-run it after `fetch_dataset.py items` or a names update.
+
+```jsonc
+{
+  "meta": {"source": "...", "counts": {"items": 544, "where": 292, "buy": 176, "fish": 22, "energy": 59, "insanity": 17,
+           "buff": 14, "stack": 544, "names": 156, "names_unofficial": 27, "buffs": 15}},
+  "names": {"vegetable-stand": {"en": "Vegetable Stand", "pt": "Banca de Vegetais", "key": "Vegetable_t1"},
+            "tree": {"en": "Tree", "pt": "Árvore", "tr": "machine"}},          // tr: machine | missing = not official
+  "buffs": {"building-spirit-ii": {"en": "Building spirit II", "pt": "Espírito da Engenharia II",
+            "d": {"en": "You temporarily have +2 Building mastery.", "pt": "..."}, "key": "buff_talent_orange_2"}},
+            // "dtr": "machine" when the description is a translated wiki chip (no game text)
+  "items": {
+    "pumpkin":      {"where": [["buy", "vegetable-stand", 2]], "use": {"en": 6}, "stack": 50},
+    "pumpkin-soup": {"use": {"en": 20, "enB": [22, "steamed-up"], "buff": ["building-spirit-ii", 450, 1]}, "stack": 30},
+    "bream":        {"where": [["fish", "village", "breadcrumb-bait", 50, 33.3]], "stack": 20}
+  }
+}
+```
+
+- `where` entries are `[kind, ref, ...]`; `ref` is a `names` key or `@<item id>` (the item's own name is used).
+  `buy`: `[.., trader, level]` (level omitted = from the start, `"talk"` = sold in conversation only; trader grades
+  Bronze/Silver/Gold collapse to one entry with the lowest level). `fish`: `[.., spot, bait item id, % by day,
+  % at night]`, the best bait of that spot. Other kinds: `gather quest battle chest found looter autopsy burial
+  container town study church start outfit resurrect character`. Wiki "Barracks" sources are skipped (the build
+  recipe says it). Order: buy, fish, gather, then wiki order.
+- `use`: `en` energy, `ins` insanity, `enB` / `insB` = `[value under the buff, buff key]` (the stat chip "+22 with
+  Steamed Up"), `buff` = `[buff key, seconds, 1 if using another restarts the timer]`.
+- In `gk2.json` the three fields land on `items[id]` and the tables in `meta.refs` (`{names, buffs}`, game keys
+  dropped).
+
 ## Endpoints / URLs used
 
 All JSON came from the wiki's public dataset API (plain GET, normal browser User-Agent, 1 request/s):

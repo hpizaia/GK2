@@ -1,0 +1,5863 @@
+{
+ "meta": {
+  "source": "data/raw/api-items-all.json (wikily.gg items dataset)",
+  "counts": {
+   "items": 544,
+   "where": 292,
+   "buy": 176,
+   "fish": 22,
+   "energy": 59,
+   "insanity": 17,
+   "buff": 14,
+   "stack": 544,
+   "names": 156,
+   "names_unofficial": 27,
+   "buffs": 15
+  },
+  "format": "data/README-data.md#facts"
+ },
+ "names": {
+  "abandoned-house": {
+   "en": "Abandoned House",
+   "pt": "Casa Abandonada",
+   "key": "wz_intro_scout_building"
+  },
+  "alchemist": {
+   "en": "Alchemist",
+   "pt": "Alquimista",
+   "key": "Alchemy_t1"
+  },
+  "alchemy-lab": {
+   "en": "Alchemy Lab",
+   "pt": "Laboratório de Alquimia",
+   "key": "builder_alchemy_lab"
+  },
+  "apothecary": {
+   "en": "Apothecary",
+   "pt": "Boticário",
+   "key": "Pharmacy_t1"
+  },
+  "apple-tree": {
+   "en": "Apple tree",
+   "pt": "Macieira",
+   "key": "garden_appletree"
+  },
+  "baker": {
+   "en": "Baker",
+   "pt": "Padeiro",
+   "key": "Bakery_t1"
+  },
+  "battle-at-the-lake": {
+   "en": "Battle at the Lake",
+   "pt": "Batalha no Lago",
+   "key": "fight_B5_1"
+  },
+  "beehive": {
+   "en": "Beehive",
+   "pt": "Colmeia",
+   "key": "honey_home_empty"
+  },
+  "berry-bush": {
+   "en": "Berry bush",
+   "pt": "Arbusto de Frutinhas",
+   "key": "bush_ashberry_clr1_xxs"
+  },
+  "bishop": {
+   "en": "Bishop",
+   "pt": "Bispo",
+   "key": "npc_bishop"
+  },
+  "blue-techbooks": {
+   "en": "Blue Techbooks",
+   "pt": "Livros Azuis de Tecnologia",
+   "key": "34_port_looters_order_4"
+  },
+  "blueberry-bush": {
+   "en": "Blueberry bush",
+   "pt": "Arbusto de mirtilo",
+   "key": "bush_blueberry_clr1_xxs"
+  },
+  "bodies": {
+   "en": "Bodies",
+   "pt": "Corpos",
+   "tr": "machine"
+  },
+  "book-broker": {
+   "en": "Book Broker",
+   "pt": "Negócio de Livros",
+   "key": "86_port_notebook_speak"
+  },
+  "brawns-and-brains": {
+   "en": "Brawns and Brains",
+   "pt": "Força e Inteligência",
+   "key": "73_crossroad_better_upgraded"
+  },
+  "break-through-to-the-bathhouse-basement": {
+   "en": "Break Through to the Bathhouse Basement",
+   "pt": "Conquista do Porão da Casa de Banho",
+   "key": "fight_C0_1"
+  },
+  "break-through-to-the-port": {
+   "en": "Break Through to the Port",
+   "pt": "Conquista do Porto",
+   "key": "fight_A1_1"
+  },
+  "brewery": {
+   "en": "Brewery",
+   "pt": "Cervejaria",
+   "key": "Brewery_t1"
+  },
+  "broken-barrel": {
+   "en": "Broken barrel",
+   "pt": "Barril quebrado",
+   "tr": "machine"
+  },
+  "broken-shelf": {
+   "en": "Broken shelf",
+   "pt": "Estante quebrada",
+   "tr": "machine"
+  },
+  "brown-mushrooms": {
+   "en": "Brown mushrooms",
+   "pt": "Cogumelos marrons",
+   "tr": "machine"
+  },
+  "builder": {
+   "en": "Builder",
+   "pt": "Construtor",
+   "key": "Builder_t1"
+  },
+  "burying-a-corpse": {
+   "en": "Burying a corpse",
+   "pt": "Enterrar um corpo",
+   "tr": "machine"
+  },
+  "bush": {
+   "en": "Bush",
+   "pt": "Arbusto",
+   "tr": "machine"
+  },
+  "campaign-of-thrones": {
+   "en": "Campaign of Thrones",
+   "pt": "Campanha dos Tronos",
+   "key": "90_village_elections_ready"
+  },
+  "can-t-see-the-forest-for-the-iron": {
+   "en": "Can't See The Forest for the Iron",
+   "pt": "Não Procure Ferro na Floresta",
+   "key": "57_forest_mine_convince"
+  },
+  "central-districts-purge-part-i": {
+   "en": "Central Districts Purge: Part I",
+   "pt": "Distritos Centrais: Purificação — Parte I",
+   "key": "fight_A4_1"
+  },
+  "central-districts-purge-part-ii": {
+   "en": "Central Districts Purge: Part II",
+   "pt": "Distritos Centrais: Purificação — Parte II",
+   "key": "fight_A4_2"
+  },
+  "chasing-fairy-lights": {
+   "en": "Chasing Fairy Lights",
+   "pt": "O Caça-Fadas",
+   "key": "28_base_fairy_summon"
+  },
+  "clay-spot": {
+   "en": "Clay spot",
+   "pt": "Ponto de argila",
+   "tr": "machine"
+  },
+  "closing-the-eastern-floodgate-part-i": {
+   "en": "Closing the Eastern Floodgate: Part I",
+   "pt": "Fechamento da Eclusa Oriental — Parte I",
+   "key": "fight_B2_1"
+  },
+  "closing-the-eastern-floodgate-part-ii": {
+   "en": "Closing the Eastern Floodgate: Part II",
+   "pt": "Fechamento da Eclusa Oriental — Parte II",
+   "key": "fight_B2_2"
+  },
+  "closing-the-western-floodgate": {
+   "en": "Closing the Western Floodgate",
+   "pt": "Fechamento da Eclusa Ocidental",
+   "key": "fight_B1_1"
+  },
+  "comrade-donkey": {
+   "en": "Comrade Donkey",
+   "pt": "Burro Camarada",
+   "key": "134_history_keeper_beer"
+  },
+  "concept-for-a-concert": {
+   "en": "Concept for a Concert",
+   "pt": "Conceito para um Concerto",
+   "key": "68_port_concert_start"
+  },
+  "copper-vein": {
+   "en": "Copper vein",
+   "pt": "Veio de cobre",
+   "tr": "machine"
+  },
+  "creepy-tree": {
+   "en": "Creepy tree",
+   "pt": "Árvore sinistra",
+   "tr": "machine"
+  },
+  "dead-tree": {
+   "en": "Dead tree",
+   "pt": "Árvore morta",
+   "tr": "machine"
+  },
+  "driftwood": {
+   "en": "Driftwood",
+   "pt": "Madeira flutuante",
+   "tr": "machine"
+  },
+  "dungeons-and-that-s-it-probably": {
+   "en": "Dungeons and... that's it, probably.",
+   "pt": "Masmorras e... é, acho que é só isso.",
+   "key": "18_base_doctor_encounter"
+  },
+  "eastern-districts-active-scouting": {
+   "en": "Eastern Districts: Active Scouting",
+   "pt": "Distritos Orientais: Investida de Sondagem",
+   "key": "fight_A2_1"
+  },
+  "eastern-districts-purge": {
+   "en": "Eastern Districts Purge",
+   "pt": "Distritos Orientais: Purificação",
+   "key": "fight_A2_2"
+  },
+  "even-more-portal-parts": {
+   "en": "Even More Portal Parts",
+   "pt": "Ainda Mais Partes do Portal",
+   "key": "156_base_pieces_sixth"
+  },
+  "eye-red-eye": {
+   "en": "Eye, Red Eye",
+   "pt": "Olho, Olho Vermelho",
+   "key": "114_base_god_ceremony"
+  },
+  "fighting-spirit-required": {
+   "en": "Fighting Spirit Required",
+   "pt": "Requer: Ímpeto da Batalha",
+   "key": "14_guard_faith_bring"
+  },
+  "final-battle": {
+   "en": "Final Battle",
+   "pt": "Última batalha",
+   "key": "fight_C1_1"
+  },
+  "finding-old-god": {
+   "en": "Finding Old God",
+   "pt": "Encontrando o Deus Antigo",
+   "key": "110_town_cheese_look"
+  },
+  "first-sludge": {
+   "en": "First... Sludge?",
+   "pt": "Primeira... borra?",
+   "key": "15_guards_fightback_win"
+  },
+  "fish-for-the-fisher": {
+   "en": "Fish for the Fisher",
+   "pt": "Um Peixe por Vez",
+   "key": "135_town_fisher_fish_good"
+  },
+  "fish-stand": {
+   "en": "Fish Stand",
+   "pt": "Peixaria",
+   "key": "Fish_t1"
+  },
+  "fishing": {
+   "en": "Fishing",
+   "pt": "Pesca",
+   "key": "ui_baits"
+  },
+  "forest": {
+   "en": "Forest",
+   "pt": "Floresta",
+   "key": "wz_forest"
+  },
+  "friend-or-foe": {
+   "en": "Friend or Foe",
+   "pt": "Amigo ou Inimigo",
+   "key": "111_base_dig_sleep"
+  },
+  "friendship-written-in-the-stars": {
+   "en": "Friendship Written in the Stars",
+   "pt": "Amizade Marcada nas Estrelas",
+   "key": "27_port_astrologer_meet"
+  },
+  "furniture-maker": {
+   "en": "Furniture Maker",
+   "pt": "Marceneiro",
+   "key": "Furniture_t1"
+  },
+  "garden-well-ii": {
+   "en": "Garden Well II",
+   "pt": "Poço do Jardim II",
+   "key": "well_garden_2"
+  },
+  "give-materials": {
+   "en": "Give materials",
+   "pt": "Entregar materiais",
+   "key": "12_village_boat_wood_1"
+  },
+  "go-wild-in-the-wild-lands": {
+   "en": "Go Wild in the Wild Lands",
+   "pt": "Vá com tudo nas Terras Selvagens",
+   "key": "162_village_pardon_ask"
+  },
+  "goddess-of-nature-statue": {
+   "en": "Goddess of Nature statue",
+   "pt": "Estátua da Deusa da Natureza",
+   "tr": "machine"
+  },
+  "graveyard": {
+   "en": "Graveyard",
+   "pt": "Cemitério",
+   "key": "wz_graveyard"
+  },
+  "green-fragment": {
+   "en": "Green Fragment",
+   "pt": "Fragmento Verde",
+   "key": "125_astrologer_third_fourth_sluise"
+  },
+  "green-men-from-far-lands": {
+   "en": "Green Men From Far Lands",
+   "pt": "Homens Verdes de Terras Distantes",
+   "key": "149_sluice_tools_land"
+  },
+  "green-techbooks": {
+   "en": "Green Techbooks",
+   "pt": "Livros Verdes de Tecnologia",
+   "key": "34_port_looters_order_3"
+  },
+  "gunter": {
+   "en": "Gunter",
+   "pt": "Gunter",
+   "key": "npc_astrologer"
+  },
+  "harold": {
+   "en": "Harold",
+   "pt": "Uriel",
+   "key": "npc_woodcarver"
+  },
+  "herbert-and": {
+   "en": "Herbert and?",
+   "pt": "Norberto e?",
+   "key": "45_guards_reading_book"
+  },
+  "herm": {
+   "en": "Herm",
+   "pt": "Hamilton",
+   "key": "npc_herm"
+  },
+  "high-price": {
+   "en": "High Price",
+   "pt": "Preço Salgado",
+   "key": "125_astrologer_third_ask"
+  },
+  "holy-moly": {
+   "en": "Holy Moly!",
+   "pt": "Çasinhora!",
+   "key": "17_village_nun_tavern"
+  },
+  "home": {
+   "en": "Home",
+   "pt": "Casa",
+   "key": "builder_home"
+  },
+  "homobonus-i": {
+   "en": "Homobonus I",
+   "pt": "Homobonus I",
+   "key": "139_town_homobonus_bottle"
+  },
+  "i-love-you-man": {
+   "en": "I Love You, Man",
+   "pt": "Eu Te Amo, Cara",
+   "key": "118_astrologer_project_ask"
+  },
+  "inquisition-base": {
+   "en": "Inquisition Base",
+   "pt": "Base da Inquisição",
+   "key": "wz_inquisitions_base"
+  },
+  "inquisition-dungeon": {
+   "en": "Inquisition Dungeon",
+   "pt": "Masmorra da Inquisição",
+   "key": "wz_prison"
+  },
+  "into-the-forest": {
+   "en": "Into the Forest",
+   "pt": "Rumo à Floresta",
+   "key": "37_village_forest_pass"
+  },
+  "iron-ore-deposit": {
+   "en": "Iron ore deposit",
+   "pt": "Jazida de minério de ferro",
+   "tr": "machine"
+  },
+  "jack-in-a-boat": {
+   "en": "Jack in a Boat",
+   "pt": "O Barco de Jailson",
+   "key": "12_village_boat_wood"
+  },
+  "jack-s-back-in-business": {
+   "en": "Jack's Back in Business",
+   "pt": "Jailson Volta à Ativa",
+   "key": "60_port_workshop_free"
+  },
+  "januarius": {
+   "en": "Januarius",
+   "pt": "Januário",
+   "key": "npc_head_of_the_village"
+  },
+  "jeweler": {
+   "en": "Jeweler",
+   "pt": "Joalheiro",
+   "key": "Jeweler_t1"
+  },
+  "junk-pile": {
+   "en": "Junk pile",
+   "pt": "Pilha de sucata",
+   "tr": "machine"
+  },
+  "love-story": {
+   "en": "Love Story",
+   "pt": "História de Amor",
+   "key": "115_linda_dawn_ask"
+  },
+  "lust-and-envy": {
+   "en": "Lust and Envy",
+   "pt": "Luxúria e Inveja",
+   "key": "160_linda_palace_help"
+  },
+  "magic-mirror": {
+   "en": "Magic Mirror",
+   "pt": "Espelho Mágico",
+   "key": "106_foundry_meeting_portal"
+  },
+  "man-of-steel": {
+   "en": "Man of Steel",
+   "pt": "Homem de Aço",
+   "key": "106_foundry_meeting_steel"
+  },
+  "marble-deposit": {
+   "en": "Marble deposit",
+   "pt": "Jazida de mármore",
+   "tr": "machine"
+  },
+  "market-square-purge": {
+   "en": "Market Square Purge",
+   "pt": "Praça do Mercado: Purificação",
+   "key": "fight_A3_1"
+  },
+  "more-portal-parts": {
+   "en": "More Portal Parts",
+   "pt": "Mais Partes do Portal",
+   "key": "143_workshop_piece_ask"
+  },
+  "night-flower": {
+   "en": "Night flower",
+   "pt": "Flor noturna",
+   "key": "flower_night"
+  },
+  "not-in-shining-armor-yet": {
+   "en": "Not in Shining Armor Yet",
+   "pt": "Uma Armadura Brilhante",
+   "key": "105_guards_armor_give"
+  },
+  "old-mine": {
+   "en": "Old Mine",
+   "pt": "Mina Antiga",
+   "key": "wz_mine"
+  },
+  "operation-potato-part-i": {
+   "en": "Operation POTATO: Part I",
+   "pt": "Operação BATATA: Parte I",
+   "key": "fight_B3_1"
+  },
+  "operation-potato-part-ii": {
+   "en": "Operation POTATO: Part II",
+   "pt": "Operação BATATA: Parte II",
+   "key": "fight_B3_2"
+  },
+  "organic-music": {
+   "en": "Organic Music",
+   "pt": "Música Orgânica",
+   "key": "146_stilt_master_meet"
+  },
+  "personal-zombie-zone": {
+   "en": "Personal Zombie Zone",
+   "pt": "Zona Pessoal dos Zumbis",
+   "key": "69_doctor_project_ask"
+  },
+  "planted-and-delivered": {
+   "en": "Planted and Delivered",
+   "pt": "Semeada e Colhida",
+   "key": "10_village_food_samples"
+  },
+  "plenty-of-fish-in-the-sea": {
+   "en": "Plenty of Fish in the Sea",
+   "pt": "O Mar tá pra Peixe!",
+   "key": "40_village_fishing_bring"
+  },
+  "port-area": {
+   "en": "Port Area",
+   "pt": "Área do Porto",
+   "key": "wz_port_area"
+  },
+  "pre-order-bonus": {
+   "en": "Pre-order bonus",
+   "pt": "Bônus da pré-venda",
+   "tr": "machine"
+  },
+  "press-for-cash": {
+   "en": "Press for Cash",
+   "pt": "Imprimir Dinheiro",
+   "key": "124_village_money_januarius"
+  },
+  "random-techbooks": {
+   "en": "Random Techbooks",
+   "pt": "Livros Aleatórios de Tecnologia",
+   "key": "34_port_looters_order_5"
+  },
+  "red-mushrooms": {
+   "en": "Red mushrooms",
+   "pt": "Cogumelos vermelhos",
+   "tr": "machine"
+  },
+  "red-techbooks": {
+   "en": "Red Techbooks",
+   "pt": "Livros Vermelhos de Tecnologia",
+   "key": "34_port_looters_order_2"
+  },
+  "repair-block": {
+   "en": "Repair Block",
+   "pt": "Consertar Estrutura",
+   "key": "repair_1105"
+  },
+  "repair-house": {
+   "en": "Repair House",
+   "pt": "Consertar Casa",
+   "key": "repair_1107"
+  },
+  "repair-large-house": {
+   "en": "Repair Large House",
+   "pt": "Consertar Casa Grande",
+   "key": "repair_1101"
+  },
+  "repair-small-house": {
+   "en": "Repair Small House",
+   "pt": "Consertar Casa Pequena",
+   "key": "repair_1108"
+  },
+  "resurrection-lab": {
+   "en": "Resurrection Lab",
+   "pt": "Laboratório de Ressurreição",
+   "key": "wz_resurrection"
+  },
+  "rhododendron-bush": {
+   "en": "Rhododendron bush",
+   "pt": "Arbusto de Rododendro",
+   "key": "bush_rhodod_clr1_xxs"
+  },
+  "rhyme-and-printed": {
+   "en": "Rhyme and Printed",
+   "pt": "Prensa e Verso",
+   "key": "77_astrologer_printing_book"
+  },
+  "safe-harbor": {
+   "en": "Safe Harbor",
+   "pt": "Porto Seguro",
+   "key": "29_port_linda_meet"
+  },
+  "sand-pit": {
+   "en": "Sand pit",
+   "pt": "Areal",
+   "tr": "machine"
+  },
+  "sawmill": {
+   "en": "Sawmill",
+   "pt": "Serraria",
+   "key": "wz_sawmill"
+  },
+  "seeds": {
+   "en": "Seeds",
+   "pt": "Sementes",
+   "key": "34_port_looters_order_9"
+  },
+  "sermons": {
+   "en": "Sermons",
+   "pt": "Sermões",
+   "tr": "machine"
+  },
+  "sewer-brawl-i": {
+   "en": "Sewer Brawl I",
+   "pt": "Batalha no Esgoto I",
+   "key": "fight_S1_1"
+  },
+  "sewer-brawl-ii": {
+   "en": "Sewer Brawl II",
+   "pt": "Batalha no Esgoto II",
+   "key": "fight_S2_1"
+  },
+  "sewerena-the-sewer-arena": {
+   "en": "Sewerena (The Sewer Arena)",
+   "pt": "Esgotarena (A Arena do Esgoto)",
+   "key": "fight_S0_1"
+  },
+  "sewers": {
+   "en": "Sewers",
+   "pt": "Esgotos",
+   "key": "wz_sewers"
+  },
+  "smithy": {
+   "en": "Smithy",
+   "pt": "Forja",
+   "key": "Blacksmith_t1"
+  },
+  "stars-lies-contracts": {
+   "en": "Stars, Lies, & Contracts",
+   "pt": "Estrelas, Mentiras e Contratos",
+   "key": "78_astrologer_jack_signed"
+  },
+  "stone-deposit": {
+   "en": "Stone deposit",
+   "pt": "Jazida de pedra",
+   "tr": "machine"
+  },
+  "suit-up": {
+   "en": "Suit Up!",
+   "pt": "Vista-se bem!",
+   "key": "tech_customization"
+  },
+  "swamp": {
+   "en": "Swamp",
+   "pt": "Pântano",
+   "key": "wz_swamp"
+  },
+  "swamp-mushrooms": {
+   "en": "Swamp mushrooms",
+   "pt": "Cogumelos do pântano",
+   "tr": "machine"
+  },
+  "sweet-dreams": {
+   "en": "Sweet Dreams",
+   "pt": "Durma Bem!",
+   "key": "24_doctor_zombies_powder"
+  },
+  "swords-and-bell": {
+   "en": "Swords and Bell",
+   "pt": "Espadas e Sino",
+   "key": "14_guard_faith_swords"
+  },
+  "tailor": {
+   "en": "Tailor",
+   "pt": "Alfaiate",
+   "key": "Tailor_t1"
+  },
+  "tales-for-ales": {
+   "en": "Tales for Ales",
+   "pt": "Contos e Cervejas",
+   "key": "102_town_captain_beer"
+  },
+  "tavern": {
+   "en": "Tavern",
+   "pt": "Taberna",
+   "key": "Shalman_t1"
+  },
+  "the-hungry-cosmos": {
+   "en": "The Hungry Cosmos",
+   "pt": "O Cosmos Faminto",
+   "key": "108_astrologer_pieces_second"
+  },
+  "the-ingenious-gentleman-don-keyote": {
+   "en": "The Ingenious Gentleman Don Keyote",
+   "pt": "O Engenhoso Burro Dom Quixote",
+   "key": "55_base_strike_donkey"
+  },
+  "the-keeper-s-tool-belt": {
+   "en": "The Keeper's tool belt",
+   "pt": "Cinto de ferramentas do Coveiro",
+   "tr": "machine"
+  },
+  "the-last-battle": {
+   "en": "The Last Battle",
+   "pt": "A Batalha Final",
+   "key": "126_pre-C1-fights_approach"
+  },
+  "the-lord-s-vintage": {
+   "en": "The Lord's Vintage",
+   "pt": "A Safra do Senhor",
+   "key": "128_foundry_wine_bring"
+  },
+  "the-nun-also-reads": {
+   "en": "The Nun Also Reads",
+   "pt": "A Freira Também Lê",
+   "key": "72_crossroad_reader_convence"
+  },
+  "the-nun-with-the-hairy-ass": {
+   "en": "The Nun with the Hairy Ass",
+   "pt": "A Freira do Burro Peludo",
+   "key": "42_crossroad_nun_donkey"
+  },
+  "the-prologue": {
+   "en": "The prologue",
+   "pt": "O prólogo",
+   "tr": "machine"
+  },
+  "the-quiet-art": {
+   "en": "The Quiet Art",
+   "pt": "O Pescado do Acordo",
+   "key": "163_village_fish_rod"
+  },
+  "trademaster": {
+   "en": "Trademaster",
+   "pt": "Gerente Comercial",
+   "key": "npc_warehouse_manager"
+  },
+  "trash-pile": {
+   "en": "Trash pile",
+   "pt": "Pilha de lixo",
+   "tr": "machine"
+  },
+  "tree": {
+   "en": "Tree",
+   "pt": "Árvore",
+   "tr": "machine"
+  },
+  "tree-stump": {
+   "en": "Tree stump",
+   "pt": "Toco de árvore",
+   "tr": "machine"
+  },
+  "two-peas-in-a-pod": {
+   "en": "Two Peas in a Pod",
+   "pt": "Unha e Carne",
+   "key": "9_village_brothers_discussion"
+  },
+  "valuables": {
+   "en": "Valuables",
+   "pt": "Itens Valiosos",
+   "key": "34_port_looters_order_8"
+  },
+  "varnish-before-you-fiddle": {
+   "en": "Varnish Before You Fiddle",
+   "pt": "Envernize Antes de Mexer",
+   "key": "64_doctor_violine_ask"
+  },
+  "vegetable-stand": {
+   "en": "Vegetable Stand",
+   "pt": "Banca de Vegetais",
+   "key": "Vegetable_t1"
+  },
+  "village": {
+   "en": "Village",
+   "pt": "Aldeia",
+   "key": "wz_village"
+  },
+  "water-well": {
+   "en": "Water well",
+   "pt": "Poço de água",
+   "key": "well_garden_1"
+  },
+  "wealthy-clients": {
+   "en": "Wealthy Clients",
+   "pt": "Clientes Prósperos",
+   "key": "112_linda_wealth_orders"
+  },
+  "well-deserved-rest": {
+   "en": "Well-Deserved Rest",
+   "pt": "Um Descanso Merecido",
+   "key": "117_crossroad_calm_ask"
+  },
+  "wharf-rats": {
+   "en": "Wharf Rats",
+   "pt": "Ratos do Porto",
+   "key": "34_port_looters_meet"
+  },
+  "wild-beehive": {
+   "en": "Wild beehive",
+   "pt": "Colmeia selvagem",
+   "tr": "machine"
+  },
+  "workshop-hours": {
+   "en": "Workshop Hours",
+   "pt": "Horário da Oficina",
+   "key": "58_port_supplies_order"
+  },
+  "yard": {
+   "en": "Yard",
+   "pt": "Pátio",
+   "key": "builder_yard"
+  },
+  "yummies": {
+   "en": "Yummies",
+   "pt": "Festa das Guloseimas",
+   "key": "41_forest_bonfire_food"
+  }
+ },
+ "buffs": {
+  "beer-thirst": {
+   "en": "Beer thirst",
+   "pt": "Sede de cerveja",
+   "d": {
+    "en": "Beer tastes much better now!",
+    "pt": "Agora a cerveja está com um gosto muito melhor!"
+   },
+   "key": "buff_beer"
+  },
+  "berserk": {
+   "en": "Berserk",
+   "pt": "Enfurecido",
+   "d": {
+    "en": "Your attacks no longer consume stamina.",
+    "pt": "Seus ataques não consomem mais vigor."
+   },
+   "key": "buff_berserk_1"
+  },
+  "berserk-ii": {
+   "en": "Berserk II",
+   "pt": "Enfurecido II",
+   "d": {
+    "en": "Your attacks no longer consume stamina.",
+    "pt": "Seus ataques não consomem mais vigor."
+   },
+   "key": "buff_berserk_2"
+  },
+  "berserk-iii": {
+   "en": "Berserk III",
+   "pt": "Enfurecido III",
+   "d": {
+    "en": "Your attacks no longer consume stamina.",
+    "pt": "Seus ataques não consomem mais vigor."
+   },
+   "key": "buff_berserk_3"
+  },
+  "building-spirit-ii": {
+   "en": "Building spirit II",
+   "pt": "Espírito da Engenharia II",
+   "d": {
+    "en": "You temporarily have +2 Building mastery.",
+    "pt": "Você tem temporariamente +2 Engenharia."
+   },
+   "key": "buff_talent_orange_2"
+  },
+  "farming-spirit-ii": {
+   "en": "Farming spirit II",
+   "pt": "Espírito da Agricultura II",
+   "d": {
+    "en": "You temporarily have +2 Farming mastery.",
+    "pt": "Você tem temporariamente +2 Agricultura."
+   },
+   "key": "buff_talent_green_2"
+  },
+  "fighter": {
+   "en": "Fighter",
+   "pt": "Lutador",
+   "d": {
+    "en": "Your damage is slightly increased.",
+    "pt": "Seu dano aumenta ligeiramente."
+   },
+   "key": "buff_damage_1"
+  },
+  "fighter-ii": {
+   "en": "Fighter II",
+   "pt": "Lutador II",
+   "d": {
+    "en": "Your damage is increased.",
+    "pt": "Seu dano aumenta."
+   },
+   "key": "buff_damage_2"
+  },
+  "fighter-iii": {
+   "en": "Fighter III",
+   "pt": "Lutador III",
+   "d": {
+    "en": "Your damage is greatly increased.",
+    "pt": "Seu dano aumenta bastante."
+   },
+   "key": "buff_damage_3"
+  },
+  "smithing-spirit-ii": {
+   "en": "Smithing spirit II",
+   "pt": "Espírito da Metalurgia II",
+   "d": {
+    "en": "You temporarily have +2 Smithing mastery.",
+    "pt": "Você tem temporariamente +2 Metalurgia."
+   },
+   "key": "buff_talent_red_2"
+  },
+  "steamed-up": {
+   "en": "Steamed Up",
+   "pt": "Aquecido",
+   "d": {
+    "en": "You feel refreshed after your sauna: food gives +10% energy.",
+    "pt": "Você se sente revigorado após a sauna: alimentos concedem +10% de energia."
+   },
+   "key": "buff_sauna"
+  },
+  "third-eye-salt": {
+   "en": "Third Eye Salt",
+   "pt": "Sal do Terceiro Olho",
+   "d": {
+    "en": "+2 to all five masteries",
+    "pt": "+2 nas cinco maestrias"
+   },
+   "dtr": "machine",
+   "key": "third_eye_salt"
+  },
+  "zombie-motivation": {
+   "en": "Zombie Motivation",
+   "pt": "Motivação Zumbi",
+   "d": {
+    "en": "Allied fighters' attack speed is increased.",
+    "pt": "A velocidade de ataque dos lutadores aliados aumenta."
+   },
+   "key": "buff_motivator_1"
+  },
+  "zombie-motivation-ii": {
+   "en": "Zombie Motivation II",
+   "pt": "Motivação Zumbi II",
+   "d": {
+    "en": "Allied fighters' attack speed is increased.",
+    "pt": "A velocidade de ataque dos lutadores aliados aumenta."
+   },
+   "key": "buff_motivator_2"
+  },
+  "zombie-motivation-iii": {
+   "en": "Zombie Motivation III",
+   "pt": "Motivação Zumbi III",
+   "d": {
+    "en": "Allied fighters' attack speed is increased.",
+    "pt": "A velocidade de ataque dos lutadores aliados aumenta."
+   },
+   "key": "buff_motivator_3"
+  }
+ },
+ "items": {
+  "acid": {
+   "stack": 20
+  },
+  "advanced-detail": {
+   "where": [
+    [
+     "buy",
+     "smithy",
+     2
+    ]
+   ],
+   "stack": 30
+  },
+  "advanced-rod": {
+   "where": [
+    [
+     "buy",
+     "fish-stand",
+     2
+    ]
+   ],
+   "stack": 1
+  },
+  "albedo-tear": {
+   "stack": 50
+  },
+  "alchemic-powder": {
+   "where": [
+    [
+     "buy",
+     "apothecary"
+    ]
+   ],
+   "stack": 99
+  },
+  "alchemist-s-bag": {
+   "where": [
+    [
+     "buy",
+     "apothecary"
+    ]
+   ],
+   "stack": 1
+  },
+  "alchemist-s-clothes": {
+   "where": [
+    [
+     "quest",
+     "sweet-dreams"
+    ]
+   ],
+   "stack": 1
+  },
+  "alchemist-s-kit": {
+   "stack": 1
+  },
+  "alchemist-s-note": {
+   "where": [
+    [
+     "chest",
+     "alchemy-lab"
+    ]
+   ],
+   "stack": 1
+  },
+  "alchemy-flasks": {
+   "stack": 100
+  },
+  "alchemy-flasks-i": {
+   "where": [
+    [
+     "buy",
+     "apothecary"
+    ],
+    [
+     "chest",
+     "alchemy-lab"
+    ]
+   ],
+   "stack": 99
+  },
+  "alchemy-flasks-ii": {
+   "where": [
+    [
+     "buy",
+     "apothecary",
+     3
+    ]
+   ],
+   "stack": 99
+  },
+  "alcohol": {
+   "where": [
+    [
+     "buy",
+     "apothecary",
+     2
+    ]
+   ],
+   "stack": 99
+  },
+  "alkali": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "stack": 20
+  },
+  "alum": {
+   "stack": 20
+  },
+  "amateur-rod": {
+   "where": [
+    [
+     "buy",
+     "fish-stand"
+    ]
+   ],
+   "stack": 1
+  },
+  "anchovy": {
+   "where": [
+    [
+     "fish",
+     "port-area",
+     "breadcrumb-bait",
+     66.7,
+     33.3
+    ]
+   ],
+   "stack": 20
+  },
+  "anima-mundi-fragment": {
+   "stack": 50
+  },
+  "apple": {
+   "where": [
+    [
+     "buy",
+     "vegetable-stand"
+    ],
+    [
+     "gather",
+     "apple-tree"
+    ]
+   ],
+   "use": {
+    "en": 3
+   },
+   "stack": 20
+  },
+  "apple-cider": {
+   "where": [
+    [
+     "buy",
+     "tavern"
+    ],
+    [
+     "buy",
+     "brewery"
+    ]
+   ],
+   "use": {
+    "ins": -7
+   },
+   "stack": 50
+  },
+  "apple-juice": {
+   "use": {
+    "en": 25
+   },
+   "stack": 50
+  },
+  "apple-tree-seedling": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     3
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 20
+  },
+  "aqua-vitae": {
+   "stack": 20
+  },
+  "archer-tower-i": {
+   "stack": 99
+  },
+  "archer-tower-ii": {
+   "stack": 99
+  },
+  "archer-tower-iii": {
+   "stack": 99
+  },
+  "ash": {
+   "where": [
+    [
+     "buy",
+     "apothecary"
+    ]
+   ],
+   "stack": 99
+  },
+  "baked-apple": {
+   "use": {
+    "en": 21,
+    "enB": [
+     23,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "baked-fish": {
+   "use": {
+    "en": 40,
+    "enB": [
+     44,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "baked-meat": {
+   "use": {
+    "en": 40,
+    "enB": [
+     44,
+     "steamed-up"
+    ],
+    "ins": 10
+   },
+   "stack": 30
+  },
+  "baked-mushrooms": {
+   "use": {
+    "en": 27,
+    "enB": [
+     30,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "baked-pumpkin": {
+   "use": {
+    "en": 25,
+    "enB": [
+     28,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "baked-salmon": {
+   "use": {
+    "en": 40,
+    "enB": [
+     44,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "barricade-i": {
+   "stack": 99
+  },
+  "barricade-ii": {
+   "stack": 99
+  },
+  "barricade-iii": {
+   "stack": 99
+  },
+  "basic-rod": {
+   "where": [
+    [
+     "quest",
+     "two-peas-in-a-pod"
+    ]
+   ],
+   "stack": 1
+  },
+  "battle-bow": {
+   "stack": 1
+  },
+  "battle-loot": {
+   "stack": 10
+  },
+  "battle-pike": {
+   "where": [
+    [
+     "buy",
+     "smithy",
+     2
+    ]
+   ],
+   "stack": 1
+  },
+  "beer": {
+   "where": [
+    [
+     "buy",
+     "januarius"
+    ],
+    [
+     "buy",
+     "tavern"
+    ],
+    [
+     "buy",
+     "brewery"
+    ],
+    [
+     "chest",
+     "yard"
+    ]
+   ],
+   "use": {
+    "ins": -12,
+    "insB": [
+     -24,
+     "beer-thirst"
+    ]
+   },
+   "stack": 50
+  },
+  "beeswax": {
+   "where": [
+    [
+     "gather",
+     "beehive"
+    ],
+    [
+     "gather",
+     "wild-beehive"
+    ]
+   ],
+   "stack": 30
+  },
+  "beet": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "use": {
+    "en": 3
+   },
+   "stack": 50
+  },
+  "beet-seed": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 50
+  },
+  "beet-slices": {
+   "use": {
+    "en": 15,
+    "enB": [
+     17,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "berry": {
+   "where": [
+    [
+     "gather",
+     "berry-bush"
+    ],
+    [
+     "chest",
+     "home"
+    ]
+   ],
+   "use": {
+    "en": 3
+   },
+   "stack": 50
+  },
+  "berry-cider": {
+   "where": [
+    [
+     "buy",
+     "tavern"
+    ],
+    [
+     "buy",
+     "brewery"
+    ]
+   ],
+   "use": {
+    "ins": -7
+   },
+   "stack": 50
+  },
+  "berry-juice": {
+   "use": {
+    "en": 25
+   },
+   "stack": 50
+  },
+  "berry-pie": {
+   "where": [
+    [
+     "buy",
+     "januarius"
+    ],
+    [
+     "buy",
+     "baker"
+    ]
+   ],
+   "use": {
+    "en": 30,
+    "enB": [
+     33,
+     "steamed-up"
+    ],
+    "ins": -3
+   },
+   "stack": 30
+  },
+  "berry-smoothie": {
+   "use": {
+    "en": 25,
+    "enB": [
+     28,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "berserker-potion": {
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "use": {
+    "buff": [
+     "berserk",
+     15,
+     1
+    ]
+   },
+   "stack": 20
+  },
+  "berserker-potion-ii": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "use": {
+    "buff": [
+     "berserk-ii",
+     30,
+     1
+    ]
+   },
+   "stack": 20
+  },
+  "berserker-potion-iii": {
+   "use": {
+    "buff": [
+     "berserk-iii",
+     45,
+     1
+    ]
+   },
+   "stack": 20
+  },
+  "big-universal-bag": {
+   "where": [
+    [
+     "buy",
+     "tailor",
+     2
+    ]
+   ],
+   "stack": 1
+  },
+  "black-oil": {
+   "stack": 20
+  },
+  "blacksmith-s-clothes": {
+   "where": [
+    [
+     "quest",
+     "jack-in-a-boat"
+    ]
+   ],
+   "stack": 1
+  },
+  "blank-hardcover-notebook": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "stack": 30
+  },
+  "blank-softcover-notebook": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "stack": 30
+  },
+  "blood": {
+   "where": [
+    [
+     "chest",
+     "alchemy-lab"
+    ],
+    [
+     "autopsy",
+     "bodies"
+    ]
+   ],
+   "stack": 99
+  },
+  "blue-crystal": {
+   "where": [
+    [
+     "buy",
+     "gunter",
+     2
+    ],
+    [
+     "gather",
+     "goddess-of-nature-statue"
+    ]
+   ],
+   "stack": 20
+  },
+  "blue-techbook": {
+   "where": [
+    [
+     "looter",
+     "blue-techbooks"
+    ],
+    [
+     "looter",
+     "random-techbooks"
+    ]
+   ],
+   "stack": 10
+  },
+  "blue-techbook-ii": {
+   "where": [
+    [
+     "looter",
+     "blue-techbooks"
+    ],
+    [
+     "looter",
+     "random-techbooks"
+    ]
+   ],
+   "stack": 10
+  },
+  "blueberry": {
+   "where": [
+    [
+     "gather",
+     "blueberry-bush"
+    ]
+   ],
+   "use": {
+    "en": 4
+   },
+   "stack": 50
+  },
+  "blueberry-cider": {
+   "where": [
+    [
+     "buy",
+     "tavern"
+    ]
+   ],
+   "use": {
+    "ins": -10
+   },
+   "stack": 50
+  },
+  "blueberry-juice": {
+   "use": {
+    "en": 35
+   },
+   "stack": 50
+  },
+  "blueberry-seedling": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     3
+    ],
+    [
+     "buy",
+     "vegetable-stand",
+     2
+    ]
+   ],
+   "stack": 30
+  },
+  "board": {
+   "where": [
+    [
+     "buy",
+     "builder"
+    ],
+    [
+     "gather",
+     "broken-barrel"
+    ],
+    [
+     "gather",
+     "trash-pile"
+    ],
+    [
+     "gather",
+     "broken-shelf"
+    ],
+    [
+     "chest",
+     "yard"
+    ]
+   ],
+   "stack": 50
+  },
+  "boiled-egg": {
+   "use": {
+    "en": 10
+   },
+   "stack": 30
+  },
+  "bones": {
+   "where": [
+    [
+     "autopsy",
+     "@autopsy-table-i"
+    ]
+   ],
+   "stack": 20
+  },
+  "brain": {
+   "where": [
+    [
+     "autopsy",
+     "@autopsy-table-i"
+    ]
+   ],
+   "stack": 20
+  },
+  "bread": {
+   "where": [
+    [
+     "buy",
+     "baker"
+    ],
+    [
+     "chest",
+     "home"
+    ]
+   ],
+   "use": {
+    "en": 18,
+    "enB": [
+     20,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "breadcrumb-bait": {
+   "stack": 20
+  },
+  "bream": {
+   "where": [
+    [
+     "fish",
+     "village",
+     "breadcrumb-bait",
+     50,
+     33.3
+    ]
+   ],
+   "stack": 20
+  },
+  "brick": {
+   "where": [
+    [
+     "buy",
+     "builder"
+    ]
+   ],
+   "stack": 50
+  },
+  "brimstone": {
+   "stack": 20
+  },
+  "broken-ceramic": {
+   "stack": 50
+  },
+  "bronze-armor": {
+   "where": [
+    [
+     "buy",
+     "smithy"
+    ]
+   ],
+   "stack": 1
+  },
+  "bronze-axe": {
+   "stack": 1
+  },
+  "bronze-chisel": {
+   "stack": 30
+  },
+  "bronze-detail": {
+   "where": [
+    [
+     "buy",
+     "furniture-maker"
+    ],
+    [
+     "buy",
+     "smithy"
+    ]
+   ],
+   "stack": 30
+  },
+  "bronze-gear": {
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     2
+    ],
+    [
+     "buy",
+     "smithy",
+     2
+    ]
+   ],
+   "stack": 30
+  },
+  "bronze-hammer": {
+   "where": [
+    [
+     "buy",
+     "smithy"
+    ]
+   ],
+   "stack": 1
+  },
+  "bronze-ingot": {
+   "where": [
+    [
+     "buy",
+     "smithy"
+    ]
+   ],
+   "stack": 30
+  },
+  "bronze-nails": {
+   "where": [
+    [
+     "buy",
+     "furniture-maker"
+    ],
+    [
+     "buy",
+     "builder"
+    ],
+    [
+     "buy",
+     "smithy"
+    ],
+    [
+     "gather",
+     "broken-barrel"
+    ],
+    [
+     "gather",
+     "trash-pile"
+    ],
+    [
+     "gather",
+     "broken-shelf"
+    ],
+    [
+     "gather",
+     "junk-pile"
+    ]
+   ],
+   "stack": 99
+  },
+  "bronze-pickaxe": {
+   "stack": 1
+  },
+  "bronze-scrap": {
+   "where": [
+    [
+     "buy",
+     "herm"
+    ],
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "buy",
+     "jeweler"
+    ],
+    [
+     "buy",
+     "smithy"
+    ],
+    [
+     "gather",
+     "broken-barrel"
+    ],
+    [
+     "gather",
+     "trash-pile"
+    ],
+    [
+     "gather",
+     "broken-shelf"
+    ],
+    [
+     "gather",
+     "junk-pile"
+    ]
+   ],
+   "stack": 50
+  },
+  "bronze-shovel": {
+   "where": [
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 1
+  },
+  "bronze-sword": {
+   "where": [
+    [
+     "buy",
+     "smithy"
+    ]
+   ],
+   "stack": 1
+  },
+  "bronze-talisman": {
+   "where": [
+    [
+     "buy",
+     "jeweler"
+    ]
+   ],
+   "stack": 1
+  },
+  "bronze-tools": {
+   "where": [
+    [
+     "buy",
+     "jeweler"
+    ]
+   ],
+   "stack": 1
+  },
+  "bronze-zombie-collar": {
+   "where": [
+    [
+     "buy",
+     "jeweler"
+    ],
+    [
+     "chest",
+     "resurrection-lab"
+    ]
+   ],
+   "stack": 10
+  },
+  "brown-mushroom": {
+   "where": [
+    [
+     "gather",
+     "brown-mushrooms"
+    ]
+   ],
+   "use": {
+    "en": 4
+   },
+   "stack": 20
+  },
+  "builder-s-bag": {
+   "where": [
+    [
+     "buy",
+     "furniture-maker"
+    ],
+    [
+     "buy",
+     "builder"
+    ]
+   ],
+   "stack": 1
+  },
+  "building-kit-i": {
+   "where": [
+    [
+     "buy",
+     "builder"
+    ]
+   ],
+   "stack": 30
+  },
+  "building-kit-ii": {
+   "where": [
+    [
+     "buy",
+     "builder",
+     2
+    ]
+   ],
+   "stack": 30
+  },
+  "burger": {
+   "use": {
+    "en": 80,
+    "enB": [
+     88,
+     "steamed-up"
+    ],
+    "ins": 5
+   },
+   "stack": 30
+  },
+  "burial-certificate-i": {
+   "where": [
+    [
+     "burial",
+     "burying-a-corpse"
+    ]
+   ],
+   "stack": 30
+  },
+  "burial-certificate-ii": {
+   "where": [
+    [
+     "burial",
+     "burying-a-corpse"
+    ]
+   ],
+   "stack": 30
+  },
+  "burial-certificate-iii": {
+   "where": [
+    [
+     "burial",
+     "burying-a-corpse"
+    ]
+   ],
+   "stack": 30
+  },
+  "bush-seedling": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     3
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 30
+  },
+  "butcher-s-kit": {
+   "stack": 1
+  },
+  "cabbage": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "use": {
+    "en": 4
+   },
+   "stack": 50
+  },
+  "cabbage-seed": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ],
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "looter",
+     "seeds"
+    ]
+   ],
+   "stack": 50
+  },
+  "cabbage-soup": {
+   "where": [
+    [
+     "buy",
+     "tavern"
+    ]
+   ],
+   "use": {
+    "en": 25,
+    "enB": [
+     28,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "cacao": {
+   "where": [
+    [
+     "buy",
+     "trademaster"
+    ]
+   ],
+   "stack": 50
+  },
+  "cake": {
+   "stack": 1
+  },
+  "camphor": {
+   "stack": 20
+  },
+  "carp": {
+   "where": [
+    [
+     "fish",
+     "forest",
+     "breadcrumb-bait",
+     33.3,
+     66.7
+    ]
+   ],
+   "stack": 20
+  },
+  "carpet": {
+   "stack": 30
+  },
+  "carrot": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "use": {
+    "en": 2
+   },
+   "stack": 50
+  },
+  "carrot-cutlet": {
+   "use": {
+    "en": 15,
+    "enB": [
+     17,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "carrot-seed": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 50
+  },
+  "carrot-soup": {
+   "where": [
+    [
+     "buy",
+     "tavern"
+    ]
+   ],
+   "use": {
+    "en": 19,
+    "enB": [
+     21,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "carved-marble": {
+   "where": [
+    [
+     "buy",
+     "builder",
+     3
+    ]
+   ],
+   "stack": 30
+  },
+  "carved-stone": {
+   "where": [
+    [
+     "buy",
+     "builder",
+     2
+    ]
+   ],
+   "stack": 30
+  },
+  "carved-wood": {
+   "stack": 30
+  },
+  "catalyst": {
+   "stack": 20
+  },
+  "catfish": {
+   "where": [
+    [
+     "fish",
+     "swamp",
+     "breadcrumb-bait",
+     30.8,
+     30.8
+    ]
+   ],
+   "stack": 20
+  },
+  "celestial-salmon": {
+   "where": [
+    [
+     "fish",
+     "forest",
+     "live-bait",
+     100,
+     100
+    ]
+   ],
+   "stack": 20
+  },
+  "ceramic-plate": {
+   "stack": 50
+  },
+  "ceramic-urn": {
+   "stack": 50
+  },
+  "chaos-spagyric-root": {
+   "stack": 50
+  },
+  "charged-hypno-device": {
+   "stack": 20
+  },
+  "cheese": {
+   "where": [
+    [
+     "found",
+     "abandoned-house"
+    ],
+    [
+     "chest",
+     "graveyard"
+    ],
+    [
+     "quest",
+     "go-wild-in-the-wild-lands"
+    ],
+    [
+     "quest",
+     "finding-old-god"
+    ],
+    [
+     "quest",
+     "chasing-fairy-lights"
+    ]
+   ],
+   "use": {
+    "en": 50,
+    "enB": [
+     55,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "chicken-egg": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "baker"
+    ]
+   ],
+   "stack": 30
+  },
+  "chocolate": {
+   "use": {
+    "en": 50,
+    "ins": -20
+   },
+   "stack": 20
+  },
+  "cinnabar": {
+   "stack": 20
+  },
+  "clay": {
+   "where": [
+    [
+     "gather",
+     "clay-spot"
+    ]
+   ],
+   "stack": 99
+  },
+  "clay-molds": {
+   "stack": 30
+  },
+  "clay-plate": {
+   "stack": 50
+  },
+  "clay-urn": {
+   "stack": 50
+  },
+  "clean-paper": {
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ],
+    [
+     "chest",
+     "alchemy-lab"
+    ]
+   ],
+   "stack": 50
+  },
+  "coal": {
+   "stack": 99
+  },
+  "comet-s-tail": {
+   "where": [
+    [
+     "buy",
+     "gunter"
+    ],
+    [
+     "buy",
+     "apothecary"
+    ]
+   ],
+   "stack": 20
+  },
+  "comfortable-chair": {
+   "stack": 1
+  },
+  "coniunctio-salt": {
+   "stack": 50
+  },
+  "copper-detail": {
+   "stack": 50
+  },
+  "copper-ingot": {
+   "stack": 20
+  },
+  "copper-nails": {
+   "stack": 50
+  },
+  "copper-nugget": {
+   "where": [
+    [
+     "gather",
+     "copper-vein"
+    ]
+   ],
+   "stack": 50
+  },
+  "copper-scrap": {
+   "stack": 50
+  },
+  "copper-trinkets": {
+   "stack": 20
+  },
+  "corpse": {
+   "where": [
+    [
+     "character",
+     "comrade-donkey"
+    ]
+   ],
+   "stack": 1
+  },
+  "crate": {
+   "stack": 30
+  },
+  "croissant": {
+   "where": [
+    [
+     "buy",
+     "baker"
+    ]
+   ],
+   "use": {
+    "en": 20,
+    "enB": [
+     22,
+     "steamed-up"
+    ],
+    "ins": -5
+   },
+   "stack": 30
+  },
+  "crop-boosting-fertilizer-i": {
+   "stack": 30
+  },
+  "crucian": {
+   "where": [
+    [
+     "fish",
+     "inquisition-base",
+     "no-bait",
+     0.1,
+     0.2
+    ],
+    [
+     "fish",
+     "village",
+     "no-bait",
+     0.2,
+     0.5
+    ]
+   ],
+   "stack": 20
+  },
+  "damage-potion": {
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "use": {
+    "buff": [
+     "fighter",
+     30,
+     1
+    ]
+   },
+   "stack": 20
+  },
+  "damage-potion-ii": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "use": {
+    "buff": [
+     "fighter-ii",
+     30,
+     1
+    ]
+   },
+   "stack": 20
+  },
+  "damage-potion-iii": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "use": {
+    "buff": [
+     "fighter-iii",
+     30,
+     1
+    ]
+   },
+   "stack": 20
+  },
+  "deck-of-cards": {
+   "where": [
+    [
+     "quest",
+     "safe-harbor"
+    ]
+   ],
+   "stack": 1
+  },
+  "defender-s-emblem": {
+   "where": [
+    [
+     "battle",
+     "break-through-to-the-port"
+    ],
+    [
+     "battle",
+     "eastern-districts-active-scouting"
+    ],
+    [
+     "battle",
+     "central-districts-purge-part-i"
+    ],
+    [
+     "battle",
+     "break-through-to-the-bathhouse-basement"
+    ]
+   ],
+   "stack": 50
+  },
+  "dictionary": {
+   "stack": 1
+  },
+  "dough": {
+   "where": [
+    [
+     "buy",
+     "baker"
+    ]
+   ],
+   "stack": 50
+  },
+  "dream-dust": {
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 20
+  },
+  "dye": {
+   "stack": 20
+  },
+  "dynamite": {
+   "where": [
+    [
+     "quest",
+     "can-t-see-the-forest-for-the-iron"
+    ]
+   ],
+   "stack": 20
+  },
+  "eel": {
+   "where": [
+    [
+     "fish",
+     "swamp",
+     "insect-bait",
+     36.4,
+     18.2
+    ],
+    [
+     "fish",
+     "sewers",
+     "insect-bait",
+     100,
+     100
+    ]
+   ],
+   "stack": 20
+  },
+  "elder-catfish": {
+   "where": [
+    [
+     "fish",
+     "swamp",
+     "live-bait",
+     100,
+     100
+    ]
+   ],
+   "stack": 20
+  },
+  "elder-s-meal": {
+   "use": {
+    "en": 120,
+    "enB": [
+     132,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "elegant-prosthetic-hand": {
+   "stack": 1
+  },
+  "empty-bottle": {
+   "stack": 50
+  },
+  "empty-glass-bottle": {
+   "stack": 20
+  },
+  "energy-potion": {
+   "use": {
+    "en": 20
+   },
+   "stack": 20
+  },
+  "energy-potion-ii": {
+   "use": {
+    "en": 50
+   },
+   "stack": 20
+  },
+  "energy-potion-iii": {
+   "use": {
+    "en": 100
+   },
+   "stack": 20
+  },
+  "energy-potion-scroll": {
+   "stack": 1
+  },
+  "engineering-details": {
+   "where": [
+    [
+     "buy",
+     "smithy",
+     3
+    ]
+   ],
+   "stack": 30
+  },
+  "engineering-kit": {
+   "stack": 30
+  },
+  "everlasting-needles": {
+   "stack": 20
+  },
+  "exhumation-certificate": {
+   "where": [
+    [
+     "buy",
+     "januarius"
+    ]
+   ],
+   "stack": 30
+  },
+  "explosive-dust": {
+   "where": [
+    [
+     "chest",
+     "old-mine"
+    ]
+   ],
+   "stack": 20
+  },
+  "fabric": {
+   "where": [
+    [
+     "buy",
+     "tailor",
+     3
+    ]
+   ],
+   "stack": 30
+  },
+  "fairy-s-swamp-map": {
+   "where": [
+    [
+     "quest",
+     "chasing-fairy-lights"
+    ]
+   ],
+   "stack": 1
+  },
+  "faith": {
+   "where": [
+    [
+     "church",
+     "sermons"
+    ]
+   ],
+   "stack": 999
+  },
+  "fancy-incense": {
+   "where": [
+    [
+     "buy",
+     "apothecary",
+     3
+    ]
+   ],
+   "stack": 30
+  },
+  "farmer-s-bag": {
+   "where": [
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 1
+  },
+  "farmer-s-clothes": {
+   "where": [
+    [
+     "quest",
+     "planted-and-delivered"
+    ]
+   ],
+   "stack": 1
+  },
+  "farming-fertilizer-i": {
+   "stack": 30
+  },
+  "farming-fertilizer-ii": {
+   "stack": 30
+  },
+  "farming-fertilizer-iii": {
+   "stack": 30
+  },
+  "fat": {
+   "where": [
+    [
+     "autopsy",
+     "bodies"
+    ]
+   ],
+   "stack": 30
+  },
+  "fine-jewelry": {
+   "stack": 20
+  },
+  "firefly": {
+   "where": [
+    [
+     "buy",
+     "gunter"
+    ],
+    [
+     "gather",
+     "rhododendron-bush"
+    ],
+    [
+     "gather",
+     "night-flower"
+    ]
+   ],
+   "stack": 20
+  },
+  "firewood": {
+   "stack": 50
+  },
+  "fish-nuggets": {
+   "use": {
+    "en": 25,
+    "enB": [
+     28,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "fish-soup": {
+   "where": [
+    [
+     "buy",
+     "tavern",
+     2
+    ]
+   ],
+   "use": {
+    "en": 30,
+    "enB": [
+     33,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "fisherman-s-bag": {
+   "where": [
+    [
+     "buy",
+     "fish-stand"
+    ]
+   ],
+   "stack": 1
+  },
+  "fisherman-s-pie": {
+   "use": {
+    "en": 80,
+    "enB": [
+     88,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "fishing-line": {
+   "stack": 50
+  },
+  "flax": {
+   "where": [
+    [
+     "buy",
+     "tailor"
+    ]
+   ],
+   "stack": 99
+  },
+  "flax-seed": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "buy",
+     "tailor"
+    ]
+   ],
+   "stack": 50
+  },
+  "flax-thread": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     3
+    ],
+    [
+     "buy",
+     "tailor",
+     2
+    ]
+   ],
+   "stack": 50
+  },
+  "flesh": {
+   "where": [
+    [
+     "buy",
+     "baker",
+     2
+    ],
+    [
+     "autopsy",
+     "bodies"
+    ]
+   ],
+   "use": {
+    "en": 10,
+    "ins": 10
+   },
+   "stack": 20
+  },
+  "flour": {
+   "where": [
+    [
+     "buy",
+     "baker"
+    ]
+   ],
+   "stack": 50
+  },
+  "food-bag": {
+   "where": [
+    [
+     "buy",
+     "baker"
+    ],
+    [
+     "buy",
+     "tavern"
+    ],
+    [
+     "buy",
+     "brewery"
+    ]
+   ],
+   "stack": 1
+  },
+  "forest-pass": {
+   "where": [
+    [
+     "quest",
+     "into-the-forest"
+    ]
+   ],
+   "stack": 1
+  },
+  "fortified-barricade-i": {
+   "stack": 99
+  },
+  "fortified-barricade-ii": {
+   "stack": 99
+  },
+  "fortified-barricade-iii": {
+   "stack": 99
+  },
+  "fragrance": {
+   "where": [
+    [
+     "buy",
+     "apothecary"
+    ]
+   ],
+   "stack": 99
+  },
+  "fried-egg": {
+   "use": {
+    "en": 30
+   },
+   "stack": 30
+  },
+  "fried-golden-carp": {
+   "use": {
+    "en": 60,
+    "enB": [
+     66,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "frog": {
+   "where": [
+    [
+     "fish",
+     "swamp",
+     "no-bait",
+     100,
+     100
+    ]
+   ],
+   "stack": 20
+  },
+  "fuel": {
+   "stack": 100
+  },
+  "furniture-kit-i": {
+   "where": [
+    [
+     "buy",
+     "furniture-maker",
+     2
+    ]
+   ],
+   "stack": 30
+  },
+  "furniture-kit-ii": {
+   "where": [
+    [
+     "buy",
+     "furniture-maker",
+     3
+    ]
+   ],
+   "stack": 30
+  },
+  "gem": {
+   "where": [
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "gather",
+     "copper-vein"
+    ],
+    [
+     "container",
+     "@mysterious-chest"
+    ]
+   ],
+   "stack": 20
+  },
+  "glass": {
+   "stack": 30
+  },
+  "glass-containers": {
+   "stack": 30
+  },
+  "glossary": {
+   "stack": 1
+  },
+  "glue": {
+   "stack": 20
+  },
+  "golden-ingot": {
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     2
+    ],
+    [
+     "looter",
+     "valuables"
+    ],
+    [
+     "container",
+     "@mysterious-chest"
+    ]
+   ],
+   "stack": 20
+  },
+  "golden-nugget": {
+   "where": [
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "looter",
+     "valuables"
+    ],
+    [
+     "container",
+     "@mysterious-chest"
+    ]
+   ],
+   "stack": 50
+  },
+  "golden-talisman": {
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     3
+    ]
+   ],
+   "stack": 1
+  },
+  "golden-zombie-collar": {
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     2
+    ],
+    [
+     "quest",
+     "personal-zombie-zone"
+    ]
+   ],
+   "stack": 10
+  },
+  "goldfish": {
+   "where": [
+    [
+     "fish",
+     "port-area",
+     "insect-bait",
+     16.7,
+     20
+    ],
+    [
+     "fish",
+     "forest",
+     "insect-bait",
+     33.3,
+     25
+    ]
+   ],
+   "stack": 20
+  },
+  "good-alchemist-s-kit": {
+   "stack": 1
+  },
+  "grape-pie": {
+   "stack": 1
+  },
+  "grape-seeds": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     3
+    ],
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "buy",
+     "brewery"
+    ],
+    [
+     "looter",
+     "seeds"
+    ]
+   ],
+   "stack": 50
+  },
+  "grapes": {
+   "where": [
+    [
+     "buy",
+     "brewery"
+    ]
+   ],
+   "use": {
+    "en": 6
+   },
+   "stack": 50
+  },
+  "grated-beets": {
+   "use": {
+    "en": 35,
+    "enB": [
+     39,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "gravestone-i": {
+   "stack": 10
+  },
+  "gravestone-ii": {
+   "stack": 10
+  },
+  "green-jelly": {
+   "stack": 1
+  },
+  "green-mold": {
+   "stack": 20
+  },
+  "green-scroll": {
+   "where": [
+    [
+     "town",
+     "repair-large-house"
+    ],
+    [
+     "town",
+     "repair-block"
+    ],
+    [
+     "town",
+     "repair-house"
+    ],
+    [
+     "town",
+     "repair-small-house"
+    ]
+   ],
+   "stack": 999
+  },
+  "green-techbook": {
+   "where": [
+    [
+     "looter",
+     "green-techbooks"
+    ],
+    [
+     "looter",
+     "random-techbooks"
+    ]
+   ],
+   "stack": 10
+  },
+  "green-techbook-ii": {
+   "where": [
+    [
+     "looter",
+     "green-techbooks"
+    ],
+    [
+     "looter",
+     "random-techbooks"
+    ]
+   ],
+   "stack": 10
+  },
+  "grow-potion": {
+   "stack": 50
+  },
+  "gudgeon": {
+   "where": [
+    [
+     "fish",
+     "inquisition-base",
+     "no-bait",
+     1,
+     0.5
+    ],
+    [
+     "fish",
+     "village",
+     "no-bait",
+     1,
+     0.5
+    ]
+   ],
+   "stack": 20
+  },
+  "gunpowder": {
+   "stack": 20
+  },
+  "guts": {
+   "where": [
+    [
+     "autopsy",
+     "@autopsy-table-i"
+    ]
+   ],
+   "stack": 20
+  },
+  "hands": {
+   "where": [
+    [
+     "start",
+     "the-keeper-s-tool-belt"
+    ]
+   ],
+   "stack": 1
+  },
+  "headstart-fertilizer-i": {
+   "stack": 30
+  },
+  "headstart-fertilizer-ii": {
+   "stack": 30
+  },
+  "healing-potion": {
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ],
+    [
+     "quest",
+     "first-sludge"
+    ]
+   ],
+   "stack": 20
+  },
+  "healing-potion-ii": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "stack": 20
+  },
+  "healing-potion-iii": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "stack": 20
+  },
+  "healing-potion-scroll": {
+   "stack": 1
+  },
+  "heart": {
+   "where": [
+    [
+     "autopsy",
+     "@autopsy-table-i"
+    ]
+   ],
+   "stack": 20
+  },
+  "heavenly-salmon": {
+   "use": {
+    "en": 60,
+    "enB": [
+     66,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "heavy-bow": {
+   "stack": 1
+  },
+  "herring": {
+   "where": [
+    [
+     "fish",
+     "village",
+     "breadcrumb-bait",
+     50,
+     66.7
+    ]
+   ],
+   "stack": 20
+  },
+  "homunculus": {
+   "stack": 20
+  },
+  "honey": {
+   "where": [
+    [
+     "gather",
+     "beehive"
+    ],
+    [
+     "gather",
+     "wild-beehive"
+    ]
+   ],
+   "use": {
+    "en": 5
+   },
+   "stack": 30
+  },
+  "hop-seeds": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "buy",
+     "brewery"
+    ]
+   ],
+   "stack": 50
+  },
+  "hops": {
+   "stack": 50
+  },
+  "hypno-device": {
+   "where": [
+    [
+     "buy",
+     "gunter",
+     3
+    ]
+   ],
+   "stack": 20
+  },
+  "imported-components": {
+   "stack": 20
+  },
+  "ink": {
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 30
+  },
+  "inquisitor-s-medallion": {
+   "where": [
+    [
+     "found",
+     "inquisition-dungeon"
+    ]
+   ],
+   "stack": 1
+  },
+  "inquisitor-s-note": {
+   "where": [
+    [
+     "found",
+     "inquisition-dungeon"
+    ]
+   ],
+   "stack": 1
+  },
+  "inquisitor-s-note-i": {
+   "where": [
+    [
+     "chest",
+     "sawmill"
+    ]
+   ],
+   "stack": 1
+  },
+  "inquisitor-s-note-ii": {
+   "where": [
+    [
+     "chest",
+     "old-mine"
+    ]
+   ],
+   "stack": 1
+  },
+  "insect-bait": {
+   "stack": 20
+  },
+  "inventory": {
+   "stack": 1
+  },
+  "iron-armor": {
+   "where": [
+    [
+     "buy",
+     "smithy",
+     2
+    ]
+   ],
+   "stack": 1
+  },
+  "iron-axe": {
+   "stack": 1
+  },
+  "iron-chisel": {
+   "stack": 30
+  },
+  "iron-detail": {
+   "where": [
+    [
+     "buy",
+     "furniture-maker",
+     2
+    ],
+    [
+     "buy",
+     "smithy",
+     2
+    ]
+   ],
+   "stack": 30
+  },
+  "iron-hammer": {
+   "where": [
+    [
+     "buy",
+     "smithy",
+     2
+    ]
+   ],
+   "stack": 1
+  },
+  "iron-ingot": {
+   "stack": 30
+  },
+  "iron-kit-i": {
+   "stack": 30
+  },
+  "iron-kit-ii": {
+   "stack": 30
+  },
+  "iron-nails": {
+   "where": [
+    [
+     "buy",
+     "furniture-maker",
+     2
+    ],
+    [
+     "buy",
+     "builder",
+     2
+    ],
+    [
+     "buy",
+     "smithy",
+     2
+    ]
+   ],
+   "stack": 99
+  },
+  "iron-ore": {
+   "where": [
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "gather",
+     "iron-ore-deposit"
+    ]
+   ],
+   "stack": 50
+  },
+  "iron-pickaxe": {
+   "stack": 1
+  },
+  "iron-scrap": {
+   "stack": 50
+  },
+  "iron-shovel": {
+   "where": [
+    [
+     "buy",
+     "vegetable-stand",
+     2
+    ]
+   ],
+   "stack": 1
+  },
+  "iron-sword": {
+   "where": [
+    [
+     "buy",
+     "smithy",
+     2
+    ]
+   ],
+   "stack": 1
+  },
+  "iron-tools": {
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     2
+    ]
+   ],
+   "stack": 1
+  },
+  "jug-of-milk": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     3
+    ],
+    [
+     "buy",
+     "baker",
+     2
+    ]
+   ],
+   "use": {
+    "en": 15,
+    "enB": [
+     17,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "kebab-with-fish-and-mushrooms": {
+   "stack": 1
+  },
+  "kebab-with-fish-and-onion": {
+   "stack": 1
+  },
+  "kebab-with-fish-and-pumpkin": {
+   "stack": 1
+  },
+  "keeper-s-clothes": {
+   "where": [
+    [
+     "outfit",
+     "suit-up"
+    ]
+   ],
+   "stack": 1
+  },
+  "key-from-the-inquisition-dungeon": {
+   "where": [
+    [
+     "found",
+     "inquisition-dungeon"
+    ]
+   ],
+   "stack": 1
+  },
+  "key-to-the-resurrection-room": {
+   "stack": 1
+  },
+  "keys-for-looters": {
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     2
+    ],
+    [
+     "battle",
+     "break-through-to-the-bathhouse-basement"
+    ],
+    [
+     "battle",
+     "sewer-brawl-i"
+    ],
+    [
+     "battle",
+     "sewer-brawl-ii"
+    ],
+    [
+     "battle",
+     "sewerena-the-sewer-arena"
+    ]
+   ],
+   "stack": 20
+  },
+  "king-s-signet": {
+   "where": [
+    [
+     "found",
+     "inquisition-dungeon"
+    ]
+   ],
+   "stack": 1
+  },
+  "knight-s-spear": {
+   "where": [
+    [
+     "buy",
+     "smithy",
+     3
+    ]
+   ],
+   "stack": 1
+  },
+  "kraken-jr": {
+   "where": [
+    [
+     "fish",
+     "port-area",
+     "live-bait",
+     100,
+     100
+    ]
+   ],
+   "stack": 20
+  },
+  "kraken-steak": {
+   "use": {
+    "en": 60,
+    "enB": [
+     66,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "krotowuha": {
+   "use": {
+    "ins": -50
+   },
+   "stack": 50
+  },
+  "krotowuha-scroll": {
+   "stack": 1
+  },
+  "lace": {
+   "where": [
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "buy",
+     "tailor"
+    ]
+   ],
+   "stack": 20
+  },
+  "lacquer": {
+   "where": [
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 20
+  },
+  "lasagna": {
+   "use": {
+    "en": 50,
+    "enB": [
+     55,
+     "steamed-up"
+    ],
+    "ins": 1
+   },
+   "stack": 30
+  },
+  "leaf": {
+   "stack": 99
+  },
+  "leather-scroll": {
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 30
+  },
+  "lens": {
+   "stack": 50
+  },
+  "life-water": {
+   "stack": 50
+  },
+  "light-pike": {
+   "where": [
+    [
+     "buy",
+     "smithy"
+    ]
+   ],
+   "stack": 1
+  },
+  "live-bait": {
+   "stack": 20
+  },
+  "log": {
+   "where": [
+    [
+     "gather",
+     "tree"
+    ],
+    [
+     "gather",
+     "creepy-tree"
+    ],
+    [
+     "gather",
+     "dead-tree"
+    ],
+    [
+     "gather",
+     "driftwood"
+    ],
+    [
+     "found",
+     "yard"
+    ]
+   ],
+   "stack": 1
+  },
+  "love-novel": {
+   "where": [
+    [
+     "quest",
+     "wharf-rats"
+    ]
+   ],
+   "stack": 1
+  },
+  "luxury-drapes": {
+   "stack": 1
+  },
+  "mackerel": {
+   "where": [
+    [
+     "fish",
+     "port-area",
+     "breadcrumb-bait",
+     33.3,
+     66.7
+    ]
+   ],
+   "stack": 20
+  },
+  "magic-bell": {
+   "stack": 1
+  },
+  "magnificent-candle": {
+   "where": [
+    [
+     "buy",
+     "apothecary",
+     3
+    ]
+   ],
+   "stack": 30
+  },
+  "marble": {
+   "where": [
+    [
+     "gather",
+     "marble-deposit"
+    ]
+   ],
+   "stack": 30
+  },
+  "marble-cross-i": {
+   "stack": 10
+  },
+  "marble-cross-ii": {
+   "stack": 10
+  },
+  "marble-fence-i": {
+   "stack": 10
+  },
+  "marble-fence-ii": {
+   "stack": 10
+  },
+  "marble-kit": {
+   "stack": 30
+  },
+  "marble-plate": {
+   "where": [
+    [
+     "buy",
+     "builder",
+     2
+    ]
+   ],
+   "stack": 30
+  },
+  "mash-drop": {
+   "stack": 50
+  },
+  "master-armor": {
+   "stack": 1
+  },
+  "master-rod": {
+   "stack": 1
+  },
+  "master-surgeon-s-kit": {
+   "stack": 1
+  },
+  "master-sword": {
+   "stack": 1
+  },
+  "mead": {
+   "where": [
+    [
+     "buy",
+     "brewery"
+    ]
+   ],
+   "use": {
+    "ins": -10
+   },
+   "stack": 50
+  },
+  "melted-fat": {
+   "where": [
+    [
+     "buy",
+     "apothecary"
+    ]
+   ],
+   "stack": 99
+  },
+  "mercurius-vivus": {
+   "stack": 50
+  },
+  "minced-meat": {
+   "stack": 30
+  },
+  "miracle-growth-elixir": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "stack": 20
+  },
+  "moonshine": {
+   "stack": 20
+  },
+  "mortificatio-oil": {
+   "stack": 50
+  },
+  "muffin": {
+   "where": [
+    [
+     "buy",
+     "baker"
+    ]
+   ],
+   "use": {
+    "en": 20,
+    "enB": [
+     22,
+     "steamed-up"
+    ],
+    "buff": [
+     "farming-spirit-ii",
+     450,
+     1
+    ]
+   },
+   "stack": 30
+  },
+  "music-notes": {
+   "stack": 30
+  },
+  "mysterious-chest": {
+   "where": [
+    [
+     "quest",
+     "press-for-cash"
+    ]
+   ],
+   "stack": 1
+  },
+  "mysterious-fish-fillet": {
+   "stack": 30
+  },
+  "mythic-carp": {
+   "where": [
+    [
+     "fish",
+     "village",
+     "live-bait",
+     100,
+     100
+    ]
+   ],
+   "stack": 20
+  },
+  "natural-resin": {
+   "stack": 50
+  },
+  "necronomicon": {
+   "where": [
+    [
+     "quest",
+     "the-ingenious-gentleman-don-keyote"
+    ]
+   ],
+   "stack": 1
+  },
+  "night-flower": {
+   "where": [
+    [
+     "gather",
+     "night-flower"
+    ]
+   ],
+   "stack": 50
+  },
+  "nigredo-ash": {
+   "stack": 50
+  },
+  "no-bait": {
+   "where": [
+    [
+     "start",
+     "fishing"
+    ]
+   ],
+   "stack": 1
+  },
+  "oiled-beam": {
+   "where": [
+    [
+     "buy",
+     "builder",
+     2
+    ]
+   ],
+   "stack": 30
+  },
+  "oiled-plank": {
+   "where": [
+    [
+     "buy",
+     "furniture-maker"
+    ],
+    [
+     "buy",
+     "builder"
+    ]
+   ],
+   "stack": 30
+  },
+  "omelet": {
+   "use": {
+    "en": 50
+   },
+   "stack": 30
+  },
+  "onion": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand",
+     2
+    ]
+   ],
+   "use": {
+    "en": 5
+   },
+   "stack": 50
+  },
+  "onion-rings": {
+   "use": {
+    "en": 35,
+    "enB": [
+     39,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "onion-seed": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand",
+     2
+    ],
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "looter",
+     "seeds"
+    ]
+   ],
+   "stack": 50
+  },
+  "organ-improver": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "stack": 20
+  },
+  "organ-randomizer": {
+   "stack": 20
+  },
+  "organ-restorer": {
+   "stack": 20
+  },
+  "paint": {
+   "where": [
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 20
+  },
+  "pancakes": {
+   "stack": 30
+  },
+  "paper-glop": {
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 99
+  },
+  "pasta": {
+   "stack": 1
+  },
+  "peat": {
+   "where": [
+    [
+     "gather",
+     "@village-toilet"
+    ]
+   ],
+   "stack": 99
+  },
+  "philosopher-stone": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "stack": 20
+  },
+  "philosophic-sulfur": {
+   "stack": 50
+  },
+  "piece-of-stone": {
+   "where": [
+    [
+     "buy",
+     "builder"
+    ]
+   ],
+   "stack": 30
+  },
+  "pike": {
+   "where": [
+    [
+     "fish",
+     "inquisition-base",
+     "breadcrumb-bait",
+     100,
+     100
+    ],
+    [
+     "fish",
+     "forest",
+     "breadcrumb-bait",
+     66.7,
+     33.3
+    ]
+   ],
+   "stack": 20
+  },
+  "pilgrim-s-clothes": {
+   "where": [
+    [
+     "quest",
+     "swords-and-bell"
+    ]
+   ],
+   "stack": 1
+  },
+  "po-ta-to": {
+   "where": [
+    [
+     "quest",
+     "green-men-from-far-lands"
+    ]
+   ],
+   "stack": 20
+  },
+  "polished-bronze": {
+   "where": [
+    [
+     "buy",
+     "furniture-maker"
+    ],
+    [
+     "buy",
+     "jeweler"
+    ],
+    [
+     "buy",
+     "smithy"
+    ]
+   ],
+   "stack": 30
+  },
+  "polished-marble": {
+   "where": [
+    [
+     "buy",
+     "builder",
+     2
+    ]
+   ],
+   "stack": 30
+  },
+  "polished-stone": {
+   "where": [
+    [
+     "buy",
+     "builder"
+    ]
+   ],
+   "stack": 30
+  },
+  "polishing-paste": {
+   "stack": 20
+  },
+  "portal-fragment-envy": {
+   "where": [
+    [
+     "quest",
+     "green-fragment"
+    ]
+   ],
+   "stack": 1
+  },
+  "portal-fragment-gluttony": {
+   "where": [
+    [
+     "quest",
+     "the-hungry-cosmos"
+    ]
+   ],
+   "stack": 1
+  },
+  "portal-fragment-greed": {
+   "where": [
+    [
+     "quest",
+     "the-last-battle"
+    ]
+   ],
+   "stack": 1
+  },
+  "portal-fragment-lust": {
+   "where": [
+    [
+     "quest",
+     "high-price"
+    ]
+   ],
+   "stack": 1
+  },
+  "portal-fragment-pride": {
+   "where": [
+    [
+     "quest",
+     "more-portal-parts"
+    ]
+   ],
+   "stack": 1
+  },
+  "portal-fragment-sloth": {
+   "where": [
+    [
+     "quest",
+     "magic-mirror"
+    ]
+   ],
+   "stack": 1
+  },
+  "portal-fragment-wrath": {
+   "where": [
+    [
+     "quest",
+     "even-more-portal-parts"
+    ]
+   ],
+   "stack": 1
+  },
+  "potion-bag": {
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 1
+  },
+  "pr-agreement": {
+   "where": [
+    [
+     "quest",
+     "rhyme-and-printed"
+    ]
+   ],
+   "stack": 1
+  },
+  "prayer-for-music": {
+   "stack": 1
+  },
+  "prayer-for-old-god": {
+   "where": [
+    [
+     "quest",
+     "eye-red-eye"
+    ]
+   ],
+   "stack": 1
+  },
+  "prayer-for-speed": {
+   "stack": 1
+  },
+  "prayer-for-storms": {
+   "stack": 1
+  },
+  "precious-trinkets": {
+   "stack": 20
+  },
+  "preservative": {
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 20
+  },
+  "pretty-candle": {
+   "where": [
+    [
+     "buy",
+     "apothecary",
+     2
+    ]
+   ],
+   "stack": 30
+  },
+  "priest-s-clothes": {
+   "where": [
+    [
+     "quest",
+     "holy-moly"
+    ]
+   ],
+   "stack": 1
+  },
+  "prima-materia-dust": {
+   "stack": 50
+  },
+  "primer": {
+   "stack": 1
+  },
+  "printed-money": {
+   "stack": 50
+  },
+  "printed-poetry": {
+   "stack": 1
+  },
+  "pro-rod": {
+   "where": [
+    [
+     "buy",
+     "fish-stand",
+     3
+    ],
+    [
+     "quest",
+     "fish-for-the-fisher"
+    ]
+   ],
+   "stack": 1
+  },
+  "prosthetic-hand": {
+   "stack": 1
+  },
+  "pumpkin": {
+   "where": [
+    [
+     "buy",
+     "vegetable-stand",
+     2
+    ]
+   ],
+   "use": {
+    "en": 6
+   },
+   "stack": 50
+  },
+  "pumpkin-seeds": {
+   "where": [
+    [
+     "buy",
+     "vegetable-stand",
+     2
+    ],
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "looter",
+     "seeds"
+    ]
+   ],
+   "stack": 50
+  },
+  "pumpkin-soup": {
+   "use": {
+    "en": 20,
+    "enB": [
+     22,
+     "steamed-up"
+    ],
+    "buff": [
+     "building-spirit-ii",
+     450,
+     1
+    ]
+   },
+   "stack": 30
+  },
+  "quicksilver": {
+   "stack": 20
+  },
+  "quintessence-vial": {
+   "stack": 50
+  },
+  "reanimation-liquid": {
+   "where": [
+    [
+     "buy",
+     "gunter",
+     2
+    ],
+    [
+     "buy",
+     "alchemist"
+    ],
+    [
+     "chest",
+     "old-mine"
+    ],
+    [
+     "chest",
+     "sawmill"
+    ],
+    [
+     "chest",
+     "resurrection-lab"
+    ],
+    [
+     "quest",
+     "personal-zombie-zone"
+    ]
+   ],
+   "stack": 20
+  },
+  "red-eye": {
+   "where": [
+    [
+     "quest",
+     "friend-or-foe"
+    ]
+   ],
+   "stack": 1
+  },
+  "red-jelly": {
+   "stack": 1
+  },
+  "red-mushroom": {
+   "where": [
+    [
+     "gather",
+     "red-mushrooms"
+    ]
+   ],
+   "use": {
+    "en": 3
+   },
+   "stack": 30
+  },
+  "red-techbook": {
+   "where": [
+    [
+     "looter",
+     "red-techbooks"
+    ],
+    [
+     "looter",
+     "random-techbooks"
+    ]
+   ],
+   "stack": 10
+  },
+  "red-techbook-ii": {
+   "where": [
+    [
+     "looter",
+     "red-techbooks"
+    ],
+    [
+     "looter",
+     "random-techbooks"
+    ]
+   ],
+   "stack": 10
+  },
+  "reinforced-beam": {
+   "where": [
+    [
+     "buy",
+     "builder",
+     2
+    ]
+   ],
+   "stack": 30
+  },
+  "reinforced-bow": {
+   "stack": 1
+  },
+  "reinforced-plank": {
+   "where": [
+    [
+     "buy",
+     "builder"
+    ]
+   ],
+   "stack": 30
+  },
+  "resin": {
+   "stack": 20
+  },
+  "resurrection-note": {
+   "where": [
+    [
+     "chest",
+     "resurrection-lab"
+    ]
+   ],
+   "stack": 1
+  },
+  "rhododendron": {
+   "where": [
+    [
+     "gather",
+     "rhododendron-bush"
+    ]
+   ],
+   "stack": 50
+  },
+  "rhododendron-seedling": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     3
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 20
+  },
+  "rich-growth-elixir": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "stack": 20
+  },
+  "river-fish-fillet": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ]
+   ],
+   "stack": 30
+  },
+  "roach": {
+   "where": [
+    [
+     "fish",
+     "inquisition-base",
+     "no-bait",
+     98.9,
+     99.3
+    ],
+    [
+     "fish",
+     "village",
+     "no-bait",
+     98.8,
+     99
+    ]
+   ],
+   "stack": 20
+  },
+  "royal-pardon": {
+   "where": [
+    [
+     "quest",
+     "go-wild-in-the-wild-lands"
+    ]
+   ],
+   "stack": 1
+  },
+  "rubedo-crystallis": {
+   "stack": 50
+  },
+  "rusty-armor": {
+   "where": [
+    [
+     "quest",
+     "friendship-written-in-the-stars"
+    ]
+   ],
+   "stack": 1
+  },
+  "rusty-axe": {
+   "where": [
+    [
+     "quest",
+     "the-prologue"
+    ]
+   ],
+   "stack": 1
+  },
+  "rusty-hammer": {
+   "where": [
+    [
+     "chest",
+     "graveyard"
+    ]
+   ],
+   "stack": 1
+  },
+  "rusty-pickaxe": {
+   "where": [
+    [
+     "quest",
+     "the-prologue"
+    ]
+   ],
+   "stack": 1
+  },
+  "rusty-shovel": {
+   "where": [
+    [
+     "chest",
+     "graveyard"
+    ]
+   ],
+   "stack": 1
+  },
+  "rusty-sword": {
+   "stack": 1
+  },
+  "salmon": {
+   "where": [
+    [
+     "fish",
+     "port-area",
+     "insect-bait",
+     16.7,
+     40
+    ],
+    [
+     "fish",
+     "forest",
+     "insect-bait",
+     33.3,
+     50
+    ]
+   ],
+   "stack": 20
+  },
+  "salt": {
+   "where": [
+    [
+     "buy",
+     "apothecary"
+    ],
+    [
+     "buy",
+     "baker"
+    ]
+   ],
+   "stack": 99
+  },
+  "sand": {
+   "where": [
+    [
+     "gather",
+     "sand-pit"
+    ]
+   ],
+   "stack": 99
+  },
+  "sandwich": {
+   "use": {
+    "en": 50,
+    "enB": [
+     55,
+     "steamed-up"
+    ],
+    "ins": 5
+   },
+   "stack": 30
+  },
+  "scary-idol": {
+   "stack": 20
+  },
+  "science": {
+   "where": [
+    [
+     "study",
+     "@clean-paper"
+    ],
+    [
+     "study",
+     "@science-kit-i"
+    ],
+    [
+     "study",
+     "@science-kit-ii"
+    ]
+   ],
+   "stack": 999
+  },
+  "science-kit-i": {
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ],
+    [
+     "chest",
+     "alchemy-lab"
+    ]
+   ],
+   "stack": 50
+  },
+  "science-kit-ii": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "stack": 50
+  },
+  "sculpture-kit-i": {
+   "stack": 30
+  },
+  "sculpture-kit-ii": {
+   "stack": 30
+  },
+  "sea-fish-fillet": {
+   "stack": 30
+  },
+  "secret-combination": {
+   "where": [
+    [
+     "quest",
+     "dungeons-and-that-s-it-probably"
+    ]
+   ],
+   "stack": 1
+  },
+  "seed-oil": {
+   "stack": 50
+  },
+  "separatio-membrane": {
+   "stack": 50
+  },
+  "short-log": {
+   "where": [
+    [
+     "gather",
+     "tree-stump"
+    ]
+   ],
+   "stack": 50
+  },
+  "shrimp-bait": {
+   "stack": 20
+  },
+  "signed-pr-agreement": {
+   "where": [
+    [
+     "quest",
+     "stars-lies-contracts"
+    ]
+   ],
+   "stack": 1
+  },
+  "signed-printed-money": {
+   "where": [
+    [
+     "quest",
+     "press-for-cash"
+    ]
+   ],
+   "stack": 50
+  },
+  "silver-talisman": {
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     2
+    ]
+   ],
+   "stack": 1
+  },
+  "silverfin": {
+   "where": [
+    [
+     "fish",
+     "swamp",
+     "breadcrumb-bait",
+     30.8,
+     30.8
+    ]
+   ],
+   "stack": 20
+  },
+  "simple-bow": {
+   "where": [
+    [
+     "quest",
+     "friendship-written-in-the-stars"
+    ]
+   ],
+   "stack": 1
+  },
+  "simple-candle": {
+   "where": [
+    [
+     "buy",
+     "apothecary"
+    ]
+   ],
+   "stack": 30
+  },
+  "simple-incense": {
+   "where": [
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "buy",
+     "apothecary"
+    ]
+   ],
+   "stack": 30
+  },
+  "simple-iron-part": {
+   "stack": 10
+  },
+  "simple-pike": {
+   "stack": 1
+  },
+  "skin": {
+   "where": [
+    [
+     "autopsy",
+     "@autopsy-table-i"
+    ]
+   ],
+   "stack": 20
+  },
+  "skull": {
+   "where": [
+    [
+     "autopsy",
+     "@autopsy-table-i"
+    ]
+   ],
+   "stack": 20
+  },
+  "slug": {
+   "stack": 20
+  },
+  "small-printing-press": {
+   "stack": 1
+  },
+  "soldier-s-ale": {
+   "use": {
+    "en": 5,
+    "ins": 20
+   },
+   "stack": 30
+  },
+  "soldier-s-stew": {
+   "where": [
+    [
+     "buy",
+     "tavern",
+     3
+    ]
+   ],
+   "use": {
+    "en": 25,
+    "enB": [
+     28,
+     "steamed-up"
+    ],
+    "buff": [
+     "smithing-spirit-ii",
+     450,
+     1
+    ]
+   },
+   "stack": 30
+  },
+  "special-clothes": {
+   "where": [
+    [
+     "outfit",
+     "pre-order-bonus"
+    ]
+   ],
+   "stack": 1
+  },
+  "special-wood": {
+   "where": [
+    [
+     "buy",
+     "harold",
+     "talk"
+    ]
+   ],
+   "stack": 30
+  },
+  "speech-writing-device": {
+   "stack": 1
+  },
+  "speed-potion": {
+   "stack": 50
+  },
+  "speed-potion-scroll": {
+   "stack": 1
+  },
+  "spices": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ],
+    [
+     "buy",
+     "baker",
+     2
+    ]
+   ],
+   "stack": 20
+  },
+  "spiked-barricade-i": {
+   "stack": 99
+  },
+  "spiked-barricade-ii": {
+   "stack": 99
+  },
+  "spiked-barricade-iii": {
+   "stack": 99
+  },
+  "starter-alchemist-s-kit": {
+   "stack": 1
+  },
+  "steel-armor": {
+   "where": [
+    [
+     "buy",
+     "smithy",
+     3
+    ]
+   ],
+   "stack": 1
+  },
+  "steel-axe": {
+   "stack": 1
+  },
+  "steel-detail": {
+   "where": [
+    [
+     "buy",
+     "smithy",
+     3
+    ]
+   ],
+   "stack": 30
+  },
+  "steel-hammer": {
+   "where": [
+    [
+     "buy",
+     "smithy",
+     3
+    ]
+   ],
+   "stack": 1
+  },
+  "steel-ingot": {
+   "where": [
+    [
+     "buy",
+     "bishop",
+     "talk"
+    ]
+   ],
+   "stack": 30
+  },
+  "steel-pickaxe": {
+   "stack": 1
+  },
+  "steel-screws": {
+   "where": [
+    [
+     "buy",
+     "furniture-maker",
+     3
+    ],
+    [
+     "buy",
+     "builder",
+     3
+    ],
+    [
+     "buy",
+     "smithy",
+     3
+    ]
+   ],
+   "stack": 99
+  },
+  "steel-shovel": {
+   "where": [
+    [
+     "buy",
+     "vegetable-stand",
+     3
+    ]
+   ],
+   "stack": 1
+  },
+  "steel-sword": {
+   "where": [
+    [
+     "buy",
+     "smithy",
+     3
+    ]
+   ],
+   "stack": 1
+  },
+  "steel-tools": {
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     3
+    ]
+   ],
+   "stack": 1
+  },
+  "steel-zombie-collar": {
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     3
+    ]
+   ],
+   "stack": 10
+  },
+  "stick": {
+   "where": [
+    [
+     "gather",
+     "tree"
+    ],
+    [
+     "gather",
+     "bush"
+    ],
+    [
+     "gather",
+     "tree-stump"
+    ],
+    [
+     "gather",
+     "creepy-tree"
+    ],
+    [
+     "gather",
+     "dead-tree"
+    ],
+    [
+     "gather",
+     "driftwood"
+    ]
+   ],
+   "stack": 50
+  },
+  "stone": {
+   "where": [
+    [
+     "gather",
+     "junk-pile"
+    ],
+    [
+     "gather",
+     "stone-deposit"
+    ]
+   ],
+   "stack": 30
+  },
+  "stone-fence-i": {
+   "stack": 10
+  },
+  "stone-fence-ii": {
+   "stack": 10
+  },
+  "stone-kit": {
+   "stack": 30
+  },
+  "stone-marbles": {
+   "stack": 20
+  },
+  "supply-appliances-i": {
+   "stack": 1
+  },
+  "supply-appliances-ii": {
+   "stack": 1
+  },
+  "supply-beer": {
+   "stack": 1
+  },
+  "supply-building-materials-i": {
+   "stack": 1
+  },
+  "supply-building-materials-ii": {
+   "stack": 1
+  },
+  "supply-clothes-i": {
+   "stack": 1
+  },
+  "supply-clothes-ii": {
+   "stack": 1
+  },
+  "supply-cutlery-i": {
+   "stack": 1
+  },
+  "supply-cutlery-ii": {
+   "stack": 1
+  },
+  "supply-engineering-mechanism": {
+   "stack": 1
+  },
+  "supply-fabric": {
+   "stack": 1
+  },
+  "supply-flour-sack": {
+   "stack": 1
+  },
+  "supply-furniture-i": {
+   "stack": 1
+  },
+  "supply-furniture-ii": {
+   "stack": 1
+  },
+  "supply-iron": {
+   "stack": 1
+  },
+  "supply-iron-tools": {
+   "stack": 1
+  },
+  "supply-kitchen-utensils": {
+   "stack": 1
+  },
+  "supply-preserves-i": {
+   "stack": 1
+  },
+  "supply-preserves-ii": {
+   "stack": 1
+  },
+  "supply-steel-tools": {
+   "stack": 1
+  },
+  "supply-vegetables": {
+   "stack": 1
+  },
+  "supply-wine": {
+   "stack": 1
+  },
+  "surgeon-s-error": {
+   "where": [
+    [
+     "autopsy",
+     "@autopsy-table-i"
+    ],
+    [
+     "autopsy",
+     "@autopsy-table-ii"
+    ]
+   ],
+   "stack": 1
+  },
+  "surgeon-s-kit": {
+   "stack": 1
+  },
+  "swamp-ghost": {
+   "where": [
+    [
+     "fish",
+     "swamp",
+     "insect-bait",
+     18.2,
+     36.4
+    ]
+   ],
+   "stack": 20
+  },
+  "swamp-mushroom": {
+   "where": [
+    [
+     "gather",
+     "swamp-mushrooms"
+    ]
+   ],
+   "use": {
+    "en": 7,
+    "ins": 1
+   },
+   "stack": 20
+  },
+  "tableware": {
+   "stack": 30
+  },
+  "tannin-liquid": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "stack": 20
+  },
+  "temptation": {
+   "stack": 100
+  },
+  "third-eye-salt": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "use": {
+    "buff": [
+     "third-eye-salt",
+     450,
+     1
+    ]
+   },
+   "stack": 20
+  },
+  "tin": {
+   "stack": 99
+  },
+  "toast-with-onions": {
+   "use": {
+    "en": 20,
+    "enB": [
+     22,
+     "steamed-up"
+    ],
+    "buff": [
+     "beer-thirst",
+     450,
+     1
+    ]
+   },
+   "stack": 30
+  },
+  "tool-bag": {
+   "where": [
+    [
+     "buy",
+     "jeweler"
+    ],
+    [
+     "buy",
+     "smithy"
+    ]
+   ],
+   "stack": 1
+  },
+  "tooth": {
+   "stack": 50
+  },
+  "town-gratitude": {
+   "where": [
+    [
+     "buy",
+     "januarius"
+    ],
+    [
+     "battle",
+     "break-through-to-the-port"
+    ],
+    [
+     "battle",
+     "eastern-districts-active-scouting"
+    ],
+    [
+     "battle",
+     "eastern-districts-purge"
+    ],
+    [
+     "battle",
+     "market-square-purge"
+    ],
+    [
+     "battle",
+     "central-districts-purge-part-i"
+    ],
+    [
+     "battle",
+     "central-districts-purge-part-ii"
+    ],
+    [
+     "battle",
+     "closing-the-western-floodgate"
+    ],
+    [
+     "battle",
+     "closing-the-eastern-floodgate-part-i"
+    ],
+    [
+     "battle",
+     "closing-the-eastern-floodgate-part-ii"
+    ],
+    [
+     "battle",
+     "battle-at-the-lake"
+    ],
+    [
+     "battle",
+     "operation-potato-part-i"
+    ],
+    [
+     "battle",
+     "operation-potato-part-ii"
+    ],
+    [
+     "battle",
+     "final-battle"
+    ],
+    [
+     "battle",
+     "sewer-brawl-i"
+    ],
+    [
+     "battle",
+     "sewer-brawl-ii"
+    ],
+    [
+     "battle",
+     "sewerena-the-sewer-arena"
+    ],
+    [
+     "quest",
+     "planted-and-delivered"
+    ],
+    [
+     "quest",
+     "the-quiet-art"
+    ],
+    [
+     "quest",
+     "two-peas-in-a-pod"
+    ],
+    [
+     "quest",
+     "jack-in-a-boat"
+    ],
+    [
+     "quest",
+     "holy-moly"
+    ],
+    [
+     "quest",
+     "fighting-spirit-required"
+    ],
+    [
+     "quest",
+     "swords-and-bell"
+    ],
+    [
+     "quest",
+     "yummies"
+    ],
+    [
+     "quest",
+     "friendship-written-in-the-stars"
+    ],
+    [
+     "quest",
+     "rhyme-and-printed"
+    ],
+    [
+     "quest",
+     "stars-lies-contracts"
+    ],
+    [
+     "quest",
+     "safe-harbor"
+    ],
+    [
+     "quest",
+     "concept-for-a-concert"
+    ],
+    [
+     "quest",
+     "book-broker"
+    ],
+    [
+     "quest",
+     "herbert-and"
+    ],
+    [
+     "quest",
+     "the-nun-also-reads"
+    ],
+    [
+     "quest",
+     "into-the-forest"
+    ],
+    [
+     "quest",
+     "go-wild-in-the-wild-lands"
+    ],
+    [
+     "quest",
+     "workshop-hours"
+    ],
+    [
+     "quest",
+     "jack-s-back-in-business"
+    ],
+    [
+     "quest",
+     "give-materials"
+    ],
+    [
+     "quest",
+     "the-nun-with-the-hairy-ass"
+    ],
+    [
+     "quest",
+     "brawns-and-brains"
+    ],
+    [
+     "quest",
+     "first-sludge"
+    ],
+    [
+     "quest",
+     "plenty-of-fish-in-the-sea"
+    ],
+    [
+     "quest",
+     "campaign-of-thrones"
+    ],
+    [
+     "quest",
+     "man-of-steel"
+    ],
+    [
+     "quest",
+     "i-love-you-man"
+    ],
+    [
+     "quest",
+     "organic-music"
+    ],
+    [
+     "quest",
+     "not-in-shining-armor-yet"
+    ],
+    [
+     "quest",
+     "well-deserved-rest"
+    ],
+    [
+     "quest",
+     "wealthy-clients"
+    ],
+    [
+     "quest",
+     "green-men-from-far-lands"
+    ],
+    [
+     "quest",
+     "love-story"
+    ],
+    [
+     "quest",
+     "lust-and-envy"
+    ],
+    [
+     "quest",
+     "tales-for-ales"
+    ],
+    [
+     "quest",
+     "press-for-cash"
+    ],
+    [
+     "quest",
+     "the-lord-s-vintage"
+    ],
+    [
+     "quest",
+     "fish-for-the-fisher"
+    ],
+    [
+     "quest",
+     "homobonus-i"
+    ]
+   ],
+   "stack": 100
+  },
+  "toxic-potion": {
+   "stack": 20
+  },
+  "toxic-potion-ii": {
+   "stack": 20
+  },
+  "transmutation-potion-i": {
+   "stack": 20
+  },
+  "transmutation-potion-ii": {
+   "stack": 20
+  },
+  "trilogy": {
+   "stack": 1
+  },
+  "trout": {
+   "where": [
+    [
+     "fish",
+     "forest",
+     "insect-bait",
+     33.3,
+     25
+    ]
+   ],
+   "stack": 20
+  },
+  "tuna": {
+   "where": [
+    [
+     "fish",
+     "port-area",
+     "insect-bait",
+     66.7,
+     40
+    ]
+   ],
+   "stack": 20
+  },
+  "umami": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "stack": 20
+  },
+  "unholy-idol": {
+   "stack": 20
+  },
+  "universal-bag": {
+   "where": [
+    [
+     "buy",
+     "tailor"
+    ]
+   ],
+   "stack": 1
+  },
+  "urn-with-ashes-i": {
+   "stack": 20
+  },
+  "urn-with-ashes-ii": {
+   "stack": 20
+  },
+  "vegetable-soup": {
+   "where": [
+    [
+     "buy",
+     "tavern"
+    ]
+   ],
+   "use": {
+    "en": 25,
+    "enB": [
+     28,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "victory-banner": {
+   "where": [
+    [
+     "battle",
+     "eastern-districts-purge"
+    ],
+    [
+     "battle",
+     "central-districts-purge-part-ii"
+    ],
+    [
+     "battle",
+     "break-through-to-the-bathhouse-basement"
+    ]
+   ],
+   "stack": 50
+  },
+  "victory-flag": {
+   "stack": 10
+  },
+  "violin": {
+   "where": [
+    [
+     "quest",
+     "varnish-before-you-fiddle"
+    ]
+   ],
+   "stack": 1
+  },
+  "wanted-poster": {
+   "stack": 10
+  },
+  "water": {
+   "where": [
+    [
+     "gather",
+     "water-well"
+    ],
+    [
+     "gather",
+     "garden-well-ii"
+    ],
+    [
+     "chest",
+     "alchemy-lab"
+    ],
+    [
+     "chest",
+     "yard"
+    ]
+   ],
+   "stack": 999
+  },
+  "weak-growth-elixir": {
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 20
+  },
+  "wheat": {
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 50
+  },
+  "wheat-seed": {
+   "where": [
+    [
+     "buy",
+     "herm"
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 50
+  },
+  "wine": {
+   "where": [
+    [
+     "buy",
+     "brewery",
+     2
+    ]
+   ],
+   "use": {
+    "ins": -25
+   },
+   "stack": 50
+  },
+  "wood-wedge": {
+   "stack": 50
+  },
+  "wooden-beam": {
+   "where": [
+    [
+     "buy",
+     "furniture-maker",
+     3
+    ],
+    [
+     "buy",
+     "builder",
+     2
+    ]
+   ],
+   "stack": 30
+  },
+  "wooden-billet": {
+   "stack": 20
+  },
+  "wooden-cross-i": {
+   "stack": 10
+  },
+  "wooden-cross-ii": {
+   "stack": 10
+  },
+  "wooden-fence-i": {
+   "stack": 10
+  },
+  "wooden-fence-ii": {
+   "stack": 10
+  },
+  "wooden-joint": {
+   "where": [
+    [
+     "buy",
+     "furniture-maker",
+     3
+    ],
+    [
+     "buy",
+     "builder",
+     3
+    ]
+   ],
+   "stack": 30
+  },
+  "wooden-kit-i": {
+   "where": [
+    [
+     "buy",
+     "furniture-maker"
+    ]
+   ],
+   "stack": 30
+  },
+  "wooden-kit-ii": {
+   "stack": 30
+  },
+  "wooden-plank": {
+   "where": [
+    [
+     "buy",
+     "furniture-maker"
+    ],
+    [
+     "buy",
+     "builder"
+    ]
+   ],
+   "stack": 30
+  },
+  "wooden-sign": {
+   "where": [
+    [
+     "chest",
+     "graveyard"
+    ]
+   ],
+   "stack": 10
+  },
+  "wooden-trinkets": {
+   "stack": 20
+  },
+  "worms-bait": {
+   "stack": 20
+  },
+  "written-softcover-book": {
+   "stack": 30
+  },
+  "yogurt": {
+   "use": {
+    "en": 30,
+    "enB": [
+     33,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
+  },
+  "zombie": {
+   "where": [
+    [
+     "resurrect",
+     "@resurrection-table-i"
+    ],
+    [
+     "quest",
+     "friendship-written-in-the-stars"
+    ],
+    [
+     "quest",
+     "sweet-dreams"
+    ]
+   ],
+   "stack": 1
+  },
+  "zombie-goo": {
+   "where": [
+    [
+     "buy",
+     "gunter"
+    ],
+    [
+     "battle",
+     "break-through-to-the-port"
+    ],
+    [
+     "battle",
+     "eastern-districts-active-scouting"
+    ],
+    [
+     "battle",
+     "eastern-districts-purge"
+    ],
+    [
+     "battle",
+     "market-square-purge"
+    ],
+    [
+     "battle",
+     "central-districts-purge-part-i"
+    ],
+    [
+     "battle",
+     "central-districts-purge-part-ii"
+    ],
+    [
+     "battle",
+     "closing-the-western-floodgate"
+    ],
+    [
+     "battle",
+     "closing-the-eastern-floodgate-part-i"
+    ],
+    [
+     "battle",
+     "closing-the-eastern-floodgate-part-ii"
+    ],
+    [
+     "battle",
+     "battle-at-the-lake"
+    ],
+    [
+     "battle",
+     "operation-potato-part-i"
+    ],
+    [
+     "battle",
+     "operation-potato-part-ii"
+    ],
+    [
+     "battle",
+     "break-through-to-the-bathhouse-basement"
+    ],
+    [
+     "battle",
+     "final-battle"
+    ],
+    [
+     "battle",
+     "sewer-brawl-i"
+    ],
+    [
+     "battle",
+     "sewer-brawl-ii"
+    ],
+    [
+     "battle",
+     "sewerena-the-sewer-arena"
+    ]
+   ],
+   "stack": 99
+  },
+  "zombie-mechanism": {
+   "stack": 30
+  },
+  "zombie-motivator-potion": {
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "use": {
+    "buff": [
+     "zombie-motivation",
+     15,
+     1
+    ]
+   },
+   "stack": 20
+  },
+  "zombie-motivator-potion-ii": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "use": {
+    "buff": [
+     "zombie-motivation-ii",
+     30,
+     1
+    ]
+   },
+   "stack": 20
+  },
+  "zombie-motivator-potion-iii": {
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "use": {
+    "buff": [
+     "zombie-motivation-iii",
+     60,
+     1
+    ]
+   },
+   "stack": 20
+  },
+  "zombie-power": {
+   "stack": 20
+  }
+ }
+}

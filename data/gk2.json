@@ -30,7 +30,785 @@
    "game-files",
    "gk1-wiki",
    "wikily.gg"
-  ]
+  ],
+  "refs": {
+   "names": {
+    "abandoned-house": {
+     "en": "Abandoned House",
+     "pt": "Casa Abandonada"
+    },
+    "alchemist": {
+     "en": "Alchemist",
+     "pt": "Alquimista"
+    },
+    "alchemy-lab": {
+     "en": "Alchemy Lab",
+     "pt": "Laboratório de Alquimia"
+    },
+    "apothecary": {
+     "en": "Apothecary",
+     "pt": "Boticário"
+    },
+    "apple-tree": {
+     "en": "Apple tree",
+     "pt": "Macieira"
+    },
+    "baker": {
+     "en": "Baker",
+     "pt": "Padeiro"
+    },
+    "battle-at-the-lake": {
+     "en": "Battle at the Lake",
+     "pt": "Batalha no Lago"
+    },
+    "beehive": {
+     "en": "Beehive",
+     "pt": "Colmeia"
+    },
+    "berry-bush": {
+     "en": "Berry bush",
+     "pt": "Arbusto de Frutinhas"
+    },
+    "bishop": {
+     "en": "Bishop",
+     "pt": "Bispo"
+    },
+    "blue-techbooks": {
+     "en": "Blue Techbooks",
+     "pt": "Livros Azuis de Tecnologia"
+    },
+    "blueberry-bush": {
+     "en": "Blueberry bush",
+     "pt": "Arbusto de mirtilo"
+    },
+    "bodies": {
+     "en": "Bodies",
+     "pt": "Corpos",
+     "tr": "machine"
+    },
+    "book-broker": {
+     "en": "Book Broker",
+     "pt": "Negócio de Livros"
+    },
+    "brawns-and-brains": {
+     "en": "Brawns and Brains",
+     "pt": "Força e Inteligência"
+    },
+    "break-through-to-the-bathhouse-basement": {
+     "en": "Break Through to the Bathhouse Basement",
+     "pt": "Conquista do Porão da Casa de Banho"
+    },
+    "break-through-to-the-port": {
+     "en": "Break Through to the Port",
+     "pt": "Conquista do Porto"
+    },
+    "brewery": {
+     "en": "Brewery",
+     "pt": "Cervejaria"
+    },
+    "broken-barrel": {
+     "en": "Broken barrel",
+     "pt": "Barril quebrado",
+     "tr": "machine"
+    },
+    "broken-shelf": {
+     "en": "Broken shelf",
+     "pt": "Estante quebrada",
+     "tr": "machine"
+    },
+    "brown-mushrooms": {
+     "en": "Brown mushrooms",
+     "pt": "Cogumelos marrons",
+     "tr": "machine"
+    },
+    "builder": {
+     "en": "Builder",
+     "pt": "Construtor"
+    },
+    "burying-a-corpse": {
+     "en": "Burying a corpse",
+     "pt": "Enterrar um corpo",
+     "tr": "machine"
+    },
+    "bush": {
+     "en": "Bush",
+     "pt": "Arbusto",
+     "tr": "machine"
+    },
+    "campaign-of-thrones": {
+     "en": "Campaign of Thrones",
+     "pt": "Campanha dos Tronos"
+    },
+    "can-t-see-the-forest-for-the-iron": {
+     "en": "Can't See The Forest for the Iron",
+     "pt": "Não Procure Ferro na Floresta"
+    },
+    "central-districts-purge-part-i": {
+     "en": "Central Districts Purge: Part I",
+     "pt": "Distritos Centrais: Purificação — Parte I"
+    },
+    "central-districts-purge-part-ii": {
+     "en": "Central Districts Purge: Part II",
+     "pt": "Distritos Centrais: Purificação — Parte II"
+    },
+    "chasing-fairy-lights": {
+     "en": "Chasing Fairy Lights",
+     "pt": "O Caça-Fadas"
+    },
+    "clay-spot": {
+     "en": "Clay spot",
+     "pt": "Ponto de argila",
+     "tr": "machine"
+    },
+    "closing-the-eastern-floodgate-part-i": {
+     "en": "Closing the Eastern Floodgate: Part I",
+     "pt": "Fechamento da Eclusa Oriental — Parte I"
+    },
+    "closing-the-eastern-floodgate-part-ii": {
+     "en": "Closing the Eastern Floodgate: Part II",
+     "pt": "Fechamento da Eclusa Oriental — Parte II"
+    },
+    "closing-the-western-floodgate": {
+     "en": "Closing the Western Floodgate",
+     "pt": "Fechamento da Eclusa Ocidental"
+    },
+    "comrade-donkey": {
+     "en": "Comrade Donkey",
+     "pt": "Burro Camarada"
+    },
+    "concept-for-a-concert": {
+     "en": "Concept for a Concert",
+     "pt": "Conceito para um Concerto"
+    },
+    "copper-vein": {
+     "en": "Copper vein",
+     "pt": "Veio de cobre",
+     "tr": "machine"
+    },
+    "creepy-tree": {
+     "en": "Creepy tree",
+     "pt": "Árvore sinistra",
+     "tr": "machine"
+    },
+    "dead-tree": {
+     "en": "Dead tree",
+     "pt": "Árvore morta",
+     "tr": "machine"
+    },
+    "driftwood": {
+     "en": "Driftwood",
+     "pt": "Madeira flutuante",
+     "tr": "machine"
+    },
+    "dungeons-and-that-s-it-probably": {
+     "en": "Dungeons and... that's it, probably.",
+     "pt": "Masmorras e... é, acho que é só isso."
+    },
+    "eastern-districts-active-scouting": {
+     "en": "Eastern Districts: Active Scouting",
+     "pt": "Distritos Orientais: Investida de Sondagem"
+    },
+    "eastern-districts-purge": {
+     "en": "Eastern Districts Purge",
+     "pt": "Distritos Orientais: Purificação"
+    },
+    "even-more-portal-parts": {
+     "en": "Even More Portal Parts",
+     "pt": "Ainda Mais Partes do Portal"
+    },
+    "eye-red-eye": {
+     "en": "Eye, Red Eye",
+     "pt": "Olho, Olho Vermelho"
+    },
+    "fighting-spirit-required": {
+     "en": "Fighting Spirit Required",
+     "pt": "Requer: Ímpeto da Batalha"
+    },
+    "final-battle": {
+     "en": "Final Battle",
+     "pt": "Última batalha"
+    },
+    "finding-old-god": {
+     "en": "Finding Old God",
+     "pt": "Encontrando o Deus Antigo"
+    },
+    "first-sludge": {
+     "en": "First... Sludge?",
+     "pt": "Primeira... borra?"
+    },
+    "fish-for-the-fisher": {
+     "en": "Fish for the Fisher",
+     "pt": "Um Peixe por Vez"
+    },
+    "fish-stand": {
+     "en": "Fish Stand",
+     "pt": "Peixaria"
+    },
+    "fishing": {
+     "en": "Fishing",
+     "pt": "Pesca"
+    },
+    "forest": {
+     "en": "Forest",
+     "pt": "Floresta"
+    },
+    "friend-or-foe": {
+     "en": "Friend or Foe",
+     "pt": "Amigo ou Inimigo"
+    },
+    "friendship-written-in-the-stars": {
+     "en": "Friendship Written in the Stars",
+     "pt": "Amizade Marcada nas Estrelas"
+    },
+    "furniture-maker": {
+     "en": "Furniture Maker",
+     "pt": "Marceneiro"
+    },
+    "garden-well-ii": {
+     "en": "Garden Well II",
+     "pt": "Poço do Jardim II"
+    },
+    "give-materials": {
+     "en": "Give materials",
+     "pt": "Entregar materiais"
+    },
+    "go-wild-in-the-wild-lands": {
+     "en": "Go Wild in the Wild Lands",
+     "pt": "Vá com tudo nas Terras Selvagens"
+    },
+    "goddess-of-nature-statue": {
+     "en": "Goddess of Nature statue",
+     "pt": "Estátua da Deusa da Natureza",
+     "tr": "machine"
+    },
+    "graveyard": {
+     "en": "Graveyard",
+     "pt": "Cemitério"
+    },
+    "green-fragment": {
+     "en": "Green Fragment",
+     "pt": "Fragmento Verde"
+    },
+    "green-men-from-far-lands": {
+     "en": "Green Men From Far Lands",
+     "pt": "Homens Verdes de Terras Distantes"
+    },
+    "green-techbooks": {
+     "en": "Green Techbooks",
+     "pt": "Livros Verdes de Tecnologia"
+    },
+    "gunter": {
+     "en": "Gunter",
+     "pt": "Gunter"
+    },
+    "harold": {
+     "en": "Harold",
+     "pt": "Uriel"
+    },
+    "herbert-and": {
+     "en": "Herbert and?",
+     "pt": "Norberto e?"
+    },
+    "herm": {
+     "en": "Herm",
+     "pt": "Hamilton"
+    },
+    "high-price": {
+     "en": "High Price",
+     "pt": "Preço Salgado"
+    },
+    "holy-moly": {
+     "en": "Holy Moly!",
+     "pt": "Çasinhora!"
+    },
+    "home": {
+     "en": "Home",
+     "pt": "Casa"
+    },
+    "homobonus-i": {
+     "en": "Homobonus I",
+     "pt": "Homobonus I"
+    },
+    "i-love-you-man": {
+     "en": "I Love You, Man",
+     "pt": "Eu Te Amo, Cara"
+    },
+    "inquisition-base": {
+     "en": "Inquisition Base",
+     "pt": "Base da Inquisição"
+    },
+    "inquisition-dungeon": {
+     "en": "Inquisition Dungeon",
+     "pt": "Masmorra da Inquisição"
+    },
+    "into-the-forest": {
+     "en": "Into the Forest",
+     "pt": "Rumo à Floresta"
+    },
+    "iron-ore-deposit": {
+     "en": "Iron ore deposit",
+     "pt": "Jazida de minério de ferro",
+     "tr": "machine"
+    },
+    "jack-in-a-boat": {
+     "en": "Jack in a Boat",
+     "pt": "O Barco de Jailson"
+    },
+    "jack-s-back-in-business": {
+     "en": "Jack's Back in Business",
+     "pt": "Jailson Volta à Ativa"
+    },
+    "januarius": {
+     "en": "Januarius",
+     "pt": "Januário"
+    },
+    "jeweler": {
+     "en": "Jeweler",
+     "pt": "Joalheiro"
+    },
+    "junk-pile": {
+     "en": "Junk pile",
+     "pt": "Pilha de sucata",
+     "tr": "machine"
+    },
+    "love-story": {
+     "en": "Love Story",
+     "pt": "História de Amor"
+    },
+    "lust-and-envy": {
+     "en": "Lust and Envy",
+     "pt": "Luxúria e Inveja"
+    },
+    "magic-mirror": {
+     "en": "Magic Mirror",
+     "pt": "Espelho Mágico"
+    },
+    "man-of-steel": {
+     "en": "Man of Steel",
+     "pt": "Homem de Aço"
+    },
+    "marble-deposit": {
+     "en": "Marble deposit",
+     "pt": "Jazida de mármore",
+     "tr": "machine"
+    },
+    "market-square-purge": {
+     "en": "Market Square Purge",
+     "pt": "Praça do Mercado: Purificação"
+    },
+    "more-portal-parts": {
+     "en": "More Portal Parts",
+     "pt": "Mais Partes do Portal"
+    },
+    "night-flower": {
+     "en": "Night flower",
+     "pt": "Flor noturna"
+    },
+    "not-in-shining-armor-yet": {
+     "en": "Not in Shining Armor Yet",
+     "pt": "Uma Armadura Brilhante"
+    },
+    "old-mine": {
+     "en": "Old Mine",
+     "pt": "Mina Antiga"
+    },
+    "operation-potato-part-i": {
+     "en": "Operation POTATO: Part I",
+     "pt": "Operação BATATA: Parte I"
+    },
+    "operation-potato-part-ii": {
+     "en": "Operation POTATO: Part II",
+     "pt": "Operação BATATA: Parte II"
+    },
+    "organic-music": {
+     "en": "Organic Music",
+     "pt": "Música Orgânica"
+    },
+    "personal-zombie-zone": {
+     "en": "Personal Zombie Zone",
+     "pt": "Zona Pessoal dos Zumbis"
+    },
+    "planted-and-delivered": {
+     "en": "Planted and Delivered",
+     "pt": "Semeada e Colhida"
+    },
+    "plenty-of-fish-in-the-sea": {
+     "en": "Plenty of Fish in the Sea",
+     "pt": "O Mar tá pra Peixe!"
+    },
+    "port-area": {
+     "en": "Port Area",
+     "pt": "Área do Porto"
+    },
+    "pre-order-bonus": {
+     "en": "Pre-order bonus",
+     "pt": "Bônus da pré-venda",
+     "tr": "machine"
+    },
+    "press-for-cash": {
+     "en": "Press for Cash",
+     "pt": "Imprimir Dinheiro"
+    },
+    "random-techbooks": {
+     "en": "Random Techbooks",
+     "pt": "Livros Aleatórios de Tecnologia"
+    },
+    "red-mushrooms": {
+     "en": "Red mushrooms",
+     "pt": "Cogumelos vermelhos",
+     "tr": "machine"
+    },
+    "red-techbooks": {
+     "en": "Red Techbooks",
+     "pt": "Livros Vermelhos de Tecnologia"
+    },
+    "repair-block": {
+     "en": "Repair Block",
+     "pt": "Consertar Estrutura"
+    },
+    "repair-house": {
+     "en": "Repair House",
+     "pt": "Consertar Casa"
+    },
+    "repair-large-house": {
+     "en": "Repair Large House",
+     "pt": "Consertar Casa Grande"
+    },
+    "repair-small-house": {
+     "en": "Repair Small House",
+     "pt": "Consertar Casa Pequena"
+    },
+    "resurrection-lab": {
+     "en": "Resurrection Lab",
+     "pt": "Laboratório de Ressurreição"
+    },
+    "rhododendron-bush": {
+     "en": "Rhododendron bush",
+     "pt": "Arbusto de Rododendro"
+    },
+    "rhyme-and-printed": {
+     "en": "Rhyme and Printed",
+     "pt": "Prensa e Verso"
+    },
+    "safe-harbor": {
+     "en": "Safe Harbor",
+     "pt": "Porto Seguro"
+    },
+    "sand-pit": {
+     "en": "Sand pit",
+     "pt": "Areal",
+     "tr": "machine"
+    },
+    "sawmill": {
+     "en": "Sawmill",
+     "pt": "Serraria"
+    },
+    "seeds": {
+     "en": "Seeds",
+     "pt": "Sementes"
+    },
+    "sermons": {
+     "en": "Sermons",
+     "pt": "Sermões",
+     "tr": "machine"
+    },
+    "sewer-brawl-i": {
+     "en": "Sewer Brawl I",
+     "pt": "Batalha no Esgoto I"
+    },
+    "sewer-brawl-ii": {
+     "en": "Sewer Brawl II",
+     "pt": "Batalha no Esgoto II"
+    },
+    "sewerena-the-sewer-arena": {
+     "en": "Sewerena (The Sewer Arena)",
+     "pt": "Esgotarena (A Arena do Esgoto)"
+    },
+    "sewers": {
+     "en": "Sewers",
+     "pt": "Esgotos"
+    },
+    "smithy": {
+     "en": "Smithy",
+     "pt": "Forja"
+    },
+    "stars-lies-contracts": {
+     "en": "Stars, Lies, & Contracts",
+     "pt": "Estrelas, Mentiras e Contratos"
+    },
+    "stone-deposit": {
+     "en": "Stone deposit",
+     "pt": "Jazida de pedra",
+     "tr": "machine"
+    },
+    "suit-up": {
+     "en": "Suit Up!",
+     "pt": "Vista-se bem!"
+    },
+    "swamp": {
+     "en": "Swamp",
+     "pt": "Pântano"
+    },
+    "swamp-mushrooms": {
+     "en": "Swamp mushrooms",
+     "pt": "Cogumelos do pântano",
+     "tr": "machine"
+    },
+    "sweet-dreams": {
+     "en": "Sweet Dreams",
+     "pt": "Durma Bem!"
+    },
+    "swords-and-bell": {
+     "en": "Swords and Bell",
+     "pt": "Espadas e Sino"
+    },
+    "tailor": {
+     "en": "Tailor",
+     "pt": "Alfaiate"
+    },
+    "tales-for-ales": {
+     "en": "Tales for Ales",
+     "pt": "Contos e Cervejas"
+    },
+    "tavern": {
+     "en": "Tavern",
+     "pt": "Taberna"
+    },
+    "the-hungry-cosmos": {
+     "en": "The Hungry Cosmos",
+     "pt": "O Cosmos Faminto"
+    },
+    "the-ingenious-gentleman-don-keyote": {
+     "en": "The Ingenious Gentleman Don Keyote",
+     "pt": "O Engenhoso Burro Dom Quixote"
+    },
+    "the-keeper-s-tool-belt": {
+     "en": "The Keeper's tool belt",
+     "pt": "Cinto de ferramentas do Coveiro",
+     "tr": "machine"
+    },
+    "the-last-battle": {
+     "en": "The Last Battle",
+     "pt": "A Batalha Final"
+    },
+    "the-lord-s-vintage": {
+     "en": "The Lord's Vintage",
+     "pt": "A Safra do Senhor"
+    },
+    "the-nun-also-reads": {
+     "en": "The Nun Also Reads",
+     "pt": "A Freira Também Lê"
+    },
+    "the-nun-with-the-hairy-ass": {
+     "en": "The Nun with the Hairy Ass",
+     "pt": "A Freira do Burro Peludo"
+    },
+    "the-prologue": {
+     "en": "The prologue",
+     "pt": "O prólogo",
+     "tr": "machine"
+    },
+    "the-quiet-art": {
+     "en": "The Quiet Art",
+     "pt": "O Pescado do Acordo"
+    },
+    "trademaster": {
+     "en": "Trademaster",
+     "pt": "Gerente Comercial"
+    },
+    "trash-pile": {
+     "en": "Trash pile",
+     "pt": "Pilha de lixo",
+     "tr": "machine"
+    },
+    "tree": {
+     "en": "Tree",
+     "pt": "Árvore",
+     "tr": "machine"
+    },
+    "tree-stump": {
+     "en": "Tree stump",
+     "pt": "Toco de árvore",
+     "tr": "machine"
+    },
+    "two-peas-in-a-pod": {
+     "en": "Two Peas in a Pod",
+     "pt": "Unha e Carne"
+    },
+    "valuables": {
+     "en": "Valuables",
+     "pt": "Itens Valiosos"
+    },
+    "varnish-before-you-fiddle": {
+     "en": "Varnish Before You Fiddle",
+     "pt": "Envernize Antes de Mexer"
+    },
+    "vegetable-stand": {
+     "en": "Vegetable Stand",
+     "pt": "Banca de Vegetais"
+    },
+    "village": {
+     "en": "Village",
+     "pt": "Aldeia"
+    },
+    "water-well": {
+     "en": "Water well",
+     "pt": "Poço de água"
+    },
+    "wealthy-clients": {
+     "en": "Wealthy Clients",
+     "pt": "Clientes Prósperos"
+    },
+    "well-deserved-rest": {
+     "en": "Well-Deserved Rest",
+     "pt": "Um Descanso Merecido"
+    },
+    "wharf-rats": {
+     "en": "Wharf Rats",
+     "pt": "Ratos do Porto"
+    },
+    "wild-beehive": {
+     "en": "Wild beehive",
+     "pt": "Colmeia selvagem",
+     "tr": "machine"
+    },
+    "workshop-hours": {
+     "en": "Workshop Hours",
+     "pt": "Horário da Oficina"
+    },
+    "yard": {
+     "en": "Yard",
+     "pt": "Pátio"
+    },
+    "yummies": {
+     "en": "Yummies",
+     "pt": "Festa das Guloseimas"
+    }
+   },
+   "buffs": {
+    "beer-thirst": {
+     "en": "Beer thirst",
+     "pt": "Sede de cerveja",
+     "d": {
+      "en": "Beer tastes much better now!",
+      "pt": "Agora a cerveja está com um gosto muito melhor!"
+     }
+    },
+    "berserk": {
+     "en": "Berserk",
+     "pt": "Enfurecido",
+     "d": {
+      "en": "Your attacks no longer consume stamina.",
+      "pt": "Seus ataques não consomem mais vigor."
+     }
+    },
+    "berserk-ii": {
+     "en": "Berserk II",
+     "pt": "Enfurecido II",
+     "d": {
+      "en": "Your attacks no longer consume stamina.",
+      "pt": "Seus ataques não consomem mais vigor."
+     }
+    },
+    "berserk-iii": {
+     "en": "Berserk III",
+     "pt": "Enfurecido III",
+     "d": {
+      "en": "Your attacks no longer consume stamina.",
+      "pt": "Seus ataques não consomem mais vigor."
+     }
+    },
+    "building-spirit-ii": {
+     "en": "Building spirit II",
+     "pt": "Espírito da Engenharia II",
+     "d": {
+      "en": "You temporarily have +2 Building mastery.",
+      "pt": "Você tem temporariamente +2 Engenharia."
+     }
+    },
+    "farming-spirit-ii": {
+     "en": "Farming spirit II",
+     "pt": "Espírito da Agricultura II",
+     "d": {
+      "en": "You temporarily have +2 Farming mastery.",
+      "pt": "Você tem temporariamente +2 Agricultura."
+     }
+    },
+    "fighter": {
+     "en": "Fighter",
+     "pt": "Lutador",
+     "d": {
+      "en": "Your damage is slightly increased.",
+      "pt": "Seu dano aumenta ligeiramente."
+     }
+    },
+    "fighter-ii": {
+     "en": "Fighter II",
+     "pt": "Lutador II",
+     "d": {
+      "en": "Your damage is increased.",
+      "pt": "Seu dano aumenta."
+     }
+    },
+    "fighter-iii": {
+     "en": "Fighter III",
+     "pt": "Lutador III",
+     "d": {
+      "en": "Your damage is greatly increased.",
+      "pt": "Seu dano aumenta bastante."
+     }
+    },
+    "smithing-spirit-ii": {
+     "en": "Smithing spirit II",
+     "pt": "Espírito da Metalurgia II",
+     "d": {
+      "en": "You temporarily have +2 Smithing mastery.",
+      "pt": "Você tem temporariamente +2 Metalurgia."
+     }
+    },
+    "steamed-up": {
+     "en": "Steamed Up",
+     "pt": "Aquecido",
+     "d": {
+      "en": "You feel refreshed after your sauna: food gives +10% energy.",
+      "pt": "Você se sente revigorado após a sauna: alimentos concedem +10% de energia."
+     }
+    },
+    "third-eye-salt": {
+     "en": "Third Eye Salt",
+     "pt": "Sal do Terceiro Olho",
+     "d": {
+      "en": "+2 to all five masteries",
+      "pt": "+2 nas cinco maestrias"
+     },
+     "dtr": "machine"
+    },
+    "zombie-motivation": {
+     "en": "Zombie Motivation",
+     "pt": "Motivação Zumbi",
+     "d": {
+      "en": "Allied fighters' attack speed is increased.",
+      "pt": "A velocidade de ataque dos lutadores aliados aumenta."
+     }
+    },
+    "zombie-motivation-ii": {
+     "en": "Zombie Motivation II",
+     "pt": "Motivação Zumbi II",
+     "d": {
+      "en": "Allied fighters' attack speed is increased.",
+      "pt": "A velocidade de ataque dos lutadores aliados aumenta."
+     }
+    },
+    "zombie-motivation-iii": {
+     "en": "Zombie Motivation III",
+     "pt": "Motivação Zumbi III",
+     "d": {
+      "en": "Allied fighters' attack speed is increased.",
+      "pt": "A velocidade de ataque dos lutadores aliados aumenta."
+     }
+    }
+   }
+  }
  },
  "items": {
   "10-zombie-limit-for-1-week": {
@@ -153,7 +931,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "acid"
+   "key": "acid",
+   "stack": 20
   },
   "advanced-detail": {
    "id": "advanced-detail",
@@ -177,7 +956,15 @@
     "advanced-detail"
    ],
    "defaultRecipe": "advanced-detail",
-   "key": "detail_2_iron"
+   "key": "detail_2_iron",
+   "where": [
+    [
+     "buy",
+     "smithy",
+     2
+    ]
+   ],
+   "stack": 30
   },
   "advanced-rod": {
    "id": "advanced-rod",
@@ -201,7 +988,15 @@
     "advanced-rod"
    ],
    "defaultRecipe": "advanced-rod",
-   "key": "advanced_rod"
+   "key": "advanced_rod",
+   "where": [
+    [
+     "buy",
+     "fish-stand",
+     2
+    ]
+   ],
+   "stack": 1
   },
   "albedo-tear": {
    "id": "albedo-tear",
@@ -223,7 +1018,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "alchemy_albedo"
+   "key": "alchemy_albedo",
+   "stack": 50
   },
   "alchemic-powder": {
    "id": "alchemic-powder",
@@ -245,7 +1041,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "powder_r"
+   "key": "powder_r",
+   "where": [
+    [
+     "buy",
+     "apothecary"
+    ]
+   ],
+   "stack": 99
   },
   "alchemist-s-bag": {
    "id": "alchemist-s-bag",
@@ -267,7 +1070,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "bag_alchemy"
+   "key": "bag_alchemy",
+   "where": [
+    [
+     "buy",
+     "apothecary"
+    ]
+   ],
+   "stack": 1
   },
   "alchemist-s-clothes": {
    "id": "alchemist-s-clothes",
@@ -289,7 +1099,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "hero_clothes_9004"
+   "key": "hero_clothes_9004",
+   "where": [
+    [
+     "quest",
+     "sweet-dreams"
+    ]
+   ],
+   "stack": 1
   },
   "alchemist-s-kit": {
    "id": "alchemist-s-kit",
@@ -313,7 +1130,8 @@
     "alchemist-s-kit"
    ],
    "defaultRecipe": "alchemist-s-kit",
-   "key": "alchemy_kit_2"
+   "key": "alchemy_kit_2",
+   "stack": 1
   },
   "alchemist-s-note": {
    "id": "alchemist-s-note",
@@ -335,7 +1153,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "note_lab_tower"
+   "key": "note_lab_tower",
+   "where": [
+    [
+     "chest",
+     "alchemy-lab"
+    ]
+   ],
+   "stack": 1
   },
   "alchemy-flasks": {
    "id": "alchemy-flasks",
@@ -360,7 +1185,8 @@
     "place-alchemy-flasks-ii"
    ],
    "defaultRecipe": "place-alchemy-flasks-i",
-   "key": "alchemy_flask"
+   "key": "alchemy_flask",
+   "stack": 100
   },
   "alchemy-flasks-i": {
    "id": "alchemy-flasks-i",
@@ -384,7 +1210,18 @@
     "alchemy-flasks-i"
    ],
    "defaultRecipe": "alchemy-flasks-i",
-   "key": "alchemy_bottle_1"
+   "key": "alchemy_bottle_1",
+   "where": [
+    [
+     "buy",
+     "apothecary"
+    ],
+    [
+     "chest",
+     "alchemy-lab"
+    ]
+   ],
+   "stack": 99
   },
   "alchemy-flasks-ii": {
    "id": "alchemy-flasks-ii",
@@ -408,7 +1245,15 @@
     "alchemy-flasks-ii"
    ],
    "defaultRecipe": "alchemy-flasks-ii",
-   "key": "alchemy_bottle_2"
+   "key": "alchemy_bottle_2",
+   "where": [
+    [
+     "buy",
+     "apothecary",
+     3
+    ]
+   ],
+   "stack": 99
   },
   "alchemy-tools-i": {
    "id": "alchemy-tools-i",
@@ -512,7 +1357,15 @@
    "key": "alcohol",
    "runes": {
     "blue": 3
-   }
+   },
+   "where": [
+    [
+     "buy",
+     "apothecary",
+     2
+    ]
+   ],
+   "stack": 99
   },
   "alkali": {
    "id": "alkali",
@@ -536,7 +1389,15 @@
     "alchemy-alkali"
    ],
    "defaultRecipe": "alchemy-alkali",
-   "key": "alkali"
+   "key": "alkali",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "stack": 20
   },
   "alum": {
    "id": "alum",
@@ -558,7 +1419,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "alum"
+   "key": "alum",
+   "stack": 20
   },
   "amateur-rod": {
    "id": "amateur-rod",
@@ -582,7 +1444,14 @@
     "amateur-rod"
    ],
    "defaultRecipe": "amateur-rod",
-   "key": "amateur_rod"
+   "key": "amateur_rod",
+   "where": [
+    [
+     "buy",
+     "fish-stand"
+    ]
+   ],
+   "stack": 1
   },
   "anchovy": {
    "id": "anchovy",
@@ -604,7 +1473,17 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_anchovy"
+   "key": "fish_anchovy",
+   "where": [
+    [
+     "fish",
+     "port-area",
+     "breadcrumb-bait",
+     66.7,
+     33.3
+    ]
+   ],
+   "stack": 20
   },
   "anchovy-or-mackerel": {
    "id": "anchovy-or-mackerel",
@@ -651,7 +1530,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "alchemy_anima_mundi"
+   "key": "alchemy_anima_mundi",
+   "stack": 50
   },
   "any-newspaper": {
    "id": "any-newspaper",
@@ -727,7 +1607,21 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "apple"
+   "key": "apple",
+   "where": [
+    [
+     "buy",
+     "vegetable-stand"
+    ],
+    [
+     "gather",
+     "apple-tree"
+    ]
+   ],
+   "use": {
+    "en": 3
+   },
+   "stack": 20
   },
   "apple-cider": {
    "id": "apple-cider",
@@ -751,7 +1645,21 @@
     "apple-cider"
    ],
    "defaultRecipe": "apple-cider",
-   "key": "apple_cider"
+   "key": "apple_cider",
+   "where": [
+    [
+     "buy",
+     "tavern"
+    ],
+    [
+     "buy",
+     "brewery"
+    ]
+   ],
+   "use": {
+    "ins": -7
+   },
+   "stack": 50
   },
   "apple-juice": {
    "id": "apple-juice",
@@ -775,7 +1683,11 @@
     "apple-juice"
    ],
    "defaultRecipe": "apple-juice",
-   "key": "apple_juice"
+   "key": "apple_juice",
+   "use": {
+    "en": 25
+   },
+   "stack": 50
   },
   "apple-tree": {
    "id": "apple-tree",
@@ -821,7 +1733,19 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "apple_seedling"
+   "key": "apple_seedling",
+   "where": [
+    [
+     "buy",
+     "herm",
+     3
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 20
   },
   "aqua-vitae": {
    "id": "aqua-vitae",
@@ -843,7 +1767,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "aqua_vitae"
+   "key": "aqua_vitae",
+   "stack": 20
   },
   "archer-tower-i": {
    "id": "archer-tower-i",
@@ -867,7 +1792,8 @@
     "build-archer-tower-i"
    ],
    "defaultRecipe": "build-archer-tower-i",
-   "key": "tower_1_fight"
+   "key": "tower_1_fight",
+   "stack": 99
   },
   "archer-tower-ii": {
    "id": "archer-tower-ii",
@@ -891,7 +1817,8 @@
     "build-archer-tower-ii"
    ],
    "defaultRecipe": "build-archer-tower-ii",
-   "key": "tower_2_fight"
+   "key": "tower_2_fight",
+   "stack": 99
   },
   "archer-tower-iii": {
    "id": "archer-tower-iii",
@@ -915,7 +1842,8 @@
     "build-archer-tower-iii"
    ],
    "defaultRecipe": "build-archer-tower-iii",
-   "key": "tower_3_fight"
+   "key": "tower_3_fight",
+   "stack": 99
   },
   "ash": {
    "id": "ash",
@@ -944,7 +1872,14 @@
    "runes": {
     "green": 1,
     "blue": 1
-   }
+   },
+   "where": [
+    [
+     "buy",
+     "apothecary"
+    ]
+   ],
+   "stack": 99
   },
   "assembly-bench": {
    "id": "assembly-bench",
@@ -1278,7 +2213,15 @@
     "baked-apple"
    ],
    "defaultRecipe": "baked-apple",
-   "key": "cook_baked_apple"
+   "key": "cook_baked_apple",
+   "use": {
+    "en": 21,
+    "enB": [
+     23,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "baked-fish": {
    "id": "baked-fish",
@@ -1302,7 +2245,15 @@
     "baked-fish"
    ],
    "defaultRecipe": "baked-fish",
-   "key": "cook_baked_fish"
+   "key": "cook_baked_fish",
+   "use": {
+    "en": 40,
+    "enB": [
+     44,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "baked-meat": {
    "id": "baked-meat",
@@ -1326,7 +2277,16 @@
     "baked-meat"
    ],
    "defaultRecipe": "baked-meat",
-   "key": "cook_baked_meat"
+   "key": "cook_baked_meat",
+   "use": {
+    "en": 40,
+    "enB": [
+     44,
+     "steamed-up"
+    ],
+    "ins": 10
+   },
+   "stack": 30
   },
   "baked-mushrooms": {
    "id": "baked-mushrooms",
@@ -1350,7 +2310,15 @@
     "baked-mushrooms"
    ],
    "defaultRecipe": "baked-mushrooms",
-   "key": "cook_baked_mushroom"
+   "key": "cook_baked_mushroom",
+   "use": {
+    "en": 27,
+    "enB": [
+     30,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "baked-pumpkin": {
    "id": "baked-pumpkin",
@@ -1376,7 +2344,15 @@
     "baked-pumpkin-from-pumpkin-silver"
    ],
    "defaultRecipe": "baked-pumpkin-from-pumpkin-bronze",
-   "key": "cook_pumpkin_baked"
+   "key": "cook_pumpkin_baked",
+   "use": {
+    "en": 25,
+    "enB": [
+     28,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "baked-salmon": {
    "id": "baked-salmon",
@@ -1400,7 +2376,15 @@
     "baked-salmon"
    ],
    "defaultRecipe": "baked-salmon",
-   "key": "cook_baked_salmon"
+   "key": "cook_baked_salmon",
+   "use": {
+    "en": 40,
+    "enB": [
+     44,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "barricade-i": {
    "id": "barricade-i",
@@ -1424,7 +2408,8 @@
     "build-barricade-i"
    ],
    "defaultRecipe": "build-barricade-i",
-   "key": "barricade_1_fight"
+   "key": "barricade_1_fight",
+   "stack": 99
   },
   "barricade-ii": {
    "id": "barricade-ii",
@@ -1448,7 +2433,8 @@
     "build-barricade-ii"
    ],
    "defaultRecipe": "build-barricade-ii",
-   "key": "barricade_2_fight"
+   "key": "barricade_2_fight",
+   "stack": 99
   },
   "barricade-iii": {
    "id": "barricade-iii",
@@ -1472,7 +2458,8 @@
     "build-barricade-iii"
    ],
    "defaultRecipe": "build-barricade-iii",
-   "key": "barricade_3_fight"
+   "key": "barricade_3_fight",
+   "stack": 99
   },
   "basic-prayer": {
    "id": "basic-prayer",
@@ -1517,7 +2504,14 @@
     "basic-rod"
    ],
    "defaultRecipe": "basic-rod",
-   "key": "basic_rod"
+   "key": "basic_rod",
+   "where": [
+    [
+     "quest",
+     "two-peas-in-a-pod"
+    ]
+   ],
+   "stack": 1
   },
   "battle-bow": {
    "id": "battle-bow",
@@ -1541,7 +2535,8 @@
     "battle-bow"
    ],
    "defaultRecipe": "battle-bow",
-   "key": "bow_2"
+   "key": "bow_2",
+   "stack": 1
   },
   "battle-loot": {
    "id": "battle-loot",
@@ -1563,7 +2558,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "loot_battle_purse"
+   "key": "loot_battle_purse",
+   "stack": 10
   },
   "battle-pike": {
    "id": "battle-pike",
@@ -1587,7 +2583,15 @@
     "battle-pike"
    ],
    "defaultRecipe": "battle-pike",
-   "key": "pike_2"
+   "key": "pike_2",
+   "where": [
+    [
+     "buy",
+     "smithy",
+     2
+    ]
+   ],
+   "stack": 1
   },
   "beehive": {
    "id": "beehive",
@@ -1635,7 +2639,33 @@
     "beer"
    ],
    "defaultRecipe": "beer",
-   "key": "beer"
+   "key": "beer",
+   "where": [
+    [
+     "buy",
+     "januarius"
+    ],
+    [
+     "buy",
+     "tavern"
+    ],
+    [
+     "buy",
+     "brewery"
+    ],
+    [
+     "chest",
+     "yard"
+    ]
+   ],
+   "use": {
+    "ins": -12,
+    "insB": [
+     -24,
+     "beer-thirst"
+    ]
+   },
+   "stack": 50
   },
   "beeswax": {
    "id": "beeswax",
@@ -1661,7 +2691,18 @@
    "runes": {
     "red": 1,
     "green": 2
-   }
+   },
+   "where": [
+    [
+     "gather",
+     "beehive"
+    ],
+    [
+     "gather",
+     "wild-beehive"
+    ]
+   ],
+   "stack": 30
   },
   "beet": {
    "id": "beet",
@@ -1685,7 +2726,22 @@
     "grow-beet-bed-m6"
    ],
    "defaultRecipe": null,
-   "key": "beet"
+   "key": "beet",
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "use": {
+    "en": 3
+   },
+   "stack": 50
   },
   "beet-bed": {
    "id": "beet-bed",
@@ -1731,7 +2787,19 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "beet_seed"
+   "key": "beet_seed",
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 50
   },
   "beet-slices": {
    "id": "beet-slices",
@@ -1755,7 +2823,15 @@
     "beet-slices"
    ],
    "defaultRecipe": "beet-slices",
-   "key": "cook_beet_sliced"
+   "key": "cook_beet_sliced",
+   "use": {
+    "en": 15,
+    "enB": [
+     17,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "bellows": {
    "id": "bellows",
@@ -1804,7 +2880,21 @@
    "key": "berry",
    "runes": {
     "green": 1
-   }
+   },
+   "where": [
+    [
+     "gather",
+     "berry-bush"
+    ],
+    [
+     "chest",
+     "home"
+    ]
+   ],
+   "use": {
+    "en": 3
+   },
+   "stack": 50
   },
   "berry-bush": {
    "id": "berry-bush",
@@ -1852,7 +2942,21 @@
     "berry-cider"
    ],
    "defaultRecipe": "berry-cider",
-   "key": "berry_cider"
+   "key": "berry_cider",
+   "where": [
+    [
+     "buy",
+     "tavern"
+    ],
+    [
+     "buy",
+     "brewery"
+    ]
+   ],
+   "use": {
+    "ins": -7
+   },
+   "stack": 50
   },
   "berry-juice": {
    "id": "berry-juice",
@@ -1876,7 +2980,11 @@
     "berry-juice"
    ],
    "defaultRecipe": "berry-juice",
-   "key": "berry_juice"
+   "key": "berry_juice",
+   "use": {
+    "en": 25
+   },
+   "stack": 50
   },
   "berry-pie": {
    "id": "berry-pie",
@@ -1900,7 +3008,26 @@
     "berry-pie"
    ],
    "defaultRecipe": "berry-pie",
-   "key": "berry_pie"
+   "key": "berry_pie",
+   "where": [
+    [
+     "buy",
+     "januarius"
+    ],
+    [
+     "buy",
+     "baker"
+    ]
+   ],
+   "use": {
+    "en": 30,
+    "enB": [
+     33,
+     "steamed-up"
+    ],
+    "ins": -3
+   },
+   "stack": 30
   },
   "berry-smoothie": {
    "id": "berry-smoothie",
@@ -1924,7 +3051,15 @@
     "berry-smoothie"
    ],
    "defaultRecipe": "berry-smoothie",
-   "key": "cook_smothie"
+   "key": "cook_smothie",
+   "use": {
+    "en": 25,
+    "enB": [
+     28,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "berserker-potion": {
    "id": "berserker-potion",
@@ -1948,7 +3083,21 @@
     "alchemy-berserker-potion"
    ],
    "defaultRecipe": "alchemy-berserker-potion",
-   "key": "berserk_potion"
+   "key": "berserk_potion",
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "use": {
+    "buff": [
+     "berserk",
+     15,
+     1
+    ]
+   },
+   "stack": 20
   },
   "berserker-potion-ii": {
    "id": "berserker-potion-ii",
@@ -1972,7 +3121,22 @@
     "alchemy-berserker-potion-ii"
    ],
    "defaultRecipe": "alchemy-berserker-potion-ii",
-   "key": "berserk_potion_2"
+   "key": "berserk_potion_2",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "use": {
+    "buff": [
+     "berserk-ii",
+     30,
+     1
+    ]
+   },
+   "stack": 20
   },
   "berserker-potion-iii": {
    "id": "berserker-potion-iii",
@@ -1996,7 +3160,15 @@
     "alchemy-berserker-potion-iii"
    ],
    "defaultRecipe": "alchemy-berserker-potion-iii",
-   "key": "berserk_potion_3"
+   "key": "berserk_potion_3",
+   "use": {
+    "buff": [
+     "berserk-iii",
+     45,
+     1
+    ]
+   },
+   "stack": 20
   },
   "big-universal-bag": {
    "id": "big-universal-bag",
@@ -2018,7 +3190,15 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "bag_universal_big"
+   "key": "bag_universal_big",
+   "where": [
+    [
+     "buy",
+     "tailor",
+     2
+    ]
+   ],
+   "stack": 1
   },
   "bioreactor": {
    "id": "bioreactor",
@@ -2064,7 +3244,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "black_oil"
+   "key": "black_oil",
+   "stack": 20
   },
   "blacksmith-s-clothes": {
    "id": "blacksmith-s-clothes",
@@ -2086,7 +3267,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "hero_clothes_9005"
+   "key": "hero_clothes_9005",
+   "where": [
+    [
+     "quest",
+     "jack-in-a-boat"
+    ]
+   ],
+   "stack": 1
   },
   "blank-hardcover-notebook": {
    "id": "blank-hardcover-notebook",
@@ -2110,7 +3298,15 @@
     "blank-hardcover-notebook"
    ],
    "defaultRecipe": "blank-hardcover-notebook",
-   "key": "notebook_hard"
+   "key": "notebook_hard",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "stack": 30
   },
   "blank-softcover-notebook": {
    "id": "blank-softcover-notebook",
@@ -2134,7 +3330,15 @@
     "blank-softcover-notebook"
    ],
    "defaultRecipe": "blank-softcover-notebook",
-   "key": "notebook"
+   "key": "notebook",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "stack": 30
   },
   "blood": {
    "id": "blood",
@@ -2159,7 +3363,18 @@
    "key": "blood",
    "runes": {
     "blue": 1
-   }
+   },
+   "where": [
+    [
+     "chest",
+     "alchemy-lab"
+    ],
+    [
+     "autopsy",
+     "bodies"
+    ]
+   ],
+   "stack": 99
   },
   "blue-crystal": {
    "id": "blue-crystal",
@@ -2185,7 +3400,19 @@
    "runes": {
     "green": 1,
     "blue": 2
-   }
+   },
+   "where": [
+    [
+     "buy",
+     "gunter",
+     2
+    ],
+    [
+     "gather",
+     "goddess-of-nature-statue"
+    ]
+   ],
+   "stack": 20
   },
   "blue-techbook": {
    "id": "blue-techbook",
@@ -2209,7 +3436,18 @@
     "blue-techbook"
    ],
    "defaultRecipe": "blue-techbook",
-   "key": "techbook_b_1"
+   "key": "techbook_b_1",
+   "where": [
+    [
+     "looter",
+     "blue-techbooks"
+    ],
+    [
+     "looter",
+     "random-techbooks"
+    ]
+   ],
+   "stack": 10
   },
   "blue-techbook-ii": {
    "id": "blue-techbook-ii",
@@ -2233,7 +3471,18 @@
     "blue-techbook-ii"
    ],
    "defaultRecipe": "blue-techbook-ii",
-   "key": "techbook_b_2"
+   "key": "techbook_b_2",
+   "where": [
+    [
+     "looter",
+     "blue-techbooks"
+    ],
+    [
+     "looter",
+     "random-techbooks"
+    ]
+   ],
+   "stack": 10
   },
   "blueberry": {
    "id": "blueberry",
@@ -2258,7 +3507,17 @@
    "key": "berry_blue",
    "runes": {
     "blue": 1
-   }
+   },
+   "where": [
+    [
+     "gather",
+     "blueberry-bush"
+    ]
+   ],
+   "use": {
+    "en": 4
+   },
+   "stack": 50
   },
   "blueberry-bush": {
    "id": "blueberry-bush",
@@ -2306,7 +3565,17 @@
     "blueberry-cider"
    ],
    "defaultRecipe": "blueberry-cider",
-   "key": "blueberry_cider"
+   "key": "blueberry_cider",
+   "where": [
+    [
+     "buy",
+     "tavern"
+    ]
+   ],
+   "use": {
+    "ins": -10
+   },
+   "stack": 50
   },
   "blueberry-juice": {
    "id": "blueberry-juice",
@@ -2330,7 +3599,11 @@
     "blueberry-juice"
    ],
    "defaultRecipe": "blueberry-juice",
-   "key": "blue_berry_juice"
+   "key": "blue_berry_juice",
+   "use": {
+    "en": 35
+   },
+   "stack": 50
   },
   "blueberry-seedling": {
    "id": "blueberry-seedling",
@@ -2352,7 +3625,20 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "blueberry_seedling"
+   "key": "blueberry_seedling",
+   "where": [
+    [
+     "buy",
+     "herm",
+     3
+    ],
+    [
+     "buy",
+     "vegetable-stand",
+     2
+    ]
+   ],
+   "stack": 30
   },
   "board": {
    "id": "board",
@@ -2377,7 +3663,30 @@
     "board-circular-saw"
    ],
    "defaultRecipe": "board-sawhorse",
-   "key": "flitch"
+   "key": "flitch",
+   "where": [
+    [
+     "buy",
+     "builder"
+    ],
+    [
+     "gather",
+     "broken-barrel"
+    ],
+    [
+     "gather",
+     "trash-pile"
+    ],
+    [
+     "gather",
+     "broken-shelf"
+    ],
+    [
+     "chest",
+     "yard"
+    ]
+   ],
+   "stack": 50
   },
   "boiled-egg": {
    "id": "boiled-egg",
@@ -2399,7 +3708,11 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "boiled_egg"
+   "key": "boiled_egg",
+   "use": {
+    "en": 10
+   },
+   "stack": 30
   },
   "bones": {
    "id": "bones",
@@ -2424,7 +3737,14 @@
     "improve-organ-ii-from-any-bones"
    ],
    "defaultRecipe": null,
-   "key": "bones"
+   "key": "bones",
+   "where": [
+    [
+     "autopsy",
+     "@autopsy-table-i"
+    ]
+   ],
+   "stack": 20
   },
   "bookshelf": {
    "id": "bookshelf",
@@ -2561,7 +3881,14 @@
     "improve-organ-ii-from-any-brain"
    ],
    "defaultRecipe": null,
-   "key": "brain"
+   "key": "brain",
+   "where": [
+    [
+     "autopsy",
+     "@autopsy-table-i"
+    ]
+   ],
+   "stack": 20
   },
   "bread": {
    "id": "bread",
@@ -2585,7 +3912,25 @@
     "bread"
    ],
    "defaultRecipe": "bread",
-   "key": "bread"
+   "key": "bread",
+   "where": [
+    [
+     "buy",
+     "baker"
+    ],
+    [
+     "chest",
+     "home"
+    ]
+   ],
+   "use": {
+    "en": 18,
+    "enB": [
+     20,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "breadcrumb-bait": {
    "id": "breadcrumb-bait",
@@ -2609,7 +3954,8 @@
     "breadcrumb-bait"
    ],
    "defaultRecipe": "breadcrumb-bait",
-   "key": "breadcrumb_bite"
+   "key": "breadcrumb_bite",
+   "stack": 20
   },
   "bream": {
    "id": "bream",
@@ -2631,7 +3977,17 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_bream"
+   "key": "fish_bream",
+   "where": [
+    [
+     "fish",
+     "village",
+     "breadcrumb-bait",
+     50,
+     33.3
+    ]
+   ],
+   "stack": 20
   },
   "bream-or-carp": {
    "id": "bream-or-carp",
@@ -2705,7 +4061,14 @@
     "brick-smithy-i"
    ],
    "defaultRecipe": "brick-kiln",
-   "key": "brick"
+   "key": "brick",
+   "where": [
+    [
+     "buy",
+     "builder"
+    ]
+   ],
+   "stack": 50
   },
   "brimstone": {
    "id": "brimstone",
@@ -2727,7 +4090,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "brimstone"
+   "key": "brimstone",
+   "stack": 20
   },
   "broken-ceramic": {
    "id": "broken-ceramic",
@@ -2749,7 +4113,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "ceramic_broken"
+   "key": "ceramic_broken",
+   "stack": 50
   },
   "bronze-armor": {
    "id": "bronze-armor",
@@ -2773,7 +4138,14 @@
     "bronze-armor"
    ],
    "defaultRecipe": "bronze-armor",
-   "key": "armor_1"
+   "key": "armor_1",
+   "where": [
+    [
+     "buy",
+     "smithy"
+    ]
+   ],
+   "stack": 1
   },
   "bronze-axe": {
    "id": "bronze-axe",
@@ -2797,7 +4169,8 @@
     "bronze-axe"
    ],
    "defaultRecipe": "bronze-axe",
-   "key": "axe_1"
+   "key": "axe_1",
+   "stack": 1
   },
   "bronze-chisel": {
    "id": "bronze-chisel",
@@ -2821,7 +4194,8 @@
     "bronze-chisel"
    ],
    "defaultRecipe": "bronze-chisel",
-   "key": "chisel_basic"
+   "key": "chisel_basic",
+   "stack": 30
   },
   "bronze-detail": {
    "id": "bronze-detail",
@@ -2845,7 +4219,18 @@
     "bronze-detail"
    ],
    "defaultRecipe": "bronze-detail",
-   "key": "details_1_bronze"
+   "key": "details_1_bronze",
+   "where": [
+    [
+     "buy",
+     "furniture-maker"
+    ],
+    [
+     "buy",
+     "smithy"
+    ]
+   ],
+   "stack": 30
   },
   "bronze-gear": {
    "id": "bronze-gear",
@@ -2869,7 +4254,20 @@
     "bronze-gear"
    ],
    "defaultRecipe": "bronze-gear",
-   "key": "bronze_gear"
+   "key": "bronze_gear",
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     2
+    ],
+    [
+     "buy",
+     "smithy",
+     2
+    ]
+   ],
+   "stack": 30
   },
   "bronze-hammer": {
    "id": "bronze-hammer",
@@ -2893,7 +4291,14 @@
     "bronze-hammer"
    ],
    "defaultRecipe": "bronze-hammer",
-   "key": "hammer_1"
+   "key": "hammer_1",
+   "where": [
+    [
+     "buy",
+     "smithy"
+    ]
+   ],
+   "stack": 1
   },
   "bronze-ingot": {
    "id": "bronze-ingot",
@@ -2918,7 +4323,14 @@
     "bronze-ingot-from-bronze-scrap"
    ],
    "defaultRecipe": "bronze-ingot-from-copper-nugget",
-   "key": "ingot_bronze"
+   "key": "ingot_bronze",
+   "where": [
+    [
+     "buy",
+     "smithy"
+    ]
+   ],
+   "stack": 30
   },
   "bronze-nails": {
    "id": "bronze-nails",
@@ -2943,7 +4355,38 @@
     "bronze-nails-from-bronze-scrap"
    ],
    "defaultRecipe": "bronze-nails-from-bronze-ingot",
-   "key": "nails_bronze"
+   "key": "nails_bronze",
+   "where": [
+    [
+     "buy",
+     "furniture-maker"
+    ],
+    [
+     "buy",
+     "builder"
+    ],
+    [
+     "buy",
+     "smithy"
+    ],
+    [
+     "gather",
+     "broken-barrel"
+    ],
+    [
+     "gather",
+     "trash-pile"
+    ],
+    [
+     "gather",
+     "broken-shelf"
+    ],
+    [
+     "gather",
+     "junk-pile"
+    ]
+   ],
+   "stack": 99
   },
   "bronze-pickaxe": {
    "id": "bronze-pickaxe",
@@ -2967,7 +4410,8 @@
     "bronze-pickaxe"
    ],
    "defaultRecipe": "bronze-pickaxe",
-   "key": "pickaxe_1"
+   "key": "pickaxe_1",
+   "stack": 1
   },
   "bronze-scrap": {
    "id": "bronze-scrap",
@@ -2989,7 +4433,42 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "bronze_scrap"
+   "key": "bronze_scrap",
+   "where": [
+    [
+     "buy",
+     "herm"
+    ],
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "buy",
+     "jeweler"
+    ],
+    [
+     "buy",
+     "smithy"
+    ],
+    [
+     "gather",
+     "broken-barrel"
+    ],
+    [
+     "gather",
+     "trash-pile"
+    ],
+    [
+     "gather",
+     "broken-shelf"
+    ],
+    [
+     "gather",
+     "junk-pile"
+    ]
+   ],
+   "stack": 50
   },
   "bronze-shovel": {
    "id": "bronze-shovel",
@@ -3013,7 +4492,14 @@
     "bronze-shovel"
    ],
    "defaultRecipe": "bronze-shovel",
-   "key": "shovel_1"
+   "key": "shovel_1",
+   "where": [
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 1
   },
   "bronze-sword": {
    "id": "bronze-sword",
@@ -3037,7 +4523,14 @@
     "bronze-sword"
    ],
    "defaultRecipe": "bronze-sword",
-   "key": "sword_1"
+   "key": "sword_1",
+   "where": [
+    [
+     "buy",
+     "smithy"
+    ]
+   ],
+   "stack": 1
   },
   "bronze-talisman": {
    "id": "bronze-talisman",
@@ -3061,7 +4554,14 @@
     "bronze-talisman"
    ],
    "defaultRecipe": "bronze-talisman",
-   "key": "tool_talisman_1"
+   "key": "tool_talisman_1",
+   "where": [
+    [
+     "buy",
+     "jeweler"
+    ]
+   ],
+   "stack": 1
   },
   "bronze-tools": {
    "id": "bronze-tools",
@@ -3085,7 +4585,14 @@
     "bronze-tools"
    ],
    "defaultRecipe": "bronze-tools",
-   "key": "small_instruments_1"
+   "key": "small_instruments_1",
+   "where": [
+    [
+     "buy",
+     "jeweler"
+    ]
+   ],
+   "stack": 1
   },
   "bronze-zombie-collar": {
    "id": "bronze-zombie-collar",
@@ -3109,7 +4616,18 @@
     "bronze-zombie-collar"
    ],
    "defaultRecipe": "bronze-zombie-collar",
-   "key": "collar_bronze"
+   "key": "collar_bronze",
+   "where": [
+    [
+     "buy",
+     "jeweler"
+    ],
+    [
+     "chest",
+     "resurrection-lab"
+    ]
+   ],
+   "stack": 10
   },
   "brown-mushroom": {
    "id": "brown-mushroom",
@@ -3131,7 +4649,17 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "mushroom_brown"
+   "key": "mushroom_brown",
+   "where": [
+    [
+     "gather",
+     "brown-mushrooms"
+    ]
+   ],
+   "use": {
+    "en": 4
+   },
+   "stack": 20
   },
   "builder-s-bag": {
    "id": "builder-s-bag",
@@ -3153,7 +4681,18 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "bag_builder"
+   "key": "bag_builder",
+   "where": [
+    [
+     "buy",
+     "furniture-maker"
+    ],
+    [
+     "buy",
+     "builder"
+    ]
+   ],
+   "stack": 1
   },
   "building-kit-i": {
    "id": "building-kit-i",
@@ -3178,7 +4717,14 @@
     "building-kit-i-assembly-bench-i"
    ],
    "defaultRecipe": "building-kit-i-woodworking-workbench-i",
-   "key": "building_kit_1"
+   "key": "building_kit_1",
+   "where": [
+    [
+     "buy",
+     "builder"
+    ]
+   ],
+   "stack": 30
   },
   "building-kit-ii": {
    "id": "building-kit-ii",
@@ -3202,7 +4748,15 @@
     "building-kit-ii"
    ],
    "defaultRecipe": "building-kit-ii",
-   "key": "building_kit_2"
+   "key": "building_kit_2",
+   "where": [
+    [
+     "buy",
+     "builder",
+     2
+    ]
+   ],
+   "stack": 30
   },
   "burger": {
    "id": "burger",
@@ -3226,7 +4780,16 @@
     "burger"
    ],
    "defaultRecipe": "burger",
-   "key": "cook_burger"
+   "key": "cook_burger",
+   "use": {
+    "en": 80,
+    "enB": [
+     88,
+     "steamed-up"
+    ],
+    "ins": 5
+   },
+   "stack": 30
   },
   "burial-certificate-i": {
    "id": "burial-certificate-i",
@@ -3248,7 +4811,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "body_certificate:1"
+   "key": "body_certificate:1",
+   "where": [
+    [
+     "burial",
+     "burying-a-corpse"
+    ]
+   ],
+   "stack": 30
   },
   "burial-certificate-ii": {
    "id": "burial-certificate-ii",
@@ -3270,7 +4840,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "body_certificate:2"
+   "key": "body_certificate:2",
+   "where": [
+    [
+     "burial",
+     "burying-a-corpse"
+    ]
+   ],
+   "stack": 30
   },
   "burial-certificate-iii": {
    "id": "burial-certificate-iii",
@@ -3292,7 +4869,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "body_certificate:3"
+   "key": "body_certificate:3",
+   "where": [
+    [
+     "burial",
+     "burying-a-corpse"
+    ]
+   ],
+   "stack": 30
   },
   "bush-seedling": {
    "id": "bush-seedling",
@@ -3314,7 +4898,19 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "berry_seedling"
+   "key": "berry_seedling",
+   "where": [
+    [
+     "buy",
+     "herm",
+     3
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 30
   },
   "butcher-s-kit": {
    "id": "butcher-s-kit",
@@ -3338,7 +4934,8 @@
     "butcher-s-kit"
    ],
    "defaultRecipe": "butcher-s-kit",
-   "key": "surgical_kit_1"
+   "key": "surgical_kit_1",
+   "stack": 1
   },
   "cabbage": {
    "id": "cabbage",
@@ -3364,7 +4961,22 @@
     "grow-cabbage-bed-m8"
    ],
    "defaultRecipe": null,
-   "key": "cabbage:1"
+   "key": "cabbage:1",
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "use": {
+    "en": 4
+   },
+   "stack": 50
   },
   "cabbage-bed": {
    "id": "cabbage-bed",
@@ -3412,7 +5024,27 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "cabbage_seed:1"
+   "key": "cabbage_seed:1",
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ],
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "looter",
+     "seeds"
+    ]
+   ],
+   "stack": 50
   },
   "cabbage-soup": {
    "id": "cabbage-soup",
@@ -3438,7 +5070,21 @@
     "cabbage-soup-from-cabbage-silver"
    ],
    "defaultRecipe": "cabbage-soup-from-cabbage-bronze",
-   "key": "cook_cabbage_soup"
+   "key": "cook_cabbage_soup",
+   "where": [
+    [
+     "buy",
+     "tavern"
+    ]
+   ],
+   "use": {
+    "en": 25,
+    "enB": [
+     28,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "cacao": {
    "id": "cacao",
@@ -3464,7 +5110,14 @@
    "runes": {
     "green": 2,
     "blue": 1
-   }
+   },
+   "where": [
+    [
+     "buy",
+     "trademaster"
+    ]
+   ],
+   "stack": 50
   },
   "cake": {
    "id": "cake",
@@ -3486,7 +5139,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "cook_cake"
+   "key": "cook_cake",
+   "stack": 1
   },
   "camphor": {
    "id": "camphor",
@@ -3508,7 +5162,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "camphor"
+   "key": "camphor",
+   "stack": 20
   },
   "candelabra-i": {
    "id": "candelabra-i",
@@ -3602,7 +5257,17 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_carp"
+   "key": "fish_carp",
+   "where": [
+    [
+     "fish",
+     "forest",
+     "breadcrumb-bait",
+     33.3,
+     66.7
+    ]
+   ],
+   "stack": 20
   },
   "carpet": {
    "id": "carpet",
@@ -3626,7 +5291,8 @@
     "carpet"
    ],
    "defaultRecipe": "carpet",
-   "key": "carpet"
+   "key": "carpet",
+   "stack": 30
   },
   "carrot": {
    "id": "carrot",
@@ -3650,7 +5316,22 @@
     "grow-carrot-bed-m4"
    ],
    "defaultRecipe": null,
-   "key": "carrot"
+   "key": "carrot",
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "use": {
+    "en": 2
+   },
+   "stack": 50
   },
   "carrot-bed": {
    "id": "carrot-bed",
@@ -3698,7 +5379,15 @@
     "carrot-cutlet"
    ],
    "defaultRecipe": "carrot-cutlet",
-   "key": "cook_carrot_cutlet"
+   "key": "cook_carrot_cutlet",
+   "use": {
+    "en": 15,
+    "enB": [
+     17,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "carrot-seed": {
    "id": "carrot-seed",
@@ -3720,7 +5409,19 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "carrot_seed"
+   "key": "carrot_seed",
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 50
   },
   "carrot-soup": {
    "id": "carrot-soup",
@@ -3744,7 +5445,21 @@
     "carrot-soup"
    ],
    "defaultRecipe": "carrot-soup",
-   "key": "cook_carrot_soup"
+   "key": "cook_carrot_soup",
+   "where": [
+    [
+     "buy",
+     "tavern"
+    ]
+   ],
+   "use": {
+    "en": 19,
+    "enB": [
+     21,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "carved-marble": {
    "id": "carved-marble",
@@ -3768,7 +5483,15 @@
     "carved-marble"
    ],
    "defaultRecipe": "carved-marble",
-   "key": "marble_plate_3"
+   "key": "marble_plate_3",
+   "where": [
+    [
+     "buy",
+     "builder",
+     3
+    ]
+   ],
+   "stack": 30
   },
   "carved-stone": {
    "id": "carved-stone",
@@ -3792,7 +5515,15 @@
     "carved-stone"
    ],
    "defaultRecipe": "carved-stone",
-   "key": "stone_plate_3"
+   "key": "stone_plate_3",
+   "where": [
+    [
+     "buy",
+     "builder",
+     2
+    ]
+   ],
+   "stack": 30
   },
   "carved-wood": {
    "id": "carved-wood",
@@ -3816,7 +5547,8 @@
     "carved-wood"
    ],
    "defaultRecipe": "carved-wood",
-   "key": "carved_wood"
+   "key": "carved_wood",
+   "stack": 30
   },
   "casting-table": {
    "id": "casting-table",
@@ -3862,7 +5594,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "catalyst"
+   "key": "catalyst",
+   "stack": 20
   },
   "catfish": {
    "id": "catfish",
@@ -3884,7 +5617,17 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_catfish"
+   "key": "fish_catfish",
+   "where": [
+    [
+     "fish",
+     "swamp",
+     "breadcrumb-bait",
+     30.8,
+     30.8
+    ]
+   ],
+   "stack": 20
   },
   "celestial-salmon": {
    "id": "celestial-salmon",
@@ -3906,7 +5649,17 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_celestial_salmon"
+   "key": "fish_celestial_salmon",
+   "where": [
+    [
+     "fish",
+     "forest",
+     "live-bait",
+     100,
+     100
+    ]
+   ],
+   "stack": 20
   },
   "ceramic-plate": {
    "id": "ceramic-plate",
@@ -3930,7 +5683,8 @@
     "ceramic-plate"
    ],
    "defaultRecipe": "ceramic-plate",
-   "key": "ceramic_fired_1"
+   "key": "ceramic_fired_1",
+   "stack": 50
   },
   "ceramic-urn": {
    "id": "ceramic-urn",
@@ -3954,7 +5708,8 @@
     "ceramic-urn"
    ],
    "defaultRecipe": "ceramic-urn",
-   "key": "ceramic_fired_2"
+   "key": "ceramic_fired_2",
+   "stack": 50
   },
   "chaos-spagyric-root": {
    "id": "chaos-spagyric-root",
@@ -3976,7 +5731,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "alchemy_spagyric"
+   "key": "alchemy_spagyric",
+   "stack": 50
   },
   "charged-hypno-device": {
    "id": "charged-hypno-device",
@@ -4000,7 +5756,8 @@
     "charged-hypno-device"
    ],
    "defaultRecipe": "charged-hypno-device",
-   "key": "hypno_device_charged"
+   "key": "hypno_device_charged",
+   "stack": 20
   },
   "cheese": {
    "id": "cheese",
@@ -4027,7 +5784,37 @@
     "red": 1,
     "green": 1,
     "blue": 1
-   }
+   },
+   "where": [
+    [
+     "found",
+     "abandoned-house"
+    ],
+    [
+     "chest",
+     "graveyard"
+    ],
+    [
+     "quest",
+     "go-wild-in-the-wild-lands"
+    ],
+    [
+     "quest",
+     "finding-old-god"
+    ],
+    [
+     "quest",
+     "chasing-fairy-lights"
+    ]
+   ],
+   "use": {
+    "en": 50,
+    "enB": [
+     55,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "chest": {
    "id": "chest",
@@ -4073,7 +5860,19 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "egg_chicken"
+   "key": "egg_chicken",
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "baker"
+    ]
+   ],
+   "stack": 30
   },
   "chocolate": {
    "id": "chocolate",
@@ -4097,7 +5896,12 @@
     "chocolate"
    ],
    "defaultRecipe": "chocolate",
-   "key": "chocolate"
+   "key": "chocolate",
+   "use": {
+    "en": 50,
+    "ins": -20
+   },
+   "stack": 20
   },
   "choir": {
    "id": "choir",
@@ -4311,7 +6115,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "cinnabar"
+   "key": "cinnabar",
+   "stack": 20
   },
   "circular-saw": {
    "id": "circular-saw",
@@ -4362,7 +6167,14 @@
    "key": "clay",
    "runes": {
     "red": 1
-   }
+   },
+   "where": [
+    [
+     "gather",
+     "clay-spot"
+    ]
+   ],
+   "stack": 99
   },
   "clay-digger-stand": {
    "id": "clay-digger-stand",
@@ -4410,7 +6222,8 @@
     "clay-molds"
    ],
    "defaultRecipe": "clay-molds",
-   "key": "clay_molds"
+   "key": "clay_molds",
+   "stack": 30
   },
   "clay-plate": {
    "id": "clay-plate",
@@ -4434,7 +6247,8 @@
     "clay-plate"
    ],
    "defaultRecipe": "clay-plate",
-   "key": "ceramic_1"
+   "key": "ceramic_1",
+   "stack": 50
   },
   "clay-urn": {
    "id": "clay-urn",
@@ -4458,7 +6272,8 @@
     "clay-urn"
    ],
    "defaultRecipe": "clay-urn",
-   "key": "ceramic_2"
+   "key": "ceramic_2",
+   "stack": 50
   },
   "clean-paper": {
    "id": "clean-paper",
@@ -4483,7 +6298,18 @@
     "clean-paper-paper-press"
    ],
    "defaultRecipe": "clean-paper-writing-desk",
-   "key": "clean_paper"
+   "key": "clean_paper",
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ],
+    [
+     "chest",
+     "alchemy-lab"
+    ]
+   ],
+   "stack": 50
   },
   "coal": {
    "id": "coal",
@@ -4509,7 +6335,8 @@
    "runes": {
     "red": 1,
     "green": 2
-   }
+   },
+   "stack": 99
   },
   "columbarium-area-i": {
    "id": "columbarium-area-i",
@@ -4669,7 +6496,18 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "comets_tail"
+   "key": "comets_tail",
+   "where": [
+    [
+     "buy",
+     "gunter"
+    ],
+    [
+     "buy",
+     "apothecary"
+    ]
+   ],
+   "stack": 20
   },
   "comfortable-chair": {
    "id": "comfortable-chair",
@@ -4693,7 +6531,8 @@
     "comfortable-chair"
    ],
    "defaultRecipe": "comfortable-chair",
-   "key": "chair_comfortable"
+   "key": "chair_comfortable",
+   "stack": 1
   },
   "compost-pile": {
    "id": "compost-pile",
@@ -4857,7 +6696,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "alchemy_conjunctio"
+   "key": "alchemy_conjunctio",
+   "stack": 50
   },
   "conveyor-belt": {
    "id": "conveyor-belt",
@@ -4975,7 +6815,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "details_1_copper"
+   "key": "details_1_copper",
+   "stack": 50
   },
   "copper-ingot": {
    "id": "copper-ingot",
@@ -4997,7 +6838,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "ingot_copper"
+   "key": "ingot_copper",
+   "stack": 20
   },
   "copper-nails": {
    "id": "copper-nails",
@@ -5019,7 +6861,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "nails_copper"
+   "key": "nails_copper",
+   "stack": 50
   },
   "copper-nugget": {
    "id": "copper-nugget",
@@ -5045,7 +6888,14 @@
    "runes": {
     "red": 2,
     "green": 1
-   }
+   },
+   "where": [
+    [
+     "gather",
+     "copper-vein"
+    ]
+   ],
+   "stack": 50
   },
   "copper-scrap": {
    "id": "copper-scrap",
@@ -5067,7 +6917,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "copper_scrap"
+   "key": "copper_scrap",
+   "stack": 50
   },
   "copper-trinkets": {
    "id": "copper-trinkets",
@@ -5091,7 +6942,8 @@
     "copper-trinkets"
    ],
    "defaultRecipe": "copper-trinkets",
-   "key": "trinkets_bronze"
+   "key": "trinkets_bronze",
+   "stack": 20
   },
   "corpse": {
    "id": "corpse",
@@ -5113,7 +6965,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "body_corpse"
+   "key": "body_corpse",
+   "where": [
+    [
+     "character",
+     "comrade-donkey"
+    ]
+   ],
+   "stack": 1
   },
   "corpse-dumping-point": {
    "id": "corpse-dumping-point",
@@ -5207,7 +7066,8 @@
     "crate"
    ],
    "defaultRecipe": "crate",
-   "key": "box_empty"
+   "key": "box_empty",
+   "stack": 30
   },
   "crematorium-i": {
    "id": "crematorium-i",
@@ -5279,7 +7139,22 @@
     "croissant"
    ],
    "defaultRecipe": "croissant",
-   "key": "cook_croissant"
+   "key": "cook_croissant",
+   "where": [
+    [
+     "buy",
+     "baker"
+    ]
+   ],
+   "use": {
+    "en": 20,
+    "enB": [
+     22,
+     "steamed-up"
+    ],
+    "ins": -5
+   },
+   "stack": 30
   },
   "crop-boosting-fertilizer-i": {
    "id": "crop-boosting-fertilizer-i",
@@ -5303,7 +7178,8 @@
     "crop-boosting-fertilizer-i"
    ],
    "defaultRecipe": "crop-boosting-fertilizer-i",
-   "key": "fertilize_add_cells_1"
+   "key": "fertilize_add_cells_1",
+   "stack": 30
   },
   "crucian": {
    "id": "crucian",
@@ -5325,7 +7201,24 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_crucian"
+   "key": "fish_crucian",
+   "where": [
+    [
+     "fish",
+     "inquisition-base",
+     "no-bait",
+     0.1,
+     0.2
+    ],
+    [
+     "fish",
+     "village",
+     "no-bait",
+     0.2,
+     0.5
+    ]
+   ],
+   "stack": 20
   },
   "crucian-or-herring": {
    "id": "crucian-or-herring",
@@ -5398,7 +7291,21 @@
     "alchemy-damage-potion"
    ],
    "defaultRecipe": "alchemy-damage-potion",
-   "key": "damage_potion"
+   "key": "damage_potion",
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "use": {
+    "buff": [
+     "fighter",
+     30,
+     1
+    ]
+   },
+   "stack": 20
   },
   "damage-potion-ii": {
    "id": "damage-potion-ii",
@@ -5422,7 +7329,22 @@
     "alchemy-damage-potion-ii"
    ],
    "defaultRecipe": "alchemy-damage-potion-ii",
-   "key": "damage_potion_2"
+   "key": "damage_potion_2",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "use": {
+    "buff": [
+     "fighter-ii",
+     30,
+     1
+    ]
+   },
+   "stack": 20
   },
   "damage-potion-iii": {
    "id": "damage-potion-iii",
@@ -5446,7 +7368,22 @@
     "alchemy-damage-potion-iii"
    ],
    "defaultRecipe": "alchemy-damage-potion-iii",
-   "key": "damage_potion_3"
+   "key": "damage_potion_3",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "use": {
+    "buff": [
+     "fighter-iii",
+     30,
+     1
+    ]
+   },
+   "stack": 20
   },
   "deck-of-cards": {
    "id": "deck-of-cards",
@@ -5468,7 +7405,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "card_deck"
+   "key": "card_deck",
+   "where": [
+    [
+     "quest",
+     "safe-harbor"
+    ]
+   ],
+   "stack": 1
   },
   "defender-s-emblem": {
    "id": "defender-s-emblem",
@@ -5490,7 +7434,26 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "shield_squad"
+   "key": "shield_squad",
+   "where": [
+    [
+     "battle",
+     "break-through-to-the-port"
+    ],
+    [
+     "battle",
+     "eastern-districts-active-scouting"
+    ],
+    [
+     "battle",
+     "central-districts-purge-part-i"
+    ],
+    [
+     "battle",
+     "break-through-to-the-bathhouse-basement"
+    ]
+   ],
+   "stack": 50
   },
   "dictionary": {
    "id": "dictionary",
@@ -5514,7 +7477,8 @@
     "dictionary"
    ],
    "defaultRecipe": "dictionary",
-   "key": "tool_book_2"
+   "key": "tool_book_2",
+   "stack": 1
   },
   "distillation-cube": {
    "id": "distillation-cube",
@@ -5562,7 +7526,14 @@
     "dough"
    ],
    "defaultRecipe": "dough",
-   "key": "dough"
+   "key": "dough",
+   "where": [
+    [
+     "buy",
+     "baker"
+    ]
+   ],
+   "stack": 50
   },
   "dream-dust": {
    "id": "dream-dust",
@@ -5586,7 +7557,14 @@
     "alchemy-dream-dust"
    ],
    "defaultRecipe": "alchemy-dream-dust",
-   "key": "powder_dreams"
+   "key": "powder_dreams",
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 20
   },
   "dresser-with-mirror": {
    "id": "dresser-with-mirror",
@@ -5632,7 +7610,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "dye"
+   "key": "dye",
+   "stack": 20
   },
   "dynamite": {
    "id": "dynamite",
@@ -5656,7 +7635,14 @@
     "dynamite"
    ],
    "defaultRecipe": "dynamite",
-   "key": "dynamite"
+   "key": "dynamite",
+   "where": [
+    [
+     "quest",
+     "can-t-see-the-forest-for-the-iron"
+    ]
+   ],
+   "stack": 20
   },
   "eel": {
    "id": "eel",
@@ -5678,7 +7664,24 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_eel"
+   "key": "fish_eel",
+   "where": [
+    [
+     "fish",
+     "swamp",
+     "insect-bait",
+     36.4,
+     18.2
+    ],
+    [
+     "fish",
+     "sewers",
+     "insect-bait",
+     100,
+     100
+    ]
+   ],
+   "stack": 20
   },
   "eel-or-trout": {
    "id": "eel-or-trout",
@@ -5725,7 +7728,17 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_elder_catfish"
+   "key": "fish_elder_catfish",
+   "where": [
+    [
+     "fish",
+     "swamp",
+     "live-bait",
+     100,
+     100
+    ]
+   ],
+   "stack": 20
   },
   "elder-s-meal": {
    "id": "elder-s-meal",
@@ -5749,7 +7762,15 @@
     "elder-s-meal"
    ],
    "defaultRecipe": "elder-s-meal",
-   "key": "cook_elder_catfish"
+   "key": "cook_elder_catfish",
+   "use": {
+    "en": 120,
+    "enB": [
+     132,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "elegant-prosthetic-hand": {
    "id": "elegant-prosthetic-hand",
@@ -5773,7 +7794,8 @@
     "elegant-prosthetic-hand"
    ],
    "defaultRecipe": "elegant-prosthetic-hand",
-   "key": "hand_prothesis_elegant"
+   "key": "hand_prothesis_elegant",
+   "stack": 1
   },
   "embalming-table-i": {
    "id": "embalming-table-i",
@@ -5869,7 +7891,8 @@
     "empty-bottle"
    ],
    "defaultRecipe": "empty-bottle",
-   "key": "bottle_empty"
+   "key": "bottle_empty",
+   "stack": 50
   },
   "empty-glass-bottle": {
    "id": "empty-glass-bottle",
@@ -5891,7 +7914,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "glass_bottle_empty"
+   "key": "glass_bottle_empty",
+   "stack": 20
   },
   "empty-grave": {
    "id": "empty-grave",
@@ -5937,7 +7961,11 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "energy_potion"
+   "key": "energy_potion",
+   "use": {
+    "en": 20
+   },
+   "stack": 20
   },
   "energy-potion-ii": {
    "id": "energy-potion-ii",
@@ -5959,7 +7987,11 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "energy_potion_2"
+   "key": "energy_potion_2",
+   "use": {
+    "en": 50
+   },
+   "stack": 20
   },
   "energy-potion-iii": {
    "id": "energy-potion-iii",
@@ -5981,7 +8013,11 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "energy_potion_3"
+   "key": "energy_potion_3",
+   "use": {
+    "en": 100
+   },
+   "stack": 20
   },
   "energy-potion-scroll": {
    "id": "energy-potion-scroll",
@@ -6003,7 +8039,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "energy_potion_scroll"
+   "key": "energy_potion_scroll",
+   "stack": 1
   },
   "engineering-details": {
    "id": "engineering-details",
@@ -6027,7 +8064,15 @@
     "engineering-details"
    ],
    "defaultRecipe": "engineering-details",
-   "key": "detail_2_steel"
+   "key": "detail_2_steel",
+   "where": [
+    [
+     "buy",
+     "smithy",
+     3
+    ]
+   ],
+   "stack": 30
   },
   "engineering-kit": {
    "id": "engineering-kit",
@@ -6051,7 +8096,8 @@
     "engineering-kit"
    ],
    "defaultRecipe": "engineering-kit",
-   "key": "engineering_kit"
+   "key": "engineering_kit",
+   "stack": 30
   },
   "everlasting-needles": {
    "id": "everlasting-needles",
@@ -6073,7 +8119,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "ev_needles"
+   "key": "ev_needles",
+   "stack": 20
   },
   "exhumation-certificate": {
    "id": "exhumation-certificate",
@@ -6095,7 +8142,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "exhume_certificate"
+   "key": "exhume_certificate",
+   "where": [
+    [
+     "buy",
+     "januarius"
+    ]
+   ],
+   "stack": 30
   },
   "expand-graveyard-i": {
    "id": "expand-graveyard-i",
@@ -6217,7 +8271,14 @@
     "alchemy-explosive-dust"
    ],
    "defaultRecipe": "alchemy-explosive-dust",
-   "key": "dust_explosive"
+   "key": "dust_explosive",
+   "where": [
+    [
+     "chest",
+     "old-mine"
+    ]
+   ],
+   "stack": 20
   },
   "exterior-bench-i": {
    "id": "exterior-bench-i",
@@ -6314,7 +8375,15 @@
     "fabric-assembly-bench-i"
    ],
    "defaultRecipe": "fabric-weaving-loom",
-   "key": "fabric_flax"
+   "key": "fabric_flax",
+   "where": [
+    [
+     "buy",
+     "tailor",
+     3
+    ]
+   ],
+   "stack": 30
   },
   "factory-lantern": {
    "id": "factory-lantern",
@@ -6360,7 +8429,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fairy_swamp_map"
+   "key": "fairy_swamp_map",
+   "where": [
+    [
+     "quest",
+     "chasing-fairy-lights"
+    ]
+   ],
+   "stack": 1
   },
   "faith": {
    "id": "faith",
@@ -6382,7 +8458,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "faith"
+   "key": "faith",
+   "where": [
+    [
+     "church",
+     "sermons"
+    ]
+   ],
+   "stack": 999
   },
   "faith-prayer": {
    "id": "faith-prayer",
@@ -6427,7 +8510,15 @@
     "fancy-incense"
    ],
    "defaultRecipe": "fancy-incense",
-   "key": "incense_advanced"
+   "key": "incense_advanced",
+   "where": [
+    [
+     "buy",
+     "apothecary",
+     3
+    ]
+   ],
+   "stack": 30
   },
   "farmer-s-bag": {
    "id": "farmer-s-bag",
@@ -6449,7 +8540,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "bag_farming"
+   "key": "bag_farming",
+   "where": [
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 1
   },
   "farmer-s-clothes": {
    "id": "farmer-s-clothes",
@@ -6471,7 +8569,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "hero_clothes_9002"
+   "key": "hero_clothes_9002",
+   "where": [
+    [
+     "quest",
+     "planted-and-delivered"
+    ]
+   ],
+   "stack": 1
   },
   "farming-fertilizer-i": {
    "id": "farming-fertilizer-i",
@@ -6495,7 +8600,8 @@
     "farming-fertilizer-i"
    ],
    "defaultRecipe": "farming-fertilizer-i",
-   "key": "fertilize_farming_1"
+   "key": "fertilize_farming_1",
+   "stack": 30
   },
   "farming-fertilizer-ii": {
    "id": "farming-fertilizer-ii",
@@ -6519,7 +8625,8 @@
     "farming-fertilizer-ii"
    ],
    "defaultRecipe": "farming-fertilizer-ii",
-   "key": "fertilize_farming_2"
+   "key": "fertilize_farming_2",
+   "stack": 30
   },
   "farming-fertilizer-iii": {
    "id": "farming-fertilizer-iii",
@@ -6543,7 +8650,8 @@
     "farming-fertilizer-iii"
    ],
    "defaultRecipe": "farming-fertilizer-iii",
-   "key": "fertilize_farming_3"
+   "key": "fertilize_farming_3",
+   "stack": 30
   },
   "fat": {
    "id": "fat",
@@ -6565,7 +8673,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fat"
+   "key": "fat",
+   "where": [
+    [
+     "autopsy",
+     "bodies"
+    ]
+   ],
+   "stack": 30
   },
   "fermentation-barrel": {
    "id": "fermentation-barrel",
@@ -6613,7 +8728,8 @@
     "fine-jewelry"
    ],
    "defaultRecipe": "fine-jewelry",
-   "key": "jewelry"
+   "key": "jewelry",
+   "stack": 20
   },
   "fine-tool-rack": {
    "id": "fine-tool-rack",
@@ -6663,7 +8779,22 @@
    "runes": {
     "red": 1,
     "blue": 2
-   }
+   },
+   "where": [
+    [
+     "buy",
+     "gunter"
+    ],
+    [
+     "gather",
+     "rhododendron-bush"
+    ],
+    [
+     "gather",
+     "night-flower"
+    ]
+   ],
+   "stack": 20
   },
   "firewood": {
    "id": "firewood",
@@ -6688,7 +8819,8 @@
     "firewood-from-stick"
    ],
    "defaultRecipe": "firewood-from-short-log",
-   "key": "firewood"
+   "key": "firewood",
+   "stack": 50
   },
   "firewood-shed-i": {
    "id": "firewood-shed-i",
@@ -6762,7 +8894,15 @@
     "fish-nuggets"
    ],
    "defaultRecipe": "fish-nuggets",
-   "key": "cook_fish_nuggets"
+   "key": "cook_fish_nuggets",
+   "use": {
+    "en": 25,
+    "enB": [
+     28,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "fish-soup": {
    "id": "fish-soup",
@@ -6786,7 +8926,22 @@
     "fish-soup"
    ],
    "defaultRecipe": "fish-soup",
-   "key": "cook_fish_soup"
+   "key": "cook_fish_soup",
+   "where": [
+    [
+     "buy",
+     "tavern",
+     2
+    ]
+   ],
+   "use": {
+    "en": 30,
+    "enB": [
+     33,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "fisherman-s-bag": {
    "id": "fisherman-s-bag",
@@ -6808,7 +8963,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "bag_fishing"
+   "key": "bag_fishing",
+   "where": [
+    [
+     "buy",
+     "fish-stand"
+    ]
+   ],
+   "stack": 1
   },
   "fisherman-s-pie": {
    "id": "fisherman-s-pie",
@@ -6832,7 +8994,15 @@
     "fisherman-s-pie"
    ],
    "defaultRecipe": "fisherman-s-pie",
-   "key": "cook_fisherman_pie"
+   "key": "cook_fisherman_pie",
+   "use": {
+    "en": 80,
+    "enB": [
+     88,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "fishing-line": {
    "id": "fishing-line",
@@ -6854,7 +9024,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "thread_metal"
+   "key": "thread_metal",
+   "stack": 50
   },
   "fix-the-attic": {
    "id": "fix-the-attic",
@@ -6930,7 +9101,14 @@
    "runes": {
     "red": 1,
     "green": 1
-   }
+   },
+   "where": [
+    [
+     "buy",
+     "tailor"
+    ]
+   ],
+   "stack": 99
   },
   "flax-bed": {
    "id": "flax-bed",
@@ -6976,7 +9154,23 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "flax_seed"
+   "key": "flax_seed",
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "buy",
+     "tailor"
+    ]
+   ],
+   "stack": 50
   },
   "flax-thread": {
    "id": "flax-thread",
@@ -7000,7 +9194,20 @@
     "flax-thread"
    ],
    "defaultRecipe": "flax-thread",
-   "key": "thread_flax"
+   "key": "thread_flax",
+   "where": [
+    [
+     "buy",
+     "herm",
+     3
+    ],
+    [
+     "buy",
+     "tailor",
+     2
+    ]
+   ],
+   "stack": 50
   },
   "flesh": {
    "id": "flesh",
@@ -7025,7 +9232,23 @@
    "key": "flesh",
    "runes": {
     "red": 1
-   }
+   },
+   "where": [
+    [
+     "buy",
+     "baker",
+     2
+    ],
+    [
+     "autopsy",
+     "bodies"
+    ]
+   ],
+   "use": {
+    "en": 10,
+    "ins": 10
+   },
+   "stack": 20
   },
   "flour": {
    "id": "flour",
@@ -7052,7 +9275,14 @@
    "key": "flour",
    "runes": {
     "green": 2
-   }
+   },
+   "where": [
+    [
+     "buy",
+     "baker"
+    ]
+   ],
+   "stack": 50
   },
   "flower-bed-i": {
    "id": "flower-bed-i",
@@ -7170,7 +9400,22 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "bag_food"
+   "key": "bag_food",
+   "where": [
+    [
+     "buy",
+     "baker"
+    ],
+    [
+     "buy",
+     "tavern"
+    ],
+    [
+     "buy",
+     "brewery"
+    ]
+   ],
+   "stack": 1
   },
   "forest-pass": {
    "id": "forest-pass",
@@ -7192,7 +9437,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "forest_pass"
+   "key": "forest_pass",
+   "where": [
+    [
+     "quest",
+     "into-the-forest"
+    ]
+   ],
+   "stack": 1
   },
   "formulation-bench": {
    "id": "formulation-bench",
@@ -7240,7 +9492,8 @@
     "build-fortified-barricade-i"
    ],
    "defaultRecipe": "build-fortified-barricade-i",
-   "key": "barricade_wall_1_fight"
+   "key": "barricade_wall_1_fight",
+   "stack": 99
   },
   "fortified-barricade-ii": {
    "id": "fortified-barricade-ii",
@@ -7264,7 +9517,8 @@
     "build-fortified-barricade-ii"
    ],
    "defaultRecipe": "build-fortified-barricade-ii",
-   "key": "barricade_wall_2_fight"
+   "key": "barricade_wall_2_fight",
+   "stack": 99
   },
   "fortified-barricade-iii": {
    "id": "fortified-barricade-iii",
@@ -7288,7 +9542,8 @@
     "build-fortified-barricade-iii"
    ],
    "defaultRecipe": "build-fortified-barricade-iii",
-   "key": "barricade_wall_3_fight"
+   "key": "barricade_wall_3_fight",
+   "stack": 99
   },
   "fragrance": {
    "id": "fragrance",
@@ -7315,7 +9570,14 @@
    "key": "fragrance",
    "runes": {
     "green": 3
-   }
+   },
+   "where": [
+    [
+     "buy",
+     "apothecary"
+    ]
+   ],
+   "stack": 99
   },
   "fried-egg": {
    "id": "fried-egg",
@@ -7337,7 +9599,11 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fried_egg"
+   "key": "fried_egg",
+   "use": {
+    "en": 30
+   },
+   "stack": 30
   },
   "fried-golden-carp": {
    "id": "fried-golden-carp",
@@ -7361,7 +9627,15 @@
     "fried-golden-carp"
    ],
    "defaultRecipe": "fried-golden-carp",
-   "key": "cook_golden_carp"
+   "key": "cook_golden_carp",
+   "use": {
+    "en": 60,
+    "enB": [
+     66,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "frog": {
    "id": "frog",
@@ -7383,7 +9657,17 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_frog"
+   "key": "fish_frog",
+   "where": [
+    [
+     "fish",
+     "swamp",
+     "no-bait",
+     100,
+     100
+    ]
+   ],
+   "stack": 20
   },
   "fuel": {
    "id": "fuel",
@@ -7407,7 +9691,8 @@
     "fuel"
    ],
    "defaultRecipe": "fuel",
-   "key": "fire"
+   "key": "fire",
+   "stack": 100
   },
   "furnace-i": {
    "id": "furnace-i",
@@ -7480,7 +9765,15 @@
     "furniture-kit-i-assembly-bench-ii"
    ],
    "defaultRecipe": "furniture-kit-i-woodworking-workbench-ii",
-   "key": "furniture_kit_1"
+   "key": "furniture_kit_1",
+   "where": [
+    [
+     "buy",
+     "furniture-maker",
+     2
+    ]
+   ],
+   "stack": 30
   },
   "furniture-kit-ii": {
    "id": "furniture-kit-ii",
@@ -7504,7 +9797,15 @@
     "furniture-kit-ii"
    ],
    "defaultRecipe": "furniture-kit-ii",
-   "key": "furniture_kit_2"
+   "key": "furniture_kit_2",
+   "where": [
+    [
+     "buy",
+     "furniture-maker",
+     3
+    ]
+   ],
+   "stack": 30
   },
   "garden-bed": {
    "id": "garden-bed",
@@ -7717,7 +10018,22 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "gem"
+   "key": "gem",
+   "where": [
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "gather",
+     "copper-vein"
+    ],
+    [
+     "container",
+     "@mysterious-chest"
+    ]
+   ],
+   "stack": 20
   },
   "glass": {
    "id": "glass",
@@ -7742,7 +10058,8 @@
     "glass-smithy-i"
    ],
    "defaultRecipe": "glass-furnace-i",
-   "key": "glass"
+   "key": "glass",
+   "stack": 30
   },
   "glass-containers": {
    "id": "glass-containers",
@@ -7766,7 +10083,8 @@
     "glass-containers"
    ],
    "defaultRecipe": "glass-containers",
-   "key": "glass_containers"
+   "key": "glass_containers",
+   "stack": 30
   },
   "glossary": {
    "id": "glossary",
@@ -7790,7 +10108,8 @@
     "glossary"
    ],
    "defaultRecipe": "glossary",
-   "key": "tool_book_3"
+   "key": "tool_book_3",
+   "stack": 1
   },
   "glue": {
    "id": "glue",
@@ -7812,7 +10131,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "glue"
+   "key": "glue",
+   "stack": 20
   },
   "golden-ingot": {
    "id": "golden-ingot",
@@ -7837,7 +10157,23 @@
     "gold-transmutation-from-iron-ingot"
    ],
    "defaultRecipe": "golden-ingot",
-   "key": "ingot_gold"
+   "key": "ingot_gold",
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     2
+    ],
+    [
+     "looter",
+     "valuables"
+    ],
+    [
+     "container",
+     "@mysterious-chest"
+    ]
+   ],
+   "stack": 20
   },
   "golden-nugget": {
    "id": "golden-nugget",
@@ -7865,7 +10201,22 @@
    "runes": {
     "red": 2,
     "green": 1
-   }
+   },
+   "where": [
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "looter",
+     "valuables"
+    ],
+    [
+     "container",
+     "@mysterious-chest"
+    ]
+   ],
+   "stack": 50
   },
   "golden-talisman": {
    "id": "golden-talisman",
@@ -7889,7 +10240,15 @@
     "golden-talisman"
    ],
    "defaultRecipe": "golden-talisman",
-   "key": "tool_talisman_3"
+   "key": "tool_talisman_3",
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     3
+    ]
+   ],
+   "stack": 1
   },
   "golden-zombie-collar": {
    "id": "golden-zombie-collar",
@@ -7913,7 +10272,19 @@
     "golden-zombie-collar"
    ],
    "defaultRecipe": "golden-zombie-collar",
-   "key": "collar_gold"
+   "key": "collar_gold",
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     2
+    ],
+    [
+     "quest",
+     "personal-zombie-zone"
+    ]
+   ],
+   "stack": 10
   },
   "goldfish": {
    "id": "goldfish",
@@ -7939,7 +10310,24 @@
    "runes": {
     "green": 2,
     "blue": 1
-   }
+   },
+   "where": [
+    [
+     "fish",
+     "port-area",
+     "insect-bait",
+     16.7,
+     20
+    ],
+    [
+     "fish",
+     "forest",
+     "insect-bait",
+     33.3,
+     25
+    ]
+   ],
+   "stack": 20
   },
   "good-alchemist-s-kit": {
    "id": "good-alchemist-s-kit",
@@ -7963,7 +10351,8 @@
     "good-alchemist-s-kit"
    ],
    "defaultRecipe": "good-alchemist-s-kit",
-   "key": "alchemy_kit_3"
+   "key": "alchemy_kit_3",
+   "stack": 1
   },
   "grape-juice-bronze": {
    "id": "grape-juice-bronze",
@@ -8056,7 +10445,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "cook_grape_pie"
+   "key": "cook_grape_pie",
+   "stack": 1
   },
   "grape-seeds": {
    "id": "grape-seeds",
@@ -8078,7 +10468,27 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "grape_seed"
+   "key": "grape_seed",
+   "where": [
+    [
+     "buy",
+     "herm",
+     3
+    ],
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "buy",
+     "brewery"
+    ],
+    [
+     "looter",
+     "seeds"
+    ]
+   ],
+   "stack": 50
   },
   "grapes": {
    "id": "grapes",
@@ -8104,7 +10514,17 @@
     "grow-grapes-bed-m16"
    ],
    "defaultRecipe": null,
-   "key": "grape"
+   "key": "grape",
+   "where": [
+    [
+     "buy",
+     "brewery"
+    ]
+   ],
+   "use": {
+    "en": 6
+   },
+   "stack": 50
   },
   "grapes-bed": {
    "id": "grapes-bed",
@@ -8154,7 +10574,15 @@
     "grated-beets"
    ],
    "defaultRecipe": "grated-beets",
-   "key": "cook_beet_grated"
+   "key": "cook_beet_grated",
+   "use": {
+    "en": 35,
+    "enB": [
+     39,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "grave-area-i": {
    "id": "grave-area-i",
@@ -8274,7 +10702,8 @@
     "gravestone-i"
    ],
    "defaultRecipe": "gravestone-i",
-   "key": "grave_top_stn_1"
+   "key": "grave_top_stn_1",
+   "stack": 10
   },
   "gravestone-ii": {
    "id": "gravestone-ii",
@@ -8298,7 +10727,8 @@
     "gravestone-ii"
    ],
    "defaultRecipe": "gravestone-ii",
-   "key": "grave_top_stn_2"
+   "key": "grave_top_stn_2",
+   "stack": 10
   },
   "green-jelly": {
    "id": "green-jelly",
@@ -8320,7 +10750,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "cook_green_jelly"
+   "key": "cook_green_jelly",
+   "stack": 1
   },
   "green-mold": {
    "id": "green-mold",
@@ -8342,7 +10773,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "mold_green"
+   "key": "mold_green",
+   "stack": 20
   },
   "green-scroll": {
    "id": "green-scroll",
@@ -8364,7 +10796,26 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "green_scroll"
+   "key": "green_scroll",
+   "where": [
+    [
+     "town",
+     "repair-large-house"
+    ],
+    [
+     "town",
+     "repair-block"
+    ],
+    [
+     "town",
+     "repair-house"
+    ],
+    [
+     "town",
+     "repair-small-house"
+    ]
+   ],
+   "stack": 999
   },
   "green-techbook": {
    "id": "green-techbook",
@@ -8388,7 +10839,18 @@
     "green-techbook"
    ],
    "defaultRecipe": "green-techbook",
-   "key": "techbook_g_1"
+   "key": "techbook_g_1",
+   "where": [
+    [
+     "looter",
+     "green-techbooks"
+    ],
+    [
+     "looter",
+     "random-techbooks"
+    ]
+   ],
+   "stack": 10
   },
   "green-techbook-ii": {
    "id": "green-techbook-ii",
@@ -8412,7 +10874,18 @@
     "green-techbook-ii"
    ],
    "defaultRecipe": "green-techbook-ii",
-   "key": "techbook_g_2"
+   "key": "techbook_g_2",
+   "where": [
+    [
+     "looter",
+     "green-techbooks"
+    ],
+    [
+     "looter",
+     "random-techbooks"
+    ]
+   ],
+   "stack": 10
   },
   "grow-potion": {
    "id": "grow-potion",
@@ -8434,7 +10907,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "grow_potion"
+   "key": "grow_potion",
+   "stack": 50
   },
   "gudgeon": {
    "id": "gudgeon",
@@ -8456,7 +10930,24 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_gudgeon"
+   "key": "fish_gudgeon",
+   "where": [
+    [
+     "fish",
+     "inquisition-base",
+     "no-bait",
+     1,
+     0.5
+    ],
+    [
+     "fish",
+     "village",
+     "no-bait",
+     1,
+     0.5
+    ]
+   ],
+   "stack": 20
   },
   "gunpowder": {
    "id": "gunpowder",
@@ -8478,7 +10969,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "powder_gun"
+   "key": "powder_gun",
+   "stack": 20
   },
   "guts": {
    "id": "guts",
@@ -8503,7 +10995,14 @@
     "improve-organ-ii-from-any-guts"
    ],
    "defaultRecipe": null,
-   "key": "guts"
+   "key": "guts",
+   "where": [
+    [
+     "autopsy",
+     "@autopsy-table-i"
+    ]
+   ],
+   "stack": 20
   },
   "hands": {
    "id": "hands",
@@ -8525,7 +11024,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "hand_tool"
+   "key": "hand_tool",
+   "where": [
+    [
+     "start",
+     "the-keeper-s-tool-belt"
+    ]
+   ],
+   "stack": 1
   },
   "hardening-bucket": {
    "id": "hardening-bucket",
@@ -8594,7 +11100,8 @@
     "headstart-fertilizer-i"
    ],
    "defaultRecipe": "headstart-fertilizer-i",
-   "key": "fertilize_start_bonus_1"
+   "key": "fertilize_start_bonus_1",
+   "stack": 30
   },
   "headstart-fertilizer-ii": {
    "id": "headstart-fertilizer-ii",
@@ -8618,7 +11125,8 @@
     "headstart-fertilizer-ii"
    ],
    "defaultRecipe": "headstart-fertilizer-ii",
-   "key": "fertilize_start_bonus_2"
+   "key": "fertilize_start_bonus_2",
+   "stack": 30
   },
   "healing-potion": {
    "id": "healing-potion",
@@ -8642,7 +11150,18 @@
     "alchemy-healing-potion"
    ],
    "defaultRecipe": "alchemy-healing-potion",
-   "key": "heal_potion"
+   "key": "heal_potion",
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ],
+    [
+     "quest",
+     "first-sludge"
+    ]
+   ],
+   "stack": 20
   },
   "healing-potion-ii": {
    "id": "healing-potion-ii",
@@ -8666,7 +11185,15 @@
     "alchemy-healing-potion-ii"
    ],
    "defaultRecipe": "alchemy-healing-potion-ii",
-   "key": "heal_potion_2"
+   "key": "heal_potion_2",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "stack": 20
   },
   "healing-potion-iii": {
    "id": "healing-potion-iii",
@@ -8690,7 +11217,15 @@
     "alchemy-healing-potion-iii"
    ],
    "defaultRecipe": "alchemy-healing-potion-iii",
-   "key": "heal_potion_3"
+   "key": "heal_potion_3",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "stack": 20
   },
   "healing-potion-scroll": {
    "id": "healing-potion-scroll",
@@ -8712,7 +11247,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "heal_potion_scroll"
+   "key": "heal_potion_scroll",
+   "stack": 1
   },
   "heart": {
    "id": "heart",
@@ -8737,7 +11273,14 @@
     "improve-organ-ii-from-any-heart"
    ],
    "defaultRecipe": null,
-   "key": "heart"
+   "key": "heart",
+   "where": [
+    [
+     "autopsy",
+     "@autopsy-table-i"
+    ]
+   ],
+   "stack": 20
   },
   "heavenly-salmon": {
    "id": "heavenly-salmon",
@@ -8761,7 +11304,15 @@
     "heavenly-salmon"
    ],
    "defaultRecipe": "heavenly-salmon",
-   "key": "cook_heavenly_salmon"
+   "key": "cook_heavenly_salmon",
+   "use": {
+    "en": 60,
+    "enB": [
+     66,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "heavy-bow": {
    "id": "heavy-bow",
@@ -8785,7 +11336,8 @@
     "heavy-bow"
    ],
    "defaultRecipe": "heavy-bow",
-   "key": "bow_3"
+   "key": "bow_3",
+   "stack": 1
   },
   "herring": {
    "id": "herring",
@@ -8807,7 +11359,17 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_dace"
+   "key": "fish_dace",
+   "where": [
+    [
+     "fish",
+     "village",
+     "breadcrumb-bait",
+     50,
+     66.7
+    ]
+   ],
+   "stack": 20
   },
   "home-renovation": {
    "id": "home-renovation",
@@ -8853,7 +11415,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "homunculus"
+   "key": "homunculus",
+   "stack": 20
   },
   "honey": {
    "id": "honey",
@@ -8879,7 +11442,21 @@
    "runes": {
     "green": 2,
     "blue": 1
-   }
+   },
+   "where": [
+    [
+     "gather",
+     "beehive"
+    ],
+    [
+     "gather",
+     "wild-beehive"
+    ]
+   ],
+   "use": {
+    "en": 5
+   },
+   "stack": 30
   },
   "hop-seeds": {
    "id": "hop-seeds",
@@ -8901,7 +11478,23 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "hop_seed"
+   "key": "hop_seed",
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "buy",
+     "brewery"
+    ]
+   ],
+   "stack": 50
   },
   "hops": {
    "id": "hops",
@@ -8929,7 +11522,8 @@
    "runes": {
     "green": 2,
     "blue": 1
-   }
+   },
+   "stack": 50
   },
   "hops-bed": {
    "id": "hops-bed",
@@ -8975,7 +11569,15 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "hypno_device"
+   "key": "hypno_device",
+   "where": [
+    [
+     "buy",
+     "gunter",
+     3
+    ]
+   ],
+   "stack": 20
   },
   "hypno-prayer": {
    "id": "hypno-prayer",
@@ -9018,7 +11620,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "imported_components"
+   "key": "imported_components",
+   "stack": 20
   },
   "improve-the-church-i": {
    "id": "improve-the-church-i",
@@ -9156,7 +11759,14 @@
     "ink"
    ],
    "defaultRecipe": "ink",
-   "key": "ink"
+   "key": "ink",
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 30
   },
   "inquisitor-s-medallion": {
    "id": "inquisitor-s-medallion",
@@ -9180,7 +11790,14 @@
     "open-the-door"
    ],
    "defaultRecipe": null,
-   "key": "intro_prison_medallion"
+   "key": "intro_prison_medallion",
+   "where": [
+    [
+     "found",
+     "inquisition-dungeon"
+    ]
+   ],
+   "stack": 1
   },
   "inquisitor-s-note": {
    "id": "inquisitor-s-note",
@@ -9202,7 +11819,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "intro_prison_note"
+   "key": "intro_prison_note",
+   "where": [
+    [
+     "found",
+     "inquisition-dungeon"
+    ]
+   ],
+   "stack": 1
   },
   "inquisitor-s-note-i": {
    "id": "inquisitor-s-note-i",
@@ -9224,7 +11848,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "inq_note_1"
+   "key": "inq_note_1",
+   "where": [
+    [
+     "chest",
+     "sawmill"
+    ]
+   ],
+   "stack": 1
   },
   "inquisitor-s-note-ii": {
    "id": "inquisitor-s-note-ii",
@@ -9246,7 +11877,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "inq_note_2"
+   "key": "inq_note_2",
+   "where": [
+    [
+     "chest",
+     "old-mine"
+    ]
+   ],
+   "stack": 1
   },
   "insect-bait": {
    "id": "insect-bait",
@@ -9270,7 +11908,8 @@
     "insect-bait"
    ],
    "defaultRecipe": "insect-bait",
-   "key": "insect_bite"
+   "key": "insect_bite",
+   "stack": 20
   },
   "interior-bench-i": {
    "id": "interior-bench-i",
@@ -9364,7 +12003,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "inventory"
+   "key": "inventory",
+   "stack": 1
   },
   "iron-anvil": {
    "id": "iron-anvil",
@@ -9412,7 +12052,15 @@
     "iron-armor"
    ],
    "defaultRecipe": "iron-armor",
-   "key": "armor_2"
+   "key": "armor_2",
+   "where": [
+    [
+     "buy",
+     "smithy",
+     2
+    ]
+   ],
+   "stack": 1
   },
   "iron-axe": {
    "id": "iron-axe",
@@ -9436,7 +12084,8 @@
     "iron-axe"
    ],
    "defaultRecipe": "iron-axe",
-   "key": "axe_2"
+   "key": "axe_2",
+   "stack": 1
   },
   "iron-chisel": {
    "id": "iron-chisel",
@@ -9460,7 +12109,8 @@
     "iron-chisel"
    ],
    "defaultRecipe": "iron-chisel",
-   "key": "chisel_iron"
+   "key": "chisel_iron",
+   "stack": 30
   },
   "iron-detail": {
    "id": "iron-detail",
@@ -9484,7 +12134,20 @@
     "iron-detail"
    ],
    "defaultRecipe": "iron-detail",
-   "key": "detail_1_iron"
+   "key": "detail_1_iron",
+   "where": [
+    [
+     "buy",
+     "furniture-maker",
+     2
+    ],
+    [
+     "buy",
+     "smithy",
+     2
+    ]
+   ],
+   "stack": 30
   },
   "iron-hammer": {
    "id": "iron-hammer",
@@ -9508,7 +12171,15 @@
     "iron-hammer"
    ],
    "defaultRecipe": "iron-hammer",
-   "key": "hammer_2"
+   "key": "hammer_2",
+   "where": [
+    [
+     "buy",
+     "smithy",
+     2
+    ]
+   ],
+   "stack": 1
   },
   "iron-ingot": {
    "id": "iron-ingot",
@@ -9533,7 +12204,8 @@
     "iron-ingot-smithy-i"
    ],
    "defaultRecipe": "iron-ingot-furnace-ii",
-   "key": "ingot_iron"
+   "key": "ingot_iron",
+   "stack": 30
   },
   "iron-kit-i": {
    "id": "iron-kit-i",
@@ -9558,7 +12230,8 @@
     "iron-kit-i-smithy-i"
    ],
    "defaultRecipe": "iron-kit-i-iron-anvil",
-   "key": "iron_kit_1"
+   "key": "iron_kit_1",
+   "stack": 30
   },
   "iron-kit-ii": {
    "id": "iron-kit-ii",
@@ -9582,7 +12255,8 @@
     "iron-kit-ii"
    ],
    "defaultRecipe": "iron-kit-ii",
-   "key": "iron_kit_2"
+   "key": "iron_kit_2",
+   "stack": 30
   },
   "iron-nails": {
    "id": "iron-nails",
@@ -9606,7 +12280,25 @@
     "iron-nails"
    ],
    "defaultRecipe": "iron-nails",
-   "key": "nails_iron"
+   "key": "nails_iron",
+   "where": [
+    [
+     "buy",
+     "furniture-maker",
+     2
+    ],
+    [
+     "buy",
+     "builder",
+     2
+    ],
+    [
+     "buy",
+     "smithy",
+     2
+    ]
+   ],
+   "stack": 99
   },
   "iron-ore": {
    "id": "iron-ore",
@@ -9633,7 +12325,18 @@
    "key": "iron_ore",
    "runes": {
     "red": 3
-   }
+   },
+   "where": [
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "gather",
+     "iron-ore-deposit"
+    ]
+   ],
+   "stack": 50
   },
   "iron-pickaxe": {
    "id": "iron-pickaxe",
@@ -9657,7 +12360,8 @@
     "iron-pickaxe"
    ],
    "defaultRecipe": "iron-pickaxe",
-   "key": "pickaxe_2"
+   "key": "pickaxe_2",
+   "stack": 1
   },
   "iron-scrap": {
    "id": "iron-scrap",
@@ -9679,7 +12383,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "iron_scrap"
+   "key": "iron_scrap",
+   "stack": 50
   },
   "iron-shovel": {
    "id": "iron-shovel",
@@ -9703,7 +12408,15 @@
     "iron-shovel"
    ],
    "defaultRecipe": "iron-shovel",
-   "key": "shovel_2"
+   "key": "shovel_2",
+   "where": [
+    [
+     "buy",
+     "vegetable-stand",
+     2
+    ]
+   ],
+   "stack": 1
   },
   "iron-sword": {
    "id": "iron-sword",
@@ -9727,7 +12440,15 @@
     "iron-sword"
    ],
    "defaultRecipe": "iron-sword",
-   "key": "sword_2"
+   "key": "sword_2",
+   "where": [
+    [
+     "buy",
+     "smithy",
+     2
+    ]
+   ],
+   "stack": 1
   },
   "iron-tools": {
    "id": "iron-tools",
@@ -9751,7 +12472,15 @@
     "iron-tools"
    ],
    "defaultRecipe": "iron-tools",
-   "key": "small_instruments_2"
+   "key": "small_instruments_2",
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     2
+    ]
+   ],
+   "stack": 1
   },
   "jewelry-table": {
    "id": "jewelry-table",
@@ -9797,7 +12526,27 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "jug_milk"
+   "key": "jug_milk",
+   "where": [
+    [
+     "buy",
+     "herm",
+     3
+    ],
+    [
+     "buy",
+     "baker",
+     2
+    ]
+   ],
+   "use": {
+    "en": 15,
+    "enB": [
+     17,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "kebab-with-fish-and-mushrooms": {
    "id": "kebab-with-fish-and-mushrooms",
@@ -9819,7 +12568,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "cook_kebab_fish_mushrooms"
+   "key": "cook_kebab_fish_mushrooms",
+   "stack": 1
   },
   "kebab-with-fish-and-onion": {
    "id": "kebab-with-fish-and-onion",
@@ -9841,7 +12591,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "cook_kebab_fish_onion"
+   "key": "cook_kebab_fish_onion",
+   "stack": 1
   },
   "kebab-with-fish-and-pumpkin": {
    "id": "kebab-with-fish-and-pumpkin",
@@ -9863,7 +12614,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "cook_kebab_fish_pumpkin"
+   "key": "cook_kebab_fish_pumpkin",
+   "stack": 1
   },
   "keeper-s-clothes": {
    "id": "keeper-s-clothes",
@@ -9885,7 +12637,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "hero_clothes_9001"
+   "key": "hero_clothes_9001",
+   "where": [
+    [
+     "outfit",
+     "suit-up"
+    ]
+   ],
+   "stack": 1
   },
   "key-from-the-inquisition-dungeon": {
    "id": "key-from-the-inquisition-dungeon",
@@ -9907,7 +12666,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "intro_prison_key"
+   "key": "intro_prison_key",
+   "where": [
+    [
+     "found",
+     "inquisition-dungeon"
+    ]
+   ],
+   "stack": 1
   },
   "key-to-the-resurrection-room": {
    "id": "key-to-the-resurrection-room",
@@ -9929,7 +12695,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "key_resurrection"
+   "key": "key_resurrection",
+   "stack": 1
   },
   "keys-for-looters": {
    "id": "keys-for-looters",
@@ -9951,7 +12718,31 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "keys_looters"
+   "key": "keys_looters",
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     2
+    ],
+    [
+     "battle",
+     "break-through-to-the-bathhouse-basement"
+    ],
+    [
+     "battle",
+     "sewer-brawl-i"
+    ],
+    [
+     "battle",
+     "sewer-brawl-ii"
+    ],
+    [
+     "battle",
+     "sewerena-the-sewer-arena"
+    ]
+   ],
+   "stack": 20
   },
   "kiln": {
    "id": "kiln",
@@ -9997,7 +12788,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "intro_prison_kings_signet"
+   "key": "intro_prison_kings_signet",
+   "where": [
+    [
+     "found",
+     "inquisition-dungeon"
+    ]
+   ],
+   "stack": 1
   },
   "kitchen-i": {
    "id": "kitchen-i",
@@ -10233,7 +13031,15 @@
     "knight-s-spear"
    ],
    "defaultRecipe": "knight-s-spear",
-   "key": "pike_3"
+   "key": "pike_3",
+   "where": [
+    [
+     "buy",
+     "smithy",
+     3
+    ]
+   ],
+   "stack": 1
   },
   "kraken-jr": {
    "id": "kraken-jr",
@@ -10255,7 +13061,17 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_kraken_jr"
+   "key": "fish_kraken_jr",
+   "where": [
+    [
+     "fish",
+     "port-area",
+     "live-bait",
+     100,
+     100
+    ]
+   ],
+   "stack": 20
   },
   "kraken-steak": {
    "id": "kraken-steak",
@@ -10279,7 +13095,15 @@
     "kraken-steak"
    ],
    "defaultRecipe": "kraken-steak",
-   "key": "cook_kraken_jr"
+   "key": "cook_kraken_jr",
+   "use": {
+    "en": 60,
+    "enB": [
+     66,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "krotowuha": {
    "id": "krotowuha",
@@ -10301,7 +13125,11 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "krotowuha_potion"
+   "key": "krotowuha_potion",
+   "use": {
+    "ins": -50
+   },
+   "stack": 50
   },
   "krotowuha-scroll": {
    "id": "krotowuha-scroll",
@@ -10323,7 +13151,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "krotowuha_potion_scroll"
+   "key": "krotowuha_potion_scroll",
+   "stack": 1
   },
   "laboratory-i": {
    "id": "laboratory-i",
@@ -10419,7 +13248,18 @@
     "lace"
    ],
    "defaultRecipe": "lace",
-   "key": "frill"
+   "key": "frill",
+   "where": [
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "buy",
+     "tailor"
+    ]
+   ],
+   "stack": 20
   },
   "lacquer": {
    "id": "lacquer",
@@ -10443,7 +13283,18 @@
     "alchemy-lacquer"
    ],
    "defaultRecipe": "alchemy-lacquer",
-   "key": "lacquer"
+   "key": "lacquer",
+   "where": [
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 20
   },
   "lantern-i": {
    "id": "lantern-i",
@@ -10541,7 +13392,16 @@
     "lasagna"
    ],
    "defaultRecipe": "lasagna",
-   "key": "cook_lasagna"
+   "key": "cook_lasagna",
+   "use": {
+    "en": 50,
+    "enB": [
+     55,
+     "steamed-up"
+    ],
+    "ins": 1
+   },
+   "stack": 30
   },
   "leaf": {
    "id": "leaf",
@@ -10566,7 +13426,8 @@
    "key": "leaf",
    "runes": {
     "green": 1
-   }
+   },
+   "stack": 99
   },
   "leather-scroll": {
    "id": "leather-scroll",
@@ -10590,7 +13451,14 @@
     "leather-scroll"
    ],
    "defaultRecipe": "leather-scroll",
-   "key": "skroll_skin_pig"
+   "key": "skroll_skin_pig",
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 30
   },
   "lens": {
    "id": "lens",
@@ -10615,7 +13483,8 @@
     "lens-smithy-ii"
    ],
    "defaultRecipe": "lens-furnace-i",
-   "key": "lence"
+   "key": "lence",
+   "stack": 50
   },
   "life-water": {
    "id": "life-water",
@@ -10637,7 +13506,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "mwater_drop"
+   "key": "mwater_drop",
+   "stack": 50
   },
   "lifting-crane": {
    "id": "lifting-crane",
@@ -10685,7 +13555,14 @@
     "light-pike"
    ],
    "defaultRecipe": "light-pike",
-   "key": "pike_1"
+   "key": "pike_1",
+   "where": [
+    [
+     "buy",
+     "smithy"
+    ]
+   ],
+   "stack": 1
   },
   "live-bait": {
    "id": "live-bait",
@@ -10709,7 +13586,8 @@
     "live-bait"
    ],
    "defaultRecipe": "live-bait",
-   "key": "ultimate_bite"
+   "key": "ultimate_bite",
+   "stack": 20
   },
   "locked-door": {
    "id": "locked-door",
@@ -10777,7 +13655,30 @@
     "log"
    ],
    "defaultRecipe": null,
-   "key": "wood"
+   "key": "wood",
+   "where": [
+    [
+     "gather",
+     "tree"
+    ],
+    [
+     "gather",
+     "creepy-tree"
+    ],
+    [
+     "gather",
+     "dead-tree"
+    ],
+    [
+     "gather",
+     "driftwood"
+    ],
+    [
+     "found",
+     "yard"
+    ]
+   ],
+   "stack": 1
   },
   "love-novel": {
    "id": "love-novel",
@@ -10799,7 +13700,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "book_love"
+   "key": "book_love",
+   "where": [
+    [
+     "quest",
+     "wharf-rats"
+    ]
+   ],
+   "stack": 1
   },
   "lumberjack-stand": {
    "id": "lumberjack-stand",
@@ -10847,7 +13755,8 @@
     "luxury-drapes"
    ],
    "defaultRecipe": "luxury-drapes",
-   "key": "drape_luxury"
+   "key": "drape_luxury",
+   "stack": 1
   },
   "mackerel": {
    "id": "mackerel",
@@ -10869,7 +13778,17 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_mackerel"
+   "key": "fish_mackerel",
+   "where": [
+    [
+     "fish",
+     "port-area",
+     "breadcrumb-bait",
+     33.3,
+     66.7
+    ]
+   ],
+   "stack": 20
   },
   "magic-bell": {
    "id": "magic-bell",
@@ -10893,7 +13812,8 @@
     "magic-bell"
    ],
    "defaultRecipe": "magic-bell",
-   "key": "quest_bell"
+   "key": "quest_bell",
+   "stack": 1
   },
   "magnificent-candle": {
    "id": "magnificent-candle",
@@ -10917,7 +13837,15 @@
     "magnificent-candle"
    ],
    "defaultRecipe": "magnificent-candle",
-   "key": "candle_master"
+   "key": "candle_master",
+   "where": [
+    [
+     "buy",
+     "apothecary",
+     3
+    ]
+   ],
+   "stack": 30
   },
   "marble": {
    "id": "marble",
@@ -10944,7 +13872,14 @@
    "key": "1h_marble",
    "runes": {
     "red": 3
-   }
+   },
+   "where": [
+    [
+     "gather",
+     "marble-deposit"
+    ]
+   ],
+   "stack": 30
   },
   "marble-cross-i": {
    "id": "marble-cross-i",
@@ -10968,7 +13903,8 @@
     "marble-cross-i"
    ],
    "defaultRecipe": "marble-cross-i",
-   "key": "grave_top_mrb_1"
+   "key": "grave_top_mrb_1",
+   "stack": 10
   },
   "marble-cross-ii": {
    "id": "marble-cross-ii",
@@ -10992,7 +13928,8 @@
     "marble-cross-ii"
    ],
    "defaultRecipe": "marble-cross-ii",
-   "key": "grave_top_mrb_2"
+   "key": "grave_top_mrb_2",
+   "stack": 10
   },
   "marble-fence-i": {
    "id": "marble-fence-i",
@@ -11016,7 +13953,8 @@
     "marble-fence-i"
    ],
    "defaultRecipe": "marble-fence-i",
-   "key": "grave_bot_mrb_1"
+   "key": "grave_bot_mrb_1",
+   "stack": 10
   },
   "marble-fence-ii": {
    "id": "marble-fence-ii",
@@ -11040,7 +13978,8 @@
     "marble-fence-ii"
    ],
    "defaultRecipe": "marble-fence-ii",
-   "key": "grave_bot_mrb_2"
+   "key": "grave_bot_mrb_2",
+   "stack": 10
   },
   "marble-kit": {
    "id": "marble-kit",
@@ -11064,7 +14003,8 @@
     "marble-kit"
    ],
    "defaultRecipe": "marble-kit",
-   "key": "marble_kit"
+   "key": "marble_kit",
+   "stack": 30
   },
   "marble-plate": {
    "id": "marble-plate",
@@ -11088,7 +14028,15 @@
     "marble-plate"
    ],
    "defaultRecipe": "marble-plate",
-   "key": "marble_plate_1"
+   "key": "marble_plate_1",
+   "where": [
+    [
+     "buy",
+     "builder",
+     2
+    ]
+   ],
+   "stack": 30
   },
   "mash-drop": {
    "id": "mash-drop",
@@ -11110,7 +14058,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "mash"
+   "key": "mash",
+   "stack": 50
   },
   "master-armor": {
    "id": "master-armor",
@@ -11134,7 +14083,8 @@
     "master-armor"
    ],
    "defaultRecipe": "master-armor",
-   "key": "armor_4"
+   "key": "armor_4",
+   "stack": 1
   },
   "master-rod": {
    "id": "master-rod",
@@ -11156,7 +14106,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "master_rod"
+   "key": "master_rod",
+   "stack": 1
   },
   "master-surgeon-s-kit": {
    "id": "master-surgeon-s-kit",
@@ -11180,7 +14131,8 @@
     "master-surgeon-s-kit"
    ],
    "defaultRecipe": "master-surgeon-s-kit",
-   "key": "surgical_kit_3"
+   "key": "surgical_kit_3",
+   "stack": 1
   },
   "master-sword": {
    "id": "master-sword",
@@ -11204,7 +14156,8 @@
     "master-sword"
    ],
    "defaultRecipe": "master-sword",
-   "key": "sword_4"
+   "key": "sword_4",
+   "stack": 1
   },
   "mead": {
    "id": "mead",
@@ -11228,7 +14181,17 @@
     "mead"
    ],
    "defaultRecipe": "mead",
-   "key": "mead"
+   "key": "mead",
+   "where": [
+    [
+     "buy",
+     "brewery"
+    ]
+   ],
+   "use": {
+    "ins": -10
+   },
+   "stack": 50
   },
   "melted-fat": {
    "id": "melted-fat",
@@ -11256,7 +14219,14 @@
    "key": "melted_fat",
    "runes": {
     "red": 3
-   }
+   },
+   "where": [
+    [
+     "buy",
+     "apothecary"
+    ]
+   ],
+   "stack": 99
   },
   "mercurius-vivus": {
    "id": "mercurius-vivus",
@@ -11278,7 +14248,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "alchemy_mercurius"
+   "key": "alchemy_mercurius",
+   "stack": 50
   },
   "millstone": {
    "id": "millstone",
@@ -11329,7 +14300,8 @@
    "key": "minced_meat",
    "runes": {
     "blue": 2
-   }
+   },
+   "stack": 30
   },
   "miracle-growth-elixir": {
    "id": "miracle-growth-elixir",
@@ -11353,7 +14325,15 @@
     "alchemy-miracle-growth-elixir"
    ],
    "defaultRecipe": "alchemy-miracle-growth-elixir",
-   "key": "miracle_growing_elixir"
+   "key": "miracle_growing_elixir",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "stack": 20
   },
   "mixed-area-i": {
    "id": "mixed-area-i",
@@ -11540,7 +14520,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "moonshine"
+   "key": "moonshine",
+   "stack": 20
   },
   "mortificatio-oil": {
    "id": "mortificatio-oil",
@@ -11562,7 +14543,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "alchemy_mortificartio"
+   "key": "alchemy_mortificartio",
+   "stack": 50
   },
   "muffin": {
    "id": "muffin",
@@ -11586,7 +14568,26 @@
     "muffin"
    ],
    "defaultRecipe": "muffin",
-   "key": "cook_muffin"
+   "key": "cook_muffin",
+   "where": [
+    [
+     "buy",
+     "baker"
+    ]
+   ],
+   "use": {
+    "en": 20,
+    "enB": [
+     22,
+     "steamed-up"
+    ],
+    "buff": [
+     "farming-spirit-ii",
+     450,
+     1
+    ]
+   },
+   "stack": 30
   },
   "music-notes": {
    "id": "music-notes",
@@ -11610,7 +14611,8 @@
     "music-notes"
    ],
    "defaultRecipe": "music-notes",
-   "key": "music_notes"
+   "key": "music_notes",
+   "stack": 30
   },
   "mysterious-chest": {
    "id": "mysterious-chest",
@@ -11632,7 +14634,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "chest_myst"
+   "key": "chest_myst",
+   "where": [
+    [
+     "quest",
+     "press-for-cash"
+    ]
+   ],
+   "stack": 1
   },
   "mysterious-fish-fillet": {
    "id": "mysterious-fish-fillet",
@@ -11658,7 +14667,8 @@
     "mysterious-fish-fillet-from-swamp-ghost"
    ],
    "defaultRecipe": "mysterious-fish-fillet-from-goldfish",
-   "key": "fillet_fish_myst"
+   "key": "fillet_fish_myst",
+   "stack": 30
   },
   "mythic-carp": {
    "id": "mythic-carp",
@@ -11680,7 +14690,17 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_mythic_carp"
+   "key": "fish_mythic_carp",
+   "where": [
+    [
+     "fish",
+     "village",
+     "live-bait",
+     100,
+     100
+    ]
+   ],
+   "stack": 20
   },
   "natural-resin": {
    "id": "natural-resin",
@@ -11702,7 +14722,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "natural_resin"
+   "key": "natural_resin",
+   "stack": 50
   },
   "necronomicon": {
    "id": "necronomicon",
@@ -11724,7 +14745,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "necromonicon"
+   "key": "necromonicon",
+   "where": [
+    [
+     "quest",
+     "the-ingenious-gentleman-don-keyote"
+    ]
+   ],
+   "stack": 1
   },
   "newspaper": {
    "id": "newspaper",
@@ -11862,7 +14890,14 @@
    "key": "flower_night",
    "runes": {
     "blue": 2
-   }
+   },
+   "where": [
+    [
+     "gather",
+     "night-flower"
+    ]
+   ],
+   "stack": 50
   },
   "nigredo-ash": {
    "id": "nigredo-ash",
@@ -11884,7 +14919,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "alchemy_nigredo"
+   "key": "alchemy_nigredo",
+   "stack": 50
   },
   "no-bait": {
    "id": "no-bait",
@@ -11906,7 +14942,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "no_bait"
+   "key": "no_bait",
+   "where": [
+    [
+     "start",
+     "fishing"
+    ]
+   ],
+   "stack": 1
   },
   "oiled-beam": {
    "id": "oiled-beam",
@@ -11930,7 +14973,15 @@
     "oiled-beam"
    ],
    "defaultRecipe": "oiled-beam",
-   "key": "oiled_beam"
+   "key": "oiled_beam",
+   "where": [
+    [
+     "buy",
+     "builder",
+     2
+    ]
+   ],
+   "stack": 30
   },
   "oiled-plank": {
    "id": "oiled-plank",
@@ -11954,7 +15005,18 @@
     "oiled-plank"
    ],
    "defaultRecipe": "oiled-plank",
-   "key": "oiled_plank"
+   "key": "oiled_plank",
+   "where": [
+    [
+     "buy",
+     "furniture-maker"
+    ],
+    [
+     "buy",
+     "builder"
+    ]
+   ],
+   "stack": 30
   },
   "old-door": {
    "id": "old-door",
@@ -11998,7 +15060,11 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "cook_omelette"
+   "key": "cook_omelette",
+   "use": {
+    "en": 50
+   },
+   "stack": 30
   },
   "onion": {
    "id": "onion",
@@ -12027,7 +15093,23 @@
    "key": "onion:1",
    "runes": {
     "green": 2
-   }
+   },
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand",
+     2
+    ]
+   ],
+   "use": {
+    "en": 5
+   },
+   "stack": 50
   },
   "onion-bed": {
    "id": "onion-bed",
@@ -12079,7 +15161,15 @@
     "onion-rings-from-onion-silver"
    ],
    "defaultRecipe": "onion-rings-from-onion-bronze",
-   "key": "cook_onion_rings"
+   "key": "cook_onion_rings",
+   "use": {
+    "en": 35,
+    "enB": [
+     39,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "onion-seed": {
    "id": "onion-seed",
@@ -12101,7 +15191,28 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "onion_seed:1"
+   "key": "onion_seed:1",
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand",
+     2
+    ],
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "looter",
+     "seeds"
+    ]
+   ],
+   "stack": 50
   },
   "open-corpse-dumping-point": {
    "id": "open-corpse-dumping-point",
@@ -12234,7 +15345,15 @@
     "alchemy-organ-improver"
    ],
    "defaultRecipe": "alchemy-organ-improver",
-   "key": "organ_improver_red"
+   "key": "organ_improver_red",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "stack": 20
   },
   "organ-randomizer": {
    "id": "organ-randomizer",
@@ -12256,7 +15375,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "organ_randomizer"
+   "key": "organ_randomizer",
+   "stack": 20
   },
   "organ-restorer": {
    "id": "organ-restorer",
@@ -12278,7 +15398,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "organ_restoration"
+   "key": "organ_restoration",
+   "stack": 20
   },
   "paint": {
    "id": "paint",
@@ -12302,7 +15423,18 @@
     "alchemy-paint"
    ],
    "defaultRecipe": "alchemy-paint",
-   "key": "quest_paint"
+   "key": "quest_paint",
+   "where": [
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 20
   },
   "pancakes": {
    "id": "pancakes",
@@ -12324,7 +15456,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "cook_pancakes"
+   "key": "cook_pancakes",
+   "stack": 30
   },
   "paper-glop": {
    "id": "paper-glop",
@@ -12349,7 +15482,14 @@
     "paper-glop-from-wheat"
    ],
    "defaultRecipe": "paper-glop-from-flax",
-   "key": "paper_liquid"
+   "key": "paper_liquid",
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 99
   },
   "paper-press": {
    "id": "paper-press",
@@ -12395,7 +15535,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "cook_pasta"
+   "key": "cook_pasta",
+   "stack": 1
   },
   "peat": {
    "id": "peat",
@@ -12424,7 +15565,14 @@
    "runes": {
     "green": 1,
     "blue": 1
-   }
+   },
+   "where": [
+    [
+     "gather",
+     "@village-toilet"
+    ]
+   ],
+   "stack": 99
   },
   "philosopher-stone": {
    "id": "philosopher-stone",
@@ -12448,7 +15596,15 @@
     "alchemy-philosopher-stone"
    ],
    "defaultRecipe": "alchemy-philosopher-stone",
-   "key": "philosopher_stone"
+   "key": "philosopher_stone",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "stack": 20
   },
   "philosophic-sulfur": {
    "id": "philosophic-sulfur",
@@ -12470,7 +15626,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "alchemy_sulfur"
+   "key": "alchemy_sulfur",
+   "stack": 50
   },
   "piece-of-stone": {
    "id": "piece-of-stone",
@@ -12494,7 +15651,14 @@
     "piece-of-stone"
    ],
    "defaultRecipe": "piece-of-stone",
-   "key": "stone_plate_1"
+   "key": "stone_plate_1",
+   "where": [
+    [
+     "buy",
+     "builder"
+    ]
+   ],
+   "stack": 30
   },
   "pike": {
    "id": "pike",
@@ -12516,7 +15680,24 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_pike"
+   "key": "fish_pike",
+   "where": [
+    [
+     "fish",
+     "inquisition-base",
+     "breadcrumb-bait",
+     100,
+     100
+    ],
+    [
+     "fish",
+     "forest",
+     "breadcrumb-bait",
+     66.7,
+     33.3
+    ]
+   ],
+   "stack": 20
   },
   "pike-or-catfish": {
    "id": "pike-or-catfish",
@@ -12563,7 +15744,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "hero_clothes_9006"
+   "key": "hero_clothes_9006",
+   "where": [
+    [
+     "quest",
+     "swords-and-bell"
+    ]
+   ],
+   "stack": 1
   },
   "po-ta-to": {
    "id": "po-ta-to",
@@ -12585,7 +15773,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "potato"
+   "key": "potato",
+   "where": [
+    [
+     "quest",
+     "green-men-from-far-lands"
+    ]
+   ],
+   "stack": 20
   },
   "polished-bronze": {
    "id": "polished-bronze",
@@ -12609,7 +15804,22 @@
     "polished-bronze"
    ],
    "defaultRecipe": "polished-bronze",
-   "key": "polished_bronze"
+   "key": "polished_bronze",
+   "where": [
+    [
+     "buy",
+     "furniture-maker"
+    ],
+    [
+     "buy",
+     "jeweler"
+    ],
+    [
+     "buy",
+     "smithy"
+    ]
+   ],
+   "stack": 30
   },
   "polished-marble": {
    "id": "polished-marble",
@@ -12633,7 +15843,15 @@
     "polished-marble"
    ],
    "defaultRecipe": "polished-marble",
-   "key": "marble_plate_2"
+   "key": "marble_plate_2",
+   "where": [
+    [
+     "buy",
+     "builder",
+     2
+    ]
+   ],
+   "stack": 30
   },
   "polished-stone": {
    "id": "polished-stone",
@@ -12657,7 +15875,14 @@
     "polished-stone"
    ],
    "defaultRecipe": "polished-stone",
-   "key": "stone_plate_2"
+   "key": "stone_plate_2",
+   "where": [
+    [
+     "buy",
+     "builder"
+    ]
+   ],
+   "stack": 30
   },
   "polishing-paste": {
    "id": "polishing-paste",
@@ -12679,7 +15904,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "polishing_paste"
+   "key": "polishing_paste",
+   "stack": 20
   },
   "portal-fragment-envy": {
    "id": "portal-fragment-envy",
@@ -12701,7 +15927,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "portal_stone_envy"
+   "key": "portal_stone_envy",
+   "where": [
+    [
+     "quest",
+     "green-fragment"
+    ]
+   ],
+   "stack": 1
   },
   "portal-fragment-gluttony": {
    "id": "portal-fragment-gluttony",
@@ -12723,7 +15956,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "portal_stone_gluttony"
+   "key": "portal_stone_gluttony",
+   "where": [
+    [
+     "quest",
+     "the-hungry-cosmos"
+    ]
+   ],
+   "stack": 1
   },
   "portal-fragment-greed": {
    "id": "portal-fragment-greed",
@@ -12745,7 +15985,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "portal_stone_greed"
+   "key": "portal_stone_greed",
+   "where": [
+    [
+     "quest",
+     "the-last-battle"
+    ]
+   ],
+   "stack": 1
   },
   "portal-fragment-lust": {
    "id": "portal-fragment-lust",
@@ -12767,7 +16014,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "portal_stone_lust"
+   "key": "portal_stone_lust",
+   "where": [
+    [
+     "quest",
+     "high-price"
+    ]
+   ],
+   "stack": 1
   },
   "portal-fragment-pride": {
    "id": "portal-fragment-pride",
@@ -12789,7 +16043,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "portal_stone_pride"
+   "key": "portal_stone_pride",
+   "where": [
+    [
+     "quest",
+     "more-portal-parts"
+    ]
+   ],
+   "stack": 1
   },
   "portal-fragment-sloth": {
    "id": "portal-fragment-sloth",
@@ -12811,7 +16072,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "portal_stone_sloth"
+   "key": "portal_stone_sloth",
+   "where": [
+    [
+     "quest",
+     "magic-mirror"
+    ]
+   ],
+   "stack": 1
   },
   "portal-fragment-wrath": {
    "id": "portal-fragment-wrath",
@@ -12833,7 +16101,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "portal_stone_wrath"
+   "key": "portal_stone_wrath",
+   "where": [
+    [
+     "quest",
+     "even-more-portal-parts"
+    ]
+   ],
+   "stack": 1
   },
   "porter-station": {
    "id": "porter-station",
@@ -12887,7 +16162,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "bag_potions"
+   "key": "bag_potions",
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 1
   },
   "potter-s-wheel": {
    "id": "potter-s-wheel",
@@ -12933,7 +16215,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "agreement_frontman"
+   "key": "agreement_frontman",
+   "where": [
+    [
+     "quest",
+     "rhyme-and-printed"
+    ]
+   ],
+   "stack": 1
   },
   "pr-machine-i": {
    "id": "pr-machine-i",
@@ -13117,7 +16406,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "prayer_music"
+   "key": "prayer_music",
+   "stack": 1
   },
   "prayer-for-old-god": {
    "id": "prayer-for-old-god",
@@ -13141,7 +16431,14 @@
     "prayer-for-old-god"
    ],
    "defaultRecipe": "prayer-for-old-god",
-   "key": "prayer_old_god"
+   "key": "prayer_old_god",
+   "where": [
+    [
+     "quest",
+     "eye-red-eye"
+    ]
+   ],
+   "stack": 1
   },
   "prayer-for-repose": {
    "id": "prayer-for-repose",
@@ -13184,7 +16481,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "prayer_speed"
+   "key": "prayer_speed",
+   "stack": 1
   },
   "prayer-for-storms": {
    "id": "prayer-for-storms",
@@ -13208,7 +16506,8 @@
     "prayer-for-storms"
    ],
    "defaultRecipe": "prayer-for-storms",
-   "key": "prayer_storms"
+   "key": "prayer_storms",
+   "stack": 1
   },
   "precious-trinkets": {
    "id": "precious-trinkets",
@@ -13232,7 +16531,8 @@
     "precious-trinkets"
    ],
    "defaultRecipe": "precious-trinkets",
-   "key": "trinkets_gold"
+   "key": "trinkets_gold",
+   "stack": 20
   },
   "preservative": {
    "id": "preservative",
@@ -13256,7 +16556,14 @@
     "alchemy-preservative"
    ],
    "defaultRecipe": "alchemy-preservative",
-   "key": "preservative"
+   "key": "preservative",
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 20
   },
   "pretty-candle": {
    "id": "pretty-candle",
@@ -13280,7 +16587,15 @@
     "pretty-candle"
    ],
    "defaultRecipe": "pretty-candle",
-   "key": "candle_advanced"
+   "key": "candle_advanced",
+   "where": [
+    [
+     "buy",
+     "apothecary",
+     2
+    ]
+   ],
+   "stack": 30
   },
   "priest-s-clothes": {
    "id": "priest-s-clothes",
@@ -13302,7 +16617,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "hero_clothes_9008"
+   "key": "hero_clothes_9008",
+   "where": [
+    [
+     "quest",
+     "holy-moly"
+    ]
+   ],
+   "stack": 1
   },
   "prima-materia-dust": {
    "id": "prima-materia-dust",
@@ -13324,7 +16646,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "alchemy_prima_materia"
+   "key": "alchemy_prima_materia",
+   "stack": 50
   },
   "primer": {
    "id": "primer",
@@ -13348,7 +16671,8 @@
     "primer"
    ],
    "defaultRecipe": "primer",
-   "key": "tool_book_1"
+   "key": "tool_book_1",
+   "stack": 1
   },
   "printed-money": {
    "id": "printed-money",
@@ -13372,7 +16696,8 @@
     "printed-money"
    ],
    "defaultRecipe": "printed-money",
-   "key": "printed_money"
+   "key": "printed_money",
+   "stack": 50
   },
   "printed-poetry": {
    "id": "printed-poetry",
@@ -13396,7 +16721,8 @@
     "printed-poetry"
    ],
    "defaultRecipe": "printed-poetry",
-   "key": "book_poetry"
+   "key": "book_poetry",
+   "stack": 1
   },
   "printing-press": {
    "id": "printing-press",
@@ -13444,7 +16770,19 @@
     "pro-rod"
    ],
    "defaultRecipe": "pro-rod",
-   "key": "pro_rod"
+   "key": "pro_rod",
+   "where": [
+    [
+     "buy",
+     "fish-stand",
+     3
+    ],
+    [
+     "quest",
+     "fish-for-the-fisher"
+    ]
+   ],
+   "stack": 1
   },
   "prosthetic-hand": {
    "id": "prosthetic-hand",
@@ -13468,7 +16806,8 @@
     "prosthetic-hand"
    ],
    "defaultRecipe": "prosthetic-hand",
-   "key": "hand_prothesis"
+   "key": "hand_prothesis",
+   "stack": 1
   },
   "pumpkin": {
    "id": "pumpkin",
@@ -13497,7 +16836,18 @@
    "key": "pumpkin",
    "runes": {
     "green": 3
-   }
+   },
+   "where": [
+    [
+     "buy",
+     "vegetable-stand",
+     2
+    ]
+   ],
+   "use": {
+    "en": 6
+   },
+   "stack": 50
   },
   "pumpkin-bed": {
    "id": "pumpkin-bed",
@@ -13545,7 +16895,23 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "pumpkin_seed"
+   "key": "pumpkin_seed",
+   "where": [
+    [
+     "buy",
+     "vegetable-stand",
+     2
+    ],
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "looter",
+     "seeds"
+    ]
+   ],
+   "stack": 50
   },
   "pumpkin-soup": {
    "id": "pumpkin-soup",
@@ -13571,7 +16937,20 @@
     "pumpkin-soup-from-pumpkin-silver"
    ],
    "defaultRecipe": "pumpkin-soup-from-pumpkin-bronze",
-   "key": "cook_pumpkin_soup"
+   "key": "cook_pumpkin_soup",
+   "use": {
+    "en": 20,
+    "enB": [
+     22,
+     "steamed-up"
+    ],
+    "buff": [
+     "building-spirit-ii",
+     450,
+     1
+    ]
+   },
+   "stack": 30
   },
   "quicksilver": {
    "id": "quicksilver",
@@ -13593,7 +16972,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "quicksilver"
+   "key": "quicksilver",
+   "stack": 20
   },
   "quintessence-vial": {
    "id": "quintessence-vial",
@@ -13615,7 +16995,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "alchemy_quintessence"
+   "key": "alchemy_quintessence",
+   "stack": 50
   },
   "reanimation-liquid": {
    "id": "reanimation-liquid",
@@ -13639,7 +17020,35 @@
     "alchemy-reanimation-liquid"
    ],
    "defaultRecipe": "alchemy-reanimation-liquid",
-   "key": "resurrection_liquid"
+   "key": "resurrection_liquid",
+   "where": [
+    [
+     "buy",
+     "gunter",
+     2
+    ],
+    [
+     "buy",
+     "alchemist"
+    ],
+    [
+     "chest",
+     "old-mine"
+    ],
+    [
+     "chest",
+     "sawmill"
+    ],
+    [
+     "chest",
+     "resurrection-lab"
+    ],
+    [
+     "quest",
+     "personal-zombie-zone"
+    ]
+   ],
+   "stack": 20
   },
   "red-eye": {
    "id": "red-eye",
@@ -13661,7 +17070,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "red_eye"
+   "key": "red_eye",
+   "where": [
+    [
+     "quest",
+     "friend-or-foe"
+    ]
+   ],
+   "stack": 1
   },
   "red-jelly": {
    "id": "red-jelly",
@@ -13683,7 +17099,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "cook_red_jelly"
+   "key": "cook_red_jelly",
+   "stack": 1
   },
   "red-mushroom": {
    "id": "red-mushroom",
@@ -13708,7 +17125,17 @@
    "key": "mushroom_red",
    "runes": {
     "red": 2
-   }
+   },
+   "where": [
+    [
+     "gather",
+     "red-mushrooms"
+    ]
+   ],
+   "use": {
+    "en": 3
+   },
+   "stack": 30
   },
   "red-techbook": {
    "id": "red-techbook",
@@ -13732,7 +17159,18 @@
     "red-techbook"
    ],
    "defaultRecipe": "red-techbook",
-   "key": "techbook_r_1"
+   "key": "techbook_r_1",
+   "where": [
+    [
+     "looter",
+     "red-techbooks"
+    ],
+    [
+     "looter",
+     "random-techbooks"
+    ]
+   ],
+   "stack": 10
   },
   "red-techbook-ii": {
    "id": "red-techbook-ii",
@@ -13756,7 +17194,18 @@
     "red-techbook-ii"
    ],
    "defaultRecipe": "red-techbook-ii",
-   "key": "techbook_r_2"
+   "key": "techbook_r_2",
+   "where": [
+    [
+     "looter",
+     "red-techbooks"
+    ],
+    [
+     "looter",
+     "random-techbooks"
+    ]
+   ],
+   "stack": 10
   },
   "reinforced-beam": {
    "id": "reinforced-beam",
@@ -13780,7 +17229,15 @@
     "reinforced-beam"
    ],
    "defaultRecipe": "reinforced-beam",
-   "key": "reinforced_beam"
+   "key": "reinforced_beam",
+   "where": [
+    [
+     "buy",
+     "builder",
+     2
+    ]
+   ],
+   "stack": 30
   },
   "reinforced-bow": {
    "id": "reinforced-bow",
@@ -13804,7 +17261,8 @@
     "reinforced-bow"
    ],
    "defaultRecipe": "reinforced-bow",
-   "key": "bow_1"
+   "key": "bow_1",
+   "stack": 1
   },
   "reinforced-plank": {
    "id": "reinforced-plank",
@@ -13828,7 +17286,14 @@
     "reinforced-plank"
    ],
    "defaultRecipe": "reinforced-plank",
-   "key": "reinforced_plank"
+   "key": "reinforced_plank",
+   "where": [
+    [
+     "buy",
+     "builder"
+    ]
+   ],
+   "stack": 30
   },
   "repair-bridge": {
    "id": "repair-bridge",
@@ -13911,7 +17376,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "resin"
+   "key": "resin",
+   "stack": 20
   },
   "resurrection-device": {
    "id": "resurrection-device",
@@ -13955,7 +17421,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "note_resurrection"
+   "key": "note_resurrection",
+   "where": [
+    [
+     "chest",
+     "resurrection-lab"
+    ]
+   ],
+   "stack": 1
   },
   "resurrection-table-i": {
    "id": "resurrection-table-i",
@@ -14001,7 +17474,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "flower_rhod"
+   "key": "flower_rhod",
+   "where": [
+    [
+     "gather",
+     "rhododendron-bush"
+    ]
+   ],
+   "stack": 50
   },
   "rhododendron-bush": {
    "id": "rhododendron-bush",
@@ -14047,7 +17527,19 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "rhod_seedling"
+   "key": "rhod_seedling",
+   "where": [
+    [
+     "buy",
+     "herm",
+     3
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 20
   },
   "rich-growth-elixir": {
    "id": "rich-growth-elixir",
@@ -14071,7 +17563,15 @@
     "alchemy-rich-growth-elixir"
    ],
    "defaultRecipe": "alchemy-rich-growth-elixir",
-   "key": "rich_growing_elixir"
+   "key": "rich_growing_elixir",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "stack": 20
   },
   "river-fish-fillet": {
    "id": "river-fish-fillet",
@@ -14098,7 +17598,15 @@
     "river-fish-fillet-from-pike-or-catfish"
    ],
    "defaultRecipe": "river-fish-fillet-from-roach-or-gudgeon",
-   "key": "fillet_fish_river"
+   "key": "fillet_fish_river",
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ]
+   ],
+   "stack": 30
   },
   "roach": {
    "id": "roach",
@@ -14120,7 +17628,24 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_roach"
+   "key": "fish_roach",
+   "where": [
+    [
+     "fish",
+     "inquisition-base",
+     "no-bait",
+     98.9,
+     99.3
+    ],
+    [
+     "fish",
+     "village",
+     "no-bait",
+     98.8,
+     99
+    ]
+   ],
+   "stack": 20
   },
   "roach-or-gudgeon": {
    "id": "roach-or-gudgeon",
@@ -14167,7 +17692,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "royal_pardon"
+   "key": "royal_pardon",
+   "where": [
+    [
+     "quest",
+     "go-wild-in-the-wild-lands"
+    ]
+   ],
+   "stack": 1
   },
   "rubedo-crystallis": {
    "id": "rubedo-crystallis",
@@ -14189,7 +17721,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "alchemy_rubedo"
+   "key": "alchemy_rubedo",
+   "stack": 50
   },
   "rusty-armor": {
    "id": "rusty-armor",
@@ -14213,7 +17746,14 @@
     "rusty-armor"
    ],
    "defaultRecipe": "rusty-armor",
-   "key": "armor_0"
+   "key": "armor_0",
+   "where": [
+    [
+     "quest",
+     "friendship-written-in-the-stars"
+    ]
+   ],
+   "stack": 1
   },
   "rusty-axe": {
    "id": "rusty-axe",
@@ -14235,7 +17775,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "axe_0"
+   "key": "axe_0",
+   "where": [
+    [
+     "quest",
+     "the-prologue"
+    ]
+   ],
+   "stack": 1
   },
   "rusty-hammer": {
    "id": "rusty-hammer",
@@ -14257,7 +17804,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "hammer_0"
+   "key": "hammer_0",
+   "where": [
+    [
+     "chest",
+     "graveyard"
+    ]
+   ],
+   "stack": 1
   },
   "rusty-pickaxe": {
    "id": "rusty-pickaxe",
@@ -14279,7 +17833,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "pickaxe_0"
+   "key": "pickaxe_0",
+   "where": [
+    [
+     "quest",
+     "the-prologue"
+    ]
+   ],
+   "stack": 1
   },
   "rusty-shovel": {
    "id": "rusty-shovel",
@@ -14301,7 +17862,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "shovel_0"
+   "key": "shovel_0",
+   "where": [
+    [
+     "chest",
+     "graveyard"
+    ]
+   ],
+   "stack": 1
   },
   "rusty-sword": {
    "id": "rusty-sword",
@@ -14323,7 +17891,8 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "sword_0"
+   "key": "sword_0",
+   "stack": 1
   },
   "salmon": {
    "id": "salmon",
@@ -14345,7 +17914,24 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_salmon"
+   "key": "fish_salmon",
+   "where": [
+    [
+     "fish",
+     "port-area",
+     "insect-bait",
+     16.7,
+     40
+    ],
+    [
+     "fish",
+     "forest",
+     "insect-bait",
+     33.3,
+     50
+    ]
+   ],
+   "stack": 20
   },
   "salt": {
    "id": "salt",
@@ -14372,7 +17958,18 @@
     "red": 1,
     "green": 1,
     "blue": 1
-   }
+   },
+   "where": [
+    [
+     "buy",
+     "apothecary"
+    ],
+    [
+     "buy",
+     "baker"
+    ]
+   ],
+   "stack": 99
   },
   "sand": {
    "id": "sand",
@@ -14399,7 +17996,14 @@
    "key": "sand",
    "runes": {
     "red": 1
-   }
+   },
+   "where": [
+    [
+     "gather",
+     "sand-pit"
+    ]
+   ],
+   "stack": 99
   },
   "sand-digger-stand": {
    "id": "sand-digger-stand",
@@ -14447,7 +18051,16 @@
     "sandwich"
    ],
    "defaultRecipe": "sandwich",
-   "key": "cook_sandwich"
+   "key": "cook_sandwich",
+   "use": {
+    "en": 50,
+    "enB": [
+     55,
+     "steamed-up"
+    ],
+    "ins": 5
+   },
+   "stack": 30
   },
   "sawhorse": {
    "id": "sawhorse",
@@ -14493,7 +18106,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "scary_idol"
+   "key": "scary_idol",
+   "stack": 20
   },
   "science": {
    "id": "science",
@@ -14515,7 +18129,22 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "science"
+   "key": "science",
+   "where": [
+    [
+     "study",
+     "@clean-paper"
+    ],
+    [
+     "study",
+     "@science-kit-i"
+    ],
+    [
+     "study",
+     "@science-kit-ii"
+    ]
+   ],
+   "stack": 999
   },
   "science-kit-i": {
    "id": "science-kit-i",
@@ -14539,7 +18168,18 @@
     "science-kit-i"
    ],
    "defaultRecipe": "science-kit-i",
-   "key": "science_kit_1"
+   "key": "science_kit_1",
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ],
+    [
+     "chest",
+     "alchemy-lab"
+    ]
+   ],
+   "stack": 50
   },
   "science-kit-ii": {
    "id": "science-kit-ii",
@@ -14563,7 +18203,15 @@
     "science-kit-ii"
    ],
    "defaultRecipe": "science-kit-ii",
-   "key": "science_kit_2"
+   "key": "science_kit_2",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "stack": 50
   },
   "scroll-cabinet": {
    "id": "scroll-cabinet",
@@ -14611,7 +18259,8 @@
     "sculpture-kit-i"
    ],
    "defaultRecipe": "sculpture-kit-i",
-   "key": "sculpture_kit_1"
+   "key": "sculpture_kit_1",
+   "stack": 30
   },
   "sculpture-kit-ii": {
    "id": "sculpture-kit-ii",
@@ -14635,7 +18284,8 @@
     "sculpture-kit-ii"
    ],
    "defaultRecipe": "sculpture-kit-ii",
-   "key": "sculpture_kit_2"
+   "key": "sculpture_kit_2",
+   "stack": 30
   },
   "sea-fish-fillet": {
    "id": "sea-fish-fillet",
@@ -14661,7 +18311,8 @@
     "sea-fish-fillet-from-tuna-or-salmon"
    ],
    "defaultRecipe": "sea-fish-fillet-from-anchovy-or-mackerel",
-   "key": "fillet_fish_sea"
+   "key": "fillet_fish_sea",
+   "stack": 30
   },
   "secret-combination": {
    "id": "secret-combination",
@@ -14683,7 +18334,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "doctor_meeting_code"
+   "key": "doctor_meeting_code",
+   "where": [
+    [
+     "quest",
+     "dungeons-and-that-s-it-probably"
+    ]
+   ],
+   "stack": 1
   },
   "seed-oil": {
    "id": "seed-oil",
@@ -14716,7 +18374,8 @@
    "key": "seed_oil",
    "runes": {
     "blue": 1
-   }
+   },
+   "stack": 50
   },
   "separatio-membrane": {
    "id": "separatio-membrane",
@@ -14738,7 +18397,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "alchemy_separatio"
+   "key": "alchemy_separatio",
+   "stack": 50
   },
   "sewing-table": {
    "id": "sewing-table",
@@ -14787,7 +18447,14 @@
     "short-log-circular-saw"
    ],
    "defaultRecipe": "short-log-sawhorse",
-   "key": "wood1"
+   "key": "wood1",
+   "where": [
+    [
+     "gather",
+     "tree-stump"
+    ]
+   ],
+   "stack": 50
   },
   "shrimp-bait": {
    "id": "shrimp-bait",
@@ -14809,7 +18476,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "shrimp_bite"
+   "key": "shrimp_bite",
+   "stack": 20
   },
   "signed-pr-agreement": {
    "id": "signed-pr-agreement",
@@ -14831,7 +18499,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "agreement_frontman_signed"
+   "key": "agreement_frontman_signed",
+   "where": [
+    [
+     "quest",
+     "stars-lies-contracts"
+    ]
+   ],
+   "stack": 1
   },
   "signed-printed-money": {
    "id": "signed-printed-money",
@@ -14853,7 +18528,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "printed_money_signed"
+   "key": "printed_money_signed",
+   "where": [
+    [
+     "quest",
+     "press-for-cash"
+    ]
+   ],
+   "stack": 50
   },
   "silver-talisman": {
    "id": "silver-talisman",
@@ -14877,7 +18559,15 @@
     "silver-talisman"
    ],
    "defaultRecipe": "silver-talisman",
-   "key": "tool_talisman_2"
+   "key": "tool_talisman_2",
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     2
+    ]
+   ],
+   "stack": 1
   },
   "silverfin": {
    "id": "silverfin",
@@ -14899,7 +18589,17 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_silverfin"
+   "key": "fish_silverfin",
+   "where": [
+    [
+     "fish",
+     "swamp",
+     "breadcrumb-bait",
+     30.8,
+     30.8
+    ]
+   ],
+   "stack": 20
   },
   "simple-bow": {
    "id": "simple-bow",
@@ -14923,7 +18623,14 @@
     "simple-bow"
    ],
    "defaultRecipe": "simple-bow",
-   "key": "bow_0"
+   "key": "bow_0",
+   "where": [
+    [
+     "quest",
+     "friendship-written-in-the-stars"
+    ]
+   ],
+   "stack": 1
   },
   "simple-candle": {
    "id": "simple-candle",
@@ -14947,7 +18654,14 @@
     "simple-candle"
    ],
    "defaultRecipe": "simple-candle",
-   "key": "candle_basic"
+   "key": "candle_basic",
+   "where": [
+    [
+     "buy",
+     "apothecary"
+    ]
+   ],
+   "stack": 30
   },
   "simple-chest": {
    "id": "simple-chest",
@@ -14995,7 +18709,18 @@
     "simple-incense"
    ],
    "defaultRecipe": "simple-incense",
-   "key": "incense_basic"
+   "key": "incense_basic",
+   "where": [
+    [
+     "buy",
+     "trademaster"
+    ],
+    [
+     "buy",
+     "apothecary"
+    ]
+   ],
+   "stack": 30
   },
   "simple-iron-part": {
    "id": "simple-iron-part",
@@ -15017,7 +18742,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "detail_1"
+   "key": "detail_1",
+   "stack": 10
   },
   "simple-pike": {
    "id": "simple-pike",
@@ -15041,7 +18767,8 @@
     "simple-pike"
    ],
    "defaultRecipe": "simple-pike",
-   "key": "pike_0"
+   "key": "pike_0",
+   "stack": 1
   },
   "skin": {
    "id": "skin",
@@ -15066,7 +18793,14 @@
     "improve-organ-ii-from-any-skin"
    ],
    "defaultRecipe": null,
-   "key": "skin_1_1"
+   "key": "skin_1_1",
+   "where": [
+    [
+     "autopsy",
+     "@autopsy-table-i"
+    ]
+   ],
+   "stack": 20
   },
   "skull": {
    "id": "skull",
@@ -15091,7 +18825,14 @@
     "improve-organ-ii-from-any-skull"
    ],
    "defaultRecipe": null,
-   "key": "skull"
+   "key": "skull",
+   "where": [
+    [
+     "autopsy",
+     "@autopsy-table-i"
+    ]
+   ],
+   "stack": 20
   },
   "slug": {
    "id": "slug",
@@ -15113,7 +18854,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "slug"
+   "key": "slug",
+   "stack": 20
   },
   "sluice-box": {
    "id": "sluice-box",
@@ -15161,7 +18903,8 @@
     "small-printing-press"
    ],
    "defaultRecipe": "small-printing-press",
-   "key": "small_printing_press"
+   "key": "small_printing_press",
+   "stack": 1
   },
   "smithy-bellows": {
    "id": "smithy-bellows",
@@ -15329,7 +19072,12 @@
     "soldier-s-ale"
    ],
    "defaultRecipe": "soldier-s-ale",
-   "key": "cook_soldier_ale"
+   "key": "cook_soldier_ale",
+   "use": {
+    "en": 5,
+    "ins": 20
+   },
+   "stack": 30
   },
   "soldier-s-stew": {
    "id": "soldier-s-stew",
@@ -15353,7 +19101,27 @@
     "soldier-s-stew"
    ],
    "defaultRecipe": "soldier-s-stew",
-   "key": "cook_soldier_stew"
+   "key": "cook_soldier_stew",
+   "where": [
+    [
+     "buy",
+     "tavern",
+     3
+    ]
+   ],
+   "use": {
+    "en": 25,
+    "enB": [
+     28,
+     "steamed-up"
+    ],
+    "buff": [
+     "smithing-spirit-ii",
+     450,
+     1
+    ]
+   },
+   "stack": 30
   },
   "solution-for-corpses": {
    "id": "solution-for-corpses",
@@ -15417,7 +19185,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "hero_clothes_9007"
+   "key": "hero_clothes_9007",
+   "where": [
+    [
+     "outfit",
+     "pre-order-bonus"
+    ]
+   ],
+   "stack": 1
   },
   "special-wood": {
    "id": "special-wood",
@@ -15439,7 +19214,15 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "wood_2"
+   "key": "wood_2",
+   "where": [
+    [
+     "buy",
+     "harold",
+     "talk"
+    ]
+   ],
+   "stack": 30
   },
   "speech-writing-device": {
    "id": "speech-writing-device",
@@ -15463,7 +19246,8 @@
     "speech-writing-device"
    ],
    "defaultRecipe": "speech-writing-device",
-   "key": "speech_writing_device"
+   "key": "speech_writing_device",
+   "stack": 1
   },
   "speed-potion": {
    "id": "speed-potion",
@@ -15485,7 +19269,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "speed_potion"
+   "key": "speed_potion",
+   "stack": 50
   },
   "speed-potion-scroll": {
    "id": "speed-potion-scroll",
@@ -15507,7 +19292,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "speed_potion_scroll"
+   "key": "speed_potion_scroll",
+   "stack": 1
   },
   "spices": {
    "id": "spices",
@@ -15531,7 +19317,20 @@
     "alchemy-spices"
    ],
    "defaultRecipe": "alchemy-spices",
-   "key": "spices"
+   "key": "spices",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ],
+    [
+     "buy",
+     "baker",
+     2
+    ]
+   ],
+   "stack": 20
   },
   "spiked-barricade-i": {
    "id": "spiked-barricade-i",
@@ -15555,7 +19354,8 @@
     "build-spiked-barricade-i"
    ],
    "defaultRecipe": "build-spiked-barricade-i",
-   "key": "barricade_spike_1_fight"
+   "key": "barricade_spike_1_fight",
+   "stack": 99
   },
   "spiked-barricade-ii": {
    "id": "spiked-barricade-ii",
@@ -15579,7 +19379,8 @@
     "build-spiked-barricade-ii"
    ],
    "defaultRecipe": "build-spiked-barricade-ii",
-   "key": "barricade_spike_2_fight"
+   "key": "barricade_spike_2_fight",
+   "stack": 99
   },
   "spiked-barricade-iii": {
    "id": "spiked-barricade-iii",
@@ -15603,7 +19404,8 @@
     "build-spiked-barricade-iii"
    ],
    "defaultRecipe": "build-spiked-barricade-iii",
-   "key": "barricade_spike_3_fight"
+   "key": "barricade_spike_3_fight",
+   "stack": 99
   },
   "spinning-wheel": {
    "id": "spinning-wheel",
@@ -15651,7 +19453,8 @@
     "starter-alchemist-s-kit"
    ],
    "defaultRecipe": "starter-alchemist-s-kit",
-   "key": "alchemy_kit_1"
+   "key": "alchemy_kit_1",
+   "stack": 1
   },
   "steel-anvil": {
    "id": "steel-anvil",
@@ -15699,7 +19502,15 @@
     "steel-armor"
    ],
    "defaultRecipe": "steel-armor",
-   "key": "armor_3"
+   "key": "armor_3",
+   "where": [
+    [
+     "buy",
+     "smithy",
+     3
+    ]
+   ],
+   "stack": 1
   },
   "steel-axe": {
    "id": "steel-axe",
@@ -15723,7 +19534,8 @@
     "steel-axe"
    ],
    "defaultRecipe": "steel-axe",
-   "key": "axe_3"
+   "key": "axe_3",
+   "stack": 1
   },
   "steel-detail": {
    "id": "steel-detail",
@@ -15747,7 +19559,15 @@
     "steel-detail"
    ],
    "defaultRecipe": "steel-detail",
-   "key": "detail_1_steel"
+   "key": "detail_1_steel",
+   "where": [
+    [
+     "buy",
+     "smithy",
+     3
+    ]
+   ],
+   "stack": 30
   },
   "steel-hammer": {
    "id": "steel-hammer",
@@ -15771,7 +19591,15 @@
     "steel-hammer"
    ],
    "defaultRecipe": "steel-hammer",
-   "key": "hammer_3"
+   "key": "hammer_3",
+   "where": [
+    [
+     "buy",
+     "smithy",
+     3
+    ]
+   ],
+   "stack": 1
   },
   "steel-ingot": {
    "id": "steel-ingot",
@@ -15793,7 +19621,15 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "ingot_steel"
+   "key": "ingot_steel",
+   "where": [
+    [
+     "buy",
+     "bishop",
+     "talk"
+    ]
+   ],
+   "stack": 30
   },
   "steel-pickaxe": {
    "id": "steel-pickaxe",
@@ -15817,7 +19653,8 @@
     "steel-pickaxe"
    ],
    "defaultRecipe": "steel-pickaxe",
-   "key": "pickaxe_3"
+   "key": "pickaxe_3",
+   "stack": 1
   },
   "steel-screws": {
    "id": "steel-screws",
@@ -15841,7 +19678,25 @@
     "steel-screws"
    ],
    "defaultRecipe": "steel-screws",
-   "key": "screw_steel"
+   "key": "screw_steel",
+   "where": [
+    [
+     "buy",
+     "furniture-maker",
+     3
+    ],
+    [
+     "buy",
+     "builder",
+     3
+    ],
+    [
+     "buy",
+     "smithy",
+     3
+    ]
+   ],
+   "stack": 99
   },
   "steel-shovel": {
    "id": "steel-shovel",
@@ -15865,7 +19720,15 @@
     "steel-shovel"
    ],
    "defaultRecipe": "steel-shovel",
-   "key": "shovel_3"
+   "key": "shovel_3",
+   "where": [
+    [
+     "buy",
+     "vegetable-stand",
+     3
+    ]
+   ],
+   "stack": 1
   },
   "steel-sword": {
    "id": "steel-sword",
@@ -15889,7 +19752,15 @@
     "steel-sword"
    ],
    "defaultRecipe": "steel-sword",
-   "key": "sword_3"
+   "key": "sword_3",
+   "where": [
+    [
+     "buy",
+     "smithy",
+     3
+    ]
+   ],
+   "stack": 1
   },
   "steel-tools": {
    "id": "steel-tools",
@@ -15913,7 +19784,15 @@
     "steel-tools"
    ],
    "defaultRecipe": "steel-tools",
-   "key": "small_instruments_3"
+   "key": "small_instruments_3",
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     3
+    ]
+   ],
+   "stack": 1
   },
   "steel-zombie-collar": {
    "id": "steel-zombie-collar",
@@ -15937,7 +19816,15 @@
     "steel-zombie-collar"
    ],
    "defaultRecipe": "steel-zombie-collar",
-   "key": "collar_steel"
+   "key": "collar_steel",
+   "where": [
+    [
+     "buy",
+     "jeweler",
+     3
+    ]
+   ],
+   "stack": 10
   },
   "stick": {
    "id": "stick",
@@ -15962,7 +19849,34 @@
    "key": "stick",
    "runes": {
     "green": 1
-   }
+   },
+   "where": [
+    [
+     "gather",
+     "tree"
+    ],
+    [
+     "gather",
+     "bush"
+    ],
+    [
+     "gather",
+     "tree-stump"
+    ],
+    [
+     "gather",
+     "creepy-tree"
+    ],
+    [
+     "gather",
+     "dead-tree"
+    ],
+    [
+     "gather",
+     "driftwood"
+    ]
+   ],
+   "stack": 50
   },
   "stone": {
    "id": "stone",
@@ -15989,7 +19903,18 @@
    "key": "1h_stone",
    "runes": {
     "red": 2
-   }
+   },
+   "where": [
+    [
+     "gather",
+     "junk-pile"
+    ],
+    [
+     "gather",
+     "stone-deposit"
+    ]
+   ],
+   "stack": 30
   },
   "stone-fence-i": {
    "id": "stone-fence-i",
@@ -16013,7 +19938,8 @@
     "stone-fence-i"
    ],
    "defaultRecipe": "stone-fence-i",
-   "key": "grave_bot_stn_1"
+   "key": "grave_bot_stn_1",
+   "stack": 10
   },
   "stone-fence-ii": {
    "id": "stone-fence-ii",
@@ -16037,7 +19963,8 @@
     "stone-fence-ii"
    ],
    "defaultRecipe": "stone-fence-ii",
-   "key": "grave_bot_stn_2"
+   "key": "grave_bot_stn_2",
+   "stack": 10
   },
   "stone-kit": {
    "id": "stone-kit",
@@ -16062,7 +19989,8 @@
     "stone-kit-assembly-bench-i"
    ],
    "defaultRecipe": "stone-kit-stonemason-s-workbench",
-   "key": "stone_kit_1"
+   "key": "stone_kit_1",
+   "stack": 30
   },
   "stone-marbles": {
    "id": "stone-marbles",
@@ -16086,7 +20014,8 @@
     "stone-marbles"
    ],
    "defaultRecipe": "stone-marbles",
-   "key": "trinkets_stone"
+   "key": "trinkets_stone",
+   "stack": 20
   },
   "stonemason-s-workbench": {
    "id": "stonemason-s-workbench",
@@ -16267,7 +20196,8 @@
     "supply-appliances-i"
    ],
    "defaultRecipe": "supply-appliances-i",
-   "key": "box_appliances_1"
+   "key": "box_appliances_1",
+   "stack": 1
   },
   "supply-appliances-ii": {
    "id": "supply-appliances-ii",
@@ -16291,7 +20221,8 @@
     "supply-appliances-ii"
    ],
    "defaultRecipe": "supply-appliances-ii",
-   "key": "box_appliances_2"
+   "key": "box_appliances_2",
+   "stack": 1
   },
   "supply-beer": {
    "id": "supply-beer",
@@ -16315,7 +20246,8 @@
     "supply-beer"
    ],
    "defaultRecipe": "supply-beer",
-   "key": "box_beer"
+   "key": "box_beer",
+   "stack": 1
   },
   "supply-building-materials-i": {
    "id": "supply-building-materials-i",
@@ -16339,7 +20271,8 @@
     "supply-building-materials-i"
    ],
    "defaultRecipe": "supply-building-materials-i",
-   "key": "box_building_kit_1"
+   "key": "box_building_kit_1",
+   "stack": 1
   },
   "supply-building-materials-ii": {
    "id": "supply-building-materials-ii",
@@ -16363,7 +20296,8 @@
     "supply-building-materials-ii"
    ],
    "defaultRecipe": "supply-building-materials-ii",
-   "key": "box_building_kit_2"
+   "key": "box_building_kit_2",
+   "stack": 1
   },
   "supply-clothes-i": {
    "id": "supply-clothes-i",
@@ -16388,7 +20322,8 @@
     "supply-clothes-i-assembly-bench-ii"
    ],
    "defaultRecipe": "supply-clothes-i-sewing-table",
-   "key": "box_clothes_1"
+   "key": "box_clothes_1",
+   "stack": 1
   },
   "supply-clothes-ii": {
    "id": "supply-clothes-ii",
@@ -16412,7 +20347,8 @@
     "supply-clothes-ii"
    ],
    "defaultRecipe": "supply-clothes-ii",
-   "key": "box_clothes_2"
+   "key": "box_clothes_2",
+   "stack": 1
   },
   "supply-cutlery-i": {
    "id": "supply-cutlery-i",
@@ -16436,7 +20372,8 @@
     "supply-cutlery-i"
    ],
    "defaultRecipe": "supply-cutlery-i",
-   "key": "box_cutlery_1"
+   "key": "box_cutlery_1",
+   "stack": 1
   },
   "supply-cutlery-ii": {
    "id": "supply-cutlery-ii",
@@ -16460,7 +20397,8 @@
     "supply-cutlery-ii"
    ],
    "defaultRecipe": "supply-cutlery-ii",
-   "key": "box_cutlery_2"
+   "key": "box_cutlery_2",
+   "stack": 1
   },
   "supply-engineering-mechanism": {
    "id": "supply-engineering-mechanism",
@@ -16484,7 +20422,8 @@
     "supply-engineering-mechanism"
    ],
    "defaultRecipe": "supply-engineering-mechanism",
-   "key": "box_engineering_mechanism"
+   "key": "box_engineering_mechanism",
+   "stack": 1
   },
   "supply-fabric": {
    "id": "supply-fabric",
@@ -16509,7 +20448,8 @@
     "supply-fabric-assembly-bench-i"
    ],
    "defaultRecipe": "supply-fabric-woodworking-workbench-i",
-   "key": "box_fabric"
+   "key": "box_fabric",
+   "stack": 1
   },
   "supply-flour-sack": {
    "id": "supply-flour-sack",
@@ -16533,7 +20473,8 @@
     "supply-flour-sack"
    ],
    "defaultRecipe": "supply-flour-sack",
-   "key": "box_flour"
+   "key": "box_flour",
+   "stack": 1
   },
   "supply-furniture-i": {
    "id": "supply-furniture-i",
@@ -16557,7 +20498,8 @@
     "supply-furniture-i"
    ],
    "defaultRecipe": "supply-furniture-i",
-   "key": "box_furniture_1"
+   "key": "box_furniture_1",
+   "stack": 1
   },
   "supply-furniture-ii": {
    "id": "supply-furniture-ii",
@@ -16581,7 +20523,8 @@
     "supply-furniture-ii"
    ],
    "defaultRecipe": "supply-furniture-ii",
-   "key": "box_furniture_2"
+   "key": "box_furniture_2",
+   "stack": 1
   },
   "supply-iron": {
    "id": "supply-iron",
@@ -16606,7 +20549,8 @@
     "supply-iron-assembly-bench-i"
    ],
    "defaultRecipe": "supply-iron-woodworking-workbench-i",
-   "key": "box_iron_ingot"
+   "key": "box_iron_ingot",
+   "stack": 1
   },
   "supply-iron-tools": {
    "id": "supply-iron-tools",
@@ -16630,7 +20574,8 @@
     "supply-iron-tools"
    ],
    "defaultRecipe": "supply-iron-tools",
-   "key": "box_tools_iron"
+   "key": "box_tools_iron",
+   "stack": 1
   },
   "supply-kitchen-utensils": {
    "id": "supply-kitchen-utensils",
@@ -16654,7 +20599,8 @@
     "supply-kitchen-utensils"
    ],
    "defaultRecipe": "supply-kitchen-utensils",
-   "key": "box_kitchen_utensils"
+   "key": "box_kitchen_utensils",
+   "stack": 1
   },
   "supply-pallet": {
    "id": "supply-pallet",
@@ -16730,7 +20676,8 @@
     "supply-preserves-i-from-carrot"
    ],
    "defaultRecipe": "supply-preserves-i-from-beet",
-   "key": "box_preserves_1"
+   "key": "box_preserves_1",
+   "stack": 1
   },
   "supply-preserves-ii": {
    "id": "supply-preserves-ii",
@@ -16759,7 +20706,8 @@
     "supply-preserves-ii-from-pumpkin-silver"
    ],
    "defaultRecipe": "supply-preserves-ii-from-onion-bronze",
-   "key": "box_preserves_2"
+   "key": "box_preserves_2",
+   "stack": 1
   },
   "supply-station": {
    "id": "supply-station",
@@ -16807,7 +20755,8 @@
     "supply-steel-tools"
    ],
    "defaultRecipe": "supply-steel-tools",
-   "key": "box_tools_steel"
+   "key": "box_tools_steel",
+   "stack": 1
   },
   "supply-vegetables": {
    "id": "supply-vegetables",
@@ -16841,7 +20790,8 @@
     "supply-vegetables-from-pumpkin-silver"
    ],
    "defaultRecipe": "supply-vegetables-from-beet",
-   "key": "box_vegetables"
+   "key": "box_vegetables",
+   "stack": 1
   },
   "supply-wine": {
    "id": "supply-wine",
@@ -16867,7 +20817,8 @@
     "supply-wine-from-wine-silver"
    ],
    "defaultRecipe": "supply-wine-from-wine-bronze",
-   "key": "box_vine"
+   "key": "box_vine",
+   "stack": 1
   },
   "surgeon-s-error": {
    "id": "surgeon-s-error",
@@ -16889,7 +20840,18 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "surgeon_mistake"
+   "key": "surgeon_mistake",
+   "where": [
+    [
+     "autopsy",
+     "@autopsy-table-i"
+    ],
+    [
+     "autopsy",
+     "@autopsy-table-ii"
+    ]
+   ],
+   "stack": 1
   },
   "surgeon-s-kit": {
    "id": "surgeon-s-kit",
@@ -16913,7 +20875,8 @@
     "surgeon-s-kit"
    ],
    "defaultRecipe": "surgeon-s-kit",
-   "key": "surgical_kit_2"
+   "key": "surgical_kit_2",
+   "stack": 1
   },
   "swamp-ghost": {
    "id": "swamp-ghost",
@@ -16935,7 +20898,17 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_swamp_ghost"
+   "key": "fish_swamp_ghost",
+   "where": [
+    [
+     "fish",
+     "swamp",
+     "insect-bait",
+     18.2,
+     36.4
+    ]
+   ],
+   "stack": 20
   },
   "swamp-mushroom": {
    "id": "swamp-mushroom",
@@ -16960,7 +20933,18 @@
    "key": "mushroom_green",
    "runes": {
     "green": 2
-   }
+   },
+   "where": [
+    [
+     "gather",
+     "swamp-mushrooms"
+    ]
+   ],
+   "use": {
+    "en": 7,
+    "ins": 1
+   },
+   "stack": 20
   },
   "tablet-beet": {
    "id": "tablet-beet",
@@ -17200,7 +21184,8 @@
     "tableware"
    ],
    "defaultRecipe": "tableware",
-   "key": "tableware"
+   "key": "tableware",
+   "stack": 30
   },
   "tannin-liquid": {
    "id": "tannin-liquid",
@@ -17224,7 +21209,15 @@
     "alchemy-tannin-liquid"
    ],
    "defaultRecipe": "alchemy-tannin-liquid",
-   "key": "liquid_harden"
+   "key": "liquid_harden",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "stack": 20
   },
   "temptation": {
    "id": "temptation",
@@ -17246,7 +21239,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "temptation"
+   "key": "temptation",
+   "stack": 100
   },
   "third-eye-salt": {
    "id": "third-eye-salt",
@@ -17270,7 +21264,22 @@
     "alchemy-third-eye-salt"
    ],
    "defaultRecipe": "alchemy-third-eye-salt",
-   "key": "third_eye_salt"
+   "key": "third_eye_salt",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "use": {
+    "buff": [
+     "third-eye-salt",
+     450,
+     1
+    ]
+   },
+   "stack": 20
   },
   "timber-stockpile": {
    "id": "timber-stockpile",
@@ -17323,7 +21332,8 @@
    "runes": {
     "red": 2,
     "blue": 1
-   }
+   },
+   "stack": 99
   },
   "toast-with-onions": {
    "id": "toast-with-onions",
@@ -17349,7 +21359,20 @@
     "toast-with-onions-from-onion-silver"
    ],
    "defaultRecipe": "toast-with-onions-from-onion-bronze",
-   "key": "cook_onion_toast"
+   "key": "cook_onion_toast",
+   "use": {
+    "en": 20,
+    "enB": [
+     22,
+     "steamed-up"
+    ],
+    "buff": [
+     "beer-thirst",
+     450,
+     1
+    ]
+   },
+   "stack": 30
   },
   "tool-bag": {
    "id": "tool-bag",
@@ -17371,7 +21394,18 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "bag_tools"
+   "key": "bag_tools",
+   "where": [
+    [
+     "buy",
+     "jeweler"
+    ],
+    [
+     "buy",
+     "smithy"
+    ]
+   ],
+   "stack": 1
   },
   "tool-rack": {
    "id": "tool-rack",
@@ -17423,7 +21457,8 @@
    "runes": {
     "red": 1,
     "green": 1
-   }
+   },
+   "stack": 50
   },
   "town-gratitude": {
    "id": "town-gratitude",
@@ -17445,7 +21480,238 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "town_gratitude"
+   "key": "town_gratitude",
+   "where": [
+    [
+     "buy",
+     "januarius"
+    ],
+    [
+     "battle",
+     "break-through-to-the-port"
+    ],
+    [
+     "battle",
+     "eastern-districts-active-scouting"
+    ],
+    [
+     "battle",
+     "eastern-districts-purge"
+    ],
+    [
+     "battle",
+     "market-square-purge"
+    ],
+    [
+     "battle",
+     "central-districts-purge-part-i"
+    ],
+    [
+     "battle",
+     "central-districts-purge-part-ii"
+    ],
+    [
+     "battle",
+     "closing-the-western-floodgate"
+    ],
+    [
+     "battle",
+     "closing-the-eastern-floodgate-part-i"
+    ],
+    [
+     "battle",
+     "closing-the-eastern-floodgate-part-ii"
+    ],
+    [
+     "battle",
+     "battle-at-the-lake"
+    ],
+    [
+     "battle",
+     "operation-potato-part-i"
+    ],
+    [
+     "battle",
+     "operation-potato-part-ii"
+    ],
+    [
+     "battle",
+     "final-battle"
+    ],
+    [
+     "battle",
+     "sewer-brawl-i"
+    ],
+    [
+     "battle",
+     "sewer-brawl-ii"
+    ],
+    [
+     "battle",
+     "sewerena-the-sewer-arena"
+    ],
+    [
+     "quest",
+     "planted-and-delivered"
+    ],
+    [
+     "quest",
+     "the-quiet-art"
+    ],
+    [
+     "quest",
+     "two-peas-in-a-pod"
+    ],
+    [
+     "quest",
+     "jack-in-a-boat"
+    ],
+    [
+     "quest",
+     "holy-moly"
+    ],
+    [
+     "quest",
+     "fighting-spirit-required"
+    ],
+    [
+     "quest",
+     "swords-and-bell"
+    ],
+    [
+     "quest",
+     "yummies"
+    ],
+    [
+     "quest",
+     "friendship-written-in-the-stars"
+    ],
+    [
+     "quest",
+     "rhyme-and-printed"
+    ],
+    [
+     "quest",
+     "stars-lies-contracts"
+    ],
+    [
+     "quest",
+     "safe-harbor"
+    ],
+    [
+     "quest",
+     "concept-for-a-concert"
+    ],
+    [
+     "quest",
+     "book-broker"
+    ],
+    [
+     "quest",
+     "herbert-and"
+    ],
+    [
+     "quest",
+     "the-nun-also-reads"
+    ],
+    [
+     "quest",
+     "into-the-forest"
+    ],
+    [
+     "quest",
+     "go-wild-in-the-wild-lands"
+    ],
+    [
+     "quest",
+     "workshop-hours"
+    ],
+    [
+     "quest",
+     "jack-s-back-in-business"
+    ],
+    [
+     "quest",
+     "give-materials"
+    ],
+    [
+     "quest",
+     "the-nun-with-the-hairy-ass"
+    ],
+    [
+     "quest",
+     "brawns-and-brains"
+    ],
+    [
+     "quest",
+     "first-sludge"
+    ],
+    [
+     "quest",
+     "plenty-of-fish-in-the-sea"
+    ],
+    [
+     "quest",
+     "campaign-of-thrones"
+    ],
+    [
+     "quest",
+     "man-of-steel"
+    ],
+    [
+     "quest",
+     "i-love-you-man"
+    ],
+    [
+     "quest",
+     "organic-music"
+    ],
+    [
+     "quest",
+     "not-in-shining-armor-yet"
+    ],
+    [
+     "quest",
+     "well-deserved-rest"
+    ],
+    [
+     "quest",
+     "wealthy-clients"
+    ],
+    [
+     "quest",
+     "green-men-from-far-lands"
+    ],
+    [
+     "quest",
+     "love-story"
+    ],
+    [
+     "quest",
+     "lust-and-envy"
+    ],
+    [
+     "quest",
+     "tales-for-ales"
+    ],
+    [
+     "quest",
+     "press-for-cash"
+    ],
+    [
+     "quest",
+     "the-lord-s-vintage"
+    ],
+    [
+     "quest",
+     "fish-for-the-fisher"
+    ],
+    [
+     "quest",
+     "homobonus-i"
+    ]
+   ],
+   "stack": 100
   },
   "toxic-potion": {
    "id": "toxic-potion",
@@ -17467,7 +21733,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "exp_red_potion"
+   "key": "exp_red_potion",
+   "stack": 20
   },
   "toxic-potion-ii": {
    "id": "toxic-potion-ii",
@@ -17489,7 +21756,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "exp_red_potion_2"
+   "key": "exp_red_potion_2",
+   "stack": 20
   },
   "transmutation-potion-i": {
    "id": "transmutation-potion-i",
@@ -17511,7 +21779,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "quality_items_silver"
+   "key": "quality_items_silver",
+   "stack": 20
   },
   "transmutation-potion-ii": {
    "id": "transmutation-potion-ii",
@@ -17533,7 +21802,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "quality_items_gold"
+   "key": "quality_items_gold",
+   "stack": 20
   },
   "trilogy": {
    "id": "trilogy",
@@ -17557,7 +21827,8 @@
     "trilogy"
    ],
    "defaultRecipe": "trilogy",
-   "key": "trilogy"
+   "key": "trilogy",
+   "stack": 1
   },
   "trout": {
    "id": "trout",
@@ -17579,7 +21850,17 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_trout"
+   "key": "fish_trout",
+   "where": [
+    [
+     "fish",
+     "forest",
+     "insect-bait",
+     33.3,
+     25
+    ]
+   ],
+   "stack": 20
   },
   "tuna": {
    "id": "tuna",
@@ -17601,7 +21882,17 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "fish_tuna"
+   "key": "fish_tuna",
+   "where": [
+    [
+     "fish",
+     "port-area",
+     "insect-bait",
+     66.7,
+     40
+    ]
+   ],
+   "stack": 20
   },
   "tuna-or-salmon": {
    "id": "tuna-or-salmon",
@@ -17650,7 +21941,15 @@
     "alchemy-umami"
    ],
    "defaultRecipe": "alchemy-umami",
-   "key": "quality_food_gold"
+   "key": "quality_food_gold",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "stack": 20
   },
   "underground-conveyor": {
    "id": "underground-conveyor",
@@ -17718,7 +22017,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "sinful_idol"
+   "key": "sinful_idol",
+   "stack": 20
   },
   "universal-bag": {
    "id": "universal-bag",
@@ -17740,7 +22040,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "bag_universal"
+   "key": "bag_universal",
+   "where": [
+    [
+     "buy",
+     "tailor"
+    ]
+   ],
+   "stack": 1
   },
   "upgrade-bed": {
    "id": "upgrade-bed",
@@ -17968,7 +22275,8 @@
     "urn-with-ashes-i"
    ],
    "defaultRecipe": "urn-with-ashes-i",
-   "key": "urn_ashes_1"
+   "key": "urn_ashes_1",
+   "stack": 20
   },
   "urn-with-ashes-ii": {
    "id": "urn-with-ashes-ii",
@@ -17992,7 +22300,8 @@
     "urn-with-ashes-ii"
    ],
    "defaultRecipe": "urn-with-ashes-ii",
-   "key": "urn_ashes_2"
+   "key": "urn_ashes_2",
+   "stack": 20
   },
   "vegetable-salad": {
    "id": "vegetable-salad",
@@ -18104,7 +22413,21 @@
     "vegetable-soup"
    ],
    "defaultRecipe": "vegetable-soup",
-   "key": "cook_vegetabe_soup"
+   "key": "cook_vegetabe_soup",
+   "where": [
+    [
+     "buy",
+     "tavern"
+    ]
+   ],
+   "use": {
+    "en": 25,
+    "enB": [
+     28,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "victory-banner": {
    "id": "victory-banner",
@@ -18126,7 +22449,22 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "flag_reward"
+   "key": "flag_reward",
+   "where": [
+    [
+     "battle",
+     "eastern-districts-purge"
+    ],
+    [
+     "battle",
+     "central-districts-purge-part-ii"
+    ],
+    [
+     "battle",
+     "break-through-to-the-bathhouse-basement"
+    ]
+   ],
+   "stack": 50
   },
   "victory-flag": {
    "id": "victory-flag",
@@ -18148,7 +22486,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "flag_blue"
+   "key": "flag_blue",
+   "stack": 10
   },
   "village-toilet": {
    "id": "village-toilet",
@@ -18287,7 +22626,14 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "violine"
+   "key": "violine",
+   "where": [
+    [
+     "quest",
+     "varnish-before-you-fiddle"
+    ]
+   ],
+   "stack": 1
   },
   "votive-candle-stand-i": {
    "id": "votive-candle-stand-i",
@@ -18405,7 +22751,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "paper_wanted"
+   "key": "paper_wanted",
+   "stack": 10
   },
   "water": {
    "id": "water",
@@ -18430,7 +22777,26 @@
    "key": "water",
    "runes": {
     "green": 1
-   }
+   },
+   "where": [
+    [
+     "gather",
+     "water-well"
+    ],
+    [
+     "gather",
+     "garden-well-ii"
+    ],
+    [
+     "chest",
+     "alchemy-lab"
+    ],
+    [
+     "chest",
+     "yard"
+    ]
+   ],
+   "stack": 999
   },
   "weak-growth-elixir": {
    "id": "weak-growth-elixir",
@@ -18454,7 +22820,14 @@
     "alchemy-weak-growth-elixir"
    ],
    "defaultRecipe": "alchemy-weak-growth-elixir",
-   "key": "weak_growing_elixir"
+   "key": "weak_growing_elixir",
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "stack": 20
   },
   "weaving-loom": {
    "id": "weaving-loom",
@@ -18502,7 +22875,19 @@
     "grow-wheat-bed-m2"
    ],
    "defaultRecipe": null,
-   "key": "wheat"
+   "key": "wheat",
+   "where": [
+    [
+     "buy",
+     "herm",
+     2
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 50
   },
   "wheat-bed": {
    "id": "wheat-bed",
@@ -18548,7 +22933,18 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "wheat_seed"
+   "key": "wheat_seed",
+   "where": [
+    [
+     "buy",
+     "herm"
+    ],
+    [
+     "buy",
+     "vegetable-stand"
+    ]
+   ],
+   "stack": 50
   },
   "wine": {
    "id": "wine",
@@ -18576,7 +22972,18 @@
     "drink-enhancement-ii-from-wine-silver"
    ],
    "defaultRecipe": "wine-from-grape-juice-bronze",
-   "key": "grape_wine"
+   "key": "grape_wine",
+   "where": [
+    [
+     "buy",
+     "brewery",
+     2
+    ]
+   ],
+   "use": {
+    "ins": -25
+   },
+   "stack": 50
   },
   "wine-barrel": {
    "id": "wine-barrel",
@@ -18624,7 +23031,8 @@
     "wood-wedge"
    ],
    "defaultRecipe": "wood-wedge",
-   "key": "wood_wedge"
+   "key": "wood_wedge",
+   "stack": 50
   },
   "wooden-anvil": {
    "id": "wooden-anvil",
@@ -18672,7 +23080,20 @@
     "wooden-beam"
    ],
    "defaultRecipe": "wooden-beam",
-   "key": "wooden_beam"
+   "key": "wooden_beam",
+   "where": [
+    [
+     "buy",
+     "furniture-maker",
+     3
+    ],
+    [
+     "buy",
+     "builder",
+     2
+    ]
+   ],
+   "stack": 30
   },
   "wooden-billet": {
    "id": "wooden-billet",
@@ -18694,7 +23115,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "wood_billet"
+   "key": "wood_billet",
+   "stack": 20
   },
   "wooden-cross-i": {
    "id": "wooden-cross-i",
@@ -18718,7 +23140,8 @@
     "wooden-cross-i"
    ],
    "defaultRecipe": "wooden-cross-i",
-   "key": "grave_top_wd_1"
+   "key": "grave_top_wd_1",
+   "stack": 10
   },
   "wooden-cross-ii": {
    "id": "wooden-cross-ii",
@@ -18742,7 +23165,8 @@
     "wooden-cross-ii"
    ],
    "defaultRecipe": "wooden-cross-ii",
-   "key": "grave_top_wd_2"
+   "key": "grave_top_wd_2",
+   "stack": 10
   },
   "wooden-fence-i": {
    "id": "wooden-fence-i",
@@ -18766,7 +23190,8 @@
     "wooden-fence-i"
    ],
    "defaultRecipe": "wooden-fence-i",
-   "key": "grave_bot_wd_1"
+   "key": "grave_bot_wd_1",
+   "stack": 10
   },
   "wooden-fence-ii": {
    "id": "wooden-fence-ii",
@@ -18790,7 +23215,8 @@
     "wooden-fence-ii"
    ],
    "defaultRecipe": "wooden-fence-ii",
-   "key": "grave_bot_wd_2"
+   "key": "grave_bot_wd_2",
+   "stack": 10
   },
   "wooden-joint": {
    "id": "wooden-joint",
@@ -18814,7 +23240,20 @@
     "wooden-joint"
    ],
    "defaultRecipe": "wooden-joint",
-   "key": "wooden_joint"
+   "key": "wooden_joint",
+   "where": [
+    [
+     "buy",
+     "furniture-maker",
+     3
+    ],
+    [
+     "buy",
+     "builder",
+     3
+    ]
+   ],
+   "stack": 30
   },
   "wooden-kit-i": {
    "id": "wooden-kit-i",
@@ -18840,7 +23279,14 @@
     "wooden-kit-i-from-log-assembly-bench-i"
    ],
    "defaultRecipe": "wooden-kit-i-woodworking-workbench-i",
-   "key": "wooden_kit_1"
+   "key": "wooden_kit_1",
+   "where": [
+    [
+     "buy",
+     "furniture-maker"
+    ]
+   ],
+   "stack": 30
   },
   "wooden-kit-ii": {
    "id": "wooden-kit-ii",
@@ -18864,7 +23310,8 @@
     "wooden-kit-ii"
    ],
    "defaultRecipe": "wooden-kit-ii",
-   "key": "wooden_kit_2"
+   "key": "wooden_kit_2",
+   "stack": 30
   },
   "wooden-plank": {
    "id": "wooden-plank",
@@ -18889,7 +23336,18 @@
     "wooden-plank-circular-saw"
    ],
    "defaultRecipe": "wooden-plank-woodworking-workbench-i",
-   "key": "wooden_plank"
+   "key": "wooden_plank",
+   "where": [
+    [
+     "buy",
+     "furniture-maker"
+    ],
+    [
+     "buy",
+     "builder"
+    ]
+   ],
+   "stack": 30
   },
   "wooden-sign": {
    "id": "wooden-sign",
@@ -18913,7 +23371,14 @@
     "wooden-sign"
    ],
    "defaultRecipe": "wooden-sign",
-   "key": "grave_top_wd_0"
+   "key": "grave_top_wd_0",
+   "where": [
+    [
+     "chest",
+     "graveyard"
+    ]
+   ],
+   "stack": 10
   },
   "wooden-trinkets": {
    "id": "wooden-trinkets",
@@ -18937,7 +23402,8 @@
     "wooden-trinkets"
    ],
    "defaultRecipe": "wooden-trinkets",
-   "key": "trinkets_wood"
+   "key": "trinkets_wood",
+   "stack": 20
   },
   "woodworking-workbench-i": {
    "id": "woodworking-workbench-i",
@@ -19007,7 +23473,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "worms_bite"
+   "key": "worms_bite",
+   "stack": 20
   },
   "writing-desk": {
    "id": "writing-desk",
@@ -19053,7 +23520,8 @@
    "unobtainable": true,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "book"
+   "key": "book",
+   "stack": 30
   },
   "yogurt": {
    "id": "yogurt",
@@ -19077,7 +23545,15 @@
     "yogurt"
    ],
    "defaultRecipe": "yogurt",
-   "key": "cook_yogurt"
+   "key": "cook_yogurt",
+   "use": {
+    "en": 30,
+    "enB": [
+     33,
+     "steamed-up"
+    ]
+   },
+   "stack": 30
   },
   "zombie": {
    "id": "zombie",
@@ -19099,7 +23575,22 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "key": "body_zombie"
+   "key": "body_zombie",
+   "where": [
+    [
+     "resurrect",
+     "@resurrection-table-i"
+    ],
+    [
+     "quest",
+     "friendship-written-in-the-stars"
+    ],
+    [
+     "quest",
+     "sweet-dreams"
+    ]
+   ],
+   "stack": 1
   },
   "zombie-carousel": {
    "id": "zombie-carousel",
@@ -19148,7 +23639,82 @@
    "key": "zombie_goo",
    "runes": {
     "blue": 2
-   }
+   },
+   "where": [
+    [
+     "buy",
+     "gunter"
+    ],
+    [
+     "battle",
+     "break-through-to-the-port"
+    ],
+    [
+     "battle",
+     "eastern-districts-active-scouting"
+    ],
+    [
+     "battle",
+     "eastern-districts-purge"
+    ],
+    [
+     "battle",
+     "market-square-purge"
+    ],
+    [
+     "battle",
+     "central-districts-purge-part-i"
+    ],
+    [
+     "battle",
+     "central-districts-purge-part-ii"
+    ],
+    [
+     "battle",
+     "closing-the-western-floodgate"
+    ],
+    [
+     "battle",
+     "closing-the-eastern-floodgate-part-i"
+    ],
+    [
+     "battle",
+     "closing-the-eastern-floodgate-part-ii"
+    ],
+    [
+     "battle",
+     "battle-at-the-lake"
+    ],
+    [
+     "battle",
+     "operation-potato-part-i"
+    ],
+    [
+     "battle",
+     "operation-potato-part-ii"
+    ],
+    [
+     "battle",
+     "break-through-to-the-bathhouse-basement"
+    ],
+    [
+     "battle",
+     "final-battle"
+    ],
+    [
+     "battle",
+     "sewer-brawl-i"
+    ],
+    [
+     "battle",
+     "sewer-brawl-ii"
+    ],
+    [
+     "battle",
+     "sewerena-the-sewer-arena"
+    ]
+   ],
+   "stack": 99
   },
   "zombie-marble-quarry": {
    "id": "zombie-marble-quarry",
@@ -19196,7 +23762,8 @@
     "zombie-mechanism"
    ],
    "defaultRecipe": "zombie-mechanism",
-   "key": "zombie_mechanism"
+   "key": "zombie_mechanism",
+   "stack": 30
   },
   "zombie-miner": {
    "id": "zombie-miner",
@@ -19244,7 +23811,21 @@
     "alchemy-zombie-motivator-potion"
    ],
    "defaultRecipe": "alchemy-zombie-motivator-potion",
-   "key": "motivator_potion"
+   "key": "motivator_potion",
+   "where": [
+    [
+     "buy",
+     "alchemist"
+    ]
+   ],
+   "use": {
+    "buff": [
+     "zombie-motivation",
+     15,
+     1
+    ]
+   },
+   "stack": 20
   },
   "zombie-motivator-potion-ii": {
    "id": "zombie-motivator-potion-ii",
@@ -19268,7 +23849,22 @@
     "alchemy-zombie-motivator-potion-ii"
    ],
    "defaultRecipe": "alchemy-zombie-motivator-potion-ii",
-   "key": "motivator_potion_2"
+   "key": "motivator_potion_2",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     2
+    ]
+   ],
+   "use": {
+    "buff": [
+     "zombie-motivation-ii",
+     30,
+     1
+    ]
+   },
+   "stack": 20
   },
   "zombie-motivator-potion-iii": {
    "id": "zombie-motivator-potion-iii",
@@ -19292,7 +23888,22 @@
     "alchemy-zombie-motivator-potion-iii"
    ],
    "defaultRecipe": "alchemy-zombie-motivator-potion-iii",
-   "key": "motivator_potion_3"
+   "key": "motivator_potion_3",
+   "where": [
+    [
+     "buy",
+     "alchemist",
+     3
+    ]
+   ],
+   "use": {
+    "buff": [
+     "zombie-motivation-iii",
+     60,
+     1
+    ]
+   },
+   "stack": 20
   },
   "zombie-power": {
    "id": "zombie-power",
@@ -19316,7 +23927,8 @@
     "zombie-power"
    ],
    "defaultRecipe": "zombie-power",
-   "key": "zombie_power"
+   "key": "zombie_power",
+   "stack": 20
   },
   "zombie-stone-quarry": {
    "id": "zombie-stone-quarry",

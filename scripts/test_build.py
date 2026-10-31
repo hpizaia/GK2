@@ -1282,7 +1282,7 @@ class RealShell(unittest.TestCase):
         hj = self.read("js/ui/header.js")
         self.assertIn('matchMedia("(min-width: 900px)")', hj)
         self.assertIn("top.appendChild(row)", hj)
-        self.assertIn("band.after(row)", hj)
+        self.assertRegex(hj, r"(band|at)\.after\(row\)")   # 1.4.1: after the stale-data band when there is one
 
     def test_router_scroll_per_screen(self):
         """UX review #7: a screen change no longer keeps the old screen's scroll position."""
@@ -1445,13 +1445,19 @@ class TodayFeatures(unittest.TestCase):
         synced = re.search(r"const SYNCED = \[(.*?)\];", store).group(1)
         self.assertIn('"dayDone"', synced)
         self.assertIn('"dayNotes"', synced)
-        self.assertIn("const SCHEMA = 4;", store)   # additive optional fields: no migration
+        self.assertIn("const SCHEMA = 5;", store)   # 1.3.4 fields were additive; schema 5 = lists (migrated, test_calc.mjs)
         self.assertIn("dayDone: cleanDone(o.dayDone, day, dayNumber), dayNotes: cleanNotes(o.dayNotes)", store)
         for fn in ("toggleDayDone(", "setDayNote(", "function keepLate(", "function adoptLate("):
             self.assertIn(fn, store)
         self.assertIn("S().keepLate(", sync)
         self.assertIn("S().adoptLate(", sync)
-        self.assertIn("mergeSynced(S().syncPayload(st), fields, d.updatedAt > st.updatedAt)", sync)
+        self.assertIn("mergeSynced(S().syncPayload(st), fields, d.updatedAt > st.updatedAt, base)", sync)
+        # lists (schema 5): synced by id, the open list stays per device, the flat mirror is never an unknown field
+        self.assertIn('"lists", "listsGone"', synced)
+        self.assertNotIn("activeList", synced)
+        self.assertIn("S().MIRROR.indexOf(k) < 0", sync)
+        self.assertIn("sanitizeRemote(d.state, false, d.updatedAt)", sync)
+        self.assertIn("css/lists.css", self.read("manifest.json"))
 
     def test_panel_markup(self):
         today, days = self.read("js/ui/today.js"), self.read("js/ui/days.js")
@@ -1468,6 +1474,85 @@ class TodayFeatures(unittest.TestCase):
             self.assertIn(sel, css)
         rules = [ln for ln in css.splitlines() if ".days-hub-" not in ln]   # SVG text: px are user units there
         self.assertEqual([ln for ln in rules if re.search(r"font(-size)?:[^;]*\b\d+px", ln)], [], "font sizes in rem")
+
+
+class NextStep(unittest.TestCase):
+    """The planner card "Próximo passo" (ui/nextstep.js, protótipo ideia 5). Its rule (sequence / locate / phrase)
+    is tested in test_calc.mjs; here: registration, build order, strings and the actions it reuses."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.src = ROOT / "src"
+        cls.js = (cls.src / "js" / "ui" / "nextstep.js").read_text(encoding="utf-8")
+        cls.css = (cls.src / "css" / "nextstep.css").read_text(encoding="utf-8")
+        cls.man = read_json(cls.src / "manifest.json")
+
+    def test_manifest_and_slot(self):
+        js, css = self.man["js"], self.man["css"]
+        self.assertLess(js.index("js/ui/today.js"), js.index("js/ui/nextstep.js"))
+        self.assertLess(js.index("js/ui/nextstep.js"), js.index("js/app.js"))
+        self.assertLess(css.index("css/nextstep.css"), css.index("css/responsive.css"))
+        # below "Hoje" (order 5), above the goals: same slot, next order
+        self.assertIn('GK.app.registerPanel(GK.ui.nextStep, { id: "next-step", slot: "planner-top", order: 6 });', self.js)
+        self.assertIn('<section data-slot="planner-top" id="planner-top">', (self.src / "index.html").read_text(encoding="utf-8"))
+
+    def test_strings_in_both_languages(self):
+        block = self.js.split("GK.i18n.add({", 1)[1].split("\n});", 1)[0]
+        pt, en = block.split("\n  en: {", 1)
+        grab = lambda b: dict(re.findall(r'^\s+"(next\.[\w.]+)": "((?:[^"\\]|\\.)*)",?$', b, re.M))
+        p, e = grab(pt), grab(en)
+        self.assertTrue(p and set(p) == set(e), set(p) ^ set(e))
+        for k in p:
+            self.assertEqual(sorted(re.findall(r"\{\w+\}", p[k])), sorted(re.findall(r"\{\w+\}", e[k])), k)
+        self.assertEqual(p["next.title"], "Próximo passo")
+        self.assertEqual(p["next.gather"], "Juntar (matéria-prima)")
+        self.assertEqual(p["next.finTitle"], "Plano concluído")
+        self.assertEqual(p["next.reset"], "Recomeçar")
+
+    def test_reuses_store_actions(self):
+        # "Feito" / "Voltar" = the checkbox action; "Recomeçar" = "Limpar marcações"; fold state in its own key
+        self.assertIn("GK.store.actions.toggleDone(loc.cur.key, true)", self.js)
+        self.assertIn("GK.store.actions.toggleDone(k, false)", self.js)
+        self.assertIn("GK.store.actions.clearDone()", self.js)
+        self.assertIn('const KEY = "gk2-companion.nextstep";', self.js)
+        self.assertNotIn("setUi(", self.js)
+        self.assertIn("state.example", self.js)            # hidden on the seeded example
+        for sel in (".next-done", ".next-line", ".next.is-folded", ".row.is-next", ".next-fin-title"):
+            self.assertIn(sel, self.css)
+
+
+class SearchRecents(unittest.TestCase):
+    """"Recentes" in the search (protótipo ideia 8, variante lista): the empty box focused lists the last items added
+    to goals. The store / merge rules (state.recents, synced, global) are tested in test_calc.mjs."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.src = ROOT / "src"
+        cls.read = lambda self, f: (self.src / f).read_text(encoding="utf-8")
+
+    def test_strings_and_popup(self):
+        js = self.read("js/ui/search.js")
+        block = js.split("GK.i18n.add({", 1)[1].split("\n});", 1)[0]
+        pt, en = block.split("\n  en: {", 1)
+        self.assertIn('"search.recent": "Recentes"', pt)
+        self.assertIn('"search.recent": "Recent"', en)
+        self.assertIn("const RECENT_SHOWN = 6;", js)
+        self.assertIn("function renderRecent()", js)
+        self.assertIn('class="result result-recent" role="option"', js)   # same options: tap / Enter = add()
+        self.assertIn('input.addEventListener("focus", () => renderResults());', js)
+        self.assertIn(".result-recent .result-name", self.read("css/header.css"))
+
+    def test_store_field(self):
+        store = self.read("js/store.js")
+        synced = re.search(r"const SYNCED = \[(.*?)\];", store).group(1)
+        self.assertIn('"recents"', synced)
+        self.assertIn('"recents"', re.search(r"const LATE = \[(.*?)\];", store).group(1))
+        self.assertIn("const RECENTS_MAX = 12;", store)
+        self.assertIn("recents: cleanRecents(o.recents),", store)
+        self.assertIn("pushRecent(s, item);", store.split("addGoal(item, qty) {", 1)[1].split("\n    },", 1)[0])
+        for page in ("prototype/index.html", "dist/index.html"):
+            html = (ROOT / page).read_text(encoding="utf-8")
+            self.assertIn('"search.recent": "Recentes"', html, page)
 
 
 class TypeScale(unittest.TestCase):
@@ -1522,6 +1607,230 @@ class TypeScale(unittest.TestCase):
         # the phone tab band shares the row and wraps instead of hiding tabs in a sideways scroll
         header = self.read("css/header.css")
         self.assertIn(".tabs-mob-band .tabs { flex-wrap: wrap; overflow-x: visible; }", header)
+
+
+class FooterNoticeQr(unittest.TestCase):
+    """1.4.1: the short footer (links, Letra grande, sync chip only with an account, one version line), the stale-data
+    notice (data/game-version.json embedded as meta.gameVersion, footer line + band under the tabs), the QR card
+    on Créditos (wide screens with a mouse) and the two phone layout fixes of the raw-material rows."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.src = ROOT / "src"
+        cls.read = lambda self, f: (self.src / f).read_text(encoding="utf-8")
+
+    def node(self, code):
+        with tempfile.TemporaryDirectory() as t:
+            p = Path(t) / "h.js"
+            p.write_text(code, encoding="utf-8")
+            r = subprocess.run(["node", str(p)], capture_output=True, text=True, timeout=60)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        return json.loads(r.stdout.strip().splitlines()[-1])
+
+    def test_footer_short(self):
+        f, cr = self.read("js/ui/footer.js"), self.read("js/ui/credits.js")
+        render = f.split("render(state, meta) {", 1)[1]
+        # three links, 44 px (components.css), Letra grande kept, sync chip hidden unless account / error
+        self.assertEqual(re.findall(r'id="(foot-\w+)"', render.split("const links", 1)[1].split(";\n", 1)[0]),
+                         ["foot-changelog", "foot-credits", "foot-site"])
+        self.assertIn('id="big-text"', render)
+        self.assertIn("const CHIP = { syncing: 1, synced: 1, error: 1 };", f)
+        self.assertIn("el.hidden = !CHIP[st];", f)
+        self.assertIn(".sync-chip[hidden] { display: none; }", self.read("css/planner.css"))
+        # the credits line and the long note left the footer; Créditos keeps the wikily credit and gets the note
+        for gone in ('"footer.data"', '"footer.note"', '"footer.dataVersion"', "NX Software", "wikily"):
+            self.assertNotIn(gone, f)
+        self.assertIn("(© NX Software)", cr)
+        self.assertIn('"credits.data.p3": "As quantidades são as de base;', cr)
+        self.assertIn('"credits.data.p4": "Dados de {date}', cr)
+        # one version line: one number when wiki and game agree
+        self.assertIn('"footer.line": "v{version} · dados do jogo {game}"', f)
+        self.assertIn('t(game === wiki ? "footer.line" : "footer.lineMixed"', f)
+
+    def test_game_version_embedded(self):
+        gv = build.load_game_version(ROOT)
+        self.assertRegex(gv["latest"], r"^\d+\.\d+$")
+        self.assertTrue(gv["note"]["pt"] and gv["note"]["en"])
+        page = build.page_payload({"meta": {"langs": ["pt", "en"]}, "items": {}, "stations": {}, "recipes": []},
+                                  game_version=gv)
+        self.assertEqual(page["meta"]["gameVersion"], gv)
+        with tempfile.TemporaryDirectory() as t:
+            self.assertIsNone(build.load_game_version(t))
+            (Path(t) / "data").mkdir()
+            (Path(t) / "data" / "game-version.json").write_text('{"latest": "soon"}', encoding="utf-8")
+            with self.assertRaises(SystemExit):
+                build.load_game_version(t)
+        dist = (ROOT / "dist" / "index.html")
+        if dist.exists():
+            self.assertIn('"gameVersion":{"latest":"' + gv["latest"] + '"', dist.read_text(encoding="utf-8"))
+
+    @unittest.skipUnless(shutil.which("node"), "node not installed")
+    def test_stale_notice_logic(self):
+        """latest newer than the wiki recipes: notice; equal or older: nothing. Closing is per version."""
+        f, h = self.read("js/ui/footer.js"), self.read("js/ui/header.js")
+        self.assertIn('const NOTICE_KEY = "gk2-companion.notice";', f)
+        self.assertIn("cmpVersion(gv.latest, wiki) <= 0", f)
+        self.assertIn('if (!st || closedFor() === st.latest)', f)
+        self.assertIn('document.getElementById("notice-band") || band', h)
+        out = self.node(r"""
+global.GK = { ui: {}, util: { esc: (s) => String(s) }, app: { registerPanel() {} },
+  i18n: { add() {}, t: (k) => k, lang: () => "pt" } };
+""" + f + r"""
+const F = GK.ui.footer, note = { pt: "nota", en: "note" };
+const meta = (latest, wiki, game) => ({ gameVersion: { latest, note }, data: { wiki, game } });
+console.log(JSON.stringify({
+  cmp: [F.cmpVersion("1.012", "1.011"), F.cmpVersion("1.011", "1.011"), F.cmpVersion("1.009", "1.010"), F.cmpVersion("1.100", "1.011"), F.cmpVersion("2.0", "1.999")],
+  real: F.stale(meta("1.011", "1.010", "1.011")),
+  same: F.stale(meta("1.010", "1.010", "1.011")),
+  older: F.stale(meta("1.009", "1.010", "1.011")),
+  none: F.stale({ data: { wiki: "1.010" } }),
+}));
+""")
+        self.assertEqual(out["cmp"], [1, 0, -1, 1, 1])
+        self.assertEqual(out["real"], {"latest": "1.011", "wiki": "1.010", "note": "nota"})
+        self.assertIsNone(out["same"])
+        self.assertIsNone(out["older"])
+        self.assertIsNone(out["none"])
+        for lang, txt in (("pt", '"footer.stale": "O jogo já está na {latest}; as receitas daqui são da {wiki}."'),
+                          ("en", '"footer.stale": "The game is on {latest}; recipes here are from {wiki}."')):
+            block = f.split("GK.i18n.add({", 1)[1].split("\n  en: {", 1)[0 if lang == "pt" else 1]
+            self.assertIn(txt, block)
+
+    @unittest.skipUnless(shutil.which("node"), "node not installed")
+    def test_credits_qr(self):
+        cr, css = self.read("js/ui/credits.js"), self.read("css/planner.css")
+        self.assertIn('const APP_URL = "https://claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn";', cr)
+        self.assertIn('const WIDE = "(min-width: 900px) and (pointer: fine)";', cr)
+        self.assertIn("if (!wide() || !GK.ui.qr) return \"\";", cr)           # no SVG made on a phone
+        self.assertIn('"credits.qr.say": "Aponte a câmera do celular para abrir o app lá."', cr)
+        self.assertIn(".cr-qr { display: none; }", css)
+        self.assertIn("@media (min-width: 900px) and (pointer: fine) {", css)
+        man = read_json(self.src / "manifest.json")["js"]
+        self.assertLess(man.index("js/ui/qr.js"), man.index("js/ui/credits.js"))
+        # the matrix the macOS reader (CoreImage) decoded to the app URL in the 1.4.1 screenshots
+        out = self.node("global.GK = { ui: {}, util: { esc: (s) => String(s) } };\n" + self.read("js/ui/qr.js") + r"""
+const M = GK.ui.qr.matrix("https://claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn");
+const s = M.map((r) => r.map((c) => (c ? 1 : 0)).join("")).join("\n");
+const svg = GK.ui.qr.svg("https://claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn", "QR");
+console.log(JSON.stringify({ n: M.length, sha: require("crypto").createHash("sha256").update(s).digest("hex"),
+  svg: svg.slice(0, 120), long: (() => { try { GK.ui.qr.matrix("x".repeat(200)); return "ok"; } catch (e) { return "throws"; } })() }));
+""")
+        self.assertEqual(out["n"], 33)
+        self.assertEqual(out["sha"], "1e3dd931acb6bfedb1b272a49c4536e00f2517b73c75480d6b940de5b7d5c08a")
+        self.assertIn('viewBox="-4 -4 41 41"', out["svg"])
+        self.assertIn('role="img" aria-label="QR"', out["svg"])
+        self.assertEqual(out["long"], "throws")
+
+    def test_raw_row_phone_fixes(self):
+        """The quantity no longer touches "Já tenho"; a recipe selector never widens a raw row past the screen."""
+        css, f = self.read("css/planner.css"), self.read("js/ui/fmt.js")
+        self.assertIn(".row-raw { padding-block: 6px 5px; row-gap: 4px; min-height: 0; }", css)
+        self.assertIn(".row-line2 > .row-actions > .btn:only-child { margin-block: 0 -2px; }", css)
+        self.assertRegex(css, r"\.row-line2 \.row-actions \{[^}]*min-width: 0; max-width: 100%;")
+        self.assertIn(".row-actions .select-wrap select { flex: 1 1 0; width: 0; }", css)
+        self.assertRegex(css, r"\.select-wrap select \{[^}]*max-width: 100%")
+        self.assertIn("n.split(/ from /i)[0].trim()", f)
+        self.assertNotIn('" [" + list[k].id + "]"', f)
+
+
+class FactsBuild(unittest.TestCase):
+    """scripts/build_facts.py (wiki item pages -> data/facts.json) and build.apply_facts (-> gk2.json)."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.facts = load_mod("gk2_facts_t", HERE / "build_facts.py")
+
+    def mini(self):
+        raw = {"rows": [
+            {"key": "pie", "data": {"stack": 30, "energy": 20, "insanity": -3,
+                                    "statStrip": [{"subtitle": "Energy", "chips": ["+22 with Steamed Up"]}],
+                                    "buffs": [{"title": "Building spirit II", "subtitle": "For 7 min 30 s",
+                                               "chips": ["+2 Building mastery", "Using another restarts the timer"]}],
+                                    "soldBy": [{"title": "Baker (Bronze)", "subtitle": "Sells it", "chips": ["From trader level 3"]},
+                                               {"title": "Baker (Gold)", "subtitle": "Sells it", "chips": ["From trader level 2"]},
+                                               {"title": "Harold", "subtitle": "Sells it in conversation, no shop"}]}},
+            {"key": "fish", "data": {"stack": 20, "otherSources": [
+                {"kind": "Fishing", "title": "Village fishing spot", "href": "/locations/village",
+                 "chips": ["No bait: 1% by day, 0.5% at night", "Worm Bait: 40%, day and night"]},
+                {"kind": "Barracks", "title": "Tower", "href": "/buildings/tower"},
+                {"kind": "Gathering", "title": "Tree", "href": "/map"},
+                {"kind": "Container", "title": "Chest", "href": "/items/pie"},
+                {"kind": "Quest", "title": "Sweet Dreams", "href": "/quests/sweet-dreams"}]}},
+            {"key": "ghost", "data": {"stack": 5}},
+        ]}
+        items = [{"id": "pie"}, {"id": "fish"}, {"id": "worm-bait"}]
+        game = {"Bakery_t1": {"en": "Baker", "pt": "Padeiro"}, "wz_village": {"en": "Village", "pt": "Aldeia"},
+                "buff_sauna": {"en": "Steamed Up", "pt": "Aquecido"},
+                "buff_talent_orange_2": {"en": "Building spirit II", "pt": "Espírito da Engenharia II"},
+                "buff_talent_orange_2_d": {"en": 'You temporarily have +2 <sprite name="talent_orange">.',
+                                           "pt": 'Você tem temporariamente +2 <sprite name="talent_orange">.'}}
+        return self.facts.build(raw, items, self.facts.Texts(game, {}))
+
+    def test_build_facts_shapes(self):
+        doc, warnings = self.mini()
+        self.assertEqual(self.facts.validate(doc), [])
+        pie, fish = doc["items"]["pie"], doc["items"]["fish"]
+        # trader grades collapse to one line with the lowest level; conversation-only sellers are flagged
+        self.assertEqual(pie["where"], [["buy", "baker", 2], ["buy", "harold", "talk"]])
+        self.assertEqual(pie["use"], {"en": 20, "enB": [22, "steamed-up"], "ins": -3,
+                                      "buff": ["building-spirit-ii", 450, 1]})
+        self.assertEqual(pie["stack"], 30)
+        # fishing keeps the best bait of the spot; Barracks is skipped; item links become "@id"; shops first
+        self.assertEqual(fish["where"], [["fish", "village", "worm-bait", 40, 40], ["gather", "tree"],
+                                         ["container", "@pie"], ["quest", "sweet-dreams"]])
+        self.assertNotIn("ghost", doc["items"])
+        self.assertFalse(any("ghost" in w for w in warnings))   # not a known item, no sources: skipped silently
+        n = doc["names"]
+        self.assertEqual(n["baker"], {"en": "Baker", "pt": "Padeiro", "key": "Bakery_t1"})
+        self.assertEqual(n["tree"]["tr"], "machine")                    # hand glossary
+        self.assertEqual(n["sweet-dreams"]["tr"], "missing")            # nothing: English, flagged
+        b = doc["buffs"]["building-spirit-ii"]
+        self.assertEqual(b["d"]["pt"], "Você tem temporariamente +2 Engenharia.")
+        self.assertEqual(b["d"]["en"], "You temporarily have +2 Building mastery.")
+        self.assertEqual(doc["buffs"]["steamed-up"]["pt"], "Aquecido")
+
+    def test_apply_facts(self):
+        doc, _ = self.mini()
+        doc["items"]["nope"] = {"stack": 1}
+        ds = {"meta": {}, "items": {"pie": {"id": "pie"}, "fish": {"id": "fish"}}}
+        with tempfile.TemporaryDirectory() as td:
+            p = Path(td) / "facts.json"
+            p.write_text(json.dumps(doc), encoding="utf-8")
+            self.assertEqual(build.apply_facts(ds, p), 2)
+            self.assertEqual(ds["items"]["pie"]["stack"], 30)
+            self.assertEqual(ds["items"]["fish"]["where"][0][0], "fish")
+            self.assertNotIn("key", ds["meta"]["refs"]["names"]["baker"])     # game keys stay in facts.json
+            self.assertEqual(ds["meta"]["refs"]["buffs"]["steamed-up"]["pt"], "Aquecido")
+            p.write_text("{broken", encoding="utf-8")
+            ds2 = {"meta": {}, "items": {}}
+            self.assertEqual(build.apply_facts(ds2, p), 0)
+            self.assertNotIn("refs", ds2["meta"])
+        # the page payload keeps the tables (equal pt/en collapse to one string)
+        out = build.page_payload({"meta": {"langs": ["pt", "en"], "refs": {"names": {"g": {"pt": "Gunter", "en": "Gunter"}}}},
+                                  "items": {}, "stations": {}, "recipes": []})
+        self.assertEqual(out["meta"]["refs"]["names"]["g"], "Gunter")
+
+    @unittest.skipUnless((ROOT / "data" / "facts.json").exists() and (ROOT / "data" / "raw" / "api-items-all.json").exists(),
+                         "real data not present")
+    def test_real_facts_up_to_date(self):
+        with tempfile.TemporaryDirectory() as td:
+            out = Path(td) / "facts.json"
+            rc, so, se = run(HERE / "build_facts.py", "--out", out)
+            self.assertEqual(rc, 0, se)
+            self.assertEqual(out.read_text(encoding="utf-8"), (ROOT / "data" / "facts.json").read_text(encoding="utf-8"),
+                             "data/facts.json is stale: run python3 -I scripts/build_facts.py")
+        c = read_json(ROOT / "data" / "facts.json")["meta"]["counts"]
+        self.assertGreaterEqual(c["where"], 250)
+        self.assertEqual((c["buy"], c["fish"], c["energy"], c["buff"]), (176, 22, 59, 14))
+        self.assertGreaterEqual(c["stack"], 540)
+
+    def test_recipes_detail_uses_facts(self):
+        """The item detail draws "Onde conseguir", the use tooltip and the stack; the planner files do not."""
+        js = (ROOT / "src" / "js" / "ui" / "recipes.js").read_text(encoding="utf-8")
+        for needle in ("function whereHtml(", "function tipHtml(", "function stackSlot(", "WHERE_CAP = 4", '"rc.where": "Onde conseguir"'):
+            self.assertIn(needle, js)
+        for f in ("summary.js", "goals.js", "fmt.js"):
+            self.assertNotIn(".where", (ROOT / "src" / "js" / "ui" / f).read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

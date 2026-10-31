@@ -1,0 +1,9 @@
+{
+  "_comment": "Latest Graveyard Keeper 2 version out there (scripts/build.py embeds it as meta.gameVersion). When latest is newer than the wiki recipes (meta.data.wiki), the footer and a dismissible band under the tabs say the data may be out of date (src/js/ui/footer.js).",
+  "latest": "1.011",
+  "date": "2026-10-30",
+  "note": {
+    "pt": "O jogo recebeu a versão 1.011, que muda algumas receitas (Frascos de Alquimia II, Suco de Uva); as receitas daqui ainda são da 1.010 e serão atualizadas quando a wiki for.",
+    "en": "The game is now on version 1.011, which changes a few recipes (Alchemy Flasks II, Grape Juice); recipes here are still from 1.010 and will be updated once the wiki is."
+  }
+}

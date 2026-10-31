@@ -107,3 +107,5 @@
 .result-sub { display: block; font-size: .8125rem; color: var(--ink-2); }
 .result-add { font-weight: 800; font-size: .8125rem; color: var(--accent); white-space: nowrap; }
 .results-empty { padding: var(--s3) var(--s3) var(--s4); color: var(--ink-2); }
+/* "Recentes" (empty box focused, ui/search.js): the same rows, icon + name on one line */
+.result-recent .result-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

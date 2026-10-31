@@ -60,7 +60,8 @@ GK.ui.header = (function () {
     const row = document.querySelector('[data-panel="search"]'), top = document.getElementById("top"), band = document.getElementById("tabs-band");
     if (!row || !top || !band) return;
     if (wide) { if (row.parentNode !== top) top.appendChild(row); }
-    else if (band.nextElementSibling !== row) band.after(row);
+    // phones: after the stale-data band (#notice-band, ui/footer.js) when there is one, so it stays right under the tabs
+    else { const at = document.getElementById("notice-band") || band; if (at.nextElementSibling !== row) at.after(row); }
   }
   function mount() {
     const mq = window.matchMedia && window.matchMedia("(min-width: 900px)");

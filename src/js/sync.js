@@ -1,18 +1,24 @@
 /* GK.sync: keeps the planner in the viewer's own private db document
    (Claude Artifact `db` + `user` capabilities):
-       data/users/<user id>/state  =  { v, updatedAt, state: {goals, choice, have, done, overrides, example,
-                                                              researched, groupChoice, perks, day, dayNumber,
-                                                              dayAnchor, dayDone, dayNotes, …} }
+       data/users/<user id>/state  =  { v, updatedAt, state: {lists, listsGone, overrides, researched, groupChoice,
+                                                              perks, day, dayNumber, dayAnchor, dayDone, dayNotes,
+                                                              recents, goals, choice, have, done, example, legacyOf, …} }
+   lists (schema 5) = every plan list; goals … legacyOf (GK.store.MIRROR) = this device's open list, flat, for a page
+   older than schema 5 still open elsewhere (it reads and edits them as its single plan; GK.store.sanitizeRemote folds
+   such an edit back into that list, and turns a schema 4 doc with no `lists` into the list "Minha lista").
+   Which list is open is per device (ui.activeList): switching lists writes nothing.
    localStorage stays the first source (instant render, offline), keyed by account (GK.store.useAccount).
    Reconciling a snapshot with the local copy (base = the last version both held, state.syncBase):
      - same updatedAt                 nothing to do
      - only the account changed       the account copy wins (applyRemote)
      - only this device changed       push the local copy
-     - both changed since base        merge field by field (GK.store.mergeSynced: maps by union, remote wins for
-                                      done/have/researched/perks/groupChoice, local wins for goals/choice/overrides),
+     - both changed since base        merge (GK.store.mergeSynced): lists by id (union, deleted ones stay deleted);
+                                      a list changed on one side only is taken whole, one changed on both merges
+                                      field by field (goals local, maps by union); global maps by union;
+                                      recents by union, the newer side's order first (max 12);
                                       stamp it newer than both and push it
      - no base yet (first sync)       the newer updatedAt wins (an EPOCH plan is pushed only to an empty account)
-   dayDone / dayNotes (1.3.4, GK.store.LATE) are absent from docs written by older pages, and absent is not "empty":
+   dayDone / dayNotes (1.3.4) and recents (GK.store.LATE) are absent from docs written by older pages, and absent is not "empty":
      - the account wins but its doc has no such key   keep this device's value (keepLate), stamp, push
      - same updatedAt, the doc has them, we don't     adopt the doc's (adoptLate; an older page carried them along)
      - merge                                          dayDone by union on the merged day, dayNotes newer side wins
@@ -54,7 +60,7 @@ GK.sync = (function () {
   const bytes = (s) => (typeof Blob !== "undefined" ? new Blob([s]).size : typeof TextEncoder !== "undefined" ? new TextEncoder().encode(s).length : s.length * 3);
   // the doc body: unknown fields of the account copy first, then everything this version owns
   function body(st) {
-    return { v: Math.max(S().SCHEMA, remoteV || 0), updatedAt: st.updatedAt, state: Object.assign({}, remoteRest, S().syncPayload(st)) };
+    return { v: Math.max(S().SCHEMA, remoteV || 0), updatedAt: st.updatedAt, state: Object.assign({}, remoteRest, S().legacyMirror(st), S().syncPayload(st)) };
   }
   async function flush() {
     if (!ref || !ready) return;               // reconciled first; the snapshot handler flushes afterwards
@@ -95,11 +101,11 @@ GK.sync = (function () {
     const st = S().get();
     let pushLocal = false;
     const d = snap.exists ? snap.data() : null;
-    const fields = d && typeof d.updatedAt === "string" && S().ISO.test(d.updatedAt) ? S().sanitizeRemote(d.state) : null;
+    const fields = d && typeof d.updatedAt === "string" && S().ISO.test(d.updatedAt) ? S().sanitizeRemote(d.state, false, d.updatedAt) : null;
     if (d && d.state && typeof d.state === "object") {
       remoteV = typeof d.v === "number" && isFinite(d.v) ? d.v : 0;
       remoteRest = {};
-      for (const [k, v] of Object.entries(d.state)) if (S().SYNCED.indexOf(k) < 0) remoteRest[k] = v;
+      for (const [k, v] of Object.entries(d.state)) if (S().SYNCED.indexOf(k) < 0 && S().MIRROR.indexOf(k) < 0) remoteRest[k] = v;
     }
     if (fields) {
       const base = st.syncBase || "";
@@ -112,7 +118,7 @@ GK.sync = (function () {
         if (authoritative) S().setSyncBase(d.updatedAt);
       } else if (base && localChanged && remoteChanged) {
         // both edited since the version they shared: merge (rule in GK.store.mergeSynced), then push
-        const merged = S().mergeSynced(S().syncPayload(st), fields, d.updatedAt > st.updatedAt);
+        const merged = S().mergeSynced(S().syncPayload(st), fields, d.updatedAt > st.updatedAt, base);
         const at = S().stamp(d.updatedAt > st.updatedAt ? d.updatedAt : st.updatedAt);
         S().actions.applyRemote(merged, at);
         lastSeenAt = at;

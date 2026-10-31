@@ -130,3 +130,96 @@
   .rc-recipes { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); align-items: start; }
 }
 .rc-meta .perk-on { color: var(--moss); font-weight: 700; }
+
+/* ---------- item detail: "Onde conseguir" (items[].where, data/facts.json) ---------- */
+.rc-where-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: .9375rem; color: var(--ink); line-height: 1.35; }
+.rc-where-list li { overflow-wrap: anywhere; }
+.rc-where-list li:focus { outline: none; }
+.rc-where-v { font-weight: 800; color: var(--ink-2); }
+.rc-where-d { font-size: .8125rem; color: var(--ink-3); white-space: normal; }
+.rc-where-list .badge { margin-left: 6px; vertical-align: 1px; }
+.rc-where-only { margin: 0 0 6px !important; }
+.rc-where-only .badge { margin-left: 0; }
+.rc-where-more { margin-top: 4px; margin-left: calc(var(--s2) * -1); color: var(--accent); }
+
+/* ---------- item detail: stack in the slot corner + the game's "Efeito de uso" tooltip (ideia 22) ---------- */
+:root {
+  /* game tooltip parchment, dimmed a little on the night theme so it does not glare */
+  --tip-bg: #c9ae7e; --tip-bg-2: #bea171; --tip-ink: #34200f; --tip-lbl: #634a2c; --tip-edge: #7a5a36; --tip-rule: #8d6f48;
+  --en: #2f86d6; --en-hi: #6cb8ff; --en-lo: #1b5a9e; --en-ink: #134680; --ins-ink: #5d2a86;
+  --hud: #262a35; --hud-edge: #4d5263; --hud-track: #12151c;
+  --stack: #f2cb4c; --stack-edge: #2a1606;
+  /* the game's energy bolt (wikily icon, 44x48 pixel art) */
+  --bolt: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAwCAYAAABqkJjhAAAA4ElEQVR42u2ZsQ3CQAxFz4iCASjpaWmQkBgAhsgQGYWOBTIEC1DRMAQlO0BLTtEZy3cWSO93iSLlKXr5chxZrA/JmFeKjXwezNKfBeDWma/23ejE4zoUnc2vX247F8DzNmj3RwmAiw7nDmoOBTgrpXcGJQDOfZmYJar2rtVZlADY2sPaBQ2cdc3XKAHwRA83nXdrzxooAbDWw7/mLHsJgK09bI21t/mmA7hBD0ty7IdrO5uHWQJgrYd353EN30/HorOb/hK6h0AJgL17iejdmTaroATAX+yHvf+WhScMcGDeI8BRYBMuXNAAAAAASUVORK5CYII=");
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --tip-bg: #d8bf8f; --tip-bg-2: #ccb07c; } }
+:root[data-theme="light"] { --tip-bg: #d8bf8f; --tip-bg-2: #ccb07c; }
+
+.rc-item-h > .slot { position: relative; }
+.stack-n {
+  position: absolute; right: 2px; bottom: 0; padding: 0 1px; pointer-events: none;
+  font: 800 .9375rem/1 var(--f-body); color: var(--stack);
+  text-shadow: 1px 0 0 var(--stack-edge), -1px 0 0 var(--stack-edge), 0 1px 0 var(--stack-edge), 0 -1px 0 var(--stack-edge),
+               1px 1px 0 var(--stack-edge), -1px 1px 0 var(--stack-edge), 1px -1px 0 var(--stack-edge), -1px -1px 0 var(--stack-edge);
+}
+.stack-cap { margin: 4px 0 0; font-size: .8125rem; color: var(--ink-3); }
+.stack-cap b { color: var(--ink-2); }
+
+/* the tooltip balloon: parchment, thin dark edge, tail pointing up at the item slot */
+.gk-tip {
+  position: relative; min-width: 0; margin-top: 2px; padding: 10px var(--s3) var(--s3);
+  background: linear-gradient(180deg, var(--tip-bg), var(--tip-bg-2)); color: var(--tip-ink);
+  border: 2px solid var(--tip-edge); border-radius: 4px;
+  box-shadow: inset 0 0 0 1px rgba(255, 244, 220, .35), 0 2px 0 var(--shadow);
+}
+.gk-tip::before {
+  content: ""; position: absolute; top: -9px; left: 20px; width: 14px; height: 14px;
+  background: var(--tip-bg); border-left: 2px solid var(--tip-edge); border-top: 2px solid var(--tip-edge);
+  transform: rotate(45deg); border-top-left-radius: 2px;
+}
+.gk-tip p { margin: 0; }
+.gk-tip .badge { margin-left: 6px; vertical-align: 2px; }
+.gk-rule { position: relative; height: 11px; margin: 8px 0;
+  background: radial-gradient(circle, var(--tip-rule) 1px, transparent 1.4px) 0 50% / 5px 11px repeat-x; }
+.gk-rule::after {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 7px; height: 7px; transform: translate(-50%, -50%) rotate(45deg);
+  background: var(--tip-bg); border: 2px solid var(--tip-rule);
+}
+.gk-eff { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+.gk-lbl { font-size: 1rem; color: var(--tip-lbl); }
+.gk-val { display: inline-flex; align-items: center; gap: 4px; font: 800 1.5rem/1 var(--f-body); font-variant-numeric: tabular-nums lining-nums; }
+.gk-val small { font: 700 .875rem/1 var(--f-body); }
+.gk-en { color: var(--en-ink); }
+.gk-ins { color: var(--ins-ink); }
+.gk-bolt { display: inline-block; flex: none; width: 22px; height: 24px; background: var(--bolt) center / contain no-repeat; image-rendering: pixelated; }
+
+/* HUD-style energy bar: bolt in a square frame + blue capsule, scaled to the 100-point bar */
+.gk-bar { display: flex; align-items: center; gap: 4px; margin-top: 10px; }
+.gk-bar-ico { display: grid; place-items: center; width: 30px; height: 30px; flex: none;
+  background: var(--hud); border: 2px solid var(--hud-edge); border-radius: 3px; }
+.gk-bar-ico .gk-bolt { width: 15px; height: 16px; }
+.gk-bar-track { position: relative; flex: 1; min-width: 0; height: 22px; padding: 3px; background: var(--hud); border: 2px solid var(--hud-edge); border-radius: 3px; }
+.gk-bar-track > span { position: absolute; top: 3px; bottom: 3px; }
+.gk-bar-empty { left: 3px; right: 3px; background: var(--hud-track); border-radius: 2px; }
+.gk-bar-fill { left: 3px; border-radius: 2px;
+  background: linear-gradient(180deg, var(--en-hi) 0 2px, var(--en) 2px 70%, var(--en-lo) 70%); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .35); }
+.gk-bar-plus { border-radius: 0 2px 2px 0; background: repeating-linear-gradient(135deg, var(--en-hi) 0 2px, transparent 2px 4px); opacity: .9; }
+.gk-bar-ticks { left: 3px; right: 3px; background: repeating-linear-gradient(90deg, transparent 0 calc(10% - 1px), rgba(0, 0, 0, .45) calc(10% - 1px) 10%); }
+.gk-note { margin-top: 6px !important; font-size: .9375rem; line-height: 1.35; color: var(--tip-lbl); }
+.gk-note b { color: var(--tip-ink); }
+
+/* buff: round icon like the game's status tooltips, official name + official description */
+.gk-buff { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 2px var(--s3); align-items: start; }
+.gk-buff-ico {
+  width: 40px; height: 40px; margin-top: 2px; border-radius: 50%; position: relative;
+  background: radial-gradient(circle at 50% 38%, #f3d77a 0 30%, #c98f2c 31% 62%, #6e4514 63%);
+  box-shadow: inset 0 0 0 2px var(--tip-edge), 0 1px 0 var(--shadow);
+}
+.gk-buff-ico::after { /* up arrow: a buff */
+  content: ""; position: absolute; left: 50%; top: 50%; width: 14px; height: 16px; transform: translate(-50%, -55%);
+  background: var(--tip-ink); clip-path: polygon(50% 0, 100% 50%, 68% 50%, 68% 100%, 32% 100%, 32% 50%, 0 50%);
+}
+.gk-buff-name { font: 800 1.0625rem/1.25 var(--f-body); color: var(--tip-ink); overflow-wrap: anywhere; }
+.gk-buff-d { font-size: .9375rem; line-height: 1.35; color: var(--tip-ink); overflow-wrap: anywhere; }
+.gk-buff-t { margin-top: 3px !important; font-size: .875rem; line-height: 1.35; color: var(--tip-lbl); }
+.gk-buff-t b { color: var(--tip-ink); }

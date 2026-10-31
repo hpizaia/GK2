@@ -1267,6 +1267,25 @@ def load_days(path):
     return doc
 
 
+def apply_facts(ds, path):
+    """data/facts.json (scripts/build_facts.py, see data/README-data.md#facts): items[].where / .use / .stack and
+    the name tables in meta.refs ({names, buffs}, game keys dropped). Unknown item ids are skipped. Returns the
+    number of items that got facts; a missing or malformed file changes nothing."""
+    try:
+        doc = json.loads(Path(path).read_text(encoding="utf-8"))
+        facts, names, buffs = doc["items"], doc["names"], doc["buffs"]
+    except (OSError, ValueError, KeyError, TypeError):
+        return 0
+    n = 0
+    for iid, rec in facts.items():
+        if iid in ds["items"] and isinstance(rec, dict):
+            ds["items"][iid].update({k: rec[k] for k in ("where", "use", "stack") if k in rec})
+            n += 1
+    strip = lambda t: {k: {f: v for f, v in e.items() if f != "key"} for k, e in t.items()}
+    ds["meta"]["refs"] = {"names": strip(names), "buffs": strip(buffs)}
+    return n
+
+
 def _drop_nulls(v):
     if isinstance(v, dict):
         return {k: _drop_nulls(x) for k, x in v.items() if x is not None and x != []}
@@ -1394,7 +1413,8 @@ def data_versions(name_paths):
     return {"wiki": WIKI_GAME_VERSION, "game": game or GAME_TEXT_VERSION}
 
 
-def page_payload(ds, sprite=None, artifact=False, version=None, changelog=None, techs=None, data=None, days=None):
+def page_payload(ds, sprite=None, artifact=False, version=None, changelog=None, techs=None, data=None, days=None,
+                 game_version=None):
     """The JSON embedded in the page: gk2.min.json minus redundancy.
 
     - {pt, en} pairs with identical text collapse to one string (obtain texts, notes, zones...).
@@ -1403,6 +1423,7 @@ def page_payload(ds, sprite=None, artifact=False, version=None, changelog=None, 
     - artifact mode: remote icon URLs are dropped (the Artifact CSP blocks external images).
     - meta.version / meta.changelog: the VERSION file and data/changelog.json, when given.
     - meta.data: {wiki, game} game versions of the sources (data_versions()), when given.
+    - meta.gameVersion: data/game-version.json {latest, date, note} (load_game_version()), when given (src mode).
     - techs: data/techs.json (scripts/build_techs.py) in compact form, see techs_payload().
     - days: data/days.json (scripts/build_days.py), see days_payload(); its sprite ids are kept in meta.sprite."""
     langs = set(ds["meta"]["langs"])
@@ -1429,6 +1450,8 @@ def page_payload(ds, sprite=None, artifact=False, version=None, changelog=None, 
         out["meta"]["changelog"] = changelog
     if data is not None:
         out["meta"]["data"] = data
+    if game_version is not None:
+        out["meta"]["gameVersion"] = game_version
     return out
 
 
@@ -1579,6 +1602,23 @@ def load_changelog(root):
     return cl
 
 
+def load_game_version(root):
+    """data/game-version.json of the project root: {latest: "1.011", date, note: {pt, en}} (the newest game version
+    out there; the page warns when it is newer than the wiki recipes), or None when absent. Bad file: exit 2."""
+    gp = Path(root) / "data" / "game-version.json"
+    if not gp.exists():
+        return None
+    try:
+        doc = json.loads(gp.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as e:
+        raise SystemExit(_die(f"game-version: cannot read {gp}: {e}"))
+    if not (isinstance(doc, dict) and isinstance(doc.get("latest"), str) and re.match(r"^\d+(\.\d+)*$", doc["latest"])):
+        raise SystemExit(_die(f"game-version: {gp} needs {{\"latest\": \"1.011\", ...}}"))
+    note = doc.get("note") if isinstance(doc.get("note"), dict) else {}
+    return {"latest": doc["latest"], "date": doc.get("date") if isinstance(doc.get("date"), str) else None,
+            "note": {k: v for k, v in note.items() if isinstance(v, str) and v.strip()}}
+
+
 def changelog_json(cl):
     return json.dumps(cl, ensure_ascii=False, indent=2) + "\n"
 
@@ -1670,6 +1710,7 @@ def main(argv=None):
     # the project root holds VERSION, data/changelog.json and CHANGELOG.md (src/.. in src mode)
     proj = Path(args.src).resolve().parent if args.src else ROOT
     version, changelog = load_version(proj), load_changelog(proj)
+    game_version = load_game_version(proj)
     if args.release:
         if changelog is None:
             ap.error(f"--release needs {proj / 'data' / 'changelog.json'}")
@@ -1722,6 +1763,13 @@ def main(argv=None):
         print(f"build: days {rel(days_path)} ({len(days['days'])} days, "
               f"{sum(len(d.get('events') or []) for d in days['days'])} events)")
 
+    # item facts (where to get it, energy / buff, stack): the project's data/facts.json when present
+    facts_path = proj / "data" / "facts.json" if args.src else DATA / "facts.json"
+    if (args.src or (args.items == ap.get_default("items") and args.recipes == ap.get_default("recipes"))) \
+            and facts_path.exists():
+        n = apply_facts(ds, facts_path)
+        if not args.quiet:
+            print(f"build: facts {rel(facts_path)} ({n} items)")
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     summary = [("items", rel(args.items)), ("recipes", rel(args.recipes))]
@@ -1763,7 +1811,7 @@ def main(argv=None):
             for artifact in (False, True):
                 payload = dumps_min(page_payload(ds, sprite=sprite, artifact=artifact, version=version,
                                                  changelog=changelog, techs=techs, data=data_versions(names),
-                                                 days=days))
+                                                 days=days, game_version=game_version))
                 html = assemble(args.src, payload, warn=False)
                 if artifact:
                     html = artifact_page(html)

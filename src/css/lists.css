@@ -1,0 +1,42 @@
+/* lists.css: "listas separadas" (schema 5) in the Metas panel (ui/goals.js): the "Lista: <nome> ▾" picker and its
+   menu (two or more lists), the discreet "+ Criar outra lista" (one list), and the in-page form for a new name,
+   a rename or the delete confirmation. Shared tokens, .btn, .card, .hint. */
+.list-pick { position: relative; margin-top: var(--s2); max-width: 100%; width: fit-content; }
+.list-btn { gap: 4px; padding: 0 10px 0 12px; max-width: 100%; }
+.list-btn .lbl { color: var(--ink-2); font-weight: 700; }
+.list-btn .nm { color: var(--accent); font-weight: 800; font-size: .9375rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.list-btn .car { color: var(--ink-2); font-size: .75rem; margin-left: 2px; }
+.list-menu {
+  position: absolute; left: 0; top: calc(100% + 6px); z-index: 25; width: min(300px, calc(100vw - 32px));
+  padding: 4px 0; background: var(--panel); border: 1px solid var(--gold); border-radius: var(--r);
+  box-shadow: 0 10px 30px var(--shadow), inset 0 1px 0 var(--bevel-hi);
+}
+.list-opt {
+  display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; align-items: center; gap: 8px;
+  width: 100%; min-height: 48px; padding: 4px 12px; border: 0; background: transparent; text-align: left; cursor: pointer;
+  color: var(--ink); font: inherit;
+}
+.list-opt + .list-opt { border-top: 1px solid var(--seam); }
+.list-opt:hover { background: var(--panel-2); }
+.list-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+.list-opt .ck { color: var(--moss); font-weight: 800; }
+.list-opt .on { font-weight: 800; font-size: 1rem; overflow-wrap: anywhere; }
+.list-opt .n { font-weight: 700; font-size: .8125rem; color: var(--ink-3); white-space: nowrap; }
+.list-opt[aria-checked="true"] .on { color: var(--accent); }
+.list-act { color: var(--ink-2); }
+.list-act .ck { color: var(--ink-2); }
+.list-act .on { font-weight: 700; font-size: .9375rem; }
+.list-act-del, .list-act-del .ck { color: var(--blood); }
+.list-menu-note { margin: 0; padding: 8px 12px 6px; border-top: 1px solid var(--seam); font-size: .8125rem; line-height: 1.35; color: var(--ink-2); }
+.list-form { display: grid; gap: 8px; margin-top: var(--s3); padding: var(--s3); }
+.list-form label, .list-form .list-q { margin: 0; font-weight: 700; font-size: .875rem; color: var(--ink-2); overflow-wrap: anywhere; }
+.list-form .list-q { color: var(--ink); font-size: .9375rem; }
+.list-form input {
+  min-height: var(--tap); padding: 0 10px; border: 1px solid var(--accent); border-radius: var(--r);
+  background: var(--bg-2); color: var(--ink); font: inherit; font-weight: 700; font-size: 1rem; width: 100%; min-width: 0;
+}
+.list-form .hint { margin: 0; }
+.list-form .row-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.list-ok { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.list-ok:focus-visible { outline-color: var(--accent-ink); }
+.list-more { margin-top: var(--s2); }

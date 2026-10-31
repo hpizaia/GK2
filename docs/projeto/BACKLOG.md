@@ -61,3 +61,7 @@ Licença
 ## Etapa 4 — Revisão de UX de 31/10/2026 (app, site, GitHub, ideias)
 
 Quatro relatórios em `docs/revisao-ux/` (índice com a ordem de ataque em `docs/revisao-ux/README.md`). Resumo: tirar documentos internos do repositório público; reordenar o Planejador e fixar as abas no celular; linhas de meta e de matéria-prima mais baixas; site com o diferencial no topo e imagens leves; README com o botão do app no topo; depois as ideias novas ("amanhã" e "feito hoje", bilhete por dia, próximo passo, missão como meta, modo letra grande).
+
+## Etapa 5 — Próxima rodada (anotado em 31/10/2026)
+
+- [ ] **Redesign "com a cara do jogo":** o protótipo da ideia 22 (ficha de item em balão de pergaminho, raio azul da energia, pilha em amarelo no canto do ícone) agradou. Pesquisar a interface do Graveyard Keeper 2 (balões, bordas, cores, ícones de estado, tipografia dos textos oficiais) e propor um redesign do app nessa linguagem, mantendo a leitura no celular como prioridade. Começar por um protótipo estático de 2 telas (Planejador e detalhe do item) antes de mexer no código.

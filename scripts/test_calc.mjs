@@ -271,6 +271,16 @@ await test("gold/silver recipes consume the graded input and read differently", 
     if (new Set(labels).size !== labels.length) dupes.push(it.id);
   }
   eq(dupes, [], "identical recipe labels");
+  // 1.4.1: two same-input recipes (Pele: "Improve organ I/II from Any Skin") are told apart by a short tag, not the
+  // whole English name, so the raw-row selector stays narrow on a phone
+  const skin = GK.ui.fmt.recipeLabels(GK.data.recipesFor("skin").filter((r) => r.in.length && !r.noexp), st, GK.data.recipesFor("skin"));
+  check(skin.length === 2 && skin[0] !== skin[1] && skin.every((l) => !/ from /i.test(l) && l.length <= 70), "short distinct Pele labels: " + skin.join(" | "));
+  let longTag = [];
+  for (const it of Object.values(D.items)) {
+    const list = GK.data.recipesFor(it.id).filter((r) => r.in.length && !r.noexp);
+    if (list.length > 1) GK.ui.fmt.recipeLabels(list, st, list).forEach((l) => { const tag = l.split(" — ")[1]; if (tag && (tag.length > 34 || / from /i.test(tag))) longTag.push(l); });
+  }
+  eq(longTag, [], "dedupe tags stay short");
   const lab = GK.ui.fmt.recipeLabels([g], st, GK.data.recipesFor("baked-pumpkin"))[0];
   check(/ouro/.test(lab) && /Abóbora \(ouro\)/.test(lab) && /→ 7/.test(lab), "label shows grade, graded input and yield: " + lab);
 });
@@ -329,9 +339,11 @@ await test("sanitizeRemote", () => {
     researched: { t1: 1 }, groupChoice: { "bream-or-carp": "carp", bad: 5 }, perks: { "heat-saver": true, off: false },
     overrides: { pt: { crate: " Caixa " }, xx: { crate: "?" } }, example: 1, future: { keep: "me" },
   });
-  eq(r.goals, [{ item: "crate", qty: 999 }], "goals cleaned and clamped");
-  eq(r.have, { a: true, b: 3, c: 3, h: 999999 }, "have: true or a whole number ≥ 1");
-  eq([r.choice, r.done, r.researched], [{ a: "r1" }, { "raw:x": true }, { t1: true }], "maps");
+  const l0 = r.lists[0];   // schema 5: a flat (schema 4) plan becomes the list "main"
+  eq([r.lists.length, l0.id, l0.name], [1, "main", ""], "flat plan -> one list");
+  eq(l0.goals, [{ item: "crate", qty: 999 }], "goals cleaned and clamped");
+  eq(l0.have, { a: true, b: 3, c: 3, h: 999999 }, "have: true or a whole number ≥ 1");
+  eq([l0.choice, l0.done, r.researched], [{ a: "r1" }, { "raw:x": true }, { t1: true }], "maps");
   eq([r.groupChoice, r.perks], [{ "bream-or-carp": "carp" }, { "heat-saver": true }], "groupChoice / perks");
   eq(r.overrides, { pt: { crate: "Caixa" } }, "overrides");
   check(!("future" in r), "unknown fields are not part of the sanitized body (GK.sync keeps them)");
@@ -345,12 +357,13 @@ await test("mergeSynced (both sides changed)", () => {
     overrides: { pt: { a: "La", b: "Lb" } }, example: false, researched: { t1: true }, groupChoice: { g: "m1" }, perks: { p1: true } };
   const R = { goals: [{ item: "wine", qty: 9 }], choice: { b: "R", c: "R" }, have: { x: 5, z: true }, done: { "raw:r": true },
     overrides: { pt: { b: "Rb" }, en: { c: "Rc" } }, example: false, researched: { t2: true }, groupChoice: { g: "m2", h: "m3" }, perks: { p2: true } };
-  const m = GK.store.mergeSynced(L, R);
-  eq(m.goals, L.goals, "goals: local");
-  eq(m.choice, { b: "L", c: "R", a: "L" }, "choice: union, local wins");
+  const m = GK.store.mergeSynced(L, R), ml = m.lists[0];   // both flat plans are the list "main" (changed on both sides)
+  eq(m.lists.length, 1, "one list");
+  eq(ml.goals, L.goals, "goals: local");
+  eq(ml.choice, { b: "L", c: "R", a: "L" }, "choice: union, local wins");
   eq(m.overrides, { pt: { b: "Lb", a: "La" }, en: { c: "Rc" } }, "overrides: union, local wins");
-  eq(m.have, { x: 5, y: true, z: true }, "have: union, remote wins");
-  eq(m.done, { "raw:l": true, "raw:c": true, "raw:r": true }, "done: union");
+  eq(ml.have, { x: 5, y: true, z: true }, "have: union, remote wins");
+  eq(ml.done, { "raw:l": true, "raw:c": true, "raw:r": true }, "done: union");
   eq([m.researched, m.groupChoice, m.perks], [{ t1: true, t2: true }, { g: "m2", h: "m3" }, { p1: true, p2: true }], "researched / groupChoice / perks: union, remote wins");
 });
 
@@ -659,6 +672,272 @@ await test("sync: notes and ticks travel and merge between two devices", async (
   await env.clock.tick(2000);
   const w2 = db.writes[db.writes.length - 1];
   eq(w2 && [w2.state.day, w2.state.dayNumber, w2.state.dayDone], ["pride", 41, null], "advancing resets the ticks on the account too");
+});
+
+// ---------------------------------------------------------------- "Próximo passo" (ui/nextstep.js, pure part)
+await test("next step: raw materials first (list order), then station steps top to bottom", () => {
+  const env = makeEnv();
+  vm.runInContext(fs.readFileSync(path.join(ROOT, "src/js/ui/nextstep.js"), "utf8"), env.ctx, { filename: "nextstep.js" });
+  const G = env.GK, N = G.ui.nextStep, DD = G.data.load(JSON.parse(JSON.stringify(PAYLOAD)));
+  eq(N.KEY, "gk2-companion.nextstep", "own localStorage key");
+  check(G.app.panels().some((p) => p.id === "next-step" && p.slot === "planner-top" && p.order === 6), "registered in planner-top after Hoje (5)");
+  const goals = [{ item: "crate", qty: 3 }, { item: "furnace-i", qty: 1 }, { item: "bronze-ingot", qty: 1 }];
+  const st = { goals, overrides: {}, done: {}, have: { log: true } };
+  const p = G.calc.plan(goals, DD, { have: st.have });
+  const list = N.sequence(p, st, DD);
+  const nm = (id) => G.i18n.name(DD.items[id]);
+  const raws = list.filter((e) => e.kind === "raw"), steps = list.filter((e) => e.kind === "step");
+  const firstStep = list.findIndex((e) => e.kind === "step");
+  check(firstStep === raws.length, "every raw material comes before the steps");
+  eq(raws.map((e) => e.item), p.raw.filter((r) => !r.have).map((r) => r.item).sort((a, b) => nm(a).localeCompare(nm(b), "pt-BR")), "raws: still needed, by name");
+  check(!raws.some((e) => e.item === "log"), "\"Já tenho\" raws are not a step");
+  eq(steps.map((e) => e.key), p.stations.flatMap((g) => g.steps.map((s) => "step:" + s.item)), "steps in station-card order");
+  eq(new Set(list.map((e) => e.key)).size, list.length, "keys are unique");
+  // locate: first unchecked row, "n de total"
+  let at = N.locate(list, {});
+  eq([at.cur.key, at.n, at.total], [list[0].key, 1, list.length], "nothing checked");
+  at = N.locate(list, { [list[0].key]: true });
+  eq([at.cur.key, at.n], [list[1].key, 2], "after Feito");
+  at = N.locate(list, { [list[2].key]: true });
+  eq([at.cur.key, at.n], [list[0].key, 2], "a row checked by hand further down");
+  at = N.locate(list, Object.fromEntries(list.map((e) => [e.key, true])));
+  eq([at.cur, at.n, at.total], [null, list.length, list.length], "plan complete");
+  eq(N.locate([], {}).cur, null, "empty plan");
+  // phrases
+  const r0 = raws[0];
+  eq(N.phrase(r0, st, DD), `Agora: Juntar (matéria-prima) · ${r0.qty}× ${nm(r0.item)}`, "raw phrase");
+  const s0 = steps.find((e) => e.step.ins.length);
+  const ins = s0.step.ins.map((i) => `${i.qty * s0.step.runs} ${nm(i.item)}`).join(", ");
+  eq(N.phrase(s0, st, DD), `Agora: ${G.i18n.name(s0.station)} · ${s0.qty}× ${nm(s0.item)} (${ins})`, "step phrase (whole-step inputs)");
+  G.i18n.set("en");
+  check(N.phrase(r0, st, DD).startsWith("Now: Gather (raw material) · "), "English phrase");
+});
+
+// ---------------------------------------------------------------- lists (schema 5, "listas separadas")
+await test("lists: a schema 4 copy becomes the one list \"Minha lista\" with nothing lost", () => {
+  const env = makeEnv(), S = env.GK.store;
+  env.GK.data.load(JSON.parse(JSON.stringify(PAYLOAD)));
+  const v4 = { schemaVersion: 4, lang: "pt", theme: "dark", goals: [{ item: "crate", qty: 3 }, { item: "wine", qty: 2 }],
+    choice: { fuel: "fuel-from-log" }, have: { log: true, clay: 4 }, done: { "raw:log": true, "step:crate": true }, example: false,
+    overrides: { pt: { crate: "Caixa" } }, researched: { t1: true }, groupChoice: { g: "m" }, perks: { p: true }, day: "wrath", dayNumber: 61,
+    ui: { todayCollapsed: false }, updatedAt: "2026-10-31T12:00:00.000Z", syncBase: "2026-10-30T00:00:00.000Z" };
+  env.localStorage.setItem("gk2-companion", JSON.stringify(v4));
+  check(S.load(), "loaded");
+  const st = S.get(), l = st.lists[0];
+  eq([st.schemaVersion, st.lists.length, l.id, l.name, l.createdAt, l.updatedAt], [5, 1, "main", "", "1970-01-01T00:00:00.000Z", v4.updatedAt], "one list, dated with the copy");
+  eq([l.goals, l.choice, l.have, l.done, l.example], [v4.goals, v4.choice, v4.have, v4.done, false], "the plan moved into the list");
+  eq([st.goals, st.choice, st.have, st.done], [v4.goals, v4.choice, v4.have, v4.done], "working copy = the open list (other modules read it)");
+  eq([st.overrides, st.researched, st.groupChoice, st.perks, st.day, st.updatedAt, st.syncBase, st.ui.todayCollapsed],
+    [v4.overrides, v4.researched, v4.groupChoice, v4.perks, "wrath", v4.updatedAt, v4.syncBase, false], "global fields kept");
+  eq([st.ui.activeList, st.legacyOf], ["main", "main"], "open list");
+  S.actions.toggleDone("raw:clay", true);
+  env.clock.tick(200);
+  const saved = JSON.parse(env.localStorage.getItem("gk2-companion"));
+  eq([saved.schemaVersion, saved.lists[0].done["raw:clay"], saved.done["raw:clay"], saved.legacyOf], [5, true, true, "main"], "saved as schema 5 (with the flat mirror)");
+  const fr = env.GK.store.sanitizeRemote({ lists: [] });
+  eq(fr.lists, [], "an explicit empty lists stays empty");
+});
+
+await test("lists: create, switch, rename, delete; plan per list, techs / Vantagens global", () => {
+  const env = makeEnv(), S = env.GK.store, A = S.actions, st = () => S.get();
+  env.GK.data.load(JSON.parse(JSON.stringify(PAYLOAD)));
+  A.addGoal("crate", 3); A.setHave("log", 2); A.toggleDone("raw:clay", true); A.setPerk("heat-saver", true); A.setResearched("t1", true);
+  const id = A.createList("  Igreja   da\nvila ");
+  check(!!id && id !== "main", "new id");
+  eq([st().lists.length, st().ui.activeList, st().lists[1].name], [2, id, "Igreja da vila"], "created, opened, name on one line");
+  eq([st().goals, st().have, st().done], [[], {}, {}], "starts empty");
+  eq([st().perks, st().researched], [{ "heat-saver": true }, { t1: true }], "Vantagens / techs are global");
+  A.addGoal("wine", 2); A.setHave("grapes", true);
+  eq(st().lists[1].goals, [{ item: "wine", qty: 2 }], "edits land in the open list");
+  eq(st().lists[0].goals, [{ item: "crate", qty: 3 }], "the other list is untouched");
+  const at = st().updatedAt;
+  A.switchList("main");
+  eq([st().goals, st().have, st().done], [[{ item: "crate", qty: 3 }], { log: 2 }, { "raw:clay": true }], "switching brings its plan back");
+  eq(st().updatedAt, at, "switching is not a synced change (no stamp)");
+  A.switchList(id);
+  eq([st().goals, st().have], [[{ item: "wine", qty: 2 }], { grapes: true }], "and the other one");
+  eq(A.renameList(id, "x".repeat(40)).length, 30, "names capped at 30");
+  eq(A.renameList(id, "   "), "x".repeat(30), "a blank rename is ignored");
+  A.renameList("main", "Fábrica");
+  eq(st().lists[0].name, "Fábrica", "renamed");
+  check(A.deleteList(id), "deleted");
+  eq([st().lists.length, st().ui.activeList, st().goals], [1, "main", [{ item: "crate", qty: 3 }]], "deleting the open list opens the first");
+  check(!!st().listsGone[id], "tombstone kept");
+  check(!A.deleteList("main"), "the last list cannot be deleted");
+  A.clearGoals();
+  eq([st().lists.length, st().lists[0].goals], [1, []], "Limpar lista clears only the open list");
+});
+
+await test("lists: sanitizeRemote validates lists and folds an older page's edit", () => {
+  const S = GK.store, at = "2026-11-02T00:00:00.000Z";
+  const r = S.sanitizeRemote({ lists: [
+    { id: "b", name: "B", createdAt: "2026-11-01T00:00:00.000Z", updatedAt: "2026-11-01T00:00:00.000Z", goals: [{ item: "wine", qty: 0 }] },
+    { id: "main", name: 5, goals: "x", have: { log: -1 } }, { id: "b", name: "dup" }, { id: "bad id!" }, null, "x",
+  ], listsGone: { z: "2026-01-01T00:00:00.000Z", "bad id": "2026", y: "nope" } });
+  eq(r.lists.map((l) => [l.id, l.name]), [["main", ""], ["b", "B"]], "valid ones, first of each id, creation order");
+  eq([r.lists[0].goals, r.lists[0].have, r.lists[1].goals], [[], {}, [{ item: "wine", qty: 1 }]], "content cleaned");
+  eq(r.listsGone, { z: "2026-01-01T00:00:00.000Z" }, "tombstones cleaned");
+  check(!("goals" in r) && !("example" in r), "no flat plan in the sanitized body");
+  // a schema 4 page saved its single plan over a schema 5 copy: the list it mirrored (legacyOf) takes it
+  const base = { lists: [{ id: "main", updatedAt: "2026-11-01T00:00:00.000Z", goals: [{ item: "crate", qty: 1 }] }, { id: "b", createdAt: "2026-11-01T00:00:00.000Z", goals: [] }], legacyOf: "b" };
+  const f = S.sanitizeRemote(Object.assign({}, base, { goals: [{ item: "wine", qty: 4 }], done: { "raw:log": true } }), false, at);
+  eq([f.lists[1].goals, f.lists[1].done, f.lists[1].updatedAt, f.lists[0].goals], [[{ item: "wine", qty: 4 }], { "raw:log": true }, at, [{ item: "crate", qty: 1 }]], "folded into legacyOf");
+  const same = S.sanitizeRemote(Object.assign({}, base, { goals: [] }), false, at);
+  eq(same.lists[1].updatedAt, "1970-01-01T00:00:00.000Z", "an unchanged mirror changes nothing");
+  eq(S.sanitizeRemote({ lists: [{ id: "a", updatedAt: "2026-01-01T00:00:00.000Z" }], listsGone: { a: "2026-02-01T00:00:00.000Z" } }).lists, [], "a deleted list is dropped");
+});
+
+await test("lists: mergeSynced by id (union, tombstones, one-sided changes win whole)", () => {
+  const S = GK.store, base = "2026-11-01T00:00:00.000Z";
+  const T = (d) => "2026-11-0" + d + "T00:00:00.000Z";
+  const list = (id, upd, o) => Object.assign({ id, name: id, createdAt: id === "main" ? "1970-01-01T00:00:00.000Z" : T(1), updatedAt: upd, goals: [], choice: {}, have: {}, done: {}, example: false }, o);
+  const L = { lists: [list("main", T(1), { goals: [{ item: "crate", qty: 1 }], done: { "raw:a": true } }), list("onlyL", T(2)), list("both", T(3), { goals: [{ item: "wine", qty: 1 }], have: { x: 1 }, name: "L" })], listsGone: {} };
+  const R = { lists: [list("main", T(4), { goals: [{ item: "crate", qty: 9 }] }), list("onlyR", T(2)), list("both", T(4), { goals: [{ item: "ink", qty: 1 }], have: { x: 2, y: true }, name: "R" })], listsGone: { gone: T(3) } };
+  const m = S.mergeSynced(L, R, true, base), by = Object.fromEntries(m.lists.map((l) => [l.id, l]));
+  eq(m.lists.map((l) => l.id).sort(), ["both", "main", "onlyL", "onlyR"], "union by id");
+  eq(by.main.goals, [{ item: "crate", qty: 9 }], "main changed only on the account (local is at base): the account copy wins whole");
+  eq(by.main.done, {}, "a one-sided change wins whole (an unticked mark stays unticked)");
+  eq([by.both.goals, by.both.have, by.both.name], [[{ item: "wine", qty: 1 }], { x: 2, y: true }, "R"], "changed on both: goals local, have union remote wins, name from the newer");
+  // a list deleted on one side does not come back from the other
+  const L2 = { lists: [list("main", T(1))], listsGone: { onlyR: T(3) } };
+  const m2 = S.mergeSynced(L2, R, false, base);
+  eq(m2.lists.map((l) => l.id).sort(), ["both", "main"], "tombstone wins over an older copy");
+  eq(Object.keys(m2.listsGone).sort(), ["gone", "onlyR"], "tombstones by union");
+  const R3 = { lists: [list("onlyR", T(5))] };
+  eq(S.mergeSynced(L2, R3, true, base).lists.map((l) => l.id).sort(), ["main", "onlyR"], "a list changed after its deletion stays");
+});
+
+await test("sync: a schema 4 doc from another device migrates on arrival and keeps this device's lists", async () => {
+  const env = makeEnv();
+  const base = "2026-11-01T00:00:00.000Z";
+  env.localStorage.setItem("gk2-companion.account", "u9");
+  env.localStorage.setItem("gk2-companion:u9", JSON.stringify({ schemaVersion: 5, updatedAt: "2026-11-02T00:00:00.000Z", syncBase: base,
+    lists: [{ id: "main", name: "", createdAt: "1970-01-01T00:00:00.000Z", updatedAt: "2026-10-01T00:00:00.000Z", goals: [{ item: "crate", qty: 1 }] },
+            { id: "igreja", name: "Igreja", createdAt: "2026-11-02T00:00:00.000Z", updatedAt: "2026-11-02T00:00:00.000Z", goals: [{ item: "wine", qty: 2 }] }],
+    ui: { activeList: "igreja" } }));
+  const old = { v: 4, updatedAt: "2026-11-03T00:00:00.000Z", state: { goals: [{ item: "crate", qty: 5 }], have: { log: true }, done: {}, perks: { "heat-saver": true } } };
+  const { db } = await bootSync(env, "u9", old);
+  const s = env.GK.store.get(), by = Object.fromEntries(s.lists.map((l) => [l.id, l]));
+  eq(s.lists.map((l) => l.id), ["main", "igreja"], "both lists");
+  eq([by.main.goals, by.main.have], [[{ item: "crate", qty: 5 }], { log: true }], "the old device's plan is the main list");
+  eq([s.ui.activeList, s.goals, s.perks], ["igreja", [{ item: "wine", qty: 2 }], { "heat-saver": true }], "this device's open list stays open");
+  await env.clock.tick(10);
+  const w = db.writes[db.writes.length - 1];
+  check(!!w, "merged copy pushed");
+  eq(w && [w.v, w.state.lists.length, w.state.legacyOf, w.state.goals], [5, 2, "igreja", [{ item: "wine", qty: 2 }]], "doc: lists + the open list flat");
+  // switching lists writes nothing (the open list is per device)
+  const n = db.writes.length;
+  env.GK.store.actions.switchList("main");
+  await env.clock.tick(3000);
+  eq(db.writes.length, n, "no write on switch");
+  // that older page edits the mirror it reads (lists kept as an unknown field): folded into "igreja"
+  db.push(Object.assign({}, w, { updatedAt: "2026-11-05T00:00:00.000Z", state: Object.assign({}, w.state, { goals: [{ item: "wine", qty: 7 }] }) }));
+  await flushMicro();
+  const s2 = env.GK.store.get();
+  eq([s2.lists[1].goals, s2.goals, s2.ui.activeList], [[{ item: "wine", qty: 7 }], [{ item: "crate", qty: 5 }], "main"], "older page's edit folded into its list");
+});
+
+await test("sync: lists made on two devices meet (union by id)", async () => {
+  const env = makeEnv();
+  const base = "2026-11-01T00:00:00.000Z";
+  env.localStorage.setItem("gk2-companion.account", "u10");
+  env.localStorage.setItem("gk2-companion:u10", JSON.stringify({ schemaVersion: 5, updatedAt: base, syncBase: base,
+    lists: [{ id: "main", updatedAt: base, goals: [{ item: "crate", qty: 1 }] }] }));
+  const doc = { v: 5, updatedAt: "2026-11-03T00:00:00.000Z", state: { lists: [{ id: "main", updatedAt: base, goals: [{ item: "crate", qty: 1 }] },
+    { id: "pc", name: "Do PC", createdAt: "2026-11-03T00:00:00.000Z", updatedAt: "2026-11-03T00:00:00.000Z", goals: [{ item: "ink", qty: 1 }] }] } };
+  const { db } = await bootSync(env, "u10", doc);
+  eq(env.GK.store.get().lists.map((l) => l.name), ["", "Do PC"], "the account's new list arrives");
+  env.GK.store.actions.createList("Do celular");
+  db.push({ v: 5, updatedAt: "2026-12-01T00:00:00.000Z", state: { lists: doc.state.lists.concat([{ id: "pc2", name: "Outra do PC", createdAt: "2026-11-04T00:00:00.000Z", updatedAt: "2026-11-04T00:00:00.000Z" }]) } });
+  await flushMicro();
+  const names = env.GK.store.get().lists.map((l) => l.name);
+  check(names.indexOf("Do celular") >= 0 && names.indexOf("Outra do PC") >= 0 && names.length === 4, "both new lists kept: " + names.join(", "));
+  eq(env.GK.store.get().lists.find((l) => l.id === env.GK.store.get().ui.activeList).name, "Do celular", "still on the list just made");
+});
+
+// ---------------------------------------------------------------- "Recentes" na busca (state.recents, synced, global)
+const RIDS = ["crate", "wine", "ink", "log", "fuel", "iron-ore", "clay", "sand", "master-sword", "steel-ingot", "beeswax", "grapes", "fat", "leaf"];
+await test("recents: addGoal records them, newest first, capped, global across lists", () => {
+  const env = makeEnv(), S = env.GK.store, A = S.actions, st = () => S.get();
+  env.GK.data.load(JSON.parse(JSON.stringify(PAYLOAD)));
+  eq(st().recents, [], "fresh: none");
+  check(S.SYNCED.indexOf("recents") >= 0, "synced field");
+  A.addGoal("crate", 1); A.addGoal("wine", 2); A.addGoal("ink", 1);
+  eq(st().recents, ["ink", "wine", "crate"], "newest first");
+  const at = st().updatedAt;
+  A.addGoal("crate", 1);
+  eq(st().recents, ["crate", "ink", "wine"], "adding again moves it to the front (no duplicate)");
+  check(st().updatedAt > at, "a synced change (stamped)");
+  A.addRecent("wine");
+  eq(st().recents, ["wine", "crate", "ink"], "addRecent");
+  const at2 = st().updatedAt;
+  A.addRecent("wine"); A.addRecent("no-such-item"); A.addRecent(5);
+  eq([st().recents, st().updatedAt], [["wine", "crate", "ink"], at2], "already first / unknown: no change");
+  for (const id of RIDS) A.addGoal(id, 1);
+  eq(st().recents, RIDS.slice().reverse().slice(0, S.RECENTS_MAX), "capped at RECENTS_MAX (12)");
+  A.createList("Outra");
+  eq(st().recents[0], "leaf", "recents are global: a new list keeps them");
+  A.addGoal("crate", 1);
+  A.switchList("main");
+  eq(st().recents[0], "crate", "and an add in another list counts too");
+  env.clock.tick(200);
+  eq(JSON.parse(env.localStorage.getItem("gk2-companion")).recents[0], "crate", "saved locally");
+});
+
+await test("recents: sanitizeRemote and mergeSynced", () => {
+  const S = GK.store, san = (o) => S.sanitizeRemote(o);
+  eq(san({ recents: ["wine", "nope", "wine", 3, null, "", "crate"] }).recents, ["wine", "crate"], "only known item ids, no duplicates");
+  eq([san({}).recents, san({ recents: "wine" }).recents, san({ recents: { a: 1 } }).recents], [[], [], []], "absent / not an array");
+  eq(san({ recents: RIDS }).recents.length, 12, "at most 12 kept");
+  const L = san({ recents: ["crate", "wine", "ink"] }), R = san({ recents: ["log", "wine", "fuel"] });
+  eq(S.mergeSynced(L, R).recents, ["crate", "wine", "ink", "log", "fuel"], "union, local order first when local is newer");
+  eq(S.mergeSynced(L, R, true).recents, ["log", "wine", "fuel", "crate", "ink"], "union, remote order first when the account is newer");
+  eq(S.mergeSynced(san({ recents: RIDS.slice(0, 8) }), san({ recents: RIDS.slice(6) })).recents, RIDS.slice(0, 12), "merged list capped");
+  eq(S.mergeSynced(L, san({})).recents, L.recents, "remote without recents keeps ours");
+  // a doc from a page older than recents (no key at all): ours stay
+  const raw = { goals: [] };
+  eq(S.keepLate(san(raw), raw, L).recents, L.recents, "keepLate: keep ours when the doc lacks the key");
+  eq(S.keepLate(san(raw), Object.assign({ recents: [] }, raw), L), null, "keepLate: an explicit empty value is a real clear");
+  eq(S.adoptLate(L, san({})).recents, L.recents, "adoptLate: take the doc's when we have none");
+  eq(S.adoptLate(san({}), L), null, "adoptLate: nothing to adopt");
+});
+
+await test("recents: a schema 5 copy without the field loads with none; sync merges both sides", async () => {
+  const env = makeEnv();
+  const base = "2026-11-01T00:00:00.000Z";
+  env.localStorage.setItem("gk2-companion.account", "u11");
+  env.localStorage.setItem("gk2-companion:u11", JSON.stringify({ schemaVersion: 5, updatedAt: base, syncBase: base,
+    lists: [{ id: "main", updatedAt: base, goals: [{ item: "crate", qty: 1 }] }] }));
+  const doc = { v: 5, updatedAt: base, state: { lists: [{ id: "main", updatedAt: base, goals: [{ item: "crate", qty: 1 }] }] } };
+  const { db } = await bootSync(env, "u11", doc);
+  eq(env.GK.store.get().recents, [], "no recents yet");
+  env.GK.store.actions.addGoal("wine", 1);   // this device adds; meanwhile the account got another device's recents
+  db.push({ v: 5, updatedAt: "2026-12-01T00:00:00.000Z", state: { lists: doc.state.lists, recents: ["ink", "crate"] } });
+  await flushMicro();
+  eq(env.GK.store.get().recents, ["ink", "crate", "wine"], "merged (the account is newer: its order first)");
+  await env.clock.tick(3000);
+  const w = db.writes[db.writes.length - 1];
+  eq(w && w.state.recents, ["ink", "crate", "wine"], "merged copy pushed");
+});
+
+await test("item facts reach the page (where / use / stack, meta.refs)", () => {
+  const refs = D.meta.refs || {};
+  check(refs.names && refs.buffs, "meta.refs has the name and buff tables");
+  const pk = D.items["pumpkin"], soup = D.items["pumpkin-soup"], bream = D.items["bream"];
+  eq(pk.where && pk.where[0], ["buy", "vegetable-stand", 2], "Abóbora: bought at the Vegetable Stand from level 2");
+  eq(soup.use, { en: 20, enB: [22, "steamed-up"], buff: ["building-spirit-ii", 450, 1] }, "Sopa de abóbora: energy, boost, buff");
+  eq(soup.stack, 30, "Sopa de abóbora stacks 30");
+  eq(bream.where && bream.where[0], ["fish", "village", "breadcrumb-bait", 50, 33.3], "Brema: spot, bait, day/night chance");
+  const vs = refs.names["vegetable-stand"];
+  eq(typeof vs === "string" ? vs : vs.pt, "Banca de Vegetais", "trader name: official pt");
+  eq(refs.names.tree && refs.names.tree.tr, "machine", "gathering node without official text is marked machine");
+  eq(refs.buffs["building-spirit-ii"].pt, "Espírito da Engenharia II", "buff name: official pt");
+  for (const it of Object.values(D.items)) {
+    for (const w of it.where || []) {
+      if (w[1][0] === "@") check(D.items[w[1].slice(1)], `${it.id}: source item ${w[1]} exists`);
+      else check(refs.names[w[1]] != null, `${it.id}: source name ${w[1]} is in meta.refs.names`);
+    }
+  }
 });
 
 // ---------------------------------------------------------------- done

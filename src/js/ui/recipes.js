@@ -216,6 +216,73 @@ GK.i18n.add({
     "rune.blue": "Blue",
   },
 });
+// "Onde conseguir" (items[].where) and the game-style use tooltip (items[].use, .stack), from data/facts.json
+GK.i18n.add({
+  pt: {
+    "rc.where": "Onde conseguir",
+    "rc.whereMore": "mais {n}",
+    "rc.whereMoreLabel": "Mostrar mais {n} fontes",
+    "rc.questOnly": "Só de missão",
+    "rc.questOnlyTitle": "Nenhuma loja, coleta ou receita dá este item: só missões",
+    "rc.w.buy": "Comprar", "rc.w.fish": "Pescar", "rc.w.gather": "Coletar", "rc.w.quest": "Missão",
+    "rc.w.battle": "Batalha", "rc.w.chest": "Baú", "rc.w.found": "Achar", "rc.w.looter": "Saqueadores",
+    "rc.w.autopsy": "Autópsia", "rc.w.burial": "Recompensa", "rc.w.container": "Abrir", "rc.w.town": "Restauração",
+    "rc.w.study": "Mesa de estudo", "rc.w.church": "Igreja", "rc.w.start": "Início", "rc.w.outfit": "Traje",
+    "rc.w.resurrect": "Ressurreição", "rc.w.character": "Entrega",
+    "rc.w.level": "desde o nível {n}",
+    "rc.w.talk": "só conversando, sem loja",
+    "rc.w.noBait": "sem isca",
+    "rc.w.dayNight": "dia {d}% · noite {n}%",
+    "rc.w.allDay": "dia e noite {d}%",
+    "rc.w.chestOnce": "uma vez, no início do jogo",
+    "rc.w.once": "uma vez",
+    "rc.w.unofficialTitle": "Nome sem tradução oficial do jogo",
+    "rc.stack": "Pilha: {n} por espaço.",
+    "rc.stackOne": "Não empilha: um por espaço.",
+    "rc.stackTitle": "Pilha máxima: {n}",
+    "rc.useLbl": "Efeito de uso:",
+    "rc.energyName": "Energia",
+    "rc.insanityName": "insanidade",
+    "rc.bar": "{n} de 100 da barra de energia",
+    "rc.barLabel": "Enche {n} dos 100 pontos da barra de energia",
+    "rc.boost": "{v} com {buff}",
+    "rc.lasts": "Dura {t}.",
+    "rc.restart": "Usar outro reinicia o tempo.",
+    "rc.descUnofficial": "Descrição da wiki, sem texto oficial do jogo",
+  },
+  en: {
+    "rc.where": "Where to get it",
+    "rc.whereMore": "{n} more",
+    "rc.whereMoreLabel": "Show {n} more sources",
+    "rc.questOnly": "Quest only",
+    "rc.questOnlyTitle": "No shop, gathering or recipe gives this item: only quests",
+    "rc.w.buy": "Buy", "rc.w.fish": "Fish", "rc.w.gather": "Gather", "rc.w.quest": "Quest",
+    "rc.w.battle": "Battle", "rc.w.chest": "Chest", "rc.w.found": "Find", "rc.w.looter": "Looters",
+    "rc.w.autopsy": "Autopsy", "rc.w.burial": "Reward", "rc.w.container": "Open", "rc.w.town": "Restoration",
+    "rc.w.study": "Study Table", "rc.w.church": "Church", "rc.w.start": "Start", "rc.w.outfit": "Outfit",
+    "rc.w.resurrect": "Resurrection", "rc.w.character": "Delivered by",
+    "rc.w.level": "from trader level {n}",
+    "rc.w.talk": "in conversation, no shop",
+    "rc.w.noBait": "no bait",
+    "rc.w.dayNight": "day {d}% · night {n}%",
+    "rc.w.allDay": "day and night {d}%",
+    "rc.w.chestOnce": "once, at the start of the game",
+    "rc.w.once": "once",
+    "rc.w.unofficialTitle": "No official game translation for this name",
+    "rc.stack": "Stack: {n} per slot.",
+    "rc.stackOne": "Does not stack: one per slot.",
+    "rc.stackTitle": "Max stack: {n}",
+    "rc.useLbl": "Effect on use:",
+    "rc.energyName": "Energy",
+    "rc.insanityName": "insanity",
+    "rc.bar": "{n} of the 100-point energy bar",
+    "rc.barLabel": "Fills {n} of the 100 points of the energy bar",
+    "rc.boost": "{v} with {buff}",
+    "rc.lasts": "Lasts {t}.",
+    "rc.restart": "Using another restarts the timer.",
+    "rc.descUnofficial": "Wiki description, no official game text",
+  },
+});
 
 GK.ui.recipes = (function () {
   const { t, name, num, edited } = GK.i18n, { esc, slot } = GK.util;
@@ -229,7 +296,7 @@ GK.ui.recipes = (function () {
   const V = { item: null, stack: [], q: "", cat: null, st: null, from: null };   // from: route that opened the detail
   let fromScroll = 0, returnTo = null, pendingFocus = false;
   let shown = PAGE, results = [], expanded = { cat: false, st: false };
-  let addQty = 1, usedAll = false, hereAll = false, listScroll = 0, sortCache = { key: "", ids: [] };
+  let addQty = 1, usedAll = false, hereAll = false, whereAll = false, listScroll = 0, sortCache = { key: "", ids: [] };
 
   /* ---------- persistence ---------- */
   function save() {
@@ -464,6 +531,104 @@ GK.ui.recipes = (function () {
       </div>
     </article>`;
   }
+  /* ---------- facts: "Onde conseguir", use tooltip, stack (data/facts.json via the build) ---------- */
+  const WHERE_CAP = 4, MINUS = "−";
+  const signed = (v) => (v < 0 ? MINUS + num(-v) : "+" + num(v));
+  const refs = () => (GK.data.get().meta.refs || {});
+  const unofficialBadge = (title) => (GK.i18n.lang() !== "en" ? `<span class="badge" title="${esc(title)}">${esc(t("rc.unofficial"))}</span>` : "");
+  // a source name: "@item-id" (the app's item name) or a key of meta.refs.names ("x" or {pt, en, tr})
+  function refName(ref, state) {
+    if (typeof ref !== "string") return { txt: "" };
+    if (ref[0] === "@") { const it = GK.data.item(ref.slice(1)); return { txt: it ? name(it, state.overrides) : ref.slice(1), tr: it && UNOFFICIAL[it.tr] }; }
+    const e = (refs().names || {})[ref];
+    if (e == null) return { txt: ref };
+    return typeof e === "string" ? { txt: e } : { txt: name(e), tr: !!e.tr };
+  }
+  function whereLine(w, state) {
+    const k = w[0], nm = refName(w[1], state);
+    let what = esc(nm.txt), det = "";
+    if (k === "buy") det = w[2] === "talk" ? t("rc.w.talk") : w[2] ? t("rc.w.level", { n: w[2] }) : "";
+    else if (k === "fish" && w.length > 2) {
+      const bait = w[2] === "no-bait" ? t("rc.w.noBait") : name(GK.data.item(w[2]) || { en: w[2] }, state.overrides);
+      what += ", " + esc(bait);
+      det = w[3] === w[4] ? t("rc.w.allDay", { d: num(w[3]) }) : t("rc.w.dayNight", { d: num(w[3]), n: num(w[4]) });
+    } else if (k === "chest") det = t("rc.w.chestOnce");
+    else if (k === "found") det = t("rc.w.once");
+    const badge = nm.tr ? unofficialBadge(t("rc.w.unofficialTitle")) : "";
+    return `<li><b class="rc-where-v">${esc(t("rc.w." + k))}:</b> ${what}${badge}${det ? ` <span class="rc-where-d">${esc(det)}</span>` : ""}</li>`;
+  }
+  function whereHtml(it, rs, state) {
+    const w = Array.isArray(it.where) ? it.where.filter((x) => Array.isArray(x) && x.length > 1) : [];
+    if (!w.length) return "";
+    const shown = whereAll ? w : w.slice(0, WHERE_CAP), rest = w.length - shown.length;
+    const questOnly = !rs.length && w.every((x) => x[0] === "quest");
+    return `<div class="rc-info rc-where"><h3 class="rc-k">${esc(t("rc.where"))}</h3>
+      ${questOnly ? `<p class="rc-where-only"><span class="badge badge-warn" title="${esc(t("rc.questOnlyTitle"))}">${esc(t("rc.questOnly"))}</span></p>` : ""}
+      <ul class="rc-where-list">${shown.map((x) => whereLine(x, state)).join("")}</ul>
+      ${rest > 0 ? `<button type="button" class="btn btn-sm btn-ghost rc-where-more" id="rc-where-more" data-where-more aria-label="${esc(t("rc.whereMoreLabel", { n: rest }))}">${esc(t("rc.whereMore", { n: rest }))}</button>` : ""}
+    </div>`;
+  }
+  function duration(secs) {
+    const m = Math.floor(secs / 60), s = secs % 60;
+    return [m ? `${num(m)} min` : "", s ? `${num(s)} s` : ""].filter(Boolean).join(" ");
+  }
+  function buffName(key) {
+    const b = (refs().buffs || {})[key];
+    return b ? { b, txt: name(b) } : { b: null, txt: key };
+  }
+  // the game's item tooltip: "Efeito de uso: (bolt) +20", the HUD-like energy bar, the boosted value, the buff
+  function tipHtml(it) {
+    const u = it.use;
+    if (!u || typeof u !== "object") return "";
+    const en = typeof u.en === "number" ? u.en : null, ins = typeof u.ins === "number" ? u.ins : null;
+    const vals = [];
+    if (en != null) vals.push(`<span class="gk-val gk-en"><span class="gk-bolt" role="img" aria-label="${esc(t("rc.energyName"))}"></span>${esc(signed(en))}</span>`);
+    if (ins != null) vals.push(`<span class="gk-val gk-ins">${esc(signed(ins))} <small>${esc(t("rc.insanityName"))}</small></span>`);
+    const parts = [];
+    if (vals.length) parts.push(`<p class="gk-eff"><span class="gk-lbl">${esc(t("rc.useLbl"))}</span> ${vals.join(" ")}</p>`);
+    if (en != null && en > 0) {
+      const pct = (v) => Math.max(0, Math.min(100, v)) / 100;
+      const boost = Array.isArray(u.enB) && typeof u.enB[0] === "number" ? u.enB : null;
+      const plus = boost && boost[0] > en ? pct(boost[0]) - pct(en) : 0;
+      parts.push(`<div class="gk-bar" role="img" aria-label="${esc(t("rc.barLabel", { n: en }))}">
+        <span class="gk-bar-ico"><span class="gk-bolt"></span></span>
+        <span class="gk-bar-track"><span class="gk-bar-empty"></span><span class="gk-bar-fill" style="width:calc((100% - 6px) * ${pct(en)})"></span>${plus > 0 ? `<span class="gk-bar-plus" style="left:calc(3px + (100% - 6px) * ${pct(en)});width:calc((100% - 6px) * ${plus.toFixed(3)})"></span>` : ""}<span class="gk-bar-ticks"></span></span>
+      </div>`);
+    }
+    const notes = [];
+    if (en != null && en > 0) notes.push(esc(t("rc.bar", { n: en })));
+    for (const [f, base] of [["enB", en], ["insB", ins]]) {
+      const b = u[f];
+      if (!Array.isArray(b) || typeof b[0] !== "number" || base == null) continue;
+      const bn = buffName(b[1]);
+      notes.push(t("rc.boost", { v: `<b>${esc(f === "enB" ? num(b[0]) : signed(b[0]))}</b>`, buff: `<b${bn.b && bn.b.d ? ` title="${esc(name(bn.b.d))}"` : ""}>${esc(bn.txt)}</b>` }));
+    }
+    if (notes.length) parts.push(`<p class="gk-note">${notes.join(" · ")}</p>`);
+    if (Array.isArray(u.buff) && u.buff.length) {
+      const bn = buffName(u.buff[0]), secs = typeof u.buff[1] === "number" ? u.buff[1] : null;
+      const d = bn.b && bn.b.d ? name(bn.b.d) : "";
+      const time = [secs ? esc(t("rc.lasts", { t: "\u0000" })).replace("\u0000", `<b>${duration(secs)}</b>`) : "", u.buff[2] ? esc(t("rc.restart")) : ""].filter(Boolean).join(" ");
+      if (parts.length) parts.push(`<div class="gk-rule" aria-hidden="true"></div>`);
+      parts.push(`<div class="gk-buff"><span class="gk-buff-ico" aria-hidden="true"></span><div>
+        <p class="gk-buff-name">${esc(bn.txt)}${bn.b && bn.b.tr ? unofficialBadge(t("rc.w.unofficialTitle")) : ""}</p>
+        ${d ? `<p class="gk-buff-d">${esc(d)}${bn.b.dtr ? unofficialBadge(t("rc.descUnofficial")) : ""}</p>` : ""}
+        ${time ? `<p class="gk-buff-t">${time}</p>` : ""}
+      </div></div>`);
+    }
+    return parts.length ? `<div class="gk-tip">${parts.join("")}</div>` : "";
+  }
+  // the big item slot with the stack in its corner (as the game prints the count), + one caption line
+  function stackSlot(it, nm) {
+    const html = slot(it, nm), st = typeof it.stack === "number" && it.stack > 0 ? it.stack : null;
+    if (!st || st < 2) return html;
+    return html.replace(/^<span class="slot"/, `<span class="slot" title="${esc(t("rc.stackTitle", { n: st }))}"`)
+      .replace(/<\/span>$/, `<span class="stack-n tabnum" aria-hidden="true">${esc(num(st))}</span></span>`);
+  }
+  function stackCap(it) {
+    const st = typeof it.stack === "number" && it.stack > 0 ? it.stack : null;
+    if (!st) return "";
+    return `<p class="stack-cap">${st > 1 ? esc(t("rc.stack", { n: "\u0000" })).replace("\u0000", `<b>${esc(num(st))}</b>`) : esc(t("rc.stackOne"))}</p>`;
+  }
   function detailHtml(id, state) {
     const D = GK.data.get(), it = D.items[id], nm = name(it, state.overrides), lang = GK.i18n.lang();
     const other = lang === "en" ? it.pt : it.en;
@@ -486,6 +651,8 @@ GK.ui.recipes = (function () {
     </div>`;
     const info = [];
     const rs = GK.data.recipesFor(id);
+    const where = whereHtml(it, rs, state);
+    if (where) info.push(where);
     if (it.obtain && (!rs.length || it.raw || it.unobtainable)) info.push(`<div class="rc-info"><h3 class="rc-k">${esc(t("rc.obtain"))}</h3><p>${esc(name(it.obtain))}</p></div>`);
     if (it.runes) info.push(`<div class="rc-info"><h3 class="rc-k">${esc(t("rc.runes"))}</h3><div class="rc-runes">${runes(it.runes)}</div></div>`);
     if (it.members && it.members.length) info.push(`<div class="rc-info"><h3 class="rc-k">${esc(t("rc.members"))}</h3><ul class="rc-lines">${it.members.map((m) => itemLine(m, state)).join("")}</ul></div>`);
@@ -493,13 +660,14 @@ GK.ui.recipes = (function () {
     if (groups.length) info.push(`<div class="rc-info"><h3 class="rc-k">${esc(t("rc.memberOf"))}</h3><ul class="rc-lines">${groups.map((gid) => itemLine(gid, state)).join("")}</ul></div>`);
 
     const head = `<article class="card rc-item">
-      <header class="rc-item-h">${slot(it, nm)}<div class="rc-item-t">
+      <header class="rc-item-h">${stackSlot(it, nm)}<div class="rc-item-t">
         <h2 class="rc-name" id="rc-detail-h" tabindex="-1">${esc(nm)}</h2>
         ${other && other !== nm ? `<p class="rc-other" lang="${lang === "en" ? "pt-BR" : "en"}">${esc(other)}</p>` : ""}
         ${catTxt ? `<p class="rc-cat">${esc(catTxt)}</p>` : ""}
         ${badges(it, state) ? `<div class="rc-badges">${badges(it, state)}</div>` : ""}
+        ${stackCap(it)}
       </div></header>
-      ${goal}${info.join("")}
+      ${tipHtml(it)}${goal}${info.join("")}
     </article>`;
 
     const cur = current(id, state), many = rs.filter(expandable).length > 1;
@@ -572,7 +740,7 @@ GK.ui.recipes = (function () {
     if (V.item === id) return;
     if (fromList || !V.item) { listScroll = browseEl.hidden ? listScroll : window.scrollY; V.stack = []; V.from = null; }
     else { V.stack.push(V.item); if (V.stack.length > 30) V.stack.shift(); }
-    V.item = id; addQty = 1; usedAll = false; hereAll = false;
+    V.item = id; addQty = 1; usedAll = false; hereAll = false; whereAll = false;
     save();
     showView(GK.store.get(), true);
   }
@@ -589,7 +757,7 @@ GK.ui.recipes = (function () {
     if (!toList && !V.stack.length && V.from) { backToOrigin(); return; }
     if (toList) V.from = null;
     if (!toList && V.stack.length) {
-      V.item = V.stack.pop(); addQty = 1; usedAll = false; hereAll = false;
+      V.item = V.stack.pop(); addQty = 1; usedAll = false; hereAll = false; whereAll = false;
       save(); showView(GK.store.get(), true);
       return;
     }
@@ -608,7 +776,7 @@ GK.ui.recipes = (function () {
     const from = opts && opts.from && opts.from !== "recipes" && cur !== "recipes" ? opts.from : null;
     if (from) fromScroll = window.scrollY;
     if (V.item !== itemId || from || V.stack.length) {
-      V.stack = []; V.item = itemId; addQty = 1; usedAll = false; hereAll = false;
+      V.stack = []; V.item = itemId; addQty = 1; usedAll = false; hereAll = false; whereAll = false;
       V.from = from;
       save();
     }
@@ -659,6 +827,7 @@ GK.ui.recipes = (function () {
     if ("useDefault" in d) { A.chooseRecipe(V.item, null); GK.ui.toast(t("rc.usedDefault", { name: name(GK.data.item(V.item), GK.store.get().overrides) })); return; }
     if ("usedMore" in d) { usedAll = true; renderDetail(GK.store.get()); return; }
     if ("hereMore" in d) { hereAll = true; renderDetail(GK.store.get()); return; }
+    if ("whereMore" in d) { whereAll = true; renderDetail(GK.store.get()); const l = root.querySelector(".rc-where-list li:nth-child(5)"); if (l) { l.tabIndex = -1; l.focus({ preventScroll: true }); } return; }
     if (d.tech && GK.ui.tech && typeof GK.ui.tech.open === "function") { GK.ui.tech.open(d.tech, { from: "recipes" }); return; }
   }
 
