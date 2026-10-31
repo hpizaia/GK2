@@ -4,7 +4,7 @@
 
 A crafting planner for **Graveyard Keeper 2**, in English and Brazilian Portuguese. Tell it what you want to build and it adds up every ingredient, from raw materials to the last step, grouped by station and in the right order, plus the technologies you still need to research.
 
-[![version](https://img.shields.io/badge/version-1.3.1-e3a24e)](CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-1.3.3-e3a24e)](CHANGELOG.md)
 [![built with Claude Code](https://img.shields.io/badge/built%20with-Claude%20Code-d97757)](https://claude.com/claude-code)
 [![languages](https://img.shields.io/badge/UI-EN%20%7C%20pt--BR-8fae5e)](#languages-and-themes)
 [![licence](https://img.shields.io/badge/code-MIT-green)](LICENSE)
@@ -24,8 +24,8 @@ A crafting planner for **Graveyard Keeper 2**, in English and Brazilian Portugue
 
 **Or run it yourself** (no Claude account needed, no sync):
 
-- Open [`dist/preview.html`](dist/preview.html) in a browser after cloning, or
-- Put [`dist/preview.html`](dist/preview.html), renamed to `index.html`, on any static host (GitHub Pages, Netlify, a USB stick…). Everything is inline: no server, no API calls. (`dist/index.html` is the Artifact flavour of the same page: it has no `<html>`/`<head>` skeleton because the Artifact viewer adds its own.)
+- Download the single file from the [latest release](https://github.com/hpizaia/GK2/releases/latest) and open it in a browser (works offline), or
+- Put that file, renamed to `index.html`, on any static host (GitHub Pages, Netlify, a USB stick…). Everything is inline: no server, no API calls. (In the repository it is `dist/preview.html`; `dist/index.html` is the Artifact flavour of the same page: it has no `<html>`/`<head>` skeleton because the Artifact viewer adds its own.)
 
 ## Features
 

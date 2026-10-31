@@ -119,9 +119,10 @@ O `CHANGELOG.md` é gerado: não edite à mão.
 2. **Git:**
    ```sh
    git status
-   git add -A data scripts tools docs src VERSION CHANGELOG.md dist prototype README.md SPEC.md DESIGN.md BACKLOG.md AUDITORIA.md historico
+   git add -A
+   git status --short   # confira: historico/ e os dumps do jogo não devem aparecer
    git commit -m "Companheiro GK2 v1.2.1: dados do jogo 1.0xx"
    git push
    ```
    O `.gitignore` mantém fora do git `data/raw/`, `data/icons/`, o dump completo do jogo e as `.venv`. Se o push recusar por falta de credencial: `gh auth login` (ou `gh auth setup-git`), depois `git push` de novo. Confira antes `git config user.email`: os commits devem sair com o e-mail noreply da conta do GitHub usada no repositório (configurado localmente com `git config --local user.email`).
-3. **Histórico da sessão:** peça ao Claude para exportar a transcrição da sessão e guarde em `historico/` (por exemplo `historico/sessao-AAAA-MM-DD-<assunto>.zip`), com uma linha nova na tabela do `historico/README.md`. Se o zip for grande, guarde fora do git e anote só onde está.
+3. **Histórico da sessão:** peça ao Claude para exportar a transcrição da sessão e guarde em `historico/` (por exemplo `historico/sessao-AAAA-MM-DD-<assunto>.zip`), com uma linha nova na tabela do `historico/README.md`. A pasta `historico/` está no `.gitignore` do repositório público; o histórico fica no repositório privado `hpizaia/GK2-historico`.

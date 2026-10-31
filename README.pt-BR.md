@@ -4,7 +4,7 @@
 
 Planejador de crafting do **Graveyard Keeper 2**, em português do Brasil e inglês. Você diz o que quer fabricar e ele soma todos os ingredientes, da matéria-prima até a última etapa, agrupados por estação e na ordem certa, com as tecnologias que ainda faltam pesquisar.
 
-[![versão](https://img.shields.io/badge/vers%C3%A3o-1.3.1-e3a24e)](CHANGELOG.md)
+[![versão](https://img.shields.io/badge/vers%C3%A3o-1.3.3-e3a24e)](CHANGELOG.md)
 [![feito com Claude Code](https://img.shields.io/badge/feito%20com-Claude%20Code-d97757)](https://claude.com/claude-code)
 [![idiomas](https://img.shields.io/badge/interface-pt--BR%20%7C%20EN-8fae5e)](#idiomas-e-temas)
 [![licença](https://img.shields.io/badge/c%C3%B3digo-MIT-green)](LICENSE)
@@ -24,8 +24,8 @@ Planejador de crafting do **Graveyard Keeper 2**, em português do Brasil e ingl
 
 **Ou rode você mesmo** (sem conta do Claude, sem sincronização):
 
-- Depois de clonar, abra [`dist/preview.html`](dist/preview.html) no navegador, ou
-- Ponha o [`dist/preview.html`](dist/preview.html), renomeado para `index.html`, em qualquer hospedagem estática (GitHub Pages, Netlify, um pendrive…). Está tudo embutido: sem servidor e sem chamadas de API. (O `dist/index.html` é a versão para o Artifact da mesma página: não tem o esqueleto `<html>`/`<head>`, porque o visualizador do Artifact põe o dele.)
+- Baixe o arquivo único na [última release](https://github.com/hpizaia/GK2/releases/latest) e abra no navegador (funciona sem internet), ou
+- Ponha esse arquivo, renomeado para `index.html`, em qualquer hospedagem estática (GitHub Pages, Netlify, um pendrive…). Está tudo embutido: sem servidor e sem chamadas de API. (No repositório ele é o `dist/preview.html`; o `dist/index.html` é a versão para o Artifact da mesma página: não tem o esqueleto `<html>`/`<head>`, porque o visualizador do Artifact põe o dele.)
 
 ## O que faz
 

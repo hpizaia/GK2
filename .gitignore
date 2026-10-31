@@ -31,3 +31,6 @@ __pycache__/
 
 # transcrições e auditoria privada: nunca no repositório público
 historico/
+
+# revisão de UX de 31/10 (relatórios internos e capturas; decidir depois o que publicar)
+docs/revisao-ux/

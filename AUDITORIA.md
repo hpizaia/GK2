@@ -36,7 +36,7 @@ Atualizado em 2026-10-30, na documentação da 1.2.0. Os achados originais abaix
 
 - F1: sprite em WebP sem perdas (cerca de −430 KB).
 - B1: faltam testes das telas (`GK.ui.*`) e o `test_calc.mjs` não é chamado pelo `test_build.py`.
-- X4: licença do wikily. Manter tudo privado até haver autorização.
+- X4: licença do wikily. Situação em 31/10/2026: código publicado sob MIT (só o código), dados usados como conteúdo de fã com crédito, pedido de autorização enviado ao wikily; ver `docs/dados.md`.
 - D2: 231 nomes de receita sem pt.
 - D4: 45 categorias e 3 maestrias ainda de máquina.
 - C2/D1 no build: o build já exporta `made_text` (como nota da saída) e `star_quality`, mas a qualidade das receitas "X a partir de Y (ouro)" e a troca da entrada pela variante ainda são feitas na página, pelo nome e pelo id.
@@ -53,7 +53,7 @@ Atualizado em 2026-10-30, na documentação da 1.2.0. Os achados originais abaix
 7. Desempenho: o sprite em base64 ocupa 733 KB (42% da página e 78% do gzip). WebP sem perdas ou pngquant economiza cerca de 430 KB. Parse e cálculo são rápidos.
 8. UX: vários alvos de toque têm 30–36 px (a SPEC promete ≥ 44). Há 9 pares de cores abaixo de 4,5:1, e tocar no nome de um item marca o item como coletado.
 9. Pipeline: o build é idempotente e reprodutível (verificado byte a byte) e passa em 27 testes. Mas **não há teste do JS**, e o git carrega cerca de 30 MB de artefatos gerados e de dumps do jogo.
-10. Licença: os dados do wikily (os termos proíbem scraping), os ícones do jogo e o dump completo dos textos do jogo estão no repositório (privado). **Não publique abertamente** sem autorização.
+10. Licença: os dados do wikily, os ícones do jogo e os textos do jogo não são do projeto. Resolvido em 31/10/2026: a `LICENSE` (MIT) cobre só o código e exclui dados, ícones e textos; o uso é de fã, com crédito, e o pedido de autorização foi enviado ao wikily (`docs/dados.md`).
 
 ## Testes executados
 
@@ -297,8 +297,8 @@ Recomendação: no claro, escurecer `--gold`/`--accent` no cabeçalho (ou usar `
 - Recomendação: limitar override a 80 caracteres e 2000 entradas, e filtrar ids por `GK.data.item`.
 
 **X4. Licença e redistribuição.** Severidade alta (é uma decisão), esforço P para conter.
-- Evidência: os termos do wikily proíbem scraping e uso sem licença (`data/README-data.md`). Os ícones são arte do jogo (© Lazy Bear) embutida no sprite. O repositório GitHub `hpizaia/GK2` é **privado**, mas guarda o dump completo da localização do jogo.
-- Recomendação: manter o repositório e o artifact privados. Pedir autorização em contact@wikily.gg antes de compartilhar. Tirar os dumps do jogo do git (B2). O crédito no rodapé já está correto.
+- Evidência: os termos do wikily proíbem scraping e uso sem licença (`data/README-data.md`). Os ícones são arte do jogo (© Lazy Bear) embutida no sprite. O dump completo da localização do jogo fica fora do git (`.gitignore`).
+- Situação em 31/10/2026: repositório público com `LICENSE` MIT só para o código e aviso de escopo; autorização pedida a contact@wikily.gg; dumps fora do git. O crédito no rodapé e na tela Créditos está correto.
 
 **X5. `exportar_textos.bat` instala `UnityPy` sem versão fixa.** Severidade baixa, esforço P.
 - Recomendação: fixar a versão (`UnityPy==<testada>`) e manter o leitor embutido como padrão.

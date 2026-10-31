@@ -54,3 +54,7 @@ Desempenho e repositório
 
 Licença
 - [ ] Decidir sobre publicação aberta: pedir autorização em contact@wikily.gg (X4).
+
+## Etapa 4 — Revisão de UX de 31/10/2026 (app, site, GitHub, ideias)
+
+Quatro relatórios em `docs/revisao-ux/` (índice com a ordem de ataque em `docs/revisao-ux/README.md`). Resumo: tirar documentos internos do repositório público; reordenar o Planejador e fixar as abas no celular; linhas de meta e de matéria-prima mais baixas; site com o diferencial no topo e imagens leves; README com o botão do app no topo; depois as ideias novas ("amanhã" e "feito hoje", bilhete por dia, próximo passo, missão como meta, modo letra grande).
