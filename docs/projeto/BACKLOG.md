@@ -8,7 +8,7 @@ Esforço: **P** até 2 h · **M** meio dia a um dia · **G** vários dias. Quand
 
 ## Onde estamos
 
-**Publicado:** 1.8.4 (01/11): app versão 17, site versão 15, release v1.8.4 com o arquivo único. Antes dela, 1.8.3 a 1.8.0 (mesmo dia). **O Hugo vai segurar as atualizações do app por um tempo.**
+**Publicado:** 1.8.4 (01/11): app versão 17, site versão 15, release v1.8.4 com o arquivo único. Antes dela, 1.8.3 a 1.8.0 (mesmo dia). **O Hugo vai segurar as atualizações do app por um tempo.** Site e GitHub com mídia e textos da 1.8.4 (commit 754a569, site versão 16). Ficaram para depois: o texto do `docs/guia-de-uso.md` ainda cita o bloco "Amanhã" (saiu na 1.7.0); a imagem de prévia do GitHub (`social-preview.png`, envio manual) continua antiga.
 
 **Saiu hoje:**
 - **1.8.4:** bronze nas listas (item comum das famílias com qualidade), **231 nomes de receita em PT** (wiki com `locale=pt-br` + nomes oficiais; `data/names.recipes.pt-BR.json`), 18 nomes revisados pela wiki (`data/names.wiki.pt-BR.json`, "Consertar", fontes de coleta, "Canteiro de Trigo"). Comparação: https://claude.ai/artifact/JEkU3EqQgyEKadTBVzMceD. Relatórios internos `traducao-receitas.md` e `revisao-nomes-wiki.md`.
@@ -86,7 +86,7 @@ Objetivo: tirar os defeitos que atrapalham o uso de todo dia, antes de qualquer 
 | ✓ 2.4 | (1.8.0) "Sem receita" na lista de Receitas vira "Coleta ou compra" (`app.md`, Receitas 4) | P\* | — |
 | ✓ 2.5 | (1.8.0) "Texto do jogo" nos Dias parece link: trocar por um ícone de aspas pequeno (`app.md`, Dias 2) | P\* | — |
 | 2.6 | Testar num iPhone e num Android reais: ~~atalho na tela de início no iPhone~~ (funciona, 01/11); ~~gesto de voltar~~ (funciona, 01/11); falta Android e teclado cobrindo o aviso | P\* | um celular de cada |
-| 2.12 | Site: contagens "690 itens · 695 receitas" (o build agora tem 838 itens e 707 receitas com os graus; conferir o número que o app mostra na busca) e mídia antiga — o Hugo vai mexer no site | P | Hugo |
+| ✓ 2.12 | (01/11: "700 itens · 656 receitas · 226 tecnologias"; 656 é a soma das receitas da lista, não aparece no app) Site: contagens "690 itens · 695 receitas" (o build agora tem 838 itens e 707 receitas com os graus; conferir o número que o app mostra na busca) e mídia antiga — o Hugo vai mexer no site | P | Hugo |
 | 2.13 | Aba Tecnologias: colunas recolhidas com bastante espaço entre si; apertar se incomodar | P | — |
 | 2.7 | QA de 31/10 (`docs/revisao-ux/qa-2026-11.md`): ~~"Recentes" abre sozinho depois de adicionar (médio)~~ feito na 1.6.0; ~~foco perdido ao fechar o aviso e ao apagar lista; aviso "Adicionado" fica após Desfazer; "Anatomia 0"; rótulo da Pele cortado; "Limpar lista" × "Apagar lista"~~ feitos na 1.8.0. #8, #11 e #12 feitos na 1.8.2. Nada sobrando do QA de 31/10 | — | — |
 | ✓ 2.9 | (1.8.2) Etapas: o selo da receita ("BRONZE") aparece ao lado de "Suco de Uva (prata)" e confunde; reescrever | P\* | — |
@@ -167,7 +167,7 @@ Objetivo: guardar o que vale a pena, mas só entra se o uso pedir ou se você de
 | **Peso, testes, site e licença** | | | |
 | 6.22 | Sprite em WebP sem perdas, cerca de 430 KB a menos (F1) | P | — |
 | 6.23 | Testes das telas e rodar o `test_calc.mjs` junto com o `test_build.py` (B1) | M | — |
-| 6.24 | Regravar o GIF e as capturas do site e dos READMEs com a interface nova (item 9 da revisão) | M | rodadas 1 e 4 (decidido esperar) |
+| ✓ 6.24 | (01/11, mídia da 1.8.4, site versão 16) Regravar o GIF e as capturas do site e dos READMEs com a interface nova (item 9 da revisão) | M | rodadas 1 e 4 (decidido esperar) |
 | 6.25 | Autorização do wikily (X4): e-mail enviado em 31/10, esperar a resposta | P | resposta do wikily |
 | 6.26 | Tirar o `dist/` do git, só se o tamanho incomodar (resto do B2; o zip já saiu) | P | — |
 
