@@ -8,14 +8,15 @@
 Inputs (all read-only):
     data/raw/api-technologies-all.json   {rows: [{key, data: {...}}]}, one row per technology
     data/gk2.json                        items / stations / recipes (recipes[].tech.id = technology slug)
-    data/names.official.pt-BR.json       official pt-BR names (game files), keyed by English name
-    data/names.pt-BR.json                GK1-wiki (likely) and machine (guess) names
-    data/names.machine.pt-BR.json        machine fallback layer
+    data/names.official.pt-BR.json,      the pt names layers, best first (scripts/name_layers.py, the same
+    data/names.manual.pt-BR.json,        lookup as build.py)
+    data/names.machine.pt-BR.json
     data/game-texts/gk2_textos.json   the game's own {key: {en, pt}} text table (optional);
                                          fills official names the names files lack (branch tabs, quests,
                                          NPCs, a few technologies)
 
-pt name priority: official file > game text table (official) > likely > guess > machine > missing.
+pt name priority: correction (`fix`) > official file > game text table (official) > likely > guess > machine >
+MACHINE_PT below > missing.
 Exit codes: 0 ok, 1 validation errors, 2 usage / IO error. Python 3 stdlib only.
 """
 
@@ -25,14 +26,16 @@ import json
 import os
 import re
 import sys
-import unicodedata
 from collections import Counter, defaultdict
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+sys.dont_write_bytecode = True   # keep scripts/ free of __pycache__
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parent
 DATA = ROOT / "data"
-TIERS = ("official", "likely", "guess", "machine", "missing")
-TIER_RANK = {t: i for i, t in enumerate(TIERS)}
+sys.path.insert(0, str(HERE))   # python3 -I: scripts/ is not on sys.path
+import name_layers  # noqa: E402
+from name_layers import TIERS, TIER_RANK, norm_key  # noqa: E402
 COLOURS = ("red", "green", "blue")
 QUALITY_RE = re.compile(r"\s*\((bronze|silver|gold)\)\s*$", re.I)
 QUALITY_PT = {"bronze": "bronze", "silver": "prata", "gold": "ouro"}   # as in gk2.json derived names
@@ -71,12 +74,6 @@ HOW_PT = {"Quest": "missão", "Story": "história", "Crafting": "fabricar", "Har
           "Fishing": "pescar", "Repair": "consertar", "Building": "construir", "Eating or using it": "comer ou usar"}
 
 
-def norm_key(s):
-    s = unicodedata.normalize("NFC", str(s))
-    s = s.replace("’", "'").replace("‘", "'").replace(" ", " ")
-    return re.sub(r"\s+", " ", s).strip().casefold()
-
-
 def clean(s):
     return re.sub(r"\s+", " ", str(s)).strip() if isinstance(s, str) else ""
 
@@ -89,30 +86,11 @@ def sentence(s):
 # --------------------------------------------------------------------------- names
 
 class Names:
-    """English name -> (pt, tier, source), merged over the layers by tier (first layer wins a tie)."""
+    """English name -> (pt, tier, source): the names layers (name_layers.Translator, as in build.py) with the game
+    text table slotted in right after the official file."""
 
     def __init__(self, name_files, game_text=None):
-        self.names = {}
-        for i, path in enumerate(name_files):
-            p = Path(path)
-            if not p.exists():
-                continue
-            data = json.loads(p.read_text(encoding="utf-8"))
-            machine_file = "machine" in p.name
-            for k, v in data.items():
-                if not isinstance(k, str) or k.startswith("_") or not isinstance(v, dict):
-                    continue
-                pt = v.get("pt")
-                if not isinstance(pt, str) or not pt.strip():
-                    continue
-                conf = str(v.get("confidence") or "").lower()
-                if machine_file or str(v.get("source") or "").lower() == "machine":
-                    tier = "machine"
-                elif conf in ("official", "likely", "guess"):
-                    tier = conf
-                else:
-                    tier = "guess"
-                self._add(k, pt.strip(), tier, p.stem)
+        self.layers = name_layers.load(name_files)
         # game text table: {key: {en, pt}}; en -> list of (key, pt)
         self.game = defaultdict(list)
         if game_text and Path(game_text).exists():
@@ -120,13 +98,6 @@ class Names:
             for key, v in gt.items():
                 if isinstance(v, dict) and isinstance(v.get("en"), str) and isinstance(v.get("pt"), str) and v["pt"].strip():
                     self.game[norm_key(v["en"])].append((key, clean(v["pt"])))
-
-    def _add(self, en, pt, tier, source):
-        nk = norm_key(en)
-        prev = self.names.get(nk)
-        if prev and TIER_RANK[prev[1]] <= TIER_RANK[tier]:
-            return
-        self.names[nk] = (pt, tier, source)
 
     def game_pt(self, en, prefer=()):
         """Official pt from the game text table, or None. `prefer`: key regexes tried in order;
@@ -144,13 +115,16 @@ class Names:
         """-> (pt, tier, source); (None, 'missing', None) when nothing has it."""
         if not en:
             return None, "missing", None
-        hit = self.names.get(norm_key(en))
-        if hit and hit[1] == "official":
+        fixed = self.layers.fix(en)
+        if fixed is not None:
+            return fixed
+        hit = self.layers.name(en)
+        if hit[1] == "official":
             return hit
         g = self.game_pt(en, prefer)
         if g:
             return g, "official", "game-text"
-        if hit:
+        if hit[1] != "missing":
             return hit
         if en in MACHINE_PT:
             return MACHINE_PT[en], "machine", "build_techs"
@@ -508,9 +482,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description="Build data/techs.json from the wikily technologies dump")
     ap.add_argument("--raw", default=str(DATA / "raw" / "api-technologies-all.json"))
     ap.add_argument("--data", default=str(DATA / "gk2.json"), help="merged dataset (read-only)")
-    ap.add_argument("--names", nargs="+", default=[str(DATA / "names.official.pt-BR.json"),
-                                                    str(DATA / "names.pt-BR.json"),
-                                                    str(DATA / "names.machine.pt-BR.json")])
+    ap.add_argument("--names", nargs="+", default=[str(p) for p in name_layers.default_pt(DATA)])
     ap.add_argument("--game-text", default=str(ROOT / "data" / "game-texts" / "gk2_textos.json"),
                     help="game text table {key: {en, pt}} (optional; '' to skip)")
     ap.add_argument("--out", default=str(DATA / "techs.json"))

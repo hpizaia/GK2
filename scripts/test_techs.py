@@ -27,8 +27,7 @@ class RealData(unittest.TestCase):
                                     "download it with scripts/fetch_dataset.py technologies data/raw)")
         args = B.argparse.Namespace(
             raw=str(raw), data=str(DATA / "gk2.json"),
-            names=[str(DATA / "names.official.pt-BR.json"), str(DATA / "names.pt-BR.json"),
-                   str(DATA / "names.machine.pt-BR.json")],
+            names=[str(p) for p in B.name_layers.default_pt(DATA)],
             game_text=str(ROOT / "data" / "game-texts" / "gk2_textos.json"))
         cls.raw, cls.ds, names = B.load_inputs(args)
         cls.doc = B.build(cls.raw, cls.ds, names, built="2000-01-01")
@@ -163,6 +162,39 @@ class RealData(unittest.TestCase):
         on_disk = json.loads(path.read_text(encoding="utf-8"))
         on_disk["meta"]["built"] = "2000-01-01"
         self.assertEqual(on_disk, self.doc, "data/techs.json is stale: re-run scripts/build_techs.py")
+
+
+class SharedNames(unittest.TestCase):
+    """2026-11 (rodada 5): build.py, build_techs.py and build_facts.py share one pt lookup (scripts/name_layers.py)
+    over the 3 layers official > manual > machine, and a correction (`fix`) also beats the game text table."""
+
+    def test_three_layers(self):
+        self.assertEqual([p.name for p in B.name_layers.default_pt(DATA)],
+                         ["names.official.pt-BR.json", "names.manual.pt-BR.json", "names.machine.pt-BR.json"])
+        for old in ("names.pt-BR.json", "names.recipes.pt-BR.json", "names.wiki.pt-BR.json"):
+            self.assertFalse((DATA / old).exists(), old)
+        for gone in ("build_names.py", "mt_glossary.py", "fetch_gk1_langlinks.py"):
+            self.assertFalse((HERE / gone).exists(), gone)
+
+    def test_fix_beats_game_table(self):
+        import importlib.util
+        import tempfile
+        spec = importlib.util.spec_from_file_location("gk2_facts_t", HERE / "build_facts.py")
+        facts = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(facts)
+        with tempfile.TemporaryDirectory() as d:
+            man, game = Path(d) / "names.manual.pt-BR.json", Path(d) / "game.json"
+            man.write_text(json.dumps({"Wheat Bed": {"pt": "Canteiro de Trigo", "source": "fix",
+                                                     "confidence": "likely", "fix": "typo"}}), encoding="utf-8")
+            table = {"garden_wheat": {"en": "Wheat Bed", "pt": "Canteiro de Trigorigo"},
+                     "log": {"en": "Log", "pt": "Tora"}}
+            game.write_text(json.dumps(table), encoding="utf-8")
+            n = B.Names([str(man)], str(game))
+            self.assertEqual(n.name("Wheat Bed")[:2], ("Canteiro de Trigo", "likely"))
+            self.assertEqual(n.name("Log")[:2], ("Tora", "official"))
+            t = facts.Texts(table, B.name_layers.load([man]))
+            self.assertEqual(t.loc("Wheat Bed")[0], {"en": "Wheat Bed", "pt": "Canteiro de Trigo"})
+            self.assertEqual(t.loc("Log"), ({"en": "Log", "pt": "Tora"}, "log"))
 
 
 if __name__ == "__main__":

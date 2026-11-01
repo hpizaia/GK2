@@ -84,8 +84,7 @@ git diff --stat data/items.en.json data/recipes.en.json
 - Raw pages land in `data/raw/` (ignored by git, about 19 MB).
 - `build_dataset.py` prints counts and problem lists (`dangling`, `unmatched calc`…). Compare with the previous run; normally they are empty or nearly so.
 - The optional `data/raw/calculator-props.json` (which recipe the wiki's calculator prefers) sits behind a browser challenge; see "Calculador" in [`docs/atualizacao.md`](atualizacao.md).
-- New items need a fallback-name entry: `python3 -I scripts/build_names.py data`.
-- Portuguese recipe names and name fixes live in two hand-written layers, `data/names.recipes.pt-BR.json` and `data/names.wiki.pt-BR.json`. A new recipe shows in English until someone adds it (how to get the name from the Portuguese wiki: "Nomes de receita em português" in [`docs/atualizacao.md`](atualizacao.md), in Portuguese).
+- Portuguese names live in three layers: `data/names.official.pt-BR.json` (from the game, step 5), `data/names.manual.pt-BR.json` (chosen by hand: recipe names, the game's own words, fixes) and `data/names.machine.pt-BR.json` (machine fallback). A new item with no official name needs a hand entry in the machine one. A new recipe shows in English until someone adds it (how to get the name from the Portuguese wiki: "Nomes de receita em português" in [`docs/atualizacao.md`](atualizacao.md), in Portuguese).
 
 ## 5. Official names from your own game (optional, Windows)
 

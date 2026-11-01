@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 Junta a exportação oficial do jogo (gk2_textos.json ou gk2_textos_pt-br.csv,
-gerada por exportar_textos.py no PC do jogador) com data/names.pt-BR.json,
-usando o campo gameKey, e grava data/names.official.pt-BR.json.
+gerada por exportar_textos.py no PC do jogador) com as gameKey de
+data/names.machine.pt-BR.json e grava data/names.official.pt-BR.json.
 
 Uso (na raiz do projeto):
     python3 -I tools/exportar-textos/juntar_nomes.py [EXPORT] [opções]
@@ -11,7 +11,7 @@ Uso (na raiz do projeto):
     EXPORT       gk2_textos.json ou gk2_textos_pt-br.csv
                  (padrão: data/game-texts/gk2_textos.json; se não existir,
                  tools/exportar-textos/gk2_textos.json, depois os CSVs)
-    --nomes      arquivo de nomes (padrão: data/names.pt-BR.json)
+    --nomes      arquivo de nomes com gameKey (padrão: data/names.machine.pt-BR.json)
     --saida      arquivo gerado (padrão: data/names.official.pt-BR.json)
     --completo   inclui também as entradas sem correspondência, sem alteração
                  (por padrão o arquivo traz só as entradas oficiais)
@@ -19,13 +19,13 @@ Uso (na raiz do projeto):
                  names.official.pt-BR.json ATUAL (--saida), troca o pt/en_game
                  de cada entrada pelo texto novo da mesma gameKey, mantém as
                  entradas ligadas à mão (zonas, perks, matched_by en-text*) e
-                 acrescenta as gameKeys novas de names.pt-BR.json. Sem mudanças,
+                 acrescenta as gameKeys novas do --nomes. Sem mudanças,
                  o arquivo fica byte a byte igual.
 
-Atenção: sem --atualizar o arquivo é refeito só pela gameKey de names.pt-BR.json
+Atenção: sem --atualizar o arquivo é refeito só pela gameKey do --nomes
 (972 entradas) e perde as ~32 entradas ligadas à mão. Use --atualizar.
 
-Formato de saída (mesmo esquema de names.pt-BR.json, mais um _meta):
+Formato de saída (mesmo esquema dos outros names.*.pt-BR.json, mais um _meta):
     "Bronze Nails": {"pt": "...", "source": "game-files", "confidence": "official",
                      "kind": [...], "priority": 1, "gameKey": "nails_bronze"}
 """
@@ -140,7 +140,7 @@ def atualizar(textos, export, args):
 def principal():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("export", nargs="?")
-    ap.add_argument("--nomes", default=str(RAIZ / "data" / "names.pt-BR.json"))
+    ap.add_argument("--nomes", default=str(RAIZ / "data" / "names.machine.pt-BR.json"))
     ap.add_argument("--saida", default=str(RAIZ / "data" / "names.official.pt-BR.json"))
     ap.add_argument("--completo", action="store_true")
     ap.add_argument("--atualizar", action="store_true")
@@ -174,7 +174,7 @@ def principal():
             "ptIgualAoIngles": 0, "ptIgualAoNomeEn": 0}
     ausentes, com_marcacao, en_diferente = [], [], []
     for nome_en, entrada in nomes.items():
-        if nome_en == "_meta" or not isinstance(entrada, dict):
+        if nome_en.startswith("_") or not isinstance(entrada, dict):
             continue
         cont["entradas"] += 1
         chave = entrada.get("gameKey")
@@ -223,7 +223,7 @@ def principal():
     saida_final = {"_meta": {
         "generated": time.strftime("%Y-%m-%d"),
         "from": Path(export).name,
-        "join": "names.pt-BR.json gameKey -> official game locale lng_pt-br",
+        "join": Path(args.nomes).name + " gameKey -> official game locale lng_pt-br",
         "sources": {"game-files": "official text exported from the player's copy of the game (lng_pt-br)"},
         "counts": cont,
         "missingGameKeys": ausentes,

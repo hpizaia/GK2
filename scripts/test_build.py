@@ -2361,15 +2361,16 @@ class BronzePlain17(unittest.TestCase):
 
 
 class RecipeNamesPt18(unittest.TestCase):
-    """2026-11 (consertos.md §18, traducao-receitas.md fase 2): the recipe names layer data/names.recipes.pt-BR.json,
-    read by default; the owner's 3 decisions: grade as "(ouro)", "X a partir de Y" left out of the pt card,
-    "Canteiro de Trigorigo" fixed by a `fix` entry. (The page behaviour: test_calc.mjs "nomes de receita".)"""
-    LAYER = ROOT / "data" / "names.recipes.pt-BR.json"
+    """2026-11 (consertos.md §18, traducao-receitas.md fase 2): the recipe names (the entries with `recipes` of the
+    hand layer data/names.manual.pt-BR.json, read by default); the owner's 3 decisions: grade as "(ouro)",
+    "X a partir de Y" left out of the pt card, "Canteiro de Trigorigo" fixed by a `fix` entry. (The page behaviour:
+    test_calc.mjs "nomes de receita".)"""
+    LAYER = ROOT / "data" / "names.manual.pt-BR.json"
 
     def test_layer_file(self):
         d = read_json(self.LAYER)
         rows = {k: v for k, v in d.items() if not k.startswith("_")}
-        recs = {k: v for k, v in rows.items() if not v.get("fix")}
+        recs = {k: v for k, v in rows.items() if v.get("recipes") and not v.get("fix")}
         self.assertEqual(len(recs), 231)
         kinds = {}
         for k, v in recs.items():
@@ -2402,13 +2403,13 @@ class RecipeNamesPt18(unittest.TestCase):
             self.assertEqual(t.name("Log")[0], "Tora")                       # without `fix`, official still wins
 
     def test_default_layer_and_report(self):
-        src = (ROOT / "scripts" / "build.py").read_text(encoding="utf-8")
-        self.assertIn('str(DATA / "names.official.pt-BR.json"), str(DATA / "names.recipes.pt-BR.json"),', src)
+        self.assertEqual([p.name for p in build.default_pt(build.DATA)],
+                         ["names.official.pt-BR.json", "names.manual.pt-BR.json", "names.machine.pt-BR.json"])
         rep = (ROOT / "data" / "report-l10n.md").read_text(encoding="utf-8")
         row = next(l for l in rep.splitlines() if l.startswith("| Recipe names"))
         cells = [c.strip() for c in row.strip("|").split("|")]
         self.assertEqual(cells[2:5], ["0", "0", "67"])                       # missing 0, machine 0, guess 67 (ours)
-        self.assertIn("names.recipes.pt-BR.json", (ROOT / "data" / "report-build.md").read_text(encoding="utf-8"))
+        self.assertIn("names.manual.pt-BR.json", (ROOT / "data" / "report-build.md").read_text(encoding="utf-8"))
         ds = read_json(ROOT / "data" / "gk2.json")
         self.assertEqual((ds["items"]["wheat-bed"]["pt"], ds["items"]["wheat-bed"]["tr"]), ("Canteiro de Trigo", "likely"))
         R = {r["id"]: r for r in ds["recipes"]}
@@ -2430,7 +2431,7 @@ class RecipeNamesPt18(unittest.TestCase):
 
 class WikiNames18(unittest.TestCase):
     """2026-11 (consertos.md §18, revisao-nomes-wiki.md): the 18 swaps approved by the owner. 9 categories in the hand
-    layer data/names.wiki.pt-BR.json (read by default), "Repair (X)" derived as "Consertar (X)", 7 source names of the
+    layer data/names.manual.pt-BR.json (field `game`), "Repair (X)" derived as "Consertar (X)", 7 source names of the
     MT glossary (build_facts.py). The 4 marked "conferir no jogo" stay as they were."""
     CATS = {"Building: Garden": "Construção: jardim", "Building: Garden tablets": "Construção: placas do jardim",
             "Building: Yard": "Construção: pátio", "Building: Barracks": "Construção: casernas",
@@ -2443,12 +2444,11 @@ class WikiNames18(unittest.TestCase):
                "marble-deposit": "Depósito de mármore", "sand-pit": "Buraco de areia", "broken-shelf": "Prateleira quebrada"}
 
     def test_layer_and_default(self):
-        d = read_json(ROOT / "data" / "names.wiki.pt-BR.json")
-        rows = {k: v for k, v in d.items() if not k.startswith("_")}
+        d = read_json(ROOT / "data" / "names.manual.pt-BR.json")
+        rows = {k: v for k, v in d.items() if not k.startswith("_") and v.get("game")}
         self.assertEqual({k: v["pt"] for k, v in rows.items()}, self.CATS)
         self.assertTrue(all((v["source"], v["confidence"]) == ("wikily-pt", "likely") for v in rows.values()))
-        self.assertIn('str(DATA / "names.wiki.pt-BR.json"), str(DATA / "names.pt-BR.json"),',
-                      (ROOT / "scripts" / "build.py").read_text(encoding="utf-8"))
+        self.assertIn("names.manual.pt-BR.json", [p.name for p in build.default_pt(build.DATA)])
 
     def test_dataset(self):
         ds = read_json(ROOT / "data" / "gk2.json")

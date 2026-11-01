@@ -10,8 +10,8 @@ De onde vêm os dados, o que se pode fazer com eles, como estão organizados e o
 | wikily.gg, calculador | Qual receita o calculador do wiki usa para cada item (`calculator_default`) | A página `/crafting-calculator` fica atrás do desafio do Cloudflare (403 no curl). Foi aberta uma vez num navegador e as props do componente React foram salvas | `data/raw/calculator-props.json` (fora do git) |
 | **Arquivos do jogo** (Steam app **4358690**, versão **1.011**, build Steam 26297960, Unity 6000.3) | Texto oficial em 11 idiomas, incluindo pt-BR: 9.474 chaves | `tools/exportar-textos/` no Windows com o jogo instalado. Lê o MonoBehaviour `lng_<idioma>` em `GraveyardKeeper2_Data/resources.assets`, só leitura | `data/game-texts/gk2_textos.json` (`{chave: {en, pt}}`, no git). Os 11 idiomas, os CSVs e `_resumo.json` ficam na mesma pasta, fora do git |
 | Mod tailandês GK2Thai (`Jakkrich/graveyardkeeper2-bepinex-thai-plugin`) | Texto inglês do jogo com as chaves (`source_en.csv`, versão 1.0024). Serviu para ligar nome EN do wiki → `gameKey` | Download do CSV | `data/raw/l10n/thai_source_en.csv` |
-| Wiki Fandom do GK1 em pt-BR | Pares EN → pt de nomes do primeiro jogo | MediaWiki API, `prop=langlinks` (`scripts/fetch_gk1_langlinks.py`) | `data/raw/l10n/gk1_*.json` |
-| Claude | Tradução de máquina de tudo, como reserva | Escrita à mão na sessão | `data/names.pt-BR.json` (parte `machine`), `data/names.machine.pt-BR.json` |
+| Wiki Fandom do GK1 em pt-BR | Pares EN → pt de nomes do primeiro jogo | MediaWiki API, `prop=langlinks` (script aposentado, no histórico do git) | `data/raw/l10n/gk1_*.json` → `names.manual` (`gk1-wiki`) |
+| Claude | Tradução de máquina de tudo, como reserva | Escrita à mão na sessão | `data/names.machine.pt-BR.json` |
 
 Versões: as receitas do wiki descrevem o jogo **1.010** (texto do próprio wiki em 30/10/2026). Os textos do jogo são da **1.011**. Quando o jogo mudar, as duas fontes precisam ser atualizadas (`docs/atualizacao.md`).
 
@@ -68,18 +68,17 @@ Algumas receitas consomem o próprio produto, como os "Melhorar órgão" de osso
 
 ## Camadas de tradução (pt-BR)
 
-Cada arquivo de nomes é um objeto com chave = **texto inglês exato** e valor `{pt, source, confidence}`. O `build.py` aplica todos e o melhor nível vence: **official > likely > guess > machine**. Em empate, vence o primeiro arquivo.
+Cada arquivo de nomes é um objeto com chave = **texto inglês exato** e valor `{pt, source, confidence}`. São três, lidos pela mesma busca (`scripts/name_layers.py`) no `build.py`, no `build_techs.py` e no `build_facts.py`. A regra cabe numa frase: **correção (`fix`) > oficial > à mão > máquina**; dentro de um arquivo e em empate, vence o primeiro.
 
 | prioridade | camada | arquivo | conteúdo |
 |---|---|---|---|
-| 1 | **oficial** (`game-files`, `official`) | `data/names.official.pt-BR.json` | 1.020 nomes: 972 ligados pela `gameKey` + 48 ligados à mão pelo texto inglês (zonas, perks, Suco de Uva, 4 nomes com ícone no meio). Gerado por `juntar_nomes.py` |
-| 1b | **receitas** (`wikily-pt` `likely`, `derived` `guess`, `game-files` `official`) + **correções** (`fix`) | `data/names.recipes.pt-BR.json` | Os 231 nomes de receita ("Vinho a partir de Suco de Uva (ouro)", "Construir Lanterna I (Pátio)"): 159 da wiki em pt (`locale=pt-br`, montados com nomes oficiais; grau escrito "(ouro)" como no app), 67 compostos por nós (construir, plantio, fórmula de alquimia: selo "não oficial"), 5 textos inteiros do jogo. E as correções de erro do texto oficial: uma entrada com `fix` vence qualquer camada e nível e fica `likely` (sem selo, mas sem dizer "oficial"); hoje só "Wheat Bed" → "Canteiro de Trigo" (o jogo diz "Canteiro de Trigorigo"). Escrito à mão a partir de `data/raw/pt/proposta-nomes-receita.json` (`docs/revisao-ux/traducao-receitas.md`) |
-| 1c | **wiki à mão** (`wikily-pt`, `likely`) | `data/names.wiki.pt-BR.json` | 9 categorias com a palavra do jogo (jardim, pátio, casernas, produção, Povoado…), no lugar da de máquina (`docs/revisao-ux/revisao-nomes-wiki.md`) |
-| 2 | **derivado** (`derived`, `likely`) | sintético, dentro do `build.py` | Montado a partir de partes oficiais: "X (ouro)", "A ou B", "Qualquer X", "Abrir (X)", "Consertar (X)". 47 itens |
-| 3 | **GK1** (`gk1-wiki`, `likely`) | `data/names.pt-BR.json` | 77 nomes da wiki do GK1 (quase todos perdem para o oficial: no build vence 1). O mesmo arquivo traz as `gameKey` |
-| 4 | **máquina** (`machine`, `guess`) | `data/names.pt-BR.json` (988) e `data/names.machine.pt-BR.json` (1.066 nomes + 730 textos `__obtain`) | Tradução do Claude, com glossário consistente. Só aparece onde não há nada melhor |
+| 0 | **correção** (`fix`, `likely`) | dentro de `names.manual` | Erro de digitação do texto oficial: vence tudo e fica `likely` (sem selo, mas sem dizer "oficial"). Hoje só "Wheat Bed" → "Canteiro de Trigo" (o jogo diz "Canteiro de Trigorigo") |
+| 1 | **oficial** (`game-files`, `official`) | `data/names.official.pt-BR.json` | 1.020 nomes: 972 ligados pela `gameKey` + 48 ligados à mão pelo texto inglês (zonas, perks, Suco de Uva, 4 nomes com ícone no meio). Gerado por `juntar_nomes.py --atualizar` |
+| 2 | **à mão** (`wikily-pt`/`gk1-wiki` `likely`, `derived` `guess`, `game-files` `official`) | `data/names.manual.pt-BR.json` | 318 nomes: os 231 de receita (campo `recipes`: 159 da wiki em pt, 67 compostos por nós com selo "não oficial", 5 textos inteiros do jogo; grau "(ouro)" como no app), 9 categorias com a palavra do jogo (campo `game`), 77 da wiki do GK1 (o oficial cobre 76; só "Alquimia" aparece) e a correção |
+| 2b | **derivado** (`derived`, `likely`) | sintético, dentro do `build.py` | Montado a partir de partes oficiais: "X (ouro)", "A ou B", "Qualquer X", "Abrir (X)", "Consertar (X)". 47 itens |
+| 3 | **máquina** (`machine`, `guess`) | `data/names.machine.pt-BR.json` | 1.066 nomes + 736 textos `__obtain`/`__notes`. Tradução do Claude, com glossário consistente; só aparece onde não há nada melhor. Guarda também a `gameKey` de cada nome (o `juntar_nomes.py` usa) |
 
-O `build_techs.py` usa a mesma ordem e, além dela, consulta direto `data/game-texts/gk2_textos.json` para ramos, missões, NPCs e prédios da cidade.
+O `build_techs.py` consulta, logo depois do oficial, a tabela do jogo (`data/game-texts/gk2_textos.json`) para ramos, missões, NPCs e prédios da cidade. O `build_facts.py` (quem vende, onde achar) lê essa tabela primeiro e tem um glossário próprio (`MT`) para nomes que nenhuma camada tem. O `build_days.py` tira os nomes direto da tabela do jogo, pela chave. Até 01/11/2026 eram cinco arquivos (`names.recipes`, `names.wiki` e `names.pt-BR`, este feito por `build_names.py`); estão no histórico do git.
 
 Resultado hoje: itens com 784 nomes oficiais, 48 prováveis (47 derivados e o "Canteiro de Trigo" corrigido) e 6 de máquina. Tecnologias: 221 oficiais e 5 prováveis.
 
@@ -90,9 +89,9 @@ Resultado hoje: itens com 784 nomes oficiais, 48 prováveis (47 derivados e o "C
 - **Alquimia é combinatória.** As entradas são só uma mistura sugerida (`example: true`).
 - **Plantio** tem rendimento desconhecido (`out.qty: null`).
 - **Reparos não são receitas.** Estações que vêm de consertar algo (Forno da Cozinha...) aparecem como matéria-prima.
-- **Nomes de receita**: todos em pt desde a camada `data/names.recipes.pt-BR.json` (11/2026); 67 são compostos por nós e levam o selo "não oficial". A qualidade das receitas "X a partir de Y (ouro)" é deduzida pela página, pelo nome e pelo id da receita (`GK.data`). **Categorias** (36 de 53) ainda de máquina (9 trocadas pela palavra do jogo em `names.wiki.pt-BR.json`). Também de máquina: 3 maestrias e 21 notas (`data/report-l10n.md`).
+- **Nomes de receita**: todos em pt desde 11/2026 (`data/names.manual.pt-BR.json`); 67 são compostos por nós e levam o selo "não oficial". A qualidade das receitas "X a partir de Y (ouro)" é deduzida pela página, pelo nome e pelo id da receita (`GK.data`). **Categorias** (36 de 53) ainda de máquina (9 trocadas pela palavra do jogo em `names.manual.pt-BR.json`). Também de máquina: 3 maestrias e 21 notas (`data/report-l10n.md`).
 - **Nomes pt repetidos** entre itens diferentes ("Tinta" = Ink e Paint).
 - **Oficiais estranhos** vindos do próprio jogo: "Banco de Montagem II" × "Bancada de Montagem I", caixa inconsistente.
-- **`names.machine.pt-BR.json` não tem gerador** no repositório. Itens novos ficam sem a camada de máquina até alguém traduzir.
+- **`names.machine.pt-BR.json` não tem gerador** no repositório. Itens novos ficam sem nome de máquina e sem `gameKey` até alguém escrever a entrada à mão.
 - **Fatos do item só para os 544 itens com página no wiki.** Construções e estações não têm `where`/`use`/`stack`. Ícones dos reforços não vieram (seria preciso baixar 15 ícones e refazer a folha de ícones): o detalhe desenha um ícone redondo genérico. O nome de quem vende é o do NPC no jogo ("Herm" aparece como Hamilton, "Trademaster" como Gerente Comercial), que difere do texto longo "Como obter", traduzido por máquina.
 - O texto do jogo traz tags (`<sprite name="...">`) e tokens (`@(Tecla)`). O `juntar_nomes.py` tira as tags no modo `--atualizar`. Os 4 nomes com ícone no meio do texto são conferidos à mão.

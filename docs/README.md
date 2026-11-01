@@ -33,7 +33,7 @@ Um documento por linha, com o que ele responde. Os documentos de `docs/` são em
 | [`../scripts/shots/README.md`](../scripts/shots/README.md) | Capturas de tela e comparação do app antes/depois, pixel a pixel |
 | [`../scripts/README-build.md`](../scripts/README-build.md) | Referência técnica do `build.py` (inglês): opções, schema do `gk2.json`, contrato dos módulos de `src/`, validação |
 | [`../data/README-data.md`](../data/README-data.md) | Dataset de receitas e itens do wikily (inglês): arquivos, contagens, schema, `facts.json`, lacunas |
-| [`../data/README-l10n.md`](../data/README-l10n.md) | Pesquisa das fontes de nomes pt-BR e a camada `names.pt-BR.json` (inglês) |
+| [`../data/README-l10n.md`](../data/README-l10n.md) | As 3 camadas de nomes pt-BR (`names.official`, `names.manual`, `names.machine`), a regra e a pesquisa das fontes (inglês) |
 | [`../data/README-machine-l10n.md`](../data/README-machine-l10n.md) | Camada de tradução de máquina `names.machine.pt-BR.json` (inglês) |
 | [`../data/README-techs.md`](../data/README-techs.md) | Árvore de tecnologias `techs.json` (inglês) |
 | [`../data/README-days.md`](../data/README-days.md) | Semana de 6 dias `days.json`, a aba Dias (inglês) |

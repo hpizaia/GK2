@@ -1,18 +1,26 @@
 {
  "_meta": {
-  "what": "pt-BR names of recipes (data/recipes.en.json `name`) plus fixes of official-text typos. Key = exact English name. Read by scripts/build.py (default --names, before names.official). See data/README-l10n.md and docs/revisao-ux/traducao-receitas.md.",
-  "built": "2026-11-01, from data/raw/pt/proposta-nomes-receita.json (wikily.gg API locale=pt-br, checked against data/names.official.pt-BR.json)",
+  "what": "pt-BR names written or chosen by hand (not machine translation). Key = exact English name. Read by scripts/build.py and scripts/build_techs.py, between names.official and names.machine. Rule: a correction (`fix`) beats everything; then official > this file > machine. See data/README-l10n.md.",
+  "built": "2026-11-01: names.recipes.pt-BR.json (recipe names and fixes) + names.wiki.pt-BR.json (the 9 category names with the game's own words) + the 77 GK1 wiki names of names.pt-BR.json (only 'Alchemy' is not covered by the official file). The three old files are in git history.",
   "legend": {
    "game-files/official": "the whole name is an official game text",
-   "wikily-pt/likely": "wikily.gg pt-BR name (built by the wiki from official item/station names); grade written '(ouro)' like the app, not '(qualidade ouro)'",
+   "wikily-pt/likely": "wikily.gg pt-BR name (locale=pt-br: built by the wiki from official item/station names, or the game's own word, field `game`); grade written '(ouro)' like the app, not '(qualidade ouro)'",
    "derived/guess": "composed by us from official names (Construir X (Zona), Cultivado no Canteiro de X (maestria Agricultura N), X (fórmula de alquimia)): not a game or wiki text, shown with the 'não oficial' badge",
-   "fix/likely": "`fix: <reason>`: corrects a typo of the official text; wins over every layer and tier (Translator), shown as likely (no 'official' claim, no badge)"
+   "fix/likely": "`fix: <reason>`: corrects a typo of the official text; wins over every layer and tier (Translator), shown as likely (no 'official' claim, no badge)",
+   "gk1-wiki/likely": "Graveyard Keeper 1 pt-BR Fandom page title linked from the EN page; GK2 may word it differently"
+  },
+  "fields": {
+   "recipes": "the recipe ids that carry this name (ignored by the build)",
+   "wiki_pt": "the wiki's text, when ours differs (ignored by the build)",
+   "game": "where the game itself uses the word (ignored by the build)",
+   "kind / priority / gameKey": "from the old names.pt-BR.json; priority legend: 1 listed obtainable item, 2 station, 3 category, 4 technology, 5 other (buildings, actions, unlisted items...)"
   },
   "counts": {
+   "fix/likely": 1,
+   "wikily-pt/likely": 168,
    "derived/guess": 67,
    "game-files/official": 5,
-   "wikily-pt/likely": 159,
-   "fix/likely": 1
+   "gk1-wiki/likely": 77
   }
  },
  "Wheat Bed": {
@@ -1970,5 +1978,857 @@
    "alchemy-zombie-motivator-potion-iii"
   ],
   "wiki_pt": "Poção Motivadora de Zumbis III"
+ },
+ "Building: Garden": {
+  "pt": "Construção: jardim",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "Jardim (builder_garden, wz_garden)"
+ },
+ "Building: Garden tablets": {
+  "pt": "Construção: placas do jardim",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "Jardim"
+ },
+ "Building: Yard": {
+  "pt": "Construção: pátio",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "Pátio (builder_yard, wz_yard)"
+ },
+ "Building: Barracks": {
+  "pt": "Construção: casernas",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "Casernas (builder_military_base)"
+ },
+ "Building: Graves and columbaria": {
+  "pt": "Construção: túmulos e columbários",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "\"Tutorial: Túmulos\", \"Columbários I\""
+ },
+ "Building: Assembly benches": {
+  "pt": "Construção: bancos de montagem",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "\"Banco de Montagem\" (II/III; \"Bancada de Montagem I\" também existe)"
+ },
+ "Building: Crafting station": {
+  "pt": "Construção: estação de produção",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "crafting = \"produção\" (tut_craft_hdr)"
+ },
+ "Crafting materials": {
+  "pt": "Materiais de produção",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "crafting = \"produção\" (tut_craft_hdr)"
+ },
+ "Town supplies": {
+  "pt": "Suprimentos do Povoado",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "Town = \"Povoado\" (wz_town, \"Armazém do Povoado\")"
+ },
+ "Alcohol": {
+  "pt": "Álcool",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "alcohol"
+ },
+ "Alkali": {
+  "pt": "Alcalino",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "alkali"
+ },
+ "Anchovy": {
+  "pt": "Anchova",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "fish_anchovy"
+ },
+ "Baked apple": {
+  "pt": "Maçã assada",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "cook_baked_apple"
+ },
+ "Baked mushrooms": {
+  "pt": "Cogumelos assados",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "cook_baked_mushroom"
+ },
+ "Beeswax": {
+  "pt": "Cera de Abelha",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "beeswax"
+ },
+ "Beet": {
+  "pt": "Beterraba",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "beet"
+ },
+ "Beet Seed": {
+  "pt": "Semente de beterraba",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "beet_seed"
+ },
+ "Berry": {
+  "pt": "Frutinha",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "berry"
+ },
+ "Berry Juice": {
+  "pt": "Suco de frutinhas",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "berry_juice"
+ },
+ "Blood": {
+  "pt": "Sangue",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "blood"
+ },
+ "Brain": {
+  "pt": "Cérebro",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "brain"
+ },
+ "Bread": {
+  "pt": "Pão",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item",
+   "technology"
+  ],
+  "priority": 1,
+  "gameKey": "bread"
+ },
+ "Bream": {
+  "pt": "Brema",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "fish_bream"
+ },
+ "Cabbage": {
+  "pt": "Repolho",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "cabbage:1"
+ },
+ "Cabbage seed": {
+  "pt": "Semente de repolho",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "cabbage_seed:1"
+ },
+ "Carp": {
+  "pt": "Carpa",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "fish_carp"
+ },
+ "Carrot": {
+  "pt": "Cenoura",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "carrot"
+ },
+ "Carved Wood": {
+  "pt": "Madeira entalhada",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "carved_wood"
+ },
+ "Clay": {
+  "pt": "Argila",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "clay"
+ },
+ "Clean Paper": {
+  "pt": "Papel vazio",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "clean_paper"
+ },
+ "Coal": {
+  "pt": "Carvão",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "coal"
+ },
+ "Corpse": {
+  "pt": "Cadáver",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "body_corpse"
+ },
+ "Eel": {
+  "pt": "Enguia",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "fish_eel"
+ },
+ "Faith": {
+  "pt": "Fé",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "faith"
+ },
+ "Fat": {
+  "pt": "Gordura",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "fat"
+ },
+ "Firewood": {
+  "pt": "Lenha",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "firewood"
+ },
+ "Flesh": {
+  "pt": "Carne",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "flesh"
+ },
+ "Frog": {
+  "pt": "Sapo",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "fish_frog"
+ },
+ "Glass": {
+  "pt": "Vidro",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item",
+   "technology"
+  ],
+  "priority": 1,
+  "gameKey": "glass"
+ },
+ "Goldfish": {
+  "pt": "Peixinho-dourado",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "fish_goldfish"
+ },
+ "Grapes": {
+  "pt": "Uvas",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "grape"
+ },
+ "Gudgeon": {
+  "pt": "Góbrio",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "fish_gudgeon"
+ },
+ "Heart": {
+  "pt": "Coração",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "heart"
+ },
+ "Honey": {
+  "pt": "Mel",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "honey"
+ },
+ "Ink": {
+  "pt": "Tinta",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "ink"
+ },
+ "Iron Armor": {
+  "pt": "Armadura de ferro",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "armor_2"
+ },
+ "Iron Ingot": {
+  "pt": "Lingote de ferro",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "ingot_iron"
+ },
+ "Iron Ore": {
+  "pt": "Minério de ferro",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "iron_ore"
+ },
+ "Jug of Milk": {
+  "pt": "Jarra de leite",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "jug_milk"
+ },
+ "Lens": {
+  "pt": "Lente",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "lence"
+ },
+ "Log": {
+  "pt": "Tora",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "wood"
+ },
+ "Onion": {
+  "pt": "Cebola",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "onion:1"
+ },
+ "Onion seed": {
+  "pt": "Semente de cebola",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "onion_seed:1"
+ },
+ "Paper glop": {
+  "pt": "Mistureba de papel",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "paper_liquid"
+ },
+ "Peat": {
+  "pt": "Turfa",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "fertilizer:peat"
+ },
+ "Preservative": {
+  "pt": "Conservante",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "preservative"
+ },
+ "Pumpkin": {
+  "pt": "Abóbora",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "pumpkin"
+ },
+ "Red Mushroom": {
+  "pt": "Cogumelo vermelho",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "mushroom_red"
+ },
+ "Rusty Sword": {
+  "pt": "Espada enferrujada",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "sword_0"
+ },
+ "Salmon": {
+  "pt": "Salmão",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "fish_salmon"
+ },
+ "Salt": {
+  "pt": "Sal",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "salt"
+ },
+ "Science": {
+  "pt": "Ciência",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "science"
+ },
+ "Seed oil": {
+  "pt": "Óleo de semente",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "seed_oil"
+ },
+ "Skin": {
+  "pt": "Pele",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "skin_1_1"
+ },
+ "Skull": {
+  "pt": "Caveira",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "skull"
+ },
+ "Spices": {
+  "pt": "Especiarias",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "spices"
+ },
+ "Steel Armor": {
+  "pt": "Armadura de aço",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "armor_3"
+ },
+ "Steel Ingot": {
+  "pt": "Lingote de aço",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "ingot_steel"
+ },
+ "Steel Sword": {
+  "pt": "Espada de aço",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "sword_3"
+ },
+ "Tuna": {
+  "pt": "Atum",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "fish_tuna"
+ },
+ "Water": {
+  "pt": "Água",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "water"
+ },
+ "Wheat seed": {
+  "pt": "Semente de Trigo",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "wheat_seed"
+ },
+ "Wooden beam": {
+  "pt": "Viga de madeira",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "wooden_beam"
+ },
+ "Wooden Plank": {
+  "pt": "Placa de madeira",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "wooden_plank"
+ },
+ "Zombie": {
+  "pt": "Zumbi",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 1,
+  "gameKey": "body_zombie"
+ },
+ "Potter's Wheel": {
+  "pt": "Torno de oleiro",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "station"
+  ],
+  "priority": 2,
+  "gameKey": "potter_wheel_1"
+ },
+ "Wooden Anvil": {
+  "pt": "Bigorna de madeira",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "station"
+  ],
+  "priority": 2,
+  "gameKey": "wooden_anvil"
+ },
+ "Alchemy": {
+  "pt": "Alquimia",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "priority": 3
+ },
+ "Church": {
+  "pt": "Igreja",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "priority": 3,
+  "gameKey": "builder_church"
+ },
+ "Acid": {
+  "pt": "Ácido",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 5,
+  "gameKey": "acid"
+ },
+ "Boiled Egg": {
+  "pt": "Ovo cozido",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 5,
+  "gameKey": "boiled_egg"
+ },
+ "Cake": {
+  "pt": "Bolo",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 5,
+  "gameKey": "cook_cake"
+ },
+ "Energy Potion": {
+  "pt": "Poção de energia",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 5,
+  "gameKey": "energy_potion"
+ },
+ "Glue": {
+  "pt": "Cola",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 5,
+  "gameKey": "glue"
+ },
+ "Speed Potion": {
+  "pt": "Poção de velocidade",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "item"
+  ],
+  "priority": 5,
+  "gameKey": "speed_potion"
+ },
+ "Study Table": {
+  "pt": "Mesa de estudo",
+  "source": "gk1-wiki",
+  "confidence": "likely",
+  "kind": [
+   "building"
+  ],
+  "priority": 5,
+  "gameKey": "test_survey_wgo"
  }
 }

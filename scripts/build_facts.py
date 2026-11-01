@@ -25,8 +25,10 @@ What comes from data/raw/api-items-all.json (the wiki's item dataset, already ca
             combat and the game description are left out on purpose (docs/revisao-ux/dados-ficha.md).
 Money is stored in bronze (1 silver = 100 bronze, 1 gold = 100 silver).
 Names (traders, places, quests, buffs) are interned into small tables keyed by slug, so each item stores ids.
-pt names: the game's own text table (data/game-texts/gk2_textos.json, exact English match) first, then
-data/names.official.pt-BR.json, then the hand glossary MT below (tr "machine", shown as "não oficial").
+pt names (Texts.loc): a correction (`fix`) of the names layers, the game's own text table
+(data/game-texts/gk2_textos.json, exact English match), the official names layer, the official dialogue names
+(DIALOGUE), the other names layers (scripts/name_layers.py: names.manual, then names.machine), then the hand
+glossary MT below. tr "guess"/"machine" is shown as "não oficial"; official and likely have no tr.
 Wiki and game texts are untrusted data: they are only parsed, never executed.
 """
 from __future__ import annotations
@@ -38,8 +40,12 @@ import sys
 import unicodedata
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+sys.dont_write_bytecode = True   # keep scripts/ free of __pycache__
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parent
 DATA = ROOT / "data"
+sys.path.insert(0, str(HERE))   # python3 -I: scripts/ is not on sys.path
+import name_layers  # noqa: E402
 
 # order of the source lines on the item card: shops first, then fishing, gathering, the rest in wiki order
 KIND = {"Fishing": "fish", "Gathering": "gather", "Quest": "quest", "Battle": "battle", "Chest": "chest",
@@ -115,26 +121,32 @@ def num(s):
 
 
 class Texts:
-    """pt for an English name: game text table (exact, case-insensitive), official names layer, glossary."""
+    """pt for an English name: correction (`fix`), game text table (exact, case-insensitive), official names
+    layer, DIALOGUE, the other names layers, glossary MT. `layers`: a name_layers.Translator (or None)."""
 
-    def __init__(self, game_text, official):
+    def __init__(self, game_text, layers=None):
         self.game = {}
         self.table = game_text
         for k in sorted(game_text):
             v = game_text[k]
             if isinstance(v, dict) and isinstance(v.get("en"), str) and isinstance(v.get("pt"), str) and v["pt"].strip():
                 self.game.setdefault(v["en"].strip().lower(), (k, v["pt"].strip()))
-        self.official = {k: v for k, v in official.items() if isinstance(v, dict) and v.get("pt")}
+        self.layers = layers or name_layers.Translator("pt", [])
 
     def loc(self, en):
+        fixed = self.layers.fix(en)
+        if fixed is not None:
+            return {"en": en, "pt": fixed[0]}, self.layers.game_key(en)
         hit = self.game.get(en.strip().lower())
         if hit:
             return {"en": en, "pt": hit[1]}, hit[0]
-        o = self.official.get(en)
-        if o:
-            return {"en": en, "pt": o["pt"]}, o.get("gameKey")
+        pt, tier, _ = self.layers.name(en)
+        if tier == "official":
+            return {"en": en, "pt": pt}, self.layers.game_key(en)
         if en in DIALOGUE:
             return {"en": en, "pt": DIALOGUE[en][0]}, DIALOGUE[en][1]
+        if tier != "missing":
+            return dict({"en": en, "pt": pt}, **({} if tier == "likely" else {"tr": tier})), self.layers.game_key(en)
         if en in MT:
             return {"en": en, "pt": MT[en], "tr": "machine"}, None
         return {"en": en, "pt": en, "tr": "missing"}, None
@@ -471,7 +483,8 @@ def main(argv=None):
     ap.add_argument("--raw", default=str(DATA / "raw" / "api-items-all.json"))
     ap.add_argument("--items", default=str(DATA / "items.en.json"), help="ids that exist (read-only)")
     ap.add_argument("--game-text", default=str(DATA / "game-texts" / "gk2_textos.json"))
-    ap.add_argument("--official", default=str(DATA / "names.official.pt-BR.json"))
+    ap.add_argument("--names", nargs="+", default=[str(p) for p in name_layers.default_pt(DATA)],
+                    help="pt names layers, best first (default: the three data/names.*.pt-BR.json)")
     ap.add_argument("--quests", default=str(DATA / "raw" / "days" / "probe-quests.json"),
                     help="wiki quest dataset (needs + giver), for items[].asked; '' to skip")
     ap.add_argument("--out", default=str(DATA / "facts.json"))
@@ -481,12 +494,11 @@ def main(argv=None):
         raw = json.loads(Path(args.raw).read_text(encoding="utf-8"))
         items_en = json.loads(Path(args.items).read_text(encoding="utf-8"))
         game = json.loads(Path(args.game_text).read_text(encoding="utf-8")) if args.game_text else {}
-        official = json.loads(Path(args.official).read_text(encoding="utf-8")) if args.official else {}
         quests = json.loads(Path(args.quests).read_text(encoding="utf-8")) if args.quests else None
     except (OSError, ValueError) as e:
         print(f"build_facts: cannot read inputs: {e}", file=sys.stderr)
         return 2
-    doc, warnings = build(raw, items_en, Texts(game, official), quests)
+    doc, warnings = build(raw, items_en, Texts(game, name_layers.load(args.names)), quests)
     errors = validate(doc)
     print(f"build_facts: {doc['meta']['counts']}")
     for w in warnings:

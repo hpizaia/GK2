@@ -36,12 +36,11 @@ Pastas, pipeline de build, telas e módulos, limites do artifact e camadas de no
                                                             │
  jogo (Windows) ─exportar_textos─► data/game-texts/gk2_textos.json
                                                 │           │
- GK1 wiki + mod GK2Thai ─build_names.py─► data/names.pt-BR.json (GK1 + máquina + gameKey)
-                                                │           │
-                                juntar_nomes.py ▼           │
+       gameKey de names.machine ─juntar_nomes.py▼           │
                         data/names.official.pt-BR.json      │
- escritos à mão: names.recipes, names.wiki,     │           │
-   names.machine (sem gerador)                  │           │
+ escritos à mão: names.manual (receitas, palavras do jogo,  │
+   GK1, correções) e names.machine (sem gerador)            │
+ (as 3 camadas: scripts/name_layers.py)         │           │
  api-items + quests ─build_facts.py─► data/facts.json       │
                                                 │           │
                                                 ▼           ▼
@@ -94,6 +93,6 @@ A página publicada é um único HTML hospedado como Claude Artifact, compartilh
 ## Nomes e tradução
 
 - Toda string da interface vem de um dicionário `i18n[lang][chave]`. Nomes de item, estação, categoria e tecnologia são objetos `{pt, en}`. A busca casa nos dois idiomas, sem acento.
-- Os arquivos de nomes usam como chave o **texto inglês exato** do wiki. O build aplica as camadas e o melhor nível vence: **oficial (jogo) > derivado / GK1 (likely) > guess > máquina**. Cada nome leva o campo `tr` com o nível que venceu, e a interface marca o que não é oficial.
-- A ponte entre o wiki e o jogo é a **`gameKey`** (chave de localização do jogo, por exemplo `nails_bronze`). Ela vem do `names.pt-BR.json` e é usada pelo `juntar_nomes.py`.
+- Os arquivos de nomes usam como chave o **texto inglês exato** do wiki. São três (`names.official`, `names.manual`, `names.machine`), lidos pela mesma busca (`scripts/name_layers.py`) no `build.py`, no `build_techs.py` e no `build_facts.py`: **correção (`fix`) > oficial > à mão > máquina**. Cada nome leva o campo `tr` com o nível que venceu, e a interface marca o que não é oficial.
+- A ponte entre o wiki e o jogo é a **`gameKey`** (chave de localização do jogo, por exemplo `nails_bronze`). Ela fica no `names.machine.pt-BR.json` (veio do mod GK2Thai) e é usada pelo `juntar_nomes.py`.
 - Para acrescentar um idioma: um dicionário novo na interface e um `--lang campo=arquivo` no build. Ver "Adding a language" em `scripts/README-build.md`. A tabela `gk2_textos_todos.json`, fora do git, já tem os 11 idiomas do jogo.

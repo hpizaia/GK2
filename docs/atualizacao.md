@@ -2,6 +2,8 @@
 
 Passo a passo para atualizar dados, nomes, ícones e a página quando sai uma versão nova do Graveyard Keeper 2. Os comandos rodam no Mac, na raiz do projeto, com `python3 -I`. O passo 2 roda no Windows com o jogo. A pasta tem espaços, então use sempre aspas.
 
+**O jeito curto:** `python3 -I scripts/update_data.py <etapa>` roda, na ordem e parando no primeiro erro, os mesmos comandos deste roteiro. Etapas: `wiki` (passo 1, baixa do wikily), `textos` (passo 3, depois de exportar no Windows), `montar` (passos 4 a 6, baixa só ícones que faltam) e `tudo`. Rode uma etapa por vez e faça os "passos manuais" que ela imprime (versão do wiki, nomes novos) antes da próxima; `--dry-run tudo` só lista. Changelog, release e publicação (passos 7 e 8) continuam à mão. Patch só do jogo: `textos` e depois `montar`; wiki atualizado sem textos novos: `wiki` e depois `montar`.
+
 ```sh
 cd GK2
 git status                     # comece com a árvore limpa: fica fácil ver o que o patch mudou
@@ -30,11 +32,7 @@ git diff --stat data/items.en.json data/recipes.en.json     # o que mudou
 - O `fetch_dataset.py` grava `data/raw/api-<slug>-offsetNNNN.json` e `api-<slug>-all.json` (fora do git). O `build_dataset.py` só lê os `-all.json`.
 - O `build_dataset.py` imprime contagens e listas de problemas (`dangling`, `unmatched calc`, `build variants unresolved`). Compare com a versão anterior: o normal é tudo vazio ou quase.
 - **Calculador (opcional).** `data/raw/calculator-props.json` só define `calculator_default`. Receitas novas ficam com `false` até ele ser recapturado. Para recapturar: abra `https://wikily.gg/graveyard-keeper-2/crafting-calculator` no navegador do Claude (ele passa pelo Cloudflare), extraia as props do componente `CraftingCalculatorIsland` (`craftables`, `graph`, `meta`, `stationIcons`) do payload `self.__next_f` e salve em `data/raw/calculator-props.json`. Se o resultado vier embrulhado, o script de uso único está no histórico: `git show 4639d65:scripts/unwrap_browser_dump.py`.
-- **Itens novos.** Se o patch trouxe itens, regenere a camada de reserva para eles entrarem na lista de nomes:
-  ```sh
-  python3 -I scripts/build_names.py data      # data/names.pt-BR.json (GK1 + máquina + gameKey); imprime MISSING
-  ```
-  O `gameKey` vem do CSV do mod tailandês (jogo 1.0024), então itens novos chegam **sem** `gameKey` e não são ligados no passo 3. Veja a dica no fim do passo 3.
+- **Itens novos.** Não há gerador de nomes: item novo chega sem `gameKey` e sem nome de máquina, e aparece em inglês no `data/report-l10n.md`. O nome oficial entra no passo 3 (dica no fim dele); se o jogo não tiver o nome, acrescente uma entrada à mão em `data/names.machine.pt-BR.json` (reserva, selo "não oficial") ou em `data/names.manual.pt-BR.json` (escolhido à mão).
 
 ## 2. Exportar os textos do jogo (Windows)
 
@@ -62,7 +60,7 @@ python3 -I tools/exportar-textos/juntar_nomes.py --atualizar
 git diff --stat data/names.official.pt-BR.json
 ```
 
-- **Use sempre `--atualizar`.** Ele parte do `names.official.pt-BR.json` atual, troca `pt`/`en_game` pelo texto novo da mesma `gameKey`, mantém as 48 entradas ligadas à mão (zonas, perks, `matched_by`) e acrescenta as `gameKey` novas do `names.pt-BR.json`. Sem o flag, o arquivo é refeito só pelas 972 `gameKey` e perde as outras 48.
+- **Use sempre `--atualizar`.** Ele parte do `names.official.pt-BR.json` atual, troca `pt`/`en_game` pelo texto novo da mesma `gameKey`, mantém as 48 entradas ligadas à mão (zonas, perks, `matched_by`) e acrescenta as `gameKey` novas do `names.machine.pt-BR.json` (o `--nomes` padrão: é ele que guarda as 972 `gameKey` do mod tailandês). Sem o flag, o arquivo é refeito só pelas 972 `gameKey` e perde as outras 48.
 - Leia a saída: "pt alterado" (o jogo mudou a tradução), "gameKey sem texto" (chave que sumiu; a entrada fica como estava) e "conferir à mão" (4 nomes com ícone no meio do texto, como "Poção Tóxica de `<sprite>`").
 - **Item novo sem gameKey:** procure a chave pelo texto inglês e acrescente a entrada à mão no `names.official.pt-BR.json`, no mesmo formato, com `"matched_by": "en-text"`:
   ```sh
@@ -78,22 +76,21 @@ python3 -I scripts/build_days.py --date AAAA-MM-DD   # só se os textos do jogo 
 python3 -I scripts/fetch_icons.py           # data/icons/<id>.png (só baixa o que falta)
 ```
 
-- O `build_facts.py` lê o cache do wiki (`data/raw/api-items-all.json` e `data/raw/days/probe-quests.json`), o `items.en.json`, os textos do jogo e o `names.official.pt-BR.json`; por isso vem depois dos passos 1 a 3. Só regrava o `facts.json` se o conteúdo mudar. Para só conferir: `--check`.
+- O `build_facts.py` lê o cache do wiki (`data/raw/api-items-all.json` e `data/raw/days/probe-quests.json`), o `items.en.json`, os textos do jogo e as 3 camadas de nomes; por isso vem depois dos passos 1 a 3. Só regrava o `facts.json` se o conteúdo mudar. Para só conferir: `--check`.
 - O `build_days.py` lê `data/game-texts/gk2_textos.json` e o `data/gk2.json` (por isso vem depois do build só de dados). Os eventos de cada dia são escritos à mão no próprio script (`EVENTS`). Use em `--date` a data do dia: ela vai para `meta.built` do `days.json` e para a página. Para só conferir: `--check`.
 - O `build.py --no-src` termina com exit 1 se houver erro grave. Nesse caso leia `data/report-build.md` antes de seguir.
 
-**Nomes de receita em português.** Receita nova chega em inglês: aparece na seção "Recipe names" do `data/report-l10n.md`. Os nomes ficam em `data/names.recipes.pt-BR.json`, escrito à mão (chave = nome inglês exato). A primeira versão (231 nomes, 1.8.4) foi montada com scripts que não estão no repositório; para poucas receitas novas, faça à mão:
+**Nomes de receita em português.** Receita nova chega em inglês: aparece na seção "Recipe names" do `data/report-l10n.md`. Os nomes ficam em `data/names.manual.pt-BR.json` (as entradas com o campo `recipes`), escrito à mão (chave = nome inglês exato). A primeira versão (231 nomes, 1.8.4) foi montada com scripts que não estão no repositório; para poucas receitas novas, faça à mão:
 
-1. Busque o nome na wiki em português. A API é a mesma do passo 1, com `locale=pt-br` **em minúsculas** (`pt-BR` e `pt` voltam em inglês, sem erro). O `fetch_dataset.py` só busca em inglês, então use uma cópia dele:
+1. Busque o nome na wiki em português. A API é a mesma do passo 1, com `locale=pt-br` **em minúsculas** (`pt-BR` e `pt` voltam em inglês, sem erro). O `fetch_dataset.py --locale pt-br` cuida disso: grava `data/raw/pt/api-<slug>-pt-br-*.json` e para com erro se os nomes vierem em inglês (compara com o cache do passo 1). A etapa `wiki` do `update_data.py` já faz esta busca; à mão:
    ```sh
    mkdir -p data/raw/pt
-   sed 's/"locale": "en"/"locale": "pt-br"/' scripts/fetch_dataset.py > data/raw/pt/fetch_pt.py
-   for s in recipes alchemy-formulas; do python3 -I data/raw/pt/fetch_pt.py "$s" data/raw/pt || break; done
+   for s in recipes alchemy-formulas; do python3 -I scripts/fetch_dataset.py "$s" data/raw/pt --locale pt-br || break; done
    python3 -I -c '
    import json,sys
    W={}
    for s,p in (("recipes",""),("alchemy-formulas","alchemy-")):
-       for r in json.load(open(f"data/raw/pt/api-{s}-all.json"))["rows"]: W[p+r["key"]]=r["data"]["name"]
+       for r in json.load(open(f"data/raw/pt/api-{s}-pt-br-all.json"))["rows"]: W[p+r["key"]]=r["data"]["name"]
    for r in json.load(open("data/recipes.en.json")):
        if r["name"]==sys.argv[1]: print(r["id"], "->", W.get(r["id"], "(sem nome na wiki)"))' "Nome inglês da receita"
    ```

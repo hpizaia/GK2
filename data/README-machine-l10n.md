@@ -1,15 +1,16 @@
 # Machine pt-BR fallback layer (`names.machine.pt-BR.json`)
 
-Claude's own Brazilian Portuguese translation of every name in the GK2 dataset, made 2026-10-30. **None of it comes from the game.** It is a fallback layer. Any name found in an official or GK1-derived source (`names.pt-BR.json` entries whose `source` is not `machine`) overrides it at build time. Its job is full coverage and consistent terminology.
+Claude's own Brazilian Portuguese translation of every name in the GK2 dataset, made 2026-10-30. **None of it comes from the game.** It is the fallback layer: `names.official.pt-BR.json` and `names.manual.pt-BR.json` win over it, and a correction (`fix`) over everything (`data/README-l10n.md`). Since 2026-11-01 it also holds the 21 machine names of the retired `names.pt-BR.json` that the app shows (`pt`, with this file's own text in `alt_pt`) and the `gameKey` / `kind` / `priority` of every name. Its job is full coverage and consistent terminology.
 
 ## Schema
 
-Same as `names.pt-BR.json`: an object keyed by the **exact English string**.
+Like the other names files: an object keyed by the **exact English string**.
 
 ```jsonc
 {
   "_meta":   { "generated": "2026-10-30", "counts": { ... }, ... },   // skip keys starting with "_"
-  "Iron Ingot": { "pt": "Lingote de ferro", "source": "machine", "confidence": "guess" },
+  "Iron Ingot": { "pt": "Lingote de ferro", "source": "machine", "confidence": "guess",
+                  "kind": ["item"], "priority": 1, "gameKey": "ingot_iron" },
   ...
   "__obtain": { "<items[].obtain English text>": "<pt-BR text>", ... }
 }
@@ -25,8 +26,8 @@ Same as `names.pt-BR.json`: an object keyed by the **exact English string**.
 | stations (`station` + `alt_stations`) | 79 | all 79 are also item names, so they share entries |
 | categories (`items[].category`) | 53 | |
 | technologies (`unlock.name`) | 231 | 188 are not item names. Includes 10 quest names and 1 perk used as unlocks |
-| mastery types (`mastery.type`) | 5 | added for parity with `names.pt-BR.json`. "Farming" is shared with the category |
-| **name keys total** | **1065** | the same key set as `names.pt-BR.json`, checked |
+| mastery types (`mastery.type`) | 5 | added for parity with the item names. "Farming" is shared with the category |
+| **name keys total** | **1065** | plus "Anywhere" (1,066 in the file) |
 | obtain texts (`__obtain`) | 725 | every distinct non-null `obtain` |
 
 ### How the obtain texts were translated
@@ -51,7 +52,7 @@ Ingredient lists keep the source's "N Name" form, without plurals ("com 2 Placa 
 
 ## Glossary (applied consistently across names and obtain texts)
 
-**GK1 official pt-BR vocabulary reused.** The items marked * were confirmed by the GK1 pt-BR wiki entries in `names.pt-BR.json`.
+**GK1 official pt-BR vocabulary reused.** The items marked * were confirmed by the GK1 pt-BR wiki entries (`gk1-wiki` in `names.manual.pt-BR.json`).
 
 | EN | pt-BR |
 |---|---|

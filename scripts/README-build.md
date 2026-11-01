@@ -48,7 +48,7 @@ Options for `build.py`:
 |---|---|---|
 | `--items PATH` | `data/items.en.json` | |
 | `--recipes PATH` | `data/recipes.en.json` | |
-| `--names PATH` (repeatable) | `data/names.official.pt-BR.json`, `data/names.recipes.pt-BR.json`, `data/names.wiki.pt-BR.json`, `data/names.pt-BR.json`, `data/names.machine.pt-BR.json` | pt layers. A missing file is skipped with a note in the report. An entry with `"fix": "<reason>"` is a correction of the official text: it wins over every layer and tier and keeps its own confidence (`data/README-l10n.md`) |
+| `--names PATH` (repeatable) | `data/names.official.pt-BR.json`, `data/names.manual.pt-BR.json`, `data/names.machine.pt-BR.json` (`DEFAULT_PT` in `scripts/name_layers.py`, the lookup shared with `build_techs.py` and `build_facts.py`) | pt layers, best first: correction (`fix`) > official > by hand > machine; the first file wins a tie. A missing file is skipped with a note in the report. An entry with `"fix": "<reason>"` is a correction of the official text: it wins over every layer and tier and keeps its own confidence (`data/README-l10n.md`) |
 | `--lang FIELD=PATH[,PATH]` (repeatable) | none | extra language (see below) |
 | `--out-dir DIR` | `data/` | where the JSON and the reports go |
 | `--src DIR` | `src/` when `src/manifest.json` exists | assemble the page from `DIR` and write `DIR/../prototype/index.html`, `DIR/../dist/index.html`, `DIR/../dist/preview.html`. `VERSION`, `data/changelog.json`, `data/sprite.json` and `CHANGELOG.md` are read/written in `DIR/..` |

@@ -6,7 +6,8 @@ Tudo é Python 3 só com a biblioteca padrão (no `make_sprite.py`, o Pillow é 
 
 | script | o que faz | quando rodar | entradas → saídas |
 |---|---|---|---|
-| `fetch_dataset.py <slug> data/raw` | Pagina a API pública de datasets do wikily (120 linhas por página, 1 req/s, User-Agent de navegador) e guarda cada página e o conjunto | Patch do jogo / wiki atualizado. Uma vez por slug: `recipes`, `items`, `buildings`, `crafting-stations`, `technologies`, `alchemy-formulas` | API wikily → `data/raw/api-<slug>-offsetNNNN.json` + `data/raw/api-<slug>-all.json` |
+| `update_data.py <etapa> [--dry-run]` | Encadeia os comandos de `docs/atualizacao.md` na ordem certa, mostra cada um antes de rodar e para no primeiro erro. Etapas `wiki` (baixa os datasets e os nomes pt-br, `build_dataset.py`), `textos` (`juntar_nomes.py --atualizar`), `montar` (fatos, dias, ícones, tecnologias, sprite, build, `check.py`) e `tudo`. O que precisa de gente sai impresso como "passo manual". `--dry-run` só lista; `--dias` roda o `build_days.py` sem a etapa `textos` | Patch do jogo / wiki atualizado | o mesmo de cada script que ele chama (não faz commit) |
+| `fetch_dataset.py <slug> data/raw [--locale pt-br]` | Pagina a API pública de datasets do wikily (120 linhas por página, 1 req/s, User-Agent de navegador) e guarda cada página e o conjunto. `--locale` aceita só `en` (padrão) e `pt-br` (`pt-BR`/`pt_BR` viram `pt-br` com aviso): a API devolve inglês, sem erro, para `pt-BR`. Em `pt-br`, compara os nomes com o cache em inglês e para com erro se mais de 90% forem iguais | Patch do jogo / wiki atualizado. Uma vez por slug: `recipes`, `items`, `buildings`, `crafting-stations`, `technologies`, `alchemy-formulas`, `quests`; em `pt-br` (pasta `data/raw/pt`), `recipes` e `alchemy-formulas` | API wikily → `data/raw/api-<slug>-offsetNNNN.json` + `data/raw/api-<slug>-all.json`; em pt, `api-<slug>-pt-br-*.json` |
 | `build_dataset.py "<raiz>"` | Normaliza os dumps do wikily em itens e receitas (kinds, grupos, variantes de qualidade, construções por área, alquimia, plantio; marca `calculator_default`) | Depois do `fetch_dataset.py` | `data/raw/api-*-all.json` + `data/raw/calculator-props.json` → `data/items.en.json`, `data/recipes.en.json` |
 | `build.py` | Junta itens, receitas e as camadas de nomes em `gk2.json`, valida, escreve relatórios, monta a página a partir de `src/` e regenera `CHANGELOG.md`. `--release` data a versão | Sempre que mudar dado, nome, `src/`, `VERSION` ou changelog | `data/items.en.json`, `data/recipes.en.json`, `data/names*.pt-BR.json`, `data/sprite.json`, `src/`, `VERSION`, `data/changelog.json` → `data/gk2.json`, `data/report-build.md`, `data/report-l10n.md`, `prototype/index.html`, `dist/index.html`, `dist/preview.html`, `CHANGELOG.md` |
 | `build_facts.py` | Extrai de `data/raw/api-items-all.json` as fontes (quem vende, pesca), energia, efeito e pilha de cada item para `data/facts.json`; o `build.py` aplica isso ao `gk2.json` | Quando `data/raw/` for atualizado, antes do `build.py` | `data/raw/api-items-all.json` → `data/facts.json` |
@@ -34,17 +35,9 @@ Antes de cada commit ou publicação basta um comando: `python3 -I scripts/check
 |---|---|---|---|
 | `shots/compare.py [--ref REF \| --antes ARQ] [--tolerancia N] [--only-capture]` | Abre o app de `REF:dist/preview.html` (padrão `HEAD`) e o `dist/preview.html` atual no Chrome headless, nos mesmos casos (`shots/casos.json`: cada aba e tela principal, pt/en, 390/1280 px, claro/escuro), e compara pixels, HTML e texto visíveis, estado do app, erros de JS e o resumo do `GK.data`. Uma linha por caso (o DIFERENTE diz a maior diferença de cor, "máx 1/255"), exit 1 se algo mudou; `--tolerancia 1` aceita 1/255 e conta os pixels aceitos. Lento (~30 s): fica fora do `check.py`. Detalhes em [`shots/README.md`](shots/README.md) | Antes e depois de refatorar (depois do build); `--only-capture` para tirar prints | as duas páginas → `.shots/compare/` (ou `.shots/capturas/`), fora do git |
 
-## Camada pt-BR de reserva (GK1 + tradução de máquina)
+## Camadas de nomes pt-BR
 
-Estes scripts geraram `data/names.pt-BR.json`, a camada anterior aos textos oficiais do jogo. A camada oficial (`data/names.official.pt-BR.json`) cobre quase tudo, mas esta continua sendo a fonte das `gameKey` usadas pelo `juntar_nomes.py` e o reserva para nomes que o jogo não tem. Só é preciso rodar de novo quando o wikily ganhar nomes novos que precisem de `gameKey`.
-
-| script | o que faz | quando rodar | entradas → saídas |
-|---|---|---|---|
-| `fetch_gk1_langlinks.py data/raw/l10n` | Baixa os pares interwiki pt-br ↔ en da wiki Fandom do Graveyard Keeper 1 (MediaWiki API, 0,7 s entre chamadas) | Raramente: a wiki do GK1 quase não muda | API Fandom → `data/raw/l10n/gk1_*langlinks_*.json`, `gk1_langlinks_merged.json` |
-| `mt_glossary.py` | Não roda sozinho: é o glossário EN → pt-BR do Claude (tabelas `MT`, `CROPS`, `SEEDS`, `QUAL`, `SUPPLY`, `SINS`, `CATS`) importado pelo `build_names.py` | Editar quando quiser corrigir uma tradução de máquina | — |
-| `build_names.py data` | Monta `names.pt-BR.json` com chave = nome EN exato: GK1 (`likely`) > glossário (`guess`), com prioridade e `gameKey` | Quando entrar item novo no wikily, antes do `juntar_nomes.py` | `data/items.en.json`, `data/recipes.en.json`, `data/raw/l10n/thai_source_en.csv`, `data/raw/l10n/gk1_langlinks_merged.json` → `data/names.pt-BR.json` |
-
-`data/names.machine.pt-BR.json` (a tradução de máquina completa, com os textos `__obtain`) não tem gerador no repositório. Veja `data/README-machine-l10n.md`.
+Três arquivos em `data/` (`names.official`, `names.manual`, `names.machine`, todos `.pt-BR.json`), lidos por `name_layers.py`, a busca única do `build.py`, do `build_techs.py` e do `build_facts.py`: correção (`fix`) > oficial > à mão > máquina. O `names.machine.pt-BR.json` não tem gerador (veja `data/README-machine-l10n.md`); ele guarda também a `gameKey` de cada nome, usada pelo `juntar_nomes.py`.
 
 ## Fora de `scripts/`
 
@@ -52,10 +45,11 @@ Estes scripts geraram `data/names.pt-BR.json`, a camada anterior aos textos ofic
 |---|---|---|---|
 | `tools/exportar-textos/exportar_textos.py` (+ `.bat`) | No Windows com o jogo: lê `lng_pt-br` e `lng_en` de `resources.assets`, só leitura. Versão amigável, com leitor embutido (UnityPy opcional) | Patch do jogo | jogo instalado → `gk2_textos.json`, CSVs, log (ao lado do script) |
 | `tools/exportar-textos/exportar_textos_unitypy.py` | Variante estrita (exige UnityPy) que gerou a exportação 1.011; grava também os 11 idiomas, a versão do jogo e `_resumo.json` | Patch do jogo (alternativa) | jogo instalado → `gk2_textos.json`, `gk2_textos_todos.json`, CSVs, `_resumo.json` |
-| `tools/exportar-textos/juntar_nomes.py --atualizar` | Atualiza `names.official.pt-BR.json` com a exportação nova pela `gameKey`, mantém as entradas ligadas à mão e lista o que mudou | Depois de trazer a exportação para `data/game-texts/` | `data/game-texts/gk2_textos.json`, `data/names.pt-BR.json`, `data/names.official.pt-BR.json` → `data/names.official.pt-BR.json` |
+| `tools/exportar-textos/juntar_nomes.py --atualizar` | Atualiza `names.official.pt-BR.json` com a exportação nova pela `gameKey`, mantém as entradas ligadas à mão e lista o que mudou | Depois de trazer a exportação para `data/game-texts/` | `data/game-texts/gk2_textos.json`, `data/names.machine.pt-BR.json` (gameKey), `data/names.official.pt-BR.json` → `data/names.official.pt-BR.json` |
 
 ## Removidos (estão no histórico do git)
 
 - `collect_en_names.py`: primeiro coletor de nomes EN, substituído pelo `build_names.py`.
 - `unwrap_browser_dump.py`: uso único, desembrulhava o resultado salvo do `javascript_tool` do navegador em `data/raw/calculator-props.json`. Recuperar com `git show 4639d65:scripts/unwrap_browser_dump.py` se precisar capturar o calculador de novo (veja `docs/atualizacao.md`).
+- `build_names.py`, `mt_glossary.py`, `fetch_gk1_langlinks.py`: geravam `names.pt-BR.json`, aposentados em 01/11/2026; o conteúdo está em `names.manual` (GK1) e `names.machine` (máquina e gameKey).
 - `tools/exportar-textos/_teste_join.json`: saída de teste do `juntar_nomes.py` feita com o CSV inglês do mod tailandês.

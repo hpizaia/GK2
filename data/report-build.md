@@ -7,9 +7,7 @@ Built 2026-11-01 (schema 1). Result: **0 error(s), 205 warning(s), 78 info(s)**.
 - items: `data/items.en.json`
 - recipes: `data/recipes.en.json`
 - names[pt]: `data/names.official.pt-BR.json (sourced layer, 1020 names, 0 texts)`
-- names[pt]: `data/names.recipes.pt-BR.json (sourced layer, 232 names, 0 texts)`
-- names[pt]: `data/names.wiki.pt-BR.json (sourced layer, 9 names, 0 texts)`
-- names[pt]: `data/names.pt-BR.json (sourced layer, 1065 names, 0 texts)`
+- names[pt]: `data/names.manual.pt-BR.json (sourced layer, 318 names, 0 texts)`
 - names[pt]: `data/names.machine.pt-BR.json (machine layer, 1066 names, 736 texts)`
 - names[pt]: `derived (sourced layer, 47 names, 0 texts)`
 
@@ -45,7 +43,7 @@ Things build.py had to fix or interpret in the inputs (count, examples).
 
 | coercion | count | examples |
 |---|---:|---|
-| names: `_` key ignored | 5 | names.official.pt-BR.json:_meta; names.recipes.pt-BR.json:_meta; names.wiki.pt-BR.json:_meta; names.pt-BR.json:_meta; names.machine.pt-BR.json:_meta |
+| names: `_` key ignored | 3 | names.official.pt-BR.json:_meta; names.manual.pt-BR.json:_meta; names.machine.pt-BR.json:_meta |
 
 ## Cycles
 

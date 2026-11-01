@@ -61,7 +61,7 @@ Patch do jogo ou wiki atualizada: `docs/atualizacao.md`.
 | pasta | o que é |
 |---|---|
 | `src/` | código da página: `js/` (módulos `GK.*`), `css/`, `manifest.json` (ordem) |
-| `data/` | dados do wiki, camadas de nomes `names*.pt-BR.json`, `facts.json`, `days.json`, `techs.json`, `changelog.json` |
+| `data/` | dados do wiki, nomes pt em 3 camadas `names.{official,manual,machine}.pt-BR.json` (busca única: `scripts/name_layers.py`), `facts.json`, `days.json`, `techs.json`, `changelog.json` |
 | `scripts/` | build, pipeline de dados, testes, `git-hooks/` (Python só com biblioteca padrão; um teste em Node) |
 | `dist/`, `prototype/` | páginas geradas (o artifact do app é `dist/index.html`) |
 | `site/` | site de apresentação. **O Hugo edita o texto**: não mexa sem ele pedir |

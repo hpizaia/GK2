@@ -84,8 +84,7 @@ git diff --stat data/items.en.json data/recipes.en.json
 - As páginas brutas vão para `data/raw/` (fora do git, uns 19 MB).
 - O `build_dataset.py` imprime contagens e listas de problemas (`dangling`, `unmatched calc`…). Compare com a vez anterior; o normal é tudo vazio ou quase.
 - O `data/raw/calculator-props.json` (qual receita o calculador da wiki prefere) é opcional e fica atrás de um desafio do navegador; veja "Calculador" em [`docs/atualizacao.md`](atualizacao.md).
-- Itens novos precisam de uma entrada na camada de reserva: `python3 -I scripts/build_names.py data`.
-- Nomes de receita em português e correções de nomes ficam em duas camadas escritas à mão, `data/names.recipes.pt-BR.json` e `data/names.wiki.pt-BR.json`. Receita nova aparece em inglês até alguém acrescentá-la (como buscar o nome na wiki em português: "Nomes de receita em português" em [`docs/atualizacao.md`](atualizacao.md)).
+- Os nomes em pt ficam em três camadas: `data/names.official.pt-BR.json` (do jogo, passo 5), `data/names.manual.pt-BR.json` (escolhidos à mão: nomes de receita, palavras do jogo, correções) e `data/names.machine.pt-BR.json` (reserva de máquina). Item novo sem nome oficial precisa de uma entrada à mão na de máquina. Receita nova aparece em inglês até alguém acrescentá-la (como buscar o nome na wiki em português: "Nomes de receita em português" em [`docs/atualizacao.md`](atualizacao.md)).
 
 ## 5. Nomes oficiais do seu próprio jogo (opcional, Windows)
 
