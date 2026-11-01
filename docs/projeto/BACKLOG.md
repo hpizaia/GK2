@@ -1,6 +1,6 @@
 # Backlog — Companheiro GK2
 
-31/10/2026 · versão atual **1.6.0** (commit local; publicação do app e do site aguarda a confirmação do Hugo)
+01/11/2026 · versão atual **1.6.0**, publicada (app, site e release v1.6.0 no GitHub)
 
 Este arquivo substitui o backlog anterior (Etapas 0 a 5). O histórico do que já foi feito está no [CHANGELOG.md](../../CHANGELOG.md).
 
@@ -8,7 +8,7 @@ Esforço: **P** até 2 h · **M** meio dia a um dia · **G** vários dias. Quand
 
 ## Onde estamos
 
-**Publicado:** 1.5.1 (app e site republicados em 31/10 à noite; release v1.5.0 no GitHub, commit da 1.5.1 enviado). **1.6.0:** pronta e commitada em 31/10 à noite, ainda não publicada.
+**Publicado:** 1.6.0 (01/11, madrugada): app versão 11, site versão 9, release v1.6.0 com o arquivo único. Sessões laterais da noite arquivadas.
 
 **Saiu hoje:**
 - **1.4.0:** o painel Hoje ganhou "feito hoje", a prévia de amanhã, o bilhete por dia e a opção "Letra grande". No celular, o Planejador mostra Matérias-primas e Etapas logo depois das Metas, as abas ficam fixas e as linhas ficaram mais baixas; site e READMEs revisados.
