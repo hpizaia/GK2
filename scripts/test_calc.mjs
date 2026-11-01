@@ -204,7 +204,7 @@ await test("group choice replaces the group and merges demand", () => {
 // ---------------------------------------------------------------- perk bonuses
 await test("perk bonuses come from the build (line.bonus, the perks table): the page reads them as they come", () => {
   // the shapes themselves ("N (M with X)", "N, or M with X", "+N each with X", "M with X") are read by build.py
-  // (note_bonus, test_build.py PerkBonus); here: the payload already carries them and GK.data keeps them as they are
+  // (note_bonus, scripts/tests/test_quality.py GradesAndBonusBuild); here: the payload already carries them and GK.data keeps them as they are
   const lines = (r) => r.in.concat(r.extra, [r.out]);
   const raw = PAYLOAD.recipes.flatMap((r) => (r.in || []).concat(r.extra || [], [r.out])).filter((l) => l.bonus);
   check(raw.length >= 150 && PAYLOAD.perks && Object.keys(PAYLOAD.perks).length >= 20, `payload: ${raw.length} lines with a bonus, a perks table`);

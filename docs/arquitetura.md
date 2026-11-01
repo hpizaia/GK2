@@ -12,7 +12,9 @@ Pastas, pipeline de build, telas e módulos, limites do artifact e camadas de no
 | `data/raw/` | Cache da API do wikily, props do calculador, pesquisa de localização (`l10n/`) | não (19 MB, regenerável) |
 | `data/icons/` | Um PNG por item, estação ou tecnologia | não (regenerável, vira o sprite) |
 | `scripts/` | Pipeline Python (só biblioteca padrão) e testes. Tabela em [`scripts/README.md`](../scripts/README.md) | sim |
-| `scripts/fixtures/` | Dados pequenos para o `test_build.py` | sim |
+| `scripts/build_parts/` | As partes do `build.py`, uma por assunto (montagem dos dados, qualidade, relatórios, payload, página, versões) | sim |
+| `scripts/tests/` | Os testes do build, um arquivo por assunto; `scripts/test_build.py` roda todos | sim |
+| `scripts/fixtures/` | Dados pequenos para esses testes | sim |
 | `tools/exportar-textos/` | Exportador dos textos do jogo (Windows) e `juntar_nomes.py`. Resumo em [`tools/README.md`](../tools/README.md) | sim |
 | `prototype/index.html` | Página de desenvolvimento (com esqueleto HTML), gerada. Ver [`prototype/README.md`](../prototype/README.md) | sim |
 | `dist/index.html` | A página do artifact (sem esqueleto), gerada. `dist/preview.html` é a mesma coisa com esqueleto, para ver localmente | sim |
@@ -87,7 +89,7 @@ Funções comuns, para não repetir código entre as telas (a lista completa est
 - `GK.calc` (`calc.js`): `plan`, `search`, `howToMake`, `recipeFor`, `expandable`, `orderStations`, `isBonusActive`, `doneCovers`, `rawChecked` / `stepChecked` (a marcação segue a quantidade) e `recipeGroups` (os cartões agrupados do "Como fabricar").
 - `GK.ui.fmt` (`ui/fmt.js`): marcação de nomes, receitas e estações (`badges`, `buildLabel`, `stationOf`, `recipeLabel`, `recipeLabels`, `recipeTag`, `techLine`, `nameBlock`, `otherName`, `graded`, `gradedName`, `UNOFFICIAL`), o ícone que abre a receita (`slotButton` + `recipeClick`), o botão de dobrar (`foldBtn`, `CONTROLS`) e o aviso com "Desfazer" (`undoToast`).
 
-Os módulos puros (`data`, `calc`, `store`, `sync`, `ui/fmt`) têm testes em `scripts/test_calc.mjs`; `tech.js` e a sintaxe de todos os módulos, em `scripts/test_build.py`.
+Os módulos puros (`data`, `calc`, `store`, `sync`, `ui/fmt`) têm testes em `scripts/test_calc.mjs`; `tech.js` e a sintaxe de todos os módulos, em `scripts/tests/` (rodados por `scripts/test_build.py`).
 
 ## Limites do Claude Artifact
 

@@ -202,7 +202,7 @@ Só o que muda. O resto (cabeçalho, abas, títulos, cartões, estações, Hoje,
 |---|---|---|---|---|
 | **1. Sinais no Planejador** | check verde; espaço escuro nos dois temas; pilha amarela no "tenho N"; Progresso em cápsula verde; × vermelho no aviso de patch; texto do balão mais escuro | **P** (meio dia) | protótipo `ui-jogo/planejador.html` (Atual / Novo); matriz de capturas 360/390/1280 × escuro/claro × Letra grande; script de contraste | igual ao protótipo nos dois temas; contraste da tabela da seção 4; nada da seção 3 do `simplificar.md` mudou |
 | **2. Energia e insanidade** | raio e cérebro em SVG próprio (sai o PNG da wiki); selo "+20" / "−3" nas comidas da lista de Receitas e da busca | **P** (meio dia) | Receitas filtrada em Comida; busca "sopa", "cerveja"; ficha da Sopa de abóbora e de uma bebida com insanidade | selos legíveis em 360 px com letra grande; nenhum PNG da wiki na interface |
-| **3. Letra do texto** (opcional, à parte) | Alegreya Sans → letra do sistema | **P** | matriz de capturas; `test_build.py` (TypeScale) | só se o Hugo aprovar; fontes ≤ 55 KB |
+| **3. Letra do texto** (opcional, à parte) | Alegreya Sans → letra do sistema | **P** | matriz de capturas; `scripts/tests/test_app_shell.py` (TypeScale) | só se o Hugo aprovar; fontes ≤ 55 KB |
 
 ---
 

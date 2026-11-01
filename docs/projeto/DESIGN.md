@@ -91,7 +91,7 @@ Semantic colours (moss/blood) are separate from the accent. Contrast: `--ink` on
   given as a length. So the phone's own text-size setting and "Letra grande" both scale the whole app. Spacing, borders,
   radii, shadows, icon and sprite cells (32 px, SVG icons), the 40 px slot and `--tap: 44px` stay in px, and so do
   the letter fallback inside a slot (`.slot-letter`, it fills a px tile) and the phone wordmark
-  (`clamp(20px, 5.5vw, 26px)`: a logo, never cut to "Companheir…"). `scripts/test_build.py` (`TypeScale`) checks it.
+  (`clamp(20px, 5.5vw, 26px)`: a logo, never cut to "Companheir…"). `scripts/tests/test_app_shell.py` (`TypeScale`) checks it.
 - Scale (rem, px at the default 16 px root): .625 (10) tiny badge · .6875–.75 (11–12) caption, uppercase labels ·
   .8125 (13) meta, sub-lines · .875 (14) buttons, hints · .9375 (15) tabs, "per craft" line · 1 (16) body ·
   1.0625 (17) row name, search · 1.125 (18) history heads · 1.25 (20) progress title, stepper value ·

@@ -5,9 +5,9 @@ may contain spaces, so quote them.
 
 | script | what it does |
 |---|---|
-| `scripts/build.py` | Merges items, recipes and names into `data/gk2.json`, writes the reports, assembles the page from `src/` (data, version and changelog embedded) and regenerates `CHANGELOG.md` |
+| `scripts/build.py` | Merges items, recipes and names into `data/gk2.json`, writes the reports, assembles the page from `src/` (data, version and changelog embedded) and regenerates `CHANGELOG.md`. It holds the command line; the work is in `scripts/build_parts/`, one file per subject (`common`, `notes`, `builder`, `grades`, `reports`, `payload`, `page`, `versions`), all re-exported as `build.<name>` |
 | `scripts/validate.py` | Checks a merged `gk2.json`. build.py also runs it on every build |
-| `scripts/test_build.py` | Tests on `scripts/fixtures/` (plus a read-only smoke test on the real data) |
+| `scripts/test_build.py` | Runs the build tests in `scripts/tests/` (one file per subject, shared helpers in `helpers.py`; each file also runs alone): on `scripts/fixtures/`, plus a read-only smoke test on the real data |
 | `scripts/fetch_icons.py` | Downloads every distinct `icon` URL of `data/gk2.json` (items + stations) into `data/icons/<id>.png` (≤ 5 req/s, skips existing files) |
 | `scripts/make_sprite.py` | Packs `data/icons/*.png` into one sprite sheet: `data/sprite.json` (manifest with a lossless WebP `data:` URI, made by `cwebp`) + `data/sprite.png` (the same sheet as a PNG, reference copy) |
 
@@ -408,7 +408,7 @@ The code needs no other change. To make `--lang es=…` the default, add it to `
   line, a list as `obtain`, a bare-string name entry, and an unknown confidence
 - a `</script>` inside a string
 
-The technology tests (`TechsBuild`, `RealTechs` in `test_build.py`) use a 3-tech tree written inline (`FIX_TECHS`:
+The technology tests (`TechsBuild`, `RealTechs` in `scripts/tests/test_tech_tree.py`) use a 3-tech tree written inline (`FIX_TECHS`:
 a given root, a hidden child with a reputation gate, a second branch). They cover `apply_tech_names`, the compact
 `techs` payload, the sprite filter, `--techs` / `--no-techs` in src mode, `GK.tech` itself (run in
 node with a stub `GK.data`, skipped without node) and, on the real data, the payload size (< 250 kB) and the

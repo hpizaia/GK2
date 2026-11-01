@@ -62,7 +62,7 @@ Patch do jogo ou wiki atualizada: `docs/atualizacao.md`.
 |---|---|
 | `src/` | código da página: `js/` (módulos `GK.*`), `css/`, `manifest.json` (ordem) |
 | `data/` | dados do wiki, nomes pt em 3 camadas `names.{official,manual,machine}.pt-BR.json` (busca única: `scripts/name_layers.py`), `facts.json`, `days.json`, `techs.json`, `changelog.json` |
-| `scripts/` | build, pipeline de dados, testes, `git-hooks/` (Python só com biblioteca padrão; um teste em Node) |
+| `scripts/` | build (`build.py` + partes em `build_parts/`), pipeline de dados, testes (`test_build.py` roda os de `tests/`), `git-hooks/` (Python só com biblioteca padrão; um teste em Node) |
 | `dist/`, `prototype/` | páginas geradas (o artifact do app é `dist/index.html`) |
 | `site/` | site de apresentação. **O Hugo edita o texto**: não mexa sem ele pedir |
 | `docs/` | documentos públicos (índice `docs/README.md`); status em `docs/projeto/BACKLOG.md` |
@@ -79,7 +79,7 @@ Patch do jogo ou wiki atualizada: `docs/atualizacao.md`.
 - Republicar o app: nunca passe `capabilities`. Republicar artifact de outra sessão: o tool exige ler a
   versão publicada antes.
 - Mídia do site: liste antes os arquivos do artifact (`scope: "files"`), senão a publicação é recusada.
-- `docs/projeto/DESIGN.md` não muda de lugar: `test_build.py` confere o caminho na 1ª linha de `src/css/tokens.css`.
+- `docs/projeto/DESIGN.md` não muda de lugar: `scripts/tests/test_app_shell.py` confere o caminho na 1ª linha de `src/css/tokens.css`.
 - Qualidade: o item sem sufixo é o bronze; os ids `-silver`/`-gold` ficam por causa de planos salvos.
 - Pares que mudam juntos: `README.md` e `README.pt-BR.md`; `docs/duplicar.md` e `docs/duplicate.md`.
 - Capturas de tela: use `scripts/shots/` (`compare.py --only-capture` para prints; casos em `casos.json`), não
