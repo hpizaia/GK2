@@ -1,6 +1,6 @@
 # Backlog — Companheiro GK2
 
-01/11/2026 · versão atual **1.8.1**, publicada (app, site e release v1.8.1 no GitHub)
+01/11/2026 · versão atual **1.8.2**, publicada (app, site e release v1.8.2 no GitHub)
 
 Este arquivo substitui o backlog anterior (Etapas 0 a 5). O histórico do que já foi feito está no [CHANGELOG.md](../../CHANGELOG.md).
 
@@ -8,9 +8,10 @@ Esforço: **P** até 2 h · **M** meio dia a um dia · **G** vários dias. Quand
 
 ## Onde estamos
 
-**Publicado:** 1.8.1 (01/11, manhã): app versão 14, site versão 12, release v1.8.1 com o arquivo único. Antes dela, a 1.8.0 (mesma manhã).
+**Publicado:** 1.8.2 (01/11, manhã): app versão 15, site versão 13, release v1.8.2 com o arquivo único. Antes dela, a 1.8.1 e a 1.8.0 (mesma manhã).
 
 **Saiu hoje:**
+- **1.8.2:** **qualidade consertada no build** (graus preservados: Vinho, Uvas, colheitas, receitas de estrela; melhorias Especiarias/Umami não circulares; planos salvos migram; relatórios internos `qualidade-auditoria.md` e `qualidade-pesquisa.md`), selos de grau de ingrediente fora das Etapas (2.9), "ou: … · requisitos" numa linha, **seta fina de seção** (opção A de https://claude.ai/artifact/LU6Pjko6NCoEogwMZVC6Lx), Tecnologias que faltam recolhe, **colunas da aba Tecnologias recolhem** (só a próxima aberta), Progresso sem Copiar lista / Limpar marcações / Editar nomes (renomear pelo selo "não oficial" no detalhe), QA #8 #11 #12. Comparação: https://claude.ai/artifact/Kv1tBxrbejFW5wWFnbdQL5.
 - **1.8.1:** Metas com o "− N +" à direita, na mesma coluna das outras quantidades (opção 2 do protótipo https://claude.ai/artifact/TCXVjz1GN9sXqReLQw5URs); com quantidade 1 o "−" vira ✕ e a remoção tem "Saiu das metas · Desfazer". Comparação: https://claude.ai/artifact/N1oUu9Uy69HF9FaSzhLFVG.
 - **1.8.0:** **receitas agrupadas** (um cartão por estação quando só muda um ingrediente; qualidade bronze/prata/ouro como escolha que troca a receita do planejador; circulares recolhidas em "Melhorar a qualidade"), **estrela de qualidade** no ícone em todo o app (nome sem "(prata)" nas listas, palavra embaixo), **moedas em pixel** no "Quem compra" (unidade conferida: bronze, 100/100), **cortes 9 e 19**, **C3** (marcação acompanha a quantidade), **grade única no Planejador** (pedido do Hugo: número da estação na coluna das caixinhas, ícone da estação na coluna dos ícones), 2.1 a 2.5, QA #5 #6 #7 #9 #13, 2.8 no site, caixinhas de Tecnologias e Hoje de volta ao lugar. Comparação: https://claude.ai/artifact/VwmRF7TjJeNBRknDMZgC6w · protótipo: https://claude.ai/artifact/T4QxsVK8UVetbF7n8xnVmE. Relatório interno: `docs/revisao-ux/consertos.md`.
 - **1.4.0:** o painel Hoje ganhou "feito hoje", a prévia de amanhã, o bilhete por dia e a opção "Letra grande". No celular, o Planejador mostra Matérias-primas e Etapas logo depois das Metas, as abas ficam fixas e as linhas ficaram mais baixas; site e READMEs revisados.
@@ -83,9 +84,11 @@ Objetivo: tirar os defeitos que atrapalham o uso de todo dia, antes de qualquer 
 | ✓ 2.4 | (1.8.0) "Sem receita" na lista de Receitas vira "Coleta ou compra" (`app.md`, Receitas 4) | P\* | — |
 | ✓ 2.5 | (1.8.0) "Texto do jogo" nos Dias parece link: trocar por um ícone de aspas pequeno (`app.md`, Dias 2) | P\* | — |
 | 2.6 | Testar num iPhone e num Android reais: ~~atalho na tela de início no iPhone~~ (funciona, 01/11); falta Android, teclado cobrindo o aviso e o gesto de voltar da 1.8.0 | P\* | um celular de cada |
+| 2.12 | Site: contagens "690 itens · 695 receitas" (o build agora tem 838 itens e 707 receitas com os graus; conferir o número que o app mostra na busca) e mídia antiga — o Hugo vai mexer no site | P | Hugo |
+| 2.13 | Aba Tecnologias: colunas recolhidas com bastante espaço entre si; apertar se incomodar | P | — |
 | 2.11 | Ícone da tela inicial: vem do Claude (símbolo de uma lista de 155 + cor que o Claude guarda; não dá cruz nem cores do jogo). Hugo decidiu manter o livro por ora; candidato: Fantasma (https://claude.ai/artifact/WDZ87vMxubgBWboYMbUvty) | P | sua decisão |
-| 2.7 | QA de 31/10 (`docs/revisao-ux/qa-2026-11.md`): ~~"Recentes" abre sozinho depois de adicionar (médio)~~ feito na 1.6.0; ~~foco perdido ao fechar o aviso e ao apagar lista; aviso "Adicionado" fica após Desfazer; "Anatomia 0"; rótulo da Pele cortado; "Limpar lista" × "Apagar lista"~~ feitos na 1.8.0. Sobram: "Dados de 2026-11-01" nos Créditos (#8), aspas retas no changelog (#11), cartão vazio desalinhado em 1280 (#12) | P cada | — |
-| 2.9 | Etapas: o selo da receita ("BRONZE") aparece ao lado de "Suco de Uva (prata)" e confunde; reescrever | P\* | — |
+| 2.7 | QA de 31/10 (`docs/revisao-ux/qa-2026-11.md`): ~~"Recentes" abre sozinho depois de adicionar (médio)~~ feito na 1.6.0; ~~foco perdido ao fechar o aviso e ao apagar lista; aviso "Adicionado" fica após Desfazer; "Anatomia 0"; rótulo da Pele cortado; "Limpar lista" × "Apagar lista"~~ feitos na 1.8.0. #8, #11 e #12 feitos na 1.8.2. Nada sobrando do QA de 31/10 | — | — |
+| ✓ 2.9 | (1.8.2) Etapas: o selo da receita ("BRONZE") aparece ao lado de "Suco de Uva (prata)" e confunde; reescrever | P\* | — |
 | 2.10 | Metas fora da grade nova (sem caixinha; decidido manter) e quantidade das Etapas no topo da linha: só mexer se incomodar | P\* | — |
 | ✓ 2.8 | (1.8.0) Site: trocar a frase "o rodapé mostra Só neste aparelho" (o rodapé não mostra mais nada sem conta) | P | — |
 
@@ -148,7 +151,7 @@ Objetivo: guardar o que vale a pena, mas só entra se o uso pedir ou se você de
 |---|---|---|---|
 | **Dados e tradução** | | | |
 | 6.10 | Traduzir os 231 nomes de receita (D2) | P/M | — |
-| 6.11 | Revisar 45 categorias e 3 maestrias traduzidas por máquina (D4); e dois nomes PT suspeitos achados na 1.8.0: "Sucata de Cobre" para Bronze Scrap e "Anotação…" para uma chave | P\* | — |
+| 6.11 | Revisar 45 categorias e 3 maestrias traduzidas por máquina (D4); (os dois nomes PT suspeitos da 1.8.0, "Sucata de Cobre" e "Anotação…", são do próprio jogo: ficam) | P\* | — |
 | 6.12 | Qualidade prata/ouro marcada no build, e não deduzida na página (C2/D1) | M | — |
 | 6.13 | Alquimia por runas: calcular as misturas válidas | G\* | — |
 | 6.14 | Script para levar ao arquivo de tradução os nomes editados no app | P\* | — |
