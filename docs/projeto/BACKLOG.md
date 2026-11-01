@@ -1,67 +1,184 @@
-> Documento de projeto. Parte do conteúdo descreve a versão 1.2;
-> o estado atual está no [README](../../README.pt-BR.md) e no [CHANGELOG](../../CHANGELOG.md).
-
 # Backlog — Companheiro GK2
 
-Estado em 2026-10-30. Em publicação: 1.2.0 (abas Receitas e Tecnologias, cálculo avançado, sincronização mais segura). Publicada antes: 1.1 (tema, sincronização por conta, traduções oficiais).
+31/10/2026 · versão atual **1.5.1**
 
-## Etapa 0 — Base para crescer (feita)
-- [x] Quebrar `prototype/index.html` em `src/` (HTML, CSS e um JS por módulo); `scripts/build.py` monta a página.
-- [x] Dicionário i18n por módulo (`GK.i18n.add`), para módulos novos não disputarem o mesmo arquivo.
-- [x] Arquivo `VERSION` + `data/changelog.json` (pt/en) → versão no rodapé e tela "Histórico de atualizações" (`#changelog`); `CHANGELOG.md` gerado.
-- [x] Testes do build cobrindo a montagem a partir de `src/`.
+Este arquivo substitui o backlog anterior (Etapas 0 a 5). O histórico do que já foi feito está no [CHANGELOG.md](../../CHANGELOG.md).
 
-## Etapa 1 — Funcionalidades (feita)
-- [x] **Receitas**: lista por categoria/estação com busca; detalhe do item (receitas alternativas, estação, tecnologia, maestria, tempo/energia, subprodutos, "usado em"); botão "Adicionar às metas"; link `#recipes`.
-- [x] **Tecnologias**: as 226 tecnologias no build (custos por cor, pré-requisitos, desbloqueios, ramo); ícones extras no sprite; tela por ramo com detalhe; "Já pesquisei" sincronizado; painel no Planejador com as tecnologias que faltam e a soma de pontos por cor.
-- [x] **Cálculo avançado**: "tenho N de M"; escolha do membro em itens de grupo ("Brema ou carpa"); vantagens (perks) que alteram rendimento; segurar +/− para repetir.
-- [x] **Auditoria**: revisão de código, dados e UX com melhorias priorizadas (`AUDITORIA.md`).
+Esforço: **P** até 2 h · **M** meio dia a um dia · **G** vários dias. Quando a fonte não dava o esforço, ele é uma estimativa (marcada com \*).
 
-## Etapa 2 — Consolidação (1.2.0)
-- [x] Documentação: `README.md`, `docs/arquitetura.md`, `docs/atualizacao.md`, `docs/dados.md`, `docs/guia-de-uso.md`; `SPEC.md` e `DESIGN.md` atualizados.
-- [x] Organização de pastas: `tools/`, `docs/`, `historico/`; restos de protótipo removidos.
-- [x] Melhorias da auditoria que couberam: ordem das estações, prata/ouro, sincronização (mesclagem, campos preservados, ouvinte, conta), alvos de 44 px, contraste, nome não marca a caixa, busca acessível, textos. Situação em `AUDITORIA.md`, seção "Situação em 1.2.0".
-- [x] `made_text` (vira nota da saída, com o bônus de vantagem) e `star_quality` (ciclos para prata/ouro, mostrados na tela Receitas) no build.
-- [x] Changelog da 1.2.
-- [ ] QA integrado em celular e desktop; correções.
-- [ ] Publicar 1.2 (`build.py --release`, mesmo artifact), commit, push, exportar a transcrição para `historico/`.
+## Onde estamos
 
-## Etapa 3 — Depois (sob demanda)
+**Publicado:** 1.5.1 (app e site republicados em 31/10 à noite; release v1.5.0 no GitHub, commit da 1.5.1 enviado).
 
-Dados e tradução
-- [ ] Traduzir os 231 nomes de receita (derivar "<saída> de <entrada> (ouro)" das partes oficiais) e mostrá-los no seletor e na tela Receitas (AUDITORIA D2).
-- [ ] Categorias (45 de 53) e maestrias (3) ainda de máquina: revisar, já que a tela Receitas mostra as categorias (D4).
-- [ ] Marcar no build a qualidade das receitas "X a partir de Y (prata/ouro)" e apontar a entrada para a variante; hoje a página deduz pelo nome e pelo id (C2/D1).
-- [ ] Gerador do `data/names.machine.pt-BR.json`: não existe em `scripts/` (ficou no rascunho da sessão de 30/10). Sem ele, itens novos de um patch ficam sem a camada de máquina.
-- [ ] Nomes pt repetidos entre itens ("Tinta" = Ink e Paint): mostrar o nome EN pequeno quando colidir (D3).
-- [ ] Alquimia por runas: calcular misturas válidas em vez de uma de exemplo.
-- [ ] Script para reincorporar ao arquivo de tradução os nomes editados no app.
+**Saiu hoje:**
+- **1.4.0:** o painel Hoje ganhou "feito hoje", a prévia de amanhã, o bilhete por dia e a opção "Letra grande". No celular, o Planejador mostra Matérias-primas e Etapas logo depois das Metas, as abas ficam fixas e as linhas ficaram mais baixas; site e READMEs revisados.
+- **1.5.0:** listas separadas ("Lista: Igreja ▾") e recentes na busca. O detalhe do item ganhou "Onde conseguir", energia e efeito no estilo do jogo; rodapé enxuto, QR nos Créditos e aviso de dados velhos.
+- **1.5.1:** o cartão "Próximo passo" (ideia 5, que entrou na 1.5.0) saiu a seu pedido: na prática atrapalhava no topo do Planejador. A lista de etapas continua igual.
 
-Interface
-- [ ] Receitas com link direto: hoje só `#recipes` chega à página, e o item aberto fica no `sessionStorage`. Um link para um item específico não funciona.
-- [ ] Gesto de voltar do celular no detalhe da Receita (e da Tecnologia): o detalhe não entra no histórico do navegador, então voltar não leva à lista. Usar o histórico, se o artifact deixar.
-- [ ] Memória da escolha de grupo: o membro escolhido vale para o grupo em todos os planos e nunca é apagado. Decidir se deve ser limpo ao remover a meta.
-- [ ] "Marcado" não acompanha a quantidade: marcar 3 e depois pedir 10 continua marcado (C3).
-- [ ] Rótulos de zona longos nos cartões de construção (D7).
-- [ ] Re-render por painel, para listas grandes no celular (F3).
-- [ ] Selo "não oficial" em nomes longos (quebra de linha).
+**Esperando a sua decisão:**
+1. ~~Os 16 cortes~~ **Aprovados todos em 31/10 à noite**, pelos protótipos (rodada 1 pode começar). As 18 dúvidas de detalhe das páginas do protótipo ficaram sem resposta: na implementação, usar a opção mostrada no "Depois" e perguntar só se travar.
+2. O **plano de UI com a cara do jogo** (`docs/projeto/PLANO-UI-JOGO.md`): a primeira versão do protótipo (janelas de couro e madeira) foi recusada por pesada em 31/10; a regra passou a ser "limpo e minimalista, só sinais do jogo". Plano e protótipo refeitos nessa direção aguardam o seu olhar (rodada 4).
+3. As **ideias ainda sem decisão**: 6, 7 (missão como meta, rodada 3), 15, 16, 18, 19 e 20 (rodada 6).
 
-Sincronização e privacidade
-- [ ] Navegador compartilhado sem login: o plano anônimo vai para a primeira conta que abrir a página naquele navegador. Avisar, ou perguntar antes de levar.
-- [ ] Podar `have`/`choice`/`done` ao remover metas (S6).
+**Feito em 31/10 à noite (depois da 1.5.1):**
+- Protótipos dos 16 cortes: https://claude.ai/artifact/3CD3kTbWmzXBBRrqwBhb6i (aprovados por você).
+- QA do app e do site na 1.5.1: `docs/revisao-ux/qa-2026-11.md`. 0 graves, 4 médios (2 já corrigidos em `src/`, sem versão nova), 9 pequenos. Abertos: a lista "Recentes" abre sozinha logo depois de adicionar um item; o site cita um "Só neste aparelho" que o rodapé não mostra mais.
+- Plano de UI: `docs/projeto/PLANO-UI-JOGO.md`, refeito na direção "sinais do jogo, não molduras"; protótipo em https://claude.ai/artifact/C7aaTk2E5Z7sNQsuniYdie.
+- Pasta arrumada e commitada: índice `docs/README.md` e READMEs de `docs/media/`, `prototype/` e `tools/`.
+- Este backlog, com versão para celular em https://claude.ai/artifact/XXs3MUjdWEBiixNsAMDwpm.
 
-Desempenho e repositório
-- [ ] Sprite em WebP sem perdas (cerca de −430 KB na página) (F1). Sprite de 36 px para ícones mais nítidos (+30% de tamanho).
-- [ ] Testes das telas (`GK.ui.*`); chamar o `test_calc.mjs` a partir do `test_build.py` (B1).
-- [ ] Tirar do git o zip de `historico/` e os artefatos gerados, se o tamanho do repositório incomodar (B2).
+**Dados:** o jogo está na **1.011** (30/10) e as receitas da wiki ainda na **1.010**. O aviso de dados velhos está ligado no app. Os textos oficiais do jogo já são da 1.011.
 
-Licença
-- [ ] Decidir sobre publicação aberta: pedir autorização em contact@wikily.gg (X4).
+## Próximas rodadas
 
-## Etapa 4 — Revisão de UX de 31/10/2026 (app, site, GitHub, ideias)
+### 1. Cortes aprovados
 
-Quatro relatórios em `docs/revisao-ux/` (índice com a ordem de ataque em `docs/revisao-ux/README.md`). Resumo: tirar documentos internos do repositório público; reordenar o Planejador e fixar as abas no celular; linhas de meta e de matéria-prima mais baixas; site com o diferencial no topo e imagens leves; README com o botão do app no topo; depois as ideias novas ("amanhã" e "feito hoje", bilhete por dia, próximo passo, missão como meta, modo letra grande).
+Objetivo: tirar o ruído sem perder nenhum dado (o plano longo cai de cerca de 1.950 para 1.520 palavras e de 18 para 14,5 telas).
 
-## Etapa 5 — Próxima rodada (anotado em 31/10/2026)
+**Todos os 16 aprovados em 31/10/2026 à noite** (protótipos em https://claude.ai/artifact/3CD3kTbWmzXBBRrqwBhb6i). O corte 5 (rodapé) já saiu na 1.5.0 e o corte 15 (Próximo passo) deixou de existir com a 1.5.1. Os mesmos cortes valem para os textos em inglês. Detalhes em `docs/revisao-ux/simplificar.md`.
 
-- [ ] **Redesign "com a cara do jogo":** o protótipo da ideia 22 (ficha de item em balão de pergaminho, raio azul da energia, pilha em amarelo no canto do ícone) agradou. Pesquisar a interface do Graveyard Keeper 2 (balões, bordas, cores, ícones de estado, tipografia dos textos oficiais) e propor um redesign do app nessa linguagem, mantendo a leitura no celular como prioridade. Começar por um protótipo estático de 2 telas (Planejador e detalhe do item) antes de mexer no código.
+| item | o que é | esforço | depende de |
+|---|---|---|---|
+| **Planejador › Etapas** | | | |
+| Corte 1 | "Já tenho" sai da linha própria: tocar no "×2" abre o "Tenho N de M" | M\* | — |
+| Corte 2 | Linha "Requer…" curta ("Olaria I · Engenharia 2") e sem a tecnologia já pesquisada | P\* | — |
+| Corte 3 | O seletor de receita vira a própria linha "Por execução: 1 Tora → 3 ▾" | M\* | — |
+| Corte 4 | "24 execuções" só aparece quando é diferente da quantidade | P\* | — |
+| **Planejador, outras partes** | | | |
+| Corte 6 | Sai o botão "i": tocar no ícone do item abre a receita | M\* | — |
+| Corte 8 | Saem os contadores repetidos; Vantagens viram "0 de 10 ligadas ›" | P\* | — |
+| Corte 14 | Hoje aberto: título "Dia da Ira · dia 61 · 5 coisas", sem nome repetido nos eventos | P\* | — |
+| Corte 20 | Primeiro uso: uma frase só no lugar de três | P\* | — |
+| **Topo das seções e das abas** | | | |
+| Corte 7 | Dicas fixas: cortar 4 e encurtar 2 (Tecnologias e Tecnologias que faltam) | P\* | — |
+| **Dias** | | | |
+| Corte 10 | Frase das "frases curtas" vai para "Como funciona"; sai o crédito em inglês | P\* | — |
+| Corte 11 | Menos "Hoje": sem "Ira · Wrath", sem botão quando já é hoje, "Ajustar o dia ›" | P\* | — |
+| **Receitas** | | | |
+| Corte 12 | Lista: sem "· 1 receita", "Construir no Cemitério", "Buscar item", ocultos no fim | P\* | — |
+| Corte 18 | Detalhe: "Também em" uma vez só; some o "Usado em" vazio | P\* | — |
+| **Tecnologias** | | | |
+| Corte 17 | Detalhe: sai "Libera 2 receitas…"; botão de pré-requisitos só com 2 ou mais | P\* | — |
+| **Avisos (toasts)** | | | |
+| Corte 13 | Dois avisos viram um; sem aviso de "Avançar dia" quando o Hoje está à vista | P\* | — |
+| **Histórico de atualizações** | | | |
+| Corte 16 | Só a versão atual aberta; as antigas viram uma linha cada | P\* | — |
+| **Depois** | | | |
+| Cortes 9 e 19 | Juntar a caixinha com "Já tenho → Tudo" (9); esconder "Fabricar com" circular da Pele (19) | M\* / P\* | 9: item 2.3 |
+
+### 2. Consertos pequenos
+
+Objetivo: tirar os defeitos que atrapalham o uso de todo dia, antes de qualquer tela nova.
+
+| item | o que é | esforço | depende de |
+|---|---|---|---|
+| 2.1 | Gesto de voltar do celular no detalhe de Receitas e de Tecnologias volta para a lista | M\* | o artifact deixar usar o histórico |
+| 2.2 | Nomes PT repetidos ("Tinta" = Ink e Paint): mostrar o nome EN pequeno (D3) | P | — |
+| 2.3 | "Marcado" acompanha a quantidade: marcar 3 e pedir 10 volta a pendente (C3) | P | — |
+| 2.4 | "Sem receita" na lista de Receitas vira "Coleta ou compra" (`app.md`, Receitas 4) | P\* | — |
+| 2.5 | "Texto do jogo" nos Dias parece link: trocar por um ícone de aspas pequeno (`app.md`, Dias 2) | P\* | — |
+| 2.6 | Testar num iPhone e num Android reais: atalho na tela de início e teclado cobrindo o aviso | P\* | um celular de cada |
+| 2.7 | QA de 31/10 (`docs/revisao-ux/qa-2026-11.md`): "Recentes" abre sozinho depois de adicionar (médio); foco perdido ao fechar o aviso e ao apagar lista; aviso "Adicionado" fica após Desfazer; "Dados de 2026-11-01" nos Créditos; "Anatomia 0"; rótulo da Pele cortado com letra grande; "Limpar lista" × "Apagar lista" | P cada | — |
+| 2.8 | Site: trocar a frase "o rodapé mostra Só neste aparelho" (o rodapé não mostra mais nada sem conta) | P | — |
+
+### 3. Missão como meta
+
+Objetivo: um toque na busca adiciona tudo o que uma missão pede, com as quantidades (ideia 7; a wiki tem 110 missões). Precisa do seu sim. Esforço total: **M–G**.
+
+| item | o que é | esforço | depende de |
+|---|---|---|---|
+| 3.1 | Missões no build: as 110 da wiki, com itens, quantidades e o nome oficial em PT | M | build novo dos dados |
+| 3.2 | A missão aparece na busca só quando você digita o nome (para não dar spoiler) | P\* | 3.1 |
+| 3.3 | Tocar adiciona os itens agrupados sob o nome da missão; tratar "tenha com você" e quantidade vazia | M\* | 3.1, 3.2 |
+
+### 4. Sinais do jogo na interface
+
+Objetivo: trazer ao app só os sinais que o jogador reconhece de relance (check verde, ícone em espaço escuro, pilha amarela, azul da energia), sem molduras nem faixas: a primeira proposta, "janela do jogo", foi recusada por pesada em 31/10. Regra: limpo e minimalista, legibilidade primeiro. Plano em `docs/projeto/PLANO-UI-JOGO.md`.
+
+| item | o que é | esforço | depende de |
+|---|---|---|---|
+| 4.1 | Aprovar o protótipo refeito (app 1.5.1 real com botão Atual / Novo): https://claude.ai/artifact/C7aaTk2E5Z7sNQsuniYdie | P | sua decisão |
+| 4.2 | Lote 1: check verde nas caixinhas, espaço escuro dos ícones nos dois temas, pilha amarela quando há "tenho N", Progresso em cápsula verde, × vermelho no aviso de patch, contraste do balão corrigido | P | 4.1; depois da rodada 1 |
+| 4.3 | Lote 2: raio e cérebro em SVG próprio no balão; selo "+20" azul e "−3" roxo nas comidas da lista de Receitas e da busca | P | 4.2 |
+| 4.4 | Opcional, à parte: trocar a Alegreya Sans pela letra do sistema no texto (cerca de 70 KB a menos) | P | sua decisão |
+
+### 5. Dados quando a wiki chegar à 1.011
+
+Objetivo: trocar as receitas 1.010 pelas da 1.011 e fazer o aviso de dados velhos sumir. É o roteiro curto de `docs/revisao-ux/patch-2026-10.md` (o passo 2, textos do jogo, não precisa: já são 1.011).
+
+| item | o que é | esforço | depende de |
+|---|---|---|---|
+| 5.1 | Conferir se a wiki atualizou: Frascos de Alquimia II ou Suco de Uva mudaram | P | — |
+| 5.2 | Passo 1: baixar os dados do wikily e ver o que mudou; item novo → `build_names.py` e passo 3 | P | 5.1 |
+| 5.3 | Passo 4: build sem `src` e ícones que faltam | P | 5.2 |
+| 5.4 | Passo 5: tecnologias, sprite e teste | P | 5.3 |
+| 5.5 | Passo 6: build completo e testes, com 0 erros | P | 5.4 |
+| 5.6 | Passo 7: versão e changelog "Dados do jogo 1.011"; trocar `WIKI_GAME_VERSION` de 1.010 para 1.011 | P | 5.5 |
+| 5.7 | Passo 8: publicar no mesmo artifact e conferir que o aviso sumiu | P | 5.6 |
+
+### 6. Itens adiados
+
+Objetivo: guardar o que vale a pena, mas só entra se o uso pedir ou se você decidir.
+
+**Ideias adiadas ou sem decisão**
+
+| item | o que é | esforço | depende de |
+|---|---|---|---|
+| 6.1 | Importar o save no computador (ideia 10); risco alto, o formato muda com patch | G | falar com o autor do editor de save |
+| 6.2 | Itens para estudar: o que rende pontos de tecnologia (ideia 17) | M | build novo (pontos de 334 itens) |
+| 6.3 | Sermões para a missa, no dia da Ira (ideia 15) | M | build novo (fé, bronze, paroquianos) |
+| 6.4 | Missões, lista simples (ideia 16) | G | a rodada 3 ser muito usada |
+| 6.5 | Curtidas dos comerciantes: quem compra as sobras, a preço base (ideia 18) | M | sua decisão: preço está fora da SPEC |
+| 6.6 | Código do plano para copiar e colar (ideia 19) | P/M | — |
+| 6.7 | Botão "Compartilhar" do celular em "Copiar lista" (ideia 20) | P | confirmar se o artifact deixa |
+| 6.8 | "Hoje dá para resolver algo do seu plano" no painel Hoje (ideia 6) | M/G | o que cada comerciante vende, no build |
+| 6.9 | "Onde conseguir" também na lista de Matérias-primas e agrupar por lugar (resto da ideia 14) | M | — |
+
+**O que sobrou do backlog antigo e ainda vale**
+
+| item | o que é | esforço | depende de |
+|---|---|---|---|
+| **Dados e tradução** | | | |
+| 6.10 | Traduzir os 231 nomes de receita (D2) | P/M | — |
+| 6.11 | Revisar 45 categorias e 3 maestrias traduzidas por máquina (D4) | P\* | — |
+| 6.12 | Qualidade prata/ouro marcada no build, e não deduzida na página (C2/D1) | M | — |
+| 6.13 | Alquimia por runas: calcular as misturas válidas | G\* | — |
+| 6.14 | Script para levar ao arquivo de tradução os nomes editados no app | P\* | — |
+| **Telas e sincronização** | | | |
+| 6.15 | Link direto para um item da tela Receitas | M\* | — |
+| 6.16 | Redesenhar só o painel que mudou, para listas grandes no celular (F3) | M | — |
+| 6.17 | Escolha de grupo ("Brema ou carpa"): decidir se é apagada ao remover a meta | P\* | sua decisão |
+| 6.18 | Limpar marcas, "tenho" e escolhas ao remover metas (S6) | P | junto com 2.3 |
+| 6.19 | Rótulos de zona longos nos cartões de construção (D7) | P | corte 12 |
+| 6.20 | Selo "não oficial" quebrando a linha em nomes longos | P\* | — |
+| 6.21 | Navegador compartilhado sem login: avisar antes de levar o plano anônimo para a conta | P\* | — |
+| **Peso, testes, site e licença** | | | |
+| 6.22 | Sprite em WebP sem perdas, cerca de 430 KB a menos (F1) | P | — |
+| 6.23 | Testes das telas e rodar o `test_calc.mjs` junto com o `test_build.py` (B1) | M | — |
+| 6.24 | Regravar o GIF e as capturas do site e dos READMEs com a interface nova (item 9 da revisão) | M | rodadas 1 e 4 (decidido esperar) |
+| 6.25 | Autorização do wikily (X4): e-mail enviado em 31/10, esperar a resposta | P | resposta do wikily |
+| 6.26 | Tirar o `dist/` do git, só se o tamanho incomodar (resto do B2; o zip já saiu) | P | — |
+
+## Fora de escopo
+
+- **Modo "No jogo" e tela acesa** (ideias 11 e 12): você dispensou em 31/10; a "Letra grande" da 1.4.0 cobre a leitura de longe.
+- **Notificações e alarmes:** o artifact não tem permissão, e o tempo do jogo não segue o relógio. O bilhete por dia cobre.
+- **Contagem regressiva do dia:** o app não sabe que horas são no jogo.
+- **Conta e servidor próprios:** a conta do Claude já sincroniza; servidor custa e exige cuidar de dados alheios.
+- **Painel por cima do jogo (overlay):** os mods de PC já fazem; o celular é a alternativa a isso.
+- **Ler o save pelo celular:** o celular não enxerga os arquivos do PC (a versão do computador é o 6.1).
+- **Chat com IA:** pode inventar receita e custa dinheiro; a busca responde mais rápido.
+- **Mapa interativo:** pesado, ruim com o dedo, e o Wand já faz.
+- **Busca por voz:** o microfone do teclado do celular já faz.
+- **Otimizador de zumbis e pontuação do cemitério:** depende do seu save.
+- **Lista de conquistas:** pouco a ver com fabricar, e seria mais uma aba.
+- **Lista entre dois jogadores (co-op):** convite, permissão e conflito; só quando o co-op for comum.
+- **Instalar como app (PWA):** o artifact não permite; o atalho na tela de início já funciona.
+- **Preço atual de venda:** muda com o estoque do comerciante; só o preço base é confiável (6.5).
+- **Sprite de 36 px:** deixaria o sprite 30% maior, contra o esforço de deixar a página leve; os ícones ficam a cargo do redesign (rodada 4).
+
+## Como usar este arquivo
+
+1. Terminou um item: marque "feito" na linha, com a versão em que saiu.
+2. Ao publicar a versão, leve os itens feitos para o changelog (`data/changelog.json`, que gera o `CHANGELOG.md`) e apague-os daqui.
+3. Toda vez que mexer neste arquivo, troque a data do topo.
