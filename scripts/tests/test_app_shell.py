@@ -99,10 +99,15 @@ class SearchRecents(unittest.TestCase):
     def test_strings_and_popup(self):
         js = self.read("js/ui/search.js")
         self.assertEqual((texts("pt")["search.recent"], texts("en")["search.recent"]), ("Recentes", "Recent"))
-        self.assertIn("const RECENT_SHOWN = 6;", js)
+        self.assertIn("const RECENT_SHOWN = 3;", js)
         self.assertIn("function renderRecent()", js)
         self.assertIn('class="result result-recent" role="option"', js)   # same options: tap / Enter = add()
         self.assertIn('input.addEventListener("focus", () => renderResults());', js)
+        # the popup closes when the box loses the focus (iOS keyboard ✓); pressing the popup or the × keeps it
+        self.assertIn('pop.addEventListener("mousedown", (e) => e.preventDefault());', js)
+        self.assertIn('clearBtn.addEventListener("mousedown", (e) => e.preventDefault());', js)
+        self.assertIn("if (a !== input && !root.contains(a)) setOpen(false);", js)
+        self.assertIn("else input.blur();", js)   # Enter on the empty box, nothing picked: the keyboard goes down
         self.assertIn(".result-recent .result-name", self.read("css/header.css"))
 
 

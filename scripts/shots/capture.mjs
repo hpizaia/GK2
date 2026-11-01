@@ -10,7 +10,7 @@
    comparação, um pixel cuja maior diferença por canal é ≤ N conta como igual, mas é contado em "tolerados").
 
    Cada caso de casos.json vira uma captura por idioma × tela: semeia localStorage["gk2-companion"] (e o
-   sessionStorage, se o caso pedir), abre a página na rota, roda os passos (clicar, digitar, tecla) e grava em
+   sessionStorage, se o caso pedir), abre a página na rota, roda os passos (clicar, focar, digitar, tecla) e grava em
    DIR/<lado>/: <caso>.png (página inteira, até ALTURA_MAX px), <caso>.html.txt (HTML do que está visível),
    <caso>.texto.txt (o texto visível) e <caso>.json (estado do GK.store, erros de JS, caixas dos painéis). Uma vez por
    página: dados.json (resumo do GK.data carregado: muda quando o dado muda, mesmo sem mudar a tela).
@@ -356,6 +356,8 @@ async function abrirAba(b, v, url, semente) {
 async function passo(b, s, p) {
   if (p.clicar) {
     await avaliar(b, s, `(() => { const el = document.querySelector(${JSON.stringify(p.clicar)}); if (!el) throw new Error("não achei " + ${JSON.stringify(p.clicar)}); el.scrollIntoView({ block: "center" }); el.click(); })()`, `clicar ${p.clicar}`);
+  } else if (p.focar) {   // o foco de um toque (el.click() não foca: os Recentes da busca só abrem com o foco)
+    await avaliar(b, s, `(() => { const el = document.querySelector(${JSON.stringify(p.focar)}); if (!el) throw new Error("não achei " + ${JSON.stringify(p.focar)}); el.focus(); el.click(); })()`, `focar ${p.focar}`);
   } else if (p.digitar !== undefined) {
     if (p.em) await avaliar(b, s, `(() => { const el = document.querySelector(${JSON.stringify(p.em)}); if (!el) throw new Error("não achei " + ${JSON.stringify(p.em)}); el.focus(); })()`, `focar ${p.em}`);
     await b.cdp("Input.insertText", { text: p.digitar }, s);

@@ -3,6 +3,11 @@
 
 # Histórico de atualizações — Companheiro GK2
 
+## 1.8.5 — 2026-11-01
+
+- Busca: os Recentes mostram só os 3 últimos e fecham quando a busca perde o foco (o ✓ do teclado do celular, o botão de busca com a caixa vazia ou um toque em outra parte da tela)
+- App mais leve: os ícones ocupam 444 KB a menos (no iPhone com iOS 13 ou mais antigo, a letra aparece no lugar do ícone)
+
 ## 1.8.4 — 2026-11-01
 
 - Bronze na lista: Abóbora, Vinho, Repolho, Cebola, Uvas e as sementes comuns aparecem como bronze, com estrela, e bronze, prata e ouro vêm juntos e nessa ordem; os Canteiros viram um cartão com a escolha da qualidade
@@ -146,6 +151,11 @@
 ---
 
 # Update history — GK2 Companion
+
+## 1.8.5 — 2026-11-01
+
+- Search: Recent shows only the last 3 and closes when the search box loses focus (the phone keyboard's ✓, the search key on an empty box, or a tap elsewhere)
+- Lighter app: icons take 444 KB less (on iPhones with iOS 13 or older, the letter shows instead of the icon)
 
 ## 1.8.4 — 2026-11-01
 

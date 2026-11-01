@@ -7,6 +7,9 @@
    them with the results; tap / Enter adds (same action as a result). No recents to show = the popup stays closed.
    Right after an add the emptied box keeps the focus but the recents stay closed
    ("quiet"): they come back on the next tap on the box, an ↓, or when the focus leaves and comes back.
+   The popup closes when the box loses the focus (the iOS keyboard's ✓, a tap elsewhere) or on a click outside;
+   pressing inside the popup or the × keeps the focus in the box. Enter on the empty box with no option picked
+   with ↓/↑ drops the focus (the phone keyboard goes down).
    Toasts: "+ Espada de Aço" for a new goal, "Espada de Aço: agora 4" for one already there. The first goal
    that replaces the example list (GK.store meta.exampleReplaced, from any screen: this module subscribes) gets ONE
    toast with "Desfazer" (GK.ui.fmt.undoToast): "+ Tábua reforçada · exemplo removido"; add() then skips
@@ -23,7 +26,7 @@ GK.ui.search = (function () {
   let active = -1;   // index of the highlighted option (aria-activedescendant), -1 = none
   let quiet = false;     // just added: the emptied box does not reopen the recents until the next tap / focus
   let replaced = false;  // set by the store subscription while addGoal runs: the first goal replaced the example
-  const RECENT_SHOWN = 6;
+  const RECENT_SHOWN = 3;
   const options = () => [...list.querySelectorAll('[role="option"]')];
   function setOpen(open) {
     pop.hidden = !open;
@@ -117,7 +120,7 @@ GK.ui.search = (function () {
       if (e.key === "Enter") {
         if (!input.value.trim()) {                     // the recents: Enter adds only the one picked with ↓/↑
           const o = !pop.hidden && active >= 0 && options()[active];
-          if (o) { e.preventDefault(); add(o.dataset.add); }
+          if (o) { e.preventDefault(); add(o.dataset.add); } else input.blur();
           return;
         }
         renderResults();
@@ -132,15 +135,20 @@ GK.ui.search = (function () {
       } else if (e.key === "Home" && active >= 0) { e.preventDefault(); setActive(0); }
       else if (e.key === "End" && active >= 0) { e.preventDefault(); setActive(options().length - 1); }
     });
-    // keep the focus in the input when an option is pressed (mouse / touch)
-    list.addEventListener("mousedown", (e) => { if (e.target.closest('[role="option"]')) e.preventDefault(); });
+    // keep the focus in the input when the popup (an option, the hidden toggle) or the × is pressed (mouse / tap)
+    pop.addEventListener("mousedown", (e) => e.preventDefault());
+    clearBtn.addEventListener("mousedown", (e) => e.preventDefault());
     list.addEventListener("click", (e) => { const o = e.target.closest("[data-add]"); if (o) add(o.dataset.add); });
     meta.addEventListener("click", (e) => { if (e.target.closest("[data-hidden-toggle]")) GK.store.actions.setShowHidden(!GK.store.get().showHidden); });
     clearBtn.addEventListener("click", () => { quiet = false; input.value = ""; input.focus(); renderResults(); });
     // e.target may have been re-rendered away (detached) by the click itself: not an outside click
     document.addEventListener("click", (e) => { if (e.target.isConnected && !root.contains(e.target)) setOpen(false); });
     input.addEventListener("focus", () => renderResults());
-    input.addEventListener("blur", () => { quiet = false; });
+    // the focus left the box (the iOS keyboard's ✓, Enter, a tap elsewhere): close, once it settled outside the search
+    input.addEventListener("blur", () => {
+      quiet = false;
+      setTimeout(() => { const a = document.activeElement; if (a !== input && !root.contains(a)) setOpen(false); }, 0);
+    });
     // a tap on the box after Esc (or an add) closed the popup brings it back (results, or the recents when empty)
     input.addEventListener("click", () => { quiet = false; if (pop.hidden) renderResults(); });
     // the first goal replaced the example list (here, in Receitas, anywhere): one toast, with "Desfazer"

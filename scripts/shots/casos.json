@@ -6,7 +6,7 @@
     "('Minha lista', id main) com goals/choice/have/done. lang e theme vêm da variante (idioma, tela.tema).",
     "Caso: nome, rota (#plan, #recipes, #tech, #days, #credits, #changelog), estado (nome em estados; sem estado =",
     "primeira visita, com o plano de exemplo), sessao (sessionStorage: gk2-recipes-view abre uma ficha de Receitas),",
-    "passos ({clicar: seletor} | {digitar: texto, em: seletor} | {tecla: Enter} | {rolar: seletor}; espera: ms),",
+    "passos ({clicar: seletor} | {focar: seletor (foco + clique, como um toque)} | {digitar: texto, em: seletor} | {tecla: Enter} | {rolar: seletor}; espera: ms),",
     "idiomas (padrão pt) e telas (padrão telasPadrao). Hoje = 1º de novembro de 2026, dia 61 (Ira)."
   ],
   "schemaVersion": 5,
@@ -91,7 +91,7 @@
     { "nome": "qualidade", "rota": "plan", "estado": "qualidade" },
     { "nome": "duas-listas", "rota": "plan", "estado": "duas-listas" },
     { "nome": "letra-grande", "rota": "plan", "estado": "letra-grande", "telas": ["cel-escuro"] },
-    { "nome": "busca-recentes", "rota": "plan", "estado": "recentes", "passos": [{ "clicar": "#q" }] },
+    { "nome": "busca-recentes", "rota": "plan", "estado": "recentes", "passos": [{ "focar": "#q" }] },
     { "nome": "busca-vinho", "rota": "plan", "estado": "curto", "passos": [{ "digitar": "vinho", "em": "#q" }] },
     { "nome": "busca-wine", "rota": "plan", "estado": "curto", "idiomas": ["en"], "telas": ["desk-claro"],
       "passos": [{ "digitar": "wine", "em": "#q" }] },
