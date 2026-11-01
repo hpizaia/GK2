@@ -1408,11 +1408,12 @@ console.log(JSON.stringify({ after, back, twice, ui: S.get().ui }));
 
 
 class TodayFeatures(unittest.TestCase):
-    """docs/revisao-ux/ideias.md #1-#3 in the Hoje panel and the Dias card: "Amanhã", "feito hoje" ticks
-    (GK.store dayDone) and "Bilhete do dia" (GK.store dayNotes). The store / sync rules are tested in test_calc.mjs."""
+    """docs/revisao-ux/ideias.md #2-#3 in the Hoje panel and the Dias card: "feito hoje" ticks (GK.store dayDone) and
+    "Bilhete do dia" (GK.store dayNotes). "Amanhã" (#1) left the Hoje panel in 1.6.0 (TodayCompact). The store / sync
+    rules are tested in test_calc.mjs."""
 
     KEYS = {
-        "js/ui/today.js": ("today.doneN", "today.check", "today.allDone", "today.tomorrow", "today.tomorrowOpen"),
+        "js/ui/today.js": ("today.doneN", "today.check", "today.allDone", "today.note", "today.unsure"),
         "js/ui/days.js": ("days.note.label", "days.note.add", "days.note.edit", "days.note.editX", "days.note.ta",
                           "days.note.ph", "days.note.count", "days.note.saved", "days.note.cleared"),
     }
@@ -1462,18 +1463,80 @@ class TodayFeatures(unittest.TestCase):
     def test_panel_markup(self):
         today, days = self.read("js/ui/today.js"), self.read("js/ui/days.js")
         self.assertIn('<label class="tick today-tick"><input type="checkbox"', today)   # 44 px target (.tick)
-        self.assertIn("data-today-tmr=", today)
-        self.assertIn("DY().open(tm.dataset.todayTmr)", today)
         self.assertIn('DY().noteBox("today"', today)
         self.assertIn('noteBox("days"', days)
         self.assertIn('maxlength="${MAX}"', days)
 
     def test_css_in_rem(self):
         css = self.read("css/days.css")
-        for sel in (".today-tmr", ".day-note-ta", ".day-note-add", ".today-all", ".today-tick"):
+        for sel in (".today-ev-t", ".day-note-ta", ".day-note-add", ".today-all", ".today-tick", ".today-note-btn"):
             self.assertIn(sel, css)
         rules = [ln for ln in css.splitlines() if ".days-hub-" not in ln]   # SVG text: px are user units there
         self.assertEqual([ln for ln in rules if re.search(r"font(-size)?:[^;]*\b\d+px", ln)], [], "font sizes in rem")
+
+
+class TodayCompact(unittest.TestCase):
+    """The leaner Hoje panel (1.6.0, docs/revisao-ux/shots-hoje/comparacao.html): one line per event that opens in
+    place, ticks only on tasks, no "Amanhã", the note as a ✎ button by the count, a short "?" for "não confirmado"."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.src = ROOT / "src"
+        cls.read = lambda self, f: (self.src / f).read_text(encoding="utf-8")
+
+    def test_no_tomorrow(self):
+        today, css = self.read("js/ui/today.js"), self.read("css/days.css")
+        for gone in ("today-tmr", "today.tomorrow", "DY().next(", "function tomorrow("):
+            self.assertNotIn(gone, today, gone)
+        self.assertNotIn(".today-tmr", css)
+        self.assertIn("next(day)", self.read("js/ui/days.js"))   # the week helper stays (Dias screen)
+
+    def test_one_line_rows(self):
+        today, css = self.read("js/ui/today.js"), self.read("css/days.css")
+        body = today.split("function shortText(ev) {", 1)[1].split("\n  }", 1)[0]
+        self.assertIn('text.indexOf(": ")', body)   # "Nome (Lugar): detalhe" -> "Nome (Lugar)"
+        self.assertIn("if (ev.short) return name(ev.short);", body)   # the hand-written title wins
+        self.assertIn('data-today-ev="${i}" aria-expanded="${open}" aria-controls="today-more-${i}"', today)
+        self.assertIn('<div class="today-more" id="today-more-${i}"${open ? "" : " hidden"}>', today)
+        self.assertIn("DY().eventMore(ev, state, true)", today)   # same detail as the Dias card, game text open
+        self.assertIn("eventMore(ev, state, false)", self.read("js/ui/days.js"))
+        rule = re.search(r"\.today-ev-t \{([^}]*)\}", css).group(1)
+        for decl in ("white-space: nowrap", "overflow: hidden", "text-overflow: ellipsis"):
+            self.assertIn(decl, rule)
+        self.assertRegex(css, r"\.today-ev-btn \{[^}]*min-height: var\(--tap\)")
+
+    def test_ticks_only_on_tasks(self):
+        today, days = self.read("js/ui/today.js"), self.read("js/ui/days.js")
+        self.assertIn('${ev.task ? `<label class="tick today-tick">', today)
+        self.assertIn("d.events[i].task !== false", today)   # "2/3 feitas" counts the tasks
+        self.assertIn("task: e.task !== false", days)        # absent = a task (older files)
+
+    def test_note_button_and_unsure_mark(self):
+        today = self.read("js/ui/today.js")
+        k = TodayFeatures.lang_keys(self, "js/ui/today.js")
+        self.assertEqual(k["pt"]["today.note"], "Bilhete deste dia")
+        self.assertIn('id="today-note-edit" data-note-edit="${esc(d.id)}" aria-label="${esc(t("today.note"))}"', today)
+        self.assertIn("${noteBtn(d, state)}", today.split('class="h2 today-h"', 1)[1].split("\n", 1)[0])
+        self.assertIn('class="today-unsure"', today)
+        self.assertIn('t("today.unsure")', today)   # the opened row says it in words
+
+    @unittest.skipUnless((ROOT / "data" / "days.json").exists(), "real days.json not present")
+    def test_real_days_task_marks(self):
+        doc = read_json(ROOT / "data" / "days.json")
+        evs = [e for d in doc["days"] for e in d["events"]]
+        self.assertTrue(all(isinstance(e.get("task"), bool) for e in evs))
+        info = sorted(e["pt"][:24] for e in evs if not e["task"])
+        self.assertEqual(len(info), 9, info)
+        for pt in ("O sino toca", "No fim do dia, o Laborat", "O limite semanal", "Fim do dia: o programa"):
+            self.assertTrue(any(x.startswith(pt) for x in info), pt)
+        self.assertIn('"task": bool(e["task"])', (ROOT / "scripts" / "build_days.py").read_text(encoding="utf-8"))
+        # a hand-written line title (≤ 40 letters) where the automatic one is vague or the sentence has no ": "
+        for e in evs:
+            title = e["pt"].split(": ", 1)[0] if ": " in e["pt"] else None
+            if title is None or title in ("Fim do dia", "Exceção", "Exceções", "Início da história"):
+                self.assertTrue(e.get("short"), e["pt"][:40])
+            if e.get("short"):
+                self.assertLessEqual(max(len(e["short"]["pt"]), len(e["short"]["en"])), 40, e["short"])
 
 
 class SearchRecents(unittest.TestCase):
@@ -1679,7 +1742,7 @@ console.log(JSON.stringify({ n: M.length, sha: require("crypto").createHash("sha
     def test_raw_row_phone_fixes(self):
         """The quantity no longer touches "Já tenho"; a recipe selector never widens a raw row past the screen."""
         css, f = self.read("css/planner.css"), self.read("js/ui/fmt.js")
-        self.assertIn(".row-raw { padding-block: 6px 5px; row-gap: 4px; min-height: 0; }", css)
+        self.assertIn(".row-raw { padding-block: 4px 5px; row-gap: var(--s2); min-height: 0; }", css)
         self.assertIn(".row-line2 > .row-actions > .btn:only-child { margin-block: 0 -2px; }", css)
         self.assertRegex(css, r"\.row-line2 \.row-actions \{[^}]*min-width: 0; max-width: 100%;")
         self.assertIn(".row-actions .select-wrap select { flex: 1 1 0; width: 0; }", css)
@@ -1744,6 +1807,67 @@ class FactsBuild(unittest.TestCase):
         self.assertEqual(b["d"]["en"], "You temporarily have +2 Building mastery.")
         self.assertEqual(doc["buffs"]["steamed-up"]["pt"], "Aquecido")
 
+    def test_build_facts_sell_study_asked(self):
+        """Ficha do item: who buys it (+ base / fixed price), Study Table points, quests / town uses that ask for it."""
+        raw = {"rows": [
+            {"key": "bronze", "data": {"price": 75, "statStrip": [{"subtitle": "Base price"}],
+             "boughtBy": [{"title": "Jeweler", "chips": ["Level 1: pays 55 bronze at its usual stock", "Level 3: pays 56 bronze at its usual stock",
+                                                         "Level 1: up to +10 Likes a week: +0.25 for each of 40 sold",
+                                                         "Level 3: up to +40 Likes a week: +0.25 for each of 160 sold"]},
+                          {"title": "Alchemist", "chips": ["From trader level 3", "Pays 1 silver 37 bronze at its usual stock",
+                                                           "Up to +30 Likes a week: +3 for each of 10 sold (from trader level 2)"]},
+                          {"title": "Baker", "chips": ["Pays only 1 bronze: its usual stock is 0", "Selling it earns Likes"]},
+                          {"title": "Smithy"}],
+             "studyCards": [{"title": "+30", "subtitle": "Red tech points"}, {"title": "+20", "subtitle": "Blue tech points"},
+                            {"title": "3", "subtitle": "Science it costs"}, {"title": "7", "subtitle": "Ticks"}],
+             "usedIn": [{"kind": "Town", "title": "Jeweler II", "qty": "5"}, {"kind": "Repair", "title": "Broken Ladder", "qty": "2"},
+                        {"kind": "Order", "title": "Baker (level 3)", "qty": "10", "chips": ["+40 Likes (60 with Happy supplier)"]},
+                        {"kind": "Order", "title": "Baker (level 3)", "qty": "10", "chips": ["+75 Likes", "Urgent"]},
+                        {"kind": "Order", "title": "Jeweler", "qty": "4", "chips": ["Repeatable"]}]}},
+            {"key": "fishy", "data": {"price": 72, "statStrip": [{"subtitle": "Fixed price"}], "boughtBy": [{"title": "Fish Stand"}],
+                                      "studyCards": [{"title": "+50", "subtitle": "Green tech points"}, {"title": "3", "subtitle": "Science it costs"},
+                                                     {"title": "2", "subtitle": "Faith it costs"}]}},
+            {"key": "lonely", "data": {"price": 9, "stack": 10}},
+        ]}
+        quests = {"rows": [
+            {"key": "yummies", "data": {"name": "Yummies", "giver": "Village guards", "storyOrder": 10,
+                                        "needs": [{"href": "/items/bronze", "qty": "2", "note": "Hand over"},
+                                                  {"href": "/items/fishy", "qty": "1", "note": "Given to you for this"},
+                                                  {"href": "", "qty": "", "note": "Reputation needed"}]}},
+            {"key": "first", "data": {"name": "First Steps", "giver": "Hans", "storyOrder": 1,
+                                      "needs": [{"href": "/items/bronze", "qty": "", "note": "Have it with you"}]}},
+        ]}
+        items = [{"id": "bronze"}, {"id": "fishy"}, {"id": "lonely"}]
+        doc, _ = self.facts.build(raw, items, self.facts.Texts({"Jewelry_t1": {"en": "Jeweler", "pt": "Joalheiro"}}, {}), quests)
+        self.assertEqual(self.facts.validate(doc), [])
+        b, f = doc["items"]["bronze"], doc["items"]["fishy"]
+        # [trader, lo, hi, likes, likes level, level]: levels collapse to a range; silver is 100 bronze; an
+        # empty-stock price counts only alone; "earns Likes" without a number is -1; no chips = just the trader
+        self.assertEqual(b["sell"], [["jeweler", 55, 56, 40], ["alchemist", 137, 0, 30, 2, 3], ["baker", 1, 0, -1], ["smithy"]])
+        self.assertEqual((b["price"], "fix" in b), (75, False))
+        self.assertEqual((f["sell"], f["price"], f["fix"]), ([["fish-stand"]], 72, 1))
+        self.assertNotIn("price", doc["items"]["lonely"])          # nobody buys it: no base price
+        self.assertEqual(b["study"], [30, 0, 20, 3])
+        self.assertEqual(f["study"], [0, 50, 0, 3, 2])
+        # quests in story order (giver interned; "given to you" skipped; no qty = 1), town restorations, orders
+        # (urgent + normal of one level merged with the most Likes); repairs left out
+        self.assertEqual(b["asked"], {"q": [["first-steps", 1, "hans"], ["yummies", 2, "village-guards"]],
+                                      "t": [["jeweler-ii", 5]], "o": [["baker", 10, 3, 75], ["jeweler", 4]]})
+        self.assertNotIn("asked", f)
+        n = doc["names"]
+        self.assertEqual(n["village-guards"], {"en": "Village guards", "pt": "Guardas da vila", "tr": "machine"})
+        self.assertEqual(n["hans"]["pt"], "Anselmo")                 # official game dialogue: no badge
+        self.assertNotIn("tr", n["hans"])
+        self.assertEqual(n["jeweler"]["pt"], "Joalheiro")
+        c = doc["meta"]["counts"]
+        self.assertEqual((c["sell"], c["price"], c["study"], c["asked_quest"], c["asked_town"], c["asked_order"]), (2, 2, 2, 1, 1, 1))
+        # validation catches a dangling trader and a broken study row
+        bad = json.loads(json.dumps(doc))
+        bad["items"]["bronze"]["sell"].append(["nobody", 1])
+        bad["items"]["fishy"]["study"] = [1, "x"]
+        bad["items"]["fishy"]["asked"] = {"q": [["nowhere", 1]]}
+        self.assertEqual(len(self.facts.validate(bad)), 3)
+
     def test_apply_facts(self):
         doc, _ = self.mini()
         doc["items"]["nope"] = {"stack": 1}
@@ -1754,6 +1878,11 @@ class FactsBuild(unittest.TestCase):
             self.assertEqual(build.apply_facts(ds, p), 2)
             self.assertEqual(ds["items"]["pie"]["stack"], 30)
             self.assertEqual(ds["items"]["fish"]["where"][0][0], "fish")
+            doc["items"]["pie"].update({"sell": [["baker", 5]], "price": 9, "study": [1, 2], "asked": {"t": [["baker", 2]]}})
+            p.write_text(json.dumps(doc), encoding="utf-8")
+            build.apply_facts(ds, p)
+            self.assertEqual([ds["items"]["pie"][k] for k in ("sell", "price", "study", "asked")],
+                             [[["baker", 5]], 9, [1, 2], {"t": [["baker", 2]]}])
             self.assertNotIn("key", ds["meta"]["refs"]["names"]["baker"])     # game keys stay in facts.json
             self.assertEqual(ds["meta"]["refs"]["buffs"]["steamed-up"]["pt"], "Aquecido")
             p.write_text("{broken", encoding="utf-8")
@@ -1778,12 +1907,47 @@ class FactsBuild(unittest.TestCase):
         self.assertGreaterEqual(c["where"], 250)
         self.assertEqual((c["buy"], c["fish"], c["energy"], c["buff"]), (176, 22, 59, 14))
         self.assertGreaterEqual(c["stack"], 540)
+        # ficha do item (docs/revisao-ux/dados-ficha.md): 197 bought, 333 studied, 39 cost Faith, 81 asked by quests
+        self.assertEqual((c["sell"], c["price"], c["study"], c["study_faith"]), (197, 197, 333, 39))
+        self.assertGreaterEqual(c["sell_likes"], 70)
+        self.assertEqual((c["asked_quest"], c["quests"], c["asked_town"], c["asked_order"]), (81, 60, 29, 22))
 
     def test_recipes_detail_uses_facts(self):
         """The item detail draws "Onde conseguir", the use tooltip and the stack; the planner files do not."""
         js = (ROOT / "src" / "js" / "ui" / "recipes.js").read_text(encoding="utf-8")
         for needle in ("function whereHtml(", "function tipHtml(", "function stackSlot(", "WHERE_CAP = 4", '"rc.where": "Onde conseguir"'):
             self.assertIn(needle, js)
+
+    def test_recipes_detail_ficha_blocks(self):
+        """Ficha do item: "Quem compra", "Estudar" (+ "Já estudei", synced) and "Pedido em" (folded) in the item detail
+        only; each block returns "" without its data; the planner and the list rows do not read the new fields."""
+        js = (ROOT / "src" / "js" / "ui" / "recipes.js").read_text(encoding="utf-8")
+        for needle in ("function sellHtml(", "function studyHtml(", "function askedHtml(", '"rc.sell": "Quem compra"',
+                       '"rc.study": "Estudar"', '"rc.studied": "Já estudei"', '"rc.asked": "Pedido em"', '"rc.sell": "Who buys it"',
+                       "rc.askedWarn", 'id="rc-studied"', "setStudied(", 'class="card list rc-asked" id="rc-asked"${askedOpen ? " open" : ""}',
+                       "GK.ui.tech.costHtml(cost, { big: true })"):
+            self.assertIn(needle, js)
+        for fn in ("sellHtml", "studyHtml", "askedHtml"):
+            body = js.split(f"function {fn}(", 1)[1].split("\n  function ", 1)[0]
+            self.assertIn('return "";', body, fn)
+        # order in the card: where, obtain, runes, then sell and study; "Pedido em" after "Usado em"
+        detail = js.split("function detailHtml(", 1)[1]
+        self.assertLess(detail.index("whereHtml(it"), detail.index("sellHtml(it"))
+        self.assertLess(detail.index("sellHtml(it"), detail.index("studyHtml(it"))
+        self.assertLess(detail.index("${usedHtml}"), detail.index("${askedHtml(it, state)}"))
+        row = js.split("function rowHtml(", 1)[1].split("\n  function ", 1)[0]
+        for f in (".sell", ".study", ".asked"):
+            self.assertNotIn(f, row)
+        for f in ("summary.js", "goals.js", "fmt.js"):
+            src = (ROOT / "src" / "js" / "ui" / f).read_text(encoding="utf-8")
+            for k in (".sell", ".study", ".asked", "studied"):
+                self.assertNotIn(k, src, f"{f} reads {k}")
+        css = (ROOT / "src" / "css" / "recipes.css").read_text(encoding="utf-8")
+        for needle in (".sell-list", ".study-done", ".tick input:checked", ".rc-asked > summary", ".coin-s", ".coin-g"):
+            self.assertIn(needle, css)
+        store = (ROOT / "src" / "js" / "store.js").read_text(encoding="utf-8")
+        self.assertIn('"researched", "studied",', store)
+        self.assertIn('const LATE = ["dayDone", "dayNotes", "recents", "studied"];', store)
         for f in ("summary.js", "goals.js", "fmt.js"):
             self.assertNotIn(".where", (ROOT / "src" / "js" / "ui" / f).read_text(encoding="utf-8"))
 
@@ -1816,6 +1980,23 @@ class Cuts160(unittest.TestCase):
         self.assertRegex(css, r"\.step-pick select \{[^}]*opacity: 0")
         self.assertRegex(css, r"\.qty-btn \{[^}]*min-height: var\(--tap\)")
 
+    def test_planner_spacing(self):
+        """Spacing pass after 1.6.0 (docs/revisao-ux/shots-espacos): the section toggles keep 8 px above their card and
+        sit on the 12 px line of the controls inside; the station toggle and "×2 ▾" end on that line too, with no
+        negative margins pulling "×2 ▾" up against the station band; a row's icon and tick sit at the top, beside the
+        name; 8 px between a raw row's quantity and its "Já tenho"; the 44 px targets stay."""
+        css = self.read("css/planner.css")
+        self.assertIn(".summary-grid .fold-head { margin-bottom: var(--s2); }", css)
+        self.assertIn(".summary-grid .fold-head > .fold-btn { margin-right: calc(var(--s3) + 1px); }", css)
+        self.assertRegex(css, r"\.station-h \{[^}]*padding: var\(--s2\) var\(--s3\);")
+        self.assertNotRegex(css, r"\.station-h\[data-fold-head\] \{[^}]*padding-right")
+        qty = re.search(r"\.row-qty\.qty-btn \{([^}]*)\}", css).group(1)
+        self.assertIn("margin: 0 0 0 var(--s1);", qty)
+        self.assertIn("min-height: var(--tap); min-width: var(--tap);", qty)
+        self.assertIn(".row-raw > .tick, .row-raw > .slot, .station .row > .tick, .station .row > .slot { align-self: start; }", css)
+        self.assertRegex(css, r"\.row-raw \{[^}]*row-gap: var\(--s2\)")
+        self.assertRegex(css, r"\.fold-btn \{[^}]*width: var\(--tap\)")
+
     def test_planner_general(self):
         """Cortes 6, 8, 20, 13 (goals side): the icon opens Receitas; no stats line; perks fold; one first-use line;
         the example-replaced toast moved to search.js."""
@@ -1842,7 +2023,7 @@ class Cuts160(unittest.TestCase):
         self.assertIn('"days.adjust": "Ajustar o dia"', d)
         self.assertIn("data-adjust aria-expanded=", d)
         self.assertIn('"days.machineNote"', d)          # moved into "Como funciona"
-        self.assertIn("const namedIn", t)
+        self.assertIn("function shortText(ev)", t)
         self.assertIn('class="h2 today-h"', t)
         self.assertNotIn("days.advToast", t)            # no toast from the Hoje panel; days.js keeps its own
         self.assertIn("days.advToastN", d)

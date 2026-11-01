@@ -1,6 +1,9 @@
 /* planner.css: the planner screen: layout, goals, progress, raw/step rows, station cards, the planner-extra slot.
    1.6.0: a step's "×2 ▾" quantity button (.qty-btn), the "Por execução … ▾" recipe selector (.step-pick), the folded
-   perks line (.perks-sum); gone: the progress card's count line (.stats) and the example note (.example-note). */
+   perks line (.perks-sum); gone: the progress card's count line (.stats) and the example note (.example-note).
+   1.6.x spacing pass (docs/revisao-ux/shots-espacos): the controls at a row's right end on one line, 12 px (--s3)
+   inside the card (section and station toggles, "×2 ▾", "Já tenho"); section toggles 8 px above their card; a row's
+   icon and tick at the top, beside the name; 8 px between a raw row's quantity and its "Já tenho". */
 /* ---------- planner layout ---------- */
 .planner { display: grid; gap: var(--s5); padding-block: var(--s4) var(--s6); }
 .col-plan { display: grid; gap: var(--s5); min-width: 0; }
@@ -84,6 +87,14 @@
   min-height: 60px; padding: var(--s2) var(--s3) var(--s2) var(--s1); border-top: 1px solid var(--seam);
 }
 .row:first-child { border-top: 0; }
+/* planner rows: tick and icon sit at the top, beside the name (centred on a 2–4 line block, the name rose above the
+   icon). The 44 px icon button's -2px margin puts its frame 2 px above the name's line, its 32 px picture level with
+   the letters; the tick's 24 px box shares the icon's centre line. */
+.row-raw > .tick, .row-raw > .slot, .station .row > .tick, .station .row > .slot { align-self: start; }
+/* a goal step's plain "×2" goes up with them, its baseline about level with the name's */
+.station .row > .row-qty:not(.qty-btn) { align-self: start; line-height: 1; margin-top: -1px; }
+/* raw rows have 4 px of top padding: the icon drops its -2px top margin so its frame stays 4 px off the line above */
+.row-raw > .slot-btn { margin-top: 0; }
 .tick { display: grid; place-items: center; width: var(--tap); height: var(--tap); cursor: pointer; }
 .tick input {
   appearance: none; -webkit-appearance: none; margin: 0; width: 24px; height: 24px; cursor: pointer;
@@ -115,10 +126,12 @@
 .row-qty { font-weight: 800; font-size: 1.375rem; color: var(--accent); font-variant-numeric: tabular-nums lining-nums; text-align: right; padding-left: var(--s2); white-space: nowrap; }
 .row-qty small { font-size: .875rem; color: var(--ink-3); font-weight: 700; margin-right: 1px; }
 /* a step's "×2 ▾" (1.6.0, corte 1): the quantity is the 44 px button that opens "Tenho __ de 2" (still amber, top
-   right); a goal step keeps the plain number. The field opens in the row's actions line. */
+   right); a goal step keeps the plain number. The field opens in the row's actions line. No negative margins (1.6.x):
+   its top sits 8 px under the station band (16 px from the station toggle), its right edge on the row's 12 px line;
+   4 px less on its left (12 px from the text, with the column gap) keep the text column as wide as before. */
 .row-qty.qty-btn {
   justify-self: end; align-self: start; display: inline-flex; align-items: center; gap: 2px;
-  min-height: var(--tap); min-width: var(--tap); margin: -6px -4px 0 var(--s2); padding: 0 6px 0 8px;
+  min-height: var(--tap); min-width: var(--tap); margin: 0 0 0 var(--s1); padding: 0 6px 0 8px;
   border: 1px solid var(--frame); border-radius: var(--r); background: var(--panel-2); line-height: 1;
   box-shadow: inset 0 1px 0 var(--bevel-hi), inset 0 -2px 0 var(--bevel-lo);
   font-family: var(--f-body); cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
@@ -131,8 +144,9 @@
 .row-actions { grid-column: 3 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); margin-top: var(--s2); }
 /* raw rows (1.3.4, ≈ 72 px): line 1 = name + "i" | quantity; line 2 = "como obter" on ONE line | "Já tenho".
    Wider controls (recipe / group choosers, the "tenho N de M" field) wrap below. */
-/* row-gap 4px (1.4.1): with 0 the quantity of line 1 touched the "Já tenho" button of line 2 on phones */
-.row-raw { padding-block: 6px 5px; row-gap: 4px; min-height: 0; }
+/* row-gap 4px (1.4.1): with 0 the quantity of line 1 touched the "Já tenho" button of line 2 on phones; 8px (1.6.x):
+   4 px still read as touching. 2 px come back from the top padding, so the row grows by 2 px only (79 -> 81 px) */
+.row-raw { padding-block: 4px 5px; row-gap: var(--s2); min-height: 0; }
 .row-raw > .tick, .row-raw > .slot { grid-row: 1 / span 2; }
 .row-raw > .row-main { grid-column: 3; grid-row: 1; align-self: end; }
 .row-raw > .row-qty { grid-column: 4; grid-row: 1; align-self: end; line-height: 1; }
@@ -222,6 +236,10 @@
    right with a pixel chevron (▾ open, ▸ folded); a tap on the header text toggles too */
 .fold-head { display: flex; align-items: center; gap: var(--s2); min-width: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .fold-head .h2 { flex: 1; min-width: 0; }
+/* Matérias-primas / Etapas (1.6.x): the toggle touched the card under it and its right edge; now 8 px above the card
+   and 13 px in (1 px card border + 12 px), over the column of controls inside */
+.summary-grid .fold-head { margin-bottom: var(--s2); }
+.summary-grid .fold-head > .fold-btn { margin-right: calc(var(--s3) + 1px); }
 .fold-btn { flex: none; width: var(--tap); padding: 0; color: var(--ink-2); }
 .fold-btn::before {
   content: ""; width: 8px; height: 8px; border-right: 3px solid currentColor; border-bottom: 3px solid currentColor;
@@ -231,7 +249,10 @@
 .fold-btn:hover { color: var(--accent); }
 @media (prefers-reduced-motion: reduce) { .fold-btn::before { transition: none; } }
 .fold-sum { margin-bottom: 0; cursor: pointer; }
-.station-h[data-fold-head] { cursor: pointer; padding-right: var(--s1); -webkit-tap-highlight-color: transparent; }
+.station-h[data-fold-head] { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+/* the toggle ends on the rows' 12 px line (it sat 4 px from the card edge, 5 px off the section toggle above); the
+   8 px this costs come back from the gaps after the icon and after "0/1" (12 -> 8 px), so station names wrap as before */
+.station-h .fold-btn, .station-h > h3 { margin-left: calc(var(--s1) * -1); }
 .station-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex: none; }
 .station-done { font-size: .8125rem; font-weight: 800; color: var(--ink); white-space: nowrap; }
 .station.is-folded .station-h { border-bottom: 0; }

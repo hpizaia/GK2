@@ -397,6 +397,14 @@ await test("store: current weekday (day, dayNumber)", () => {
   const env = makeEnv(), A = env.GK.store.actions, st = () => env.GK.store.get();
   const W = env.GK.store.dayOrder();   // wheel order: the payload's days block, else the fallback
   eq(W.length, 6, "six days in the wheel");
+  // the Hoje panel ticks only the tasks (data/days.json `task`, see data/README-days.md)
+  const evs = ((PAYLOAD.days && PAYLOAD.days.days) || []).flatMap((d) => d.events || []);
+  if (evs.length) {
+    check(evs.every((e) => typeof e.task === "boolean"), "every day event says task true/false");
+    eq(evs.filter((e) => !e.task).length, 9, "9 informative events (no tick)");
+    check(!evs.find((e) => e.pt.startsWith("O sino toca")).task, "the bell is information, not a task");
+    check(evs.find((e) => e.pt.startsWith("Dia de missa")).task, "the sermon is a task");
+  }
   eq(A.advanceDay(), false, "advance without a day: no-op");
   A.setDay(W[4], 59); eq([st().day, st().dayNumber], [W[4], 59], "setDay");
   check(!!st().updatedAt, "setDay stamps updatedAt");
@@ -897,6 +905,61 @@ await test("item facts reach the page (where / use / stack, meta.refs)", () => {
     for (const w of it.where || []) {
       if (w[1][0] === "@") check(D.items[w[1].slice(1)], `${it.id}: source item ${w[1]} exists`);
       else check(refs.names[w[1]] != null, `${it.id}: source name ${w[1]} is in meta.refs.names`);
+    }
+  }
+});
+
+// ---------------------------------------------------------------- ficha do item: "Já estudei" (state.studied, synced, global)
+await test("studied: setStudied, global across lists, saved, no-op changes ignored", () => {
+  const env = makeEnv(), S = env.GK.store, A = S.actions, st = () => S.get();
+  env.GK.data.load(JSON.parse(JSON.stringify(PAYLOAD)));
+  eq(st().studied, [], "fresh: none");
+  check(S.SYNCED.indexOf("studied") >= 0 && S.LATE.indexOf("studied") >= 0, "synced, and a late field");
+  check(S.PER_LIST.indexOf("studied") < 0, "not per list");
+  A.setStudied("wine", true); A.setStudied("beer", true); A.setStudied("wine", true);
+  eq(st().studied, ["beer", "wine"], "sorted, no duplicates");
+  const at = st().updatedAt;
+  A.setStudied("no-such-item", true); A.setStudied("crate", false);
+  eq([st().studied, st().updatedAt], [["beer", "wine"], at], "unknown id / unchecking an unchecked one: no change");
+  A.createList("Outra");
+  eq(st().studied, ["beer", "wine"], "global: a new list keeps them");
+  A.setStudied("beer", false);
+  check(st().updatedAt > at, "a synced change (stamped)");
+  eq(st().studied, ["wine"], "unchecked");
+  check(S.hasContent({ studied: ["wine"] }), "counts as content");
+  env.clock.tick(200);
+  eq(JSON.parse(env.localStorage.getItem("gk2-companion")).studied, ["wine"], "saved locally");
+});
+
+await test("studied: sanitizeRemote, mergeSynced (union), keepLate / adoptLate", () => {
+  const S = GK.store, san = (o) => S.sanitizeRemote(o);
+  eq(san({ studied: ["wine", "nope", "wine", 3, null, "", "beer"] }).studied, ["beer", "wine"], "only known item ids, sorted, no duplicates");
+  eq([san({}).studied, san({ studied: "wine" }).studied, san({ studied: { wine: true } }).studied], [[], [], []], "absent / not an array");
+  const L = san({ studied: ["wine", "beer"] }), R = san({ studied: ["crate", "wine"] });
+  eq(S.mergeSynced(L, R).studied, ["beer", "crate", "wine"], "union");
+  eq(S.mergeSynced(L, R, true).studied, ["beer", "crate", "wine"], "union whichever side is newer");
+  eq(S.mergeSynced(L, san({})).studied, L.studied, "remote without studied keeps ours");
+  const raw = { goals: [] };
+  eq(S.keepLate(san(raw), raw, L).studied, L.studied, "keepLate: keep ours when the doc lacks the key");
+  eq(S.keepLate(san(raw), Object.assign({ studied: [] }, raw), L), null, "keepLate: an explicit empty list is a real clear");
+  eq(S.adoptLate(L, san({})).studied, L.studied, "adoptLate: take the doc's when we have none");
+  eq(S.adoptLate(san({}), L), null, "adoptLate: nothing to adopt");
+});
+
+await test("ficha do item: sell / price / study / asked reach the page", () => {
+  const names = D.meta.refs.names, nm = (k) => { const e = names[k]; return typeof e === "string" ? e : e && e.pt; };
+  const pb = D.items["polished-bronze"], gf = D.items["goldfish"], beer = D.items["beer"];
+  eq(pb.sell, [["furniture-maker", 54, 56, 20], ["jeweler", 55, 56, 40], ["smithy", 54, 55]], "Bronze Polido: three buyers, usual-stock range, Likes");
+  eq([pb.price, pb.fix, pb.study], [75, undefined, [30, 0, 20, 3]], "Bronze Polido: base price 75; 30 red, 20 blue, 3 Science");
+  eq([gf.sell, gf.price, gf.fix, gf.study], [[["fish-stand"]], 72, 1, [50, 50, 50, 3, 3]], "Peixinho-dourado: fixed 72; 50/50/50, 3 Science + 3 Faith");
+  eq(beer.asked && beer.asked.q, [["yummies", 2, "village-guards"], ["comrade-donkey", 2, "larry"], ["tales-for-ales", 2, "captain"]], "Cerveja: three quests, two each");
+  eq([nm("yummies"), nm("larry"), nm("furniture-maker"), nm("jeweler-ii")], ["Festa das Guloseimas", "Lauro", "Marceneiro", "Joalheiro II"], "official pt names");
+  check(names.captain && names.captain.tr === "machine", "Capitão: no official name, marked");
+  for (const it of Object.values(D.items)) {
+    for (const e of it.sell || []) check(names[e[0]] != null, `${it.id}: buyer ${e[0]} is in meta.refs.names`);
+    for (const k of Object.keys(it.asked || {})) for (const e of it.asked[k]) {
+      check(names[e[0]] != null, `${it.id}: asked ${k} ${e[0]} is in meta.refs.names`);
+      if (k === "q" && e[2]) check(names[e[2]] != null, `${it.id}: quest giver ${e[2]} is in meta.refs.names`);
     }
   }
 });

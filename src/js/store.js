@@ -1,13 +1,13 @@
 /* GK.store: the single serializable app state, persistence in localStorage and schema migrations.
    Owns: state {schemaVersion, lang, theme, lists, listsGone, goals, choice, have, done, example, legacyOf, overrides,
-   showHidden, researched, groupChoice, perks, day, dayNumber, dayAnchor, dayDone, dayNotes, recents, ui, updatedAt, syncBase}.
+   showHidden, researched, studied, groupChoice, perks, day, dayNumber, dayAnchor, dayDone, dayNotes, recents, ui, updatedAt, syncBase}.
    Lists (schema 5, "listas separadas"): state.lists = [{id, name, createdAt, updatedAt, goals, choice, have, done,
    example}] holds every plan; ui.activeList (per device, never synced) says which one is open. The top-level goals /
    choice / have / done / example are the WORKING COPY of the open list: every module reads and edits them exactly as
    before schema 5, and update() writes them back into that list after every change (stamping the list's updatedAt).
    legacyOf = the id of the list the working copy belongs to; written with it, so a page older than schema 5 that
    saved its single plan on top (localStorage or the account doc) is folded back into that list (sanitizeRemote).
-   Global (shared by every list): overrides, researched, groupChoice, perks, the day fields, recents, theme, lang, ui.
+   Global (shared by every list): overrides, researched, studied, groupChoice, perks, the day fields, recents, theme, lang, ui.
    Exposes: GK.store.{get, load, subscribe, actions, update, clampQty, SCHEMA, THEMES, ISO, SYNCED, PER_LIST, MIRROR,
    syncPayload, syncKey, legacyMirror, sanitizeRemote, hasContent, mergeSynced, stamp, useAccount, setSyncBase, storageKey,
    activeList, LIST_NAME_MAX, LISTS_MAX, RECENTS_MAX, DAY_IDS, dayOrder, dayFromNumber, doneToday, NOTE_MAX, LATE, keepLate, adoptLate}.
@@ -27,7 +27,7 @@ GK.store = (function () {
   // Fields that travel to the viewer's account (GK.sync). lang, theme, showHidden and ui (with the open list) stay per
   // device. Schema 5: the plan fields live in `lists` (listsGone = {listId: ISO time} of deleted lists, so a merge
   // does not bring them back).
-  const SYNCED = ["lists", "listsGone", "overrides", "researched", "groupChoice", "perks", "day", "dayNumber", "dayAnchor", "dayDone", "dayNotes", "recents"];
+  const SYNCED = ["lists", "listsGone", "overrides", "researched", "studied", "groupChoice", "perks", "day", "dayNumber", "dayAnchor", "dayDone", "dayNotes", "recents"];
   // what each list holds (= the schema ≤ 4 top-level plan fields, still the working copy of the open list)
   const PER_LIST = ["goals", "choice", "have", "done", "example"];
   // written next to SYNCED in the account doc (GK.sync, legacyMirror): the open list, flat, for a page older than
@@ -37,7 +37,7 @@ GK.store = (function () {
   const LIST_NAME_MAX = 30, LISTS_MAX = 30, GONE_MAX = 100;
   // synced fields added after schema 4 (1.3.4, optional, no migration): a doc written by an older page has no such
   // key at all, which GK.sync must not read as "cleared" (keepLate / adoptLate below)
-  const LATE = ["dayDone", "dayNotes", "recents"];
+  const LATE = ["dayDone", "dayNotes", "recents", "studied"];
   // "Recentes" (ui/search.js): the items last added to goals, newest first, at most RECENTS_MAX ids (the search shows
   // the first 6). Global and synced. Only ids of items the page knows (when its data is loaded), no duplicates.
   const RECENTS_MAX = 12;
@@ -51,6 +51,18 @@ GK.store = (function () {
     return out;
   }
   const pushRecent = (s, id) => { s.recents = cleanRecents([id].concat(Array.isArray(s.recents) ? s.recents : [])); };
+  // "Já estudei" (item card in Receitas): ids of the items studied at the Study Table, sorted, no duplicates.
+  // Global and synced. Only ids of items the page knows (when its data is loaded). Merge: union.
+  const STUDIED_MAX = 2000;
+  function cleanStudied(a) {
+    const its = GK.data && GK.data.get && GK.data.get().items, known = its && Object.keys(its).length ? (id) => !!its[id] : () => true;
+    const out = new Set();
+    for (const id of Array.isArray(a) ? a : []) {
+      if (typeof id === "string" && id && id.length <= 200 && known(id)) out.add(id);
+      if (out.size >= STUDIED_MAX) break;
+    }
+    return Array.from(out).sort();
+  }
   // The 6-day week (Dias tab): the cycle comes from the payload's `days` block (data/days.json: meta.order, else the
   // days in their `order`) when the page has one; DAY_IDS is the fallback cycle (its first six) and the whitelist
   // (any of the seven sins, so a week that swaps one sin for another still validates).
@@ -128,6 +140,7 @@ GK.store = (function () {
     overrides: {},       // lang -> { itemId: "nome editado" }
     showHidden: false,   // search also lists hidden / unobtainable / virtual items
     researched: {},      // techId -> true ("Já pesquisei", Tecnologias tab; schema 4, synced)
+    studied: [],         // [itemId] sorted: "Já estudei" on the item card (Receitas; synced)
     groupChoice: {},     // groupItemId -> memberItemId ("Brema ou carpa" → "Usar: Carpa"; synced)
     perks: {},           // perkId -> true (yield bonuses from recipe notes, "Vantagens"; synced)
     day: null,           // current weekday id as set by the player ("wrath"; Dias tab, synced)
@@ -163,7 +176,7 @@ GK.store = (function () {
   // something the user made: in any list (schema 5) or in the flat plan of an older copy
   const listHas = (l) => !!l && ((!l.example && Array.isArray(l.goals) && l.goals.length > 0) || nonEmpty(l.done) || nonEmpty(l.have) || nonEmpty(l.choice));
   const hasContent = (s) => (Array.isArray(s.lists) ? s.lists.length > 1 || s.lists.some(listHas) : listHas(s)) ||
-    nonEmpty(s.overrides) || nonEmpty(s.researched) || nonEmpty(s.groupChoice) || nonEmpty(s.perks) || !!s.day || !!s.dayAnchor || nonEmpty(s.dayNotes);
+    nonEmpty(s.overrides) || nonEmpty(s.researched) || (Array.isArray(s.studied) && s.studied.length > 0) || nonEmpty(s.groupChoice) || nonEmpty(s.perks) || !!s.day || !!s.dayAnchor || nonEmpty(s.dayNotes);
   const trueMap = (o) => { const out = {}; for (const [k, v] of Object.entries(obj(o))) if (v) out[k] = true; return out; };
   // have: true (everything) or a whole number ≥ 1 (partial); anything else is dropped
   const clampHave = (v) => (v === true ? true : typeof v === "number" && isFinite(v) && v >= 1 ? Math.min(999999, Math.round(v)) : null);
@@ -236,7 +249,7 @@ GK.store = (function () {
     return {
       lists, listsGone: gone,
       overrides: migrateOverrides(o.overrides, !!fromV1),
-      researched: trueMap(o.researched), groupChoice: strMap(o.groupChoice), perks: trueMap(o.perks),
+      researched: trueMap(o.researched), studied: cleanStudied(o.studied), groupChoice: strMap(o.groupChoice), perks: trueMap(o.perks),
       day, dayNumber, dayAnchor: cleanAnchor(o.dayAnchor),
       dayDone: cleanDone(o.dayDone, day, dayNumber), dayNotes: cleanNotes(o.dayNotes),
       recents: cleanRecents(o.recents),
@@ -286,6 +299,7 @@ GK.store = (function () {
     if (!has(raw, "dayNotes") && nonEmpty(cleanNotes(local.dayNotes))) { out.dayNotes = cleanNotes(local.dayNotes); kept = true; }
     if (!has(raw, "dayDone")) { const dd = cleanDone(local.dayDone, out.day, out.dayNumber); if (dd) { out.dayDone = dd; kept = true; } }
     if (!has(raw, "recents") && cleanRecents(local.recents).length) { out.recents = cleanRecents(local.recents); kept = true; }
+    if (!has(raw, "studied") && cleanStudied(local.studied).length) { out.studied = cleanStudied(local.studied); kept = true; }
     return kept ? out : null;
   }
   /**
@@ -301,6 +315,7 @@ GK.store = (function () {
       if (dd) { out.dayDone = dd; got = true; }
     }
     if (!cleanRecents(local.recents).length && fields.recents && fields.recents.length) { out.recents = cleanRecents(fields.recents); got = true; }
+    if (!cleanStudied(local.studied).length && fields.studied && fields.studied.length) { out.studied = cleanStudied(fields.studied); got = true; }
     return got ? out : null;
   }
   /**
@@ -314,6 +329,7 @@ GK.store = (function () {
    *   overrides               union by key, local wins on a conflict
    *   researched, perks, groupChoice
    *                           union by key, remote wins on a conflict
+   *   studied                 union of the ids (an item unchecked on one side comes back from the other's copy)
    *   day + dayNumber         one pair: the copy with the higher day counter (the game only moves forward), else
    *                           the local one when it has a day, else the remote one
    *   dayAnchor               local when it has one, else remote
@@ -358,6 +374,7 @@ GK.store = (function () {
       ...mergeLists(L, R, typeof base === "string" ? base : ""),
       overrides: ov,
       researched: Object.assign({}, L.researched, R.researched), perks: Object.assign({}, L.perks, R.perks),
+      studied: cleanStudied(L.studied.concat(R.studied)),
       groupChoice: Object.assign({}, L.groupChoice, R.groupChoice),
       ...days, dayDone,
       dayNotes: remoteNewer ? Object.assign({}, L.dayNotes, R.dayNotes) : Object.assign({}, R.dayNotes, L.dayNotes),
@@ -537,6 +554,12 @@ GK.store = (function () {
     // Tecnologias: "Já pesquisei" per technology id (synced with the account)
     setResearched(techId, on) { update((s) => { if (on) s.researched[techId] = true; else delete s.researched[techId]; }, { from: "tech" }); },
     clearResearched() { update((s) => { s.researched = {}; }, { from: "tech" }); },
+    // Receitas: "Já estudei" per item id (synced with the account); unknown ids and no-op changes are ignored
+    setStudied(itemId, on) {
+      const cur = cleanStudied(state.studied), next = cleanStudied(on ? cur.concat([itemId]) : cur.filter((x) => x !== itemId));
+      if (JSON.stringify(next) === JSON.stringify(cur)) return;
+      update((s) => { s.studied = next; }, { from: "study" });
+    },
     // Dias: "Hoje é este dia". dayNumber: a number / numeric string sets the HUD counter, null / "" clears it,
     // undefined keeps it. A day together with a counter (given now or already set) calibrates: dayAnchor = {number,
     // day}. setDay(null) clears day and counter (the calibration stays; clearAnchor() drops it).

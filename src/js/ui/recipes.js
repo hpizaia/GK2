@@ -10,6 +10,9 @@
    1.6.0 (cortes 7, 12, 13, 18): no top hint; rows say "Construir no Cemitério" (GK.ui.fmt.buildLabel) and the recipe
    count only when > 1; "Mostrar itens ocultos" at the end of the list; "Também em" once when every recipe shares it;
    no "Usado em" section when empty; no plain toast when the first goal replaces the example (search.js shows it).
+   Ficha completa (docs/revisao-ux/protos/ficha-item.html): "Quem compra" (items[].sell / .price / .fix),
+   "Estudar" (items[].study + the global "Já estudei", state.studied) and "Pedido em" (items[].asked: quests, town
+   restorations and orders), folded by default (spoiler). Each block only when the item has the data.
 */
 GK.i18n.add({
   pt: {
@@ -285,6 +288,78 @@ GK.i18n.add({
   },
 });
 
+// "Quem compra", "Estudar", "Pedido em" (items[].sell / .price / .fix / .study / .asked, data/facts.json; ficha completa)
+GK.i18n.add({
+  pt: {
+    "rc.sell": "Quem compra",
+    "rc.sellInfo": "Sobre o preço",
+    "rc.sellNote": "Quanto cada um paga por 1 com o estoque normal dele (do nível 1 ao 3 do comerciante). Se ele já tem muitos, ou se você vende vários de uma vez, o preço cai; sem estoque, sobe até o preço base (o “até”). Peixes têm preço fixo. Curtidas: o máximo por semana vendendo para ele.",
+    "rc.sellNoteFix": "Preço fixo: quem compra paga sempre {n}, com ou sem estoque, como nos peixes.",
+    "rc.sellUpTo": "até {v}",
+    "rc.sellFix": "preço fixo",
+    "rc.sellLikes": "até +{n} curtidas por semana",
+    "rc.sellLikesFrom": "curtidas a partir do nível {lv}: até +{n} por semana",
+    "rc.sellLikesAny": "dá curtidas",
+    "rc.sellLikesAnyFrom": "dá curtidas a partir do nível {lv}",
+    "rc.sellLevel": "compra a partir do nível {n}",
+    "rc.coin.g": "ouro", "rc.coin.s": "prata", "rc.coin.b": "bronze",
+    "rc.study": "Estudar",
+    "rc.studied": "Já estudei",
+    "rc.studiedLabel": "Já estudei: {name}",
+    "rc.studyNote": "Uma vez só, na Mesa de Estudo; o item não é gasto.",
+    "rc.studyCost": "Custa {sci} de Ciência.",
+    "rc.studyCostFaith": "Custa {sci} de Ciência e {faith} de Fé.",
+    "rc.asked": "Pedido em",
+    "rc.askedShowQ.one": "Mostrar 1 missão",
+    "rc.askedShowQ.other": "Mostrar as {n} missões",
+    "rc.askedShowO.one": "Mostrar 1 uso no povoado",
+    "rc.askedShowO.other": "Mostrar {n} usos no povoado",
+    "rc.askedShowQO.one": "Mostrar 1 missão e {o} usos no povoado",
+    "rc.askedShowQO.other": "Mostrar {n} missões e {o} usos no povoado",
+    "rc.askedHide": "Esconder",
+    "rc.askedWarn": "Pode revelar parte da história (spoiler).",
+    "rc.askedQ": "Missões",
+    "rc.askedTown": "Restauração do povoado",
+    "rc.askedOrder": "Encomendas do povoado",
+    "rc.askedLevel": "nível {n}",
+    "rc.askedLikes": "+{n} curtidas",
+  },
+  en: {
+    "rc.sell": "Who buys it",
+    "rc.sellInfo": "About the price",
+    "rc.sellNote": "What each one pays for 1 at its usual stock (trader levels 1 to 3). If it already holds many, or you sell several at once, the price drops; short of stock, it rises up to the base price (the “up to”). Fish have a fixed price. Likes: the most a week from selling to it.",
+    "rc.sellNoteFix": "Fixed price: every buyer always pays {n}, with or without stock, like fish.",
+    "rc.sellUpTo": "up to {v}",
+    "rc.sellFix": "fixed price",
+    "rc.sellLikes": "up to +{n} Likes a week",
+    "rc.sellLikesFrom": "Likes from level {lv}: up to +{n} a week",
+    "rc.sellLikesAny": "gives Likes",
+    "rc.sellLikesAnyFrom": "gives Likes from level {lv}",
+    "rc.sellLevel": "buys from level {n}",
+    "rc.coin.g": "gold", "rc.coin.s": "silver", "rc.coin.b": "bronze",
+    "rc.study": "Study",
+    "rc.studied": "Studied",
+    "rc.studiedLabel": "Studied: {name}",
+    "rc.studyNote": "Once only, at the Study Table; the item is kept.",
+    "rc.studyCost": "Costs {sci} Science.",
+    "rc.studyCostFaith": "Costs {sci} Science and {faith} Faith.",
+    "rc.asked": "Asked for in",
+    "rc.askedShowQ.one": "Show 1 quest",
+    "rc.askedShowQ.other": "Show the {n} quests",
+    "rc.askedShowO.one": "Show 1 use in the Town",
+    "rc.askedShowO.other": "Show {n} uses in the Town",
+    "rc.askedShowQO.one": "Show 1 quest and {o} uses in the Town",
+    "rc.askedShowQO.other": "Show {n} quests and {o} uses in the Town",
+    "rc.askedHide": "Hide",
+    "rc.askedWarn": "May reveal part of the story (spoiler).",
+    "rc.askedQ": "Quests",
+    "rc.askedTown": "Town restoration",
+    "rc.askedOrder": "Town orders",
+    "rc.askedLevel": "level {n}",
+    "rc.askedLikes": "+{n} Likes",
+  },
+});
+
 GK.ui.recipes = (function () {
   const { t, name, num, edited } = GK.i18n, { esc, slot } = GK.util;
   const PAGE = 60, CHIPS = 8, LIST_CAP = 40, SKEY = "gk2-recipes-view";
@@ -298,6 +373,7 @@ GK.ui.recipes = (function () {
   let fromScroll = 0, returnTo = null, pendingFocus = false;
   let shown = PAGE, results = [], expanded = { cat: false, st: false };
   let addQty = 1, usedAll = false, hereAll = false, whereAll = false, listScroll = 0, sortCache = { key: "", ids: [] };
+  let askedOpen = false;         // "Pedido em" unfolded (folded again when another item opens)
 
   /* ---------- persistence ---------- */
   function save() {
@@ -635,6 +711,100 @@ GK.ui.recipes = (function () {
     if (!st) return "";
     return `<p class="stack-cap">${st > 1 ? esc(t("rc.stack", { n: "\u0000" })).replace("\u0000", `<b>${esc(num(st))}</b>`) : esc(t("rc.stackOne"))}</p>`;
   }
+  /* ---------- "Quem compra", "Estudar", "Pedido em" (ficha completa) ---------- */
+  const int = (v) => (typeof v === "number" && isFinite(v) ? Math.round(v) : 0);
+  // an amount in bronze (1 silver = 100 bronze, 1 gold = 100 silver) as the game's coins: (s)1 (b)37
+  function coins(v) {
+    const parts = [["g", Math.floor(v / 10000)], ["s", Math.floor(v / 100) % 100], ["b", v % 100]].filter((p) => p[1]);
+    return parts.map(([k, n]) => `<span class="coin coin-${k}" aria-hidden="true"></span>${esc(num(n))}<span class="sr-only"> ${esc(t("rc.coin." + k))}</span>`).join(" ");
+  }
+  // lo–hi: one bronze coin when both are under 1 silver ("54–56"), else each amount in full
+  function coinRange(lo, hi) {
+    if (!hi || hi === lo) return coins(lo);
+    if (hi < 100) return `<span class="coin coin-b" aria-hidden="true"></span>${esc(num(lo))}–${esc(num(hi))}<span class="sr-only"> ${esc(t("rc.coin.b"))}</span>`;
+    return `${coins(lo)} – ${coins(hi)}`;
+  }
+  function sellHtml(it, state) {
+    const rows = Array.isArray(it.sell) ? it.sell.filter((e) => Array.isArray(e) && typeof e[0] === "string") : [];
+    if (!rows.length) return "";
+    const base = int(it.price) > 0 ? int(it.price) : 0, fix = !!it.fix && base > 0;
+    const li = rows.map((e) => {
+      const nm = refName(e[0], state), lo = int(e[1]), hi = int(e[2]), likes = int(e[3]), likeLv = int(e[4]), lvl = int(e[5]);
+      let pay = "";
+      if (fix) pay = coins(base);
+      else if (lo > 0) pay = coinRange(lo, hi) + (base > Math.max(lo, hi) ? ` <span class="sell-max">${esc(t("rc.sellUpTo", { v: "\u0000" })).replace("\u0000", coins(base))}</span>` : "");
+      else if (base) pay = `<span class="sell-max">${esc(t("rc.sellUpTo", { v: "\u0000" })).replace("\u0000", coins(base))}</span>`;
+      const d = [];
+      if (fix) d.push(t("rc.sellFix"));
+      if (likes > 0) d.push(likeLv > 1 ? t("rc.sellLikesFrom", { n: num(likes), lv: likeLv }) : t("rc.sellLikes", { n: num(likes) }));
+      else if (likes < 0) d.push(likeLv > 1 ? t("rc.sellLikesAnyFrom", { lv: likeLv }) : t("rc.sellLikesAny"));
+      if (lvl > 1) d.push(t("rc.sellLevel", { n: lvl }));
+      const badge = nm.tr ? unofficialBadge(t("rc.w.unofficialTitle")) : "";
+      return `<li><span class="sell-who">${esc(nm.txt)}${badge}</span><span class="sell-pay tabnum">${pay}</span>${d.length ? `<span class="sell-d">${esc(d.join(" · "))}</span>` : ""}</li>`;
+    }).join("");
+    const note = fix ? esc(t("rc.sellNoteFix", { n: "\u0000" })).replace("\u0000", coins(base)) : esc(t("rc.sellNote"));
+    return `<div class="rc-info rc-sell">
+      <div class="rc-k-row"><h3 class="rc-k" id="rc-sell-h">${esc(t("rc.sell"))}</h3>
+        <details class="rc-i"><summary aria-label="${esc(t("rc.sellInfo"))}" title="${esc(t("rc.sellInfo"))}"><span aria-hidden="true">i</span></summary>
+          <p class="rc-i-p">${note}</p></details></div>
+      <ul class="sell-list" aria-labelledby="rc-sell-h">${li}</ul>
+    </div>`;
+  }
+  function studyHtml(it, state, id) {
+    const st = Array.isArray(it.study) ? it.study.map(int) : [];
+    if (!st.length || !st.some((v) => v > 0)) return "";
+    const [red, green, blue, sci, faith] = [0, 1, 2, 3, 4].map((i) => st[i] || 0);
+    const cost = { red, green, blue };
+    // the point gems of "Tecnologias que faltam" (GK.ui.tech.costHtml)
+    const pts = (red || green || blue) && GK.ui.tech && GK.ui.tech.costHtml ? GK.ui.tech.costHtml(cost, { big: true }) : "";
+    const on = Array.isArray(state.studied) && state.studied.indexOf(id) >= 0;
+    const nm = name(it, state.overrides);
+    const costTxt = sci || faith ? " " + t(faith ? "rc.studyCostFaith" : "rc.studyCost", { sci: num(sci), faith: num(faith) }) : "";
+    return `<div class="rc-info rc-study">
+      <h3 class="rc-k">${esc(t("rc.study"))}</h3>
+      <div class="study-row">${pts}
+        <label class="study-done" for="rc-studied"><span class="tick"><input type="checkbox" id="rc-studied" data-studied="${esc(id)}"${on ? " checked" : ""} aria-label="${esc(t("rc.studiedLabel", { name: nm }))}"></span>${esc(t("rc.studied"))}</label></div>
+      <p class="study-d">${esc(t("rc.studyNote") + costTxt)}</p>
+    </div>`;
+  }
+  function askedLine(mark, qty, nameHtml, note) {
+    return `<li><div class="rc-line rc-line-static"><span class="slot slot-sm asked-mark"><span class="slot-letter" aria-hidden="true">${mark}</span></span><span class="rc-line-q tabnum">${esc(num(qty))}<small>×</small></span>
+      <span class="rc-line-main"><span class="rc-line-name">${nameHtml}</span>${note ? `<span class="rc-line-note">${note}</span>` : ""}</span></div></li>`;
+  }
+  function askedHtml(it, state) {
+    const a = it.asked && typeof it.asked === "object" ? it.asked : {};
+    const rows = (k) => (Array.isArray(a[k]) ? a[k].filter((e) => Array.isArray(e) && typeof e[0] === "string") : []);
+    const nameOf = (ref) => { const nm = refName(ref, state); return esc(nm.txt) + (nm.tr ? unofficialBadge(t("rc.w.unofficialTitle")) : ""); };
+    const q = rows("q"), town = rows("t"), ord = rows("o");
+    const other = town.length + ord.length, total = q.length + other;
+    if (!total) return "";
+    const group = (k) => `<li class="asked-g" aria-hidden="true">${esc(t(k))}</li>`;
+    const lines = [];
+    if (q.length) {
+      lines.push(group("rc.askedQ"));
+      for (const e of q) lines.push(askedLine("!", int(e[1]) || 1, nameOf(e[0]), typeof e[2] === "string" ? nameOf(e[2]) : ""));
+    }
+    if (town.length) {
+      lines.push(group("rc.askedTown"));
+      for (const e of town) lines.push(askedLine("+", int(e[1]) || 1, nameOf(e[0]), ""));
+    }
+    if (ord.length) {
+      lines.push(group("rc.askedOrder"));
+      for (const e of ord) {
+        const d = [int(e[2]) > 1 ? t("rc.askedLevel", { n: int(e[2]) }) : "", int(e[3]) > 0 ? t("rc.askedLikes", { n: num(int(e[3])) }) : ""].filter(Boolean);
+        lines.push(askedLine("+", int(e[1]) || 1, nameOf(e[0]), esc(d.join(" · "))));
+      }
+    }
+    const show = q.length && other ? t("rc.askedShowQO", { n: q.length, o: other }) : q.length ? t("rc.askedShowQ", { n: q.length }) : t("rc.askedShowO", { n: other });
+    return `<section class="rc-sec" aria-labelledby="rc-asked-h">
+      <h3 class="h2" id="rc-asked-h">${esc(t("rc.asked"))} <span class="count">${total}</span></h3>
+      <details class="card list rc-asked" id="rc-asked"${askedOpen ? " open" : ""}>
+        <summary><span class="asked-t"><span class="asked-show">${esc(show)}</span><span class="asked-hide">${esc(t("rc.askedHide"))}</span></span>
+          ${q.length ? `<span class="asked-warn">${esc(t("rc.askedWarn"))}</span>` : ""}<span class="rc-chev" aria-hidden="true">›</span></summary>
+        <ul class="rc-lines">${lines.join("")}</ul>
+      </details>
+    </section>`;
+  }
   function detailHtml(id, state) {
     const D = GK.data.get(), it = D.items[id], nm = name(it, state.overrides), lang = GK.i18n.lang();
     const other = lang === "en" ? it.pt : it.en;
@@ -661,6 +831,9 @@ GK.ui.recipes = (function () {
     if (where) info.push(where);
     if (it.obtain && (!rs.length || it.raw || it.unobtainable)) info.push(`<div class="rc-info"><h3 class="rc-k">${esc(t("rc.obtain"))}</h3><p>${esc(name(it.obtain))}</p></div>`);
     if (it.runes) info.push(`<div class="rc-info"><h3 class="rc-k">${esc(t("rc.runes"))}</h3><div class="rc-runes">${runes(it.runes)}</div></div>`);
+    const sell = sellHtml(it, state), study = studyHtml(it, state, id);
+    if (sell) info.push(sell);
+    if (study) info.push(study);
     if (it.members && it.members.length) info.push(`<div class="rc-info"><h3 class="rc-k">${esc(t("rc.members"))}</h3><ul class="rc-lines">${it.members.map((m) => itemLine(m, state)).join("")}</ul></div>`);
     const groups = IX.memberOf[id] || [];
     if (groups.length) info.push(`<div class="rc-info"><h3 class="rc-k">${esc(t("rc.memberOf"))}</h3><ul class="rc-lines">${groups.map((gid) => itemLine(gid, state)).join("")}</ul></div>`);
@@ -722,7 +895,7 @@ GK.ui.recipes = (function () {
           ${made.length > list.length ? `<button type="button" class="btn btn-ghost rc-more" id="rc-here-more" data-here-more>${esc(t("rc.showAll", { n: made.length }))}</button>` : ""}</div>
       </section>`;
     }
-    return nav + `<div class="rc-detail-grid"><div class="rc-detail-a">${head}</div><div class="rc-detail-b">${recipes}${usedHtml}${here}</div></div>`;
+    return nav + `<div class="rc-detail-grid"><div class="rc-detail-a">${head}</div><div class="rc-detail-b">${recipes}${usedHtml}${askedHtml(it, state)}${here}</div></div>`;
   }
   function renderDetail(state) {
     if (!V.item || !GK.data.item(V.item)) { V.item = null; return false; }
@@ -748,7 +921,7 @@ GK.ui.recipes = (function () {
     if (V.item === id) return;
     if (fromList || !V.item) { listScroll = browseEl.hidden ? listScroll : window.scrollY; V.stack = []; V.from = null; }
     else { V.stack.push(V.item); if (V.stack.length > 30) V.stack.shift(); }
-    V.item = id; addQty = 1; usedAll = false; hereAll = false; whereAll = false;
+    V.item = id; addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false;
     save();
     showView(GK.store.get(), true);
   }
@@ -765,7 +938,7 @@ GK.ui.recipes = (function () {
     if (!toList && !V.stack.length && V.from) { backToOrigin(); return; }
     if (toList) V.from = null;
     if (!toList && V.stack.length) {
-      V.item = V.stack.pop(); addQty = 1; usedAll = false; hereAll = false; whereAll = false;
+      V.item = V.stack.pop(); addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false;
       save(); showView(GK.store.get(), true);
       return;
     }
@@ -784,7 +957,7 @@ GK.ui.recipes = (function () {
     const from = opts && opts.from && opts.from !== "recipes" && cur !== "recipes" ? opts.from : null;
     if (from) fromScroll = window.scrollY;
     if (V.item !== itemId || from || V.stack.length) {
-      V.stack = []; V.item = itemId; addQty = 1; usedAll = false; hereAll = false; whereAll = false;
+      V.stack = []; V.item = itemId; addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false;
       V.from = from;
       save();
     }
@@ -901,6 +1074,18 @@ GK.ui.recipes = (function () {
     });
     root.addEventListener("change", (e) => {
       if (e.target.id === "rc-qty") { addQty = GK.store.clampQty(e.target.value); e.target.value = addQty; }
+      // "Já estudei": the store re-renders the detail; the box gets the focus back
+      if (e.target.id === "rc-studied" && e.target.dataset.studied) {
+        GK.store.actions.setStudied(e.target.dataset.studied, e.target.checked);
+        const b = document.getElementById("rc-studied"); if (b) b.focus({ preventScroll: true });
+      }
+    });
+    // "Pedido em" stays open across re-renders of the same item (toggle does not bubble: capture)
+    root.addEventListener("toggle", (e) => { if (e.target.id === "rc-asked") askedOpen = e.target.open; }, true);
+    // the price "i": one open at a time; a tap anywhere else closes it
+    document.addEventListener("click", (e) => {
+      if (!root) return;
+      root.querySelectorAll("details.rc-i[open]").forEach((d) => { if (!d.contains(e.target)) d.open = false; });
     });
     root.addEventListener("keydown", (e) => {
       if (e.key === "Enter" && e.target.id === "rc-qty") { e.preventDefault(); const b = document.getElementById("rc-add"); if (b) b.click(); }

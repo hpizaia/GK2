@@ -1,5 +1,5 @@
 /* days.css: the Dias screen (ui/days.js: week wheel, day card, week table, "Bilhete do dia") and the planner "Hoje"
-   panel (ui/today.js: "feito hoje" ticks, the note, "Amanhã"). Type in rem (the root size is "Letra grande"); the
+   panel (ui/today.js: one-line events that open in place, "feito hoje" ticks on the tasks, the ✎ note button). Type in rem (the root size is "Letra grande"); the
    wheel's SVG hub text keeps px, which are SVG user units there. A day's colour arrives as --day (inline, from data/days.json); without one the slate/wood tokens
    are used. Uses the shared tokens, .card, .btn, .badge, .h2, .hint. */
 .screen-days { padding-block: var(--s4) var(--s6); }
@@ -163,12 +163,35 @@ button.days-item:hover { border-color: var(--accent); }
 .today-head .days-tile { width: 36px; height: 36px; }
 .today-line { margin: 0; min-width: 0; font-size: 1rem; color: var(--ink-2); }
 .today-line b { color: var(--ink); font-weight: 800; }
-.today-evs { list-style: none; margin: 0; padding: 2px var(--s3) 2px var(--s1); }
-.today-ev { display: flex; align-items: center; gap: var(--s1); padding: 2px 0; border-top: 1px solid var(--seam); font-size: .9375rem; line-height: 1.3; }
+/* one line per event: [tick or the same empty width] [icon · short text… · ? · chevron]; a tap opens .today-more */
+.today-evs { list-style: none; margin: 0; padding: 0 var(--s2) 0 var(--s1); }
+.today-ev { display: grid; grid-template-columns: var(--tap) minmax(0, 1fr); align-items: center; column-gap: 2px; border-top: 1px solid var(--seam); font-size: .9375rem; line-height: 1.3; }
 .today-ev:first-child { border-top: 0; }
+.today-tick-x { width: var(--tap); }
+.today-ev-btn {
+  display: flex; align-items: center; gap: var(--s1); min-width: 0; width: 100%; min-height: var(--tap); padding: 0 2px 0 0; margin: 0;
+  border: 0; background: transparent; color: var(--ink); font: 700 .9375rem/1.3 var(--f-body); text-align: left; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.today-ev-btn:hover .today-ev-t, .today-ev-btn:hover .today-ev-chev { color: var(--accent); }
 .today-ev-ico { display: inline-grid; place-items: center; flex: none; width: 24px; height: 20px; color: var(--gold); }
-.today-ev-main { min-width: 0; overflow-wrap: anywhere; font-weight: 700; }
-.today-ev-who { font-weight: 400; color: var(--ink-2); }
+.today-ev-t { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.today-ev.is-info .today-ev-t { font-weight: 500; color: var(--ink-2); }
+/* "não confirmado", short: a small dashed "?" at the end of the line (title + screen-reader text say it in words) */
+.today-unsure {
+  display: inline-grid; place-items: center; flex: none; width: 1.125rem; height: 1.125rem; border: 1px dashed var(--ink-3); border-radius: 50%;
+  color: var(--ink-2); font: 800 .6875rem/1 var(--f-body); cursor: help;
+}
+.today-ev-chev { flex: none; width: 8px; height: 8px; margin: 0 6px 0 4px; border: solid var(--ink-3); border-width: 0 2px 2px 0; transform: translateY(-2px) rotate(45deg); transition: transform .15s; }
+.today-ev.is-open .today-ev-chev { transform: translateY(2px) rotate(-135deg); }
+@media (prefers-reduced-motion: reduce) { .today-ev-chev { transition: none; } }
+/* the opened row: the whole sentence, "Não confirmado" in words, with whom, detail, items, game text */
+.today-more { grid-column: 2; display: grid; gap: 4px; padding: 0 var(--s1) var(--s2) 28px; font-size: .875rem; line-height: 1.35; color: var(--ink-2); }
+.today-more[hidden] { display: none; }
+.today-more-text { color: var(--ink); font-weight: 700; font-size: .9375rem; overflow-wrap: anywhere; }
+.today-more-unsure { font-style: italic; }
+.days-quote.is-open { display: grid; gap: 2px; }
+.days-quote-l { font-weight: 700; color: var(--ink-2); }
 .today-none { margin: var(--s3); }
 .today-ctl { display: flex; flex-wrap: wrap; gap: var(--s2); padding: var(--s2) var(--s3) var(--s3); border-top: 1px solid var(--seam); }
 .today-ask .hint { margin-bottom: var(--s2); }
@@ -203,12 +226,30 @@ button.days-item:hover { border-color: var(--accent); }
 
 /* "Feito hoje": a 44 px tick (the .tick look of planner.css) on each of today's events; done = struck through */
 .today-tick { flex: none; }
-.today-ev.is-done .today-ev-main { text-decoration: line-through; text-decoration-thickness: 2px; color: var(--ink-3); font-weight: 500; }
+.today-ev.is-done .today-ev-t { text-decoration: line-through; text-decoration-thickness: 2px; color: var(--ink-3); font-weight: 500; }
 .today-ev.is-done .today-ev-ico { opacity: .5; }
 .today-all { margin: 0; padding: 6px var(--s3); border-top: 1px solid var(--seam); color: var(--moss); font-size: .9375rem; font-weight: 800; }
 
-/* "Bilhete do dia" (GK.ui.days.noteBox): under today's events and in the Dias day card */
+/* "Bilhete do dia" (GK.ui.days.noteBox): the ✎ button beside the open panel's count, the note's line (or its field)
+   under today's events, and the note row of the Dias day card */
+.today .fold-head .today-h { flex: 0 1 auto; }
+.today-h::after { display: none; }
+.today-rule { flex: 1; min-width: 0; height: 1px; background: linear-gradient(90deg, var(--gold), transparent); opacity: .7; }
+.today-note-btn {
+  display: inline-grid; place-items: center; flex: none; width: var(--tap); height: var(--tap); padding: 0; margin: 0 -6px;
+  border: 0; background: transparent; color: var(--ink-3); font: 400 1.125rem/1 var(--f-body); cursor: pointer;
+}
+.today-note-btn.has-note { color: var(--accent); }
+.today-note-btn:hover { color: var(--accent); }
 .today-note-box { padding: 2px var(--s3); border-top: 1px solid var(--seam); }
+.today-note-line {
+  display: flex; align-items: baseline; gap: var(--s2); width: 100%; min-height: var(--tap); margin: 0; padding: 10px var(--s3);
+  border: 0; border-top: 1px solid var(--seam); background: transparent; color: var(--ink); font: 400 .9375rem/1.35 var(--f-body);
+  text-align: left; cursor: pointer;
+}
+.today-note-ic { flex: none; color: var(--accent); }
+.today-note-txt { min-width: 0; overflow-wrap: anywhere; }
+.today-note-line:hover .today-note-txt { text-decoration: underline; text-decoration-color: var(--seam); text-underline-offset: 3px; }
 .days-note-box { padding: 2px var(--s4); border-bottom: 1px solid var(--seam); background: var(--panel-2); }
 .today-nw { white-space: nowrap; }
 /* folded row: the day on the first line, "2/3 feitas · dia 61" under it (it wrapped there anyway at phone widths) */
@@ -231,19 +272,3 @@ button.days-item:hover { border-color: var(--accent); }
   font: 400 1rem/1.4 var(--f-body);   /* 16 px or more: no zoom-in on iPhone */
 }
 .day-note-n { justify-self: end; font-size: .75rem; color: var(--ink-2); }
-
-/* "Amanhã": secondary (smaller, --ink-2), one button that opens the Dias screen on that day */
-.today-tmr {
-  display: grid; gap: 2px; width: 100%; min-height: var(--tap); margin: 0; padding: var(--s2) var(--s3);
-  border: 0; border-top: 1px solid var(--seam); background: transparent; color: var(--ink-2);
-  font: 400 .8125rem/1.3 var(--f-body); text-align: left; cursor: pointer;
-}
-.today-tmr:hover .today-tmr-t b, .today-tmr:hover .today-tmr-go { color: var(--accent); }
-.today-tmr-h { display: flex; align-items: center; gap: var(--s2); min-width: 0; }
-.today-tmr-t { flex: 1; min-width: 0; }
-.today-tmr-t b { font-weight: 800; color: var(--ink-2); }
-.today-tmr-go { flex: none; font-size: 1.125rem; line-height: 1; }
-.today .today-tmr-tile { width: 22px; height: 22px; }
-.today-tmr-ev { display: flex; align-items: center; gap: 6px; min-width: 0; padding-left: 30px; }
-.today-tmr-ico { display: inline-grid; place-items: center; flex: none; width: 14px; color: var(--ink-3); }
-.today-tmr-x { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

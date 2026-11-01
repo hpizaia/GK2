@@ -94,13 +94,15 @@ Special item kinds:
 ### facts.json
 
 `scripts/build_facts.py` reads `raw/api-items-all.json` (no download), `game-texts/gk2_textos.json` and
-`names.official.pt-BR.json`, and writes `facts.json`; `scripts/build.py` merges it into `gk2.json` and the page when
+`names.official.pt-BR.json` (plus `raw/days/probe-quests.json` for the quests that ask for an item), and writes `facts.json`; `scripts/build.py` merges it into `gk2.json` and the page when
 it exists (src mode or the default inputs). Re-run it after `fetch_dataset.py items` or a names update.
 
 ```jsonc
 {
   "meta": {"source": "...", "counts": {"items": 544, "where": 292, "buy": 176, "fish": 22, "energy": 59, "insanity": 17,
-           "buff": 14, "stack": 544, "names": 156, "names_unofficial": 27, "buffs": 15}},
+           "buff": 14, "stack": 544, "sell": 197, "sell_priced": 132, "sell_likes": 75, "price": 197, "study": 333,
+           "study_faith": 39, "asked_quest": 81, "asked_quest_lines": 93, "quests": 60, "asked_town": 29,
+           "asked_order": 22, "asked": 122, "names": 215, "names_unofficial": 34, "buffs": 15}},
   "names": {"vegetable-stand": {"en": "Vegetable Stand", "pt": "Banca de Vegetais", "key": "Vegetable_t1"},
             "tree": {"en": "Tree", "pt": "Árvore", "tr": "machine"}},          // tr: machine | missing = not official
   "buffs": {"building-spirit-ii": {"en": "Building spirit II", "pt": "Espírito da Engenharia II",
@@ -109,7 +111,11 @@ it exists (src mode or the default inputs). Re-run it after `fetch_dataset.py it
   "items": {
     "pumpkin":      {"where": [["buy", "vegetable-stand", 2]], "use": {"en": 6}, "stack": 50},
     "pumpkin-soup": {"use": {"en": 20, "enB": [22, "steamed-up"], "buff": ["building-spirit-ii", 450, 1]}, "stack": 30},
-    "bream":        {"where": [["fish", "village", "breadcrumb-bait", 50, 33.3]], "stack": 20}
+    "bream":        {"where": [["fish", "village", "breadcrumb-bait", 50, 33.3]], "stack": 20},
+    "polished-bronze": {"sell": [["furniture-maker", 54, 56, 20], ["jeweler", 55, 56, 40], ["smithy", 54, 55]],
+                        "price": 75, "study": [30, 0, 20, 3],
+                        "asked": {"q": [["the-nun-with-the-hairy-ass", 2, "nun"]], "t": [["jeweler-ii", 5], ["jeweler-iii", 10]]}},
+    "goldfish":     {"sell": [["fish-stand"]], "price": 72, "fix": 1, "study": [50, 50, 50, 3, 3]}
   }
 }
 ```
@@ -122,7 +128,25 @@ it exists (src mode or the default inputs). Re-run it after `fetch_dataset.py it
   recipe says it). Order: buy, fish, gather, then wiki order.
 - `use`: `en` energy, `ins` insanity, `enB` / `insB` = `[value under the buff, buff key]` (the stat chip "+22 with
   Steamed Up"), `buff` = `[buff key, seconds, 1 if using another restarts the timer]`.
-- In `gk2.json` the three fields land on `items[id]` and the tables in `meta.refs` (`{names, buffs}`, game keys
+- `sell` (item card "Quem compra", wiki `boughtBy`): one `[trader, lo, hi, likes, likesLevel, level]` per buyer, trailing
+  zeros trimmed. `lo`/`hi` = what it pays for one at its usual stock, lowest/highest over trader levels 1-3 (`hi` 0 =
+  same as `lo`; `lo` 0 or absent = the wiki gives no number); a price that only holds at an empty usual stock ("pays
+  only 1 bronze") counts only when it is the only one. `likes` = the most Likes a week from selling to it (-1 =
+  "earns Likes", no amount), `likesLevel` = first trader level that gives them, `level` = first trader level that
+  buys it (0 = level 1). Money is in bronze (1 silver = 100 bronze, 1 gold = 100 silver).
+- `price`: the base price (the ceiling, paid when the trader is short of stock), only for items someone buys (197 of
+  the 306 with a price). `fix: 1`: every buyer pays that fixed price (fish and the like; stock does not change it).
+- `study` (item card "Estudar", wiki `studyCards`): `[red, green, blue, science, faith]`, trailing zeros trimmed:
+  the Study Table points by colour, then the Science and the Faith the study costs.
+- `asked` (item card "Pedido em"): `{q: [[quest, qty, giver]], t: [[town building, qty]], o: [[trader, qty, level,
+  likes]]}`, each key only when non-empty. `q` from `raw/days/probe-quests.json` `needs` (items handed over or carried;
+  "given to you" skipped; no quantity = 1), in story order; `t` = town restorations and `o` = town orders (wiki
+  `usedIn` kinds Town / Order; the urgent and the normal order of one trader level merge into one with the most
+  Likes). Repairs, battles, bait, sermons, bags, combat and the game description are left out on purpose. Quest,
+  giver and town names are `names` keys. Quest givers with no entry in the game's name table but spelled out in
+  official dialogue (Davy the Dagger, Hans, Sven, Old God) keep that text (no `tr`, the dialogue line as `key`); the
+  other 7 (Captain, Village guards...) come from the script's glossary (`tr: "machine"`, shown "não oficial").
+- In `gk2.json` the fields land on `items[id]` and the tables in `meta.refs` (`{names, buffs}`, game keys
   dropped).
 
 ## Endpoints / URLs used

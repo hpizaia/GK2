@@ -1268,7 +1268,8 @@ def load_days(path):
 
 
 def apply_facts(ds, path):
-    """data/facts.json (scripts/build_facts.py, see data/README-data.md#facts): items[].where / .use / .stack and
+    """data/facts.json (scripts/build_facts.py, see data/README-data.md#facts): items[].where / .use / .stack (ficha do item:
+    also .sell / .price / .fix / .study / .asked, the item card's "Quem compra", "Estudar" and "Pedido em") and
     the name tables in meta.refs ({names, buffs}, game keys dropped). Unknown item ids are skipped. Returns the
     number of items that got facts; a missing or malformed file changes nothing."""
     try:
@@ -1279,7 +1280,8 @@ def apply_facts(ds, path):
     n = 0
     for iid, rec in facts.items():
         if iid in ds["items"] and isinstance(rec, dict):
-            ds["items"][iid].update({k: rec[k] for k in ("where", "use", "stack") if k in rec})
+            ds["items"][iid].update({k: rec[k] for k in ("where", "use", "stack", "sell", "price", "fix", "study", "asked")
+                                     if k in rec})
             n += 1
     strip = lambda t: {k: {f: v for f, v in e.items() if f != "key"} for k, e in t.items()}
     ds["meta"]["refs"] = {"names": strip(names), "buffs": strip(buffs)}

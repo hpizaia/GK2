@@ -1,7 +1,7 @@
 {
  "meta": {
   "schema": 1,
-  "built": "2026-10-31",
+  "built": "2026-11-01",
   "langs": [
    "pt",
    "en"
@@ -37,9 +37,21 @@
      "en": "Abandoned House",
      "pt": "Casa Abandonada"
     },
+    "albert": {
+     "en": "Albert",
+     "pt": "Alberto"
+    },
     "alchemist": {
      "en": "Alchemist",
      "pt": "Alquimista"
+    },
+    "alchemist-ii": {
+     "en": "Alchemist II",
+     "pt": "Alquimista II"
+    },
+    "alchemist-iii": {
+     "en": "Alchemist III",
+     "pt": "Alquimista III"
     },
     "alchemy-lab": {
      "en": "Alchemy Lab",
@@ -49,6 +61,14 @@
      "en": "Apothecary",
      "pt": "Boticário"
     },
+    "apothecary-ii": {
+     "en": "Apothecary II",
+     "pt": "Boticário II"
+    },
+    "apothecary-iii": {
+     "en": "Apothecary III",
+     "pt": "Boticário III"
+    },
     "apple-tree": {
      "en": "Apple tree",
      "pt": "Macieira"
@@ -56,6 +76,14 @@
     "baker": {
      "en": "Baker",
      "pt": "Padeiro"
+    },
+    "baker-ii": {
+     "en": "Baker II",
+     "pt": "Padeiro II"
+    },
+    "baker-iii": {
+     "en": "Baker III",
+     "pt": "Padeiro III"
     },
     "battle-at-the-lake": {
      "en": "Battle at the Lake",
@@ -106,6 +134,14 @@
      "en": "Brewery",
      "pt": "Cervejaria"
     },
+    "brewery-ii": {
+     "en": "Brewery II",
+     "pt": "Cervejaria II"
+    },
+    "brewery-iii": {
+     "en": "Brewery III",
+     "pt": "Cervejaria III"
+    },
     "broken-barrel": {
      "en": "Broken barrel",
      "pt": "Barril quebrado",
@@ -125,6 +161,14 @@
      "en": "Builder",
      "pt": "Construtor"
     },
+    "builder-ii": {
+     "en": "Builder II",
+     "pt": "Construtor II"
+    },
+    "builder-iii": {
+     "en": "Builder III",
+     "pt": "Construtor III"
+    },
     "burying-a-corpse": {
      "en": "Burying a corpse",
      "pt": "Enterrar um corpo",
@@ -143,6 +187,11 @@
      "en": "Can't See The Forest for the Iron",
      "pt": "Não Procure Ferro na Floresta"
     },
+    "captain": {
+     "en": "Captain",
+     "pt": "Capitão",
+     "tr": "machine"
+    },
     "central-districts-purge-part-i": {
      "en": "Central Districts Purge: Part I",
      "pt": "Distritos Centrais: Purificação — Parte I"
@@ -150,6 +199,10 @@
     "central-districts-purge-part-ii": {
      "en": "Central Districts Purge: Part II",
      "pt": "Distritos Centrais: Purificação — Parte II"
+    },
+    "certificate-please": {
+     "en": "Certificate, Please",
+     "pt": "Certidão, por favor"
     },
     "chasing-fairy-lights": {
      "en": "Chasing Fairy Lights",
@@ -180,6 +233,10 @@
      "en": "Concept for a Concert",
      "pt": "Conceito para um Concerto"
     },
+    "congregation-trouble": {
+     "en": "Congregation Trouble",
+     "pt": "Problemas na Congregação"
+    },
     "copper-vein": {
      "en": "Copper vein",
      "pt": "Veio de cobre",
@@ -190,9 +247,26 @@
      "pt": "Árvore sinistra",
      "tr": "machine"
     },
+    "crystal-clear": {
+     "en": "Crystal Clear",
+     "pt": "Cristalino"
+    },
+    "davy-the-dagger": {
+     "en": "Davy the Dagger",
+     "pt": "Orlando, Olha a Faca"
+    },
     "dead-tree": {
      "en": "Dead tree",
      "pt": "Árvore morta",
+     "tr": "machine"
+    },
+    "demolish-the-wall": {
+     "en": "Demolish the Wall",
+     "pt": "Demolir a parede"
+    },
+    "dig": {
+     "en": "Dig",
+     "pt": "Dig",
      "tr": "machine"
     },
     "driftwood": {
@@ -244,6 +318,18 @@
      "en": "Fish Stand",
      "pt": "Peixaria"
     },
+    "fish-stand-ii": {
+     "en": "Fish Stand II",
+     "pt": "Peixaria II"
+    },
+    "fish-stand-iii": {
+     "en": "Fish Stand III",
+     "pt": "Peixaria III"
+    },
+    "fisherman": {
+     "en": "Fisherman",
+     "pt": "Pescador"
+    },
     "fishing": {
      "en": "Fishing",
      "pt": "Pesca"
@@ -251,6 +337,10 @@
     "forest": {
      "en": "Forest",
      "pt": "Floresta"
+    },
+    "forest-pass": {
+     "en": "Forest Pass",
+     "pt": "Passe da Floresta"
     },
     "friend-or-foe": {
      "en": "Friend or Foe",
@@ -264,6 +354,14 @@
      "en": "Furniture Maker",
      "pt": "Marceneiro"
     },
+    "furniture-maker-ii": {
+     "en": "Furniture Maker II",
+     "pt": "Marceneiro II"
+    },
+    "furniture-maker-iii": {
+     "en": "Furniture Maker III",
+     "pt": "Marceneiro III"
+    },
     "garden-well-ii": {
      "en": "Garden Well II",
      "pt": "Poço do Jardim II"
@@ -272,9 +370,17 @@
      "en": "Give materials",
      "pt": "Entregar materiais"
     },
+    "gluttony-and-pride": {
+     "en": "Gluttony and Pride",
+     "pt": "Gula e Orgulho"
+    },
     "go-wild-in-the-wild-lands": {
      "en": "Go Wild in the Wild Lands",
      "pt": "Vá com tudo nas Terras Selvagens"
+    },
+    "goddess-in-the-swamp": {
+     "en": "Goddess in the Swamp",
+     "pt": "A Deusa no Pântano"
     },
     "goddess-of-nature-statue": {
      "en": "Goddess of Nature statue",
@@ -301,9 +407,17 @@
      "en": "Gunter",
      "pt": "Gunter"
     },
+    "hans": {
+     "en": "Hans",
+     "pt": "Anselmo"
+    },
     "harold": {
      "en": "Harold",
      "pt": "Uriel"
+    },
+    "herbert": {
+     "en": "Herbert",
+     "pt": "Norberto"
     },
     "herbert-and": {
      "en": "Herbert and?",
@@ -325,13 +439,25 @@
      "en": "Home",
      "pt": "Casa"
     },
+    "homobonus": {
+     "en": "Homobonus",
+     "pt": "Homobonus"
+    },
     "homobonus-i": {
      "en": "Homobonus I",
      "pt": "Homobonus I"
     },
+    "hot-potato-delivery": {
+     "en": "Hot Potato Delivery",
+     "pt": "Passando a Batata Quente"
+    },
     "i-love-you-man": {
      "en": "I Love You, Man",
      "pt": "Eu Te Amo, Cara"
+    },
+    "inflation": {
+     "en": "Inflation",
+     "pt": "Inflação"
     },
     "inquisition-base": {
      "en": "Inquisition Base",
@@ -350,6 +476,10 @@
      "pt": "Jazida de minério de ferro",
      "tr": "machine"
     },
+    "jack": {
+     "en": "Jack",
+     "pt": "Jailson"
+    },
     "jack-in-a-boat": {
      "en": "Jack in a Boat",
      "pt": "O Barco de Jailson"
@@ -362,14 +492,38 @@
      "en": "Januarius",
      "pt": "Januário"
     },
+    "jeffry": {
+     "en": "Jeffry",
+     "pt": "Bruno"
+    },
     "jeweler": {
      "en": "Jeweler",
      "pt": "Joalheiro"
+    },
+    "jeweler-ii": {
+     "en": "Jeweler II",
+     "pt": "Joalheiro II"
+    },
+    "jeweler-iii": {
+     "en": "Jeweler III",
+     "pt": "Joalheiro III"
+    },
+    "jully": {
+     "en": "Jully",
+     "pt": "Júlio"
     },
     "junk-pile": {
      "en": "Junk pile",
      "pt": "Pilha de sucata",
      "tr": "machine"
+    },
+    "larry": {
+     "en": "Larry",
+     "pt": "Lauro"
+    },
+    "linda": {
+     "en": "Linda",
+     "pt": "Linda"
     },
     "love-story": {
      "en": "Love Story",
@@ -396,6 +550,16 @@
      "en": "Market Square Purge",
      "pt": "Praça do Mercado: Purificação"
     },
+    "merc-leader": {
+     "en": "Merc Leader",
+     "pt": "Líder dos mercenários",
+     "tr": "machine"
+    },
+    "monk": {
+     "en": "Monk",
+     "pt": "Monge",
+     "tr": "machine"
+    },
     "more-portal-parts": {
      "en": "More Portal Parts",
      "pt": "Mais Partes do Portal"
@@ -407,6 +571,18 @@
     "not-in-shining-armor-yet": {
      "en": "Not in Shining Armor Yet",
      "pt": "Uma Armadura Brilhante"
+    },
+    "nun": {
+     "en": "Nun",
+     "pt": "Freira"
+    },
+    "nun-of-your-business": {
+     "en": "Nun of Your Business",
+     "pt": "Não é Dia de Freira"
+    },
+    "old-god": {
+     "en": "Old God",
+     "pt": "Deus Antigo"
     },
     "old-mine": {
      "en": "Old Mine",
@@ -461,6 +637,11 @@
     "red-techbooks": {
      "en": "Red Techbooks",
      "pt": "Livros Vermelhos de Tecnologia"
+    },
+    "refugees": {
+     "en": "Refugees",
+     "pt": "Refugiados",
+     "tr": "machine"
     },
     "repair-block": {
      "en": "Repair Block",
@@ -532,6 +713,19 @@
      "en": "Smithy",
      "pt": "Forja"
     },
+    "smithy-ii": {
+     "en": "Smithy II",
+     "pt": "Forja II"
+    },
+    "smithy-iii": {
+     "en": "Smithy III",
+     "pt": "Forja III"
+    },
+    "soul": {
+     "en": "Soul",
+     "pt": "Alma",
+     "tr": "machine"
+    },
     "stars-lies-contracts": {
      "en": "Stars, Lies, & Contracts",
      "pt": "Estrelas, Mentiras e Contratos"
@@ -541,9 +735,17 @@
      "pt": "Jazida de pedra",
      "tr": "machine"
     },
+    "strings-and-sinners": {
+     "en": "Strings and Sinners",
+     "pt": "Cordas e Pecadores"
+    },
     "suit-up": {
      "en": "Suit Up!",
      "pt": "Vista-se bem!"
+    },
+    "sven": {
+     "en": "Sven",
+     "pt": "Arnaldo"
     },
     "swamp": {
      "en": "Swamp",
@@ -566,6 +768,14 @@
      "en": "Tailor",
      "pt": "Alfaiate"
     },
+    "tailor-ii": {
+     "en": "Tailor II",
+     "pt": "Alfaiate II"
+    },
+    "tailor-iii": {
+     "en": "Tailor III",
+     "pt": "Alfaiate III"
+    },
     "tales-for-ales": {
      "en": "Tales for Ales",
      "pt": "Contos e Cervejas"
@@ -573,6 +783,22 @@
     "tavern": {
      "en": "Tavern",
      "pt": "Taberna"
+    },
+    "tavern-ii": {
+     "en": "Tavern II",
+     "pt": "Taberna II"
+    },
+    "tavern-iii": {
+     "en": "Tavern III",
+     "pt": "Taberna III"
+    },
+    "the-frill-of-the-chase": {
+     "en": "The Frill of the Chase",
+     "pt": "O Frisson da Caçada"
+    },
+    "the-house-at-the-crossroads": {
+     "en": "The House at the Crossroads",
+     "pt": "A Casa na Encruzilhada"
     },
     "the-hungry-cosmos": {
      "en": "The Hungry Cosmos",
@@ -647,9 +873,22 @@
      "en": "Vegetable Stand",
      "pt": "Banca de Vegetais"
     },
+    "vegetable-stand-ii": {
+     "en": "Vegetable Stand II",
+     "pt": "Banca de Vegetais II"
+    },
+    "vegetable-stand-iii": {
+     "en": "Vegetable Stand III",
+     "pt": "Banca de Vegetais III"
+    },
     "village": {
      "en": "Village",
      "pt": "Aldeia"
+    },
+    "village-guards": {
+     "en": "Village guards",
+     "pt": "Guardas da vila",
+     "tr": "machine"
     },
     "water-well": {
      "en": "Water well",
@@ -675,6 +914,10 @@
     "workshop-hours": {
      "en": "Workshop Hours",
      "pt": "Horário da Oficina"
+    },
+    "wrath-and-sloth": {
+     "en": "Wrath and Sloth",
+     "pt": "Fúria e Preguiça"
     },
     "yard": {
      "en": "Yard",
@@ -964,7 +1207,32 @@
      2
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "smithy",
+     18,
+     0,
+     20,
+     0,
+     2
+    ]
+   ],
+   "price": 25,
+   "study": [
+    50,
+    0,
+    20,
+    5
+   ],
+   "asked": {
+    "t": [
+     [
+      "smithy-ii",
+      6
+     ]
+    ]
+   }
   },
   "advanced-rod": {
    "id": "advanced-rod",
@@ -996,7 +1264,21 @@
      2
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    30,
+    0,
+    3
+   ],
+   "asked": {
+    "t": [
+     [
+      "fish-stand-ii",
+      1
+     ]
+    ]
+   }
   },
   "albedo-tear": {
    "id": "albedo-tear",
@@ -1048,7 +1330,13 @@
      "apothecary"
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "sell": [
+    [
+     "apothecary"
+    ]
+   ],
+   "price": 5
   },
   "alchemist-s-bag": {
    "id": "alchemist-s-bag",
@@ -1131,7 +1419,13 @@
    ],
    "defaultRecipe": "alchemist-s-kit",
    "key": "alchemy_kit_2",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    0,
+    40,
+    5
+   ]
   },
   "alchemist-s-note": {
    "id": "alchemist-s-note",
@@ -1221,7 +1515,16 @@
      "alchemy-lab"
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "sell": [
+    [
+     "apothecary",
+     15,
+     0,
+     5
+    ]
+   ],
+   "price": 20
   },
   "alchemy-flasks-ii": {
    "id": "alchemy-flasks-ii",
@@ -1253,7 +1556,27 @@
      3
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "sell": [
+    [
+     "apothecary",
+     59,
+     0,
+     10,
+     0,
+     3
+    ]
+   ],
+   "price": 80,
+   "asked": {
+    "q": [
+     [
+      "love-story",
+      10,
+      "linda"
+     ]
+    ]
+   }
   },
   "alchemy-tools-i": {
    "id": "alchemy-tools-i",
@@ -1365,7 +1688,25 @@
      2
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "sell": [
+    [
+     "apothecary",
+     37,
+     0,
+     10,
+     0,
+     2
+    ]
+   ],
+   "price": 50,
+   "study": [
+    0,
+    15,
+    10,
+    2,
+    2
+   ]
   },
   "alkali": {
    "id": "alkali",
@@ -1397,7 +1738,24 @@
      3
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     1430,
+     0,
+     20,
+     0,
+     3
+    ]
+   ],
+   "price": 2000,
+   "study": [
+    0,
+    50,
+    10,
+    15
+   ]
   },
   "alum": {
    "id": "alum",
@@ -1483,7 +1841,20 @@
      33.3
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand"
+    ]
+   ],
+   "price": 48,
+   "fix": 1,
+   "study": [
+    0,
+    40,
+    0,
+    3
+   ]
   },
   "anchovy-or-mackerel": {
    "id": "anchovy-or-mackerel",
@@ -1621,7 +1992,20 @@
    "use": {
     "en": 3
    },
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "vegetable-stand",
+     1
+    ]
+   ],
+   "price": 2,
+   "study": [
+    0,
+    10,
+    10,
+    3
+   ]
   },
   "apple-cider": {
    "id": "apple-cider",
@@ -1659,7 +2043,34 @@
    "use": {
     "ins": -7
    },
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "tavern",
+     15,
+     16,
+     25
+    ],
+    [
+     "brewery",
+     15
+    ]
+   ],
+   "price": 21,
+   "study": [
+    0,
+    40,
+    10,
+    10
+   ],
+   "asked": {
+    "t": [
+     [
+      "tavern-ii",
+      20
+     ]
+    ]
+   }
   },
   "apple-juice": {
    "id": "apple-juice",
@@ -1687,7 +2098,22 @@
    "use": {
     "en": 25
    },
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "brewery",
+     9,
+     10,
+     20
+    ]
+   ],
+   "price": 13,
+   "study": [
+    0,
+    30,
+    0,
+    3
+   ]
   },
   "apple-tree": {
    "id": "apple-tree",
@@ -1745,7 +2171,29 @@
      "vegetable-stand"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "herm",
+     100,
+     0,
+     0,
+     0,
+     3
+    ],
+    [
+     "vegetable-stand",
+     61,
+     71
+    ]
+   ],
+   "price": 100,
+   "study": [
+    10,
+    50,
+    0,
+    10
+   ]
   },
   "aqua-vitae": {
    "id": "aqua-vitae",
@@ -1879,7 +2327,21 @@
      "apothecary"
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "sell": [
+    [
+     "apothecary",
+     7
+    ]
+   ],
+   "price": 10,
+   "study": [
+    0,
+    0,
+    10,
+    3,
+    2
+   ]
   },
   "assembly-bench": {
    "id": "assembly-bench",
@@ -2221,7 +2683,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    30,
+    0,
+    3
+   ]
   },
   "baked-fish": {
    "id": "baked-fish",
@@ -2253,7 +2721,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    30,
+    0,
+    3
+   ]
   },
   "baked-meat": {
    "id": "baked-meat",
@@ -2286,7 +2760,13 @@
     ],
     "ins": 10
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    0,
+    20,
+    3
+   ]
   },
   "baked-mushrooms": {
    "id": "baked-mushrooms",
@@ -2318,7 +2798,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    20,
+    0,
+    3
+   ]
   },
   "baked-pumpkin": {
    "id": "baked-pumpkin",
@@ -2352,7 +2838,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    20,
+    0,
+    3
+   ]
   },
   "baked-salmon": {
    "id": "baked-salmon",
@@ -2384,7 +2876,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    30,
+    0,
+    3
+   ]
   },
   "barricade-i": {
    "id": "barricade-i",
@@ -2511,7 +3009,13 @@
      "two-peas-in-a-pod"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    10,
+    0,
+    2
+   ]
   },
   "battle-bow": {
    "id": "battle-bow",
@@ -2536,7 +3040,13 @@
    ],
    "defaultRecipe": "battle-bow",
    "key": "bow_2",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    50,
+    10,
+    5
+   ]
   },
   "battle-loot": {
    "id": "battle-loot",
@@ -2591,7 +3101,25 @@
      2
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 1000,
+   "fix": 1,
+   "study": [
+    0,
+    50,
+    10,
+    5
+   ]
   },
   "beehive": {
    "id": "beehive",
@@ -2665,7 +3193,52 @@
      "beer-thirst"
     ]
    },
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "januarius",
+     26,
+     27,
+     20,
+     2
+    ],
+    [
+     "tavern",
+     26,
+     27,
+     25
+    ],
+    [
+     "brewery",
+     26
+    ]
+   ],
+   "price": 36,
+   "study": [
+    0,
+    30,
+    10,
+    10
+   ],
+   "asked": {
+    "q": [
+     [
+      "yummies",
+      2,
+      "village-guards"
+     ],
+     [
+      "comrade-donkey",
+      2,
+      "larry"
+     ],
+     [
+      "tales-for-ales",
+      2,
+      "captain"
+     ]
+    ]
+   }
   },
   "beeswax": {
    "id": "beeswax",
@@ -2702,7 +3275,14 @@
      "wild-beehive"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "study": [
+    30,
+    40,
+    10,
+    3,
+    5
+   ]
   },
   "beet": {
    "id": "beet",
@@ -2741,7 +3321,30 @@
    "use": {
     "en": 3
    },
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     4,
+     0,
+     5,
+     0,
+     2
+    ],
+    [
+     "vegetable-stand",
+     4,
+     0,
+     10
+    ]
+   ],
+   "price": 5,
+   "study": [
+    0,
+    40,
+    0,
+    2
+   ]
   },
   "beet-bed": {
    "id": "beet-bed",
@@ -2799,7 +3402,28 @@
      "vegetable-stand"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     2,
+     0,
+     0,
+     0,
+     2
+    ],
+    [
+     "vegetable-stand",
+     2
+    ]
+   ],
+   "price": 3,
+   "study": [
+    0,
+    20,
+    0,
+    2
+   ]
   },
   "beet-slices": {
    "id": "beet-slices",
@@ -2831,7 +3455,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    20,
+    0,
+    3
+   ]
   },
   "bellows": {
    "id": "bellows",
@@ -2894,7 +3524,14 @@
    "use": {
     "en": 3
    },
-   "stack": 50
+   "stack": 50,
+   "study": [
+    0,
+    20,
+    0,
+    1,
+    1
+   ]
   },
   "berry-bush": {
    "id": "berry-bush",
@@ -2956,7 +3593,26 @@
    "use": {
     "ins": -7
    },
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "tavern",
+     15,
+     16,
+     25
+    ],
+    [
+     "brewery",
+     15
+    ]
+   ],
+   "price": 21,
+   "study": [
+    0,
+    40,
+    10,
+    10
+   ]
   },
   "berry-juice": {
    "id": "berry-juice",
@@ -2984,7 +3640,22 @@
    "use": {
     "en": 25
    },
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "brewery",
+     9,
+     10,
+     20
+    ]
+   ],
+   "price": 13,
+   "study": [
+    0,
+    30,
+    0,
+    3
+   ]
   },
   "berry-pie": {
    "id": "berry-pie",
@@ -3027,7 +3698,30 @@
     ],
     "ins": -3
    },
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "januarius",
+     23,
+     24
+    ]
+   ],
+   "price": 33,
+   "study": [
+    0,
+    25,
+    0,
+    2
+   ],
+   "asked": {
+    "q": [
+     [
+      "yummies",
+      1,
+      "village-guards"
+     ]
+    ]
+   }
   },
   "berry-smoothie": {
    "id": "berry-smoothie",
@@ -3059,7 +3753,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    10,
+    0,
+    2
+   ]
   },
   "berserker-potion": {
    "id": "berserker-potion",
@@ -3097,7 +3797,21 @@
      1
     ]
    },
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     137,
+     143
+    ]
+   ],
+   "price": 200,
+   "study": [
+    20,
+    0,
+    20,
+    5
+   ]
   },
   "berserker-potion-ii": {
    "id": "berserker-potion-ii",
@@ -3136,7 +3850,24 @@
      1
     ]
    },
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     715,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 1000,
+   "study": [
+    40,
+    0,
+    35,
+    10
+   ]
   },
   "berserker-potion-iii": {
    "id": "berserker-potion-iii",
@@ -3168,7 +3899,24 @@
      1
     ]
    },
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     1,
+     0,
+     0,
+     0,
+     3
+    ]
+   ],
+   "price": 3000,
+   "study": [
+    80,
+    0,
+    50,
+    15
+   ]
   },
   "big-universal-bag": {
    "id": "big-universal-bag",
@@ -3306,7 +4054,32 @@
      3
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "alchemist",
+     110,
+     0,
+     20,
+     0,
+     3
+    ]
+   ],
+   "price": 150,
+   "study": [
+    0,
+    0,
+    30,
+    20
+   ],
+   "asked": {
+    "t": [
+     [
+      "alchemist-iii",
+      4
+     ]
+    ]
+   }
   },
   "blank-softcover-notebook": {
    "id": "blank-softcover-notebook",
@@ -3338,7 +4111,39 @@
      2
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "alchemist",
+     59,
+     0,
+     10,
+     2,
+     2
+    ]
+   ],
+   "price": 80,
+   "study": [
+    0,
+    0,
+    20,
+    10
+   ],
+   "asked": {
+    "q": [
+     [
+      "book-broker",
+      1,
+      "linda"
+     ]
+    ],
+    "t": [
+     [
+      "alchemist-ii",
+      4
+     ]
+    ]
+   }
   },
   "blood": {
    "id": "blood",
@@ -3374,7 +4179,13 @@
      "bodies"
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "study": [
+    5,
+    0,
+    10,
+    1
+   ]
   },
   "blue-crystal": {
    "id": "blue-crystal",
@@ -3412,7 +4223,20 @@
      "goddess-of-nature-statue"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "gunter",
+     54
+    ]
+   ],
+   "price": 75,
+   "study": [
+    0,
+    10,
+    20,
+    15
+   ]
   },
   "blue-techbook": {
    "id": "blue-techbook",
@@ -3517,7 +4341,14 @@
    "use": {
     "en": 4
    },
-   "stack": 50
+   "stack": 50,
+   "study": [
+    0,
+    0,
+    20,
+    1,
+    1
+   ]
   },
   "blueberry-bush": {
    "id": "blueberry-bush",
@@ -3575,7 +4406,30 @@
    "use": {
     "ins": -10
    },
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "tavern",
+     22,
+     0,
+     25
+    ]
+   ],
+   "price": 30,
+   "study": [
+    0,
+    30,
+    0,
+    10
+   ],
+   "asked": {
+    "t": [
+     [
+      "tavern-iii",
+      20
+     ]
+    ]
+   }
   },
   "blueberry-juice": {
    "id": "blueberry-juice",
@@ -3603,7 +4457,13 @@
    "use": {
     "en": 35
    },
-   "stack": 50
+   "stack": 50,
+   "study": [
+    0,
+    30,
+    0,
+    5
+   ]
   },
   "blueberry-seedling": {
    "id": "blueberry-seedling",
@@ -3638,7 +4498,32 @@
      2
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "herm",
+     250,
+     0,
+     0,
+     0,
+     3
+    ],
+    [
+     "vegetable-stand",
+     153,
+     171,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 250,
+   "study": [
+    0,
+    50,
+    10,
+    10
+   ]
   },
   "board": {
    "id": "board",
@@ -3686,7 +4571,24 @@
      "yard"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     4
+    ],
+    [
+     "builder",
+     4
+    ]
+   ],
+   "price": 6,
+   "study": [
+    10,
+    0,
+    0,
+    1
+   ]
   },
   "boiled-egg": {
    "id": "boiled-egg",
@@ -3744,7 +4646,13 @@
      "@autopsy-table-i"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "study": [
+    10,
+    0,
+    10,
+    5
+   ]
   },
   "bookshelf": {
    "id": "bookshelf",
@@ -3888,7 +4796,14 @@
      "@autopsy-table-i"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "study": [
+    0,
+    0,
+    30,
+    3,
+    3
+   ]
   },
   "bread": {
    "id": "bread",
@@ -3930,7 +4845,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    25,
+    0,
+    2
+   ]
   },
   "breadcrumb-bait": {
    "id": "breadcrumb-bait",
@@ -3955,7 +4876,22 @@
    ],
    "defaultRecipe": "breadcrumb-bait",
    "key": "breadcrumb_bite",
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand",
+     2,
+     0,
+     15
+    ]
+   ],
+   "price": 3,
+   "study": [
+    0,
+    20,
+    0,
+    2
+   ]
   },
   "bream": {
    "id": "bream",
@@ -3987,7 +4923,20 @@
      33.3
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand"
+    ]
+   ],
+   "price": 60,
+   "fix": 1,
+   "study": [
+    10,
+    30,
+    0,
+    3
+   ]
   },
   "bream-or-carp": {
    "id": "bream-or-carp",
@@ -4068,7 +5017,28 @@
      "builder"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     7,
+     0,
+     0,
+     0,
+     2
+    ],
+    [
+     "builder",
+     7
+    ]
+   ],
+   "price": 10,
+   "study": [
+    10,
+    0,
+    0,
+    5
+   ]
   },
   "brimstone": {
    "id": "brimstone",
@@ -4114,7 +5084,13 @@
    "recipes": [],
    "defaultRecipe": null,
    "key": "ceramic_broken",
-   "stack": 50
+   "stack": 50,
+   "study": [
+    5,
+    0,
+    0,
+    2
+   ]
   },
   "bronze-armor": {
    "id": "bronze-armor",
@@ -4145,7 +5121,20 @@
      "smithy"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy"
+    ]
+   ],
+   "price": 150,
+   "fix": 1,
+   "study": [
+    30,
+    0,
+    5,
+    3
+   ]
   },
   "bronze-axe": {
    "id": "bronze-axe",
@@ -4170,7 +5159,29 @@
    ],
    "defaultRecipe": "bronze-axe",
    "key": "axe_1",
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy"
+    ]
+   ],
+   "price": 150,
+   "fix": 1,
+   "study": [
+    30,
+    0,
+    5,
+    3
+   ],
+   "asked": {
+    "q": [
+     [
+      "jack-in-a-boat",
+      1,
+      "jack"
+     ]
+    ]
+   }
   },
   "bronze-chisel": {
    "id": "bronze-chisel",
@@ -4195,7 +5206,13 @@
    ],
    "defaultRecipe": "bronze-chisel",
    "key": "chisel_basic",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    15,
+    0,
+    0,
+    5
+   ]
   },
   "bronze-detail": {
    "id": "bronze-detail",
@@ -4230,7 +5247,40 @@
      "smithy"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "furniture-maker",
+     1,
+     0,
+     15
+    ],
+    [
+     "smithy",
+     1
+    ]
+   ],
+   "price": 2,
+   "study": [
+    20,
+    0,
+    15,
+    3
+   ],
+   "asked": {
+    "q": [
+     [
+      "dungeons-and-that-s-it-probably",
+      3,
+      "albert"
+     ],
+     [
+      "the-nun-also-reads",
+      2,
+      "nun"
+     ]
+    ]
+   }
   },
   "bronze-gear": {
    "id": "bronze-gear",
@@ -4267,7 +5317,32 @@
      2
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "jeweler",
+     86,
+     88,
+     0,
+     0,
+     2
+    ],
+    [
+     "smithy",
+     86,
+     88,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 120,
+   "study": [
+    50,
+    0,
+    0,
+    3
+   ]
   },
   "bronze-hammer": {
    "id": "bronze-hammer",
@@ -4298,7 +5373,34 @@
      "smithy"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 175,
+   "fix": 1,
+   "study": [
+    30,
+    0,
+    5,
+    3
+   ],
+   "asked": {
+    "q": [
+     [
+      "jack-in-a-boat",
+      1,
+      "jack"
+     ]
+    ]
+   }
   },
   "bronze-ingot": {
    "id": "bronze-ingot",
@@ -4330,7 +5432,23 @@
      "smithy"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "smithy",
+     7,
+     0,
+     8
+    ]
+   ],
+   "price": 10,
+   "study": [
+    10,
+    0,
+    15,
+    2,
+    1
+   ]
   },
   "bronze-nails": {
    "id": "bronze-nails",
@@ -4386,7 +5504,30 @@
      "junk-pile"
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "sell": [
+    [
+     "furniture-maker",
+     1,
+     0,
+     10
+    ],
+    [
+     "builder",
+     1
+    ],
+    [
+     "smithy",
+     1
+    ]
+   ],
+   "price": 1,
+   "study": [
+    20,
+    0,
+    15,
+    3
+   ]
   },
   "bronze-pickaxe": {
    "id": "bronze-pickaxe",
@@ -4411,7 +5552,20 @@
    ],
    "defaultRecipe": "bronze-pickaxe",
    "key": "pickaxe_1",
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy"
+    ]
+   ],
+   "price": 150,
+   "fix": 1,
+   "study": [
+    30,
+    0,
+    5,
+    3
+   ]
   },
   "bronze-scrap": {
    "id": "bronze-scrap",
@@ -4468,7 +5622,36 @@
      "junk-pile"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     4
+    ],
+    [
+     "trademaster",
+     4
+    ],
+    [
+     "jeweler",
+     4,
+     0,
+     20
+    ],
+    [
+     "smithy",
+     4,
+     0,
+     8
+    ]
+   ],
+   "price": 6,
+   "study": [
+    10,
+    0,
+    0,
+    2
+   ]
   },
   "bronze-shovel": {
    "id": "bronze-shovel",
@@ -4499,7 +5682,28 @@
      "vegetable-stand"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "vegetable-stand",
+     0,
+     0,
+     0,
+     0,
+     2
+    ],
+    [
+     "smithy"
+    ]
+   ],
+   "price": 160,
+   "fix": 1,
+   "study": [
+    30,
+    0,
+    5,
+    3
+   ]
   },
   "bronze-sword": {
    "id": "bronze-sword",
@@ -4530,7 +5734,20 @@
      "smithy"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy"
+    ]
+   ],
+   "price": 300,
+   "fix": 1,
+   "study": [
+    30,
+    0,
+    5,
+    3
+   ]
   },
   "bronze-talisman": {
    "id": "bronze-talisman",
@@ -4561,7 +5778,25 @@
      "jeweler"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "jeweler",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 200,
+   "fix": 1,
+   "study": [
+    0,
+    0,
+    20,
+    10
+   ]
   },
   "bronze-tools": {
    "id": "bronze-tools",
@@ -4592,7 +5827,25 @@
      "jeweler"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "jeweler",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 150,
+   "fix": 1,
+   "study": [
+    0,
+    10,
+    5,
+    2
+   ]
   },
   "bronze-zombie-collar": {
    "id": "bronze-zombie-collar",
@@ -4627,7 +5880,20 @@
      "resurrection-lab"
     ]
    ],
-   "stack": 10
+   "stack": 10,
+   "sell": [
+    [
+     "jeweler"
+    ]
+   ],
+   "price": 100,
+   "fix": 1,
+   "study": [
+    0,
+    10,
+    20,
+    5
+   ]
   },
   "brown-mushroom": {
    "id": "brown-mushroom",
@@ -4659,7 +5925,13 @@
    "use": {
     "en": 4
    },
-   "stack": 20
+   "stack": 20,
+   "study": [
+    0,
+    30,
+    0,
+    3
+   ]
   },
   "builder-s-bag": {
    "id": "builder-s-bag",
@@ -4724,7 +5996,102 @@
      "builder"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "builder",
+     110,
+     111
+    ]
+   ],
+   "price": 150,
+   "study": [
+    40,
+    0,
+    10,
+    10
+   ],
+   "asked": {
+    "q": [
+     [
+      "give-materials",
+      5,
+      "jack"
+     ],
+     [
+      "brawns-and-brains",
+      2,
+      "nun"
+     ],
+     [
+      "organic-music",
+      2,
+      "harold"
+     ]
+    ],
+    "t": [
+     [
+      "apothecary",
+      4
+     ],
+     [
+      "vegetable-stand",
+      4
+     ],
+     [
+      "tailor",
+      4
+     ],
+     [
+      "furniture-maker",
+      6
+     ],
+     [
+      "baker",
+      6
+     ],
+     [
+      "fish-stand",
+      6
+     ],
+     [
+      "alchemist",
+      8
+     ],
+     [
+      "jeweler",
+      8
+     ],
+     [
+      "builder",
+      4
+     ],
+     [
+      "smithy",
+      4
+     ],
+     [
+      "tavern",
+      6
+     ],
+     [
+      "brewery",
+      6
+     ],
+     [
+      "repair-large-house",
+      16
+     ],
+     [
+      "repair-house",
+      6
+     ],
+     [
+      "repair-small-house",
+      4
+     ]
+    ]
+   }
   },
   "building-kit-ii": {
    "id": "building-kit-ii",
@@ -4756,7 +6123,80 @@
      2
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "builder",
+     127,
+     129,
+     30,
+     3,
+     2
+    ]
+   ],
+   "price": 175,
+   "study": [
+    50,
+    0,
+    10,
+    10
+   ],
+   "asked": {
+    "t": [
+     [
+      "apothecary-iii",
+      1
+     ],
+     [
+      "vegetable-stand-iii",
+      1
+     ],
+     [
+      "tailor-iii",
+      1
+     ],
+     [
+      "furniture-maker-iii",
+      2
+     ],
+     [
+      "baker-iii",
+      2
+     ],
+     [
+      "fish-stand-iii",
+      2
+     ],
+     [
+      "alchemist-iii",
+      3
+     ],
+     [
+      "jeweler-iii",
+      3
+     ],
+     [
+      "builder-iii",
+      2
+     ],
+     [
+      "smithy-iii",
+      2
+     ],
+     [
+      "tavern-iii",
+      3
+     ],
+     [
+      "brewery-iii",
+      3
+     ],
+     [
+      "repair-block",
+      16
+     ]
+    ]
+   }
   },
   "burger": {
    "id": "burger",
@@ -4789,7 +6229,13 @@
     ],
     "ins": 5
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    0,
+    30,
+    10
+   ]
   },
   "burial-certificate-i": {
    "id": "burial-certificate-i",
@@ -4818,7 +6264,26 @@
      "burying-a-corpse"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "januarius",
+     0,
+     0,
+     20
+    ]
+   ],
+   "price": 100,
+   "fix": 1,
+   "asked": {
+    "q": [
+     [
+      "certificate-please",
+      1,
+      "herbert"
+     ]
+    ]
+   }
   },
   "burial-certificate-ii": {
    "id": "burial-certificate-ii",
@@ -4847,7 +6312,17 @@
      "burying-a-corpse"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "januarius",
+     0,
+     0,
+     20
+    ]
+   ],
+   "price": 250,
+   "fix": 1
   },
   "burial-certificate-iii": {
    "id": "burial-certificate-iii",
@@ -4876,7 +6351,17 @@
      "burying-a-corpse"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "januarius",
+     0,
+     0,
+     20
+    ]
+   ],
+   "price": 500,
+   "fix": 1
   },
   "bush-seedling": {
    "id": "bush-seedling",
@@ -4910,7 +6395,29 @@
      "vegetable-stand"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "herm",
+     100,
+     0,
+     0,
+     0,
+     3
+    ],
+    [
+     "vegetable-stand",
+     61,
+     71
+    ]
+   ],
+   "price": 100,
+   "study": [
+    10,
+    50,
+    0,
+    10
+   ]
   },
   "butcher-s-kit": {
    "id": "butcher-s-kit",
@@ -4935,7 +6442,13 @@
    ],
    "defaultRecipe": "butcher-s-kit",
    "key": "surgical_kit_1",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    0,
+    20,
+    5
+   ]
   },
   "cabbage": {
    "id": "cabbage",
@@ -4976,7 +6489,38 @@
    "use": {
     "en": 4
    },
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     0,
+     0,
+     -1,
+     0,
+     2
+    ],
+    [
+     "vegetable-stand",
+     0,
+     0,
+     -1
+    ]
+   ],
+   "price": 7,
+   "study": [
+    0,
+    40,
+    0,
+    2
+   ],
+   "asked": {
+    "t": [
+     [
+      "vegetable-stand-ii",
+      40
+     ]
+    ]
+   }
   },
   "cabbage-bed": {
    "id": "cabbage-bed",
@@ -5044,7 +6588,30 @@
      "seeds"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     0,
+     0,
+     0,
+     0,
+     2
+    ],
+    [
+     "vegetable-stand"
+    ],
+    [
+     "trademaster"
+    ]
+   ],
+   "price": 4,
+   "study": [
+    0,
+    20,
+    0,
+    2
+   ]
   },
   "cabbage-soup": {
    "id": "cabbage-soup",
@@ -5084,7 +6651,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    30,
+    0,
+    3
+   ]
   },
   "cacao": {
    "id": "cacao",
@@ -5117,7 +6690,14 @@
      "trademaster"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "trademaster",
+     220
+    ]
+   ],
+   "price": 300
   },
   "cake": {
    "id": "cake",
@@ -5267,7 +6847,20 @@
      66.7
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand"
+    ]
+   ],
+   "price": 72,
+   "fix": 1,
+   "study": [
+    0,
+    40,
+    0,
+    3
+   ]
   },
   "carpet": {
    "id": "carpet",
@@ -5292,7 +6885,13 @@
    ],
    "defaultRecipe": "carpet",
    "key": "carpet",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    0,
+    30,
+    30
+   ]
   },
   "carrot": {
    "id": "carrot",
@@ -5331,7 +6930,30 @@
    "use": {
     "en": 2
    },
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     3,
+     0,
+     5,
+     0,
+     2
+    ],
+    [
+     "vegetable-stand",
+     3,
+     0,
+     10
+    ]
+   ],
+   "price": 4,
+   "study": [
+    0,
+    30,
+    0,
+    3
+   ]
   },
   "carrot-bed": {
    "id": "carrot-bed",
@@ -5387,7 +7009,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    20,
+    0,
+    3
+   ]
   },
   "carrot-seed": {
    "id": "carrot-seed",
@@ -5421,7 +7049,28 @@
      "vegetable-stand"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     1,
+     0,
+     0,
+     0,
+     2
+    ],
+    [
+     "vegetable-stand",
+     1
+    ]
+   ],
+   "price": 2,
+   "study": [
+    0,
+    20,
+    0,
+    2
+   ]
   },
   "carrot-soup": {
    "id": "carrot-soup",
@@ -5459,7 +7108,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    30,
+    0,
+    3
+   ]
   },
   "carved-marble": {
    "id": "carved-marble",
@@ -5491,7 +7146,24 @@
      3
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "builder",
+     55,
+     0,
+     30,
+     3,
+     2
+    ]
+   ],
+   "price": 75,
+   "study": [
+    50,
+    0,
+    15,
+    30
+   ]
   },
   "carved-stone": {
    "id": "carved-stone",
@@ -5523,7 +7195,38 @@
      2
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "builder",
+     26,
+     0,
+     30,
+     2
+    ]
+   ],
+   "price": 35,
+   "study": [
+    40,
+    0,
+    10,
+    10
+   ],
+   "asked": {
+    "q": [
+     [
+      "eye-red-eye",
+      6,
+      "old-god"
+     ]
+    ],
+    "t": [
+     [
+      "builder-ii",
+      2
+     ]
+    ]
+   }
   },
   "carved-wood": {
    "id": "carved-wood",
@@ -5548,7 +7251,13 @@
    ],
    "defaultRecipe": "carved-wood",
    "key": "carved_wood",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    35,
+    0,
+    15,
+    10
+   ]
   },
   "casting-table": {
    "id": "casting-table",
@@ -5627,7 +7336,25 @@
      30.8
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 112,
+   "fix": 1,
+   "study": [
+    0,
+    40,
+    0,
+    3
+   ]
   },
   "celestial-salmon": {
    "id": "celestial-salmon",
@@ -5659,7 +7386,13 @@
      100
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "study": [
+    20,
+    40,
+    40,
+    10
+   ]
   },
   "ceramic-plate": {
    "id": "ceramic-plate",
@@ -5684,7 +7417,13 @@
    ],
    "defaultRecipe": "ceramic-plate",
    "key": "ceramic_fired_1",
-   "stack": 50
+   "stack": 50,
+   "study": [
+    10,
+    0,
+    0,
+    5
+   ]
   },
   "ceramic-urn": {
    "id": "ceramic-urn",
@@ -5757,7 +7496,22 @@
    ],
    "defaultRecipe": "charged-hypno-device",
    "key": "hypno_device_charged",
-   "stack": 20
+   "stack": 20,
+   "study": [
+    10,
+    0,
+    40,
+    15
+   ],
+   "asked": {
+    "q": [
+     [
+      "congregation-trouble",
+      1,
+      "gunter"
+     ]
+    ]
+   }
   },
   "cheese": {
    "id": "cheese",
@@ -5814,7 +7568,14 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    50,
+    50,
+    3,
+    1
+   ]
   },
   "chest": {
    "id": "chest",
@@ -5872,7 +7633,28 @@
      "baker"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "herm",
+     4,
+     0,
+     0,
+     0,
+     2
+    ],
+    [
+     "baker",
+     4
+    ]
+   ],
+   "price": 5,
+   "study": [
+    0,
+    20,
+    0,
+    3
+   ]
   },
   "chocolate": {
    "id": "chocolate",
@@ -5901,7 +7683,16 @@
     "en": 50,
     "ins": -20
    },
-   "stack": 20
+   "stack": 20,
+   "asked": {
+    "q": [
+     [
+      "love-story",
+      1,
+      "linda"
+     ]
+    ]
+   }
   },
   "choir": {
    "id": "choir",
@@ -6174,7 +7965,14 @@
      "clay-spot"
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "study": [
+    5,
+    5,
+    0,
+    1,
+    1
+   ]
   },
   "clay-digger-stand": {
    "id": "clay-digger-stand",
@@ -6223,7 +8021,13 @@
    ],
    "defaultRecipe": "clay-molds",
    "key": "clay_molds",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    20,
+    20,
+    10,
+    10
+   ]
   },
   "clay-plate": {
    "id": "clay-plate",
@@ -6248,7 +8052,33 @@
    ],
    "defaultRecipe": "clay-plate",
    "key": "ceramic_1",
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     3,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 4,
+   "study": [
+    10,
+    0,
+    0,
+    5
+   ],
+   "asked": {
+    "q": [
+     [
+      "two-peas-in-a-pod",
+      6,
+      "jeffry"
+     ]
+    ]
+   }
   },
   "clay-urn": {
    "id": "clay-urn",
@@ -6273,7 +8103,13 @@
    ],
    "defaultRecipe": "clay-urn",
    "key": "ceramic_2",
-   "stack": 50
+   "stack": 50,
+   "study": [
+    20,
+    0,
+    0,
+    5
+   ]
   },
   "clean-paper": {
    "id": "clean-paper",
@@ -6309,7 +8145,25 @@
      "alchemy-lab"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "alchemist",
+     15,
+     0,
+     10
+    ]
+   ],
+   "price": 20,
+   "asked": {
+    "q": [
+     [
+      "nun-of-your-business",
+      5,
+      "nun"
+     ]
+    ]
+   }
   },
   "coal": {
    "id": "coal",
@@ -6336,7 +8190,14 @@
     "red": 1,
     "green": 2
    },
-   "stack": 99
+   "stack": 99,
+   "study": [
+    20,
+    10,
+    0,
+    2,
+    2
+   ]
   },
   "columbarium-area-i": {
    "id": "columbarium-area-i",
@@ -6507,7 +8368,33 @@
      "apothecary"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "gunter",
+     7
+    ],
+    [
+     "apothecary",
+     7
+    ]
+   ],
+   "price": 10,
+   "study": [
+    0,
+    0,
+    30,
+    10
+   ],
+   "asked": {
+    "q": [
+     [
+      "chasing-fairy-lights",
+      1,
+      "soul"
+     ]
+    ]
+   }
   },
   "comfortable-chair": {
    "id": "comfortable-chair",
@@ -6532,7 +8419,16 @@
    ],
    "defaultRecipe": "comfortable-chair",
    "key": "chair_comfortable",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "wrath-and-sloth",
+      1,
+      "nun"
+     ]
+    ]
+   }
   },
   "compost-pile": {
    "id": "compost-pile",
@@ -6895,7 +8791,13 @@
      "copper-vein"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "study": [
+    20,
+    0,
+    10,
+    2
+   ]
   },
   "copper-scrap": {
    "id": "copper-scrap",
@@ -6943,7 +8845,18 @@
    ],
    "defaultRecipe": "copper-trinkets",
    "key": "trinkets_bronze",
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "trademaster",
+     157
+    ],
+    [
+     "smithy",
+     157
+    ]
+   ],
+   "price": 220
   },
   "corpse": {
    "id": "corpse",
@@ -7067,7 +8980,13 @@
    ],
    "defaultRecipe": "crate",
    "key": "box_empty",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    25,
+    0,
+    10,
+    10
+   ]
   },
   "crematorium-i": {
    "id": "crematorium-i",
@@ -7154,7 +9073,13 @@
     ],
     "ins": -5
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    30,
+    20,
+    10
+   ]
   },
   "crop-boosting-fertilizer-i": {
    "id": "crop-boosting-fertilizer-i",
@@ -7179,7 +9104,13 @@
    ],
    "defaultRecipe": "crop-boosting-fertilizer-i",
    "key": "fertilize_add_cells_1",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    50,
+    10,
+    5
+   ]
   },
   "crucian": {
    "id": "crucian",
@@ -7218,7 +9149,20 @@
      0.5
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand"
+    ]
+   ],
+   "price": 30,
+   "fix": 1,
+   "study": [
+    0,
+    30,
+    0,
+    2
+   ]
   },
   "crucian-or-herring": {
    "id": "crucian-or-herring",
@@ -7305,7 +9249,21 @@
      1
     ]
    },
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     68,
+     72
+    ]
+   ],
+   "price": 100,
+   "study": [
+    0,
+    30,
+    10,
+    5
+   ]
   },
   "damage-potion-ii": {
    "id": "damage-potion-ii",
@@ -7344,7 +9302,24 @@
      1
     ]
    },
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     358,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 500,
+   "study": [
+    0,
+    50,
+    10,
+    10
+   ]
   },
   "damage-potion-iii": {
    "id": "damage-potion-iii",
@@ -7383,7 +9358,24 @@
      1
     ]
    },
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     1430,
+     0,
+     0,
+     0,
+     3
+    ]
+   ],
+   "price": 2000,
+   "study": [
+    0,
+    100,
+    20,
+    15
+   ]
   },
   "deck-of-cards": {
    "id": "deck-of-cards",
@@ -7412,7 +9404,16 @@
      "safe-harbor"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "friendship-written-in-the-stars",
+      1,
+      "gunter"
+     ]
+    ]
+   }
   },
   "defender-s-emblem": {
    "id": "defender-s-emblem",
@@ -7478,7 +9479,13 @@
    ],
    "defaultRecipe": "dictionary",
    "key": "tool_book_2",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    0,
+    40,
+    30
+   ]
   },
   "distillation-cube": {
    "id": "distillation-cube",
@@ -7533,7 +9540,20 @@
      "baker"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "baker",
+     7
+    ]
+   ],
+   "price": 10,
+   "study": [
+    0,
+    15,
+    0,
+    3
+   ]
   },
   "dream-dust": {
    "id": "dream-dust",
@@ -7564,7 +9584,36 @@
      "alchemist"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     68,
+     72,
+     10
+    ]
+   ],
+   "price": 100,
+   "study": [
+    0,
+    0,
+    50,
+    5
+   ],
+   "asked": {
+    "q": [
+     [
+      "sweet-dreams",
+      1,
+      "albert"
+     ],
+     [
+      "chasing-fairy-lights",
+      1,
+      "soul"
+     ]
+    ]
+   }
   },
   "dresser-with-mirror": {
    "id": "dresser-with-mirror",
@@ -7642,7 +9691,21 @@
      "can-t-see-the-forest-for-the-iron"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "study": [
+    50,
+    0,
+    0,
+    5
+   ],
+   "asked": {
+    "t": [
+     [
+      "demolish-the-wall",
+      1
+     ]
+    ]
+   }
   },
   "eel": {
    "id": "eel",
@@ -7681,7 +9744,25 @@
      100
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 192,
+   "fix": 1,
+   "study": [
+    0,
+    60,
+    0,
+    5
+   ]
   },
   "eel-or-trout": {
    "id": "eel-or-trout",
@@ -7738,7 +9819,13 @@
      100
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "study": [
+    30,
+    40,
+    30,
+    10
+   ]
   },
   "elder-s-meal": {
    "id": "elder-s-meal",
@@ -7770,7 +9857,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    40,
+    30,
+    20
+   ]
   },
   "elegant-prosthetic-hand": {
    "id": "elegant-prosthetic-hand",
@@ -7795,7 +9888,16 @@
    ],
    "defaultRecipe": "elegant-prosthetic-hand",
    "key": "hand_prothesis_elegant",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "gluttony-and-pride",
+      1,
+      "gunter"
+     ]
+    ]
+   }
   },
   "embalming-table-i": {
    "id": "embalming-table-i",
@@ -7892,7 +9994,31 @@
    ],
    "defaultRecipe": "empty-bottle",
    "key": "bottle_empty",
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "brewery",
+     7,
+     0,
+     15
+    ]
+   ],
+   "price": 10,
+   "study": [
+    10,
+    10,
+    0,
+    3
+   ],
+   "asked": {
+    "q": [
+     [
+      "homobonus-i",
+      10,
+      "homobonus"
+     ]
+    ]
+   }
   },
   "empty-glass-bottle": {
    "id": "empty-glass-bottle",
@@ -8072,7 +10198,24 @@
      3
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "smithy",
+     439,
+     0,
+     40,
+     0,
+     3
+    ]
+   ],
+   "price": 600,
+   "study": [
+    70,
+    0,
+    25,
+    10
+   ]
   },
   "engineering-kit": {
    "id": "engineering-kit",
@@ -8097,7 +10240,13 @@
    ],
    "defaultRecipe": "engineering-kit",
    "key": "engineering_kit",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    50,
+    0,
+    10,
+    10
+   ]
   },
   "everlasting-needles": {
    "id": "everlasting-needles",
@@ -8149,7 +10298,14 @@
      "januarius"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "januarius"
+    ]
+   ],
+   "price": 550,
+   "fix": 1
   },
   "expand-graveyard-i": {
    "id": "expand-graveyard-i",
@@ -8383,7 +10539,38 @@
      3
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "tailor",
+     26,
+     0,
+     50,
+     0,
+     3
+    ],
+    [
+     "baker",
+     26,
+     0,
+     20
+    ]
+   ],
+   "price": 35,
+   "study": [
+    20,
+    50,
+    0,
+    5
+   ],
+   "asked": {
+    "t": [
+     [
+      "tailor-iii",
+      60
+     ]
+    ]
+   }
   },
   "factory-lantern": {
    "id": "factory-lantern",
@@ -8436,7 +10623,16 @@
      "chasing-fairy-lights"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "go-wild-in-the-wild-lands",
+      1,
+      "hans"
+     ]
+    ]
+   }
   },
   "faith": {
    "id": "faith",
@@ -8465,7 +10661,21 @@
      "sermons"
     ]
    ],
-   "stack": 999
+   "stack": 999,
+   "asked": {
+    "q": [
+     [
+      "fighting-spirit-required",
+      3,
+      "herbert"
+     ],
+     [
+      "goddess-in-the-swamp",
+      100,
+      "jully"
+     ]
+    ]
+   }
   },
   "faith-prayer": {
    "id": "faith-prayer",
@@ -8518,7 +10728,24 @@
      3
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "apothecary",
+     393,
+     0,
+     20,
+     0,
+     3
+    ]
+   ],
+   "price": 550,
+   "study": [
+    0,
+    0,
+    30,
+    15
+   ]
   },
   "farmer-s-bag": {
    "id": "farmer-s-bag",
@@ -8601,7 +10828,13 @@
    ],
    "defaultRecipe": "farming-fertilizer-i",
    "key": "fertilize_farming_1",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    30,
+    5,
+    2
+   ]
   },
   "farming-fertilizer-ii": {
    "id": "farming-fertilizer-ii",
@@ -8626,7 +10859,13 @@
    ],
    "defaultRecipe": "farming-fertilizer-ii",
    "key": "fertilize_farming_2",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    60,
+    15,
+    4
+   ]
   },
   "farming-fertilizer-iii": {
    "id": "farming-fertilizer-iii",
@@ -8651,7 +10890,13 @@
    ],
    "defaultRecipe": "farming-fertilizer-iii",
    "key": "fertilize_farming_3",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    75,
+    25,
+    10
+   ]
   },
   "fat": {
    "id": "fat",
@@ -8680,7 +10925,13 @@
      "bodies"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    0,
+    10,
+    5
+   ]
   },
   "fermentation-barrel": {
    "id": "fermentation-barrel",
@@ -8729,7 +10980,14 @@
    ],
    "defaultRecipe": "fine-jewelry",
    "key": "jewelry",
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "jeweler",
+     35755
+    ]
+   ],
+   "price": 50000
   },
   "fine-tool-rack": {
    "id": "fine-tool-rack",
@@ -8794,7 +11052,21 @@
      "night-flower"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "gunter",
+     7
+    ]
+   ],
+   "price": 10,
+   "study": [
+    0,
+    20,
+    10,
+    2,
+    2
+   ]
   },
   "firewood": {
    "id": "firewood",
@@ -8820,7 +11092,20 @@
    ],
    "defaultRecipe": "firewood-from-short-log",
    "key": "firewood",
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     3
+    ]
+   ],
+   "price": 4,
+   "study": [
+    10,
+    0,
+    0,
+    2
+   ]
   },
   "firewood-shed-i": {
    "id": "firewood-shed-i",
@@ -8902,7 +11187,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    30,
+    0,
+    3
+   ]
   },
   "fish-soup": {
    "id": "fish-soup",
@@ -8941,7 +11232,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    30,
+    0,
+    3
+   ]
   },
   "fisherman-s-bag": {
    "id": "fisherman-s-bag",
@@ -9002,7 +11299,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    20,
+    20,
+    10
+   ]
   },
   "fishing-line": {
    "id": "fishing-line",
@@ -9025,7 +11328,13 @@
    "recipes": [],
    "defaultRecipe": null,
    "key": "thread_metal",
-   "stack": 50
+   "stack": 50,
+   "study": [
+    20,
+    10,
+    0,
+    5
+   ]
   },
   "fix-the-attic": {
    "id": "fix-the-attic",
@@ -9108,7 +11417,23 @@
      "tailor"
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "sell": [
+    [
+     "tailor",
+     5,
+     0,
+     15
+    ]
+   ],
+   "price": 7,
+   "study": [
+    10,
+    20,
+    0,
+    2,
+    2
+   ]
   },
   "flax-bed": {
    "id": "flax-bed",
@@ -9170,7 +11495,32 @@
      "tailor"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     3,
+     4,
+     0,
+     0,
+     2
+    ],
+    [
+     "trademaster",
+     3
+    ],
+    [
+     "tailor",
+     3
+    ]
+   ],
+   "price": 4,
+   "study": [
+    5,
+    10,
+    0,
+    2
+   ]
   },
   "flax-thread": {
    "id": "flax-thread",
@@ -9207,7 +11557,47 @@
      2
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     15,
+     0,
+     0,
+     0,
+     3
+    ],
+    [
+     "tailor",
+     11,
+     0,
+     50,
+     2,
+     2
+    ]
+   ],
+   "price": 15,
+   "study": [
+    15,
+    30,
+    0,
+    3
+   ],
+   "asked": {
+    "q": [
+     [
+      "plenty-of-fish-in-the-sea",
+      3,
+      "jeffry"
+     ]
+    ],
+    "t": [
+     [
+      "tailor-ii",
+      40
+     ]
+    ]
+   }
   },
   "flesh": {
    "id": "flesh",
@@ -9248,7 +11638,37 @@
     "en": 10,
     "ins": 10
    },
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "baker",
+     25,
+     26,
+     20,
+     2,
+     2
+    ]
+   ],
+   "price": 35,
+   "study": [
+    0,
+    0,
+    10,
+    1,
+    1
+   ],
+   "asked": {
+    "t": [
+     [
+      "baker-ii",
+      4
+     ],
+     [
+      "baker-iii",
+      8
+     ]
+    ]
+   }
   },
   "flour": {
    "id": "flour",
@@ -9282,7 +11702,23 @@
      "baker"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "baker",
+     4,
+     0,
+     40
+    ]
+   ],
+   "price": 5,
+   "study": [
+    0,
+    10,
+    0,
+    2,
+    1
+   ]
   },
   "flower-bed-i": {
    "id": "flower-bed-i",
@@ -9444,7 +11880,16 @@
      "into-the-forest"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "forest-pass",
+      1,
+      "village-guards"
+     ]
+    ]
+   }
   },
   "formulation-bench": {
    "id": "formulation-bench",
@@ -9577,7 +12022,23 @@
      "apothecary"
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "sell": [
+    [
+     "apothecary",
+     22,
+     0,
+     5
+    ]
+   ],
+   "price": 30,
+   "study": [
+    0,
+    15,
+    10,
+    2,
+    2
+   ]
   },
   "fried-egg": {
    "id": "fried-egg",
@@ -9635,7 +12096,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    50,
+    30,
+    20
+   ]
   },
   "frog": {
    "id": "frog",
@@ -9667,7 +12134,25 @@
      100
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 112,
+   "fix": 1,
+   "study": [
+    0,
+    30,
+    15,
+    3
+   ]
   },
   "fuel": {
    "id": "fuel",
@@ -9773,7 +12258,91 @@
      2
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "furniture-maker",
+     44,
+     45,
+     20,
+     2,
+     2
+    ]
+   ],
+   "price": 60,
+   "study": [
+    40,
+    0,
+    10,
+    10
+   ],
+   "asked": {
+    "q": [
+     [
+      "brawns-and-brains",
+      2,
+      "nun"
+     ]
+    ],
+    "t": [
+     [
+      "apothecary-ii",
+      2
+     ],
+     [
+      "vegetable-stand-ii",
+      2
+     ],
+     [
+      "tailor-ii",
+      2
+     ],
+     [
+      "furniture-maker-ii",
+      3
+     ],
+     [
+      "baker-ii",
+      3
+     ],
+     [
+      "fish-stand-ii",
+      3
+     ],
+     [
+      "alchemist-ii",
+      6
+     ],
+     [
+      "jeweler-ii",
+      6
+     ],
+     [
+      "builder-ii",
+      3
+     ],
+     [
+      "smithy-ii",
+      3
+     ],
+     [
+      "tavern-ii",
+      6
+     ],
+     [
+      "brewery-ii",
+      6
+     ],
+     [
+      "repair-large-house",
+      6
+     ],
+     [
+      "repair-house",
+      6
+     ]
+    ]
+   }
   },
   "furniture-kit-ii": {
    "id": "furniture-kit-ii",
@@ -9805,7 +12374,87 @@
      3
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "furniture-maker",
+     74,
+     0,
+     30,
+     0,
+     3
+    ]
+   ],
+   "price": 100,
+   "study": [
+    50,
+    0,
+    10,
+    10
+   ],
+   "asked": {
+    "q": [
+     [
+      "the-house-at-the-crossroads",
+      2,
+      "nun"
+     ]
+    ],
+    "t": [
+     [
+      "apothecary-iii",
+      2
+     ],
+     [
+      "vegetable-stand-iii",
+      2
+     ],
+     [
+      "tailor-iii",
+      2
+     ],
+     [
+      "furniture-maker-iii",
+      4
+     ],
+     [
+      "baker-iii",
+      4
+     ],
+     [
+      "fish-stand-iii",
+      4
+     ],
+     [
+      "alchemist-iii",
+      6
+     ],
+     [
+      "jeweler-iii",
+      6
+     ],
+     [
+      "builder-iii",
+      4
+     ],
+     [
+      "smithy-iii",
+      4
+     ],
+     [
+      "tavern-iii",
+      6
+     ],
+     [
+      "brewery-iii",
+      6
+     ],
+     [
+      "repair-block",
+      10
+     ]
+    ]
+   }
   },
   "garden-bed": {
    "id": "garden-bed",
@@ -10033,7 +12682,14 @@
      "@mysterious-chest"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "trademaster",
+     100
+    ]
+   ],
+   "price": 100
   },
   "glass": {
    "id": "glass",
@@ -10059,7 +12715,13 @@
    ],
    "defaultRecipe": "glass-furnace-i",
    "key": "glass",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    20,
+    10,
+    0,
+    3
+   ]
   },
   "glass-containers": {
    "id": "glass-containers",
@@ -10084,7 +12746,25 @@
    ],
    "defaultRecipe": "glass-containers",
    "key": "glass_containers",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    20,
+    20,
+    10,
+    10
+   ],
+   "asked": {
+    "t": [
+     [
+      "apothecary-ii",
+      2
+     ],
+     [
+      "vegetable-stand-ii",
+      2
+     ]
+    ]
+   }
   },
   "glossary": {
    "id": "glossary",
@@ -10109,7 +12789,13 @@
    ],
    "defaultRecipe": "glossary",
    "key": "tool_book_3",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    0,
+    60,
+    5
+   ]
   },
   "glue": {
    "id": "glue",
@@ -10173,7 +12859,24 @@
      "@mysterious-chest"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "jeweler",
+     6847,
+     7151,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 10000,
+   "study": [
+    20,
+    10,
+    0,
+    3
+   ]
   },
   "golden-nugget": {
    "id": "golden-nugget",
@@ -10216,7 +12919,21 @@
      "@mysterious-chest"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "trademaster",
+     73
+    ]
+   ],
+   "price": 100,
+   "study": [
+    50,
+    10,
+    20,
+    3,
+    3
+   ]
   },
   "golden-talisman": {
    "id": "golden-talisman",
@@ -10248,7 +12965,13 @@
      3
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    0,
+    60,
+    30
+   ]
   },
   "golden-zombie-collar": {
    "id": "golden-zombie-collar",
@@ -10284,7 +13007,25 @@
      "personal-zombie-zone"
     ]
    ],
-   "stack": 10
+   "stack": 10,
+   "sell": [
+    [
+     "jeweler",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 1000,
+   "fix": 1,
+   "study": [
+    0,
+    20,
+    30,
+    10
+   ]
   },
   "goldfish": {
    "id": "goldfish",
@@ -10327,7 +13068,21 @@
      25
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand"
+    ]
+   ],
+   "price": 72,
+   "fix": 1,
+   "study": [
+    50,
+    50,
+    50,
+    3,
+    3
+   ]
   },
   "good-alchemist-s-kit": {
    "id": "good-alchemist-s-kit",
@@ -10352,7 +13107,13 @@
    ],
    "defaultRecipe": "good-alchemist-s-kit",
    "key": "alchemy_kit_3",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    0,
+    60,
+    10
+   ]
   },
   "grape-juice-bronze": {
    "id": "grape-juice-bronze",
@@ -10488,7 +13249,30 @@
      "seeds"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     0,
+     0,
+     0,
+     0,
+     3
+    ],
+    [
+     "trademaster"
+    ],
+    [
+     "brewery"
+    ]
+   ],
+   "price": 50,
+   "study": [
+    0,
+    20,
+    0,
+    1
+   ]
   },
   "grapes": {
    "id": "grapes",
@@ -10524,7 +13308,19 @@
    "use": {
     "en": 6
    },
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "brewery"
+    ]
+   ],
+   "price": 50,
+   "study": [
+    0,
+    20,
+    25,
+    5
+   ]
   },
   "grapes-bed": {
    "id": "grapes-bed",
@@ -10582,7 +13378,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    20,
+    0,
+    3
+   ]
   },
   "grave-area-i": {
    "id": "grave-area-i",
@@ -10703,7 +13505,13 @@
    ],
    "defaultRecipe": "gravestone-i",
    "key": "grave_top_stn_1",
-   "stack": 10
+   "stack": 10,
+   "study": [
+    0,
+    0,
+    20,
+    15
+   ]
   },
   "gravestone-ii": {
    "id": "gravestone-ii",
@@ -10728,7 +13536,13 @@
    ],
    "defaultRecipe": "gravestone-ii",
    "key": "grave_top_stn_2",
-   "stack": 10
+   "stack": 10,
+   "study": [
+    0,
+    0,
+    40,
+    20
+   ]
   },
   "green-jelly": {
    "id": "green-jelly",
@@ -10947,7 +13761,29 @@
      0.5
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand"
+    ]
+   ],
+   "price": 10,
+   "fix": 1,
+   "study": [
+    0,
+    30,
+    0,
+    2
+   ],
+   "asked": {
+    "q": [
+     [
+      "the-quiet-art",
+      1,
+      "herm"
+     ]
+    ]
+   }
   },
   "gunpowder": {
    "id": "gunpowder",
@@ -11002,7 +13838,14 @@
      "@autopsy-table-i"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "study": [
+    0,
+    10,
+    20,
+    3,
+    3
+   ]
   },
   "hands": {
    "id": "hands",
@@ -11101,7 +13944,13 @@
    ],
    "defaultRecipe": "headstart-fertilizer-i",
    "key": "fertilize_start_bonus_1",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    30,
+    5,
+    2
+   ]
   },
   "headstart-fertilizer-ii": {
    "id": "headstart-fertilizer-ii",
@@ -11126,7 +13975,13 @@
    ],
    "defaultRecipe": "headstart-fertilizer-ii",
    "key": "fertilize_start_bonus_2",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    40,
+    10,
+    4
+   ]
   },
   "healing-potion": {
    "id": "healing-potion",
@@ -11161,7 +14016,20 @@
      "first-sludge"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     36
+    ]
+   ],
+   "price": 50,
+   "study": [
+    30,
+    0,
+    10,
+    5
+   ]
   },
   "healing-potion-ii": {
    "id": "healing-potion-ii",
@@ -11193,7 +14061,24 @@
      2
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     179,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 250,
+   "study": [
+    50,
+    0,
+    10,
+    10
+   ]
   },
   "healing-potion-iii": {
    "id": "healing-potion-iii",
@@ -11225,7 +14110,24 @@
      3
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     715,
+     0,
+     0,
+     0,
+     3
+    ]
+   ],
+   "price": 1000,
+   "study": [
+    100,
+    0,
+    20,
+    15
+   ]
   },
   "healing-potion-scroll": {
    "id": "healing-potion-scroll",
@@ -11280,7 +14182,14 @@
      "@autopsy-table-i"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "study": [
+    10,
+    0,
+    20,
+    3,
+    3
+   ]
   },
   "heavenly-salmon": {
    "id": "heavenly-salmon",
@@ -11312,7 +14221,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    40,
+    40,
+    20
+   ]
   },
   "heavy-bow": {
    "id": "heavy-bow",
@@ -11337,7 +14252,13 @@
    ],
    "defaultRecipe": "heavy-bow",
    "key": "bow_3",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    100,
+    20,
+    10
+   ]
   },
   "herring": {
    "id": "herring",
@@ -11369,7 +14290,20 @@
      66.7
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand"
+    ]
+   ],
+   "price": 48,
+   "fix": 1,
+   "study": [
+    0,
+    40,
+    0,
+    3
+   ]
   },
   "home-renovation": {
    "id": "home-renovation",
@@ -11456,7 +14390,14 @@
    "use": {
     "en": 5
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    20,
+    10,
+    3,
+    5
+   ]
   },
   "hop-seeds": {
    "id": "hop-seeds",
@@ -11494,7 +14435,32 @@
      "brewery"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     5,
+     7,
+     0,
+     0,
+     2
+    ],
+    [
+     "trademaster",
+     5
+    ],
+    [
+     "brewery",
+     5
+    ]
+   ],
+   "price": 7,
+   "study": [
+    0,
+    20,
+    0,
+    1
+   ]
   },
   "hops": {
    "id": "hops",
@@ -11523,7 +14489,23 @@
     "green": 2,
     "blue": 1
    },
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "brewery",
+     8,
+     0,
+     10
+    ]
+   ],
+   "price": 11,
+   "study": [
+    0,
+    40,
+    0,
+    2,
+    2
+   ]
   },
   "hops-bed": {
    "id": "hops-bed",
@@ -11577,7 +14559,20 @@
      3
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "gunter",
+     36
+    ]
+   ],
+   "price": 50,
+   "study": [
+    10,
+    0,
+    30,
+    10
+   ]
   },
   "hypno-prayer": {
    "id": "hypno-prayer",
@@ -11766,7 +14761,36 @@
      "alchemist"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "alchemist",
+     37,
+     0,
+     10
+    ]
+   ],
+   "price": 50,
+   "study": [
+    0,
+    0,
+    30,
+    5
+   ],
+   "asked": {
+    "q": [
+     [
+      "nun-of-your-business",
+      2,
+      "nun"
+     ],
+     [
+      "go-wild-in-the-wild-lands",
+      3,
+      "hans"
+     ]
+    ]
+   }
   },
   "inquisitor-s-medallion": {
    "id": "inquisitor-s-medallion",
@@ -11797,7 +14821,22 @@
      "inquisition-dungeon"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "study": [
+    30,
+    0,
+    10,
+    3
+   ],
+   "asked": {
+    "q": [
+     [
+      "dungeons-and-that-s-it-probably",
+      1,
+      "albert"
+     ]
+    ]
+   }
   },
   "inquisitor-s-note": {
    "id": "inquisitor-s-note",
@@ -11909,7 +14948,24 @@
    ],
    "defaultRecipe": "insect-bait",
    "key": "insect_bite",
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand",
+     9,
+     0,
+     30,
+     2,
+     2
+    ]
+   ],
+   "price": 12,
+   "study": [
+    0,
+    30,
+    0,
+    3
+   ]
   },
   "interior-bench-i": {
    "id": "interior-bench-i",
@@ -12060,7 +15116,25 @@
      2
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 2000,
+   "fix": 1,
+   "study": [
+    50,
+    0,
+    10,
+    5
+   ]
   },
   "iron-axe": {
    "id": "iron-axe",
@@ -12085,7 +15159,25 @@
    ],
    "defaultRecipe": "iron-axe",
    "key": "axe_2",
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 1000,
+   "fix": 1,
+   "study": [
+    60,
+    0,
+    10,
+    5
+   ]
   },
   "iron-chisel": {
    "id": "iron-chisel",
@@ -12110,7 +15202,13 @@
    ],
    "defaultRecipe": "iron-chisel",
    "key": "chisel_iron",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    25,
+    0,
+    0,
+    10
+   ]
   },
   "iron-detail": {
    "id": "iron-detail",
@@ -12147,7 +15245,41 @@
      2
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "furniture-maker",
+     22,
+     0,
+     10,
+     0,
+     2
+    ],
+    [
+     "smithy",
+     21,
+     22,
+     10,
+     0,
+     2
+    ]
+   ],
+   "price": 30,
+   "study": [
+    20,
+    0,
+    20,
+    3
+   ],
+   "asked": {
+    "q": [
+     [
+      "eye-red-eye",
+      8,
+      "old-god"
+     ]
+    ]
+   }
   },
   "iron-hammer": {
    "id": "iron-hammer",
@@ -12179,7 +15311,25 @@
      2
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy",
+     0,
+     0,
+     0,
+     0,
+     3
+    ]
+   ],
+   "price": 1500,
+   "fix": 1,
+   "study": [
+    60,
+    0,
+    10,
+    5
+   ]
   },
   "iron-ingot": {
    "id": "iron-ingot",
@@ -12205,7 +15355,13 @@
    ],
    "defaultRecipe": "iron-ingot-furnace-ii",
    "key": "ingot_iron",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    10,
+    0,
+    20,
+    2
+   ]
   },
   "iron-kit-i": {
    "id": "iron-kit-i",
@@ -12231,7 +15387,77 @@
    ],
    "defaultRecipe": "iron-kit-i-iron-anvil",
    "key": "iron_kit_1",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    25,
+    0,
+    10,
+    10
+   ],
+   "asked": {
+    "t": [
+     [
+      "apothecary",
+      1
+     ],
+     [
+      "vegetable-stand",
+      1
+     ],
+     [
+      "tailor",
+      1
+     ],
+     [
+      "furniture-maker",
+      2
+     ],
+     [
+      "baker",
+      2
+     ],
+     [
+      "fish-stand",
+      2
+     ],
+     [
+      "alchemist",
+      3
+     ],
+     [
+      "jeweler",
+      3
+     ],
+     [
+      "builder",
+      1
+     ],
+     [
+      "smithy",
+      1
+     ],
+     [
+      "tavern",
+      2
+     ],
+     [
+      "brewery",
+      2
+     ],
+     [
+      "repair-large-house",
+      4
+     ],
+     [
+      "repair-house",
+      2
+     ],
+     [
+      "repair-small-house",
+      1
+     ]
+    ]
+   }
   },
   "iron-kit-ii": {
    "id": "iron-kit-ii",
@@ -12256,7 +15482,22 @@
    ],
    "defaultRecipe": "iron-kit-ii",
    "key": "iron_kit_2",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    50,
+    0,
+    10,
+    10
+   ],
+   "asked": {
+    "q": [
+     [
+      "organic-music",
+      1,
+      "harold"
+     ]
+    ]
+   }
   },
   "iron-nails": {
    "id": "iron-nails",
@@ -12298,7 +15539,40 @@
      2
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "sell": [
+    [
+     "furniture-maker",
+     12,
+     0,
+     10,
+     0,
+     2
+    ],
+    [
+     "builder",
+     12,
+     0,
+     0,
+     0,
+     2
+    ],
+    [
+     "smithy",
+     12,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 16,
+   "study": [
+    20,
+    0,
+    20,
+    3
+   ]
   },
   "iron-ore": {
    "id": "iron-ore",
@@ -12336,7 +15610,21 @@
      "iron-ore-deposit"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "trademaster",
+     72
+    ]
+   ],
+   "price": 100,
+   "study": [
+    30,
+    0,
+    15,
+    3,
+    1
+   ]
   },
   "iron-pickaxe": {
    "id": "iron-pickaxe",
@@ -12361,7 +15649,25 @@
    ],
    "defaultRecipe": "iron-pickaxe",
    "key": "pickaxe_2",
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 1000,
+   "fix": 1,
+   "study": [
+    60,
+    0,
+    10,
+    5
+   ]
   },
   "iron-scrap": {
    "id": "iron-scrap",
@@ -12384,7 +15690,13 @@
    "recipes": [],
    "defaultRecipe": null,
    "key": "iron_scrap",
-   "stack": 50
+   "stack": 50,
+   "study": [
+    10,
+    0,
+    0,
+    2
+   ]
   },
   "iron-shovel": {
    "id": "iron-shovel",
@@ -12416,7 +15728,33 @@
      2
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "vegetable-stand",
+     0,
+     0,
+     0,
+     0,
+     3
+    ],
+    [
+     "smithy",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 1750,
+   "fix": 1,
+   "study": [
+    60,
+    0,
+    10,
+    5
+   ]
   },
   "iron-sword": {
    "id": "iron-sword",
@@ -12448,7 +15786,25 @@
      2
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 3000,
+   "fix": 1,
+   "study": [
+    50,
+    0,
+    10,
+    5
+   ]
   },
   "iron-tools": {
    "id": "iron-tools",
@@ -12480,7 +15836,25 @@
      2
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "jeweler",
+     0,
+     0,
+     0,
+     0,
+     3
+    ]
+   ],
+   "price": 2000,
+   "fix": 1,
+   "study": [
+    0,
+    50,
+    10,
+    3
+   ]
   },
   "jewelry-table": {
    "id": "jewelry-table",
@@ -12546,7 +15920,32 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "herm",
+     10,
+     0,
+     0,
+     0,
+     3
+    ],
+    [
+     "baker",
+     9,
+     10,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 13,
+   "study": [
+    0,
+    30,
+    10,
+    10
+   ]
   },
   "kebab-with-fish-and-mushrooms": {
    "id": "kebab-with-fish-and-mushrooms",
@@ -12742,7 +16141,33 @@
      "sewerena-the-sewer-arena"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "jeweler",
+     65,
+     72,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 100,
+   "study": [
+    10,
+    10,
+    10,
+    3
+   ],
+   "asked": {
+    "q": [
+     [
+      "wharf-rats",
+      1,
+      "davy-the-dagger"
+     ]
+    ]
+   }
   },
   "kiln": {
    "id": "kiln",
@@ -12795,7 +16220,13 @@
      "inquisition-dungeon"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "study": [
+    30,
+    10,
+    10,
+    3
+   ]
   },
   "kitchen-i": {
    "id": "kitchen-i",
@@ -13039,7 +16470,25 @@
      3
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy",
+     0,
+     0,
+     0,
+     0,
+     3
+    ]
+   ],
+   "price": 10000,
+   "fix": 1,
+   "study": [
+    0,
+    100,
+    20,
+    10
+   ]
   },
   "kraken-jr": {
    "id": "kraken-jr",
@@ -13071,7 +16520,13 @@
      100
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "study": [
+    50,
+    20,
+    30,
+    10
+   ]
   },
   "kraken-steak": {
    "id": "kraken-steak",
@@ -13103,7 +16558,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    20,
+    30,
+    20
+   ]
   },
   "krotowuha": {
    "id": "krotowuha",
@@ -13259,7 +16720,33 @@
      "tailor"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "trademaster",
+     125
+    ],
+    [
+     "tailor",
+     91
+    ]
+   ],
+   "price": 125,
+   "study": [
+    10,
+    20,
+    0,
+    5
+   ],
+   "asked": {
+    "q": [
+     [
+      "the-frill-of-the-chase",
+      1,
+      "herm"
+     ]
+    ]
+   }
   },
   "lacquer": {
    "id": "lacquer",
@@ -13294,7 +16781,43 @@
      "alchemist"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "trademaster",
+     200
+    ],
+    [
+     "alchemist",
+     137,
+     143,
+     10
+    ],
+    [
+     "furniture-maker",
+     1,
+     0,
+     0,
+     0,
+     3
+    ]
+   ],
+   "price": 200,
+   "study": [
+    30,
+    0,
+    10,
+    5
+   ],
+   "asked": {
+    "q": [
+     [
+      "varnish-before-you-fiddle",
+      1,
+      "linda"
+     ]
+    ]
+   }
   },
   "lantern-i": {
    "id": "lantern-i",
@@ -13401,7 +16924,13 @@
     ],
     "ins": 1
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    20,
+    30,
+    10
+   ]
   },
   "leaf": {
    "id": "leaf",
@@ -13427,7 +16956,13 @@
    "runes": {
     "green": 1
    },
-   "stack": 99
+   "stack": 99,
+   "study": [
+    0,
+    10,
+    0,
+    1
+   ]
   },
   "leather-scroll": {
    "id": "leather-scroll",
@@ -13458,7 +16993,20 @@
      "alchemist"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "alchemist",
+     7
+    ]
+   ],
+   "price": 10,
+   "study": [
+    0,
+    10,
+    10,
+    3
+   ]
   },
   "lens": {
    "id": "lens",
@@ -13484,7 +17032,22 @@
    ],
    "defaultRecipe": "lens-furnace-i",
    "key": "lence",
-   "stack": 50
+   "stack": 50,
+   "study": [
+    25,
+    0,
+    10,
+    10
+   ],
+   "asked": {
+    "q": [
+     [
+      "crystal-clear",
+      3,
+      "trademaster"
+     ]
+    ]
+   }
   },
   "life-water": {
    "id": "life-water",
@@ -13562,7 +17125,20 @@
      "smithy"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy"
+    ]
+   ],
+   "price": 100,
+   "fix": 1,
+   "study": [
+    0,
+    30,
+    5,
+    3
+   ]
   },
   "live-bait": {
    "id": "live-bait",
@@ -13587,7 +17163,24 @@
    ],
    "defaultRecipe": "live-bait",
    "key": "ultimate_bite",
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand",
+     22,
+     0,
+     30,
+     0,
+     3
+    ]
+   ],
+   "price": 30,
+   "study": [
+    0,
+    30,
+    20,
+    5
+   ]
   },
   "locked-door": {
    "id": "locked-door",
@@ -13707,7 +17300,16 @@
      "wharf-rats"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "herbert-and",
+      1,
+      "herbert"
+     ]
+    ]
+   }
   },
   "lumberjack-stand": {
    "id": "lumberjack-stand",
@@ -13756,7 +17358,16 @@
    ],
    "defaultRecipe": "luxury-drapes",
    "key": "drape_luxury",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "lust-and-envy",
+      1,
+      "linda"
+     ]
+    ]
+   }
   },
   "mackerel": {
    "id": "mackerel",
@@ -13788,7 +17399,20 @@
      66.7
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand"
+    ]
+   ],
+   "price": 84,
+   "fix": 1,
+   "study": [
+    0,
+    40,
+    0,
+    3
+   ]
   },
   "magic-bell": {
    "id": "magic-bell",
@@ -13813,7 +17437,16 @@
    ],
    "defaultRecipe": "magic-bell",
    "key": "quest_bell",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "swords-and-bell",
+      1,
+      "herbert"
+     ]
+    ]
+   }
   },
   "magnificent-candle": {
    "id": "magnificent-candle",
@@ -13845,7 +17478,24 @@
      3
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "apothecary",
+     358,
+     0,
+     40,
+     0,
+     3
+    ]
+   ],
+   "price": 500,
+   "study": [
+    0,
+    0,
+    30,
+    30
+   ]
   },
   "marble": {
    "id": "marble",
@@ -13879,7 +17529,14 @@
      "marble-deposit"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "study": [
+    20,
+    0,
+    0,
+    5,
+    2
+   ]
   },
   "marble-cross-i": {
    "id": "marble-cross-i",
@@ -13904,7 +17561,13 @@
    ],
    "defaultRecipe": "marble-cross-i",
    "key": "grave_top_mrb_1",
-   "stack": 10
+   "stack": 10,
+   "study": [
+    0,
+    0,
+    30,
+    30
+   ]
   },
   "marble-cross-ii": {
    "id": "marble-cross-ii",
@@ -13929,7 +17592,13 @@
    ],
    "defaultRecipe": "marble-cross-ii",
    "key": "grave_top_mrb_2",
-   "stack": 10
+   "stack": 10,
+   "study": [
+    0,
+    0,
+    50,
+    50
+   ]
   },
   "marble-fence-i": {
    "id": "marble-fence-i",
@@ -13954,7 +17623,13 @@
    ],
    "defaultRecipe": "marble-fence-i",
    "key": "grave_bot_mrb_1",
-   "stack": 10
+   "stack": 10,
+   "study": [
+    0,
+    0,
+    30,
+    30
+   ]
   },
   "marble-fence-ii": {
    "id": "marble-fence-ii",
@@ -13979,7 +17654,13 @@
    ],
    "defaultRecipe": "marble-fence-ii",
    "key": "grave_bot_mrb_2",
-   "stack": 10
+   "stack": 10,
+   "study": [
+    0,
+    0,
+    50,
+    50
+   ]
   },
   "marble-kit": {
    "id": "marble-kit",
@@ -14004,7 +17685,33 @@
    ],
    "defaultRecipe": "marble-kit",
    "key": "marble_kit",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    50,
+    0,
+    10,
+    10
+   ],
+   "asked": {
+    "t": [
+     [
+      "builder-ii",
+      2
+     ],
+     [
+      "smithy-ii",
+      2
+     ],
+     [
+      "tavern-ii",
+      4
+     ],
+     [
+      "brewery-ii",
+      4
+     ]
+    ]
+   }
   },
   "marble-plate": {
    "id": "marble-plate",
@@ -14036,7 +17743,24 @@
      2
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "builder",
+     26,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 35,
+   "study": [
+    30,
+    0,
+    0,
+    10
+   ]
   },
   "mash-drop": {
    "id": "mash-drop",
@@ -14084,7 +17808,13 @@
    ],
    "defaultRecipe": "master-armor",
    "key": "armor_4",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    150,
+    0,
+    40,
+    15
+   ]
   },
   "master-rod": {
    "id": "master-rod",
@@ -14107,7 +17837,13 @@
    "recipes": [],
    "defaultRecipe": null,
    "key": "master_rod",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    100,
+    0,
+    10
+   ]
   },
   "master-surgeon-s-kit": {
    "id": "master-surgeon-s-kit",
@@ -14132,7 +17868,13 @@
    ],
    "defaultRecipe": "master-surgeon-s-kit",
    "key": "surgical_kit_3",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    0,
+    60,
+    20
+   ]
   },
   "master-sword": {
    "id": "master-sword",
@@ -14157,7 +17899,13 @@
    ],
    "defaultRecipe": "master-sword",
    "key": "sword_4",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    150,
+    0,
+    40,
+    15
+   ]
   },
   "mead": {
    "id": "mead",
@@ -14191,7 +17939,21 @@
    "use": {
     "ins": -10
    },
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "brewery",
+     21,
+     22
+    ]
+   ],
+   "price": 30,
+   "study": [
+    0,
+    30,
+    10,
+    15
+   ]
   },
   "melted-fat": {
    "id": "melted-fat",
@@ -14226,7 +17988,21 @@
      "apothecary"
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "sell": [
+    [
+     "apothecary",
+     7
+    ]
+   ],
+   "price": 10,
+   "study": [
+    0,
+    15,
+    10,
+    2,
+    2
+   ]
   },
   "mercurius-vivus": {
    "id": "mercurius-vivus",
@@ -14301,7 +18077,14 @@
    "runes": {
     "blue": 2
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    30,
+    20,
+    5,
+    3
+   ]
   },
   "miracle-growth-elixir": {
    "id": "miracle-growth-elixir",
@@ -14333,7 +18116,24 @@
      3
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     1073,
+     0,
+     30,
+     0,
+     3
+    ]
+   ],
+   "price": 1500,
+   "study": [
+    0,
+    50,
+    20,
+    20
+   ]
   },
   "mixed-area-i": {
    "id": "mixed-area-i",
@@ -14587,7 +18387,13 @@
      1
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    30,
+    0,
+    10
+   ]
   },
   "music-notes": {
    "id": "music-notes",
@@ -14612,7 +18418,22 @@
    ],
    "defaultRecipe": "music-notes",
    "key": "music_notes",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    0,
+    50,
+    20
+   ],
+   "asked": {
+    "q": [
+     [
+      "the-nun-also-reads",
+      4,
+      "nun"
+     ]
+    ]
+   }
   },
   "mysterious-chest": {
    "id": "mysterious-chest",
@@ -14668,7 +18489,22 @@
    ],
    "defaultRecipe": "mysterious-fish-fillet-from-goldfish",
    "key": "fillet_fish_myst",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    10,
+    10,
+    3
+   ],
+   "asked": {
+    "q": [
+     [
+      "fish-for-the-fisher",
+      5,
+      "fisherman"
+     ]
+    ]
+   }
   },
   "mythic-carp": {
    "id": "mythic-carp",
@@ -14700,7 +18536,13 @@
      100
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "study": [
+    20,
+    50,
+    30,
+    10
+   ]
   },
   "natural-resin": {
    "id": "natural-resin",
@@ -14752,7 +18594,13 @@
      "the-ingenious-gentleman-don-keyote"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    0,
+    300,
+    50
+   ]
   },
   "newspaper": {
    "id": "newspaper",
@@ -14897,7 +18745,14 @@
      "night-flower"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "study": [
+    0,
+    0,
+    20,
+    2,
+    2
+   ]
   },
   "nigredo-ash": {
    "id": "nigredo-ash",
@@ -14981,7 +18836,24 @@
      2
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "builder",
+     18,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 25,
+   "study": [
+    25,
+    0,
+    0,
+    10
+   ]
   },
   "oiled-plank": {
    "id": "oiled-plank",
@@ -15016,7 +18888,35 @@
      "builder"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "furniture-maker",
+     10,
+     0,
+     10
+    ],
+    [
+     "builder",
+     10
+    ]
+   ],
+   "price": 14,
+   "study": [
+    20,
+    0,
+    0,
+    10
+   ],
+   "asked": {
+    "q": [
+     [
+      "the-nun-also-reads",
+      4,
+      "nun"
+     ]
+    ]
+   }
   },
   "old-door": {
    "id": "old-door",
@@ -15109,7 +19009,41 @@
    "use": {
     "en": 5
    },
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     0,
+     0,
+     -1,
+     0,
+     2
+    ],
+    [
+     "vegetable-stand",
+     0,
+     0,
+     -1,
+     0,
+     2
+    ]
+   ],
+   "price": 10,
+   "study": [
+    0,
+    30,
+    0,
+    2,
+    2
+   ],
+   "asked": {
+    "t": [
+     [
+      "vegetable-stand-iii",
+      40
+     ]
+    ]
+   }
   },
   "onion-bed": {
    "id": "onion-bed",
@@ -15169,7 +19103,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    20,
+    10,
+    3
+   ]
   },
   "onion-seed": {
    "id": "onion-seed",
@@ -15212,7 +19152,35 @@
      "seeds"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     0,
+     0,
+     0,
+     0,
+     2
+    ],
+    [
+     "vegetable-stand",
+     0,
+     0,
+     0,
+     0,
+     2
+    ],
+    [
+     "trademaster"
+    ]
+   ],
+   "price": 6,
+   "study": [
+    0,
+    20,
+    0,
+    2
+   ]
   },
   "open-corpse-dumping-point": {
    "id": "open-corpse-dumping-point",
@@ -15353,7 +19321,24 @@
      2
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     0,
+     0,
+     -1,
+     0,
+     2
+    ]
+   ],
+   "price": 500,
+   "study": [
+    10,
+    0,
+    50,
+    15
+   ]
   },
   "organ-randomizer": {
    "id": "organ-randomizer",
@@ -15434,7 +19419,43 @@
      "alchemist"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "trademaster",
+     200
+    ],
+    [
+     "alchemist",
+     137,
+     143,
+     10
+    ],
+    [
+     "furniture-maker",
+     1,
+     0,
+     0,
+     0,
+     3
+    ]
+   ],
+   "price": 200,
+   "study": [
+    30,
+    0,
+    10,
+    5
+   ],
+   "asked": {
+    "q": [
+     [
+      "safe-harbor",
+      1,
+      "linda"
+     ]
+    ]
+   }
   },
   "pancakes": {
    "id": "pancakes",
@@ -15489,7 +19510,20 @@
      "alchemist"
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "sell": [
+    [
+     "alchemist",
+     18
+    ]
+   ],
+   "price": 25,
+   "study": [
+    0,
+    30,
+    10,
+    5
+   ]
   },
   "paper-press": {
    "id": "paper-press",
@@ -15572,7 +19606,14 @@
      "@village-toilet"
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "study": [
+    0,
+    5,
+    0,
+    2,
+    1
+   ]
   },
   "philosopher-stone": {
    "id": "philosopher-stone",
@@ -15604,7 +19645,24 @@
      3
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     3575,
+     0,
+     20,
+     0,
+     3
+    ]
+   ],
+   "price": 5000,
+   "study": [
+    50,
+    30,
+    25,
+    20
+   ]
   },
   "philosophic-sulfur": {
    "id": "philosophic-sulfur",
@@ -15658,7 +19716,20 @@
      "builder"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "builder",
+     3
+    ]
+   ],
+   "price": 4,
+   "study": [
+    20,
+    0,
+    0,
+    2
+   ]
   },
   "pike": {
    "id": "pike",
@@ -15697,7 +19768,25 @@
      33.3
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 112,
+   "fix": 1,
+   "study": [
+    0,
+    40,
+    0,
+    3
+   ]
   },
   "pike-or-catfish": {
    "id": "pike-or-catfish",
@@ -15780,7 +19869,16 @@
      "green-men-from-far-lands"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "asked": {
+    "q": [
+     [
+      "hot-potato-delivery",
+      3,
+      "linda"
+     ]
+    ]
+   }
   },
   "polished-bronze": {
    "id": "polished-bronze",
@@ -15819,7 +19917,52 @@
      "smithy"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "furniture-maker",
+     54,
+     56,
+     20
+    ],
+    [
+     "jeweler",
+     55,
+     56,
+     40
+    ],
+    [
+     "smithy",
+     54,
+     55
+    ]
+   ],
+   "price": 75,
+   "study": [
+    30,
+    0,
+    20,
+    3
+   ],
+   "asked": {
+    "q": [
+     [
+      "the-nun-with-the-hairy-ass",
+      2,
+      "nun"
+     ]
+    ],
+    "t": [
+     [
+      "jeweler-ii",
+      5
+     ],
+     [
+      "jeweler-iii",
+      10
+     ]
+    ]
+   }
   },
   "polished-marble": {
    "id": "polished-marble",
@@ -15851,7 +19994,24 @@
      2
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "builder",
+     33,
+     0,
+     30,
+     2,
+     2
+    ]
+   ],
+   "price": 45,
+   "study": [
+    40,
+    0,
+    10,
+    20
+   ]
   },
   "polished-stone": {
    "id": "polished-stone",
@@ -15882,7 +20042,31 @@
      "builder"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "builder",
+     6,
+     0,
+     20
+    ]
+   ],
+   "price": 8,
+   "study": [
+    30,
+    0,
+    0,
+    5
+   ],
+   "asked": {
+    "q": [
+     [
+      "the-nun-with-the-hairy-ass",
+      4,
+      "nun"
+     ]
+    ]
+   }
   },
   "polishing-paste": {
    "id": "polishing-paste",
@@ -15934,7 +20118,16 @@
      "green-fragment"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "green-fragment",
+      1,
+      "larry"
+     ]
+    ]
+   }
   },
   "portal-fragment-gluttony": {
    "id": "portal-fragment-gluttony",
@@ -15992,7 +20185,16 @@
      "the-last-battle"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "the-last-battle",
+      1,
+      "old-god"
+     ]
+    ]
+   }
   },
   "portal-fragment-lust": {
    "id": "portal-fragment-lust",
@@ -16021,7 +20223,16 @@
      "high-price"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "high-price",
+      1,
+      "trademaster"
+     ]
+    ]
+   }
   },
   "portal-fragment-pride": {
    "id": "portal-fragment-pride",
@@ -16050,7 +20261,16 @@
      "more-portal-parts"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "more-portal-parts",
+      1,
+      "jack"
+     ]
+    ]
+   }
   },
   "portal-fragment-sloth": {
    "id": "portal-fragment-sloth",
@@ -16222,7 +20442,16 @@
      "rhyme-and-printed"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "stars-lies-contracts",
+      1,
+      "gunter"
+     ]
+    ]
+   }
   },
   "pr-machine-i": {
    "id": "pr-machine-i",
@@ -16532,7 +20761,18 @@
    ],
    "defaultRecipe": "precious-trinkets",
    "key": "trinkets_gold",
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "trademaster",
+     7509
+    ],
+    [
+     "jeweler",
+     7509
+    ]
+   ],
+   "price": 10500
   },
   "preservative": {
    "id": "preservative",
@@ -16563,7 +20803,20 @@
      "alchemist"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     286
+    ]
+   ],
+   "price": 400,
+   "study": [
+    20,
+    20,
+    10,
+    10
+   ]
   },
   "pretty-candle": {
    "id": "pretty-candle",
@@ -16595,7 +20848,24 @@
      2
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "apothecary",
+     143,
+     0,
+     20,
+     2,
+     2
+    ]
+   ],
+   "price": 200,
+   "study": [
+    0,
+    0,
+    20,
+    15
+   ]
   },
   "priest-s-clothes": {
    "id": "priest-s-clothes",
@@ -16672,7 +20942,13 @@
    ],
    "defaultRecipe": "primer",
    "key": "tool_book_1",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    0,
+    20,
+    20
+   ]
   },
   "printed-money": {
    "id": "printed-money",
@@ -16697,7 +20973,27 @@
    ],
    "defaultRecipe": "printed-money",
    "key": "printed_money",
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "januarius",
+     72,
+     0,
+     0,
+     0,
+     3
+    ]
+   ],
+   "price": 100,
+   "asked": {
+    "q": [
+     [
+      "press-for-cash",
+      20,
+      "jeffry"
+     ]
+    ]
+   }
   },
   "printed-poetry": {
    "id": "printed-poetry",
@@ -16722,7 +21018,16 @@
    ],
    "defaultRecipe": "printed-poetry",
    "key": "book_poetry",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "rhyme-and-printed",
+      1,
+      "gunter"
+     ]
+    ]
+   }
   },
   "printing-press": {
    "id": "printing-press",
@@ -16782,7 +21087,21 @@
      "fish-for-the-fisher"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    50,
+    0,
+    5
+   ],
+   "asked": {
+    "t": [
+     [
+      "fish-stand-iii",
+      1
+     ]
+    ]
+   }
   },
   "prosthetic-hand": {
    "id": "prosthetic-hand",
@@ -16807,7 +21126,16 @@
    ],
    "defaultRecipe": "prosthetic-hand",
    "key": "hand_prothesis",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "i-love-you-man",
+      1,
+      "gunter"
+     ]
+    ]
+   }
   },
   "pumpkin": {
    "id": "pumpkin",
@@ -16847,7 +21175,25 @@
    "use": {
     "en": 6
    },
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "vegetable-stand",
+     0,
+     0,
+     -1,
+     3,
+     2
+    ]
+   ],
+   "price": 20,
+   "study": [
+    0,
+    50,
+    30,
+    3,
+    3
+   ]
   },
   "pumpkin-bed": {
    "id": "pumpkin-bed",
@@ -16911,7 +21257,27 @@
      "seeds"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "vegetable-stand",
+     0,
+     0,
+     0,
+     0,
+     2
+    ],
+    [
+     "trademaster"
+    ]
+   ],
+   "price": 10,
+   "study": [
+    0,
+    30,
+    20,
+    2
+   ]
   },
   "pumpkin-soup": {
    "id": "pumpkin-soup",
@@ -16950,7 +21316,13 @@
      1
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    30,
+    0,
+    3
+   ]
   },
   "quicksilver": {
    "id": "quicksilver",
@@ -17048,7 +21420,22 @@
      "personal-zombie-zone"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "gunter"
+    ],
+    [
+     "alchemist"
+    ]
+   ],
+   "price": 700,
+   "study": [
+    30,
+    50,
+    25,
+    20
+   ]
   },
   "red-eye": {
    "id": "red-eye",
@@ -17077,7 +21464,16 @@
      "friend-or-foe"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "friend-or-foe",
+      1,
+      "dig"
+     ]
+    ]
+   }
   },
   "red-jelly": {
    "id": "red-jelly",
@@ -17135,7 +21531,14 @@
    "use": {
     "en": 3
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    30,
+    50,
+    2,
+    2
+   ]
   },
   "red-techbook": {
    "id": "red-techbook",
@@ -17237,7 +21640,24 @@
      2
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "builder",
+     43,
+     44,
+     20,
+     0,
+     2
+    ]
+   ],
+   "price": 60,
+   "study": [
+    30,
+    0,
+    10,
+    10
+   ]
   },
   "reinforced-bow": {
    "id": "reinforced-bow",
@@ -17262,7 +21682,13 @@
    ],
    "defaultRecipe": "reinforced-bow",
    "key": "bow_1",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    30,
+    5,
+    3
+   ]
   },
   "reinforced-plank": {
    "id": "reinforced-plank",
@@ -17293,7 +21719,22 @@
      "builder"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "builder",
+     13,
+     0,
+     8
+    ]
+   ],
+   "price": 18,
+   "study": [
+    25,
+    0,
+    10,
+    10
+   ]
   },
   "repair-bridge": {
    "id": "repair-bridge",
@@ -17481,7 +21922,13 @@
      "rhododendron-bush"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "study": [
+    30,
+    0,
+    0,
+    3
+   ]
   },
   "rhododendron-bush": {
    "id": "rhododendron-bush",
@@ -17539,7 +21986,29 @@
      "vegetable-stand"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "herm",
+     150,
+     0,
+     0,
+     0,
+     3
+    ],
+    [
+     "vegetable-stand",
+     92,
+     106
+    ]
+   ],
+   "price": 150,
+   "study": [
+    0,
+    50,
+    10,
+    10
+   ]
   },
   "rich-growth-elixir": {
    "id": "rich-growth-elixir",
@@ -17571,7 +22040,24 @@
      2
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     286,
+     0,
+     20,
+     0,
+     2
+    ]
+   ],
+   "price": 400,
+   "study": [
+    0,
+    25,
+    10,
+    10
+   ]
   },
   "river-fish-fillet": {
    "id": "river-fish-fillet",
@@ -17606,7 +22092,31 @@
      2
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "herm",
+     8,
+     0,
+     5
+    ]
+   ],
+   "price": 11,
+   "study": [
+    0,
+    20,
+    0,
+    2
+   ],
+   "asked": {
+    "q": [
+     [
+      "fish-for-the-fisher",
+      5,
+      "fisherman"
+     ]
+    ]
+   }
   },
   "roach": {
    "id": "roach",
@@ -17645,7 +22155,29 @@
      99
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand"
+    ]
+   ],
+   "price": 10,
+   "fix": 1,
+   "study": [
+    0,
+    30,
+    0,
+    2
+   ],
+   "asked": {
+    "q": [
+     [
+      "the-quiet-art",
+      1,
+      "herm"
+     ]
+    ]
+   }
   },
   "roach-or-gudgeon": {
    "id": "roach-or-gudgeon",
@@ -17699,7 +22231,16 @@
      "go-wild-in-the-wild-lands"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "go-wild-in-the-wild-lands",
+      1,
+      "hans"
+     ]
+    ]
+   }
   },
   "rubedo-crystallis": {
    "id": "rubedo-crystallis",
@@ -17753,7 +22294,20 @@
      "friendship-written-in-the-stars"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy"
+    ]
+   ],
+   "price": 10,
+   "fix": 1,
+   "study": [
+    10,
+    0,
+    0,
+    2
+   ]
   },
   "rusty-axe": {
    "id": "rusty-axe",
@@ -17782,7 +22336,20 @@
      "the-prologue"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy"
+    ]
+   ],
+   "price": 10,
+   "fix": 1,
+   "study": [
+    10,
+    0,
+    0,
+    2
+   ]
   },
   "rusty-hammer": {
    "id": "rusty-hammer",
@@ -17811,7 +22378,20 @@
      "graveyard"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy"
+    ]
+   ],
+   "price": 10,
+   "fix": 1,
+   "study": [
+    10,
+    0,
+    0,
+    2
+   ]
   },
   "rusty-pickaxe": {
    "id": "rusty-pickaxe",
@@ -17840,7 +22420,20 @@
      "the-prologue"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy"
+    ]
+   ],
+   "price": 10,
+   "fix": 1,
+   "study": [
+    10,
+    0,
+    0,
+    2
+   ]
   },
   "rusty-shovel": {
    "id": "rusty-shovel",
@@ -17869,7 +22462,20 @@
      "graveyard"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy"
+    ]
+   ],
+   "price": 10,
+   "fix": 1,
+   "study": [
+    10,
+    0,
+    0,
+    2
+   ]
   },
   "rusty-sword": {
    "id": "rusty-sword",
@@ -17892,7 +22498,20 @@
    "recipes": [],
    "defaultRecipe": null,
    "key": "sword_0",
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy"
+    ]
+   ],
+   "price": 10,
+   "fix": 1,
+   "study": [
+    10,
+    0,
+    0,
+    2
+   ]
   },
   "salmon": {
    "id": "salmon",
@@ -17931,7 +22550,25 @@
      50
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 126,
+   "fix": 1,
+   "study": [
+    0,
+    60,
+    0,
+    5
+   ]
   },
   "salt": {
    "id": "salt",
@@ -17969,7 +22606,27 @@
      "baker"
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "sell": [
+    [
+     "apothecary",
+     15,
+     0,
+     5
+    ],
+    [
+     "baker",
+     15
+    ]
+   ],
+   "price": 20,
+   "study": [
+    0,
+    0,
+    10,
+    3,
+    2
+   ]
   },
   "sand": {
    "id": "sand",
@@ -18003,7 +22660,14 @@
      "sand-pit"
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "study": [
+    5,
+    5,
+    0,
+    1,
+    1
+   ]
   },
   "sand-digger-stand": {
    "id": "sand-digger-stand",
@@ -18060,7 +22724,13 @@
     ],
     "ins": 5
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    10,
+    30,
+    10
+   ]
   },
   "sawhorse": {
    "id": "sawhorse",
@@ -18179,7 +22849,14 @@
      "alchemy-lab"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "alchemist",
+     37
+    ]
+   ],
+   "price": 50
   },
   "science-kit-ii": {
    "id": "science-kit-ii",
@@ -18211,7 +22888,18 @@
      2
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "alchemist",
+     366,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 500
   },
   "scroll-cabinet": {
    "id": "scroll-cabinet",
@@ -18260,7 +22948,37 @@
    ],
    "defaultRecipe": "sculpture-kit-i",
    "key": "sculpture_kit_1",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    40,
+    0,
+    10,
+    10
+   ],
+   "asked": {
+    "t": [
+     [
+      "apothecary-ii",
+      1
+     ],
+     [
+      "tailor-ii",
+      1
+     ],
+     [
+      "furniture-maker-ii",
+      2
+     ],
+     [
+      "baker-ii",
+      2
+     ],
+     [
+      "fish-stand-ii",
+      2
+     ]
+    ]
+   }
   },
   "sculpture-kit-ii": {
    "id": "sculpture-kit-ii",
@@ -18285,7 +23003,41 @@
    ],
    "defaultRecipe": "sculpture-kit-ii",
    "key": "sculpture_kit_2",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    50,
+    0,
+    10,
+    10
+   ],
+   "asked": {
+    "t": [
+     [
+      "apothecary-iii",
+      1
+     ],
+     [
+      "alchemist-ii",
+      2
+     ],
+     [
+      "jeweler-ii",
+      2
+     ],
+     [
+      "repair-block",
+      5
+     ],
+     [
+      "repair-large-house",
+      4
+     ],
+     [
+      "repair-house",
+      4
+     ]
+    ]
+   }
   },
   "sea-fish-fillet": {
    "id": "sea-fish-fillet",
@@ -18312,7 +23064,22 @@
    ],
    "defaultRecipe": "sea-fish-fillet-from-anchovy-or-mackerel",
    "key": "fillet_fish_sea",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    20,
+    0,
+    2
+   ],
+   "asked": {
+    "q": [
+     [
+      "fish-for-the-fisher",
+      5,
+      "fisherman"
+     ]
+    ]
+   }
   },
   "secret-combination": {
    "id": "secret-combination",
@@ -18341,7 +23108,16 @@
      "dungeons-and-that-s-it-probably"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "dungeons-and-that-s-it-probably",
+      1,
+      "albert"
+     ]
+    ]
+   }
   },
   "seed-oil": {
    "id": "seed-oil",
@@ -18375,7 +23151,14 @@
    "runes": {
     "blue": 1
    },
-   "stack": 50
+   "stack": 50,
+   "study": [
+    0,
+    10,
+    0,
+    2,
+    1
+   ]
   },
   "separatio-membrane": {
    "id": "separatio-membrane",
@@ -18454,7 +23237,13 @@
      "tree-stump"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "study": [
+    10,
+    0,
+    0,
+    1
+   ]
   },
   "shrimp-bait": {
    "id": "shrimp-bait",
@@ -18506,7 +23295,16 @@
      "stars-lies-contracts"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "stars-lies-contracts",
+      1,
+      "gunter"
+     ]
+    ]
+   }
   },
   "signed-printed-money": {
    "id": "signed-printed-money",
@@ -18535,7 +23333,16 @@
      "press-for-cash"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "asked": {
+    "q": [
+     [
+      "press-for-cash",
+      10,
+      "jeffry"
+     ]
+    ]
+   }
   },
   "silver-talisman": {
    "id": "silver-talisman",
@@ -18567,7 +23374,25 @@
      2
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "jeweler",
+     0,
+     0,
+     0,
+     0,
+     3
+    ]
+   ],
+   "price": 2250,
+   "fix": 1,
+   "study": [
+    0,
+    0,
+    40,
+    20
+   ]
   },
   "silverfin": {
    "id": "silverfin",
@@ -18599,7 +23424,25 @@
      30.8
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 112,
+   "fix": 1,
+   "study": [
+    0,
+    60,
+    0,
+    5
+   ]
   },
   "simple-bow": {
    "id": "simple-bow",
@@ -18630,7 +23473,13 @@
      "friendship-written-in-the-stars"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    10,
+    0,
+    2
+   ]
   },
   "simple-candle": {
    "id": "simple-candle",
@@ -18661,7 +23510,29 @@
      "apothecary"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "apothecary",
+     72
+    ]
+   ],
+   "price": 100,
+   "study": [
+    0,
+    0,
+    10,
+    5
+   ],
+   "asked": {
+    "q": [
+     [
+      "can-t-see-the-forest-for-the-iron",
+      1,
+      "sven"
+     ]
+    ]
+   }
   },
   "simple-chest": {
    "id": "simple-chest",
@@ -18720,7 +23591,35 @@
      "apothecary"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "trademaster",
+     150
+    ],
+    [
+     "apothecary",
+     107,
+     0,
+     10
+    ]
+   ],
+   "price": 150,
+   "study": [
+    0,
+    0,
+    20,
+    5
+   ],
+   "asked": {
+    "q": [
+     [
+      "strings-and-sinners",
+      1,
+      "linda"
+     ]
+    ]
+   }
   },
   "simple-iron-part": {
    "id": "simple-iron-part",
@@ -18768,7 +23667,13 @@
    ],
    "defaultRecipe": "simple-pike",
    "key": "pike_0",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    10,
+    0,
+    2
+   ]
   },
   "skin": {
    "id": "skin",
@@ -18800,7 +23705,13 @@
      "@autopsy-table-i"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "study": [
+    0,
+    10,
+    10,
+    5
+   ]
   },
   "skull": {
    "id": "skull",
@@ -18832,7 +23743,13 @@
      "@autopsy-table-i"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "study": [
+    10,
+    0,
+    10,
+    5
+   ]
   },
   "slug": {
    "id": "slug",
@@ -18904,7 +23821,16 @@
    ],
    "defaultRecipe": "small-printing-press",
    "key": "small_printing_press",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "i-love-you-man",
+      1,
+      "gunter"
+     ]
+    ]
+   }
   },
   "smithy-bellows": {
    "id": "smithy-bellows",
@@ -19077,7 +24003,13 @@
     "en": 5,
     "ins": 20
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    20,
+    20,
+    10
+   ]
   },
   "soldier-s-stew": {
    "id": "soldier-s-stew",
@@ -19121,7 +24053,13 @@
      1
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    20,
+    10,
+    10
+   ]
   },
   "solution-for-corpses": {
    "id": "solution-for-corpses",
@@ -19222,7 +24160,22 @@
      "talk"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "study": [
+    50,
+    20,
+    0,
+    30
+   ],
+   "asked": {
+    "q": [
+     [
+      "organic-music",
+      4,
+      "harold"
+     ]
+    ]
+   }
   },
   "speech-writing-device": {
    "id": "speech-writing-device",
@@ -19247,7 +24200,16 @@
    ],
    "defaultRecipe": "speech-writing-device",
    "key": "speech_writing_device",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "well-deserved-rest",
+      1,
+      "nun"
+     ]
+    ]
+   }
   },
   "speed-potion": {
    "id": "speed-potion",
@@ -19330,7 +24292,32 @@
      2
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     0,
+     0,
+     -1,
+     0,
+     2
+    ],
+    [
+     "baker",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 400,
+   "study": [
+    0,
+    30,
+    10,
+    5
+   ]
   },
   "spiked-barricade-i": {
    "id": "spiked-barricade-i",
@@ -19454,7 +24441,13 @@
    ],
    "defaultRecipe": "starter-alchemist-s-kit",
    "key": "alchemy_kit_1",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    0,
+    20,
+    30
+   ]
   },
   "steel-anvil": {
    "id": "steel-anvil",
@@ -19510,7 +24503,34 @@
      3
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy",
+     0,
+     0,
+     0,
+     0,
+     3
+    ]
+   ],
+   "price": 25000,
+   "fix": 1,
+   "study": [
+    100,
+    0,
+    20,
+    10
+   ],
+   "asked": {
+    "q": [
+     [
+      "not-in-shining-armor-yet",
+      5,
+      "herbert"
+     ]
+    ]
+   }
   },
   "steel-axe": {
    "id": "steel-axe",
@@ -19535,7 +24555,13 @@
    ],
    "defaultRecipe": "steel-axe",
    "key": "axe_3",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    100,
+    0,
+    20,
+    10
+   ]
   },
   "steel-detail": {
    "id": "steel-detail",
@@ -19567,7 +24593,33 @@
      3
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "smithy",
+     221,
+     0,
+     0,
+     0,
+     3
+    ]
+   ],
+   "price": 300,
+   "study": [
+    40,
+    0,
+    25,
+    7
+   ],
+   "asked": {
+    "q": [
+     [
+      "organic-music",
+      6,
+      "harold"
+     ]
+    ]
+   }
   },
   "steel-hammer": {
    "id": "steel-hammer",
@@ -19599,7 +24651,13 @@
      3
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "study": [
+    100,
+    0,
+    20,
+    10
+   ]
   },
   "steel-ingot": {
    "id": "steel-ingot",
@@ -19629,7 +24687,22 @@
      "talk"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "study": [
+    20,
+    0,
+    25,
+    3
+   ],
+   "asked": {
+    "q": [
+     [
+      "man-of-steel",
+      3,
+      "jack"
+     ]
+    ]
+   }
   },
   "steel-pickaxe": {
    "id": "steel-pickaxe",
@@ -19654,7 +24727,13 @@
    ],
    "defaultRecipe": "steel-pickaxe",
    "key": "pickaxe_3",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    100,
+    0,
+    20,
+    10
+   ]
   },
   "steel-screws": {
    "id": "steel-screws",
@@ -19696,7 +24775,52 @@
      3
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "sell": [
+    [
+     "furniture-maker",
+     111,
+     0,
+     20,
+     0,
+     3
+    ],
+    [
+     "builder",
+     111,
+     0,
+     0,
+     0,
+     3
+    ],
+    [
+     "smithy",
+     111,
+     0,
+     20,
+     0,
+     3
+    ]
+   ],
+   "price": 150,
+   "study": [
+    60,
+    0,
+    25,
+    10
+   ],
+   "asked": {
+    "t": [
+     [
+      "furniture-maker-iii",
+      10
+     ],
+     [
+      "smithy-iii",
+      12
+     ]
+    ]
+   }
   },
   "steel-shovel": {
    "id": "steel-shovel",
@@ -19728,7 +24852,22 @@
      3
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "study": [
+    100,
+    0,
+    20,
+    10
+   ],
+   "asked": {
+    "q": [
+     [
+      "green-men-from-far-lands",
+      3,
+      "refugees"
+     ]
+    ]
+   }
   },
   "steel-sword": {
    "id": "steel-sword",
@@ -19760,7 +24899,25 @@
      3
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "sell": [
+    [
+     "smithy",
+     0,
+     0,
+     0,
+     0,
+     3
+    ]
+   ],
+   "price": 25000,
+   "fix": 1,
+   "study": [
+    100,
+    0,
+    20,
+    10
+   ]
   },
   "steel-tools": {
    "id": "steel-tools",
@@ -19792,7 +24949,13 @@
      3
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    100,
+    20,
+    10
+   ]
   },
   "steel-zombie-collar": {
    "id": "steel-zombie-collar",
@@ -19824,7 +24987,25 @@
      3
     ]
    ],
-   "stack": 10
+   "stack": 10,
+   "sell": [
+    [
+     "jeweler",
+     0,
+     0,
+     0,
+     0,
+     3
+    ]
+   ],
+   "price": 9000,
+   "fix": 1,
+   "study": [
+    0,
+    30,
+    70,
+    20
+   ]
   },
   "stick": {
    "id": "stick",
@@ -19876,7 +25057,21 @@
      "driftwood"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     1
+    ]
+   ],
+   "price": 1,
+   "study": [
+    5,
+    5,
+    0,
+    1,
+    1
+   ]
   },
   "stone": {
    "id": "stone",
@@ -19914,7 +25109,14 @@
      "stone-deposit"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "study": [
+    10,
+    0,
+    0,
+    1,
+    1
+   ]
   },
   "stone-fence-i": {
    "id": "stone-fence-i",
@@ -19939,7 +25141,13 @@
    ],
    "defaultRecipe": "stone-fence-i",
    "key": "grave_bot_stn_1",
-   "stack": 10
+   "stack": 10,
+   "study": [
+    0,
+    0,
+    20,
+    15
+   ]
   },
   "stone-fence-ii": {
    "id": "stone-fence-ii",
@@ -19964,7 +25172,13 @@
    ],
    "defaultRecipe": "stone-fence-ii",
    "key": "grave_bot_stn_2",
-   "stack": 10
+   "stack": 10,
+   "study": [
+    0,
+    0,
+    40,
+    20
+   ]
   },
   "stone-kit": {
    "id": "stone-kit",
@@ -19990,7 +25204,22 @@
    ],
    "defaultRecipe": "stone-kit-stonemason-s-workbench",
    "key": "stone_kit_1",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    25,
+    0,
+    10,
+    10
+   ],
+   "asked": {
+    "q": [
+     [
+      "brawns-and-brains",
+      2,
+      "nun"
+     ]
+    ]
+   }
   },
   "stone-marbles": {
    "id": "stone-marbles",
@@ -20015,7 +25244,14 @@
    ],
    "defaultRecipe": "stone-marbles",
    "key": "trinkets_stone",
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "builder",
+     236
+    ]
+   ],
+   "price": 330
   },
   "stonemason-s-workbench": {
    "id": "stonemason-s-workbench",
@@ -20197,7 +25433,23 @@
    ],
    "defaultRecipe": "supply-appliances-i",
    "key": "box_appliances_1",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "furniture-maker",
+      10,
+      3,
+      75
+     ],
+     [
+      "baker",
+      10,
+      3,
+      75
+     ]
+    ]
+   }
   },
   "supply-appliances-ii": {
    "id": "supply-appliances-ii",
@@ -20222,7 +25474,23 @@
    ],
    "defaultRecipe": "supply-appliances-ii",
    "key": "box_appliances_2",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "alchemist",
+      10,
+      3,
+      75
+     ],
+     [
+      "brewery",
+      10,
+      3,
+      75
+     ]
+    ]
+   }
   },
   "supply-beer": {
    "id": "supply-beer",
@@ -20247,7 +25515,17 @@
    ],
    "defaultRecipe": "supply-beer",
    "key": "box_beer",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "tavern",
+      10,
+      2,
+      50
+     ]
+    ]
+   }
   },
   "supply-building-materials-i": {
    "id": "supply-building-materials-i",
@@ -20272,7 +25550,23 @@
    ],
    "defaultRecipe": "supply-building-materials-i",
    "key": "box_building_kit_1",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "jack",
+      5,
+      2,
+      10
+     ],
+     [
+      "smithy",
+      10,
+      0,
+      40
+     ]
+    ]
+   }
   },
   "supply-building-materials-ii": {
    "id": "supply-building-materials-ii",
@@ -20297,7 +25591,17 @@
    ],
    "defaultRecipe": "supply-building-materials-ii",
    "key": "box_building_kit_2",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "smithy",
+      10,
+      2,
+      50
+     ]
+    ]
+   }
   },
   "supply-clothes-i": {
    "id": "supply-clothes-i",
@@ -20323,7 +25627,23 @@
    ],
    "defaultRecipe": "supply-clothes-i-sewing-table",
    "key": "box_clothes_1",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "tailor",
+      10,
+      2,
+      50
+     ],
+     [
+      "fish-stand",
+      10,
+      3,
+      50
+     ]
+    ]
+   }
   },
   "supply-clothes-ii": {
    "id": "supply-clothes-ii",
@@ -20348,7 +25668,17 @@
    ],
    "defaultRecipe": "supply-clothes-ii",
    "key": "box_clothes_2",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "tailor",
+      10,
+      3,
+      75
+     ]
+    ]
+   }
   },
   "supply-cutlery-i": {
    "id": "supply-cutlery-i",
@@ -20373,7 +25703,17 @@
    ],
    "defaultRecipe": "supply-cutlery-i",
    "key": "box_cutlery_1",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "apothecary",
+      10,
+      0,
+      30
+     ]
+    ]
+   }
   },
   "supply-cutlery-ii": {
    "id": "supply-cutlery-ii",
@@ -20398,7 +25738,23 @@
    ],
    "defaultRecipe": "supply-cutlery-ii",
    "key": "box_cutlery_2",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "apothecary",
+      10,
+      3,
+      75
+     ],
+     [
+      "brewery",
+      10,
+      2,
+      75
+     ]
+    ]
+   }
   },
   "supply-engineering-mechanism": {
    "id": "supply-engineering-mechanism",
@@ -20423,7 +25779,35 @@
    ],
    "defaultRecipe": "supply-engineering-mechanism",
    "key": "box_engineering_mechanism",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "alchemist",
+      10,
+      2,
+      50
+     ],
+     [
+      "jeweler",
+      10,
+      3,
+      50
+     ],
+     [
+      "builder",
+      10,
+      3,
+      50
+     ],
+     [
+      "smithy",
+      10,
+      3,
+      50
+     ]
+    ]
+   }
   },
   "supply-fabric": {
    "id": "supply-fabric",
@@ -20449,7 +25833,23 @@
    ],
    "defaultRecipe": "supply-fabric-woodworking-workbench-i",
    "key": "box_fabric",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "jack",
+      5,
+      2,
+      10
+     ],
+     [
+      "tailor",
+      10,
+      0,
+      30
+     ]
+    ]
+   }
   },
   "supply-flour-sack": {
    "id": "supply-flour-sack",
@@ -20474,7 +25874,17 @@
    ],
    "defaultRecipe": "supply-flour-sack",
    "key": "box_flour",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "baker",
+      10,
+      0,
+      30
+     ]
+    ]
+   }
   },
   "supply-furniture-i": {
    "id": "supply-furniture-i",
@@ -20499,7 +25909,17 @@
    ],
    "defaultRecipe": "supply-furniture-i",
    "key": "box_furniture_1",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "furniture-maker",
+      10,
+      0,
+      30
+     ]
+    ]
+   }
   },
   "supply-furniture-ii": {
    "id": "supply-furniture-ii",
@@ -20524,7 +25944,17 @@
    ],
    "defaultRecipe": "supply-furniture-ii",
    "key": "box_furniture_2",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "furniture-maker",
+      10,
+      2,
+      50
+     ]
+    ]
+   }
   },
   "supply-iron": {
    "id": "supply-iron",
@@ -20550,7 +25980,30 @@
    ],
    "defaultRecipe": "supply-iron-woodworking-workbench-i",
    "key": "box_iron_ingot",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "workshop-hours",
+      1,
+      "jack"
+     ]
+    ],
+    "o": [
+     [
+      "jack",
+      1,
+      0,
+      20
+     ],
+     [
+      "jack",
+      5,
+      2,
+      10
+     ]
+    ]
+   }
   },
   "supply-iron-tools": {
    "id": "supply-iron-tools",
@@ -20575,7 +26028,35 @@
    ],
    "defaultRecipe": "supply-iron-tools",
    "key": "box_tools_iron",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "baker",
+      10,
+      2,
+      40
+     ],
+     [
+      "fish-stand",
+      10,
+      2,
+      40
+     ],
+     [
+      "jeweler",
+      10,
+      0,
+      40
+     ],
+     [
+      "builder",
+      10,
+      0,
+      40
+     ]
+    ]
+   }
   },
   "supply-kitchen-utensils": {
    "id": "supply-kitchen-utensils",
@@ -20600,7 +26081,29 @@
    ],
    "defaultRecipe": "supply-kitchen-utensils",
    "key": "box_kitchen_utensils",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "apothecary",
+      10,
+      2,
+      50
+     ],
+     [
+      "alchemist",
+      10,
+      0,
+      50
+     ],
+     [
+      "brewery",
+      10,
+      0,
+      50
+     ]
+    ]
+   }
   },
   "supply-pallet": {
    "id": "supply-pallet",
@@ -20677,7 +26180,29 @@
    ],
    "defaultRecipe": "supply-preserves-i-from-beet",
    "key": "box_preserves_1",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "vegetable-stand",
+      10,
+      2,
+      50
+     ],
+     [
+      "fish-stand",
+      10,
+      0,
+      50
+     ],
+     [
+      "tavern",
+      10,
+      0,
+      50
+     ]
+    ]
+   }
   },
   "supply-preserves-ii": {
    "id": "supply-preserves-ii",
@@ -20707,7 +26232,17 @@
    ],
    "defaultRecipe": "supply-preserves-ii-from-onion-bronze",
    "key": "box_preserves_2",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "vegetable-stand",
+      10,
+      3,
+      75
+     ]
+    ]
+   }
   },
   "supply-station": {
    "id": "supply-station",
@@ -20756,7 +26291,23 @@
    ],
    "defaultRecipe": "supply-steel-tools",
    "key": "box_tools_steel",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "jeweler",
+      10,
+      2,
+      75
+     ],
+     [
+      "builder",
+      10,
+      2,
+      75
+     ]
+    ]
+   }
   },
   "supply-vegetables": {
    "id": "supply-vegetables",
@@ -20791,7 +26342,17 @@
    ],
    "defaultRecipe": "supply-vegetables-from-beet",
    "key": "box_vegetables",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "vegetable-stand",
+      10,
+      0,
+      30
+     ]
+    ]
+   }
   },
   "supply-wine": {
    "id": "supply-wine",
@@ -20818,7 +26379,17 @@
    ],
    "defaultRecipe": "supply-wine-from-wine-bronze",
    "key": "box_vine",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "o": [
+     [
+      "tavern",
+      10,
+      3,
+      50
+     ]
+    ]
+   }
   },
   "surgeon-s-error": {
    "id": "surgeon-s-error",
@@ -20876,7 +26447,13 @@
    ],
    "defaultRecipe": "surgeon-s-kit",
    "key": "surgical_kit_2",
-   "stack": 1
+   "stack": 1,
+   "study": [
+    0,
+    0,
+    40,
+    10
+   ]
   },
   "swamp-ghost": {
    "id": "swamp-ghost",
@@ -20908,7 +26485,25 @@
      36.4
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 154,
+   "fix": 1,
+   "study": [
+    0,
+    25,
+    25,
+    5
+   ]
   },
   "swamp-mushroom": {
    "id": "swamp-mushroom",
@@ -20944,7 +26539,14 @@
     "en": 7,
     "ins": 1
    },
-   "stack": 20
+   "stack": 20,
+   "study": [
+    0,
+    30,
+    0,
+    2,
+    2
+   ]
   },
   "tablet-beet": {
    "id": "tablet-beet",
@@ -21185,7 +26787,13 @@
    ],
    "defaultRecipe": "tableware",
    "key": "tableware",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    20,
+    20,
+    10,
+    10
+   ]
   },
   "tannin-liquid": {
    "id": "tannin-liquid",
@@ -21217,7 +26825,24 @@
      3
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     1430,
+     0,
+     20,
+     0,
+     3
+    ]
+   ],
+   "price": 2000,
+   "study": [
+    50,
+    0,
+    10,
+    15
+   ]
   },
   "temptation": {
    "id": "temptation",
@@ -21279,7 +26904,24 @@
      1
     ]
    },
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     1073,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 1500,
+   "study": [
+    30,
+    30,
+    15,
+    10
+   ]
   },
   "timber-stockpile": {
    "id": "timber-stockpile",
@@ -21333,7 +26975,14 @@
     "red": 2,
     "blue": 1
    },
-   "stack": 99
+   "stack": 99,
+   "study": [
+    20,
+    0,
+    10,
+    3,
+    1
+   ]
   },
   "toast-with-onions": {
    "id": "toast-with-onions",
@@ -21372,7 +27021,13 @@
      1
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    20,
+    10,
+    3
+   ]
   },
   "tool-bag": {
    "id": "tool-bag",
@@ -21458,7 +27113,23 @@
     "red": 1,
     "green": 1
    },
-   "stack": 50
+   "stack": 50,
+   "study": [
+    0,
+    0,
+    20,
+    3,
+    2
+   ],
+   "asked": {
+    "q": [
+     [
+      "chasing-fairy-lights",
+      1,
+      "soul"
+     ]
+    ]
+   }
   },
   "town-gratitude": {
    "id": "town-gratitude",
@@ -21734,7 +27405,13 @@
    "recipes": [],
    "defaultRecipe": null,
    "key": "exp_red_potion",
-   "stack": 20
+   "stack": 20,
+   "study": [
+    30,
+    0,
+    0,
+    5
+   ]
   },
   "toxic-potion-ii": {
    "id": "toxic-potion-ii",
@@ -21757,7 +27434,13 @@
    "recipes": [],
    "defaultRecipe": null,
    "key": "exp_red_potion_2",
-   "stack": 20
+   "stack": 20,
+   "study": [
+    50,
+    0,
+    0,
+    10
+   ]
   },
   "transmutation-potion-i": {
    "id": "transmutation-potion-i",
@@ -21828,7 +27511,16 @@
    ],
    "defaultRecipe": "trilogy",
    "key": "trilogy",
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "well-deserved-rest",
+      1,
+      "nun"
+     ]
+    ]
+   }
   },
   "trout": {
    "id": "trout",
@@ -21860,7 +27552,25 @@
      25
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 140,
+   "fix": 1,
+   "study": [
+    0,
+    60,
+    0,
+    5
+   ]
   },
   "tuna": {
    "id": "tuna",
@@ -21892,7 +27602,20 @@
      40
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "fish-stand"
+    ]
+   ],
+   "price": 84,
+   "fix": 1,
+   "study": [
+    0,
+    60,
+    0,
+    5
+   ]
   },
   "tuna-or-salmon": {
    "id": "tuna-or-salmon",
@@ -21949,7 +27672,24 @@
      3
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     1073,
+     0,
+     20,
+     0,
+     3
+    ]
+   ],
+   "price": 1500,
+   "study": [
+    0,
+    50,
+    10,
+    10
+   ]
   },
   "underground-conveyor": {
    "id": "underground-conveyor",
@@ -22276,7 +28016,13 @@
    ],
    "defaultRecipe": "urn-with-ashes-i",
    "key": "urn_ashes_1",
-   "stack": 20
+   "stack": 20,
+   "study": [
+    0,
+    10,
+    20,
+    5
+   ]
   },
   "urn-with-ashes-ii": {
    "id": "urn-with-ashes-ii",
@@ -22301,7 +28047,13 @@
    ],
    "defaultRecipe": "urn-with-ashes-ii",
    "key": "urn_ashes_2",
-   "stack": 20
+   "stack": 20,
+   "study": [
+    0,
+    10,
+    30,
+    10
+   ]
   },
   "vegetable-salad": {
    "id": "vegetable-salad",
@@ -22427,7 +28179,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    10,
+    10,
+    3
+   ]
   },
   "victory-banner": {
    "id": "victory-banner",
@@ -22633,7 +28391,16 @@
      "varnish-before-you-fiddle"
     ]
    ],
-   "stack": 1
+   "stack": 1,
+   "asked": {
+    "q": [
+     [
+      "strings-and-sinners",
+      1,
+      "linda"
+     ]
+    ]
+   }
   },
   "votive-candle-stand-i": {
    "id": "votive-candle-stand-i",
@@ -22796,7 +28563,13 @@
      "yard"
     ]
    ],
-   "stack": 999
+   "stack": 999,
+   "study": [
+    0,
+    5,
+    5,
+    1
+   ]
   },
   "weak-growth-elixir": {
    "id": "weak-growth-elixir",
@@ -22827,7 +28600,22 @@
      "alchemist"
     ]
    ],
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     143,
+     0,
+     10
+    ]
+   ],
+   "price": 200,
+   "study": [
+    0,
+    10,
+    10,
+    5
+   ]
   },
   "weaving-loom": {
    "id": "weaving-loom",
@@ -22887,7 +28675,45 @@
      "vegetable-stand"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     2,
+     0,
+     5,
+     0,
+     2
+    ],
+    [
+     "vegetable-stand",
+     2,
+     0,
+     10
+    ],
+    [
+     "brewery",
+     2,
+     0,
+     15
+    ]
+   ],
+   "price": 3,
+   "study": [
+    0,
+    20,
+    0,
+    1
+   ],
+   "asked": {
+    "q": [
+     [
+      "planted-and-delivered",
+      5,
+      "herm"
+     ]
+    ]
+   }
   },
   "wheat-bed": {
    "id": "wheat-bed",
@@ -22944,7 +28770,24 @@
      "vegetable-stand"
     ]
    ],
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "herm",
+     1
+    ],
+    [
+     "vegetable-stand",
+     1
+    ]
+   ],
+   "price": 2,
+   "study": [
+    0,
+    15,
+    0,
+    2
+   ]
   },
   "wine": {
    "id": "wine",
@@ -22983,7 +28826,38 @@
    "use": {
     "ins": -25
    },
-   "stack": 50
+   "stack": 50,
+   "sell": [
+    [
+     "brewery",
+     0,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 75,
+   "study": [
+    0,
+    30,
+    10,
+    10
+   ],
+   "asked": {
+    "q": [
+     [
+      "inflation",
+      3,
+      "merc-leader"
+     ],
+     [
+      "the-lord-s-vintage",
+      2,
+      "monk"
+     ]
+    ]
+   }
   },
   "wine-barrel": {
    "id": "wine-barrel",
@@ -23032,7 +28906,13 @@
    ],
    "defaultRecipe": "wood-wedge",
    "key": "wood_wedge",
-   "stack": 50
+   "stack": 50,
+   "study": [
+    10,
+    0,
+    0,
+    2
+   ]
   },
   "wooden-anvil": {
    "id": "wooden-anvil",
@@ -23093,7 +28973,40 @@
      2
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "furniture-maker",
+     13,
+     0,
+     20,
+     2,
+     2
+    ],
+    [
+     "builder",
+     13,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 18,
+   "study": [
+    20,
+    0,
+    0,
+    10
+   ],
+   "asked": {
+    "t": [
+     [
+      "furniture-maker-ii",
+      4
+     ]
+    ]
+   }
   },
   "wooden-billet": {
    "id": "wooden-billet",
@@ -23141,7 +29054,13 @@
    ],
    "defaultRecipe": "wooden-cross-i",
    "key": "grave_top_wd_1",
-   "stack": 10
+   "stack": 10,
+   "study": [
+    0,
+    0,
+    20,
+    5
+   ]
   },
   "wooden-cross-ii": {
    "id": "wooden-cross-ii",
@@ -23166,7 +29085,13 @@
    ],
    "defaultRecipe": "wooden-cross-ii",
    "key": "grave_top_wd_2",
-   "stack": 10
+   "stack": 10,
+   "study": [
+    0,
+    0,
+    30,
+    10
+   ]
   },
   "wooden-fence-i": {
    "id": "wooden-fence-i",
@@ -23191,7 +29116,13 @@
    ],
    "defaultRecipe": "wooden-fence-i",
    "key": "grave_bot_wd_1",
-   "stack": 10
+   "stack": 10,
+   "study": [
+    0,
+    0,
+    20,
+    5
+   ]
   },
   "wooden-fence-ii": {
    "id": "wooden-fence-ii",
@@ -23216,7 +29147,13 @@
    ],
    "defaultRecipe": "wooden-fence-ii",
    "key": "grave_bot_wd_2",
-   "stack": 10
+   "stack": 10,
+   "study": [
+    0,
+    0,
+    30,
+    10
+   ]
   },
   "wooden-joint": {
    "id": "wooden-joint",
@@ -23253,7 +29190,40 @@
      3
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "furniture-maker",
+     55,
+     0,
+     40,
+     0,
+     3
+    ],
+    [
+     "builder",
+     55,
+     0,
+     20,
+     0,
+     3
+    ]
+   ],
+   "price": 75,
+   "study": [
+    35,
+    0,
+    10,
+    10
+   ],
+   "asked": {
+    "t": [
+     [
+      "builder-iii",
+      4
+     ]
+    ]
+   }
   },
   "wooden-kit-i": {
    "id": "wooden-kit-i",
@@ -23286,7 +29256,98 @@
      "furniture-maker"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "furniture-maker",
+     4,
+     0,
+     10
+    ]
+   ],
+   "price": 5,
+   "study": [
+    25,
+    0,
+    10,
+    10
+   ],
+   "asked": {
+    "q": [
+     [
+      "give-materials",
+      5,
+      "jack"
+     ],
+     [
+      "brawns-and-brains",
+      2,
+      "nun"
+     ]
+    ],
+    "t": [
+     [
+      "apothecary",
+      3
+     ],
+     [
+      "vegetable-stand",
+      3
+     ],
+     [
+      "tailor",
+      3
+     ],
+     [
+      "furniture-maker",
+      4
+     ],
+     [
+      "baker",
+      4
+     ],
+     [
+      "fish-stand",
+      4
+     ],
+     [
+      "alchemist",
+      6
+     ],
+     [
+      "jeweler",
+      6
+     ],
+     [
+      "builder",
+      3
+     ],
+     [
+      "smithy",
+      3
+     ],
+     [
+      "tavern",
+      4
+     ],
+     [
+      "brewery",
+      4
+     ],
+     [
+      "repair-large-house",
+      8
+     ],
+     [
+      "repair-house",
+      4
+     ],
+     [
+      "repair-small-house",
+      3
+     ]
+    ]
+   }
   },
   "wooden-kit-ii": {
    "id": "wooden-kit-ii",
@@ -23311,7 +29372,32 @@
    ],
    "defaultRecipe": "wooden-kit-ii",
    "key": "wooden_kit_2",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    40,
+    0,
+    10,
+    10
+   ],
+   "asked": {
+    "q": [
+     [
+      "the-house-at-the-crossroads",
+      2,
+      "nun"
+     ]
+    ],
+    "t": [
+     [
+      "repair-large-house",
+      10
+     ],
+     [
+      "repair-house",
+      10
+     ]
+    ]
+   }
   },
   "wooden-plank": {
    "id": "wooden-plank",
@@ -23347,7 +29433,53 @@
      "builder"
     ]
    ],
-   "stack": 30
+   "stack": 30,
+   "sell": [
+    [
+     "herm",
+     7,
+     0,
+     0,
+     0,
+     2
+    ],
+    [
+     "furniture-maker",
+     7,
+     0,
+     10
+    ],
+    [
+     "builder",
+     7
+    ]
+   ],
+   "price": 10,
+   "study": [
+    15,
+    0,
+    0,
+    5
+   ],
+   "asked": {
+    "q": [
+     [
+      "dungeons-and-that-s-it-probably",
+      3,
+      "albert"
+     ],
+     [
+      "jack-in-a-boat",
+      5,
+      "jack"
+     ],
+     [
+      "eye-red-eye",
+      16,
+      "old-god"
+     ]
+    ]
+   }
   },
   "wooden-sign": {
    "id": "wooden-sign",
@@ -23378,7 +29510,13 @@
      "graveyard"
     ]
    ],
-   "stack": 10
+   "stack": 10,
+   "study": [
+    0,
+    0,
+    10,
+    3
+   ]
   },
   "wooden-trinkets": {
    "id": "wooden-trinkets",
@@ -23403,7 +29541,18 @@
    ],
    "defaultRecipe": "wooden-trinkets",
    "key": "trinkets_wood",
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "trademaster",
+     72
+    ],
+    [
+     "furniture-maker",
+     72
+    ]
+   ],
+   "price": 100
   },
   "woodworking-workbench-i": {
    "id": "woodworking-workbench-i",
@@ -23553,7 +29702,13 @@
      "steamed-up"
     ]
    },
-   "stack": 30
+   "stack": 30,
+   "study": [
+    0,
+    10,
+    10,
+    2
+   ]
   },
   "zombie": {
    "id": "zombie",
@@ -23714,7 +29869,21 @@
      "sewerena-the-sewer-arena"
     ]
    ],
-   "stack": 99
+   "stack": 99,
+   "sell": [
+    [
+     "gunter",
+     107
+    ]
+   ],
+   "price": 150,
+   "study": [
+    0,
+    0,
+    20,
+    3,
+    2
+   ]
   },
   "zombie-marble-quarry": {
    "id": "zombie-marble-quarry",
@@ -23763,7 +29932,13 @@
    ],
    "defaultRecipe": "zombie-mechanism",
    "key": "zombie_mechanism",
-   "stack": 30
+   "stack": 30,
+   "study": [
+    50,
+    0,
+    10,
+    10
+   ]
   },
   "zombie-miner": {
    "id": "zombie-miner",
@@ -23825,7 +30000,21 @@
      1
     ]
    },
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     103,
+     107
+    ]
+   ],
+   "price": 150,
+   "study": [
+    0,
+    20,
+    20,
+    5
+   ]
   },
   "zombie-motivator-potion-ii": {
    "id": "zombie-motivator-potion-ii",
@@ -23864,7 +30053,24 @@
      1
     ]
    },
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     536,
+     0,
+     0,
+     0,
+     2
+    ]
+   ],
+   "price": 750,
+   "study": [
+    0,
+    40,
+    35,
+    10
+   ]
   },
   "zombie-motivator-potion-iii": {
    "id": "zombie-motivator-potion-iii",
@@ -23903,7 +30109,24 @@
      1
     ]
    },
-   "stack": 20
+   "stack": 20,
+   "sell": [
+    [
+     "alchemist",
+     1788,
+     0,
+     0,
+     0,
+     3
+    ]
+   ],
+   "price": 2500,
+   "study": [
+    0,
+    80,
+    50,
+    15
+   ]
   },
   "zombie-power": {
    "id": "zombie-power",
@@ -23928,7 +30151,16 @@
    ],
    "defaultRecipe": "zombie-power",
    "key": "zombie_power",
-   "stack": 20
+   "stack": 20,
+   "asked": {
+    "q": [
+     [
+      "magic-mirror",
+      3,
+      "bishop"
+     ]
+    ]
+   }
   },
   "zombie-stone-quarry": {
    "id": "zombie-stone-quarry",

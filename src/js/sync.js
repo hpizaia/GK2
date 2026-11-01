@@ -1,8 +1,9 @@
 /* GK.sync: keeps the planner in the viewer's own private db document
    (Claude Artifact `db` + `user` capabilities):
-       data/users/<user id>/state  =  { v, updatedAt, state: {lists, listsGone, overrides, researched, groupChoice,
-                                                              perks, day, dayNumber, dayAnchor, dayDone, dayNotes,
-                                                              recents, goals, choice, have, done, example, legacyOf, …} }
+       data/users/<user id>/state  =  { v, updatedAt, state: {lists, listsGone, overrides, researched, studied,
+                                                              groupChoice, perks, day, dayNumber, dayAnchor, dayDone,
+                                                              dayNotes, recents, goals, choice, have, done, example,
+                                                              legacyOf, …} }
    lists (schema 5) = every plan list; goals … legacyOf (GK.store.MIRROR) = this device's open list, flat, for a page
    older than schema 5 still open elsewhere (it reads and edits them as its single plan; GK.store.sanitizeRemote folds
    such an edit back into that list, and turns a schema 4 doc with no `lists` into the list "Minha lista").
@@ -18,7 +19,8 @@
                                       recents by union, the newer side's order first (max 12);
                                       stamp it newer than both and push it
      - no base yet (first sync)       the newer updatedAt wins (an EPOCH plan is pushed only to an empty account)
-   dayDone / dayNotes (1.3.4) and recents (GK.store.LATE) are absent from docs written by older pages, and absent is not "empty":
+   dayDone / dayNotes (1.3.4), recents and studied ("Já estudei", ficha do item: item ids, merged by union) (GK.store.LATE) are
+   absent from docs written by older pages, and absent is not "empty":
      - the account wins but its doc has no such key   keep this device's value (keepLate), stamp, push
      - same updatedAt, the doc has them, we don't     adopt the doc's (adoptLate; an older page carried them along)
      - merge                                          dayDone by union on the merged day, dayNotes newer side wins

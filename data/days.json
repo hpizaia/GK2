@@ -84,6 +84,7 @@
    "events": [
     {
      "kind": "other",
+     "task": true,
      "en": "PR Machine: load Newspapers and Charged Hypno-devices to raise the zombie limit.",
      "pt": "Máquina de RP: carregue Jornais e Hipno dispositivos carregados para subir o limite de zumbis.",
      "tr": "machine",
@@ -105,6 +106,7 @@
       "pt": "Problemas na Congregação",
       "tr": "official"
      },
+     "short": null,
      "detail": {
       "en": "The only day the machine takes a load: +10 for 1 week (PR Machine I) up to +80 for 5 weeks (PR Machine V).",
       "pt": "Único dia em que a máquina aceita carga: de +10 por 1 semana (Máquina I) a +80 por 5 semanas (Máquina V)."
@@ -151,6 +153,7 @@
    "events": [
     {
      "kind": "battle",
+     "task": true,
      "en": "Battle day: most Town battles can only be started today.",
      "pt": "Dia de batalha: a maioria das batalhas do Povoado só pode ser iniciada hoje.",
      "tr": "machine",
@@ -169,6 +172,7 @@
       "pt": "Primeira... borra?",
       "tr": "official"
      },
+     "short": null,
      "detail": null,
      "quote": {
       "key": "battle_planer_other_day",
@@ -178,6 +182,7 @@
     },
     {
      "kind": "event",
+     "task": false,
      "en": "The bell rings in the morning and most zombies withdraw to the town centre.",
      "pt": "O sino toca de manhã e a maioria dos zumbis recua para o centro do Povoado.",
      "tr": "machine",
@@ -191,6 +196,10 @@
      "confidence": "high",
      "items": [],
      "unlock": null,
+     "short": {
+      "en": "Bell rings, zombies pull back",
+      "pt": "Sino toca e zumbis recuam"
+     },
      "detail": null,
      "quote": {
       "key": "70_guards_bells_10",
@@ -200,6 +209,7 @@
     },
     {
      "kind": "battle",
+     "task": false,
      "en": "Exceptions: the Sewer battles and two story battles can be fought on any day.",
      "pt": "Exceções: as batalhas dos Esgotos e duas batalhas da história valem em qualquer dia.",
      "tr": "machine",
@@ -212,6 +222,10 @@
      "confidence": "medium",
      "items": [],
      "unlock": null,
+     "short": {
+      "en": "Battles open on any day",
+      "pt": "Batalhas que valem qualquer dia"
+     },
      "detail": {
       "en": "Any day: Break Through to the Port, Sewer Brawl I and II, Break Through to the Bathhouse Basement, Sewerena. After Herbert hands over the red banner, battles stay open until the end of the next Sloth.",
       "pt": "Qualquer dia: Break Through to the Port, Sewer Brawl I e II, Break Through to the Bathhouse Basement, Sewerena. Depois que o Norberto entrega o estandarte vermelho, as batalhas ficam abertas até o fim da próxima Preguiça."
@@ -264,6 +278,7 @@
    "events": [
     {
      "kind": "merchant",
+     "task": true,
      "en": "Trade ship at the Main Pier: the Trademaster has new exotic goods.",
      "pt": "Navio mercante no Cais Principal: o Gerente Comercial tem produtos exóticos novos.",
      "tr": "machine",
@@ -282,6 +297,7 @@
       "pt": "Cristalino",
       "tr": "official"
      },
+     "short": null,
      "detail": null,
      "quote": {
       "key": "36_port_trademaster_lenses_5",
@@ -291,6 +307,7 @@
     },
     {
      "kind": "npc",
+     "task": true,
      "en": "Linda (Dockside Club) takes Green Scrolls: more citizens and a higher Likes limit.",
      "pt": "Linda (Clube do Cais) recebe Pergaminhos Verdes: mais moradores e limite maior de curtidas.",
      "tr": "machine",
@@ -311,6 +328,7 @@
       "pt": "Gente nova?",
       "tr": "official"
      },
+     "short": null,
      "detail": null,
      "quote": {
       "key": "tut_town_houses",
@@ -320,6 +338,7 @@
     },
     {
      "kind": "npc",
+     "task": true,
      "en": "Davy the Dagger (Dockside Club) takes looter orders, paid in Keys for Looters.",
      "pt": "Orlando, Olha a Faca (Clube do Cais) aceita encomendas aos saqueadores, pagas com chaves.",
      "tr": "machine",
@@ -340,6 +359,10 @@
       "pt": "Ratos do Porto",
       "tr": "official"
      },
+     "short": {
+      "en": "Davy the Dagger takes looter orders",
+      "pt": "Orlando aceita encomendas"
+     },
      "detail": null,
      "quote": {
       "key": "34_port_looters_keys_7",
@@ -349,6 +372,7 @@
     },
     {
      "kind": "quest",
+     "task": true,
      "en": "High Price: buy the Lust portal fragment from the Trademaster (1 gold).",
      "pt": "Preço Salgado: compre o fragmento de portal da Luxúria com o Gerente Comercial (1 ouro).",
      "tr": "machine",
@@ -369,6 +393,7 @@
       "pt": "Preço Salgado",
       "tr": "official"
      },
+     "short": null,
      "detail": null,
      "quote": {
       "key": "quest_open_125_astrologer_third_buy_d",
@@ -378,6 +403,7 @@
     },
     {
      "kind": "quest",
+     "task": true,
      "en": "Concept for a Concert: Linda's concert can only start today.",
      "pt": "Conceito para um Concerto: o show da Linda só pode começar hoje.",
      "tr": "machine",
@@ -395,6 +421,7 @@
       "pt": "Conceito para um Concerto",
       "tr": "official"
      },
+     "short": null,
      "detail": null,
      "quote": {
       "key": "67_port_incense_6",
@@ -404,6 +431,7 @@
     },
     {
      "kind": "other",
+     "task": false,
      "en": "At the very end of the day the Resurrection Lab gets its power back for Envy.",
      "pt": "No fim do dia, o Laboratório de Ressurreição recarrega para o dia da Inveja.",
      "tr": "machine",
@@ -414,6 +442,10 @@
      "confidence": "medium",
      "items": [],
      "unlock": null,
+     "short": {
+      "en": "Resurrection Lab recharges tonight",
+      "pt": "Laboratório recarrega à noite"
+     },
      "detail": null,
      "quote": null
     }
@@ -478,6 +510,7 @@
    "events": [
     {
      "kind": "other",
+     "task": true,
      "en": "Resurrection day: the storm powers the lab; one use raises a zombie on every prepared table.",
      "pt": "Dia de ressurreição: a tempestade energiza o laboratório; um uso ressuscita um zumbi em cada mesa pronta.",
      "tr": "machine",
@@ -505,6 +538,7 @@
       "pt": "Depois de consertar o Dispositivo de Ressurreição",
       "tr": "machine"
      },
+     "short": null,
      "detail": {
       "en": "Each table needs a corpse with all 6 organs, 1 Reanimation Liquid and a good enough collar. Once used, the power is gone until the next Envy.",
       "pt": "Cada mesa precisa de um corpo com os 6 órgãos, 1 Líquido de reanimação e uma coleira adequada. Depois de usar, só no próximo dia da Inveja."
@@ -517,6 +551,7 @@
     },
     {
      "kind": "npc",
+     "task": true,
      "en": "Blue Crystals (the Goddess's tears) appear by her statue in the Heart of the Swamp.",
      "pt": "Cristais azuis (lágrimas da Deusa) surgem junto à estátua no Coração do Pântano.",
      "tr": "machine",
@@ -537,6 +572,10 @@
       "pt": "Coração do Pântano",
       "tr": "official"
      },
+     "short": {
+      "en": "Blue Crystals by the Goddess statue",
+      "pt": "Cristais azuis junto à estátua"
+     },
      "detail": {
       "en": "A pile of 4; a new pile only comes after the last one is collected. Every zombie collar needs one.",
       "pt": "Uma pilha de 4; outra só aparece depois de pegar a anterior. Toda coleira de zumbi usa um."
@@ -549,6 +588,7 @@
     },
     {
      "kind": "church",
+     "task": false,
      "en": "Exception: the Prayer for Storms sermon (God of the storms) allows resurrection on any day.",
      "pt": "Exceção: o sermão Oração das tempestades (Deus das Tempestades) libera ressurreição em qualquer dia.",
      "tr": "machine",
@@ -563,6 +603,10 @@
      "confidence": "high",
      "items": [],
      "unlock": null,
+     "short": {
+      "en": "Prayer for Storms sermon",
+      "pt": "Sermão Oração das tempestades"
+     },
      "detail": {
       "en": "The buff lasts 1 h 30 min of game time (wikily).",
       "pt": "O efeito dura 1 h 30 min de jogo (wikily)."
@@ -575,6 +619,7 @@
     },
     {
      "kind": "npc",
+     "task": true,
      "en": "Albert, the Plague Doctor, may give 2 free zombies to resurrect (unconfirmed).",
      "pt": "Alberto, o Médico da Peste, pode dar 2 zumbis grátis para ressuscitar (não confirmado).",
      "tr": "machine",
@@ -587,6 +632,10 @@
      "confidence": "low",
      "items": [],
      "unlock": null,
+     "short": {
+      "en": "Albert may give 2 free zombies",
+      "pt": "Alberto pode dar 2 zumbis"
+     },
      "detail": null,
      "quote": null
     }
@@ -656,6 +705,7 @@
    "events": [
     {
      "kind": "other",
+     "task": true,
      "en": "Town orders can only be accepted today, at the order board.",
      "pt": "Pedidos do povoado só podem ser aceitos hoje, no quadro de pedidos.",
      "tr": "machine",
@@ -675,6 +725,10 @@
       "pt": "Horário da Oficina",
       "tr": "official"
      },
+     "short": {
+      "en": "Town orders, today only",
+      "pt": "Pedidos do povoado, só hoje"
+     },
      "detail": {
       "en": "Urgent orders must be completed in full within one week; others can be delivered on any day.",
       "pt": "Pedidos urgentes precisam ser concluídos em até uma semana; os demais podem ser entregues em qualquer dia."
@@ -687,6 +741,7 @@
     },
     {
      "kind": "merchant",
+     "task": false,
      "en": "Every trader's weekly Likes limit resets.",
      "pt": "O limite semanal de curtidas de cada comerciante é reiniciado.",
      "tr": "machine",
@@ -699,6 +754,10 @@
      "confidence": "high",
      "items": [],
      "unlock": null,
+     "short": {
+      "en": "Traders' Likes limits reset",
+      "pt": "Limite de curtidas reinicia"
+     },
      "detail": null,
      "quote": {
       "key": "tt_trade_hap_likes",
@@ -708,6 +767,7 @@
     },
     {
      "kind": "other",
+     "task": false,
      "en": "Town Warehouse payout: crate goods fill your orders, the rest is sold; collect the money at the board.",
      "pt": "Pagamento do Armazém do Povoado: as caixas abastecem os pedidos, o resto é vendido; o dinheiro fica no quadro.",
      "tr": "machine",
@@ -718,6 +778,7 @@
      "confidence": "medium",
      "items": [],
      "unlock": null,
+     "short": null,
      "detail": {
       "en": "Repeatable orders finished since the last Pride can be accepted again.",
       "pt": "Pedidos repetíveis concluídos desde o último Orgulho podem ser aceitos de novo."
@@ -765,6 +826,7 @@
    "events": [
     {
      "kind": "church",
+     "task": true,
      "en": "Mass day: hold one sermon at the Church.",
      "pt": "Dia de missa: faça um sermão na Igreja.",
      "tr": "machine",
@@ -786,6 +848,7 @@
       "pt": "Çasinhora!",
       "tr": "official"
      },
+     "short": null,
      "detail": {
       "en": "Only the very first sermon (Holy Moly!) can be held on another day.",
       "pt": "Só o primeiro sermão (Çasinhora!) pode ser feito em outro dia."
@@ -798,6 +861,7 @@
     },
     {
      "kind": "npc",
+     "task": true,
      "en": "Agatha (Crossroads): set the weekly corpse delivery (none, a few or lots).",
      "pt": "Agatha (Encruzilhada): defina a entrega semanal de corpos (nenhum, poucos ou muitos).",
      "tr": "machine",
@@ -816,6 +880,7 @@
       "pt": "Entrega de Corpos",
       "tr": "official"
      },
+     "short": null,
      "detail": null,
      "quote": {
       "key": "51_crossroad_fixed_delivery_6",
@@ -825,6 +890,7 @@
     },
     {
      "kind": "npc",
+     "task": false,
      "en": "Early story: the Nun comes by to check on the church repairs.",
      "pt": "Início da história: a Freira passa para ver a reforma da igreja.",
      "tr": "machine",
@@ -840,6 +906,10 @@
       "pt": "Çasinhora!",
       "tr": "official"
      },
+     "short": {
+      "en": "The Nun visits the church",
+      "pt": "A Freira visita a igreja"
+     },
      "detail": null,
      "quote": {
       "key": "17_village_nun_meeting_14",
@@ -849,6 +919,7 @@
     },
     {
      "kind": "quest",
+     "task": false,
      "en": "The Nun with the Hairy Ass: Agatha hands over a couple of poor corpses on this day.",
      "pt": "A Freira do Burro Peludo: Agatha entrega alguns corpos pobres neste dia.",
      "tr": "machine",
@@ -866,6 +937,7 @@
       "pt": "A Freira do Burro Peludo",
       "tr": "official"
      },
+     "short": null,
      "detail": null,
      "quote": {
       "key": "42_crossroad_nun_donkey_12_a_11",
@@ -875,6 +947,7 @@
     },
     {
      "kind": "other",
+     "task": false,
      "en": "End of day: a running PR Machine program counts down one week.",
      "pt": "Fim do dia: o programa ativo da Máquina de RP desconta uma semana.",
      "tr": "machine",
@@ -885,6 +958,10 @@
      "confidence": "medium",
      "items": [],
      "unlock": null,
+     "short": {
+      "en": "PR Machine: −1 week",
+      "pt": "Máquina de RP: −1 semana"
+     },
      "detail": null,
      "quote": null
     }

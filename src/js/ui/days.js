@@ -16,9 +16,11 @@
    the shared week helpers below. State: GK.store day / dayNumber / dayAnchor / dayNotes (setDay, setDayNumber,
    advanceDay, clearAnchor, setDayNote).
    Exposes: GK.ui.days.{mount, render, open(dayId), week(), day(id), current(state), next(day), glyph(day, px),
-   medal(day, px), kindIcon(kind, px), kinds, eventText(ev), whoText(ev), confidenceBadge(ev), tile(day, px),
+   medal(day, px), kindIcon(kind, px), kinds, eventText(ev), whoText(ev), confidenceBadge(ev),
+   eventMore(ev, state, quoteOpen) (the lines under an event: with whom, detail, items, game text), tile(day, px),
    numberToast(anchorBefore), noteBox(prefix, rerender)}.
-   ui/today.js (the planner "Hoje" panel) uses the helpers.
+   ui/today.js (the planner "Hoje" panel) uses the helpers. An event's `task` (data/days.json; absent = true) says
+   whether the Hoje panel gives it a "feito hoje" tick.
 */
 GK.i18n.add({
   pt: {
@@ -245,11 +247,13 @@ GK.ui.days = (function () {
         color: typeof d.color === "string" && HEX.test(d.color) ? d.color : null,
         events: (Array.isArray(d.events) ? d.events : []).filter((e) => e && (e.en || e.pt)).map((e) => ({
           kind: KINDS.indexOf(e.kind) >= 0 ? e.kind : "other", pt: e.pt || e.en, en: e.en || e.pt, tr: e.tr || "official",
+          task: e.task !== false,   // something to do or buy that day (the Hoje panel's "feito hoje" tick); absent = true
           who: e.who || e.who_pt ? { en: e.who || e.who_pt, pt: e.who_pt || e.who } : null,
           source: e.source || null, also: Array.isArray(e.also) ? e.also : [],
           confidence: e.confidence === "medium" || e.confidence === "low" ? e.confidence : "high",
           items: Array.isArray(e.items) ? e.items.filter((x) => typeof x === "string") : [],
           unlock: e.unlock && (e.unlock.en || e.unlock.pt) ? e.unlock : null,
+          short: e.short && (e.short.en || e.short.pt) ? { en: e.short.en || e.short.pt, pt: e.short.pt || e.short.en } : null,   // hand-written line title (Hoje)
           detail: locOf(e.detail), quote: e.quote && (e.quote.en || e.quote.pt) ? e.quote : null,
         })),
       };
@@ -452,17 +456,25 @@ GK.ui.days = (function () {
         : `<span class="days-item">${GK.util.slot(it, nm, true)}<span>${esc(nm)}</span></span>`;
     }).join("")}</span>`;
   }
-  function eventLi(ev, state) {
+  // what goes under an event's line, shared by the Dias card and the Hoje panel's opened row (ui/today.js):
+  // "com X · depois da missão", the longer detail, the item chips and the official game text (folded in a
+  // <details> here; quoteOpen = shown as an open block, the Hoje row being already the thing the player opened)
+  function eventMore(ev, state, quoteOpen) {
     const who = whoText(ev);
-    const tipParts = [ev.source ? t("days.source", { src: ev.source }) : "", ev.also.length ? t("days.also", { src: ev.also.join(", ") }) : ""].filter(Boolean);
     const unlock = ev.unlock ? (ev.unlock.key ? t("days.unlockQuest", { q: name(ev.unlock) }) : name(ev.unlock)) : "";
     const sub = [who ? t("days.who", { who }) : "", unlock].filter(Boolean).join(" · ");
-    return `<li class="days-ev${ev.confidence !== "high" ? " is-unsure" : ""}"${tipParts.length ? ` title="${esc(tipParts.join("\n"))}"` : ""}>
-      <span class="days-ev-text">${esc(eventText(ev))}${confidenceBadge(ev)}</span>
-      ${sub ? `<span class="days-ev-who">${esc(sub)}</span>` : ""}
+    const quote = !ev.quote ? "" : quoteOpen ? `<span class="days-quote is-open"><span class="days-quote-l">${esc(t("days.quote"))}</span><q>${esc(name(ev.quote))}</q></span>`
+      : `<details class="days-quote"><summary>${esc(t("days.quote"))}</summary><q>${esc(name(ev.quote))}</q></details>`;
+    return `${sub ? `<span class="days-ev-who">${esc(sub)}</span>` : ""}
       ${ev.detail ? `<span class="days-ev-detail">${esc(name(ev.detail))}</span>` : ""}
       ${itemChips(ev.items, state)}
-      ${ev.quote ? `<details class="days-quote"><summary>${esc(t("days.quote"))}</summary><q>${esc(name(ev.quote))}</q></details>` : ""}
+      ${quote}`;
+  }
+  function eventLi(ev, state) {
+    const tipParts = [ev.source ? t("days.source", { src: ev.source }) : "", ev.also.length ? t("days.also", { src: ev.also.join(", ") }) : ""].filter(Boolean);
+    return `<li class="days-ev${ev.confidence !== "high" ? " is-unsure" : ""}"${tipParts.length ? ` title="${esc(tipParts.join("\n"))}"` : ""}>
+      <span class="days-ev-text">${esc(eventText(ev))}${confidenceBadge(ev)}</span>
+      ${eventMore(ev, state, false)}
     </li>`;
   }
   function eventsByKind(d, state) {
@@ -624,7 +636,7 @@ GK.ui.days = (function () {
     location.hash = "#days";
     window.scrollTo(0, 0);
   }
-  return { mount, render, open, week, day, current, next, noteBox, glyph, medal, kindIcon, kinds: KINDS, eventText, whoText, confidenceBadge, tile, numberToast };
+  return { mount, render, open, week, day, current, next, noteBox, glyph, medal, kindIcon, kinds: KINDS, eventText, whoText, confidenceBadge, eventMore, tile, numberToast };
 })();
 
 GK.router.register({ id: "days", labelKey: "tab.days", screen: "days", order: 40 });

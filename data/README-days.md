@@ -43,6 +43,7 @@ Icons: `data/icons/day__<id>.png` (6 files, 100x100) are the official HUD day me
     "prev": "gluttony", "next": "lust",
     "events": [{
       "kind": "npc|merchant|church|battle|quest|event|other",
+      "task": true,                         // true = something the player does or buys that day; false = information
       "en": "...", "pt": "...",             // short, phone-sized
       "tr": "machine",                      // written for this app; the official wording is in `quote`
       "who": "Linda", "who_pt": "Linda",    // official pt names (Herbert = Norberto, Davy the Dagger = Orlando, Olha a Faca...)
@@ -51,6 +52,7 @@ Icons: `data/icons/day__<id>.png` (6 files, 100x100) are the official HUD day me
       "confidence": "high|medium|low",
       "items": ["ids in data/gk2.json"],
       "unlock": {"key","en","pt","tr"} | null,   // the quest (official title) after which this applies
+      "short": {"en","pt"} | null,               // hand-written line title (≤ 40 letters) for the Hoje panel
       "detail": {"en","pt"} | null,              // optional longer text
       "quote": {"key","en","pt"} | null          // official game text; the day glyph is replaced by the sin name
     }],
@@ -60,6 +62,18 @@ Icons: `data/icons/day__<id>.png` (6 files, 100x100) are the official HUD day me
 ```
 
 `tr`: `official` means verbatim game text. `likely` means built from official words (for example "Dia da" + the official sin name). `machine` means written for this app, not taken from the game.
+`task`: `true` when the event is something the player does or buys that day (load the PR Machine, start a battle, buy from the Trademaster, hand in Green Scrolls, preach...). The planner's Hoje panel gives only these a "feito hoje" tick, and its "2/3 feitas" counts only them. `false` for information (the bell rings, the lab recharges, a cap resets, an any-day exception, something an NPC does by herself). Set by hand per event in `EVENTS`; a missing `task` in an older file counts as `true`.
+
+| day | `task: false` (no tick) |
+|---|---|
+| Sloth | the bell rings and the zombies withdraw; the any-day battle exceptions |
+| Lust | the Resurrection Lab recharges at the end of the day |
+| Envy | the Prayer for Storms exception |
+| Pride | the traders' weekly Likes caps reset; the Town Warehouse payout |
+| Wrath | story start: the Nun drops by; Agatha delivers some poor corpses; the PR Machine program counts down |
+
+`short`: a hand-written title of at most 40 letters, used as the event's one line in the planner's Hoje panel when the automatic one would be vague ("Fim do dia", "Exceção", "Exceções", "Início da história") or when the sentence has no ": " (Orlando, "Pedidos do povoado"...). Without it the panel shows the text before ": ", else the whole sentence cut with an ellipsis. Set in `EVENTS` (`short=(en, pt)`); build_days.py rejects one over 40 letters.
+
 `confidence`: `high` means a game text states it (usually wikily too). `medium` means only wikily or a web guide says it. `low` means a single unverified guide.
 
 In `quote`, the glyph is replaced by the sin name, which can read oddly in pt ("todo Luxúria"), because the game shows an icon there. The UI can draw the glyph instead.

@@ -16,6 +16,14 @@ What comes from data/raw/api-items-all.json (the wiki's item dataset, already ca
             "+22 with Steamed Up" chip of the Energy / Insanity stat) and the buff the item grants (`buffs`:
             name + duration).
   * stack:  stack size (`stack`, every item page).
+  * sell:   who buys it (`boughtBy`): trader, what it pays at its usual stock (lowest-highest over trader levels 1-3),
+            the most Likes a week it gives and from which trader level; `price` (base price, the ceiling when the
+            trader is short of stock) and `fix` (fish and the like: every buyer pays that fixed price).
+  * study:  Study Table points by colour + the Science and Faith it costs (`studyCards`).
+  * asked:  who asks for it outside recipes: quests (data/raw/days/probe-quests.json `needs`, with the quest giver),
+            town restorations and town orders (`usedIn` kinds Town / Order). Repairs, battles, bait, sermons, bags,
+            combat and the game description are left out on purpose (docs/revisao-ux/dados-ficha.md).
+Money is stored in bronze (1 silver = 100 bronze, 1 gold = 100 silver).
 Names (traders, places, quests, buffs) are interned into small tables keyed by slug, so each item stores ids.
 pt names: the game's own text table (data/game-texts/gk2_textos.json, exact English match) first, then
 data/names.official.pt-BR.json, then the hand glossary MT below (tr "machine", shown as "não oficial").
@@ -60,6 +68,17 @@ MT = {
     "Seeds": "Sementes", "Valuables": "Objetos de valor",
     # buff descriptions the game table lacks (wiki chip, translated)
     "+2 to all five masteries": "+2 nas cinco maestrias",
+    # quest givers the game's name table lacks ("Pedido em", ficha do item)
+    "Captain": "Capitão", "Village guards": "Guardas da vila", "Merc Leader": "Líder dos mercenários",
+    "Monk": "Monge", "Refugees": "Refugiados", "Soul": "Alma", "Dig": "Dig",
+}
+# Names with no entry of their own in the game's name table, but spelled out in official game dialogue (the line
+# key is kept as the name's `key`): official text, so no "não oficial" badge.
+DIALOGUE = {
+    "Davy the Dagger": ("Orlando, Olha a Faca", "110_town_cheese_look_2"),   # "Você sabe onde está Orlando, Olha a Faca?"
+    "Hans": ("Anselmo", "53_forest_pass_10"),                                # "Quem é Anselmo?"
+    "Sven": ("Arnaldo", "57_forest_mine_larry_robert_14"),                   # "É... o Arnaldo é tão chato."
+    "Old God": ("Deus Antigo", "110_town_cheese_look"),                      # "Encontrando o Deus Antigo"
 }
 # <sprite name="x"> tokens inside official buff descriptions -> words
 SPRITE_WORDS = {
@@ -72,6 +91,15 @@ DURATION_RE = re.compile(r"^For (?:(\d+) min)?\s*(?:(\d+) s)?$")
 LEVEL_RE = re.compile(r"^From trader level (\d+)$")
 FISH_RE = re.compile(r"^(.+?): ([\d.]+)%(?: by day, ([\d.]+)% at night|, day and night)$")
 BOOST_RE = re.compile(r"^([+-]\d+) with (.+)$")
+MONEY_RE = re.compile(r"(\d+) (gold|silver|bronze)\b")
+COIN = {"gold": 10000, "silver": 100, "bronze": 1}
+PAYS_RE = re.compile(r"^(?:Level \d+: )?[Pp]ays (?:only )?(.+?)(?: at its usual stock(?: at levels [\d ,and]+)?| \(usual stock \d+\)|: its usual stock is \d+| at level \d+)$")
+LIKES_RE = re.compile(r"^(?:Level (\d+): )?[Uu]p to \+(\d+) Likes a week\b.*?(?:\(from trader level (\d+)\))?$")
+LIKES_ANY_RE = re.compile(r"^Selling it earns Likes(?: \(from trader level (\d+)\))?$")
+ORDER_RE = re.compile(r"^(.+?)(?: \(level (\d+)\))?$")
+ORDER_LIKES_RE = re.compile(r"^\+(\d+) Likes\b")
+# a quest need that is not handed over or carried (the quest gives it to you)
+QUEST_SKIP_NOTES = ("Given to you",)
 
 
 def slugify(s):
@@ -103,6 +131,8 @@ class Texts:
         o = self.official.get(en)
         if o:
             return {"en": en, "pt": o["pt"]}, o.get("gameKey")
+        if en in DIALOGUE:
+            return {"en": en, "pt": DIALOGUE[en][0]}, DIALOGUE[en][1]
         if en in MT:
             return {"en": en, "pt": MT[en], "tr": "machine"}, None
         return {"en": en, "pt": en, "tr": "missing"}, None
@@ -113,7 +143,53 @@ class Texts:
         return re.sub(r"\s+", " ", s).replace(" .", ".").strip()
 
 
-def build(raw, items_en, texts):
+def money(s):
+    """'1 silver 37 bronze' -> 137 (bronze); None when no amount is found."""
+    parts = MONEY_RE.findall(s or "")
+    return sum(int(n) * COIN[u] for n, u in parts) if parts else None
+
+
+def sell_entry(b, key):
+    """One wiki "Buys it" card -> [trader, lo, hi, likes, likesLevel, level] (trailing zeros trimmed).
+    lo/hi: what it pays at its usual stock over the trader levels (0 = the wiki gives no number); a price that only
+    holds at an empty usual stock ("pays only 1 bronze") counts only when it is the only one. likes: the most Likes a
+    week (-1 = "earns Likes", no amount); likesLevel: the first trader level that gives them (0 = from level 1);
+    level: the first trader level that buys it."""
+    full, empty, likes, like_lv, lvl = [], [], 0, 0, 0
+    for c in b.get("chips") or []:
+        m = LEVEL_RE.match(c)
+        if m:
+            lvl = int(m.group(1))
+            continue
+        m = PAYS_RE.match(c)
+        if m:
+            v = money(m.group(1))
+            if v is not None:
+                (full if "at its usual stock" in c and "only" not in c else empty).append(v)
+            continue
+        m = LIKES_RE.match(c)
+        if m:
+            n, lv = int(m.group(2)), int(m.group(1) or m.group(3) or 1)
+            likes = max(likes, n) if likes >= 0 else n
+            like_lv = lv if not like_lv else min(like_lv, lv)
+            continue
+        m = LIKES_ANY_RE.match(c)
+        if m:
+            if not likes:
+                likes = -1
+            lv = int(m.group(1) or 1)
+            like_lv = lv if not like_lv else min(like_lv, lv)
+    pays = full or empty
+    lo, hi = (min(pays), max(pays)) if pays else (0, 0)
+    row = [key, lo, hi if hi != lo else 0, likes, like_lv if like_lv > 1 else 0, lvl if lvl > 1 else 0]
+    while len(row) > 2 and row[-1] == 0:
+        row.pop()
+    if len(row) == 2 and row[1] == 0:
+        row.pop()
+    return row
+
+
+def build(raw, items_en, texts, quests=None):
     known = {i["id"] for i in items_en if isinstance(i, dict) and i.get("id")}
     names, buffs, out, warnings = {}, {}, {}, []
 
@@ -157,6 +233,23 @@ def build(raw, items_en, texts):
         elif o["kind"] == "Looter order":
             title = re.sub(r"^Looter order: ", "", title)
         return intern(title)
+
+    # quests that ask for an item (probe-quests `needs`): item id -> [(story order, quest key, qty, giver key)]
+    asked_q = {}
+    qrows = (quests.get("rows") if isinstance(quests, dict) else quests) or []
+    for qr in sorted(qrows, key=lambda r: r.get("key") or ""):
+        Q = qr.get("data") or {}
+        if not Q.get("name"):
+            continue
+        for n in Q.get("needs") or []:
+            href = n.get("href") or ""
+            iid = href.rsplit("/", 1)[-1]
+            if not href.startswith("/items/") or iid not in known or (n.get("note") or "").startswith(QUEST_SKIP_NOTES):
+                continue
+            qty = int(n["qty"]) if str(n.get("qty") or "").isdigit() else 1
+            giver = intern(Q["giver"]) if Q.get("giver") else ""
+            order = Q.get("storyOrder") if isinstance(Q.get("storyOrder"), int) else 10 ** 6
+            asked_q.setdefault(iid, []).append((order, intern(Q["name"]), qty, giver))
 
     rows = raw["rows"] if isinstance(raw, dict) else raw
     for row in sorted(rows, key=lambda r: r.get("key") or ""):
@@ -251,6 +344,60 @@ def build(raw, items_en, texts):
         st = D.get("stack")
         if isinstance(st, int) and not isinstance(st, bool) and st > 0:
             rec["stack"] = st
+        # ---- sell: who buys it, base price, fixed price
+        sell = []
+        for b in D.get("boughtBy") or []:
+            en = re.sub(r"\s*\([^)]*\)$", "", b.get("title") or "").strip()
+            if not en:
+                continue
+            e = sell_entry(b, intern(en))
+            prev = next((x for x in sell if x[0] == e[0]), None)
+            if prev is None:
+                sell.append(e)
+            else:
+                warnings.append(f"{iid}: trader {en!r} listed twice under boughtBy; first kept")
+        if sell:
+            rec["sell"] = sell
+        pr = D.get("price")
+        # the base price only matters to a seller: items nobody buys keep none (it would show nowhere)
+        if sell and isinstance(pr, int) and not isinstance(pr, bool) and pr > 0:
+            rec["price"] = pr
+            if any(s.get("subtitle") == "Fixed price" for s in D.get("statStrip") or []):
+                rec["fix"] = 1
+        # ---- study: [red, green, blue, science, faith], trailing zeros trimmed
+        sc = {s.get("subtitle"): s.get("title") for s in D.get("studyCards") or []}
+        if sc:
+            val = lambda k: int(m.group(1)) if (m := re.match(r"^\+?(\d+)$", str(sc.get(k) or ""))) else 0
+            study = [val("Red tech points"), val("Green tech points"), val("Blue tech points"),
+                     val("Science it costs"), val("Faith it costs")]
+            while study and study[-1] == 0:
+                study.pop()
+            if study:
+                rec["study"] = study
+        # ---- asked: {q: quests (story order), t: town restorations, o: town orders}
+        quest = [[q, n, g] if g else [q, n] for _, q, n, g in sorted(asked_q.get(iid, []))]
+        town, order = [], []
+        for u in D.get("usedIn") or []:
+            kind = u.get("kind")
+            qty = int(u["qty"]) if str(u.get("qty") or "").isdigit() else 1
+            if kind == "Town" and u.get("title"):
+                town.append([intern(u["title"]), qty])
+            elif kind == "Order" and u.get("title"):
+                m = ORDER_RE.match(u["title"])
+                likes = next((int(x.group(1)) for c in u.get("chips") or [] for x in [ORDER_LIKES_RE.match(c)] if x), 0)
+                e = [intern(m.group(1)), qty, int(m.group(2) or 0), likes]
+                # the urgent and the normal order of one trader level: one line, the most Likes
+                prev = next((a for a in order if a[:3] == e[:3]), None)
+                if prev is not None:
+                    prev[3] = max(prev[3], likes)
+                    continue
+                order.append(e)
+        for e in order:
+            while len(e) > 2 and e[-1] == 0:
+                e.pop()
+        asked = {k: v for k, v in (("q", quest), ("t", town), ("o", order)) if v}
+        if asked:
+            rec["asked"] = asked
         if rec:
             out[iid] = rec
     counts = {
@@ -262,11 +409,24 @@ def build(raw, items_en, texts):
         "insanity": sum(1 for r in out.values() if "ins" in r.get("use", {})),
         "buff": sum(1 for r in out.values() if "buff" in r.get("use", {})),
         "stack": sum(1 for r in out.values() if "stack" in r),
+        "sell": sum(1 for r in out.values() if "sell" in r),
+        "sell_priced": sum(1 for r in out.values() if any(len(e) > 1 and e[1] for e in r.get("sell", []))),
+        "sell_likes": sum(1 for r in out.values() if any(len(e) > 3 and e[3] for e in r.get("sell", []))),
+        "price": sum(1 for r in out.values() if "price" in r),
+        "study": sum(1 for r in out.values() if "study" in r),
+        "study_faith": sum(1 for r in out.values() if len(r.get("study", [])) > 4),
+        "asked_quest": sum(1 for r in out.values() if "q" in r.get("asked", {})),
+        "asked_quest_lines": sum(len(r.get("asked", {}).get("q", [])) for r in out.values()),
+        "quests": len({a[0] for r in out.values() for a in r.get("asked", {}).get("q", [])}),
+        "asked_town": sum(1 for r in out.values() if "t" in r.get("asked", {})),
+        "asked_order": sum(1 for r in out.values() if "o" in r.get("asked", {})),
+        "asked": sum(1 for r in out.values() if "asked" in r),
         "names": len(names),
         "names_unofficial": sum(1 for n in names.values() if n.get("tr")),
         "buffs": len(buffs),
     }
-    doc = {"meta": {"source": "data/raw/api-items-all.json (wikily.gg items dataset)",
+    doc = {"meta": {"source": "data/raw/api-items-all.json (wikily.gg items dataset)"
+                              + (" + data/raw/days/probe-quests.json (quests)" if qrows else ""),
                     "counts": counts, "format": "data/README-data.md#facts"},
            "names": dict(sorted(names.items())), "buffs": dict(sorted(buffs.items())), "items": out}
     return doc, warnings
@@ -287,6 +447,20 @@ def validate(doc):
         b = r.get("use", {}).get("buff")
         if b and b[0] not in doc["buffs"]:
             errors.append(f"{iid}: unknown buff {b[0]!r}")
+        for e in r.get("sell", []):
+            if e[0] not in doc["names"]:
+                errors.append(f"{iid}: unknown trader {e[0]!r}")
+            if not all(isinstance(x, int) for x in e[1:]):
+                errors.append(f"{iid}: sell entry {e!r} is not [trader, ints...]")
+        for k, rows in r.get("asked", {}).items():
+            for a in rows:
+                refs = a[:1] + (a[2:3] if k == "q" else [])
+                if k not in ("q", "t", "o") or len(a) < 2 or not isinstance(a[1], int) \
+                        or any(x not in doc["names"] for x in refs):
+                    errors.append(f"{iid}: bad asked.{k} entry {a!r}")
+        st = r.get("study")
+        if st is not None and not (isinstance(st, list) and 0 < len(st) <= 5 and all(isinstance(x, int) and x >= 0 for x in st)):
+            errors.append(f"{iid}: bad study {st!r}")
     return errors
 
 
@@ -296,6 +470,8 @@ def main(argv=None):
     ap.add_argument("--items", default=str(DATA / "items.en.json"), help="ids that exist (read-only)")
     ap.add_argument("--game-text", default=str(DATA / "game-texts" / "gk2_textos.json"))
     ap.add_argument("--official", default=str(DATA / "names.official.pt-BR.json"))
+    ap.add_argument("--quests", default=str(DATA / "raw" / "days" / "probe-quests.json"),
+                    help="wiki quest dataset (needs + giver), for items[].asked; '' to skip")
     ap.add_argument("--out", default=str(DATA / "facts.json"))
     ap.add_argument("--check", action="store_true", help="build and validate, write nothing")
     args = ap.parse_args(argv)
@@ -304,10 +480,11 @@ def main(argv=None):
         items_en = json.loads(Path(args.items).read_text(encoding="utf-8"))
         game = json.loads(Path(args.game_text).read_text(encoding="utf-8")) if args.game_text else {}
         official = json.loads(Path(args.official).read_text(encoding="utf-8")) if args.official else {}
+        quests = json.loads(Path(args.quests).read_text(encoding="utf-8")) if args.quests else None
     except (OSError, ValueError) as e:
         print(f"build_facts: cannot read inputs: {e}", file=sys.stderr)
         return 2
-    doc, warnings = build(raw, items_en, Texts(game, official))
+    doc, warnings = build(raw, items_en, Texts(game, official), quests)
     errors = validate(doc)
     print(f"build_facts: {doc['meta']['counts']}")
     for w in warnings:

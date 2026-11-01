@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.7.0",
+    "date": "2026-11-01",
+    "pt": [
+      "Ficha completa do item (no detalhe das Receitas): “Quem compra” mostra cada comerciante com o preço que paga por 1 com o estoque normal, o “até” do preço base, as curtidas por semana e um “i” que explica como o preço varia; “Estudar” mostra os pontos de cada cor na Mesa de Estudo, o custo em Ciência e Fé e a caixa “Já estudei” (sincronizada entre aparelhos); “Pedido em” fica recolhido, com aviso de spoiler, e lista missões (nome, quantidade e quem pede), restauração e encomendas do povoado",
+      "Dados: 197 itens com comprador (132 com preço, 75 com curtidas), 333 com pontos de estudo (39 pedem Fé) e 122 pedidos em missões ou no povoado; o arquivo cresceu cerca de 48 KB",
+      "Hoje enxuto: uma linha por acontecimento, com título curto escrito à mão; toque abre o texto completo; a caixa de marcar só aparece no que é tarefa; o bloco “Amanhã” saiu (a semana está em Dias); o bilhete do dia virou um ícone ✎ ao lado de “N coisas”; o que não é confirmado ganha um “?”",
+      "Espaçamentos do Planejador: a seta de recolher a seção não encosta mais nas bordas; figura, caixa e nome das etapas alinhados pelo topo; a seta da estação, o “×N ▾” e o “Já tenho” alinhados por dentro do cartão e com folga entre si; o número de matérias-primas não toca mais o “Já tenho”"
+    ],
+    "en": [
+      "Full item sheet (in the Recipes detail): “Who buys it” lists each trader with the price paid for 1 at usual stock, the “up to” base price, Likes a week and an “i” that explains how the price moves; “Study” shows the points of each colour at the Study Table, the Science and Faith cost and a “Studied” box (synced between devices); “Asked in” stays folded, with a spoiler warning, and lists quests (name, quantity, who asks), town restoration and town orders",
+      "Data: 197 items with a buyer (132 with a price, 75 with Likes), 333 with study points (39 need Faith) and 122 asked in quests or in town; the file grew by about 48 KB",
+      "Lean Today: one line per event, with a hand-written short title; tap opens the full text; the checkbox shows only on tasks; the “Tomorrow” block is gone (the week is in Days); the day note became a ✎ icon next to “N things”; unconfirmed items get a “?”",
+      "Planner spacing: the section collapse arrow no longer touches the edges; picture, checkbox and name of each step align at the top; the station arrow, “×N ▾” and “Have it” align inside the card with room between them; the raw-materials number no longer touches “Have it”"
+    ]
+  },
+  {
     "version": "1.6.0",
     "date": "2026-10-31",
     "pt": [

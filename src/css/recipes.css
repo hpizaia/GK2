@@ -226,3 +226,80 @@
 .gk-buff-d { font-size: .9375rem; line-height: 1.35; color: var(--tip-ink); overflow-wrap: anywhere; }
 .gk-buff-t { margin-top: 3px !important; font-size: .875rem; line-height: 1.35; color: var(--tip-lbl); }
 .gk-buff-t b { color: var(--tip-ink); }
+
+/* ---------- item detail, "ficha completa" (protos/ficha-item.html): "Quem compra", "Estudar", "Pedido em" ---------- */
+/* block title + the price "i" (a <details>: 44 px target, the note drops below the title row) */
+.rc-k-row { position: relative; display: flex; align-items: center; gap: 4px; margin-bottom: 6px; }
+.rc-k-row .rc-k { margin: 0; }
+.rc-i > summary {
+  list-style: none; display: grid; place-items: center; width: var(--tap); height: var(--tap); margin: -12px 0; cursor: pointer;
+  border-radius: var(--r); -webkit-tap-highlight-color: transparent;
+}
+.rc-i > summary::-webkit-details-marker { display: none; }
+.rc-i > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
+.rc-i > summary > span {
+  display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%;
+  border: 1.5px solid var(--gold); color: var(--gold); font: italic 800 .8125rem/1 Georgia, serif;
+}
+.rc-i[open] > summary > span { background: var(--gold); color: var(--panel); }
+.rc-info .rc-i-p {
+  position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 8; margin: 0;
+  padding: var(--s2) var(--s3); font-size: .875rem; line-height: 1.4; color: var(--ink);
+  background: var(--panel-2); border: 1px solid var(--frame); border-radius: var(--r); box-shadow: 0 4px 12px var(--shadow);
+}
+/* one row per trader: name | what it pays (+ "até" the base price); likes and level below */
+.sell-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: .9375rem; line-height: 1.3; }
+.sell-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--s2); align-items: baseline; }
+.sell-who { font-weight: 700; color: var(--ink); overflow-wrap: anywhere; }
+.sell-who .badge { vertical-align: 1px; }
+.sell-pay { display: inline-flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 0 4px; font-weight: 800; color: var(--ink); text-align: right; }
+.sell-max { font-weight: 700; font-size: .8125rem; color: var(--ink-3); white-space: nowrap; }
+.sell-d { grid-column: 1 / -1; font-size: .8125rem; color: var(--ink-3); }
+/* drawn coins (not the game's icons): bronze, silver, gold */
+.coin {
+  display: inline-block; flex: none; width: 12px; height: 12px; border-radius: 50%; vertical-align: -1px; margin-right: 2px;
+  background: radial-gradient(circle at 35% 35%, #f3c08a 0 18%, #c8763a 45%, #7a3f16 100%);
+  box-shadow: inset 0 0 0 1px rgba(60, 25, 5, .55);
+}
+.coin-s { background: radial-gradient(circle at 35% 35%, #ffffff 0 18%, #b9bec6 45%, #5d636c 100%); box-shadow: inset 0 0 0 1px rgba(30, 34, 40, .55); }
+.coin-g { background: radial-gradient(circle at 35% 35%, #fff2b0 0 18%, #e0ad2c 45%, #7d5508 100%); box-shadow: inset 0 0 0 1px rgba(70, 45, 0, .55); }
+.sell-max .coin { width: 10px; height: 10px; margin-left: 2px; }
+
+/* study points (GK.ui.tech.costHtml) + "Já estudei" (a 44 px box) */
+.study-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px var(--s3); }
+.study-done { display: inline-flex; align-items: center; gap: 2px; min-height: var(--tap); padding-right: 4px; font-weight: 700; font-size: .9375rem; color: var(--ink-2); cursor: pointer; white-space: nowrap; }
+.tick { display: grid; place-items: center; width: var(--tap); height: var(--tap); margin-left: -10px; cursor: pointer; }
+.tick input {
+  appearance: none; -webkit-appearance: none; margin: 0; width: 24px; height: 24px; cursor: pointer;
+  border: 2px solid var(--gold); border-radius: 2px; background: var(--bg-2); box-shadow: inset 0 2px 0 var(--bevel-lo);
+}
+.tick input:checked { background: var(--moss); border-color: var(--moss); box-shadow: inset 0 0 0 3px var(--bg-2); }
+.tick input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.study-done:has(input:checked) { color: var(--moss); }
+.rc-info .study-d { margin-top: 2px; font-size: .8125rem; color: var(--ink-3); }
+
+/* "Pedido em": folded card (spoiler); open: grouped static lines (mark, quantity, name, who asks) */
+.rc-asked > summary {
+  list-style: none; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 2px var(--s2);
+  min-height: 56px; padding: 8px var(--s3); cursor: pointer;
+}
+.rc-asked > summary::-webkit-details-marker { display: none; }
+.rc-asked > summary:hover { background: var(--panel-2); }
+.rc-asked > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.asked-t { font-weight: 700; font-size: .9375rem; color: var(--accent); }
+.asked-warn { grid-column: 1; font-size: .75rem; color: var(--ink-3); }
+.rc-asked > summary .rc-chev { grid-column: 2; grid-row: 1 / span 2; transition: transform .15s; }
+.rc-asked[open] > summary { min-height: var(--tap); border-bottom: 1px solid var(--seam); }
+.rc-asked[open] > summary .rc-chev { grid-row: 1; transform: rotate(90deg); }
+.rc-asked[open] .asked-show, .rc-asked:not([open]) .asked-hide, .rc-asked[open] .asked-warn { display: none; }
+.rc-line-static { cursor: default; }
+.rc-line-static:hover { background: transparent; }
+.rc-line-static .rc-line-note .badge { vertical-align: 0; }
+.asked-mark .slot-letter { font-size: 15px; color: var(--accent); }
+.asked-g {
+  padding: 10px var(--s3) 2px; border-top: 1px solid var(--seam);
+  font: 800 .6875rem/1.3 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3);
+}
+.asked-g:first-child { border-top: 0; }
+.asked-g + li > .rc-line { border-top: 0; }
+@media (prefers-reduced-motion: reduce) { .rc-asked > summary .rc-chev { transition: none; } }
