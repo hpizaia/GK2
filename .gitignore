@@ -16,9 +16,6 @@ tools/exportar-textos/gk2_textos*.csv
 tools/exportar-textos/_resumo.json
 tools/exportar-textos/_raw_*.bin
 tools/exportar-textos/gk2_exportacao_log.txt
-# pasta antiga trazida do Windows: só sobra a .venv e um link de compatibilidade
-tradução windows/
-
 # ambientes virtuais
 .venv/
 venv/
@@ -32,5 +29,9 @@ __pycache__/
 # transcrições e auditoria privada: nunca no repositório público
 historico/
 
-# revisão de UX de 31/10 (relatórios internos e capturas; decidir depois o que publicar)
+# interno: relatórios, decisões, protótipos e capturas; nunca no GitHub
 docs/revisao-ux/
+
+# instruções privadas do Claude e configuração local do Claude Code (não versionar)
+CLAUDE.local.md
+.claude/settings.local.json

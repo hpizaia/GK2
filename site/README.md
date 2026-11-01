@@ -12,7 +12,7 @@ live artifact and to this repository.
 Copy lives in the `I18N` dict at the bottom of `index.html` (`en` and `pt`, same keys). Elements
 carry `data-i18n="key"` (text), `data-i18n-alt="key"` (image alt) and `data-html` (value is HTML).
 The chosen language is kept in `localStorage` (`gk2-site-lang`). The version in the footer comes from
-`const VERSION` in the same script; bump it together with `/VERSION`.
+`const VERSION` in the same script (and `#ver` in the footer markup); `scripts/release.py` sets both to `/VERSION`.
 
 Page order: hero (subtitle with the phone-next-to-the-game pitch, the app button, a trust line and a
 one-line personal note), what it does, screenshots, save your progress / home screen, how it's built, a
@@ -70,28 +70,17 @@ file fails, it loads the Portuguese one first and only shows the placeholder if 
 
 ## Regenerate preview.html
 
-After editing `index.html`:
+After editing `index.html` (`scripts/release.py` already does this when it bumps the version, and
+`scripts/check.py` fails while `preview.html` is stale):
 
 ```sh
-cd GK2/site
-python3 -I - <<'PY'
-s = open('index.html', encoding='utf-8').read()
-i = s.index('</style>') + len('</style>')
-head, body = s[:i], s[i:]
-open('preview.html', 'w', encoding='utf-8').write(
-  '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
-  '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
-  '<!-- Generated from index.html (the Claude Artifact page). Do not edit by hand; see README.md. -->\n'
-  '<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}'
-  'body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>\n'
-  + head.strip() + '\n</head>\n<body>\n' + body.strip() + '\n</body>\n</html>\n')
-PY
+python3 -I scripts/site_preview.py           # from the project root; --check only compares
 ```
 
 To look at it locally, serve the folder (the media already sit in `media/`):
 
 ```sh
-python3 -m http.server 8770 --bind 127.0.0.1 --directory .   # open http://127.0.0.1:8770/preview.html
+python3 -m http.server 8770 --bind 127.0.0.1 --directory site   # from the project root; open http://127.0.0.1:8770/preview.html
 ```
 
 ## Publish as a Claude Artifact

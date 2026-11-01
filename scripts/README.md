@@ -15,12 +15,17 @@ Tudo é Python 3 só com a biblioteca padrão (Pillow é opcional no `make_sprit
 | `fetch_icons.py [--techs]` | Baixa cada URL de ícone distinta (≤ 5 req/s, pula o que já existe). `--techs` inclui os ícones próprios da árvore | Quando aparecem itens ou tecnologias novos | `data/gk2.json` (+ `data/techs.json`) → `data/icons/<id>.png` (ignorado no git) |
 | `make_sprite.py` | Empacota os ícones numa folha única (células de 32 px, ícones iguais compartilham célula) | Depois do `fetch_icons.py` | `data/icons/*.png` → `data/sprite.json` (manifesto com o PNG em `data:`) + `data/sprite.png` |
 
-## Testes
+## Testes e release
+
+Antes de cada commit ou publicação basta um comando: `python3 -I scripts/check.py`. Ele roda os 3 testes abaixo e as conferências que nenhum teste faz.
 
 | script | o que faz | quando rodar | entradas → saídas |
 |---|---|---|---|
+| `check.py [--release]` | Confere versões (`VERSION`, topo do changelog, versão do site), build reprodutível (refaz numa pasta temporária e compara byte a byte), `site/preview.html` e `data/days.json` em dia, os 3 testes (cada um com seu código de saída) e o e-mail do git. Uma linha por conferência (ok / AVISO / FALHA), exit 1 se algo falhou. `--release` exige changelog datado e nenhum teste pulado | Antes de cada commit/publicação | o projeto → só o resultado (não grava nada) |
+| `release.py X.Y.Z [--dry-run]` | Prepara a versão até o ponto de pedir OK: `VERSION`, número da versão no site, `site/preview.html`, `build.py --release`, `check.py --release`, arquivo da release e notas numa pasta temporária. Imprime os comandos de commit, push e `gh release` sem rodá-los | Ao fechar uma versão (`docs/atualizacao.md` §7–8) | entrada no topo de `data/changelog.json` → `VERSION`, `site/`, saídas do build + `companheiro-gk2-X.Y.Z.html` e `notas.md` fora do repositório |
+| `site_preview.py [--check]` | Regenera `site/preview.html` a partir de `site/index.html` (funções usadas também pelo `check.py` e pelo `release.py`) | Depois de editar `site/index.html` | `site/index.html` → `site/preview.html` |
 | `test_build.py` | Testes do `build.py` e do `validate.py` sobre `scripts/fixtures/` (saídas em pasta temporária), mais um teste de fumaça nos dados reais | Antes de cada commit/publicação | `scripts/fixtures/*`, `data/*.en.json` → só o resultado dos testes |
-| `test_techs.py` | Testes do `build_techs.py` nos dados reais. Também acusa `data/techs.json` desatualizado | Depois de mexer em tecnologias ou nomes | `data/raw/api-technologies-all.json`, `data/gk2.json`, nomes, tabela do jogo → só o resultado dos testes |
+| `test_techs.py` | Testes do `build_techs.py` nos dados reais. Também acusa `data/techs.json` desatualizado. Sem `data/raw/` (fora do git), pula tudo com aviso | Depois de mexer em tecnologias ou nomes | `data/raw/api-technologies-all.json`, `data/gk2.json`, nomes, tabela do jogo → só o resultado dos testes |
 | `test_calc.mjs` | Testes do JavaScript da página no node, sem dependências: `GK.data`, `GK.calc` (casos reais, ordem das estações, "tenho N", grupos, vantagens, prata/ouro), `GK.store` (migração, mesclagem) e `GK.sync` (versão, campos desconhecidos, ouvinte, nova tentativa, armazenamento por conta). Rodar com `node scripts/test_calc.mjs` | Depois de mexer em `src/js/` ou nos dados, antes de publicar | `src/js/*.js`, dados embutidos em `prototype/index.html` (ou `data/gk2.json`) → só o resultado dos testes |
 
 ## Camada pt-BR de reserva (GK1 + tradução de máquina)

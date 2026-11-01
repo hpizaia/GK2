@@ -20,8 +20,13 @@ DATA = ROOT / "data"
 class RealData(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        raw = DATA / "raw" / "api-technologies-all.json"
+        if not raw.exists():
+            # data/raw/ is not in git (fresh clone, contributor): skip everything, loudly, instead of crashing
+            raise unittest.SkipTest(f"missing {raw.relative_to(ROOT)} (data/raw/ is not in git; "
+                                    "download it with scripts/fetch_dataset.py technologies data/raw)")
         args = B.argparse.Namespace(
-            raw=str(DATA / "raw" / "api-technologies-all.json"), data=str(DATA / "gk2.json"),
+            raw=str(raw), data=str(DATA / "gk2.json"),
             names=[str(DATA / "names.official.pt-BR.json"), str(DATA / "names.pt-BR.json"),
                    str(DATA / "names.machine.pt-BR.json")],
             game_text=str(ROOT / "data" / "game-texts" / "gk2_textos.json"))

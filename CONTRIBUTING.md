@@ -46,10 +46,10 @@ Requirements: Python 3 (standard library only); Node for the JavaScript tests.
 
 ```sh
 python3 -I scripts/build.py           # rebuild after any change in src/ or data/
-python3 -I scripts/test_build.py      # build and validation tests
-python3 -I scripts/test_techs.py      # technology tree tests
-node scripts/test_calc.mjs            # planner maths, storage and sync tests
+python3 -I scripts/check.py           # everything before you send: versions, build up to date, the 3 test suites
 ```
+
+`check.py` prints one line per check (ok / AVISO / FALHA) and exits 1 if anything failed. Without `data/raw/` (not in git) the technology tests are skipped with a warning.
 
 - **Edit `src/`, never `dist/` or `prototype/`**: they are regenerated on every build.
 - One feature = one module (`src/js/ui/<name>.js`, optional CSS), listed in `src/manifest.json`, with its own i18n strings, route and panel. The contract is in [`scripts/README-build.md`](scripts/README-build.md#adding-a-module-the-contract-for-parallel-work); each file starts with a comment saying what it owns and exposes.
@@ -98,6 +98,6 @@ Use o modelo **Bug**: o que você fez, o que esperava e o que aconteceu, mais ce
 
 ### Código
 
-Os comandos e as regras são os da seção [Code](#code) acima: edite `src/` (nunca `dist/` nem `prototype/`), um módulo por função seguindo o contrato do [`scripts/README-build.md`](scripts/README-build.md#adding-a-module-the-contract-for-parallel-work), todo texto em `pt` e `en` via `GK.i18n.add`, nenhuma dependência nova, e uma linha no topo do `data/changelog.json` para cada mudança visível. Rode os quatro comandos de teste antes de mandar.
+Os comandos e as regras são os da seção [Code](#code) acima: edite `src/` (nunca `dist/` nem `prototype/`), um módulo por função seguindo o contrato do [`scripts/README-build.md`](scripts/README-build.md#adding-a-module-the-contract-for-parallel-work), todo texto em `pt` e `en` via `GK.i18n.add`, nenhuma dependência nova, e uma linha no topo do `data/changelog.json` para cada mudança visível. Rode `python3 -I scripts/build.py` e depois `python3 -I scripts/check.py` antes de mandar.
 
 Ao contribuir com código ou documentação, você concorda que a sua contribuição seja publicada sob a licença do código do projeto, **MIT** (veja o [`LICENSE`](LICENSE)). A licença cobre só o código: os dados do jogo, os nomes, os ícones e as capturas de tela não estão cobertos (veja o aviso de escopo no [`LICENSE`](LICENSE) e o [`docs/dados.md`](docs/dados.md)). As correções de nomes que você mandar entram nos arquivos de nomes em `data/`, que seguem as mesmas regras do resto dos dados do jogo.

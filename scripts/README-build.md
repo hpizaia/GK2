@@ -40,8 +40,9 @@ python3 -I scripts/build.py
 python3 -I scripts/validate.py data/gk2.json            # markdown report
 python3 -I scripts/validate.py data/gk2.json --json     # machine-readable
 
-# tests
-python3 -I scripts/test_build.py
+# everything before a commit: versions, build up to date (rebuilt in a temp dir and compared byte for byte),
+# site/preview.html, data/days.json and the 3 test suites; one line per check, exit 1 on any FALHA
+python3 -I scripts/check.py
 ```
 
 Options for `build.py`:
@@ -157,8 +158,10 @@ Hash routes are bare tokens (`#recipes`), the only form the Artifact viewer pass
   `date: null` = unreleased ("em desenvolvimento"). Embedded as `meta.changelog` and rendered by `ui/changelog.js`.
   The top entry's version should match `VERSION` (warning otherwise; `--release` refuses).
 - `CHANGELOG.md` is generated from it on every build (pt first, en below). Do not edit it by hand.
-- Releasing: bump `VERSION`, add the entry at the top with `"date": null`, list the changes, then
-  `python3 -I scripts/build.py --release`.
+- Releasing: add the entry at the top with `"date": null`, list the changes, then
+  `python3 -I scripts/release.py X.Y.Z`. It writes `VERSION` and the site version, runs `build.py --release`
+  and `check.py --release`, and prints the commit / push / `gh release` commands without running them
+  (`docs/atualizacao.md` §7–8).
 
 ## Output schema (`data/gk2.json`, schema 1)
 

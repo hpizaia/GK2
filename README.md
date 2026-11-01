@@ -125,12 +125,8 @@ git clone https://github.com/hpizaia/GK2.git && cd GK2
 
 # data + page -> prototype/, dist/index.html, dist/preview.html, CHANGELOG.md
 python3 -I scripts/build.py
-# build tests (fixtures + smoke test on the real data)
-python3 -I scripts/test_build.py
-# technology tree tests
-python3 -I scripts/test_techs.py
-# planner maths, storage and sync tests
-node scripts/test_calc.mjs
+# all tests (build, technology tree, planner maths/storage/sync) + reproducible-build check; exits 1 on any failure
+python3 -I scripts/check.py
 
 # then open http://127.0.0.1:8765/
 python3 -m http.server 8765 --bind 127.0.0.1 --directory prototype

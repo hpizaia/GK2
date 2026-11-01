@@ -1,0 +1,114 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Trava contra vazamento no push (gancho pre-push do git).
+
+Ativar uma vez por clone, na raiz do projeto:
+    git config core.hooksPath scripts/git-hooks
+
+O que faz, quando o destino é o repositório PÚBLICO (remoto chamado
+`origin`, ou endereço com `hpizaia/GK2` que não seja `GK2-historico`):
+  1. Só deixa passar `main` -> `main` e tags `v*`. Qualquer outra branch
+     (por exemplo `backup-main-pre-rewrite` ou `historico`, que guardam o
+     histórico antigo com documentos internos) é recusada. Isso também
+     barra `git push --all` e `--mirror`.
+  2. Recusa o push se algum commit novo (que o remoto ainda não tem)
+     contiver um caminho interno: `historico/`, `docs/revisao-ux/`,
+     `docs/divulgacao/`, `CLAUDE.local.md` ou o `AUDITORIA.md` antigo da raiz.
+Para qualquer outro remoto (ex.: `historico`, o repositório privado) não
+bloqueia nada.
+
+Só biblioteca padrão. O git chama assim: argumentos `<nome do remoto> <url>`
+e, na entrada, uma linha por ref: `<ref local> <sha local> <ref remota> <sha remoto>`.
+Para pular a trava num caso excepcional (com o ok do Hugo): `git push --no-verify`.
+"""
+import re
+import subprocess
+import sys
+
+ZERO = "0" * 40
+# Caminhos internos que nunca podem aparecer num commit enviado ao público.
+PROIBIDOS = ["historico", "docs/revisao-ux", "docs/divulgacao", "CLAUDE.local.md", "AUDITORIA.md"]
+
+
+def git(*args):
+    r = subprocess.run(["git", *args], capture_output=True, text=True)
+    return r.returncode, r.stdout
+
+
+def destino_publico(nome, url):
+    if nome == "origin":
+        return True
+    # hpizaia/GK2 (https ou ssh, com ou sem .git), mas não hpizaia/GK2-historico
+    return re.search(r"hpizaia/GK2(\.git)?/?$", url.strip()) is not None
+
+
+def commits_novos(nome, sha_local, sha_remoto):
+    """Commits que o push vai mandar e o remoto ainda não tem."""
+    if sha_remoto != ZERO and git("cat-file", "-e", sha_remoto + "^{commit}")[0] == 0:
+        faixa = [sha_local, "^" + sha_remoto]
+    else:
+        # ref nova no remoto (ou sha remoto desconhecido aqui): tudo que não
+        # está em nenhuma branch conhecida desse remoto
+        faixa = [sha_local, "--not", "--remotes=" + nome]
+    rc, out = git("rev-list", *faixa)
+    if rc != 0:
+        return None
+    return out.split()
+
+
+def caminhos_proibidos(commit):
+    rc, out = git("ls-tree", "-r", "--name-only", commit, "--", *PROIBIDOS)
+    if rc != 0:
+        return ["(não consegui ler o commit)"]
+    return [p for p in out.splitlines() if p]
+
+
+def main():
+    nome = sys.argv[1] if len(sys.argv) > 1 else ""
+    url = sys.argv[2] if len(sys.argv) > 2 else ""
+    if not destino_publico(nome, url):
+        return 0  # remoto privado (historico) ou outro: sem trava
+
+    erros = []
+    for linha in sys.stdin.read().splitlines():
+        partes = linha.split()
+        if len(partes) != 4:
+            continue
+        ref_local, sha_local, ref_remota, sha_remoto = partes
+        e_tag = ref_remota.startswith("refs/tags/v")
+
+        if sha_local == ZERO:  # apagar algo no remoto
+            if not e_tag:
+                erros.append(f"apagar {ref_remota} no repositório público não é permitido")
+            continue
+
+        if not (e_tag or (ref_local == "refs/heads/main" and ref_remota == "refs/heads/main")):
+            erros.append(f"{ref_local} -> {ref_remota}: no repositório público só vai main -> main e tags v*")
+            continue
+
+        novos = commits_novos(nome, sha_local, sha_remoto)
+        if novos is None:
+            erros.append(f"{ref_local}: não consegui listar os commits a enviar")
+            continue
+        for c in novos:
+            achados = caminhos_proibidos(c)
+            if achados:
+                extra = f" (+{len(achados) - 3})" if len(achados) > 3 else ""
+                erros.append(f"commit {c[:7]} em {ref_local} tem caminho interno: "
+                             + ", ".join(achados[:3]) + extra)
+                break
+
+    if erros:
+        print("", file=sys.stderr)
+        print(f"PUSH RECUSADO pela trava contra vazamento (destino público: {nome} {url})", file=sys.stderr)
+        for e in erros:
+            print("  - " + e, file=sys.stderr)
+        print("O repositório público só recebe `git push origin main` e tags v*, sem pastas internas.", file=sys.stderr)
+        print("O histórico antigo vai só para o remoto privado: git push historico <branch>.", file=sys.stderr)
+        print("Detalhes em scripts/git-hooks/pre-push.", file=sys.stderr)
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

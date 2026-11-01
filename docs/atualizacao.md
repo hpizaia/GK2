@@ -87,10 +87,10 @@ O `build_techs.py` lê o `data/gk2.json` (por isso vem depois do passo 4) e a ta
 
 ```sh
 python3 -I scripts/build.py                 # gk2.json, relatórios, prototype/, dist/, CHANGELOG.md
-python3 -I scripts/test_build.py
-python3 -I scripts/test_techs.py            # de novo: confere que techs.json não ficou desatualizado
-node scripts/test_calc.mjs                  # cálculo, armazenamento e sincronização sobre os dados novos
+python3 -I scripts/check.py                 # versões, build em dia, site/preview.html, days.json e os 3 testes
 ```
+
+O `check.py` mostra uma linha por conferência (ok / AVISO / FALHA) e o log só de quem falhou; termina com exit 1 se algo falhou. Não precisa de `| tail`.
 
 - `data/report-build.md`: tem que dar **0 erros**. Compare os avisos com a versão anterior (hoje 206, quase todos `orphan`).
 - `data/report-l10n.md`: lista o que ainda está como máquina ou sem tradução, do mais usado para o menos usado.
@@ -98,7 +98,7 @@ node scripts/test_calc.mjs                  # cálculo, armazenamento e sincroni
 
 ## 7. Versão e histórico
 
-1. Aumente `VERSION` (por exemplo `1.2.0` → `1.2.1` para só dados, `1.3.0` para funcionalidade).
+1. Escolha o número da versão (por exemplo `1.2.0` → `1.2.1` para só dados, `1.3.0` para funcionalidade).
 2. Acrescente a entrada no **topo** de `data/changelog.json`, com `"date": null` e frases curtas que o jogador entenda, em pt e en:
    ```json
    {"version": "1.2.1", "date": null,
@@ -107,22 +107,18 @@ node scripts/test_calc.mjs                  # cálculo, armazenamento e sincroni
    Confira se o JSON ficou válido: `python3 -I -c "import json; json.load(open('data/changelog.json'))"`.
 3. Feche a versão:
    ```sh
-   python3 -I scripts/build.py --release       # data a entrada do topo; recusa se VERSION e changelog divergirem
-   python3 -I scripts/test_build.py && node scripts/test_calc.mjs
+   python3 -I scripts/release.py 1.2.1 --dry-run   # só confere
+   python3 -I scripts/release.py 1.2.1
    ```
+   O `release.py` grava `VERSION`, troca só o número da versão no site (`const VERSION` e `#ver` em `site/index.html`) e regenera `site/preview.html`, roda `build.py --release` (data a entrada do topo) e `check.py --release`, e prepara `companheiro-gk2-1.2.1.html` e as notas da release numa pasta temporária. Ele não faz commit, push nem release: no fim imprime os comandos e a lista do passo 8. Se algo falhar, conserte e rode de novo.
 
 O `CHANGELOG.md` é gerado: não edite à mão.
 
 ## 8. Publicar e versionar
 
-1. **Artifact:** peça ao Claude para republicar `dist/index.html` **no mesmo artifact** (https://claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn), sem criar outro. Se for outra sessão, ele acha a URL com a listagem de artifacts e lê a versão publicada antes. Ao republicar, ele não passa `capabilities`, para manter as que a página já tem (`db` e `user`, usadas na sincronização por conta). Abra a página publicada e confira a versão no rodapé.
-2. **Git:**
-   ```sh
-   git status
-   git add -A
-   git status --short   # confira: historico/ e os dumps do jogo não devem aparecer
-   git commit -m "Companheiro GK2 v1.2.1: dados do jogo 1.0xx"
-   git push
-   ```
-   O `.gitignore` mantém fora do git `data/raw/`, `data/icons/`, o dump completo do jogo e as `.venv`. Se o push recusar por falta de credencial: `gh auth login` (ou `gh auth setup-git`), depois `git push` de novo. Confira antes `git config user.email`: os commits devem sair com o e-mail noreply da conta do GitHub usada no repositório (configurado localmente com `git config --local user.email`).
-3. **Histórico da sessão:** peça ao Claude para exportar a transcrição da sessão e guarde em `historico/` (por exemplo `historico/sessao-AAAA-MM-DD-<assunto>.zip`), com uma linha nova na tabela do `historico/README.md`. A pasta `historico/` está no `.gitignore` do repositório público; o histórico fica no repositório privado `hpizaia/GK2-historico`.
+Siga o que o `release.py` imprimiu no fim, nesta ordem:
+
+1. **Git e GitHub** (com o OK do Hugo): `git add -A`, `git status --short` (confira: `historico/` e os dumps do jogo não devem aparecer), o `git -c user.name=... -c user.email=... commit` impresso, `git push` e, **só depois do push**, o `gh release create` impresso (com o arquivo único e as notas; antes do push a tag nasceria no commit errado). O `.gitignore` mantém fora do git `data/raw/`, `data/icons/`, o dump completo do jogo e as `.venv`. Se o push recusar por falta de credencial: `gh auth login` (ou `gh auth setup-git`), depois `git push` de novo. Os commits devem sair com o e-mail noreply da conta do GitHub usada no repositório (o `check.py` avisa se o `git config user.email` for outro).
+2. **Artifact:** peça ao Claude para republicar `dist/index.html` **no mesmo artifact** (https://claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn), sem criar outro. Se for outra sessão, ele acha a URL com a listagem de artifacts e lê a versão publicada antes. Ao republicar, ele não passa `capabilities`, para manter as que a página já tem (`db` e `user`, usadas na sincronização por conta). Abra a página publicada e confira a versão no rodapé. O site (https://claude.ai/artifact/Bgn32T3eDPRFydxYoxgWTr) também é republicado, porque o número da versão mudou: veja `site/README.md`.
+3. **Backlog:** atualize `docs/projeto/BACKLOG.md` e faça o commit "Backlog: 1.2.1 publicada".
+4. **Histórico da sessão:** peça ao Claude para exportar a transcrição da sessão e guarde em `historico/` (por exemplo `historico/sessao-AAAA-MM-DD-<assunto>.zip`), com uma linha nova na tabela do `historico/README.md`. A pasta `historico/` está no `.gitignore` do repositório público; o histórico fica no repositório privado `hpizaia/GK2-historico`.
