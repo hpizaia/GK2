@@ -1,6 +1,6 @@
 # Backlog — Companheiro GK2
 
-01/11/2026 · versão atual **1.8.2**, publicada (app, site e release v1.8.2 no GitHub)
+01/11/2026 · versão atual **1.8.3**, publicada (app, site e release v1.8.3 no GitHub)
 
 Este arquivo substitui o backlog anterior (Etapas 0 a 5). O histórico do que já foi feito está no [CHANGELOG.md](../../CHANGELOG.md).
 
@@ -8,9 +8,10 @@ Esforço: **P** até 2 h · **M** meio dia a um dia · **G** vários dias. Quand
 
 ## Onde estamos
 
-**Publicado:** 1.8.2 (01/11, manhã): app versão 15, site versão 13, release v1.8.2 com o arquivo único. Antes dela, a 1.8.1 e a 1.8.0 (mesma manhã).
+**Publicado:** 1.8.3 (01/11, manhã): app versão 16, site versão 14, release v1.8.3 com o arquivo único. Antes dela, 1.8.2, 1.8.1 e 1.8.0 (mesma manhã).
 
 **Saiu hoje:**
+- **1.8.3:** aba Tecnologias com todas as colunas que faltam abertas (só as completas recolhidas); saiu a faixa de aviso do topo, fica só o aviso do rodapé.
 - **1.8.2:** **qualidade consertada no build** (graus preservados: Vinho, Uvas, colheitas, receitas de estrela; melhorias Especiarias/Umami não circulares; planos salvos migram; relatórios internos `qualidade-auditoria.md` e `qualidade-pesquisa.md`), selos de grau de ingrediente fora das Etapas (2.9), "ou: … · requisitos" numa linha, **seta fina de seção** (opção A de https://claude.ai/artifact/LU6Pjko6NCoEogwMZVC6Lx), Tecnologias que faltam recolhe, **colunas da aba Tecnologias recolhem** (só a próxima aberta), Progresso sem Copiar lista / Limpar marcações / Editar nomes (renomear pelo selo "não oficial" no detalhe), QA #8 #11 #12. Comparação: https://claude.ai/artifact/Kv1tBxrbejFW5wWFnbdQL5.
 - **1.8.1:** Metas com o "− N +" à direita, na mesma coluna das outras quantidades (opção 2 do protótipo https://claude.ai/artifact/TCXVjz1GN9sXqReLQw5URs); com quantidade 1 o "−" vira ✕ e a remoção tem "Saiu das metas · Desfazer". Comparação: https://claude.ai/artifact/N1oUu9Uy69HF9FaSzhLFVG.
 - **1.8.0:** **receitas agrupadas** (um cartão por estação quando só muda um ingrediente; qualidade bronze/prata/ouro como escolha que troca a receita do planejador; circulares recolhidas em "Melhorar a qualidade"), **estrela de qualidade** no ícone em todo o app (nome sem "(prata)" nas listas, palavra embaixo), **moedas em pixel** no "Quem compra" (unidade conferida: bronze, 100/100), **cortes 9 e 19**, **C3** (marcação acompanha a quantidade), **grade única no Planejador** (pedido do Hugo: número da estação na coluna das caixinhas, ícone da estação na coluna dos ícones), 2.1 a 2.5, QA #5 #6 #7 #9 #13, 2.8 no site, caixinhas de Tecnologias e Hoje de volta ao lugar. Comparação: https://claude.ai/artifact/VwmRF7TjJeNBRknDMZgC6w · protótipo: https://claude.ai/artifact/T4QxsVK8UVetbF7n8xnVmE. Relatório interno: `docs/revisao-ux/consertos.md`.
