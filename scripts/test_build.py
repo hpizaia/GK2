@@ -1282,7 +1282,7 @@ class RealShell(unittest.TestCase):
         hj = self.read("js/ui/header.js")
         self.assertIn('matchMedia("(min-width: 900px)")', hj)
         self.assertIn("top.appendChild(row)", hj)
-        self.assertRegex(hj, r"(band|at)\.after\(row\)")   # 1.4.1: after the stale-data band when there is one
+        self.assertIn("band.after(row)", hj)   # 1.8.x: the stale-data band is gone, the row goes right after the tabs
 
     def test_router_scroll_per_screen(self):
         """UX review #7: a screen change no longer keeps the old screen's scroll position."""
@@ -1685,7 +1685,7 @@ class TypeScale(unittest.TestCase):
 
 class FooterNoticeQr(unittest.TestCase):
     """1.4.1: the short footer (links, Letra grande, sync chip only with an account, one version line), the stale-data
-    notice (data/game-version.json embedded as meta.gameVersion, footer line + band under the tabs), the QR card
+    notice (data/game-version.json embedded as meta.gameVersion, footer line only since 1.8.x), the QR card
     on Créditos (wide screens with a mouse) and the two phone layout fixes of the raw-material rows."""
 
     @classmethod
@@ -1743,12 +1743,16 @@ class FooterNoticeQr(unittest.TestCase):
 
     @unittest.skipUnless(shutil.which("node"), "node not installed")
     def test_stale_notice_logic(self):
-        """latest newer than the wiki recipes: notice; equal or older: nothing. Closing is per version."""
+        """latest newer than the wiki recipes: notice (the footer line); equal or older: nothing. 1.8.x: the band under
+        the tabs (with its ✕ and the "gk2-companion.notice" key) is gone; the old key is only dropped, never read."""
         f, h = self.read("js/ui/footer.js"), self.read("js/ui/header.js")
-        self.assertIn('const NOTICE_KEY = "gk2-companion.notice";', f)
         self.assertIn("cmpVersion(gv.latest, wiki) <= 0", f)
-        self.assertIn('if (!st || closedFor() === st.latest)', f)
-        self.assertIn('document.getElementById("notice-band") || band', h)
+        for gone in ("NOTICE_KEY", "notice-band", "closedFor", "closeBand", "renderBand", '"footer.staleClose"', "data-notice-close"):
+            self.assertNotIn(gone, f)
+        self.assertNotIn("notice-band", h)
+        self.assertNotIn(".notice-", self.read("css/planner.css"))
+        self.assertIn('try { localStorage.removeItem("gk2-companion.notice"); } catch (e)', f)
+        self.assertNotIn('getItem("gk2-companion.notice")', f)
         out = self.node(r"""
 global.GK = { ui: {}, util: { esc: (s) => String(s) }, app: { registerPanel() {} },
   i18n: { add() {}, t: (k) => k, lang: () => "pt" } };

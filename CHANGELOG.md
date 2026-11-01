@@ -3,6 +3,11 @@
 
 # Histórico de atualizações — Companheiro GK2
 
+## 1.8.3 — 2026-11-01
+
+- Aba Tecnologias: todas as colunas que ainda têm algo a pesquisar começam abertas; só as completas (✓) começam recolhidas
+- Saiu a faixa de aviso do topo; o aviso de dados do jogo fica só no rodapé
+
 ## 1.8.2 — 2026-11-01
 
 - Qualidade consertada: o Barril dá Vinho do mesmo grau do suco, e Especiarias e Umami sobem o Vinho e o Suco de Uva de bronze para prata e de prata para ouro (deixaram de ser “circulares”); Vinho prata e ouro têm receita
@@ -135,6 +140,11 @@
 ---
 
 # Update history — GK2 Companion
+
+## 1.8.3 — 2026-11-01
+
+- Technologies tab: every column with something left to research starts open; only finished ones (✓) start folded
+- The notice bar at the top is gone; the game-data notice stays in the footer
 
 ## 1.8.2 — 2026-11-01
 

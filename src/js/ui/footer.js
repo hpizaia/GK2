@@ -5,10 +5,9 @@
    1.010)" (meta.version, meta.data). The data credits and the note on amounts/names live on the Créditos screen.
    Stale data notice (meta.gameVersion = data/game-version.json, embedded by build.py): when its `latest` is newer
    than the wiki recipes (meta.data.wiki, compared as versions: 1.012 > 1.011), a line under the version with an "i"
-   that opens the note, and a thin band under the tabs (#notice-band, made here, placed after #tabs-band) with a ✕.
-   Closing it is kept per device with the version (localStorage "gk2-companion.notice" = {"closed": "1.011"}): a new
-   `latest` brings it back.
-   Owns: [data-panel="footer"], #notice-band and the sync.* texts.
+   that opens the note. (1.8.x: the thin band under the tabs with a ✕ is gone, the owner keeps only this line; the
+   old "gk2-companion.notice" key that remembered closing it is dropped on mount, never read.)
+   Owns: [data-panel="footer"] and the sync.* texts.
    Exposes: GK.ui.footer.{mount, render, stale, cmpVersion}; registered as a panel.
 */
 GK.i18n.add({
@@ -36,7 +35,6 @@ GK.i18n.add({
     "footer.lineMixed": "v{version} · dados do jogo {game} (receitas {wiki})",
     "footer.stale": "O jogo já está na {latest}; as receitas daqui são da {wiki}.",
     "footer.staleMore": "Mais sobre a versão do jogo",
-    "footer.staleClose": "Fechar aviso",
     "footer.bigTitle": "Aumenta todo o texto do app, para ler de longe com o celular ao lado do jogo. Soma com o tamanho de letra do celular.",
   },
   en: {
@@ -63,16 +61,14 @@ GK.i18n.add({
     "footer.lineMixed": "v{version} · game data {game} (recipes {wiki})",
     "footer.stale": "The game is on {latest}; recipes here are from {wiki}.",
     "footer.staleMore": "More about the game version",
-    "footer.staleClose": "Close notice",
     "footer.bigTitle": "Makes all the app's text bigger, to read from a distance with the phone beside the game. Adds to your phone's own text size.",
   },
 });
 
 GK.ui.footer = (function () {
   const { t } = GK.i18n, esc = GK.util.esc;
-  const NOTICE_KEY = "gk2-companion.notice";
   const SITE = "https://claude.ai/artifact/Bgn32T3eDPRFydxYoxgWTr";
-  let root, band, noteOpen = false;
+  let root, noteOpen = false;
   function when(ts) {
     const min = Math.floor((Date.now() - ts) / 60000);
     if (min < 1) return t("sync.now");
@@ -108,19 +104,6 @@ GK.ui.footer = (function () {
     const note = gv.note || {};
     return { latest: gv.latest, wiki, note: note[GK.i18n.lang()] || note.en || note.pt || "" };
   }
-  function closedFor() {
-    try { const v = JSON.parse(localStorage.getItem(NOTICE_KEY) || "null"); return v && v.closed; } catch (e) { return null; }
-  }
-  function closeBand(latest) {
-    try { localStorage.setItem(NOTICE_KEY, JSON.stringify({ closed: latest })); } catch (e) { /* private mode: closed for now */ }
-    if (band) { band.hidden = true; band.innerHTML = ""; }
-  }
-  function renderBand(st) {
-    if (!band) return;
-    if (!st || closedFor() === st.latest) { band.hidden = true; band.innerHTML = ""; return; }
-    band.hidden = false;
-    band.innerHTML = `<div class="wrap notice-in"><span class="notice-txt">${esc(t("footer.stale", st))}</span><button type="button" class="notice-x" id="notice-close" data-notice-close="${esc(st.latest)}" title="${esc(t("footer.staleClose"))}" aria-label="${esc(t("footer.staleClose"))}">✕</button></div>`;
-  }
   const INFO_SVG = '<svg width="16" height="16" viewBox="0 0 9 9" aria-hidden="true" focusable="false" shape-rendering="crispEdges" fill="currentColor"><path d="M2 0h5v1H2zM1 1h1v1H1zM7 1h1v1H7zM0 2h1v5H0zM8 2h1v5H8zM1 7h1v1H1zM7 7h1v1H7zM2 8h5v1H2zM4 2h1v1H4zM4 4h1v3H4z"/></svg>';
   return {
     stale, cmpVersion,
@@ -137,21 +120,8 @@ GK.ui.footer = (function () {
           if (n) n.hidden = !noteOpen;
         }
       });
-      // the band under the tabs (on desktop the tab band is hidden, so it sits right under the sticky header)
-      band = document.createElement("div");
-      band.className = "notice-band"; band.id = "notice-band"; band.hidden = true;
-      band.setAttribute("role", "note");
-      const tabs = document.getElementById("tabs-band"), main = document.querySelector("main");
-      if (tabs) tabs.after(band); else if (main) main.before(band);
-      band.addEventListener("click", (e) => {
-        const x = e.target.closest("[data-notice-close]");
-        if (!x) return;
-        closeBand(x.dataset.noticeClose);
-        // the ✕ is gone: the focus goes to the tab of this screen, right above where the band was (QA #5); there is a
-        // tab bar in the header (wide screens) and one in the band (phones): the one on display
-        const tab = [...document.querySelectorAll('.tab[aria-current="page"]')].find((a) => a.getClientRects().length);
-        if (tab) tab.focus({ preventScroll: true });
-      });
+      // the band under the tabs is gone (1.8.x): drop the key that remembered closing it (never read; private mode: no-op)
+      try { localStorage.removeItem("gk2-companion.notice"); } catch (e) { /* storage blocked: nothing to drop */ }
       GK.sync.subscribe(chip);
       setInterval(() => { if (GK.sync.status() === "synced") chip(); }, 30000);
     },
@@ -171,7 +141,6 @@ GK.ui.footer = (function () {
       const links = `<nav class="foot-links" aria-label="${esc(t("footer.links"))}"><a href="#changelog" id="foot-changelog">${esc(t("footer.history"))}</a><a href="#credits" id="foot-credits">${esc(t("footer.credits"))}</a><a href="${SITE}" target="_blank" rel="noopener" id="foot-site">${esc(t("footer.site"))}</a></nav>`;
       root.innerHTML = `<div class="foot-top">${big}<span class="sync-chip" id="sync-chip" hidden></span></div>${links}${version}${staleLine}`;
       chip();
-      renderBand(st);
     },
   };
 })();

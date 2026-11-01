@@ -11,11 +11,12 @@
    pré-requisitos como pesquisados" only when 2+ of them are missing (with 1, tapping it is the same thing).
    1.8.0: the phone's back gesture closes a detail opened on this screen (GK.router.detailHistory: one entry when the
    detail opens over the list; "‹ Voltar à lista" drops it).
-   1.8.x (seta das seções, opção A): each "COLUNA N … x/y" header is a 44 px button that folds its column. Only the
-   first column with something left to research starts open (GK.tech.nextColumn); the others, done or ahead, start
-   folded (a done one shows a green ✓). What the player opens or folds by hand is kept per branch (GK.store
-   ui.techCols, per device, never synced). The "next" column is worked out when the screen or a branch is shown
-   and kept while the player ticks there, so ticking the last tech of a column does not fold it under the finger.
+   1.8.x (seta das seções, opção A): each "COLUNA N … x/y" header is a 44 px button that folds its column. Every
+   column with something left to research starts open (GK.tech.pendingColumns); only a done one (N/N, with a green
+   ✓) starts folded. (1.8.2 opened only the first of them; the owner wants them all open.) What the player opens or
+   folds by hand is kept per branch (GK.store ui.techCols, per device, never synced) and wins over the rule. The
+   open columns are worked out when the screen is shown and kept while the player ticks there, so ticking the
+   last tech of a column does not fold it under the finger (it folds on the next visit).
    The thin chevron sits right after "COLUNA N" (never in the x column of the rows' "›"). A search lists its hits
    by branch, never folded. Opening a tech's detail opens its column (the list comes back to that row).
 */
@@ -158,7 +159,7 @@ GK.ui.tech = (function () {
   let pendingFocus = false;   // open() switched routes: show the detail after the route's render
   let detailFrom = null, fromScroll = 0, returnTo = null;   // the route that opened the detail (open(id, {from}))
   let hist = null;        // GK.router.detailHistory (mount): the back gesture closes the detail
-  let nextAt = {};        // branch id -> its "next" column (GK.tech.nextColumn), fixed for this visit of the screen
+  let openAt = {};        // branch id -> Set of its columns with something left (GK.tech.pendingColumns) at the start of this visit
   const isOn = () => GK.router.current() === "tech";
 
   // ---- shared bits (also used by ui/techneeds.js) ----
@@ -239,13 +240,16 @@ GK.ui.tech = (function () {
       <span class="tech-chev" aria-hidden="true">›</span>
     </div>`;
   }
-  // the column the branch opens by default (kept for this visit: see the header comment)
-  function nextCol(bid, done) {
-    if (!(bid in nextAt)) nextAt[bid] = TK.nextColumn(bid, done);
-    return nextAt[bid];
+  // the columns the branch opens by default: those with something left at the start of this visit (kept while the
+  // player ticks: see the header comment) plus any that has something left now (a tech unticked meanwhile)
+  function openCols(bid, done) {
+    if (!(bid in openAt)) openAt[bid] = new Set(TK.pendingColumns(bid, done));
+    const s = new Set(openAt[bid]);
+    for (const c of TK.pendingColumns(bid, done)) s.add(c);
+    return s;
   }
   const colChoice = (state, bid) => (state.ui && state.ui.techCols && state.ui.techCols[bid]) || {};
-  const isColOpen = (state, bid, col, done) => TK.columnOpen(col, nextCol(bid, done), colChoice(state, bid));
+  const isColOpen = (state, bid, col, done) => TK.columnOpen(col, openCols(bid, done), colChoice(state, bid));
   function branchList(bid, state, done) {
     return TK.columns(bid).map(({ column: col, techs: ts }) => {
       const nDone = ts.filter((x) => done.has(x.id)).length, all = nDone === ts.length;
@@ -373,7 +377,7 @@ GK.ui.tech = (function () {
     if (!root) return;
     if (!isOn()) { dirty = true; return; }
     if (meta && meta.from === "search-toggle" && !dirty) return;
-    if (meta && meta.from === "router") nextAt = {};   // a new visit: the "next" column is worked out again
+    if (meta && meta.from === "router") openAt = {};   // a new visit: the open columns are worked out again
     dirty = false;
     if (!TK.available()) { root.innerHTML = `<div class="card empty"><p>${esc(t("tech.empty"))}</p></div>`; return; }
     if (!branchSel || !TK.branch(branchSel)) branchSel = TK.branches()[0].id;
@@ -496,7 +500,7 @@ GK.ui.tech = (function () {
       if (e.target.closest("[data-clear]")) { asking = true; rerender(); const y = root.querySelector("#tech-clear-no"); if (y) y.focus(); return; }
       if (e.target.closest("[data-clear-no]")) { asking = false; rerender(); const c = root.querySelector("#tech-clear"); if (c) c.focus(); return; }
       if (e.target.closest("[data-clear-yes]")) {
-        asking = false; nextAt = {}; S.actions.clearResearched(); GK.ui.toast(t("tech.cleared"));
+        asking = false; openAt = {}; S.actions.clearResearched(); GK.ui.toast(t("tech.cleared"));
         // the button is gone: keep the focus on the screen (its title), not on <body>; no keyboard pops up
         const h = root.querySelector(".tech-main .h2"); if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
         return;

@@ -3,7 +3,7 @@
    scripts/build.py), kept raw by GK.data as GK.data.get().techs and normalized here on first use.
    Owns: the normalized tree (techs by id with derived children / recipes, branches in tab order, point colours).
    Exposes: GK.tech.{available, get, all, branches, branch, inBranch, tp, COLORS, ancestors, researchedSet,
-   required, costOf, order, forPlan, isFree, init, columns, nextColumn, columnOpen}.
+   required, costOf, order, forPlan, isFree, init, columns, pendingColumns, columnOpen}.
 
    A tech = {id, pt, en, tr, branch, column, y, cost: {red, green, blue}, parents[], children[], hidden, given,
              free (cost 0), rep: {who: {pt, en}, level} | null, unlocks: [{item, kind, pt, en, tr, station}],
@@ -108,16 +108,17 @@ GK.tech = (function () {
     for (const t of inBranch(bid)) { if (!cols.has(t.column)) cols.set(t.column, []); cols.get(t.column).push(t); }
     return [...cols.entries()].sort((a, b) => a[0] - b[0]).map(([column, techs]) => ({ column, techs }));
   }
-  /** nextColumn(bid, done) → the first column of the branch with a tech not in `done` (a researchedSet), or null
-   *  when the whole branch is researched. The Tecnologias tab opens only this column by default (1.8.x). */
-  function nextColumn(bid, done) {
+  /** pendingColumns(bid, done) → the columns of the branch (in order) with a tech not in `done` (a researchedSet);
+   *  [] when the whole branch is researched. The Tecnologias tab opens these by default (1.8.x). */
+  function pendingColumns(bid, done) {
     const set = done instanceof Set ? done : researchedSet(done);
-    const c = columns(bid).find((g) => g.techs.some((t) => !set.has(t.id)));
-    return c ? c.column : null;
+    return columns(bid).filter((g) => g.techs.some((t) => !set.has(t.id))).map((g) => g.column);
   }
-  /** columnOpen(col, next, choice) → is a column open: the player's choice for it (true / false) when there is
-   *  one, else only the `next` column (nextColumn) is. */
-  const columnOpen = (col, next, choice) => (choice && typeof choice[col] === "boolean" ? choice[col] : col === next);
+  /** columnOpen(col, pending, choice) → is a column open: the player's choice for it (true / false) when there is
+   *  one, else whether it is one of the `pending` columns (pendingColumns: an array or a Set). Only a column with
+   *  nothing left to research starts folded. */
+  const columnOpen = (col, pending, choice) => (choice && typeof choice[col] === "boolean" ? choice[col]
+    : !!pending && (pending instanceof Set ? pending.has(col) : [].concat(pending).indexOf(col) >= 0));
 
   // every ancestor of the given ids (not the ids themselves), in research order
   function ancestors(ids) {
@@ -233,6 +234,6 @@ GK.tech = (function () {
     available: () => tree().list.length > 0,
     init(src) { injected = src !== undefined; raw = src || null; T = null; return tree(); },   // tests / another data source
     get, all, branches, branch, inBranch, tp, COLORS, isFree, order,
-    ancestors, researchedSet, required, costOf, forPlan, signature, columns, nextColumn, columnOpen,
+    ancestors, researchedSet, required, costOf, forPlan, signature, columns, pendingColumns, columnOpen,
   };
 })();

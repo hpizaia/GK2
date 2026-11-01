@@ -1,5 +1,17 @@
 [
   {
+    "version": "1.8.3",
+    "date": "2026-11-01",
+    "pt": [
+      "Aba Tecnologias: todas as colunas que ainda têm algo a pesquisar começam abertas; só as completas (✓) começam recolhidas",
+      "Saiu a faixa de aviso do topo; o aviso de dados do jogo fica só no rodapé"
+    ],
+    "en": [
+      "Technologies tab: every column with something left to research starts open; only finished ones (✓) start folded",
+      "The notice bar at the top is gone; the game-data notice stays in the footer"
+    ]
+  },
+  {
     "version": "1.8.2",
     "date": "2026-11-01",
     "pt": [

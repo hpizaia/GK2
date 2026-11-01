@@ -1302,27 +1302,29 @@ function engineeringAt12(G) {
   return { TK, bid, cols, mark };
 }
 
-await test("Tecnologias: only the next column opens by default (columns 1-3 done, 4 has techs left)", () => {
+await test("Tecnologias: every column with something left opens by default, only done ones fold (columns 1-3 done)", () => {
   const { GK: G } = techEnv();
   const { TK, bid, cols, mark } = engineeringAt12(G);
   check(cols.length >= 6, "Engenharia has many columns (" + cols.length + ")");
   eq(cols.map((g) => g.column), [...cols.map((g) => g.column)].sort((a, b) => a - b), "columns in order");
-  eq(TK.nextColumn(bid, new Set()), cols[0].column, "nothing researched: column 1 is the next one");
+  eq(TK.pendingColumns(bid, new Set()), cols.map((g) => g.column), "nothing researched: every column has something left");
   const done = TK.researchedSet(mark);
-  const nxt = TK.nextColumn(bid, done);
-  eq(nxt, cols[3].column, "columns 1-3 done: column 4 is the next one");
-  const open = cols.filter((g) => TK.columnOpen(g.column, nxt, {})).map((g) => g.column);
-  eq(open, [cols[3].column], "only column 4 starts open (done ones and later ones folded)");
+  const pend = TK.pendingColumns(bid, done);
+  eq(pend, cols.slice(3).map((g) => g.column), "columns 1-3 done: 4 onwards have something left");
+  const open = cols.filter((g) => TK.columnOpen(g.column, pend, {})).map((g) => g.column);
+  eq(open, cols.slice(3).map((g) => g.column), "columns 4 onwards start open, the done ones (1-3) folded");
+  eq(cols.filter((g) => TK.columnOpen(g.column, new Set(pend), {})).map((g) => g.column), open, "a Set works the same");
   // everything researched: no column opens
   const all = {}; for (const t of TK.inBranch(bid)) all[t.id] = true;
-  eq(TK.nextColumn(bid, TK.researchedSet(all)), null, "whole branch researched: no next column");
-  check(cols.every((g) => !TK.columnOpen(g.column, null, {})), "…and every column starts folded");
+  eq(TK.pendingColumns(bid, TK.researchedSet(all)), [], "whole branch researched: nothing left");
+  check(cols.every((g) => !TK.columnOpen(g.column, [], {})), "…and every column starts folded");
   // implied research counts: marking a column-4 tech implies its parents
   const c4 = cols[3].techs[0];
   check(TK.researchedSet({ [c4.id]: true }).has(c4.parents[0] || c4.id), "a marked tech implies its parents");
   // the player's choice wins over the rule, in both directions
-  const choice = { [cols[1].column]: true, [nxt]: false };
-  eq(cols.filter((g) => TK.columnOpen(g.column, nxt, choice)).map((g) => g.column), [cols[1].column], "choice: 2 opened, 4 folded by hand");
+  const choice = { [cols[1].column]: true, [cols[3].column]: false };
+  eq(cols.filter((g) => TK.columnOpen(g.column, pend, choice)).map((g) => g.column), [cols[1].column, ...cols.slice(4).map((g) => g.column)],
+    "choice: 2 opened (done), 4 folded by hand, the rest by the rule");
 });
 
 await test("Tecnologias: the opened / folded columns are kept per branch (ui.techCols, per device, cleaned, not synced)", async () => {
@@ -1350,7 +1352,7 @@ await test("Tecnologias: the opened / folded columns are kept per branch (ui.tec
   check(!("ui" in env2.GK.store.syncPayload(env2.GK.store.get())) && env2.GK.store.SYNCED.indexOf("ui") < 0, "not synced");
 });
 
-await test("Tecnologias tab (ui/tech.js): headers fold, the next column stays put while ticking, ✓ on done columns", async () => {
+await test("Tecnologias tab (ui/tech.js): headers fold, columns with something left open, done ones fold, kept while ticking", async () => {
   const env = techEnv(), G = env.GK, ctx = env.ctx;
   const { TK, bid, cols, mark } = engineeringAt12(G);
   const fake = () => {
@@ -1370,28 +1372,31 @@ await test("Tecnologias tab (ui/tech.js): headers fold, the next column stays pu
   const draw = (meta) => { T.render(S.get(), meta || {}); return root.innerHTML; };
   const heads = (h) => [...h.matchAll(/<button type="button" class="tc-btn" id="tcol-[^"]+-(\d+)" data-tcol="\d+" aria-expanded="(true|false)" aria-controls="([^"]+)" aria-label="([^"]+)">(.*?)<\/button>/g)]
     .map((m) => ({ col: +m[1], open: m[2] === "true", ctl: m[3], label: m[4], inner: m[5] }));
+  const from = (i) => cols.slice(i).map((g) => g.column);
   let h = draw({ from: "router" }), hs = heads(h);
   eq(hs.length, cols.length, "one header button per column");
-  eq(hs.filter((x) => x.open).map((x) => x.col), [cols[3].column], "only column 4 open");
+  eq(hs.filter((x) => x.open).map((x) => x.col), from(3), "columns 4 onwards open, done ones folded");
   check(hs.slice(0, 3).every((x) => /class="tc-ok"/.test(x.inner)) && !hs.slice(3).some((x) => /class="tc-ok"/.test(x.inner)), "✓ only on the done columns");
   check(/aria-label="Expandir: Coluna 1, 1 de 1 pesquisadas"|aria-label="Expandir: Coluna 1, \d+ de \d+ pesquisadas"/.test(h), "label: Expandir: Coluna 1, n de n pesquisadas");
   check(/<span class="tc-t">Coluna 4<\/span><span class="tc-chev" aria-hidden="true"><\/span><span class="tc-r"><span class="count">/.test(h), "the chevron right after the title, the count after it");
   check(new RegExp(`<div class="card list" id="${hs[3].ctl}">`).test(h) && new RegExp(`<div id="${hs[0].ctl}" hidden></div>`).test(h), "aria-controls points at the rows (folded: empty and hidden)");
-  // ticking every tech of column 4 does not fold it under the finger (the next column is kept for this visit)
+  // ticking every tech of column 4 does not fold it under the finger (the open columns are kept for this visit)
   S.update((s) => { for (const t of cols[3].techs) s.researched[t.id] = true; }, { from: "tech" });
   hs = heads(draw());
-  eq(hs.filter((x) => x.open).map((x) => x.col), [cols[3].column], "column 4 done while on the screen: still open");
+  eq(hs.filter((x) => x.open).map((x) => x.col), from(3), "column 4 done while on the screen: still open");
   check(/class="tc-ok"/.test(hs[3].inner), "…with its ✓");
-  // the next visit opens the new next column
+  // the next visit folds it (done), the rest stays open
   hs = heads(draw({ from: "router" }));
-  eq(hs.filter((x) => x.open).map((x) => x.col), [cols[4].column], "next visit: column 5 open, 4 folded");
+  eq(hs.filter((x) => x.open).map((x) => x.col), from(4), "next visit: column 4 folded, 5 onwards open");
   // a tap on a header: the choice is kept (and wins over the rule)
   const click = (sel, data) => root.ls.click.forEach((f) => f({ target: { closest: (q) => (q === sel ? { dataset: data } : null) } }));
   click("[data-tcol]", { tcol: String(cols[1].column) });
   click("[data-tcol]", { tcol: String(cols[4].column) });
-  eq(S.get().ui.techCols, { [bid]: { [cols[1].column]: true, [cols[4].column]: false } }, "taps saved per branch");
+  click("[data-tcol]", { tcol: String(cols[6].column) });
+  eq(S.get().ui.techCols, { [bid]: { [cols[1].column]: true, [cols[4].column]: false, [cols[6].column]: false } }, "taps saved per branch");
   hs = heads(draw({ from: "router" }));
-  eq(hs.filter((x) => x.open).map((x) => x.col), [cols[1].column], "after a new visit: column 2 open (by hand), 5 folded (by hand)");
+  eq(hs.filter((x) => x.open).map((x) => x.col), [cols[1].column, cols[5].column, ...from(7)],
+    "after a new visit: column 2 open (by hand), 5 and 7 folded (by hand), the others by the rule");
   // opening a tech of a folded column opens that column (the list comes back to its row)
   const t7 = cols[6].techs[0];
   T.open(t7.id);

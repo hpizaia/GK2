@@ -111,7 +111,7 @@ GK.store = (function () {
   // is gone; an old saved one is dropped here. Renaming is in the Receitas detail, GK.store overrides.)
   // 1.8.x (seta das seções, opção A): "Tecnologias que faltam" folds too (tnCollapsed); techCols = the columns of the
   // Tecnologias tab the player opened or folded by hand, per branch: {branchId: {column: true (open) | false}}; a
-  // column with no entry follows the rule of ui/tech.js (only the first column with something left starts open)
+  // column with no entry follows the rule of ui/tech.js (every column with something left starts open, a done one folded)
   const UI_FLAGS = ["todayCollapsed", "stepsCollapsed", "rawCollapsed", "tnCollapsed", "bigText"]; // bigText = "Letra grande" (ui/footer.js, GK.theme.big; absent = off)
   // activeList (schema 5): id of the list open on this device (null = the first one); per device, never synced
   const freshUi = () => ({ todayCollapsed: true, stepsCollapsed: false, rawCollapsed: false, tnCollapsed: false, stationCollapsed: {}, techCols: {}, activeList: null });
