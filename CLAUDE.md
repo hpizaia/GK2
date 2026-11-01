@@ -9,7 +9,8 @@ Se existir `CLAUDE.local.md` (privado, fora do git), leia também.
 ## Regras fixas
 
 1. **Commit sempre com a identidade do projeto** (a global do Mac é de outra conta):
-   `git -c user.name="Hugo Pizaia" -c user.email="1241727+hpizaia@users.noreply.github.com" commit -m "..."`
+   `git -c user.name="Hugo Pizaia" -c user.email="1241727+hpizaia@users.noreply.github.com" commit -m "..."`,
+   com a mensagem terminando em `Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>` (regra do Hugo).
 2. **Push só da main para o origin:** `git push origin main` (e tags `v*`). Nunca `--all`, `--mirror` nem
    outra branch. As branches locais `backup-main-pre-rewrite` e `historico` têm o histórico antigo, com
    documentos internos: nunca vão para o `origin`. A trava `scripts/git-hooks/pre-push` recusa isso; num
