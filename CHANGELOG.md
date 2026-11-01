@@ -3,6 +3,10 @@
 
 # Histórico de atualizações — Companheiro GK2
 
+## 1.5.1 — 2026-10-31
+
+- O cartão "Próximo passo" foi removido: na prática ele atrapalhava mais do que ajudava no topo do Planejador. A lista de etapas continua a mesma
+
 ## 1.5.0 — 2026-10-31
 
 - Cartão "Próximo passo" no topo do Planejador: uma frase com o que fazer agora, botão "Feito" que marca a linha na lista, "Voltar um passo" e contagem "8 de 12"
@@ -85,6 +89,10 @@
 ---
 
 # Update history — GK2 Companion
+
+## 1.5.1 — 2026-10-31
+
+- The "Next step" card was removed: in practice it got in the way at the top of the Planner. The steps list is unchanged
 
 ## 1.5.0 — 2026-10-31
 

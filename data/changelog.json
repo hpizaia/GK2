@@ -1,5 +1,15 @@
 [
   {
+    "version": "1.5.1",
+    "date": "2026-10-31",
+    "pt": [
+      "O cartão \"Próximo passo\" foi removido: na prática ele atrapalhava mais do que ajudava no topo do Planejador. A lista de etapas continua a mesma"
+    ],
+    "en": [
+      "The \"Next step\" card was removed: in practice it got in the way at the top of the Planner. The steps list is unchanged"
+    ]
+  },
+  {
     "version": "1.5.0",
     "date": "2026-10-31",
     "pt": [

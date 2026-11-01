@@ -1476,51 +1476,6 @@ class TodayFeatures(unittest.TestCase):
         self.assertEqual([ln for ln in rules if re.search(r"font(-size)?:[^;]*\b\d+px", ln)], [], "font sizes in rem")
 
 
-class NextStep(unittest.TestCase):
-    """The planner card "Próximo passo" (ui/nextstep.js, protótipo ideia 5). Its rule (sequence / locate / phrase)
-    is tested in test_calc.mjs; here: registration, build order, strings and the actions it reuses."""
-
-    @classmethod
-    def setUpClass(cls):
-        cls.src = ROOT / "src"
-        cls.js = (cls.src / "js" / "ui" / "nextstep.js").read_text(encoding="utf-8")
-        cls.css = (cls.src / "css" / "nextstep.css").read_text(encoding="utf-8")
-        cls.man = read_json(cls.src / "manifest.json")
-
-    def test_manifest_and_slot(self):
-        js, css = self.man["js"], self.man["css"]
-        self.assertLess(js.index("js/ui/today.js"), js.index("js/ui/nextstep.js"))
-        self.assertLess(js.index("js/ui/nextstep.js"), js.index("js/app.js"))
-        self.assertLess(css.index("css/nextstep.css"), css.index("css/responsive.css"))
-        # below "Hoje" (order 5), above the goals: same slot, next order
-        self.assertIn('GK.app.registerPanel(GK.ui.nextStep, { id: "next-step", slot: "planner-top", order: 6 });', self.js)
-        self.assertIn('<section data-slot="planner-top" id="planner-top">', (self.src / "index.html").read_text(encoding="utf-8"))
-
-    def test_strings_in_both_languages(self):
-        block = self.js.split("GK.i18n.add({", 1)[1].split("\n});", 1)[0]
-        pt, en = block.split("\n  en: {", 1)
-        grab = lambda b: dict(re.findall(r'^\s+"(next\.[\w.]+)": "((?:[^"\\]|\\.)*)",?$', b, re.M))
-        p, e = grab(pt), grab(en)
-        self.assertTrue(p and set(p) == set(e), set(p) ^ set(e))
-        for k in p:
-            self.assertEqual(sorted(re.findall(r"\{\w+\}", p[k])), sorted(re.findall(r"\{\w+\}", e[k])), k)
-        self.assertEqual(p["next.title"], "Próximo passo")
-        self.assertEqual(p["next.gather"], "Juntar (matéria-prima)")
-        self.assertEqual(p["next.finTitle"], "Plano concluído")
-        self.assertEqual(p["next.reset"], "Recomeçar")
-
-    def test_reuses_store_actions(self):
-        # "Feito" / "Voltar" = the checkbox action; "Recomeçar" = "Limpar marcações"; fold state in its own key
-        self.assertIn("GK.store.actions.toggleDone(loc.cur.key, true)", self.js)
-        self.assertIn("GK.store.actions.toggleDone(k, false)", self.js)
-        self.assertIn("GK.store.actions.clearDone()", self.js)
-        self.assertIn('const KEY = "gk2-companion.nextstep";', self.js)
-        self.assertNotIn("setUi(", self.js)
-        self.assertIn("state.example", self.js)            # hidden on the seeded example
-        for sel in (".next-done", ".next-line", ".next.is-folded", ".row.is-next", ".next-fin-title"):
-            self.assertIn(sel, self.css)
-
-
 class SearchRecents(unittest.TestCase):
     """"Recentes" in the search (protótipo ideia 8, variante lista): the empty box focused lists the last items added
     to goals. The store / merge rules (state.recents, synced, global) are tested in test_calc.mjs."""

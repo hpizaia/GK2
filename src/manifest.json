@@ -12,7 +12,6 @@
     "css/tech.css",
     "css/days.css",
     "css/lists.css",
-    "css/nextstep.css",
     "css/responsive.css"
   ],
   "js": [
@@ -38,7 +37,6 @@
     "js/ui/techneeds.js",
     "js/ui/days.js",
     "js/ui/today.js",
-    "js/ui/nextstep.js",
     "js/ui/changelog.js",
     "js/ui/qr.js",
     "js/ui/credits.js",

@@ -674,45 +674,6 @@ await test("sync: notes and ticks travel and merge between two devices", async (
   eq(w2 && [w2.state.day, w2.state.dayNumber, w2.state.dayDone], ["pride", 41, null], "advancing resets the ticks on the account too");
 });
 
-// ---------------------------------------------------------------- "Próximo passo" (ui/nextstep.js, pure part)
-await test("next step: raw materials first (list order), then station steps top to bottom", () => {
-  const env = makeEnv();
-  vm.runInContext(fs.readFileSync(path.join(ROOT, "src/js/ui/nextstep.js"), "utf8"), env.ctx, { filename: "nextstep.js" });
-  const G = env.GK, N = G.ui.nextStep, DD = G.data.load(JSON.parse(JSON.stringify(PAYLOAD)));
-  eq(N.KEY, "gk2-companion.nextstep", "own localStorage key");
-  check(G.app.panels().some((p) => p.id === "next-step" && p.slot === "planner-top" && p.order === 6), "registered in planner-top after Hoje (5)");
-  const goals = [{ item: "crate", qty: 3 }, { item: "furnace-i", qty: 1 }, { item: "bronze-ingot", qty: 1 }];
-  const st = { goals, overrides: {}, done: {}, have: { log: true } };
-  const p = G.calc.plan(goals, DD, { have: st.have });
-  const list = N.sequence(p, st, DD);
-  const nm = (id) => G.i18n.name(DD.items[id]);
-  const raws = list.filter((e) => e.kind === "raw"), steps = list.filter((e) => e.kind === "step");
-  const firstStep = list.findIndex((e) => e.kind === "step");
-  check(firstStep === raws.length, "every raw material comes before the steps");
-  eq(raws.map((e) => e.item), p.raw.filter((r) => !r.have).map((r) => r.item).sort((a, b) => nm(a).localeCompare(nm(b), "pt-BR")), "raws: still needed, by name");
-  check(!raws.some((e) => e.item === "log"), "\"Já tenho\" raws are not a step");
-  eq(steps.map((e) => e.key), p.stations.flatMap((g) => g.steps.map((s) => "step:" + s.item)), "steps in station-card order");
-  eq(new Set(list.map((e) => e.key)).size, list.length, "keys are unique");
-  // locate: first unchecked row, "n de total"
-  let at = N.locate(list, {});
-  eq([at.cur.key, at.n, at.total], [list[0].key, 1, list.length], "nothing checked");
-  at = N.locate(list, { [list[0].key]: true });
-  eq([at.cur.key, at.n], [list[1].key, 2], "after Feito");
-  at = N.locate(list, { [list[2].key]: true });
-  eq([at.cur.key, at.n], [list[0].key, 2], "a row checked by hand further down");
-  at = N.locate(list, Object.fromEntries(list.map((e) => [e.key, true])));
-  eq([at.cur, at.n, at.total], [null, list.length, list.length], "plan complete");
-  eq(N.locate([], {}).cur, null, "empty plan");
-  // phrases
-  const r0 = raws[0];
-  eq(N.phrase(r0, st, DD), `Agora: Juntar (matéria-prima) · ${r0.qty}× ${nm(r0.item)}`, "raw phrase");
-  const s0 = steps.find((e) => e.step.ins.length);
-  const ins = s0.step.ins.map((i) => `${i.qty * s0.step.runs} ${nm(i.item)}`).join(", ");
-  eq(N.phrase(s0, st, DD), `Agora: ${G.i18n.name(s0.station)} · ${s0.qty}× ${nm(s0.item)} (${ins})`, "step phrase (whole-step inputs)");
-  G.i18n.set("en");
-  check(N.phrase(r0, st, DD).startsWith("Now: Gather (raw material) · "), "English phrase");
-});
-
 // ---------------------------------------------------------------- lists (schema 5, "listas separadas")
 await test("lists: a schema 4 copy becomes the one list \"Minha lista\" with nothing lost", () => {
   const env = makeEnv(), S = env.GK.store;
