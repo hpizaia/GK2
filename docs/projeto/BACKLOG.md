@@ -1,6 +1,6 @@
 # Backlog — Companheiro GK2
 
-01/11/2026 · versão atual **1.8.3**, publicada (app, site e release v1.8.3 no GitHub)
+01/11/2026 · versão atual **1.8.4**, publicada (app, site e release v1.8.4 no GitHub)
 
 Este arquivo substitui o backlog anterior (Etapas 0 a 5). O histórico do que já foi feito está no [CHANGELOG.md](../../CHANGELOG.md).
 
@@ -8,9 +8,10 @@ Esforço: **P** até 2 h · **M** meio dia a um dia · **G** vários dias. Quand
 
 ## Onde estamos
 
-**Publicado:** 1.8.3 (01/11, manhã): app versão 16, site versão 14, release v1.8.3 com o arquivo único. Antes dela, 1.8.2, 1.8.1 e 1.8.0 (mesma manhã).
+**Publicado:** 1.8.4 (01/11): app versão 17, site versão 15, release v1.8.4 com o arquivo único. Antes dela, 1.8.3 a 1.8.0 (mesmo dia). **O Hugo vai segurar as atualizações do app por um tempo.**
 
 **Saiu hoje:**
+- **1.8.4:** bronze nas listas (item comum das famílias com qualidade), **231 nomes de receita em PT** (wiki com `locale=pt-br` + nomes oficiais; `data/names.recipes.pt-BR.json`), 18 nomes revisados pela wiki (`data/names.wiki.pt-BR.json`, "Consertar", fontes de coleta, "Canteiro de Trigo"). Comparação: https://claude.ai/artifact/JEkU3EqQgyEKadTBVzMceD. Relatórios internos `traducao-receitas.md` e `revisao-nomes-wiki.md`.
 - **1.8.3:** aba Tecnologias com todas as colunas que faltam abertas (só as completas recolhidas); saiu a faixa de aviso do topo, fica só o aviso do rodapé.
 - **1.8.2:** **qualidade consertada no build** (graus preservados: Vinho, Uvas, colheitas, receitas de estrela; melhorias Especiarias/Umami não circulares; planos salvos migram; relatórios internos `qualidade-auditoria.md` e `qualidade-pesquisa.md`), selos de grau de ingrediente fora das Etapas (2.9), "ou: … · requisitos" numa linha, **seta fina de seção** (opção A de https://claude.ai/artifact/LU6Pjko6NCoEogwMZVC6Lx), Tecnologias que faltam recolhe, **colunas da aba Tecnologias recolhem** (só a próxima aberta), Progresso sem Copiar lista / Limpar marcações / Editar nomes (renomear pelo selo "não oficial" no detalhe), QA #8 #11 #12. Comparação: https://claude.ai/artifact/Kv1tBxrbejFW5wWFnbdQL5.
 - **1.8.1:** Metas com o "− N +" à direita, na mesma coluna das outras quantidades (opção 2 do protótipo https://claude.ai/artifact/TCXVjz1GN9sXqReLQw5URs); com quantidade 1 o "−" vira ✕ e a remoção tem "Saiu das metas · Desfazer". Comparação: https://claude.ai/artifact/N1oUu9Uy69HF9FaSzhLFVG.
@@ -150,8 +151,8 @@ Objetivo: guardar o que vale a pena, mas só entra se o uso pedir ou se você de
 | item | o que é | esforço | depende de |
 |---|---|---|---|
 | **Dados e tradução** | | | |
-| 6.10 | Traduzir os 231 nomes de receita (D2): a wiki (wikily) tem versão em português (troca de idioma no topo do site); buscar os nomes de receita em PT de lá em vez de traduzir à mão, conferir com os textos do jogo e cair na tradução só no que faltar | P/M | acesso à wiki em PT (o wikily bloqueia leitura automática; ver se a API aceita idioma) |
-| 6.11 | Revisar 45 categorias e 3 maestrias traduzidas por máquina (D4); (os dois nomes PT suspeitos da 1.8.0, "Sucata de Cobre" e "Anotação…", são do próprio jogo: ficam) | P\* | — |
+| ✓ 6.10 | (1.8.4) Traduzir os 231 nomes de receita (D2): a wiki (wikily) tem versão em português (troca de idioma no topo do site); buscar os nomes de receita em PT de lá em vez de traduzir à mão, conferir com os textos do jogo e cair na tradução só no que faltar | P/M | acesso à wiki em PT (o wikily bloqueia leitura automática; ver se a API aceita idioma) |
+| 6.11 | (1.8.4: revisado contra a wiki PT; 9 categorias trocadas, o resto já batia) Falta conferir no jogo: "Dig", "Any Story", "Building: Metalwork" e Escrita de livros × Escritura. Era: revisar 45 categorias e 3 maestrias traduzidas por máquina (D4); (os dois nomes PT suspeitos da 1.8.0, "Sucata de Cobre" e "Anotação…", são do próprio jogo: ficam) | P\* | — |
 | 6.12 | Qualidade prata/ouro marcada no build, e não deduzida na página (C2/D1) | M | — |
 | 6.13 | Alquimia por runas: calcular as misturas válidas | G\* | — |
 | 6.14 | Script para levar ao arquivo de tradução os nomes editados no app | P\* | — |
