@@ -20,17 +20,17 @@ Built by `scripts/build_dataset.py` from cached API responses in `data/raw/`.
 
 ## Record counts
 
-- **Recipes: 695**
-  - `hand_craft` 241, `auto` 80, `factory` 69, `star_craft` 35. Together these are the 425 rows of the wiki's recipe dataset: the 416 listed on /recipes plus 9 unlisted rows (`listed:false`).
+- **Recipes: 707**
+  - `hand_craft` 241, `auto` 80, `factory` 69, `star_craft` 35 + 12. The first 425 are the rows of the wiki's recipe dataset: the 416 listed on /recipes plus 9 unlisted rows (`listed:false`). The 12 more `star_craft` are the per-grade copies of 4 star crafts (see "Quality grades").
   - `building` 225 (construction/build costs of 208 buildings, plus 17 alternative per-area variants; 13 records are unlisted on the wiki)
   - `alchemy` 28 (rune-based alchemy formulas)
   - `grow` 17 (crop-bed harvests, de-duplicated per bed and mastery tier)
-  - 66 output items have more than one recipe (alternatives).
-  - `calculator_default: true` marks the 406 recipes the wikily calculator uses: one per craftable thing, and every one was matched.
-- **Items: 820**
-  - by `kind`: `item` 544 (wiki item pages), `building` 130, `station` 87, `virtual` 18, `action` 16, `quality-variant` 15, `group` 10
-  - **574 items have at least one recipe** (`recipe_ids` non-empty); **246 have none**.
-  - **290 are `is_raw: true`**: 235 items, 23 buildings, 18 stations, 10 groups and 4 quality variants. 91 items are flagged `unobtainable` (the wiki says nothing gives them in 1.010), which leaves 148 obtainable raw items.
+  - 71 output items have more than one recipe (alternatives).
+  - `calculator_default: true` marks 405 of the 406 recipes the wikily calculator uses (one per craftable thing). The one left is its "Wine" from Wine + Spices: since 1.9 that recipe makes Wine (silver), so it no longer matches the calculator's plain Wine.
+- **Items: 838**
+  - by `kind`: `item` 544 (wiki item pages), `building` 130, `station` 87, `virtual` 18, `action` 16, `quality-variant` 33, `group` 10
+  - **588 items have at least one recipe** (`recipe_ids` non-empty); **250 have none**.
+  - **302 are `is_raw: true`**: 235 items, 23 buildings, 18 stations, 10 groups and 16 quality variants (silver / gold crops and seeds). 91 items are flagged `unobtainable` (the wiki says nothing gives them in 1.010), which leaves 148 obtainable raw items.
   - 41 items carry `alchemy_runes`.
 
 ## Schema
@@ -87,7 +87,7 @@ Built by `scripts/build_dataset.py` from cached API responses in `data/raw/`.
 
 Special item kinds:
 - `group`: a wildcard ingredient such as "Any Newspaper", "Bream or Carp" or "Newspaper (silver or gold)". `group_members` lists the concrete ids that can fill it.
-- `quality-variant`: a bronze, silver or gold grade such as "Story (gold)". The wiki has no separate page for these.
+- `quality-variant`: a bronze, silver or gold grade such as "Story (gold)" or "Wine (silver)". The wiki has no separate page for these. See "Quality grades" below.
 - `virtual`: an item referenced only by name, with no wiki page (prayers, Story, Newspaper, Injection/Solution...).
 - `action`: a recipe "output" that is not an item: PR-machine zombie-limit buffs, repairs, opening doors, Summon Fairy.
 
@@ -164,6 +164,39 @@ https://wikily.gg/api/wikis/graveyard-keeper-2/datasets/alchemy-formulas/list?..
 - The HTML pages (https://wikily.gg/graveyard-keeper-2/crafting-calculator and /recipes) sit behind a Cloudflare managed challenge that returns 403 to curl. They were opened once in a normal browser session, and the calculator's server-rendered props (`self.__next_f` RSC payload, island `CraftingCalculatorIsland`: `craftables`, `graph`, `meta`, `stationIcons`) were saved to `raw/calculator-props.json`. Those props were used only to set `calculator_default`. The API endpoints are not behind the challenge.
 - Also consulted for context (not stored): /graveyard-keeper-2/crafting (explains ticks, mastery and tech points), /terms-of-service, /legal-notice.
 
+## Quality grades (bronze, silver, gold)
+
+Rule since 1.9 (`scripts/build_dataset.py`, `graded_ref()` and sections 5-6; the research is in
+`docs/revisao-ux/qualidade-pesquisa.md`, the inventory in `docs/revisao-ux/qualidade-auditoria.md`):
+
+- **The grade is kept.** The wiki writes a graded reference as "Wine (silver)" but points it to the plain item page
+  (`wine`). A reference "<X> (bronze)" resolves to the plain item: **the plain item is the bronze grade** (`wine`,
+  `cabbage`, `grapes`, the seeds). "<X> (silver|gold)" resolves to `<x>-silver` / `<x>-gold`, a `quality-variant` with
+  `base_item: <x>` and the base's icon and category. These are the ids the page already used for its synthetic
+  variants up to 1.8.1, so saved plans keep working. Families without a wiki item page keep their own items for every
+  grade (`grape-juice-bronze`, `story-bronze`, ...).
+- **Same grade in, same grade out** where the game does it with a fixed recipe: the Wine Barrel turns 4 Grape Juice of a
+  grade into 4 Wine of that grade; the Vine Press needs 6 Grapes of the juice's grade; a bed planted with 4 seeds of a
+  grade (`plant-*-<grade>`, `grow-*-m<level>`: the lowest mastery is the bronze seed) gives the harvest of that grade
+  and the next one (bronze: bronze + silver; silver: silver + gold; gold: gold).
+- **Upgrades** go up one grade at a time and are flagged `quality_upgrade: true`: Drink/Food enhancement I (bronze + Spices
+  -> silver) and II (silver + Umami -> gold) for Wine, Grape Juice, Vegetable salad and Bowl of sauerkraut; Improve story
+  I/II (2 -> 1 of the next grade); Improve newspaper I/II (20 + 1 Story of the target grade). `scripts/build.py` lists them
+  after the recipe that makes the grade directly, so the planner's default for Wine (silver) is the Barrel with silver
+  Grape Juice and the enhancement is an alternative.
+- **Star crafts** (Story, Printing Press -> Newspaper, Vegetable salad, Bowl of sauerkraut): the grade depends on the
+  successful ticks (`star_quality`: silver at N, gold at M). The wiki's recipe makes the plain item (kept as it was: the
+  prayers ask for the plain "Story"); a copy `<recipe>-<grade>` (`story-gold`, `printing-press-bronze`) makes each grade,
+  with the same inputs, yield and thresholds, and is that grade's default recipe. No chance or number is invented.
+- **Crops and seeds** of silver / gold have no crafting recipe: their `obtain` says where they come from ("Harvest: bronze
+  or silver seeds." / "Harvest: silver or gold seeds."; seeds: "Harvest by-product: ..."). The pt texts are in
+  `names.machine.pt-BR.json` `__obtain`.
+- **Yields by grade** stay per recipe, as the wiki gives them (Supply: Wine asks for 8 / 6 / 4 Wine; Cabbage soup makes
+  4 / 7 / 10).
+- **Not graded on purpose** (ambiguous in the sources): organ improvers ("Improve organ I/II from Any <organ>" -> "(gold)",
+  `NO_GRADE` in the build: unchanged, circular as before), Beer, prayers, burial certificates. "Polished Bronze" has no
+  grade (the page reads a grade only from a graded output or a "(grade)" name, never from an id).
+
 ## Known gaps and caveats
 
 - **Base amounts only.** Perk effects appear only as text (`made_text`, `note`, `extra_outputs[].note`), for example "4 (6 with Cook II)" or "50% chance with Glassworker".
@@ -171,7 +204,7 @@ https://wikily.gg/api/wikis/graveyard-keeper-2/datasets/alchemy-formulas/list?..
 - **Grow recipes** have `output.qty = null`, because the yield "varies with the bed". Crops and seeds are marked raw. The matching planting step is the `star_craft` "Plant X seed" recipe, whose output is the planted bed item (`beet-bed` etc.).
 - **Building variants.** When a building can be built in several areas at different costs, the first area is the main `build-<slug>` record and the others are `build-<slug>--<area>` records. 29 build records have no inputs, either because they are free (grave areas, garden tablets) or because the wiki gives no material cost (PR machines).
 - **Station repairs are missing.** Some stations come from repairing a broken object (for example the Kitchen Oven, "repairing the Broken Oven with 2 Piece of stone"). These appear only in the station's `obtain` text, not as recipes, so a few stations (Kitchen Oven, Kitchen Table, Assembly bench...) are `is_raw:true`.
-- **Group ingredients.** "Any Wine" uses the real `wine` item page. The other groups are synthetic, and their `group_members` are derived from names.
+- **Group ingredients.** "Any Wine" / "Any Cabbage" / "Any Onion" use the real plain item page (`wine`, the bronze grade). The other groups are synthetic, and their `group_members` are derived from names.
 - **Unlisted content is kept.** 22 recipes have `listed:false` (hidden on the wiki: unbuildable or unused content), and 91 items are flagged `unobtainable`. Filter both out in the UI.
 - **Factory (conveyor) recipes are included** (`type: factory`). The wikily calculator leaves them out.
 - **Ids are wiki slugs**, so they stay stable across re-fetches. Synthetic ids are slugified names (`any-newspaper`, `story-gold`).

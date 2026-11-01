@@ -1,7 +1,7 @@
 /* GK.ui.credits: the "Créditos" screen (#credits), a route-only screen (not in the tab bar) reached from the
    footer: who made the app and why (a non-profit fan project), the game's rights, where the data comes from,
    that it was made with AI, the source code, thanks, and the app version (meta.version). Since 1.4.1 it also holds
-   what left the footer: the base-amounts note and the data date / game versions (the wikily credit was already here).
+   what left the footer: the base-amounts note and the data's game versions (the wikily credit was already here; no build date since 1.8.x).
    Wide screens with a mouse (min-width 900px and pointer: fine): a card beside it with a QR code of the app's link
    ("Aponte a câmera do celular…"), drawn by GK.ui.qr only then, when the screen opens; phones never get it.
    Owns: the "credits" route and its screen section (created by GK.router.ensureScreens), the credits.* texts.
@@ -23,7 +23,7 @@ GK.i18n.add({
     "credits.data.link": "Graveyard Keeper 2 Wiki no Wikily",
     "credits.data.p2": "Os nomes oficiais em português do Brasil saem dos próprios arquivos de texto do jogo; os marcados “não oficial” são traduções provisórias.",
     "credits.data.p3": "As quantidades são as de base; ligue suas Vantagens no Progresso para somar os bônus.",
-    "credits.data.p4": "Dados de {date}: receitas do wiki da versão {wiki} do jogo, nomes oficiais da versão {game}.",
+    "credits.data.p4": "Receitas da wiki (jogo {wiki}) · textos do jogo {game}.",
     "credits.qr.h": "Abrir no celular",
     "credits.qr.say": "Aponte a câmera do celular para abrir o app lá.",
     "credits.qr.alt": "QR code do endereço do app",
@@ -49,7 +49,7 @@ GK.i18n.add({
     "credits.data.link": "Graveyard Keeper 2 Wiki on Wikily",
     "credits.data.p2": "Official Brazilian Portuguese names come from the game's own text files; names marked “não oficial” (unofficial) are provisional translations.",
     "credits.data.p3": "Amounts are the base ones; switch on your Perks in Progress to add the bonuses.",
-    "credits.data.p4": "Data from {date}: wiki recipes from game version {wiki}, official names from version {game}.",
+    "credits.data.p4": "Wiki recipes (game {wiki}) · game texts {game}.",
     "credits.qr.h": "Open on your phone",
     "credits.qr.say": "Point your phone's camera here to open the app there.",
     "credits.qr.alt": "QR code of the app's address",
@@ -110,7 +110,8 @@ GK.ui.credits = (function () {
     const m = GK.data.get().meta, d = m.data || {};
     const version = m.version
       ? `<p class="cr-version">${esc(t("footer.version", { app: t("app.titlePlain"), version: m.version }))}</p>` : "";
-    const dataDate = m.built || d.wiki ? esc(t("credits.data.p4", { date: m.built || "?", wiki: d.wiki || "?", game: d.game || d.wiki || "?" })) : "";
+    // the data's game versions (meta.data), not the build date (QA 2026-11 #8: it changed with every build)
+    const dataDate = d.wiki ? esc(t("credits.data.p4", { wiki: d.wiki, game: d.game || d.wiki })) : "";
     const qr = qrCard();
     root.innerHTML = `<div class="cr-grid${qr ? " has-qr" : ""}"><div class="card cl-card cr-card">
       <a class="btn btn-sm btn-ghost cl-back" href="#plan" id="cr-back">${esc(t("credits.back"))}</a>

@@ -1,6 +1,6 @@
 # Build report
 
-Built 2026-11-01 (schema 1). Result: **0 error(s), 206 warning(s), 73 info(s)**.
+Built 2026-11-01 (schema 1). Result: **0 error(s), 205 warning(s), 78 info(s)**.
 
 ## Inputs
 
@@ -8,34 +8,34 @@ Built 2026-11-01 (schema 1). Result: **0 error(s), 206 warning(s), 73 info(s)**.
 - recipes: `data/recipes.en.json`
 - names[pt]: `data/names.official.pt-BR.json (sourced layer, 1020 names, 0 texts)`
 - names[pt]: `data/names.pt-BR.json (sourced layer, 1065 names, 0 texts)`
-- names[pt]: `data/names.machine.pt-BR.json (machine layer, 1066 names, 731 texts)`
-- names[pt]: `derived (sourced layer, 29 names, 0 texts)`
+- names[pt]: `data/names.machine.pt-BR.json (machine layer, 1066 names, 736 texts)`
+- names[pt]: `derived (sourced layer, 47 names, 0 texts)`
 
 ## Counts
 
 | what | count |
 |---|---:|
-| items | 820 |
-| recipes | 695 |
+| items | 838 |
+| recipes | 707 |
 | stations | 79 |
 | categories | 53 |
 | techs | 231 |
-| multiRecipeItems | 66 |
+| multiRecipeItems | 71 |
 | noexpRecipes | 17 |
-| tr | official 785, likely 29, guess 0, machine 6, missing 0 |
-| cycles | 8 |
+| tr | official 785, likely 47, guess 0, machine 6, missing 0 |
+| cycles | 7 |
 | errors | 0 |
-| warnings | 206 |
-| items by kind | action 16, building 130, group 10, item 544, quality-variant 15, station 87, virtual 18 |
-| recipes by type | alchemy 28, auto 80, building 225, factory 69, grow 17, hand_craft 241, star_craft 35 |
+| warnings | 205 |
+| items by kind | action 16, building 130, group 10, item 544, quality-variant 33, station 87, virtual 18 |
+| recipes by type | alchemy 28, auto 80, building 225, factory 69, grow 17, hand_craft 241, star_craft 47 |
 | unlisted recipes | 22 |
 | unobtainable items | 91 |
-| items with defaultRecipe | 523 |
-| obtain texts translated | 786 / 786 |
+| items with defaultRecipe | 529 |
+| obtain texts translated | 804 / 804 |
 
 ## Notes
 
-- names[pt]: 29 derived name(s) (quality grades, groups, Any/Open/Repair), tier likely
+- names[pt]: 47 derived name(s) (quality grades, groups, Any/Open/Repair), tier likely
 
 ## Input coercions
 
@@ -58,7 +58,6 @@ Strongly connected components of the item graph (item -> inputs of its expandabl
 | 5 | 1 | inquisitor-s-medallion | inquisitor-s-medallion -> inquisitor-s-medallion | open-the-door | inquisitor-s-medallion |
 | 6 | 1 | skin | skin -> skin | improve-organ-i-from-any-skin, improve-organ-ii-from-any-skin | skin |
 | 7 | 1 | skull | skull -> skull | improve-organ-i-from-any-skull, improve-organ-ii-from-any-skull | skull |
-| 8 | 1 | wine | wine -> wine | drink-enhancement-i-from-wine-bronze, drink-enhancement-ii-from-wine-silver |  |
 
 # Validation
 
@@ -66,9 +65,9 @@ Strongly connected components of the item graph (item -> inputs of its expandabl
 
 _none_
 
-## Warnings (206)
+## Warnings (205)
 
-### `cycle` (8)
+### `cycle` (7)
 
 - cycle (self-loop): bones (Bones) -> bones (Bones); recipes: improve-organ-i-from-any-bones, improve-organ-ii-from-any-bones
 - cycle (self-loop): brain (Brain) -> brain (Brain); recipes: improve-organ-i-from-any-brain, improve-organ-ii-from-any-brain
@@ -77,7 +76,6 @@ _none_
 - cycle (self-loop): inquisitor-s-medallion (Inquisitor’s medallion) -> inquisitor-s-medallion (Inquisitor’s medallion); recipes: open-the-door
 - cycle (self-loop): skin (Skin) -> skin (Skin); recipes: improve-organ-i-from-any-skin, improve-organ-ii-from-any-skin
 - cycle (self-loop): skull (Skull) -> skull (Skull); recipes: improve-organ-i-from-any-skull, improve-organ-ii-from-any-skull
-- cycle (self-loop): wine (Wine) -> wine (Wine); recipes: drink-enhancement-i-from-wine-bronze, drink-enhancement-ii-from-wine-silver
 
 ### `orphan` (163)
 
@@ -283,7 +281,7 @@ _none_
 - recipe `sand` (Sand) has no inputs
 - recipe `stone` (Stone) has no inputs
 
-## Infos (73)
+## Infos (78)
 
 ### `cycle-trapped` (7)
 
@@ -295,7 +293,7 @@ _none_
 - `skin` (Skin): every recipe feeds back into its cycle; the calculator must stop expanding it (treat as raw)
 - `skull` (Skull): every recipe feeds back into its cycle; the calculator must stop expanding it (treat as raw)
 
-### `multi-recipe` (66)
+### `multi-recipe` (71)
 
 - `alchemy-flasks` (Alchemy Flasks) has 2 recipes: place-alchemy-flasks-i, place-alchemy-flasks-ii
 - `alcohol` (Alcohol) has 6 recipes: alcohol-from-any-wine, alcohol-from-apple-cider, alcohol-from-beer, alcohol-from-berry-cider, alcohol-from-blueberry-cider, alcohol-from-mead
@@ -303,12 +301,13 @@ _none_
 - `baked-pumpkin` (Baked pumpkin) has 3 recipes: baked-pumpkin-from-pumpkin-bronze, baked-pumpkin-from-pumpkin-gold, baked-pumpkin-from-pumpkin-silver
 - `board` (Board) has 2 recipes: board-circular-saw, board-sawhorse
 - `bones` (Bones) has 2 recipes: improve-organ-i-from-any-bones, improve-organ-ii-from-any-bones
+- `bowl-of-sauerkraut-gold` (Bowl of sauerkraut (gold)) has 2 recipes: bowl-of-sauerkraut-gold, food-enhancement-ii-from-bowl-of-sauerkraut-silver
+- `bowl-of-sauerkraut-silver` (Bowl of sauerkraut (silver)) has 2 recipes: bowl-of-sauerkraut-silver, food-enhancement-i-from-bowl-of-sauerkraut-bronze
 - `brain` (Brain) has 2 recipes: improve-organ-i-from-any-brain, improve-organ-ii-from-any-brain
 - `brick` (Brick) has 2 recipes: brick-kiln, brick-smithy-i
 - `bronze-ingot` (Bronze Ingot) has 2 recipes: bronze-ingot-from-bronze-scrap, bronze-ingot-from-copper-nugget
 - `bronze-nails` (Bronze Nails) has 2 recipes: bronze-nails-from-bronze-ingot, bronze-nails-from-bronze-scrap
 - `building-kit-i` (Building Kit I) has 2 recipes: building-kit-i-assembly-bench-i, building-kit-i-woodworking-workbench-i
-- `cabbage` (Cabbage) has 3 recipes: grow-cabbage-bed-m10, grow-cabbage-bed-m12, grow-cabbage-bed-m8
 - `cabbage-bed` (Cabbage Bed) has 3 recipes: plant-cabbage-seed-bronze, plant-cabbage-seed-gold, plant-cabbage-seed-silver
 - `cabbage-soup` (Cabbage soup) has 3 recipes: cabbage-soup-from-cabbage-bronze, cabbage-soup-from-cabbage-gold, cabbage-soup-from-cabbage-silver
 - `clean-paper` (Clean Paper) has 2 recipes: clean-paper-paper-press, clean-paper-writing-desk
@@ -323,7 +322,6 @@ _none_
 - `golden-ingot` (Golden ingot) has 2 recipes: gold-transmutation-from-iron-ingot, golden-ingot
 - `grape-juice-gold` (Grape Juice (gold)) has 2 recipes: drink-enhancement-ii-from-grape-juice-silver, grape-juice-from-grapes-gold
 - `grape-juice-silver` (Grape Juice (silver)) has 2 recipes: drink-enhancement-i-from-grape-juice-bronze, grape-juice-from-grapes-silver
-- `grapes` (Grapes) has 3 recipes: grow-grapes-bed-m12, grow-grapes-bed-m14, grow-grapes-bed-m16
 - `grapes-bed` (Grapes Bed) has 3 recipes: plant-grape-seeds-bronze, plant-grape-seeds-gold, plant-grape-seeds-silver
 - `guts` (Guts) has 2 recipes: improve-organ-i-from-any-guts, improve-organ-ii-from-any-guts
 - `heart` (Heart) has 2 recipes: improve-organ-i-from-any-heart, improve-organ-ii-from-any-heart
@@ -334,13 +332,13 @@ _none_
 - `lens` (Lens) has 2 recipes: lens-furnace-i, lens-smithy-ii
 - `melted-fat` (Melted Fat) has 2 recipes: melted-fat-from-fat, melted-fat-from-seed-oil
 - `mysterious-fish-fillet` (Mysterious fish fillet) has 3 recipes: mysterious-fish-fillet-from-goldfish, mysterious-fish-fillet-from-silverfin, mysterious-fish-fillet-from-swamp-ghost
-- `onion` (Onion) has 3 recipes: grow-onion-bed-m10, grow-onion-bed-m12, grow-onion-bed-m14
+- `newspaper-gold` (Newspaper (gold)) has 2 recipes: improve-newspaper-ii, printing-press-gold
+- `newspaper-silver` (Newspaper (silver)) has 2 recipes: improve-newspaper-i, printing-press-silver
 - `onion-bed` (Onion Bed) has 3 recipes: plant-onion-seed-bronze, plant-onion-seed-gold, plant-onion-seed-silver
 - `onion-rings` (Onion rings) has 3 recipes: onion-rings-from-onion-bronze, onion-rings-from-onion-gold, onion-rings-from-onion-silver
 - `paper-glop` (Paper glop) has 2 recipes: paper-glop-from-flax, paper-glop-from-wheat
 - `peat` (Peat) has 2 recipes: peat-compost-pile, peat-compost-pile-ii
 - `porter-station` (Porter Station) has 9 recipes: build-porter-station, build-porter-station--old-mine, build-porter-station--quarry, build-porter-station--riverside, build-porter-station--sawmill, build-porter-station--sawmill-2, build-porter-station--supply-storage, build-porter-station--vineyard, build-porter-station--vineyard-basement
-- `pumpkin` (Pumpkin) has 3 recipes: grow-pumpkin-bed-m12, grow-pumpkin-bed-m14, grow-pumpkin-bed-m16
 - `pumpkin-bed` (Pumpkin Bed) has 3 recipes: plant-pumpkin-seeds-bronze, plant-pumpkin-seeds-gold, plant-pumpkin-seeds-silver
 - `pumpkin-soup` (Pumpkin soup) has 3 recipes: pumpkin-soup-from-pumpkin-bronze, pumpkin-soup-from-pumpkin-gold, pumpkin-soup-from-pumpkin-silver
 - `river-fish-fillet` (River fish fillet) has 4 recipes: river-fish-fillet-from-bream-or-carp, river-fish-fillet-from-crucian-or-herring, river-fish-fillet-from-pike-or-catfish, river-fish-fillet-from-roach-or-gudgeon
@@ -350,6 +348,8 @@ _none_
 - `skin` (Skin) has 2 recipes: improve-organ-i-from-any-skin, improve-organ-ii-from-any-skin
 - `skull` (Skull) has 2 recipes: improve-organ-i-from-any-skull, improve-organ-ii-from-any-skull
 - `stone-kit` (Stone Kit) has 2 recipes: stone-kit-assembly-bench-i, stone-kit-stonemason-s-workbench
+- `story-gold` (Story (gold)) has 2 recipes: improve-story-ii, story-gold
+- `story-silver` (Story (silver)) has 2 recipes: improve-story-i, story-silver
 - `supply-clothes-i` (Supply: Clothes I) has 2 recipes: supply-clothes-i-assembly-bench-ii, supply-clothes-i-sewing-table
 - `supply-fabric` (Supply: Fabric) has 2 recipes: supply-fabric-assembly-bench-i, supply-fabric-woodworking-workbench-i
 - `supply-iron` (Supply: Iron) has 2 recipes: supply-iron-assembly-bench-i, supply-iron-woodworking-workbench-i
@@ -359,7 +359,10 @@ _none_
 - `supply-wine` (Supply: Wine) has 3 recipes: supply-wine-from-wine-bronze, supply-wine-from-wine-gold, supply-wine-from-wine-silver
 - `timber-stockpile` (Timber stockpile) has 2 recipes: build-timber-stockpile, build-timber-stockpile--sawmill
 - `toast-with-onions` (Toast with onions) has 3 recipes: toast-with-onions-from-onion-bronze, toast-with-onions-from-onion-gold, toast-with-onions-from-onion-silver
-- `wine` (Wine) has 5 recipes: drink-enhancement-i-from-wine-bronze, drink-enhancement-ii-from-wine-silver, wine-from-grape-juice-bronze, wine-from-grape-juice-gold, wine-from-grape-juice-silver
+- `vegetable-salad-gold` (Vegetable salad (gold)) has 2 recipes: food-enhancement-ii-from-vegetable-salad-silver, vegetable-salad-gold
+- `vegetable-salad-silver` (Vegetable salad (silver)) has 2 recipes: food-enhancement-i-from-vegetable-salad-bronze, vegetable-salad-silver
+- `wine-gold` (Wine (gold)) has 2 recipes: drink-enhancement-ii-from-wine-silver, wine-from-grape-juice-gold
+- `wine-silver` (Wine (silver)) has 2 recipes: drink-enhancement-i-from-wine-bronze, wine-from-grape-juice-silver
 - `wooden-kit-i` (Wooden Kit I) has 3 recipes: wooden-kit-i-from-bronze-nails-assembly-bench-i, wooden-kit-i-from-log-assembly-bench-i, wooden-kit-i-woodworking-workbench-i
 - `wooden-plank` (Wooden Plank) has 2 recipes: wooden-plank-circular-saw, wooden-plank-woodworking-workbench-i
 - `zombie-supplier-station` (Zombie Supplier Station) has 2 recipes: build-zombie-supplier-station, build-zombie-supplier-station--home

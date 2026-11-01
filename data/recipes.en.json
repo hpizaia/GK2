@@ -4676,7 +4676,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "pumpkin",
+    "item": "pumpkin-gold",
     "qty": 2
    },
    {
@@ -4724,7 +4724,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "pumpkin",
+    "item": "pumpkin-silver",
     "qty": 2
    },
    {
@@ -5690,6 +5690,171 @@
   "listed": true,
   "calculator_default": false,
   "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table"
+ },
+ {
+  "id": "bowl-of-sauerkraut-bronze",
+  "name": "Bowl of sauerkraut",
+  "type": "star_craft",
+  "output": {
+   "item": "bowl-of-sauerkraut-bronze",
+   "qty": 2
+  },
+  "extra_outputs": [],
+  "made_text": "2 (4 with Cook)",
+  "station": "Kitchen Table",
+  "station_id": "kitchen-table",
+  "alt_stations": [
+   "Kitchen Table II"
+  ],
+  "station_extension": null,
+  "inputs": [
+   {
+    "item": "cabbage",
+    "qty": 3
+   },
+   {
+    "item": "salt",
+    "qty": 1
+   },
+   {
+    "item": "seed-oil",
+    "qty": 1
+   }
+  ],
+  "unlock": {
+   "name": "Cabbage dishes",
+   "type": "technology",
+   "id": "cabbage-dishes",
+   "url": "https://wikily.gg/graveyard-keeper-2/technologies/cabbage-dishes"
+  },
+  "mastery": {
+   "type": "Farming",
+   "level": 4
+  },
+  "time_ticks": 7,
+  "energy_per_tick": 2,
+  "tech_points_reward": {
+   "green": 1
+  },
+  "star_quality": {
+   "silver_at": "4 successful ticks",
+   "gold_at": "7 successful ticks"
+  },
+  "note": "Star craft: the result's quality depends on successful ticks.",
+  "listed": true,
+  "calculator_default": false,
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table",
+  "star_grade": "bronze"
+ },
+ {
+  "id": "bowl-of-sauerkraut-gold",
+  "name": "Bowl of sauerkraut",
+  "type": "star_craft",
+  "output": {
+   "item": "bowl-of-sauerkraut-gold",
+   "qty": 2
+  },
+  "extra_outputs": [],
+  "made_text": "2 (4 with Cook)",
+  "station": "Kitchen Table",
+  "station_id": "kitchen-table",
+  "alt_stations": [
+   "Kitchen Table II"
+  ],
+  "station_extension": null,
+  "inputs": [
+   {
+    "item": "cabbage",
+    "qty": 3
+   },
+   {
+    "item": "salt",
+    "qty": 1
+   },
+   {
+    "item": "seed-oil",
+    "qty": 1
+   }
+  ],
+  "unlock": {
+   "name": "Cabbage dishes",
+   "type": "technology",
+   "id": "cabbage-dishes",
+   "url": "https://wikily.gg/graveyard-keeper-2/technologies/cabbage-dishes"
+  },
+  "mastery": {
+   "type": "Farming",
+   "level": 4
+  },
+  "time_ticks": 7,
+  "energy_per_tick": 2,
+  "tech_points_reward": {
+   "green": 1
+  },
+  "star_quality": {
+   "silver_at": "4 successful ticks",
+   "gold_at": "7 successful ticks"
+  },
+  "note": "Star craft: the result's quality depends on successful ticks.",
+  "listed": true,
+  "calculator_default": false,
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table",
+  "star_grade": "gold"
+ },
+ {
+  "id": "bowl-of-sauerkraut-silver",
+  "name": "Bowl of sauerkraut",
+  "type": "star_craft",
+  "output": {
+   "item": "bowl-of-sauerkraut-silver",
+   "qty": 2
+  },
+  "extra_outputs": [],
+  "made_text": "2 (4 with Cook)",
+  "station": "Kitchen Table",
+  "station_id": "kitchen-table",
+  "alt_stations": [
+   "Kitchen Table II"
+  ],
+  "station_extension": null,
+  "inputs": [
+   {
+    "item": "cabbage",
+    "qty": 3
+   },
+   {
+    "item": "salt",
+    "qty": 1
+   },
+   {
+    "item": "seed-oil",
+    "qty": 1
+   }
+  ],
+  "unlock": {
+   "name": "Cabbage dishes",
+   "type": "technology",
+   "id": "cabbage-dishes",
+   "url": "https://wikily.gg/graveyard-keeper-2/technologies/cabbage-dishes"
+  },
+  "mastery": {
+   "type": "Farming",
+   "level": 4
+  },
+  "time_ticks": 7,
+  "energy_per_tick": 2,
+  "tech_points_reward": {
+   "green": 1
+  },
+  "star_quality": {
+   "silver_at": "4 successful ticks",
+   "gold_at": "7 successful ticks"
+  },
+  "note": "Star craft: the result's quality depends on successful ticks.",
+  "listed": true,
+  "calculator_default": false,
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table",
+  "star_grade": "silver"
  },
  {
   "id": "bread",
@@ -16110,7 +16275,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "cabbage",
+    "item": "cabbage-gold",
     "qty": 2
    },
    {
@@ -16162,7 +16327,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "cabbage",
+    "item": "cabbage-silver",
     "qty": 2
    },
    {
@@ -17402,14 +17567,15 @@
   "note": null,
   "listed": true,
   "calculator_default": true,
-  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table"
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table",
+  "quality_upgrade": true
  },
  {
   "id": "drink-enhancement-i-from-wine-bronze",
   "name": "Drink enhancement I from Wine (bronze)",
   "type": "hand_craft",
   "output": {
-   "item": "wine",
+   "item": "wine-silver",
    "qty": 1
   },
   "extra_outputs": [],
@@ -17449,8 +17615,9 @@
   "star_quality": null,
   "note": null,
   "listed": true,
-  "calculator_default": true,
-  "source_url": "https://wikily.gg/graveyard-keeper-2/items/wine"
+  "calculator_default": false,
+  "source_url": "https://wikily.gg/graveyard-keeper-2/items/wine",
+  "quality_upgrade": true
  },
  {
   "id": "drink-enhancement-ii-from-grape-juice-silver",
@@ -17498,14 +17665,15 @@
   "note": null,
   "listed": true,
   "calculator_default": true,
-  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table"
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table",
+  "quality_upgrade": true
  },
  {
   "id": "drink-enhancement-ii-from-wine-silver",
   "name": "Drink enhancement II from Wine (silver)",
   "type": "hand_craft",
   "output": {
-   "item": "wine",
+   "item": "wine-gold",
    "qty": 1
   },
   "extra_outputs": [],
@@ -17518,7 +17686,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "wine",
+    "item": "wine-silver",
     "qty": 1
    },
    {
@@ -17546,7 +17714,8 @@
   "note": null,
   "listed": true,
   "calculator_default": false,
-  "source_url": "https://wikily.gg/graveyard-keeper-2/items/wine"
+  "source_url": "https://wikily.gg/graveyard-keeper-2/items/wine",
+  "quality_upgrade": true
  },
  {
   "id": "dynamite",
@@ -18594,7 +18763,8 @@
   "note": null,
   "listed": true,
   "calculator_default": true,
-  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table"
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table",
+  "quality_upgrade": true
  },
  {
   "id": "food-enhancement-i-from-vegetable-salad-bronze",
@@ -18642,7 +18812,8 @@
   "note": null,
   "listed": true,
   "calculator_default": true,
-  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table"
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table",
+  "quality_upgrade": true
  },
  {
   "id": "food-enhancement-ii-from-bowl-of-sauerkraut-silver",
@@ -18690,7 +18861,8 @@
   "note": null,
   "listed": true,
   "calculator_default": true,
-  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table"
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table",
+  "quality_upgrade": true
  },
  {
   "id": "food-enhancement-ii-from-vegetable-salad-silver",
@@ -18738,7 +18910,8 @@
   "note": null,
   "listed": true,
   "calculator_default": true,
-  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table"
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table",
+  "quality_upgrade": true
  },
  {
   "id": "fragrance",
@@ -19550,7 +19723,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "grapes",
+    "item": "grapes-gold",
     "qty": 6
    },
    {
@@ -19595,7 +19768,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "grapes",
+    "item": "grapes-silver",
     "qty": 6
    },
    {
@@ -19909,23 +20082,23 @@
   "name": "Grown in a Cabbage Bed (Farming mastery 10)",
   "type": "grow",
   "output": {
-   "item": "cabbage",
+   "item": "cabbage-silver",
    "qty": null
   },
   "output_note": "amount varies with the bed; +1 each with Farmer",
   "extra_outputs": [
    {
-    "item": "cabbage",
+    "item": "cabbage-gold",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Farmer II"
    },
    {
-    "item": "cabbage-seed",
+    "item": "cabbage-seed-silver",
     "qty": null,
     "note": "amount varies with the bed"
    },
    {
-    "item": "cabbage-seed",
+    "item": "cabbage-seed-gold",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Seed Master"
    },
@@ -19941,7 +20114,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "cabbage-seed",
+    "item": "cabbage-seed-silver",
     "qty": 4
    }
   ],
@@ -19964,13 +20137,13 @@
   "name": "Grown in a Cabbage Bed (Farming mastery 12)",
   "type": "grow",
   "output": {
-   "item": "cabbage",
+   "item": "cabbage-gold",
    "qty": null
   },
   "output_note": "amount varies with the bed; +1 each with Farmer and Farmer II",
   "extra_outputs": [
    {
-    "item": "cabbage-seed",
+    "item": "cabbage-seed-gold",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Seed Master"
    },
@@ -19986,7 +20159,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "cabbage-seed",
+    "item": "cabbage-seed-gold",
     "qty": 4
    }
   ],
@@ -20015,7 +20188,7 @@
   "output_note": "amount varies with the bed; +1 each with Farmer",
   "extra_outputs": [
    {
-    "item": "cabbage",
+    "item": "cabbage-silver",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Farmer II"
    },
@@ -20025,7 +20198,7 @@
     "note": "amount varies with the bed"
    },
    {
-    "item": "cabbage-seed",
+    "item": "cabbage-seed-silver",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Seed Master"
    },
@@ -20160,7 +20333,7 @@
   "output_note": "amount varies with the bed; +1 each with Farmer",
   "extra_outputs": [
    {
-    "item": "grapes",
+    "item": "grapes-silver",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Farmer II and Grape Master"
    },
@@ -20170,7 +20343,7 @@
     "note": "amount varies with the bed"
    },
    {
-    "item": "grape-seeds",
+    "item": "grape-seeds-silver",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Seed Master"
    },
@@ -20209,23 +20382,23 @@
   "name": "Grown in a Grapes Bed (Farming mastery 14)",
   "type": "grow",
   "output": {
-   "item": "grapes",
+   "item": "grapes-silver",
    "qty": null
   },
   "output_note": "amount varies with the bed; +1 each with Farmer",
   "extra_outputs": [
    {
-    "item": "grapes",
+    "item": "grapes-gold",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Farmer II and Grape Master"
    },
    {
-    "item": "grape-seeds",
+    "item": "grape-seeds-silver",
     "qty": null,
     "note": "amount varies with the bed"
    },
    {
-    "item": "grape-seeds",
+    "item": "grape-seeds-gold",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Seed Master"
    },
@@ -20241,7 +20414,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "grape-seeds",
+    "item": "grape-seeds-silver",
     "qty": 4
    }
   ],
@@ -20264,13 +20437,13 @@
   "name": "Grown in a Grapes Bed (Farming mastery 16)",
   "type": "grow",
   "output": {
-   "item": "grapes",
+   "item": "grapes-gold",
    "qty": null
   },
   "output_note": "amount varies with the bed; +1 each with Farmer, Farmer II and Grape Master",
   "extra_outputs": [
    {
-    "item": "grape-seeds",
+    "item": "grape-seeds-gold",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Seed Master"
    },
@@ -20286,7 +20459,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "grape-seeds",
+    "item": "grape-seeds-gold",
     "qty": 4
    }
   ],
@@ -20360,7 +20533,7 @@
   "output_note": "amount varies with the bed; +1 each with Farmer",
   "extra_outputs": [
    {
-    "item": "onion",
+    "item": "onion-silver",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Farmer II"
    },
@@ -20370,7 +20543,7 @@
     "note": "amount varies with the bed"
    },
    {
-    "item": "onion-seed",
+    "item": "onion-seed-silver",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Seed Master"
    },
@@ -20409,23 +20582,23 @@
   "name": "Grown in an Onion Bed (Farming mastery 12)",
   "type": "grow",
   "output": {
-   "item": "onion",
+   "item": "onion-silver",
    "qty": null
   },
   "output_note": "amount varies with the bed; +1 each with Farmer",
   "extra_outputs": [
    {
-    "item": "onion",
+    "item": "onion-gold",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Farmer II"
    },
    {
-    "item": "onion-seed",
+    "item": "onion-seed-silver",
     "qty": null,
     "note": "amount varies with the bed"
    },
    {
-    "item": "onion-seed",
+    "item": "onion-seed-gold",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Seed Master"
    },
@@ -20441,7 +20614,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "onion-seed",
+    "item": "onion-seed-silver",
     "qty": 4
    }
   ],
@@ -20464,13 +20637,13 @@
   "name": "Grown in an Onion Bed (Farming mastery 14)",
   "type": "grow",
   "output": {
-   "item": "onion",
+   "item": "onion-gold",
    "qty": null
   },
   "output_note": "amount varies with the bed; +1 each with Farmer and Farmer II",
   "extra_outputs": [
    {
-    "item": "onion-seed",
+    "item": "onion-seed-gold",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Seed Master"
    },
@@ -20486,7 +20659,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "onion-seed",
+    "item": "onion-seed-gold",
     "qty": 4
    }
   ],
@@ -20515,7 +20688,7 @@
   "output_note": "amount varies with the bed; +1 each with Farmer",
   "extra_outputs": [
    {
-    "item": "pumpkin",
+    "item": "pumpkin-silver",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Farmer II"
    },
@@ -20525,7 +20698,7 @@
     "note": "amount varies with the bed"
    },
    {
-    "item": "pumpkin-seeds",
+    "item": "pumpkin-seeds-silver",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Seed Master"
    },
@@ -20564,23 +20737,23 @@
   "name": "Grown in a Pumpkin Bed (Farming mastery 14)",
   "type": "grow",
   "output": {
-   "item": "pumpkin",
+   "item": "pumpkin-silver",
    "qty": null
   },
   "output_note": "amount varies with the bed; +1 each with Farmer",
   "extra_outputs": [
    {
-    "item": "pumpkin",
+    "item": "pumpkin-gold",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Farmer II"
    },
    {
-    "item": "pumpkin-seeds",
+    "item": "pumpkin-seeds-silver",
     "qty": null,
     "note": "amount varies with the bed"
    },
    {
-    "item": "pumpkin-seeds",
+    "item": "pumpkin-seeds-gold",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Seed Master"
    },
@@ -20596,7 +20769,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "pumpkin-seeds",
+    "item": "pumpkin-seeds-silver",
     "qty": 4
    }
   ],
@@ -20619,13 +20792,13 @@
   "name": "Grown in a Pumpkin Bed (Farming mastery 16)",
   "type": "grow",
   "output": {
-   "item": "pumpkin",
+   "item": "pumpkin-gold",
    "qty": null
   },
   "output_note": "amount varies with the bed; +1 each with Farmer and Farmer II",
   "extra_outputs": [
    {
-    "item": "pumpkin-seeds",
+    "item": "pumpkin-seeds-gold",
     "qty": null,
     "note": "amount varies with the bed; +1 each with Seed Master"
    },
@@ -20641,7 +20814,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "pumpkin-seeds",
+    "item": "pumpkin-seeds-gold",
     "qty": 4
    }
   ],
@@ -21057,7 +21230,8 @@
   "note": null,
   "listed": true,
   "calculator_default": true,
-  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/printing-press"
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/printing-press",
+  "quality_upgrade": true
  },
  {
   "id": "improve-newspaper-ii",
@@ -21103,7 +21277,8 @@
   "note": null,
   "listed": true,
   "calculator_default": true,
-  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/printing-press"
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/printing-press",
+  "quality_upgrade": true
  },
  {
   "id": "improve-organ-i-from-any-bones",
@@ -21696,7 +21871,8 @@
   "note": null,
   "listed": true,
   "calculator_default": true,
-  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/writing-desk"
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/writing-desk",
+  "quality_upgrade": true
  },
  {
   "id": "improve-story-ii",
@@ -21737,7 +21913,8 @@
   "note": null,
   "listed": true,
   "calculator_default": true,
-  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/writing-desk"
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/writing-desk",
+  "quality_upgrade": true
  },
  {
   "id": "injection-for-corpses",
@@ -24384,7 +24561,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "onion",
+    "item": "onion-gold",
     "qty": 3
    },
    {
@@ -24436,7 +24613,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "onion",
+    "item": "onion-silver",
     "qty": 3
    },
    {
@@ -25006,7 +25183,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "cabbage-seed",
+    "item": "cabbage-seed-gold",
     "qty": 4
    }
   ],
@@ -25042,7 +25219,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "cabbage-seed",
+    "item": "cabbage-seed-silver",
     "qty": 4
    }
   ],
@@ -25186,7 +25363,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "grape-seeds",
+    "item": "grape-seeds-gold",
     "qty": 4
    }
   ],
@@ -25222,7 +25399,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "grape-seeds",
+    "item": "grape-seeds-silver",
     "qty": 4
    }
   ],
@@ -25330,7 +25507,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "onion-seed",
+    "item": "onion-seed-gold",
     "qty": 4
    }
   ],
@@ -25366,7 +25543,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "onion-seed",
+    "item": "onion-seed-silver",
     "qty": 4
    }
   ],
@@ -25438,7 +25615,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "pumpkin-seeds",
+    "item": "pumpkin-seeds-gold",
     "qty": 4
    }
   ],
@@ -25474,7 +25651,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "pumpkin-seeds",
+    "item": "pumpkin-seeds-silver",
     "qty": 4
    }
   ],
@@ -26230,6 +26407,156 @@
   "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/printing-press"
  },
  {
+  "id": "printing-press-bronze",
+  "name": "Printing Press",
+  "type": "star_craft",
+  "output": {
+   "item": "newspaper-bronze",
+   "qty": 20
+  },
+  "extra_outputs": [],
+  "made_text": "20 (30 with Paper maker)",
+  "station": "Printing Press",
+  "station_id": "printing-press",
+  "alt_stations": [],
+  "station_extension": null,
+  "inputs": [
+   {
+    "item": "any-story",
+    "qty": 1
+   },
+   {
+    "item": "clean-paper",
+    "qty": 10
+   }
+  ],
+  "unlock": {
+   "name": "Newspaper",
+   "type": "technology",
+   "id": "newspaper",
+   "url": "https://wikily.gg/graveyard-keeper-2/technologies/newspaper"
+  },
+  "mastery": {
+   "type": "Book writing",
+   "level": 8
+  },
+  "time_ticks": 10,
+  "energy_per_tick": 2,
+  "tech_points_reward": {
+   "red": 4,
+   "blue": 4
+  },
+  "star_quality": {
+   "silver_at": "6 successful ticks",
+   "gold_at": "10 successful ticks"
+  },
+  "note": "Star craft: the result's quality depends on successful ticks.",
+  "listed": true,
+  "calculator_default": false,
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/printing-press",
+  "star_grade": "bronze"
+ },
+ {
+  "id": "printing-press-gold",
+  "name": "Printing Press",
+  "type": "star_craft",
+  "output": {
+   "item": "newspaper-gold",
+   "qty": 20
+  },
+  "extra_outputs": [],
+  "made_text": "20 (30 with Paper maker)",
+  "station": "Printing Press",
+  "station_id": "printing-press",
+  "alt_stations": [],
+  "station_extension": null,
+  "inputs": [
+   {
+    "item": "any-story",
+    "qty": 1
+   },
+   {
+    "item": "clean-paper",
+    "qty": 10
+   }
+  ],
+  "unlock": {
+   "name": "Newspaper",
+   "type": "technology",
+   "id": "newspaper",
+   "url": "https://wikily.gg/graveyard-keeper-2/technologies/newspaper"
+  },
+  "mastery": {
+   "type": "Book writing",
+   "level": 8
+  },
+  "time_ticks": 10,
+  "energy_per_tick": 2,
+  "tech_points_reward": {
+   "red": 4,
+   "blue": 4
+  },
+  "star_quality": {
+   "silver_at": "6 successful ticks",
+   "gold_at": "10 successful ticks"
+  },
+  "note": "Star craft: the result's quality depends on successful ticks.",
+  "listed": true,
+  "calculator_default": false,
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/printing-press",
+  "star_grade": "gold"
+ },
+ {
+  "id": "printing-press-silver",
+  "name": "Printing Press",
+  "type": "star_craft",
+  "output": {
+   "item": "newspaper-silver",
+   "qty": 20
+  },
+  "extra_outputs": [],
+  "made_text": "20 (30 with Paper maker)",
+  "station": "Printing Press",
+  "station_id": "printing-press",
+  "alt_stations": [],
+  "station_extension": null,
+  "inputs": [
+   {
+    "item": "any-story",
+    "qty": 1
+   },
+   {
+    "item": "clean-paper",
+    "qty": 10
+   }
+  ],
+  "unlock": {
+   "name": "Newspaper",
+   "type": "technology",
+   "id": "newspaper",
+   "url": "https://wikily.gg/graveyard-keeper-2/technologies/newspaper"
+  },
+  "mastery": {
+   "type": "Book writing",
+   "level": 8
+  },
+  "time_ticks": 10,
+  "energy_per_tick": 2,
+  "tech_points_reward": {
+   "red": 4,
+   "blue": 4
+  },
+  "star_quality": {
+   "silver_at": "6 successful ticks",
+   "gold_at": "10 successful ticks"
+  },
+  "note": "Star craft: the result's quality depends on successful ticks.",
+  "listed": true,
+  "calculator_default": false,
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/printing-press",
+  "star_grade": "silver"
+ },
+ {
   "id": "pro-rod",
   "name": "Pro Rod",
   "type": "hand_craft",
@@ -26398,7 +26725,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "pumpkin",
+    "item": "pumpkin-gold",
     "qty": 2
    },
    {
@@ -26450,7 +26777,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "pumpkin",
+    "item": "pumpkin-silver",
     "qty": 2
    },
    {
@@ -29186,6 +29513,165 @@
   "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/writing-desk"
  },
  {
+  "id": "story-bronze",
+  "name": "Story",
+  "type": "star_craft",
+  "output": {
+   "item": "story-bronze",
+   "qty": 1
+  },
+  "extra_outputs": [],
+  "made_text": "1",
+  "station": "Writing Desk",
+  "station_id": "writing-desk",
+  "alt_stations": [],
+  "station_extension": null,
+  "inputs": [
+   {
+    "item": "faith",
+    "qty": 3
+   },
+   {
+    "item": "clean-paper",
+    "qty": 2
+   },
+   {
+    "item": "ink",
+    "qty": 1
+   }
+  ],
+  "unlock": {
+   "name": "Books I",
+   "type": "technology",
+   "id": "books-i",
+   "url": "https://wikily.gg/graveyard-keeper-2/technologies/books-i"
+  },
+  "mastery": {
+   "type": "Book writing",
+   "level": 6
+  },
+  "time_ticks": 10,
+  "energy_per_tick": 2,
+  "tech_points_reward": {
+   "blue": 5
+  },
+  "star_quality": {
+   "silver_at": "6 successful ticks",
+   "gold_at": "10 successful ticks"
+  },
+  "note": "Star craft: the result's quality depends on successful ticks.",
+  "listed": true,
+  "calculator_default": false,
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/writing-desk",
+  "star_grade": "bronze"
+ },
+ {
+  "id": "story-gold",
+  "name": "Story",
+  "type": "star_craft",
+  "output": {
+   "item": "story-gold",
+   "qty": 1
+  },
+  "extra_outputs": [],
+  "made_text": "1",
+  "station": "Writing Desk",
+  "station_id": "writing-desk",
+  "alt_stations": [],
+  "station_extension": null,
+  "inputs": [
+   {
+    "item": "faith",
+    "qty": 3
+   },
+   {
+    "item": "clean-paper",
+    "qty": 2
+   },
+   {
+    "item": "ink",
+    "qty": 1
+   }
+  ],
+  "unlock": {
+   "name": "Books I",
+   "type": "technology",
+   "id": "books-i",
+   "url": "https://wikily.gg/graveyard-keeper-2/technologies/books-i"
+  },
+  "mastery": {
+   "type": "Book writing",
+   "level": 6
+  },
+  "time_ticks": 10,
+  "energy_per_tick": 2,
+  "tech_points_reward": {
+   "blue": 5
+  },
+  "star_quality": {
+   "silver_at": "6 successful ticks",
+   "gold_at": "10 successful ticks"
+  },
+  "note": "Star craft: the result's quality depends on successful ticks.",
+  "listed": true,
+  "calculator_default": false,
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/writing-desk",
+  "star_grade": "gold"
+ },
+ {
+  "id": "story-silver",
+  "name": "Story",
+  "type": "star_craft",
+  "output": {
+   "item": "story-silver",
+   "qty": 1
+  },
+  "extra_outputs": [],
+  "made_text": "1",
+  "station": "Writing Desk",
+  "station_id": "writing-desk",
+  "alt_stations": [],
+  "station_extension": null,
+  "inputs": [
+   {
+    "item": "faith",
+    "qty": 3
+   },
+   {
+    "item": "clean-paper",
+    "qty": 2
+   },
+   {
+    "item": "ink",
+    "qty": 1
+   }
+  ],
+  "unlock": {
+   "name": "Books I",
+   "type": "technology",
+   "id": "books-i",
+   "url": "https://wikily.gg/graveyard-keeper-2/technologies/books-i"
+  },
+  "mastery": {
+   "type": "Book writing",
+   "level": 6
+  },
+  "time_ticks": 10,
+  "energy_per_tick": 2,
+  "tech_points_reward": {
+   "blue": 5
+  },
+  "star_quality": {
+   "silver_at": "6 successful ticks",
+   "gold_at": "10 successful ticks"
+  },
+  "note": "Star craft: the result's quality depends on successful ticks.",
+  "listed": true,
+  "calculator_default": false,
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/writing-desk",
+  "star_grade": "silver"
+ },
+ {
   "id": "summon-fairy",
   "name": "Summon Fairy",
   "type": "hand_craft",
@@ -30250,7 +30736,7 @@
     "qty": 1
    },
    {
-    "item": "cabbage",
+    "item": "cabbage-gold",
     "qty": 6
    }
   ],
@@ -30297,7 +30783,7 @@
     "qty": 1
    },
    {
-    "item": "cabbage",
+    "item": "cabbage-silver",
     "qty": 8
    }
   ],
@@ -30434,7 +30920,7 @@
     "qty": 1
    },
    {
-    "item": "onion",
+    "item": "onion-gold",
     "qty": 6
    }
   ],
@@ -30479,7 +30965,7 @@
     "qty": 1
    },
    {
-    "item": "onion",
+    "item": "onion-silver",
     "qty": 8
    }
   ],
@@ -30569,7 +31055,7 @@
     "qty": 1
    },
    {
-    "item": "pumpkin",
+    "item": "pumpkin-gold",
     "qty": 2
    }
   ],
@@ -30614,7 +31100,7 @@
     "qty": 1
    },
    {
-    "item": "pumpkin",
+    "item": "pumpkin-silver",
     "qty": 3
    }
   ],
@@ -30800,7 +31286,7 @@
     "qty": 1
    },
    {
-    "item": "cabbage",
+    "item": "cabbage-gold",
     "qty": 6
    }
   ],
@@ -30847,7 +31333,7 @@
     "qty": 1
    },
    {
-    "item": "cabbage",
+    "item": "cabbage-silver",
     "qty": 8
    }
   ],
@@ -30988,7 +31474,7 @@
     "qty": 1
    },
    {
-    "item": "onion",
+    "item": "onion-gold",
     "qty": 4
    }
   ],
@@ -31035,7 +31521,7 @@
     "qty": 1
    },
    {
-    "item": "onion",
+    "item": "onion-silver",
     "qty": 6
    }
   ],
@@ -31129,7 +31615,7 @@
     "qty": 1
    },
    {
-    "item": "pumpkin",
+    "item": "pumpkin-gold",
     "qty": 1
    }
   ],
@@ -31176,7 +31662,7 @@
     "qty": 1
    },
    {
-    "item": "pumpkin",
+    "item": "pumpkin-silver",
     "qty": 2
    }
   ],
@@ -31262,7 +31748,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "wine",
+    "item": "wine-gold",
     "qty": 4
    }
   ],
@@ -31305,7 +31791,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "wine",
+    "item": "wine-silver",
     "qty": 6
    }
   ],
@@ -31540,7 +32026,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "onion",
+    "item": "onion-gold",
     "qty": 1
    },
    {
@@ -31592,7 +32078,7 @@
   "station_extension": null,
   "inputs": [
    {
-    "item": "onion",
+    "item": "onion-silver",
     "qty": 1
    },
    {
@@ -32021,6 +32507,171 @@
   "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table"
  },
  {
+  "id": "vegetable-salad-bronze",
+  "name": "Vegetable salad",
+  "type": "star_craft",
+  "output": {
+   "item": "vegetable-salad-bronze",
+   "qty": 2
+  },
+  "extra_outputs": [],
+  "made_text": "2 (4 with Cook)",
+  "station": "Kitchen Table",
+  "station_id": "kitchen-table",
+  "alt_stations": [
+   "Kitchen Table II"
+  ],
+  "station_extension": null,
+  "inputs": [
+   {
+    "item": "onion",
+    "qty": 2
+   },
+   {
+    "item": "carrot",
+    "qty": 2
+   },
+   {
+    "item": "beet",
+    "qty": 2
+   }
+  ],
+  "unlock": {
+   "name": "Vegetable dishes",
+   "type": "technology",
+   "id": "vegetable-dishes",
+   "url": "https://wikily.gg/graveyard-keeper-2/technologies/vegetable-dishes"
+  },
+  "mastery": {
+   "type": "Farming",
+   "level": 4
+  },
+  "time_ticks": 7,
+  "energy_per_tick": 2,
+  "tech_points_reward": {
+   "green": 1
+  },
+  "star_quality": {
+   "silver_at": "4 successful ticks",
+   "gold_at": "7 successful ticks"
+  },
+  "note": "Star craft: the result's quality depends on successful ticks.",
+  "listed": true,
+  "calculator_default": false,
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table",
+  "star_grade": "bronze"
+ },
+ {
+  "id": "vegetable-salad-gold",
+  "name": "Vegetable salad",
+  "type": "star_craft",
+  "output": {
+   "item": "vegetable-salad-gold",
+   "qty": 2
+  },
+  "extra_outputs": [],
+  "made_text": "2 (4 with Cook)",
+  "station": "Kitchen Table",
+  "station_id": "kitchen-table",
+  "alt_stations": [
+   "Kitchen Table II"
+  ],
+  "station_extension": null,
+  "inputs": [
+   {
+    "item": "onion",
+    "qty": 2
+   },
+   {
+    "item": "carrot",
+    "qty": 2
+   },
+   {
+    "item": "beet",
+    "qty": 2
+   }
+  ],
+  "unlock": {
+   "name": "Vegetable dishes",
+   "type": "technology",
+   "id": "vegetable-dishes",
+   "url": "https://wikily.gg/graveyard-keeper-2/technologies/vegetable-dishes"
+  },
+  "mastery": {
+   "type": "Farming",
+   "level": 4
+  },
+  "time_ticks": 7,
+  "energy_per_tick": 2,
+  "tech_points_reward": {
+   "green": 1
+  },
+  "star_quality": {
+   "silver_at": "4 successful ticks",
+   "gold_at": "7 successful ticks"
+  },
+  "note": "Star craft: the result's quality depends on successful ticks.",
+  "listed": true,
+  "calculator_default": false,
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table",
+  "star_grade": "gold"
+ },
+ {
+  "id": "vegetable-salad-silver",
+  "name": "Vegetable salad",
+  "type": "star_craft",
+  "output": {
+   "item": "vegetable-salad-silver",
+   "qty": 2
+  },
+  "extra_outputs": [],
+  "made_text": "2 (4 with Cook)",
+  "station": "Kitchen Table",
+  "station_id": "kitchen-table",
+  "alt_stations": [
+   "Kitchen Table II"
+  ],
+  "station_extension": null,
+  "inputs": [
+   {
+    "item": "onion",
+    "qty": 2
+   },
+   {
+    "item": "carrot",
+    "qty": 2
+   },
+   {
+    "item": "beet",
+    "qty": 2
+   }
+  ],
+  "unlock": {
+   "name": "Vegetable dishes",
+   "type": "technology",
+   "id": "vegetable-dishes",
+   "url": "https://wikily.gg/graveyard-keeper-2/technologies/vegetable-dishes"
+  },
+  "mastery": {
+   "type": "Farming",
+   "level": 4
+  },
+  "time_ticks": 7,
+  "energy_per_tick": 2,
+  "tech_points_reward": {
+   "green": 1
+  },
+  "star_quality": {
+   "silver_at": "4 successful ticks",
+   "gold_at": "7 successful ticks"
+  },
+  "note": "Star craft: the result's quality depends on successful ticks.",
+  "listed": true,
+  "calculator_default": false,
+  "source_url": "https://wikily.gg/graveyard-keeper-2/crafting-stations/kitchen-table",
+  "star_grade": "silver"
+ },
+ {
   "id": "vegetable-soup",
   "name": "Vegetable soup",
   "type": "auto",
@@ -32118,7 +32769,7 @@
   "name": "Wine from Grape Juice (gold)",
   "type": "auto",
   "output": {
-   "item": "wine",
+   "item": "wine-gold",
    "qty": 4
   },
   "extra_outputs": [],
@@ -32159,7 +32810,7 @@
   "name": "Wine from Grape Juice (silver)",
   "type": "auto",
   "output": {
-   "item": "wine",
+   "item": "wine-silver",
    "qty": 4
   },
   "extra_outputs": [],

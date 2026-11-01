@@ -8,8 +8,11 @@
    - bonus: input / by-product / output notes shaped "N (M with X)", "N, or M with X", "+N each with X" or
      "M with X" become line.bonus = {perk: "X" (en), perks: [perkId], qty: M | null, add: N | null}; the perk
      names (en + pt, the pt one read from note.pt with the mirrored pattern) are collected in D.perks.
-   - quality: recipe.quality = "bronze" | "silver" | "gold" from its name "(gold)" or id "-gold" (star_quality
-     when the payload carries it).
+   - quality (1.9): recipe.quality = "bronze" | "silver" | "gold" = the grade of the graded item it makes (Barril with
+     silver Grape Juice → Vinho (prata); "Wine (bronze) + Spices" → Vinho (prata) too), else the grade its name gives the
+     input ("Cabbage soup from Cabbage (gold)"); never read from the id alone (Bronze Polido has none).
+   - grades kept by the build (1.9, docs/revisao-ux/consertos.md "Qualidade"): "Wine (silver)" is the item wine-silver
+     (base: wine) in the payload; the plain item is the bronze one. gradeMoves() moves a plan saved before that.
    - quality inputs (AUDITORIA C2/D1): a "<X> from <Y> (silver|gold)" recipe whose output is not itself a quality
      variant consumes the graded <Y>, not the plain one: the input is pointed to "<y>-<grade>" (the real variant
      item, or a synthetic one: kind quality-variant, raw, synthetic: true, base: <y>, the base's icon).
@@ -18,7 +21,7 @@
      the plain one (bronze: the common <Y> is the bronze one; a circular recipe: the input is the output itself). Shown
      as the star in the icon corner (GK.util.slot). The recipes of an item, by family (same id but the grade suffix),
      always come bronze, silver, gold (gradeSort keeps the positions the family holds in the list).
-   Also exposes GK.data.{GRADE_RANK, itemGrade, family, gradeSort, stripGrade}.
+   Also exposes GK.data.{GRADE_RANK, itemGrade, family, gradeSort, stripGrade, gradeMoves}.
 */
 GK.data = (function () {
   const D = {
@@ -110,10 +113,15 @@ GK.data = (function () {
       p.uses++;
     }
   }
+  // a recipe's grade (1.9, qualidade): the grade of what it MAKES when the output is a graded item ("Wine (silver)" from
+  // the Barrel with silver Grape Juice, and from "Wine (bronze) + Spices"); else the grade its name gives the input it
+  // changes ("Cabbage soup from Cabbage (gold)"). Never from the id alone: "polished-bronze" is not a grade.
   const gradeOf = (r) => {
     const st = r.star_quality || r.star;
     if (typeof st === "string" && GRADES[st.toLowerCase()]) return st.toLowerCase();
-    const m = (r.name && /\((bronze|silver|gold)\)\s*$/i.exec(r.name.en || "")) || /-(bronze|silver|gold)$/.exec(r.id || "");
+    const out = D.items[r.out.item];
+    if (out && out.grade) return out.grade;
+    const m = r.name && /\((bronze|silver|gold)\)\s*$/i.exec(r.name.en || "");
     return m ? m[1].toLowerCase() : null;
   };
   // "<X> from <Y> (bronze|silver|gold)": mark the <Y> input with the grade; silver and gold point the plain <Y> to its
@@ -121,21 +129,23 @@ GK.data = (function () {
   // circular recipe (its input is the output itself): there the grade is only shown (line.grade).
   function qualityInputs(spriteIcons) {
     for (const r of D.recipes) {
-      if (!r.quality || !r.name) continue;
-      const out = D.items[r.out.item];
-      if (!out || out.kind === "quality-variant") continue;   // the output carries the grade (Grape Juice (gold))
+      if (!r.name) continue;
       const m = /^.+? from (.+?) \((bronze|silver|gold)\)\s*$/i.exec(r.name.en || "");
       if (!m) continue;
-      const want = norm(m[1]);
+      const grade = m[2].toLowerCase(), want = norm(m[1]);
       const line = r.in.find((l) => D.items[l.item] && norm(D.items[l.item].en) === want);
       if (!line) continue;
       const base = D.items[line.item];
       if (base.kind === "quality-variant" || base.members) continue;
-      line.grade = r.quality;
-      if (r.quality === "bronze" || line.item === r.out.item) continue;
-      const vid = base.id + "-" + r.quality;
+      // since 1.9 the build keeps the grade (silver / gold inputs are their own items): what is left here is the plain
+      // item read as bronze ("Wine (bronze)" in "Drink enhancement I", "Cabbage (bronze)" in a soup); the rest is for
+      // an older payload whose silver / gold input still names the plain item
+      line.grade = grade;
+      const out = D.items[r.out.item];
+      if (grade === "bronze" || line.item === r.out.item || (out && out.kind === "quality-variant")) continue;
+      const vid = base.id + "-" + grade;
       if (!D.items[vid]) {
-        const g = GRADES[r.quality], o = {};
+        const g = GRADES[grade], o = {};
         LANGS.forEach((l) => { o[l] = `${base[l] || base.en} (${g[l] || g.en})`; });
         D.items[vid] = normItem(vid, Object.assign(o, {
           tr: base.tr, cat: base.cat, icon: base.icon, kind: "quality-variant", raw: true, recipes: [], defaultRecipe: null,
@@ -176,6 +186,34 @@ GK.data = (function () {
       idx.forEach((i, j) => { list[i] = xs[j]; });
     }
     return list;
+  }
+  /**
+   * A plan saved up to 1.8.1, when the data dropped the grade of Vinho / Uvas / Repolho…: "Vinho" had the three Barril
+   * recipes and the two improvements, so a silver or gold one was planned as the goal "wine" with the recipe chosen
+   * (choice.wine = "wine-from-grape-juice-silver"). Since 1.9 that recipe makes "wine-silver": the choice moves to the
+   * item it makes, and a goal of the plain item planned with it becomes that grade (what the plan made), with its step
+   * tick. Ids never change: "wine" is the bronze one, "wine-silver" / "cabbage-gold" the ids the page already used.
+   * goals [{item, qty}], choice {item: recipe}, done {key: tick} → {goals, choice, done} (new objects) or null (no change).
+   */
+  function gradeMoves(goals, choice, done) {
+    if (!D.recipes.length || !choice) return null;
+    let gs = null, ch = null, dn = null;
+    for (const [id, rid] of Object.entries(choice)) {
+      const r = D.recipeById[rid], to = r && D.items[r.out.item];
+      if (!to || to.id === id || !itemGrade(to) || family(to) !== id) continue;
+      ch = ch || Object.assign({}, choice);
+      delete ch[id];
+      if (ch[to.id] == null) ch[to.id] = rid;
+      gs = gs || (goals || []).map((g) => ({ item: g.item, qty: g.qty }));
+      const i = gs.findIndex((g) => g.item === id);
+      if (i < 0) continue;
+      const j = gs.findIndex((g) => g.item === to.id);
+      gs[i] = { item: to.id, qty: gs[i].qty + (j >= 0 ? gs[j].qty : 0) };   // at the old goal's place
+      if (j >= 0) gs.splice(j, 1);
+      const k = "step:" + id;
+      if (done && done[k] != null) { dn = dn || Object.assign({}, done); if (dn["step:" + to.id] == null) dn["step:" + to.id] = dn[k]; delete dn[k]; }
+    }
+    return ch ? { goals: gs, choice: ch, done: dn || done } : null;
   }
   // "Suco de Uva (prata)" → "Suco de Uva" (the grade word in either language, at the end of a shown name)
   const stripGrade = (s) => String(s == null ? "" : s).replace(/\s*\((bronze|prata|ouro|silver|gold)\)\s*$/i, "");
@@ -261,14 +299,18 @@ GK.data = (function () {
       const nr = normRecipe(r, i);
       if (nr && !D.recipeById[nr.id]) { D.recipes.push(nr); D.recipeById[nr.id] = nr; }
     });
+    const icons = D.meta.sprite && D.meta.sprite.icons;
+    qualityInputs(icons);
+    for (const it of Object.values(D.items)) {
+      const m = it.kind === "quality-variant" && GRADE_SUFFIX.exec(it.id);
+      if (!m) continue;
+      it.grade = m[1];
+      // a grade the build kept ("wine-silver", base "wine") draws its family's icon (the star tells the grade)
+      if (icons && it.base && !icons[it.id] && icons[it.base]) icons[it.id] = icons[it.base];
+    }
     for (const r of D.recipes) {
       r.quality = gradeOf(r);
       r.in.forEach(addBonus); r.extra.forEach(addBonus); addBonus(r.out);
-    }
-    qualityInputs(D.meta.sprite && D.meta.sprite.icons);
-    for (const it of Object.values(D.items)) {
-      const m = it.kind === "quality-variant" && GRADE_SUFFIX.exec(it.id);
-      if (m) it.grade = m[1];
     }
     // byOut keeps each item's best-first order (item.recipes); usedIn = consumers
     D.byOut = {}; D.usedIn = {};
@@ -298,7 +340,7 @@ GK.data = (function () {
     return D;
   }
   return {
-    load, norm, words, parseBonus, GRADE_RANK, itemGrade, family, gradeSort, stripGrade,
+    load, norm, words, parseBonus, GRADE_RANK, itemGrade, family, gradeSort, stripGrade, gradeMoves,
     get: () => D,
     perks: () => D.perks,
     item: (id) => D.items[id],

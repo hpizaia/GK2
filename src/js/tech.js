@@ -3,7 +3,7 @@
    scripts/build.py), kept raw by GK.data as GK.data.get().techs and normalized here on first use.
    Owns: the normalized tree (techs by id with derived children / recipes, branches in tab order, point colours).
    Exposes: GK.tech.{available, get, all, branches, branch, inBranch, tp, COLORS, ancestors, researchedSet,
-   required, costOf, order, forPlan, isFree, init}.
+   required, costOf, order, forPlan, isFree, init, columns, nextColumn, columnOpen}.
 
    A tech = {id, pt, en, tr, branch, column, y, cost: {red, green, blue}, parents[], children[], hidden, given,
              free (cost 0), rep: {who: {pt, en}, level} | null, unlocks: [{item, kind, pt, en, tr, station}],
@@ -101,6 +101,23 @@ GK.tech = (function () {
   // research order: (branch order, column, y). Parents always come first: no edge crosses branches and
   // every parent sits in a lower column.
   const order = (list) => (list || []).map((x) => (typeof x === "string" ? get(x) : x)).filter(Boolean).sort((a, b) => a.rank - b.rank);
+
+  // the columns of a branch in order: [{column, techs: [...]}] (the Tecnologias tab's groups)
+  function columns(bid) {
+    const cols = new Map();
+    for (const t of inBranch(bid)) { if (!cols.has(t.column)) cols.set(t.column, []); cols.get(t.column).push(t); }
+    return [...cols.entries()].sort((a, b) => a[0] - b[0]).map(([column, techs]) => ({ column, techs }));
+  }
+  /** nextColumn(bid, done) → the first column of the branch with a tech not in `done` (a researchedSet), or null
+   *  when the whole branch is researched. The Tecnologias tab opens only this column by default (1.8.x). */
+  function nextColumn(bid, done) {
+    const set = done instanceof Set ? done : researchedSet(done);
+    const c = columns(bid).find((g) => g.techs.some((t) => !set.has(t.id)));
+    return c ? c.column : null;
+  }
+  /** columnOpen(col, next, choice) → is a column open: the player's choice for it (true / false) when there is
+   *  one, else only the `next` column (nextColumn) is. */
+  const columnOpen = (col, next, choice) => (choice && typeof choice[col] === "boolean" ? choice[col] : col === next);
 
   // every ancestor of the given ids (not the ids themselves), in research order
   function ancestors(ids) {
@@ -216,6 +233,6 @@ GK.tech = (function () {
     available: () => tree().list.length > 0,
     init(src) { injected = src !== undefined; raw = src || null; T = null; return tree(); },   // tests / another data source
     get, all, branches, branch, inBranch, tp, COLORS, isFree, order,
-    ancestors, researchedSet, required, costOf, forPlan, signature,
+    ancestors, researchedSet, required, costOf, forPlan, signature, columns, nextColumn, columnOpen,
   };
 })();

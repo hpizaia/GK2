@@ -1323,7 +1323,7 @@ class PlannerUx(unittest.TestCase):
         cls.read = lambda self, f: (self.src / f).read_text(encoding="utf-8")
 
     def test_planner_order_mobile(self):
-        """#1: below 900 px the progress card (perks, "Copiar lista") goes after raw materials, steps and techs."""
+        """#1: below 900 px the progress card (bar and perks) goes after raw materials, steps and techs."""
         css = self.read("css/planner.css")
         phone = css.split("@media (max-width: 899px) {", 1)[1].split("\n}", 1)[0]
         self.assertIn('.col-plan > [data-panel="checklist"] { order: 10; }', phone)
@@ -1368,14 +1368,47 @@ class PlannerUx(unittest.TestCase):
         self.assertIn("hyphens: auto", name)
 
     def test_planner_raw_rows_compact(self):
-        """#5: "como obter" on one line (full text in the title), "Já tenho" on the row, ✎ only in "Editar nomes"."""
+        """#5: "como obter" on one line (full text in the title), "Já tenho" on the row. 1.8.x: no ✎ pencils on the
+        planner rows (renaming is in the Receitas detail; test_calc.mjs "renomear no detalhe")."""
         css, s, f = self.read("css/planner.css"), self.read("js/ui/summary.js"), self.read("js/ui/fmt.js")
         self.assertRegex(css, r"\.row-obtain \{[^}]*text-overflow: ellipsis")
         self.assertIn('class="row-line2"', s)
         self.assertIn('class="row-sub row-obtain"', s)
-        self.assertIn("const pencil = canEdit ?", f)
-        self.assertIn("editNames", self.read("js/store.js"))
-        self.assertIn('id="edit-names"', self.read("js/ui/checklist.js"))
+        for gone in ("const pencil", "data-edit", "edit-form", "canEdit"):
+            self.assertNotIn(gone, f + s, gone)
+        self.assertIn("function nameBlock(it, nm, extraBadges, overrides)", f)
+        self.assertNotIn("editNames", self.read("js/store.js"))
+
+    def test_progress_card_bar_and_perks_only(self):
+        """1.8.x (pedido do dono): the Progresso card is the bar and the "Vantagens" line; no "Copiar lista",
+        "Limpar marcações", "Editar nomes" or "Exportar nomes editados" there (the export moved to the rename field
+        in the Receitas detail); their strings, store action and CSS are gone; "Limpar metas" stays."""
+        c, st = self.read("js/ui/checklist.js"), self.read("js/store.js")
+        css = self.read("css/planner.css") + self.read("css/components.css")
+        for gone in ("copy-list", "clear-done", "edit-names", "export-names", "progress.copy", "progress.clear",
+                     "names.edit", "export.button", "copy.header", "asText", "exportNames", "copyText"):
+            self.assertNotIn(gone, c, gone)
+        self.assertIn("return { mount, render };", c)
+        self.assertIn('class="bar" role="progressbar"', c)
+        self.assertIn("${perkRow(plan)}", c)
+        self.assertNotIn("clearDone", st)
+        for gone in (".progress-actions", ".names-toggle", ".edit-ico", ".copy-fallback"):
+            self.assertNotIn(gone, css, gone)
+        self.assertIn('"goals.clear": "Limpar metas"', self.read("js/ui/goals.js"))
+
+    def test_rename_in_recipes_detail(self):
+        """1.8.x: the detail's "não oficial" / "editado" tag is the rename button ("Renomear <nome>", 44 px hit area);
+        Salvar / Cancelar / "Voltar ao nome original" write GK.store overrides (behaviour: test_calc.mjs)."""
+        r, css = self.read("js/ui/recipes.js"), self.read("css/recipes.css")
+        self.assertIn('id="rc-rename" data-rename aria-expanded="${renaming}"', r)
+        self.assertIn('aria-label="${esc(t("rc.rename", { name: name(it, state.overrides) }))}"', r)
+        self.assertIn("GK.store.actions.setOverride(lang, V.item, keep ? v : \"\")", r)
+        for k, pt, en in (("rc.rename", "Renomear {name}", "Rename {name}"), ("rc.renameReset", "Voltar ao nome original", "Back to the original name"),
+                          ("rc.exportNames", "Exportar nomes editados ({n})", "Export edited names ({n})")):
+            self.assertIn('"%s": "%s"' % (k, pt), r)
+            self.assertIn('"%s": "%s"' % (k, en), r)
+        self.assertRegex(css, r"\.badge-btn::after \{[^}]*inset: -14px -4px")
+        self.assertIn(".copy-fallback {", css)
 
     def test_planner_have_all_undo(self):
         """#6: "Tudo" shows "<item>: você já tem tudo · Desfazer" and moves the focus to the next row."""
@@ -1427,7 +1460,7 @@ console.log(JSON.stringify({ after, back, twice, ui: S.get().ui }));
                                        "example": True, "done": {"raw:log": True}})
         self.assertEqual(out["twice"], {"goals": [{"item": "wine", "qty": 2}], "replaced": False})
         self.assertTrue(out["ui"]["todayCollapsed"])
-        self.assertFalse(out["ui"]["editNames"])
+        self.assertNotIn("editNames", out["ui"])
 
 
 class TodayFeatures(unittest.TestCase):
@@ -1683,7 +1716,10 @@ class FooterNoticeQr(unittest.TestCase):
             self.assertNotIn(gone, f)
         self.assertIn("(© NX Software)", cr)
         self.assertIn('"credits.data.p3": "As quantidades são as de base;', cr)
-        self.assertIn('"credits.data.p4": "Dados de {date}', cr)
+        # the data's game versions, no build date (QA 2026-11 #8)
+        self.assertIn('"credits.data.p4": "Receitas da wiki (jogo {wiki}) · textos do jogo {game}."', cr)
+        self.assertIn('"credits.data.p4": "Wiki recipes (game {wiki}) · game texts {game}."', cr)
+        self.assertNotIn("m.built", cr)
         # one version line: one number when wiki and game agree
         self.assertIn('"footer.line": "v{version} · dados do jogo {game}"', f)
         self.assertIn('t(game === wiki ? "footer.line" : "footer.lineMixed"', f)
@@ -2005,6 +2041,17 @@ class Cuts160(unittest.TestCase):
         self.assertIn("GK.tech.researchedSet", f)
         self.assertRegex(css, r"\.step-pick select \{[^}]*opacity: 0")
         self.assertRegex(css, r"\.qty-btn \{[^}]*min-height: var\(--tap\)")
+        # 1.8.x: "ou: Lenheiro II · Metalurgia 1": the other stations and the tech line on one small line in the row's
+        # actions (8 px above, like the tech line before), each alone when the other is empty; no separate .row-alt
+        self.assertIn('if (note.length) actions.push(`<span class="tech">${esc(note.join(" · "))}</span>`);', s)
+        self.assertIn('[t("steps.alt", {', s)
+        self.assertIn('.concat(F.techLine(r, state)).map((x) => x.replace(/ (?=(?:\\d+|[IVX]+)(?:[ ,]|$))/g, "\\u00a0"));', s)
+        self.assertNotIn("row-alt", s)
+        self.assertNotIn(".row-alt", self.read("css/components.css"))
+        self.assertIn('"steps.alt": "ou: {names}"', s)
+        self.assertIn('"steps.alt": "or: {names}"', s)
+        self.assertRegex(css, r"\.row-actions \{[^}]*flex-wrap: wrap;[^}]*margin-top: var\(--s2\)")
+        self.assertIn(".tech { font-size: .8125rem; color: var(--ink-3); }", css)
 
     def test_planner_spacing(self):
         """Spacing pass after 1.6.0 (docs/revisao-ux/shots-espacos): the section toggles keep 8 px above their card and
@@ -2013,7 +2060,18 @@ class Cuts160(unittest.TestCase):
         name; 8 px between a raw row's quantity and its "Já tenho"; the 44 px targets stay."""
         css = self.read("css/planner.css")
         self.assertIn(".summary-grid .fold-head { margin-bottom: var(--s2); }", css)
-        self.assertIn(".summary-grid .fold-head > .fold-btn { margin-right: calc(var(--s3) + 1px); }", css)
+        # 1.8.x (seta das seções, opção A): a section's toggle is no longer the 44 px box 13 px in (it fell in the
+        # column of the station box under it): a thin chevron with no box at the card's right edge, its invisible
+        # 44 px target reaching 10 px into the page margin; the station toggle keeps its box
+        self.assertNotIn(".summary-grid .fold-head > .fold-btn", css)
+        sec = re.search(r"\n\.sec-fold \{([^}]*)\}", css).group(1)
+        for decl in ("width: var(--tap); height: var(--tap);", "margin: 0 -10px 0 0; padding: 0 13px 0 0;",
+                     "border: 0; background: transparent; color: var(--ink-3);"):
+            self.assertIn(decl, sec)
+        chev = re.search(r"\n\.sec-chev \{([^}]*)\}", css).group(1)
+        self.assertIn("width: 9px; height: 9px;", chev)
+        self.assertIn("border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;", chev)
+        self.assertIn('[aria-expanded="false"] > .sec-chev { transform: translateX(-2px) rotate(-45deg); }', css)
         self.assertRegex(css, r"\.station-h \{[^}]*padding: var\(--s2\) var\(--s3\);")
         self.assertNotRegex(css, r"\.station-h\[data-fold-head\] \{[^}]*padding-right")
         qty = re.search(r"\.row-qty\.qty-btn \{([^}]*)\}", css).group(1)
@@ -2041,6 +2099,49 @@ class Cuts160(unittest.TestCase):
         self.assertNotRegex(css, r"\.goal[^{]*\.stepper[^{]*\{[^}]*margin")
         self.assertNotRegex(css, r"\n\.stepper \{[^}]*margin")
         self.assertRegex(css, r"\.fold-btn \{[^}]*width: var\(--tap\)")
+
+    def test_section_fold_option_a(self):
+        """Seta das seções, opção A (1.8.x, docs/revisao-ux/protos/seta-secao): Matérias-primas, Etapas, Tecnologias
+        que faltam and the open Hoje fold with the thin chevron (.sec-fold > .sec-chev, aria-expanded, a label per
+        state); the station cards and the one-line Hoje keep the boxed .fold-btn. "Tecnologias que faltam" folded
+        shows only "Total de pontos: …" (GK.store ui.tnCollapsed, per device)."""
+        summary, today, tn, store = (self.read("js/ui/summary.js"), self.read("js/ui/today.js"),
+                                     self.read("js/ui/techneeds.js"), self.read("js/store.js"))
+        self.assertIn('class="${sec ? "sec-fold" : "btn fold-btn"}" id="fold-${domId(k)}"', summary)
+        self.assertIn('${foldBtn("raw", !U.rawCollapsed, t("raw.title"), "raw-body", true)}', summary)
+        self.assertIn('${foldBtn("steps", !U.stepsCollapsed, t("steps.title"), "steps-body", true)}', summary)
+        self.assertIn("${foldBtn(fk, open, stName, body)}", summary)   # station: boxed
+        self.assertIn('${foldBtn(true, t("today.title"), true)}', today)
+        self.assertIn('${foldBtn(false, t("today.title"))}', today)     # one-line Hoje card: boxed
+        self.assertIn('<button type="button" class="sec-fold" id="fold-tn" data-tn-fold aria-expanded="${!shut}" aria-controls="tn-body"', tn)
+        self.assertIn('<span class="sec-chev" aria-hidden="true"></span>', tn)
+        self.assertIn('setUi({ tnCollapsed: !shutOf(GK.store.get()) })', tn)
+        self.assertIn('<span class="tn-sum-l">${esc(t("tn.totalSum"))}</span>${GK.ui.tech.costHtml(need.cost)}', tn)
+        self.assertIn('expanded + "|" + shut + "|"', tn)   # folding re-renders the memoised panel
+        for lang, words in (("pt", ('"tn.totalSum": "Total de pontos:"', '"tn.collapseX": "Recolher: {name}"')),
+                            ("en", ('"tn.totalSum": "Total points:"', '"tn.collapseX": "Collapse: {name}"'))):
+            block = tn.split("GK.i18n.add({", 1)[1].split("\n  en: {", 1)[0 if lang == "pt" else 1]
+            for w in words:
+                self.assertIn(w, block)
+        flags = re.search(r"const UI_FLAGS = \[(.*?)\];", store).group(1)
+        self.assertIn('"tnCollapsed"', flags)
+        self.assertIn("tnCollapsed: false", store)
+        # the tech tab's column headers: 44 px buttons with aria-expanded, chevron after the title, smaller than ›
+        tech, tcss = self.read("js/ui/tech.js"), self.read("css/tech.css")
+        self.assertIn('<button type="button" class="tc-btn" id="tcol-${domId(bid)}-${col}" data-tcol="${col}" aria-expanded="${open}" aria-controls="${body}"', tech)
+        self.assertIn('<span class="tc-t">${esc(t("tech.column", { n: col }))}</span><span class="tc-chev" aria-hidden="true"></span><span class="tc-r">', tech)
+        self.assertIn('${all ? `<span class="tc-ok" aria-hidden="true">✓</span>` : ""}', tech)
+        btn = re.search(r"\n\.tc-btn \{([^}]*)\}", tcss).group(1)
+        self.assertIn("min-height: var(--tap);", btn)
+        chev = re.search(r"\n\.tc-chev \{([^}]*)\}", tcss).group(1)
+        self.assertIn("width: 4px; height: 4px;", chev)
+        self.assertIn("color: var(--ink-3);", chev)
+        self.assertRegex(tcss, r"\.tech-chev \{[^}]*font-size: 1\.375rem")   # the rows' › stays the bigger one
+        self.assertIn(".tc-btn:focus-visible { outline: 2px solid var(--accent);", tcss)
+        # the search lists its hits by branch, with plain (never folded) headers
+        search = tech.split("function searchList", 1)[1].split("function chips", 1)[0]
+        self.assertNotIn("data-tcol", search)
+        self.assertNotIn("hidden", search)
 
     def test_planner_general(self):
         """Cortes 6, 8, 20, 13 (goals side): the icon opens Receitas; no stats line; perks fold; one first-use line;
@@ -2179,6 +2280,76 @@ class GroupedRecipes180(unittest.TestCase):
         self.assertIn(".sell-max .coin { width: 14px; height: 14px;", css)
         self.assertNotIn("radial-gradient(circle at 35% 35%", css)
         self.assertIn('<span class="sr-only"> ${esc(t("rc.coin." + k))}</span>', self.read("js/ui/recipes.js"))
+
+
+
+class Quality19(unittest.TestCase):
+    """1.9, qualidade (docs/revisao-ux/qualidade-auditoria.md, consertos.md "Qualidade"): build_dataset.py keeps the
+    grade of "Wine (silver)" (wine-silver, base wine; bronze = the plain item), the star crafts make every grade, and
+    build.py lists a quality upgrade after the recipe that makes that grade directly."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.items = {i["id"]: i for i in read_json(ROOT / "data" / "items.en.json")}
+        cls.recipes = {r["id"]: r for r in read_json(ROOT / "data" / "recipes.en.json")}
+        cls.ds = read_json(ROOT / "data" / "gk2.json")
+
+    def test_dataset_keeps_the_grade(self):
+        I, R = self.items, self.recipes
+        for g in ("silver", "gold"):
+            self.assertEqual(R[f"wine-from-grape-juice-{g}"]["output"]["item"], f"wine-{g}")
+            self.assertEqual(I[f"wine-{g}"]["base_item"], "wine")
+            self.assertEqual(I[f"wine-{g}"]["kind"], "quality-variant")
+            self.assertEqual([i["item"] for i in R[f"grape-juice-from-grapes-{g}"]["inputs"]][0], f"grapes-{g}")
+        self.assertEqual(R["wine-from-grape-juice-bronze"]["output"]["item"], "wine")       # bronze = the plain item
+        self.assertEqual(R["drink-enhancement-i-from-wine-bronze"]["output"]["item"], "wine-silver")
+        self.assertEqual([i["item"] for i in R["drink-enhancement-i-from-wine-bronze"]["inputs"]], ["wine", "spices"])
+        self.assertTrue(R["drink-enhancement-i-from-wine-bronze"]["quality_upgrade"])
+        self.assertNotIn("quality_upgrade", R["wine-from-grape-juice-silver"])
+        # organ improvers stay as they were (ambiguous: "(gold)" from "Any <organ>", both levels)
+        self.assertEqual(R["improve-organ-i-from-any-bones"]["output"]["item"], "bones")
+        self.assertNotIn("bones-gold", I)
+        # crops: the seed grade gives the harvest grade; silver / gold have a short "how to get" text
+        self.assertEqual(I["cabbage-silver"]["obtain"], "Harvest: bronze or silver seeds.")
+        self.assertEqual(I["grapes-gold"]["obtain"], "Harvest: silver or gold seeds.")
+        self.assertEqual(R["grow-grapes-bed-m16"]["inputs"][0]["item"], "grape-seeds-gold")
+        self.assertEqual(R["grow-grapes-bed-m16"]["source_url"].rsplit("/", 1)[-1], "grapes")
+        # Bronze Polido: no variant, no grade
+        self.assertEqual(I["polished-bronze"]["kind"], "item")
+        self.assertFalse(any(k.startswith("polished-bronze-") for k in I))
+
+    def test_star_crafts_per_grade(self):
+        R = self.recipes
+        for rid, fam in (("story", "story"), ("printing-press", "newspaper"), ("vegetable-salad", "vegetable-salad"),
+                         ("bowl-of-sauerkraut", "bowl-of-sauerkraut")):
+            self.assertEqual(R[rid]["output"]["item"], fam)
+            for g in ("bronze", "silver", "gold"):
+                c = R[f"{rid}-{g}"]
+                self.assertEqual((c["output"]["item"], c["output"]["qty"], c["inputs"], c["star_quality"], c["type"]),
+                                 (f"{fam}-{g}", R[rid]["output"]["qty"], R[rid]["inputs"], R[rid]["star_quality"], "star_craft"))
+        self.assertFalse(any(r["id"].startswith("basic-prayer-") for r in R.values()))   # prayers: not a graded family
+
+    def test_page_defaults_and_base(self):
+        it = self.ds["items"]
+        self.assertEqual(it["wine-silver"]["recipes"], ["wine-from-grape-juice-silver", "drink-enhancement-i-from-wine-bronze"])
+        self.assertEqual(it["wine-silver"]["defaultRecipe"], "wine-from-grape-juice-silver")
+        self.assertEqual(it["grape-juice-gold"]["defaultRecipe"], "grape-juice-from-grapes-gold")
+        self.assertEqual(it["story-silver"]["defaultRecipe"], "story-silver")
+        self.assertEqual(it["story-bronze"]["defaultRecipe"], "story-bronze")
+        self.assertEqual(it["newspaper-bronze"]["defaultRecipe"], "printing-press-bronze")
+        self.assertEqual((it["wine-gold"]["base"], it["cabbage-silver"]["base"]), ("wine", "cabbage"))
+        self.assertNotIn("base", it["grape-juice-gold"])                 # no plain Grape Juice item
+        self.assertEqual(it["cabbage-silver"]["obtain"], {"pt": "Colheita: semente bronze ou prata.", "en": "Harvest: bronze or silver seeds."})
+        self.assertEqual(it["wine-silver"]["pt"], "Vinho (prata)")
+        self.assertFalse(any(r["cyc"] for r in self.ds["recipes"] if r["out"]["item"].startswith(("wine", "grape-juice"))))
+
+    def test_steps_no_grade_badge(self):
+        s = (ROOT / "src" / "js" / "ui" / "summary.js").read_text(encoding="utf-8")
+        self.assertNotIn("badge-q", s)
+        self.assertIn('<span class="badge badge-goal">', s)
+        self.assertIn('"steps.starGrade": "{grade} com {n} ciclos bem-sucedidos"', s)
+        f = (ROOT / "src" / "js" / "ui" / "fmt.js").read_text(encoding="utf-8")
+        self.assertNotIn('r.quality ? " · " + t("quality." + r.quality)', f)
 
 
 if __name__ == "__main__":

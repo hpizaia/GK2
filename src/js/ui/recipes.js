@@ -22,6 +22,10 @@
    the end ("Melhorar a qualidade · N"). A graded item shows its name without "(prata)", the star on its icon
    (GK.util.slot) and the grade word on the line below (list rows, ingredient lines, "Usado em"); bronze, prata, ouro
    in that order (GK.data.gradeSort). "Quem compra": pixel coins (recipes.css).
+   1.8.x, renomear: the detail's "não oficial" / "editado" tag is a button ("Renomear <nome>") that opens the name's
+   field under the header (Salvar / Cancelar, "Voltar ao nome original" once edited). It writes GK.store overrides
+   (lang -> {itemId: name}, synced like before); the planner's "Editar nomes" mode and its ✎ pencils are gone. The
+   open form also offers "Exportar nomes editados (N)": the JSON for data/names.pt-BR.json (CONTRIBUTING.md).
 */
 GK.i18n.add({
   pt: {
@@ -60,6 +64,17 @@ GK.i18n.add({
     "rc.unofficialTitle": "Tradução não oficial do nome",
     "rc.edited": "editado",
     "rc.editedTitle": "Nome editado por você",
+    "rc.rename": "Renomear {name}",
+    "rc.renameHint": "toque para renomear",
+    "rc.renameInput": "Novo nome para {name} ({lang})",
+    "rc.renameSave": "Salvar",
+    "rc.renameCancel": "Cancelar",
+    "rc.renameReset": "Voltar ao nome original",
+    "rc.renamed": "Nome salvo: {name}",
+    "rc.renameRestored": "Nome original de volta: {name}",
+    "rc.exportNames": "Exportar nomes editados ({n})",
+    "rc.exportCopied": "Nomes editados copiados (JSON)",
+    "rc.exportFail": "Não deu para copiar automaticamente. O JSON está selecionado abaixo: copie com o menu do sistema.",
     "rc.hidden": "oculto",
     "rc.hiddenTitle": "Oculto na wiki ou não é um item de verdade",
     "rc.unobt": "não obtenível",
@@ -167,6 +182,17 @@ GK.i18n.add({
     "rc.unofficialTitle": "Unofficial name translation",
     "rc.edited": "edited",
     "rc.editedTitle": "Name edited by you",
+    "rc.rename": "Rename {name}",
+    "rc.renameHint": "tap to rename",
+    "rc.renameInput": "New name for {name} ({lang})",
+    "rc.renameSave": "Save",
+    "rc.renameCancel": "Cancel",
+    "rc.renameReset": "Back to the original name",
+    "rc.renamed": "Name saved: {name}",
+    "rc.renameRestored": "Original name back: {name}",
+    "rc.exportNames": "Export edited names ({n})",
+    "rc.exportCopied": "Edited names copied (JSON)",
+    "rc.exportFail": "Couldn't copy automatically. The JSON is selected below: copy it with your system menu.",
     "rc.hidden": "hidden",
     "rc.hiddenTitle": "Hidden on the wiki, or not a real item",
     "rc.unobt": "unobtainable",
@@ -394,6 +420,7 @@ GK.ui.recipes = (function () {
   let addQty = 1, usedAll = false, hereAll = false, whereAll = false, listScroll = 0, sortCache = { key: "", ids: [] };
   let askedOpen = false;         // "Pedido em" unfolded (folded again when another item opens)
   let cycOpen = false;           // "Melhorar a qualidade" unfolded (idem)
+  let renaming = false, renameDraft = null;   // the name's field is open (closed when another item opens); its text
   let hist = null;               // GK.router.detailHistory: the back gesture closes the detail (mount)
 
   /* ---------- persistence ---------- */
@@ -552,13 +579,44 @@ GK.ui.recipes = (function () {
     const it = D.items[id];
     return it && it.defaultRecipe ? D.recipeById[it.defaultRecipe] || null : null;
   }
+  // the detail header's tags; "não oficial" / "editado" is the rename button (see the header)
   function badges(it, state) {
-    const b = [];
-    if (edited(it, state.overrides)) b.push(`<span class="badge badge-edited" title="${esc(t("rc.editedTitle"))}">${esc(t("rc.edited"))}</span>`);
-    else if (GK.i18n.lang() !== "en" && UNOFFICIAL[it.tr]) b.push(`<span class="badge" title="${esc(t("rc.unofficialTitle"))}">${esc(t("rc.unofficial"))}</span>`);
+    const b = [], ed = edited(it, state.overrides);
+    if (ed || (GK.i18n.lang() !== "en" && UNOFFICIAL[it.tr])) {
+      const title = t(ed ? "rc.editedTitle" : "rc.unofficialTitle") + " · " + t("rc.renameHint");
+      b.push(`<button type="button" class="badge${ed ? " badge-edited" : ""} badge-btn" id="rc-rename" data-rename aria-expanded="${renaming}"${renaming ? ' aria-controls="rc-rename-box"' : ""} title="${esc(title)}" aria-label="${esc(t("rc.rename", { name: name(it, state.overrides) }))}">${esc(t(ed ? "rc.edited" : "rc.unofficial"))}<span class="badge-pen" aria-hidden="true">✎</span></button>`);
+    }
     if (it.unobtainable) b.push(`<span class="badge badge-warn" title="${esc(t("rc.unobtTitle"))}">${esc(t("rc.unobt"))}</span>`);
     else if (it.hidden) b.push(`<span class="badge badge-hidden" title="${esc(t("rc.hiddenTitle"))}">${esc(t("rc.hidden"))}</span>`);
     return b.join("");
+  }
+  // the name's field, under the header, while renaming
+  const editedCount = (state) => Object.values(state.overrides || {}).reduce((n, m) => n + Object.keys(m || {}).length, 0);
+  function renameBox(it, nm, state) {
+    if (!renaming) return "";
+    const lang = GK.i18n.lang(), n = editedCount(state);
+    return `<form class="edit-form rc-rename" id="rc-rename-box" data-rename-form>
+        <input id="rc-rename-in" name="v" value="${esc(renameDraft == null ? nm : renameDraft)}" maxlength="80" autocomplete="off" spellcheck="false" aria-label="${esc(t("rc.renameInput", { name: it[lang] || it.en, lang: lang.toUpperCase() }))}">
+        <button type="submit" class="btn btn-sm">${esc(t("rc.renameSave"))}</button>
+        <button type="button" class="btn btn-sm btn-ghost" data-rename-cancel>${esc(t("rc.renameCancel"))}</button>
+        ${edited(it, state.overrides) ? `<button type="button" class="btn btn-sm btn-ghost" id="rc-rename-reset" data-rename-reset>${esc(t("rc.renameReset"))}</button>` : ""}
+        ${n ? `<p class="rc-rename-more"><button type="button" class="btn btn-sm btn-ghost" id="rc-export-names" data-export-names>${esc(t("rc.exportNames", { n: num(n) }))}</button></p>` : ""}
+        <div class="rc-copy-box" id="rc-copy-box" hidden></div>
+      </form>`;
+  }
+  // { "<English name>": { "pt": "…", source, confidence } }: ready to merge into data/names.pt-BR.json
+  function namesJson(state) {
+    const D = GK.data.get(), out = {};
+    for (const [lang, m] of Object.entries(state.overrides || {})) {
+      for (const [id, v] of Object.entries(m || {})) {
+        const it = D.items[id];
+        if (!it || !v) continue;
+        const e = (out[it.en] = out[it.en] || {});
+        e[lang] = v;
+        e.source = "user"; e.confidence = "guess";
+      }
+    }
+    return JSON.stringify(out, null, 2);
   }
   // "Construir no Cemitério" for a build pseudo-station, the plain name otherwise (corte 12)
   const stationLabel = (s, state) => GK.ui.fmt.buildLabel(s, state.overrides);
@@ -941,7 +999,7 @@ GK.ui.recipes = (function () {
         ${badges(it, state) ? `<div class="rc-badges">${badges(it, state)}</div>` : ""}
         ${stackCap(it)}
       </div></header>
-      ${tipHtml(it)}${goal}${info.join("")}
+      ${renameBox(it, nm, state)}${tipHtml(it)}${goal}${info.join("")}
     </article>`;
 
     const cur = current(id, state), many = rs.filter(expandable).length > 1;
@@ -1004,7 +1062,10 @@ GK.ui.recipes = (function () {
   }
   function renderDetail(state) {
     if (!V.item || !GK.data.item(V.item)) { V.item = null; return false; }
+    // a re-render while typing a new name (a sync, say) keeps the field's text (renameDraft) and its focus
+    const typing = renaming && document.activeElement && document.activeElement.id === "rc-rename-in";
     detailEl.innerHTML = detailHtml(V.item, state);
+    if (typing) { const i = document.getElementById("rc-rename-in"); if (i) i.focus({ preventScroll: true }); }
     return true;
   }
 
@@ -1026,7 +1087,7 @@ GK.ui.recipes = (function () {
     if (V.item === id) return;
     if (fromList || !V.item) { listScroll = browseEl.hidden ? listScroll : window.scrollY; V.stack = []; V.from = null; }
     else { V.stack.push(V.item); if (V.stack.length > 30) V.stack.shift(); }
-    V.item = id; addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false; cycOpen = false; cycOpen = false;
+    V.item = id; addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false; cycOpen = false; renaming = false; renameDraft = null;
     save();
     if (hist) hist.push();
     showView(GK.store.get(), true);
@@ -1044,11 +1105,11 @@ GK.ui.recipes = (function () {
     if (!toList && !V.stack.length && V.from) { backToOrigin(); return; }
     if (toList) V.from = null;
     if (!toList && V.stack.length) {
-      V.item = V.stack.pop(); addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false; cycOpen = false;
+      V.item = V.stack.pop(); addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false; cycOpen = false; renaming = false; renameDraft = null;
       save(); showView(GK.store.get(), true);
       return;
     }
-    V.item = null; V.stack = [];
+    V.item = null; V.stack = []; renaming = false; renameDraft = null;
     save();
     showView(GK.store.get(), false);
     window.scrollTo(0, listScroll);
@@ -1063,7 +1124,7 @@ GK.ui.recipes = (function () {
     const from = opts && opts.from && opts.from !== "recipes" && cur !== "recipes" ? opts.from : null;
     if (from) fromScroll = window.scrollY;
     if (V.item !== itemId || from || V.stack.length) {
-      V.stack = []; V.item = itemId; addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false; cycOpen = false;
+      V.stack = []; V.item = itemId; addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false; cycOpen = false; renaming = false; renameDraft = null;
       V.from = from;
       save();
     }
@@ -1125,6 +1186,37 @@ GK.ui.recipes = (function () {
     if ("hereMore" in d) { hereAll = true; renderDetail(GK.store.get()); return; }
     if ("whereMore" in d) { whereAll = true; renderDetail(GK.store.get()); const l = root.querySelector(".rc-where-list li:nth-child(5)"); if (l) { l.tabIndex = -1; l.focus({ preventScroll: true }); } return; }
     if (d.tech && GK.ui.tech && typeof GK.ui.tech.open === "function") { GK.ui.tech.open(d.tech, { from: "recipes" }); return; }
+    if ("rename" in d) { renaming = !renaming; renameDraft = null; renderDetail(GK.store.get()); if (renaming) focusEl("rc-rename-in", true); else focusEl("rc-rename"); return; }
+    if ("renameCancel" in d) { closeRename(); return; }
+    if ("renameReset" in d) { saveName(""); return; }
+    if ("exportNames" in d) { exportNames(); return; }
+  }
+  const focusEl = (id, select) => { const el = document.getElementById(id); if (el) { el.focus({ preventScroll: true }); if (select && el.select) el.select(); } return !!el; };
+  // back to the tag (or the heading, when the name is official again)
+  function closeRename() {
+    renaming = false; renameDraft = null; renderDetail(GK.store.get());
+    if (!focusEl("rc-rename")) focusEl("rc-detail-h");
+  }
+  // the field's text: blank or the original = the original name back; the same name = nothing to do
+  function saveName(raw) {
+    const it = GK.data.item(V.item); if (!it) return;
+    const lang = GK.i18n.lang(), st = GK.store.get(), v = String(raw || "").trim(), original = it[lang] || it.en;
+    const cur = name(it, st.overrides), wasEdited = edited(it, st.overrides), keep = v && v !== original;
+    renaming = false; renameDraft = null;
+    if (v !== cur && (keep || wasEdited)) {
+      GK.store.actions.setOverride(lang, V.item, keep ? v : "");
+      GK.ui.toast(t(keep ? "rc.renamed" : "rc.renameRestored", { name: keep ? v : original }));
+    }
+    renderDetail(GK.store.get());
+    if (!focusEl("rc-rename")) focusEl("rc-detail-h");
+  }
+  async function exportNames() {
+    const txt = namesJson(GK.store.get());
+    if (await GK.util.copyText(txt)) { GK.ui.toast(t("rc.exportCopied")); return; }
+    const box = document.getElementById("rc-copy-box"); if (!box) return;
+    box.hidden = false;
+    box.innerHTML = `<p class="hint">${esc(t("rc.exportFail"))}</p><textarea class="copy-fallback" readonly aria-label="${esc(t("rc.exportCopied"))}"></textarea>`;
+    const ta = box.querySelector("textarea"); ta.value = txt; ta.focus(); ta.select();
   }
 
   function mount(el) {
@@ -1183,7 +1275,12 @@ GK.ui.recipes = (function () {
         if (b) b.focus({ preventScroll: true });
       }, 0);
     });
+    root.addEventListener("submit", (e) => {
+      const f = e.target.closest("[data-rename-form]");
+      if (f) { e.preventDefault(); saveName(f.elements.v.value); }
+    });
     root.addEventListener("input", (e) => {
+      if (e.target.id === "rc-rename-in") renameDraft = e.target.value;
       if (e.target.id === "rc-qty" && e.target.value !== "") addQty = GK.store.clampQty(e.target.value);
     });
     root.addEventListener("change", (e) => {
@@ -1203,6 +1300,7 @@ GK.ui.recipes = (function () {
     });
     root.addEventListener("keydown", (e) => {
       if (e.key === "Enter" && e.target.id === "rc-qty") { e.preventDefault(); const b = document.getElementById("rc-add"); if (b) b.click(); }
+      if (e.key === "Escape" && e.target.closest("[data-rename-form]")) { e.preventDefault(); closeRename(); return; }
       // the grade options: the arrows move between them (a radio group); Enter / Space picks
       const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
       if (step && e.target.getAttribute && e.target.getAttribute("role") === "radio" && e.target.closest(".qpick")) {

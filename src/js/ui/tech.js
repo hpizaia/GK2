@@ -11,6 +11,13 @@
    pré-requisitos como pesquisados" only when 2+ of them are missing (with 1, tapping it is the same thing).
    1.8.0: the phone's back gesture closes a detail opened on this screen (GK.router.detailHistory: one entry when the
    detail opens over the list; "‹ Voltar à lista" drops it).
+   1.8.x (seta das seções, opção A): each "COLUNA N … x/y" header is a 44 px button that folds its column. Only the
+   first column with something left to research starts open (GK.tech.nextColumn); the others, done or ahead, start
+   folded (a done one shows a green ✓). What the player opens or folds by hand is kept per branch (GK.store
+   ui.techCols, per device, never synced). The "next" column is worked out when the screen or a branch is shown
+   and kept while the player ticks there, so ticking the last tech of a column does not fold it under the finger.
+   The thin chevron sits right after "COLUNA N" (never in the x column of the rows' "›"). A search lists its hits
+   by branch, never folded. Opening a tech's detail opens its column (the list comes back to that row).
 */
 GK.i18n.add({
   pt: {
@@ -28,6 +35,8 @@ GK.i18n.add({
     "tech.noResults": "Nenhuma tecnologia com “{q}”.",
     "tech.viaUnlock": "desbloqueia {name}",
     "tech.column": "Coluna {n}",
+    "tech.colCollapse": "Recolher: Coluna {n}, {done} de {total} pesquisadas",
+    "tech.colExpand": "Expandir: Coluna {n}, {done} de {total} pesquisadas",
     "tech.researched": "Já pesquisei",
     "tech.researchedLabel": "Já pesquisei: {name}",
     "tech.implied": "pesquisada (vem antes de {name})",
@@ -88,6 +97,8 @@ GK.i18n.add({
     "tech.noResults": "No technology matches “{q}”.",
     "tech.viaUnlock": "unlocks {name}",
     "tech.column": "Column {n}",
+    "tech.colCollapse": "Collapse: Column {n}, {done} of {total} researched",
+    "tech.colExpand": "Expand: Column {n}, {done} of {total} researched",
     "tech.researched": "Researched",
     "tech.researchedLabel": "Researched: {name}",
     "tech.implied": "researched (comes before {name})",
@@ -147,6 +158,7 @@ GK.ui.tech = (function () {
   let pendingFocus = false;   // open() switched routes: show the detail after the route's render
   let detailFrom = null, fromScroll = 0, returnTo = null;   // the route that opened the detail (open(id, {from}))
   let hist = null;        // GK.router.detailHistory (mount): the back gesture closes the detail
+  let nextAt = {};        // branch id -> its "next" column (GK.tech.nextColumn), fixed for this visit of the screen
   const isOn = () => GK.router.current() === "tech";
 
   // ---- shared bits (also used by ui/techneeds.js) ----
@@ -227,14 +239,21 @@ GK.ui.tech = (function () {
       <span class="tech-chev" aria-hidden="true">›</span>
     </div>`;
   }
+  // the column the branch opens by default (kept for this visit: see the header comment)
+  function nextCol(bid, done) {
+    if (!(bid in nextAt)) nextAt[bid] = TK.nextColumn(bid, done);
+    return nextAt[bid];
+  }
+  const colChoice = (state, bid) => (state.ui && state.ui.techCols && state.ui.techCols[bid]) || {};
+  const isColOpen = (state, bid, col, done) => TK.columnOpen(col, nextCol(bid, done), colChoice(state, bid));
   function branchList(bid, state, done) {
-    const list = TK.inBranch(bid), cols = new Map();
-    for (const tc of list) { if (!cols.has(tc.column)) cols.set(tc.column, []); cols.get(tc.column).push(tc); }
-    return [...cols.entries()].map(([col, ts]) => {
-      const nDone = ts.filter((x) => done.has(x.id)).length;
-      return `<section class="tech-colgroup" aria-label="${esc(t("tech.column", { n: col }))}">
-        <h3 class="tech-col"><span>${esc(t("tech.column", { n: col }))}</span><span class="count">${esc(t("tech.branchCount", { done: nDone, total: ts.length }))}</span></h3>
-        <div class="card list">${ts.map((x) => row(x, state, done)).join("")}</div>
+    return TK.columns(bid).map(({ column: col, techs: ts }) => {
+      const nDone = ts.filter((x) => done.has(x.id)).length, all = nDone === ts.length;
+      const open = isColOpen(state, bid, col, done), body = `tc-body-${domId(bid)}-${col}`;
+      const lab = t(open ? "tech.colCollapse" : "tech.colExpand", { n: col, done: nDone, total: ts.length });
+      return `<section class="tech-colgroup${open ? "" : " is-folded"}" aria-label="${esc(t("tech.column", { n: col }))}">
+        <h3 class="tech-col tc"><button type="button" class="tc-btn" id="tcol-${domId(bid)}-${col}" data-tcol="${col}" aria-expanded="${open}" aria-controls="${body}" aria-label="${esc(lab)}"><span class="tc-t">${esc(t("tech.column", { n: col }))}</span><span class="tc-chev" aria-hidden="true"></span><span class="tc-r"><span class="count">${esc(t("tech.branchCount", { done: nDone, total: ts.length }))}</span>${all ? `<span class="tc-ok" aria-hidden="true">✓</span>` : ""}</span></button></h3>
+        ${open ? `<div class="card list" id="${body}">${ts.map((x) => row(x, state, done)).join("")}</div>` : `<div id="${body}" hidden></div>`}
       </section>`;
     }).join("");
   }
@@ -354,6 +373,7 @@ GK.ui.tech = (function () {
     if (!root) return;
     if (!isOn()) { dirty = true; return; }
     if (meta && meta.from === "search-toggle" && !dirty) return;
+    if (meta && meta.from === "router") nextAt = {};   // a new visit: the "next" column is worked out again
     dirty = false;
     if (!TK.available()) { root.innerHTML = `<div class="card empty"><p>${esc(t("tech.empty"))}</p></div>`; return; }
     if (!branchSel || !TK.branch(branchSel)) branchSel = TK.branches()[0].id;
@@ -403,6 +423,9 @@ GK.ui.tech = (function () {
     detail = id;
     if (!query.trim()) branchSel = tc.branch;
     asking = false;
+    // its column opens, so the list comes back to this row (a choice kept like a tap on the header)
+    const st = GK.store.get();
+    if (!isColOpen(st, tc.branch, tc.column, TK.researchedSet(st.researched))) GK.store.actions.setTechCol(tc.branch, tc.column, true);
     if (!isOn()) {
       detailFrom = opts && opts.from && opts.from !== "tech" ? opts.from : null;
       fromScroll = window.scrollY;
@@ -454,6 +477,12 @@ GK.ui.tech = (function () {
       if (e.target.closest("[data-back-route]")) { backToOrigin(); return; }
       const ro = e.target.closest("[data-recipe-open]");
       if (ro) { GK.ui.recipes.open(ro.dataset.recipeOpen, { from: "tech" }); return; }
+      const tcb = e.target.closest("[data-tcol]");
+      if (tcb) {
+        const st = S.get(), col = +tcb.dataset.tcol;
+        S.actions.setTechCol(branchSel, col, !isColOpen(st, branchSel, col, TK.researchedSet(st.researched)));
+        return;
+      }
       const b = e.target.closest("[data-branch]");
       if (b) {
         branchSel = b.dataset.branch; query = "";
@@ -467,7 +496,7 @@ GK.ui.tech = (function () {
       if (e.target.closest("[data-clear]")) { asking = true; rerender(); const y = root.querySelector("#tech-clear-no"); if (y) y.focus(); return; }
       if (e.target.closest("[data-clear-no]")) { asking = false; rerender(); const c = root.querySelector("#tech-clear"); if (c) c.focus(); return; }
       if (e.target.closest("[data-clear-yes]")) {
-        asking = false; S.actions.clearResearched(); GK.ui.toast(t("tech.cleared"));
+        asking = false; nextAt = {}; S.actions.clearResearched(); GK.ui.toast(t("tech.cleared"));
         // the button is gone: keep the focus on the screen (its title), not on <body>; no keyboard pops up
         const h = root.querySelector(".tech-main .h2"); if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
         return;

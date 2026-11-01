@@ -8,10 +8,10 @@ Opening an issue needs a free GitHub account. **No account?** Leave a comment on
 
 ## Report a wrong name or translation
 
-Every item name can be corrected inside the app, and the app can hand you your corrections as JSON.
+Names tagged *unofficial* can be corrected inside the app, and the app can hand you your corrections as JSON.
 
-1. Next to the wrong name, tap the pencil **✎**, type the right name and tap **Save**. The name gets an *edited* tag and is used on every screen (for the language you are using).
-2. In the planner's **Progress** card, tap **Export edited names (N)**. The JSON is copied to your clipboard (if copying is blocked, it is shown selected so you can copy it by hand).
+1. Open the item in **Recipes** and tap its **unofficial ✎** tag next to the name. Type the right name and tap **Save**. The name gets an *edited* tag and is used on every screen (for the language you are using).
+2. Tap the **edited ✎** tag again, then **Export edited names (N)**. The JSON is copied to your clipboard (if copying is blocked, it is shown selected so you can copy it by hand).
 3. Open an issue with the **Wrong name or data** template and paste the JSON. It looks like this:
 
 ```json
@@ -20,7 +20,7 @@ Every item name can be corrected inside the app, and the app can hand you your c
 }
 ```
 
-The key is the exact English name from the wiki, which is what the names files in `data/` use, so a maintainer can merge it directly. Names tagged *unofficial* are the best candidates: they did not come from the game files.
+The key is the exact English name from the wiki, which is what the names files in `data/` use, so a maintainer can merge it directly. A wrong name without a tag comes from the game's own text files and can't be edited in the app: open the issue with the item and the right name.
 
 ## Report a wrong day event
 
@@ -70,13 +70,13 @@ Abrir uma issue exige uma conta gratuita no GitHub. **Sem conta?** Deixe um come
 
 ### Nome ou tradução errada
 
-Todo nome de item pode ser corrigido dentro do app, e o app entrega as suas correções em JSON.
+Os nomes com o selo *não oficial* podem ser corrigidos dentro do app, e o app entrega as suas correções em JSON.
 
-1. Ao lado do nome errado, toque no lápis **✎**, digite o nome certo e toque em **Salvar**. O nome ganha o selo *editado* e vale em todas as telas (no idioma em uso).
-2. No cartão **Progresso** do Planejador, toque em **Exportar nomes editados (N)**. O JSON vai para a área de transferência (se não der para copiar, ele aparece selecionado para você copiar à mão).
+1. Abra o item em **Receitas** e toque no selo **não oficial ✎** ao lado do nome. Digite o nome certo e toque em **Salvar**. O nome ganha o selo *editado* e vale em todas as telas (no idioma em uso).
+2. Toque de novo no selo **editado ✎** e em **Exportar nomes editados (N)**. O JSON vai para a área de transferência (se não der para copiar, ele aparece selecionado para você copiar à mão).
 3. Abra uma issue com o modelo **Nome ou dado errado** e cole o JSON (formato no exemplo acima). A chave é o nome inglês exato da wiki, o mesmo usado nos arquivos de nomes em `data/`.
 
-Os nomes com o selo *não oficial* são os melhores candidatos: eles não vieram dos arquivos do jogo.
+Um nome errado sem selo vem dos próprios arquivos de texto do jogo e não dá para editar no app: abra a issue com o item e o nome certo.
 
 ### Evento do dia errado
 

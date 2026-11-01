@@ -1,5 +1,5 @@
 /* GK.ui.fmt: shared bits of markup for item names, recipes and stations (badges, recipe labels,
-   tech lines, the editable name block) and the "Desfazer" toast. No state, no panel.
+   tech lines, the name block) and the "Desfazer" toast. No state, no panel.
    Exposes: GK.ui.fmt.{badges, buildLabel, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, slotButton, undoToast, otherName}.
    slotButton(item, name): the item's icon as a 44 px button (data-recipe-open) that opens it in Receitas; every planner
    panel that shows one handles the click itself (GK.ui.recipes.open(id, {from: "plan"})).
@@ -30,14 +30,6 @@ GK.i18n.add({
     "quality.gold": "ouro",
     "badge.edited": "editado",
     "badge.editedTitle": "Nome editado por você",
-    "edit.button": "editar",
-    "edit.label": "Editar nome de {name}",
-    "edit.input": "Novo nome para {name} ({lang})",
-    "edit.save": "Salvar",
-    "edit.cancel": "Cancelar",
-    "edit.reset": "Restaurar original",
-    "edit.saved": "Nome salvo: {name}",
-    "edit.restored": "Nome original restaurado: {name}",
     "info.label": "Abrir {name} em Receitas",
     "info.title": "Ver em Receitas",
     "undo.button": "Desfazer",
@@ -58,14 +50,6 @@ GK.i18n.add({
     "quality.gold": "gold",
     "badge.edited": "edited",
     "badge.editedTitle": "Name edited by you",
-    "edit.button": "edit",
-    "edit.label": "Edit the name of {name}",
-    "edit.input": "New name for {name} ({lang})",
-    "edit.save": "Save",
-    "edit.cancel": "Cancel",
-    "edit.reset": "Restore original",
-    "edit.saved": "Name saved: {name}",
-    "edit.restored": "Original name restored: {name}",
     "info.label": "Open {name} in Recipes",
     "info.title": "See in Recipes",
     "undo.button": "Undo",
@@ -105,12 +89,11 @@ GK.ui.fmt = (function () {
     const label = buildLabel(h.r.station, state.overrides);
     return rs.length > 1 ? t("search.recipes", { station: label, n: rs.length }) : label;
   }
-  // what sets a recipe apart from its siblings: the quality grade ("ouro"), else its own name ("Board (Sawhorse)").
-  // "<X> from <Y>" names only restate the inputs the label already lists: left out. The selector labels show only
-  // the grade (recipe names are mostly English and repeat the station); recipeLabels adds the name back when two
-  // options would otherwise read the same.
+  // what sets a recipe apart from its siblings: its own name ("Board (Sawhorse)"). "<X> from <Y>" names only restate
+  // the inputs the label already lists: left out. recipeLabels adds the name back when two options would otherwise
+  // read the same. 1.9: no grade word: the graded ingredient ("2 Abóbora (ouro)") already sets a quality recipe apart,
+  // and the grade of the result is the item's own (its name and star).
   function recipeTag(r) {
-    if (r.quality) return t("quality." + r.quality);
     return r.name && !/ from /i.test(r.name.en || "") ? name(r.name) : "";
   }
   // quantity of a line / the output under the viewer's perks
@@ -121,7 +104,7 @@ GK.ui.fmt = (function () {
   }
   // short, in the UI language, ingredients first (1.3.4: no letter, no English recipe name), so a closed <select>
   // cut at ~180 px still shows what goes in: "1 Tora → 4 · Cavalete",
-  // "2 Abóbora (ouro) + 10 Combustível → 7 · Forno da Cozinha · ouro (oculta, circular)".
+  // "2 Abóbora (ouro) + 10 Combustível → 7 · Forno da Cozinha (oculta, circular)".
   // opts.noStation: leave the station out (every option of the list uses the same one: the card already says it).
   function recipeLabel(r, idx, state, opts) {
     const D = GK.data.get();
@@ -132,7 +115,7 @@ GK.ui.fmt = (function () {
     if (r.example) tags.push(t("steps.example"));
     const out = qtyOf(r.out.qty, r.out.bonus, state);
     const st = opts && opts.noStation ? "" : " · " + name(r.station, state.overrides);
-    return `${ins}${out ? " → " + num(out) : ""}${st}${r.quality ? " · " + t("quality." + r.quality) : ""}${tags.length ? " (" + tags.join(", ") + ")" : ""}`;
+    return `${ins}${out ? " → " + num(out) : ""}${st}${tags.length ? " (" + tags.join(", ") + ")" : ""}`;
   }
   // labels for a list of options (`all` = the item's full list, kept for callers). The station is left out when
   // every option uses the same one, or (opts.omitStation = a station id) on the options made at that station: the
@@ -192,22 +175,10 @@ GK.ui.fmt = (function () {
     return `<button type="button" class="slot slot-btn${m[1] || ""}" data-recipe-open="${esc(it.id)}" title="${esc(t("info.title"))}" aria-label="${esc(t("info.label", { name: nm }))}">` +
       s.slice(m[0].length, -"</span>".length) + "</button>";
   }
-  // name + pencil + inline edit form when editing. The name is plain text: only the checkbox (and its 44 px
-  // .tick box) toggles "done" (AUDITORIA U3). labelFor is kept for callers; it is no longer used.
-  // canEdit: show the ✎ pencil (the "Editar nomes" mode of the progress card, GK.store ui.editNames).
-  function nameBlock(it, nm, labelFor, editing, extraBadges, overrides, canEdit) {
-    const lang = GK.i18n.lang();
-    if (editing) {
-      const id = GK.util.domId(it.id);
-      return `<form class="edit-form" data-edit-form="${esc(it.id)}">
-        <input id="edit-${id}" name="v" value="${esc(nm)}" maxlength="80" autocomplete="off" spellcheck="false" aria-label="${esc(t("edit.input", { name: it[lang] || it.en, lang: lang.toUpperCase() }))}">
-        <button type="submit" class="btn btn-sm">${esc(t("edit.save"))}</button>
-        <button type="button" class="btn btn-sm btn-ghost" data-edit-cancel>${esc(t("edit.cancel"))}</button>
-        ${edited(it, overrides) ? `<button type="button" class="btn btn-sm btn-ghost" data-edit-reset="${esc(it.id)}">${esc(t("edit.reset"))}</button>` : ""}
-      </form>`;
-    }
-    const pencil = canEdit ? `<button type="button" class="edit-ico" data-edit="${esc(it.id)}" title="${esc(t("edit.button"))}" aria-label="${esc(t("edit.label", { name: nm }))}">✎</button>` : "";
-    return `<span class="row-name"><span class="row-label">${esc(nm)}</span>${pencil}${extraBadges || ""}${badges(it, overrides)}</span>`;
+  // the name (plain text: only the checkbox and its 44 px .tick box toggle "done", AUDITORIA U3) and its badges.
+  // 1.8.x: no ✎ pencil or inline rename form here; renaming is in the item's Receitas detail (ui/recipes.js).
+  function nameBlock(it, nm, extraBadges, overrides) {
+    return `<span class="row-name"><span class="row-label">${esc(nm)}</span>${extraBadges || ""}${badges(it, overrides)}</span>`;
   }
   // "Areia: você já tem tudo [Desfazer]": the undo toast (see the header)
   let undoTimer = null;

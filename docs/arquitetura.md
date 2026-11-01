@@ -64,9 +64,9 @@ Cada arquivo de `src/js/` é um módulo `GK.*` que começa com um comentário di
 
 | tela / função | módulos | o que fazem |
 |---|---|---|
-| Planejador (`#plan`) | `ui/search.js`, `ui/goals.js`, `ui/summary.js`, `ui/checklist.js` | Busca (combobox), metas com −/+ (segurar repete), matérias-primas e etapas por estação ("tenho N de M", grupos, escolha de receita, edição de nomes), progresso, vantagens, copiar e exportar |
+| Planejador (`#plan`) | `ui/search.js`, `ui/goals.js`, `ui/summary.js`, `ui/checklist.js` | Busca (combobox), metas com −/+ (segurar repete), matérias-primas e etapas por estação ("tenho N de M", grupos, escolha de receita), progresso e vantagens |
 | Tecnologias que faltam | `ui/techneeds.js` (+ `tech.js`) | Painel no Planejador (`slot: "planner-extra"`): tecnologias que faltam para o plano, soma de pontos por cor |
-| Receitas (`#recipes`) | `ui/recipes.js` | Lista com busca e filtros; detalhe do item, "Usado em", adicionar às metas, escolher receita |
+| Receitas (`#recipes`) | `ui/recipes.js` | Lista com busca e filtros; detalhe do item, "Usado em", adicionar às metas, escolher receita, renomear um nome não oficial (selo) e exportar os nomes editados |
 | Tecnologias (`#tech`) | `ui/tech.js` (+ `tech.js`) | Árvore por ramo, busca, "Já pesquisei", detalhe da tecnologia |
 | Histórico (`#changelog`) | `ui/changelog.js` | Tela só de rota (sem aba), a partir de `data/changelog.json` |
 | Créditos (`#credits`) | `ui/credits.js` | Tela só de rota (sem aba), ligada no rodapé: projeto de fã, créditos ao estúdio e ao wiki, feito com IA, sem fins lucrativos |

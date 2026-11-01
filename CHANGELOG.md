@@ -3,6 +3,16 @@
 
 # Histórico de atualizações — Companheiro GK2
 
+## 1.8.2 — 2026-11-01
+
+- Qualidade consertada: o Barril dá Vinho do mesmo grau do suco, e Especiarias e Umami sobem o Vinho e o Suco de Uva de bronze para prata e de prata para ouro (deixaram de ser “circulares”); Vinho prata e ouro têm receita
+- A Prensa pede Uvas do mesmo grau do suco; colheitas prata e ouro dizem como obter (“Colheita: semente prata ou ouro”); História, Jornal, Salada e Chucrute bronze têm receita, com a nota de quantos ciclos bem-sucedidos dão ouro; Bronze Polido não é mais tratado como qualidade
+- Etapas sem os selos BRONZE/PRATA/OURO que mostravam a qualidade do ingrediente: a estrela e o nome já dizem a do resultado; planos salvos continuam valendo
+- Recolher seções: a seta virou um ⌄ fino, sem caixa (a caixa ficou só nas estações); “Tecnologias que faltam” também recolhe
+- Aba Tecnologias: as colunas recolhem; só a primeira que falta pesquisar começa aberta, as completas mostram ✓, e o app lembra o que você abrir
+- Progresso mais enxuto: saíram “Copiar lista”, “Limpar marcações” e “Editar nomes”; para renomear, toque no selo “não oficial ✎” no detalhe do item
+- Etapas: “ou: Lenheiro II · Metalurgia 1” numa linha só; Créditos sem a data do build; aspas “ ” no Histórico; no computador, o cartão da lista vazia alinhado com o Hoje
+
 ## 1.8.1 — 2026-11-01
 
 - Metas: o seletor “− N +” fica à direita, na linha do nome e na mesma coluna da quantidade das Matérias-primas e Etapas; cada meta ficou mais baixa
@@ -41,35 +51,35 @@
 
 ## 1.5.1 — 2026-10-31
 
-- O cartão "Próximo passo" foi removido: na prática ele atrapalhava mais do que ajudava no topo do Planejador. A lista de etapas continua a mesma
+- O cartão “Próximo passo” foi removido: na prática ele atrapalhava mais do que ajudava no topo do Planejador. A lista de etapas continua a mesma
 
 ## 1.5.0 — 2026-10-31
 
-- Cartão "Próximo passo" no topo do Planejador: uma frase com o que fazer agora, botão "Feito" que marca a linha na lista, "Voltar um passo" e contagem "8 de 12"
-- Listas separadas de metas ("Lista: Igreja ▾"): cada lista tem as próprias metas e marcações; tecnologias, vantagens e dias valem para todas. Com uma lista só, aparece apenas "Criar outra lista"
+- Cartão “Próximo passo” no topo do Planejador: uma frase com o que fazer agora, botão “Feito” que marca a linha na lista, “Voltar um passo” e contagem “8 de 12”
+- Listas separadas de metas (“Lista: Igreja ▾”): cada lista tem as próprias metas e marcações; tecnologias, vantagens e dias valem para todas. Com uma lista só, aparece apenas “Criar outra lista”
 - Recentes na busca: ao tocar na busca vazia, os últimos itens adicionados aparecem como atalho
-- Detalhe do item: bloco "Onde conseguir" (quem vende, onde pescar, isca) e, nas comidas, o balão de energia e efeito no estilo da ficha do jogo; a pilha aparece no canto do ícone
-- Rodapé enxuto: só "Letra grande", os três links e uma linha de versão. Os créditos dos dados foram para a tela Créditos
+- Detalhe do item: bloco “Onde conseguir” (quem vende, onde pescar, isca) e, nas comidas, o balão de energia e efeito no estilo da ficha do jogo; a pilha aparece no canto do ícone
+- Rodapé enxuto: só “Letra grande”, os três links e uma linha de versão. Os créditos dos dados foram para a tela Créditos
 - Aviso quando o jogo recebe um patch antes dos dados do app (hoje: jogo 1.011, receitas da wiki 1.010), no rodapé e numa faixa fechável sob as abas
 - QR code na tela Créditos, no computador, para abrir o app no celular
-- Correções no celular: espaço entre a quantidade e "Já tenho"; o seletor "Fabricar com" da Pele não estoura mais a largura
+- Correções no celular: espaço entre a quantidade e “Já tenho”; o seletor “Fabricar com” da Pele não estoura mais a largura
 
 ## 1.4.0 — 2026-10-31
 
-- Painel Hoje: caixinhas de "feito hoje" em cada evento (zeram sozinhas quando o dia muda e sincronizam entre aparelhos), a prévia de amanhã com o que preparar antes de dormir, e um bilhete por dia da semana, também editável na aba Dias
-- O texto acompanha o tamanho de letra do celular, e há uma opção "Letra grande" no rodapé para ler de longe ao lado do jogo
-- No celular, o Planejador mostra Matérias-primas e Etapas logo depois das Metas; Progresso, Vantagens e "Copiar lista" ficam no fim
+- Painel Hoje: caixinhas de “feito hoje” em cada evento (zeram sozinhas quando o dia muda e sincronizam entre aparelhos), a prévia de amanhã com o que preparar antes de dormir, e um bilhete por dia da semana, também editável na aba Dias
+- O texto acompanha o tamanho de letra do celular, e há uma opção “Letra grande” no rodapé para ler de longe ao lado do jogo
+- No celular, o Planejador mostra Matérias-primas e Etapas logo depois das Metas; Progresso, Vantagens e “Copiar lista” ficam no fim
 - As abas ficam fixas no topo ao rolar (a busca rola com a página) e cada tela guarda a própria posição de rolagem
-- A página mostra o cabeçalho e "Carregando…" desde os primeiros bytes, em vez de uma tela vazia
+- A página mostra o cabeçalho e “Carregando…” desde os primeiros bytes, em vez de uma tela vazia
 - Metas no celular: os botões − / + e o ✕ ficam numa linha abaixo do nome, e os nomes não quebram mais no meio da palavra
-- Matérias-primas mais compactas: "como obter" numa linha só (o texto completo fica no "i") e "Já tenho" na mesma linha; o lápis de renomear fica no botão "Editar nomes" do Progresso
-- Primeiro uso: uma frase explica o app, a primeira meta adicionada substitui a lista de exemplo (com "Desfazer") e o painel Hoje começa como uma linha "Marcar o dia do jogo"
-- "Já tenho → Tudo" mostra um aviso com "Desfazer" e leva o foco para a linha seguinte
-- Estações das Etapas numeradas 1, 2, 3… na ordem em que aparecem (sem o selo "etapa N")
+- Matérias-primas mais compactas: “como obter” numa linha só (o texto completo fica no “i”) e “Já tenho” na mesma linha; o lápis de renomear fica no botão “Editar nomes” do Progresso
+- Primeiro uso: uma frase explica o app, a primeira meta adicionada substitui a lista de exemplo (com “Desfazer”) e o painel Hoje começa como uma linha “Marcar o dia do jogo”
+- “Já tenho → Tudo” mostra um aviso com “Desfazer” e leva o foco para a linha seguinte
+- Estações das Etapas numeradas 1, 2, 3… na ordem em que aparecem (sem o selo “etapa N”)
 - Seletor de receita mais curto e em português, com os ingredientes primeiro
-- Nomes dos dias embaixo dos medalhões (no Hoje e na roda); "Avançar dia" com o mesmo nome em todo lugar
+- Nomes dos dias embaixo dos medalhões (no Hoje e na roda); “Avançar dia” com o mesmo nome em todo lugar
 - Links do rodapé e botão de tema com área de toque de 44 px; bordas de botões com mais contraste; foco visível em botões e abas
-- "Limpar pesquisadas" vai para o fim de Tecnologias e só aparece quando há algo marcado
+- “Limpar pesquisadas” vai para o fim de Tecnologias e só aparece quando há algo marcado
 
 ## 1.3.3 — 2026-10-31
 
@@ -86,27 +96,27 @@
 ## 1.3.0 — 2026-10-31
 
 - Aba Dias: a roda da semana como no jogo, com os 6 dias e o que acontece em cada um (batalhas, navio mercante, ressurreição, pedidos da cidade, missa)
-- Painel "Hoje" no topo do Planejador: marque o dia atual, avance o dia e veja o que dá para fazer
-- Calibração pelo contador do jogo: informe uma vez "dia N = X" e depois só digite o número
+- Painel “Hoje” no topo do Planejador: marque o dia atual, avance o dia e veja o que dá para fazer
+- Calibração pelo contador do jogo: informe uma vez “dia N = X” e depois só digite o número
 - Dia atual e calibração sincronizam com a sua conta
-- Eventos vindos só de guias aparecem como "não confirmado"
+- Eventos vindos só de guias aparecem como “não confirmado”
 
 ## 1.2.0 — 2026-10-31
 
-- Aba Receitas: todos os itens, receitas alternativas e "Usado em"
-- Aba Tecnologias: as 226 tecnologias, com "Já pesquisei"
-- Painel "Tecnologias que faltam" no Planejador, com a soma de pontos por cor
-- "Tenho N de M": desconta o que você já tem
-- Escolha do item em grupos ("Brema ou carpa")
+- Aba Receitas: todos os itens, receitas alternativas e “Usado em”
+- Aba Tecnologias: as 226 tecnologias, com “Já pesquisei”
+- Painel “Tecnologias que faltam” no Planejador, com a soma de pontos por cor
+- “Tenho N de M”: desconta o que você já tem
+- Escolha do item em grupos (“Brema ou carpa”)
 - Vantagens (perks) no Progresso ajustam as quantidades
 - Seletor de receitas mostra os ingredientes e a qualidade (prata/ouro)
 - Etapas na ordem certa: nenhuma estação depende de outra mais abaixo
 - Segure + ou − para repetir
 - Busca acessível, alvos de toque maiores e contraste melhor
 - Sincronização mais segura: junta as mudanças de dois aparelhos e separa o plano por conta
-- Versão e histórico no rodapé; ícones das tecnologias; zonas e notas em português; "não oficial" sem hífen
-- Botão "i" ao lado dos itens abre a receita; tecnologias e desbloqueios levam de uma tela à outra, com "Voltar"
-- Bônus de rendimento das vantagens em 117 receitas ("rende 3, 5 com Cozinheiro II"); as três "Maestria em Bronze" viram I, II e III; versões dos dados no rodapé
+- Versão e histórico no rodapé; ícones das tecnologias; zonas e notas em português; “não oficial” sem hífen
+- Botão “i” ao lado dos itens abre a receita; tecnologias e desbloqueios levam de uma tela à outra, com “Voltar”
+- Bônus de rendimento das vantagens em 117 receitas (“rende 3, 5 com Cozinheiro II”); as três “Maestria em Bronze” viram I, II e III; versões dos dados no rodapé
 
 ## 1.1.0 — 2026-10-30
 
@@ -125,6 +135,16 @@
 ---
 
 # Update history — GK2 Companion
+
+## 1.8.2 — 2026-11-01
+
+- Quality fixed: the Wine Barrel gives Wine of the juice's grade, and Spices and Umami raise Wine and Grape Juice from bronze to silver and silver to gold (no longer “circular”); silver and gold Wine have a recipe
+- The Wine Press asks for Grapes of the juice's grade; silver and gold crops say how to get them (“Harvest: silver or gold seed”); bronze Story, Newspaper, Salad and Sauerkraut have a recipe, with how many successful ticks give gold; Polished Bronze is no longer treated as a grade
+- Steps without the BRONZE/SILVER/GOLD badges that showed the ingredient's grade: the star and the name already say the result's; saved plans keep working
+- Folding sections: the arrow is now a thin ⌄ with no box (the box stays only on stations); “Missing technologies” folds too
+- Technologies tab: columns fold; only the first one with something left to research starts open, finished ones show ✓, and the app remembers what you open
+- Leaner Progress: “Copy list”, “Clear checks” and “Edit names” are gone; to rename, tap the “unofficial ✎” badge in the item detail
+- Steps: “or: Firewood shed II · Metallurgy 1” on one line; Credits without the build date; “ ” quotes in the History; on desktop, the empty-list card lines up with Today
 
 ## 1.8.1 — 2026-11-01
 
@@ -164,35 +184,35 @@
 
 ## 1.5.1 — 2026-10-31
 
-- The "Next step" card was removed: in practice it got in the way at the top of the Planner. The steps list is unchanged
+- The “Next step” card was removed: in practice it got in the way at the top of the Planner. The steps list is unchanged
 
 ## 1.5.0 — 2026-10-31
 
-- "Next step" card at the top of the Planner: one line with what to do now, a "Done" button that ticks the row in the list, "Back one step" and an "8 of 12" count
-- Separate goal lists ("List: Church ▾"): each list has its own goals and ticks; technologies, perks and days are shared. With a single list only "Create another list" shows
+- “Next step” card at the top of the Planner: one line with what to do now, a “Done” button that ticks the row in the list, “Back one step” and an “8 of 12” count
+- Separate goal lists (“List: Church ▾”): each list has its own goals and ticks; technologies, perks and days are shared. With a single list only “Create another list” shows
 - Recent items in the search: tapping the empty search shows the last items you added as shortcuts
-- Item detail: a "Where to get" block (who sells it, where to fish, bait) and, for food, the energy and effect bubble in the style of the game's item card; the stack size sits in the icon corner
-- Leaner footer: only "Large text", the three links and one version line. Data credits moved to the Credits screen
+- Item detail: a “Where to get” block (who sells it, where to fish, bait) and, for food, the energy and effect bubble in the style of the game's item card; the stack size sits in the icon corner
+- Leaner footer: only “Large text”, the three links and one version line. Data credits moved to the Credits screen
 - Notice when the game gets a patch before the app's data (today: game 1.011, wiki recipes 1.010), in the footer and in a closable band under the tabs
 - QR code on the Credits screen, on desktop, to open the app on your phone
-- Phone fixes: space between the quantity and "Have it"; the Skin row's "Craft with" selector no longer overflows the width
+- Phone fixes: space between the quantity and “Have it”; the Skin row's “Craft with” selector no longer overflows the width
 
 ## 1.4.0 — 2026-10-31
 
-- Today panel: "done today" checkboxes on each event (they reset by themselves when the day changes and sync across devices), a preview of tomorrow with what to prepare before sleeping, and one note per weekday, also editable in the Days tab
-- Text follows your phone's text size, and a new "Large text" switch in the footer makes the app easier to read from a distance beside the game
-- On phones, the Planner shows Raw materials and Steps right after Goals; Progress, Perks and "Copy list" move to the end
+- Today panel: “done today” checkboxes on each event (they reset by themselves when the day changes and sync across devices), a preview of tomorrow with what to prepare before sleeping, and one note per weekday, also editable in the Days tab
+- Text follows your phone's text size, and a new “Large text” switch in the footer makes the app easier to read from a distance beside the game
+- On phones, the Planner shows Raw materials and Steps right after Goals; Progress, Perks and “Copy list” move to the end
 - The tabs stay pinned at the top while you scroll (the search scrolls with the page) and each screen keeps its own scroll position
-- The page shows the header and "Loading…" from the first bytes instead of a blank screen
+- The page shows the header and “Loading…” from the first bytes instead of a blank screen
 - Goals on phones: the − / + buttons and ✕ sit on a line under the name, and names no longer break mid-word
-- More compact raw materials: "how to get" on one line (full text in the "i") and "Have it" on the same line; the rename pencil lives behind "Edit names" in Progress
-- First use: one line explains the app, the first goal you add replaces the example list (with "Undo") and the Today panel starts as a single "Set the game day" row
-- "Have it → All" shows a notice with "Undo" and moves focus to the next row
-- Station cards in Steps are numbered 1, 2, 3… in display order (no more "stage N" badge)
+- More compact raw materials: “how to get” on one line (full text in the “i”) and “Have it” on the same line; the rename pencil lives behind “Edit names” in Progress
+- First use: one line explains the app, the first goal you add replaces the example list (with “Undo”) and the Today panel starts as a single “Set the game day” row
+- “Have it → All” shows a notice with “Undo” and moves focus to the next row
+- Station cards in Steps are numbered 1, 2, 3… in display order (no more “stage N” badge)
 - Shorter recipe selector in the UI language, ingredients first
-- Day names under the medallions (in Today and on the wheel); "Next day" is named the same everywhere
+- Day names under the medallions (in Today and on the wheel); “Next day” is named the same everywhere
 - Footer links and the theme button get 44 px tap areas; higher-contrast button borders; visible focus on buttons and tabs
-- "Clear researched" moves to the end of Technologies and only shows when something is marked
+- “Clear researched” moves to the end of Technologies and only shows when something is marked
 
 ## 1.3.3 — 2026-10-31
 
@@ -209,18 +229,18 @@
 ## 1.3.0 — 2026-10-31
 
 - Days tab: the in-game week wheel with the 6 days and what happens on each (battles, trade ship, resurrection, town orders, mass)
-- "Today" panel at the top of the Planner: set the current day, advance it and see what you can do
-- Calibration by the game's day counter: enter "day N = X" once, then just type the number
+- “Today” panel at the top of the Planner: set the current day, advance it and see what you can do
+- Calibration by the game's day counter: enter “day N = X” once, then just type the number
 - Current day and calibration sync with your account
-- Events sourced only from guides are marked "unconfirmed"
+- Events sourced only from guides are marked “unconfirmed”
 
 ## 1.2.0 — 2026-10-31
 
-- Recipes tab: every item, alternative recipes and "Used in"
-- Technologies tab: all 226 technologies, with "Researched"
-- "Missing technologies" panel in the Planner, with point totals per colour
-- "I have N of M": subtracts what you already have
-- Pick the item for groups ("Bream or carp")
+- Recipes tab: every item, alternative recipes and “Used in”
+- Technologies tab: all 226 technologies, with “Researched”
+- “Missing technologies” panel in the Planner, with point totals per colour
+- “I have N of M”: subtracts what you already have
+- Pick the item for groups (“Bream or carp”)
 - Perks in Progress adjust the amounts
 - Recipe picker shows the ingredients and the quality (silver/gold)
 - Steps in the right order: no station depends on one further down
@@ -228,8 +248,8 @@
 - Accessible search, larger tap targets and better contrast
 - Safer sync: merges changes from two devices and keeps each account's plan apart
 - Version and history in the footer; technology icons; zone names and notes translated to Portuguese
-- An "i" button next to items opens the recipe; technologies and unlocks link screens together, with "Back"
-- Perk yield bonuses on 117 recipes ("yields 3, 5 with Cook II"); the three "Bronze Mastery" techs become I, II and III; data versions in the footer
+- An “i” button next to items opens the recipe; technologies and unlocks link screens together, with “Back”
+- Perk yield bonuses on 117 recipes (“yields 3, 5 with Cook II”); the three “Bronze Mastery” techs become I, II and III; data versions in the footer
 
 ## 1.1.0 — 2026-10-30
 

@@ -1,6 +1,6 @@
 {
  "meta": {
-  "built": "2026-10-30",
+  "built": "2026-11-01",
   "count": 226,
   "branches": [
    "building",
@@ -6838,7 +6838,7 @@
      "station": "vine-press"
     },
     {
-     "item": "wine",
+     "item": "wine-silver",
      "kind": "item",
      "en": "Wine (silver)",
      "pt": "Vinho (prata)",
@@ -6846,7 +6846,7 @@
      "station": "wine-barrel"
     },
     {
-     "item": "wine",
+     "item": "wine-gold",
      "kind": "item",
      "en": "Wine (gold)",
      "pt": "Vinho (ouro)",
@@ -7345,7 +7345,10 @@
    "recipes": [
     "blank-softcover-notebook",
     "primer",
-    "story"
+    "story",
+    "story-bronze",
+    "story-gold",
+    "story-silver"
    ],
    "icon": "blank-softcover-notebook",
    "notes": null
@@ -7574,7 +7577,10 @@
    ],
    "recipes": [
     "build-printing-press",
-    "printing-press"
+    "printing-press",
+    "printing-press-bronze",
+    "printing-press-gold",
+    "printing-press-silver"
    ],
    "icon": "newspaper",
    "notes": {
@@ -10262,7 +10268,7 @@
      "station": "kitchen-table"
     },
     {
-     "item": "wine",
+     "item": "wine-silver",
      "kind": "item",
      "en": "Wine (silver)",
      "pt": "Vinho (prata)",
@@ -10570,7 +10576,7 @@
      "station": "kitchen-table"
     },
     {
-     "item": "wine",
+     "item": "wine-gold",
      "kind": "item",
      "en": "Wine (gold)",
      "pt": "Vinho (ouro)",
@@ -11272,6 +11278,9 @@
    ],
    "recipes": [
     "vegetable-salad",
+    "vegetable-salad-bronze",
+    "vegetable-salad-gold",
+    "vegetable-salad-silver",
     "vegetable-soup"
    ],
    "icon": "vegetable-soup",
@@ -11416,6 +11425,9 @@
    ],
    "recipes": [
     "bowl-of-sauerkraut",
+    "bowl-of-sauerkraut-bronze",
+    "bowl-of-sauerkraut-gold",
+    "bowl-of-sauerkraut-silver",
     "cabbage-soup-from-cabbage-bronze",
     "cabbage-soup-from-cabbage-gold",
     "cabbage-soup-from-cabbage-silver"

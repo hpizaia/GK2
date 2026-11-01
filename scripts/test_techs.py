@@ -127,7 +127,7 @@ class RealData(unittest.TestCase):
         c = self.rep["counts"]
         self.assertGreaterEqual(c["unlocks_mapped"] / c["unlocks"], 0.95)
         wine = next(u for u in self.techs["alchemy-advanced"]["unlocks"] if u["en"] == "Wine (gold)")
-        self.assertEqual((wine["item"], wine["pt"]), ("wine", "Vinho (ouro)"))
+        self.assertEqual((wine["item"], wine["pt"]), ("wine-gold", "Vinho (ouro)"))   # 1.9: the grade is its own item
 
     def test_icons(self):
         items, stations = self.ds["items"], self.ds["stations"]

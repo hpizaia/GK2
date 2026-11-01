@@ -1,9 +1,9 @@
-/* GK.ui.summary: raw totals and steps grouped by station (+ inline name editing, recipe choice, "Já tenho" /
+/* GK.ui.summary: raw totals and steps grouped by station (+ recipe choice, "Já tenho" /
    "tenho N de M", the member choice of group items).
    Raw rows are two lines (1.3.4): name + "i" | quantity, then "como obter" cut to one line (full text in the row's
-   title and in the "i" detail) beside "Já tenho". The ✎ rename pencils show only in the "Editar nomes" mode
-   (GK.store ui.editNames, toggled in the progress card). "Tudo" shows an undo toast ("Areia: você já tem tudo ·
-   Desfazer") and moves the focus to the next row. Station cards are numbered 1, 2, 3… in display order.
+   title and in the "i" detail) beside "Já tenho". "Tudo" shows an undo toast ("Areia: você já tem tudo ·
+   Desfazer") and moves the focus to the next row. (1.8.x: no ✎ rename pencils here; renaming is in the item's
+   Receitas detail, ui/recipes.js.) Station cards are numbered 1, 2, 3… in display order.
    Collapsible (GK.store ui, per device): "Matérias-primas" (rawCollapsed), "Etapas por estação" (stepsCollapsed)
    and each station card (ui.stationCollapsed[stationKey], key = station id, "#<repeat>" for a card that comes back);
    a folded part keeps its header (with counts) and skips rendering its rows.
@@ -18,6 +18,10 @@
    quantity is the steps' "× 20 ▾"; choosers and the field go on a line of their own (.row-more). Ticks follow the quantity (GK.calc rawChecked / stepChecked): a row ticked at 3
    is pending again when the plan asks for 10. A step's tick keeps its quantity (toggleDone(key, on, need)).
    Corte 19: no "Fabricar com" when every recipe left is circular (Pele).
+   1.8.x (seta das seções, opção A): the toggle of "Matérias-primas" / "Etapas por estação" is a thin, quiet chevron
+   with no box (.sec-fold: an invisible 44 px target at the section's right edge), turned › when folded; each station
+   card keeps its boxed 44 px toggle (.fold-btn), so the two never look alike.
+   1.8.x: a step's other stations and its tech line share one small line ("ou: Lenheiro II · Metalurgia 1").
    Owns: [data-panel="summary"]. Exposes: GK.ui.summary.{mount, render, stationKey}; registered as a panel.
 */
 GK.i18n.add({
@@ -52,6 +56,8 @@ GK.i18n.add({
     "steps.yieldPerk": "rende\u00a0{n} com {perk}",
     "steps.withPerk": "com {perk}",
     "steps.yieldIf": "{n} com {perk}",
+    "steps.starGrade": "{grade} com {n} ciclos bem-sucedidos",
+    "steps.starAny": "o grau sai dos ciclos bem-sucedidos",
     "steps.groupLine": "grupo: {name}",
     "steps.again": "de novo",
     "steps.againTitle": "Esta estação aparece de novo: estas etapas dependem de outra estação acima.",
@@ -110,6 +116,8 @@ GK.i18n.add({
     "steps.yieldPerk": "makes\u00a0{n} with {perk}",
     "steps.withPerk": "with {perk}",
     "steps.yieldIf": "{n} with {perk}",
+    "steps.starGrade": "{grade} at {n} successful ticks",
+    "steps.starAny": "the grade comes from the successful ticks",
     "steps.groupLine": "group: {name}",
     "steps.again": "again",
     "steps.againTitle": "This station comes back: these steps need another station above.",
@@ -142,7 +150,7 @@ GK.i18n.add({
 GK.ui.summary = (function () {
   const { t, name, num } = GK.i18n, { esc, slot, domId } = GK.util;
   const F = GK.ui.fmt;
-  let root, editing = null; // item id whose name is being edited
+  let root;
   let haveOpen = null;      // item id whose "tenho N de M" field was just opened from "Já tenho"
   const focusId = (id) => { const el = document.getElementById(id); if (el) { el.focus(); if (el.select) el.select(); } };
   function applyHave(id, raw) {
@@ -153,7 +161,6 @@ GK.ui.summary = (function () {
   }
   // folding: "raw" | "steps" | "st:<station key>"; the toggle and its header carry the same data-fold value
   const ui = (state) => state.ui || {};
-  const canEdit = (state) => !!ui(state).editNames || !!editing;
   const stationKey = (g) => g.station.id + (g.repeat > 1 ? "#" + g.repeat : "");
   const FOLD_CONTROLS = "button, a, input, select, textarea, label";
   function toggleFold(k) {
@@ -162,9 +169,10 @@ GK.ui.summary = (function () {
     else if (k === "steps") A.setUi({ stepsCollapsed: !u.stepsCollapsed });
     else if (k.indexOf("st:") === 0) A.toggleStation(k.slice(3));
   }
-  // the 44 px toggle at a header's right (chevron drawn in CSS: .fold-btn); stable id so focus survives re-renders
-  function foldBtn(k, open, label, bodyId) {
-    return `<button type="button" class="btn fold-btn" id="fold-${domId(k)}" data-fold="${esc(k)}" aria-expanded="${open}" aria-controls="${bodyId}" title="${esc(t(open ? "fold.collapse" : "fold.expand"))}" aria-label="${esc(t(open ? "fold.collapseX" : "fold.expandX", { name: label }))}"></button>`;
+  // the 44 px toggle at a header's right; stable id so focus survives re-renders. A station card: the boxed .fold-btn
+  // (chevron drawn in CSS); a section (sec = true): the thin chevron with no box (.sec-fold > .sec-chev)
+  function foldBtn(k, open, label, bodyId, sec) {
+    return `<button type="button" class="${sec ? "sec-fold" : "btn fold-btn"}" id="fold-${domId(k)}" data-fold="${esc(k)}" aria-expanded="${open}" aria-controls="${bodyId}" title="${esc(t(open ? "fold.collapse" : "fold.expand"))}" aria-label="${esc(t(open ? "fold.collapseX" : "fold.expandX", { name: label }))}">${sec ? `<span class="sec-chev" aria-hidden="true"></span>` : ""}</button>`;
   }
   function mount(el) {
     root = el;
@@ -176,16 +184,6 @@ GK.ui.summary = (function () {
       if (fh && !e.target.closest(FOLD_CONTROLS)) { toggleFold(fh.dataset.foldHead); return; }
       const ro = e.target.closest("[data-recipe-open]");
       if (ro) { GK.ui.recipes.open(ro.dataset.recipeOpen, { from: "plan" }); return; }
-      const ed = e.target.closest("[data-edit]");
-      if (ed) { editing = ed.dataset.edit; rerender(); focusId("edit-" + domId(editing)); return; }
-      if (e.target.closest("[data-edit-cancel]")) { editing = null; rerender(); return; }
-      const rs = e.target.closest("[data-edit-reset]");
-      if (rs) {
-        const id = rs.dataset.editReset; editing = null;
-        A.setOverride(GK.i18n.lang(), id, "");
-        GK.ui.toast(t("edit.restored", { name: name(GK.data.item(id)) }));
-        return;
-      }
       const ho = e.target.closest("[data-have-open]");
       if (ho) {
         // a step's "×2 ▾" toggles the field it opened (a kept "tenho N" field only takes the focus)
@@ -202,18 +200,9 @@ GK.ui.summary = (function () {
     });
     root.addEventListener("submit", (e) => {
       const hf = e.target.closest("[data-have-form]");
-      if (hf) { e.preventDefault(); applyHave(hf.dataset.haveForm, hf.elements.n.value); return; }
-      const f = e.target.closest("[data-edit-form]");
-      if (!f) return;
-      e.preventDefault();
-      const id = f.dataset.editForm, it = GK.data.item(id), v = f.elements.v.value.trim();
-      const original = it[GK.i18n.lang()] || it.en;
-      editing = null;
-      GK.store.actions.setOverride(GK.i18n.lang(), id, v && v !== original ? v : "");
-      GK.ui.toast(t(v && v !== original ? "edit.saved" : "edit.restored", { name: v || original }));
+      if (hf) { e.preventDefault(); applyHave(hf.dataset.haveForm, hf.elements.n.value); }
     });
     root.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && e.target.closest("[data-edit-form]")) { editing = null; rerender(); }
       if (e.key === "Escape" && e.target.closest("[data-have-form]")) { const id = e.target.closest("[data-have-form]").dataset.haveForm; haveOpen = null; rerender(); focusId("have-" + domId(id)); }
     });
     root.addEventListener("change", (e) => {
@@ -364,7 +353,7 @@ GK.ui.summary = (function () {
     return `<div class="row row-raw${done ? " is-done" : ""}">
       <label class="tick"><input type="checkbox" id="${cb}" data-raw-check="${esc(r.item)}" data-qty="${total}"${done ? " checked" : ""} aria-label="${esc(t("have.allLabel", { name: nm, n: num(total) }))}"></label>
       ${F.slotButton(it, nm)}
-      <div class="row-main">${F.nameBlock(it, nm, cb, editing === r.item, goal, state.overrides, canEdit(state))}</div>
+      <div class="row-main">${F.nameBlock(it, nm, goal, state.overrides)}</div>
       ${qty}
       <div class="row-line2">${sub.length ? `<span class="row-sub row-obtain"${full ? ` title="${esc(full)}"` : ""}>${sub.join(" ")}</span>` : ""}</div>
       ${more ? `<div class="row-actions row-more">${more}</div>` : ""}
@@ -388,6 +377,10 @@ GK.ui.summary = (function () {
     else if (r.out.bonus && r.out.bonus.add != null) meta.push(t("steps.yield", { n: s.yield }) + ` (${t("steps.yieldIf", { n: "+" + num(r.out.bonus.add), perk: perkName(r.out.bonus) })})`);
     else if (s.yield > 1 || r.out.note) meta.push(t("steps.yield", { n: s.yield }) + (r.out.note ? ` (${name(r.out.note)})` : ""));
     if (s.leftover > 0) meta.push(t("steps.left", { n: s.leftover }));
+    // a star craft that makes one grade (1.9: História (ouro) written at the Escrivaninha): the grade it aims at, from
+    // the recipe's own thresholds; bronze (or a threshold the data does not give) says only where the grade comes from
+    const sg = it.grade && r.star ? r.star[it.grade] : null;
+    if (it.grade && r.star) meta.push(sg != null ? t("steps.starGrade", { grade: t("quality." + it.grade), n: sg }) : t("steps.starAny"));
     // "×2 ▾" opens "Tenho __ de 2" (the field shows under the row while open or while a number is kept); a goal step
     // has no "Já tenho": a plain number. "Tenho tudo" makes the item a raw material, so no step row shows it.
     const actions = [], v = state.have[s.item];
@@ -397,23 +390,27 @@ GK.ui.summary = (function () {
       qty = qtyButton(s.item, nm, s.need, open, true);
       if (open) actions.push(haveControls(s.item, nm, s.demand, state, false));
     }
-    const tech = F.techLine(r, state);
-    if (tech.length) actions.push(`<span class="tech">${esc(tech.join(" · "))}</span>`);
+    // one small line (1.8.x): "ou: Lenheiro II · Metalurgia 1" = the other stations, then the short tech line; either
+    // part alone when the other is empty; a long one wraps as running text, a level or tier staying with its word
+    // ("Metalurgia 2", "Lenheiro II": no lone "2" on the next line)
+    const note = (r.alt.length ? [t("steps.alt", { names: r.alt.map((a) => name(a, state.overrides)).join(", ") })] : [])
+      .concat(F.techLine(r, state)).map((x) => x.replace(/ (?=(?:\d+|[IVX]+)(?:[ ,]|$))/g, "\u00a0"));
+    if (note.length) actions.push(`<span class="tech">${esc(note.join(" · "))}</span>`);
     const ins = lineList(s.ins, state, D);
     const perRun = s.alts > 1 ? stepPicker(s, state, D, ins) : `<span class="row-in">${esc(t("steps.per"))} ${ins}</span>`;
+    // no grade badge (1.9, BACKLOG 2.9): the name and the star already say the grade of what the step makes, and the
+    // "Por execução" line names the graded ingredient ("1 Suco de Uva (prata) · 1 Umami → 1")
     const extraBadges = (s.isGoal ? `<span class="badge badge-goal">${esc(t("steps.goal"))}</span>` : "") +
-      (r.quality && s.alts > 1 ? ` <span class="badge badge-q" title="${esc(name(r.name || {}) || "")}">${esc(t("quality." + r.quality))}</span>` : "") +
       (r.example ? ` <span class="badge badge-ex" title="${esc(t("steps.exampleTitle"))}">${esc(t("steps.example"))}</span>` : "");
-    const alt = r.alt.length ? `<span class="row-alt">${esc(t("steps.alt", { names: r.alt.map((a) => name(a, state.overrides)).join(", ") }))}</span>` : "";
     const extra = r.extra.length ? `<span class="row-extra">${esc(t("steps.extra"))} ${extraList(r.extra, state, D)}</span>` : "";
     return `<div class="row${done ? " is-done" : ""}">
       <label class="tick"><input type="checkbox" id="${cb}" data-done="${esc(key)}" data-qty="${s.need}"${done ? " checked" : ""} aria-label="${esc(t("steps.check", { name: nm }))}"></label>
       ${F.slotButton(it, nm)}
       <div class="row-main">
-        ${F.nameBlock(it, nm, cb, editing === s.item, extraBadges, state.overrides, canEdit(state))}
+        ${F.nameBlock(it, nm, extraBadges, state.overrides)}
         ${meta.length ? `<span class="row-sub tabnum">${esc(meta.join(" · "))}</span>` : ""}
         ${perRun}
-        ${extra}${alt}
+        ${extra}
       </div>
       ${qty}
       ${actions.length ? `<div class="row-actions">${actions.join("")}</div>` : ""}
@@ -463,13 +460,13 @@ GK.ui.summary = (function () {
     const stepSum = `${t("fold.stations", { n: plan.stations.length })} · ${t("fold.done", { done: stepDone, total: plan.steps.length })}`;
     root.innerHTML = `${warn}<div class="summary-grid">
       <section aria-labelledby="raw-h"${U.rawCollapsed ? ' class="is-folded"' : ""}>
-        <div class="fold-head" data-fold-head="raw"><h2 class="h2" id="raw-h">${esc(t("raw.title"))} <span class="count">${plan.raw.length}</span></h2>${foldBtn("raw", !U.rawCollapsed, t("raw.title"), "raw-body")}</div>
+        <div class="fold-head" data-fold-head="raw"><h2 class="h2" id="raw-h">${esc(t("raw.title"))} <span class="count">${plan.raw.length}</span></h2>${foldBtn("raw", !U.rawCollapsed, t("raw.title"), "raw-body", true)}</div>
         ${U.rawCollapsed ? `<p class="hint fold-sum tabnum" data-fold-head="raw">${esc(rawSum)}</p><div id="raw-body" hidden></div>` : `<div class="card list" id="raw-body">${plain.map((r) => rawRow(r, state, D)).join("")}
           ${had.length ? `<div class="raw-group-label">${esc(t("raw.haveGroup"))}</div>` + had.map((r) => rawRow(r, state, D)).join("") : ""}
         </div>`}
       </section>
       <section aria-labelledby="steps-h"${U.stepsCollapsed ? ' class="is-folded"' : ""}>
-        <div class="fold-head" data-fold-head="steps"><h2 class="h2" id="steps-h">${esc(t("steps.title"))} <span class="count">${plan.steps.length}</span></h2>${foldBtn("steps", !U.stepsCollapsed, t("steps.title"), "steps-body")}</div>
+        <div class="fold-head" data-fold-head="steps"><h2 class="h2" id="steps-h">${esc(t("steps.title"))} <span class="count">${plan.steps.length}</span></h2>${foldBtn("steps", !U.stepsCollapsed, t("steps.title"), "steps-body", true)}</div>
         ${U.stepsCollapsed ? `<p class="hint fold-sum tabnum" data-fold-head="steps">${esc(stepSum)}</p><div class="stations" id="steps-body" hidden></div>` : `<div class="stations" id="steps-body">${stations}</div>`}
       </section>
     </div>`;

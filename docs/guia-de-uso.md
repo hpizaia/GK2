@@ -39,10 +39,9 @@ Algumas receitas aceitam qualquer item de um grupo, como "Brema ou carpa" ou "Qu
 Quando um item pode ser feito de mais de um jeito, a etapa mostra **Receita** com um seletor. Cada opção mostra os ingredientes, a estação e, nas receitas de qualidade, "prata" ou "ouro" (a de ouro pede o ingrediente de ouro). A escolha vale para esse item em todos os planos. A tela Receitas também deixa escolher.
 
 ### Progresso e vantagens
-- Marque a caixinha de cada matéria-prima que você já tem toda e de cada etapa feita. A barra de progresso acompanha. "Limpar marcações" desmarca tudo.
+- Marque a caixinha de cada matéria-prima que você já tem toda e de cada etapa feita. A barra de progresso acompanha. Para desmarcar, toque de novo na caixinha.
 - Só a caixinha marca. Tocar no nome não marca nada.
 - **Vantagens:** as vantagens (perks) do jogo que mudam quantidades neste plano, como "Cozinheiro II". Ligue as que você já tem: o plano recalcula rendimentos e ingredientes.
-- **Copiar lista** copia o plano como texto, para colar nas notas do celular ou mandar para alguém.
 
 ### Tecnologias que faltam
 
@@ -72,8 +71,8 @@ Abaixo do plano aparece **Tecnologias que faltam**: o que você ainda precisa pe
 
 ## Nomes
 - Os nomes vêm dos arquivos oficiais do jogo. Os poucos que não vêm levam o selo **não oficial**.
-- Para corrigir um nome, toque no lápis ✎ ao lado dele, digite e toque em **Salvar**. O nome ganha o selo **editado** e vale em todas as telas. "Restaurar original" desfaz. A edição vale para o idioma em uso.
-- **Exportar nomes editados** (no Progresso) copia suas correções em JSON. Mande para o Hugo, para entrarem na próxima versão.
+- Para corrigir um nome **não oficial**, abra o item em **Receitas** e toque no selo **não oficial ✎** ao lado do nome. Digite o nome certo e toque em **Salvar**. O nome ganha o selo **editado** e vale em todas as telas, no idioma em uso. Para desfazer, toque no selo **editado** e em **Voltar ao nome original**.
+- Com o campo aberto, **Exportar nomes editados** copia suas correções em JSON. Mande para o Hugo, para entrarem na próxima versão.
 
 ## Idioma e tema
 - **PT / EN** troca o idioma de tudo, inclusive dos nomes dos itens. A busca aceita os dois idiomas sempre.

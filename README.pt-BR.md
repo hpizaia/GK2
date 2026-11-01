@@ -38,7 +38,7 @@ Feito por **Hugo Pizaia**, jogador brasileiro e não programador, com o [Claude 
 - **Metas.** Busca em português ou inglês, sem precisar de acento (`caix` acha *Caixote*). Quantidade com − / + (segure para repetir).
 - **Matérias-primas.** Tudo o que coletar, comprar ou já ter no baú, com o total.
 - **Etapas por estação.** O que fabricar em cada bancada, quantas execuções, rendimento e sobra. Siga de cima para baixo: nenhuma estação depende de outra mais abaixo.
-- **Vantagens** (perks) que mudam o rendimento ("Cozinheiro II") recalculam o plano. **Copiar lista** como texto.
+- **Vantagens** (perks) que mudam o rendimento ("Cozinheiro II") recalculam o plano.
 
 #### Receitas alternativas e checklist
 

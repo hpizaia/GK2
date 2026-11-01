@@ -3,12 +3,19 @@
    inline "Já pesquisei" checkbox, and the quests / perks the plan also needs. Hidden when nothing is missing.
    Re-renders only when the plan's tech signature, the researched set or the language changes.
    1.6.0 (corte 7): the hint is one short line, "Pesquise nesta ordem; marque o que já tem."
+   1.8.x (seta das seções, opção A): the panel folds like "Matérias-primas" / "Etapas" (the same thin chevron, a tap
+   on the header text too; GK.store ui.tnCollapsed, per device); folded, it shows only "Total de pontos: …".
    Owns: its <div data-panel="tech-needs"> in [data-slot="planner-extra"].
    Exposes: GK.ui.techneeds.{mount, render}. Registered via GK.app.registerPanel(..., {slot: "planner-extra"}).
 */
 GK.i18n.add({
   pt: {
     "tn.title": "Tecnologias que faltam",
+    "tn.collapse": "Recolher",
+    "tn.expand": "Expandir",
+    "tn.collapseX": "Recolher: {name}",
+    "tn.expandX": "Expandir: {name}",
+    "tn.totalSum": "Total de pontos:",
     "tn.hint": "Pesquise nesta ordem; marque o que já tem.",
     "tn.total": "Total de pontos",
     "tn.more.one": "Mostrar mais {n}",
@@ -23,6 +30,11 @@ GK.i18n.add({
   },
   en: {
     "tn.title": "Technologies still needed",
+    "tn.collapse": "Collapse",
+    "tn.expand": "Expand",
+    "tn.collapseX": "Collapse: {name}",
+    "tn.expandX": "Expand: {name}",
+    "tn.totalSum": "Total points:",
     "tn.hint": "Research in this order; check what you already have.",
     "tn.total": "Total points",
     "tn.more.one": "Show {n} more",
@@ -42,6 +54,8 @@ GK.ui.techneeds = (function () {
   const TK = GK.tech;
   const FIRST = 8;          // rows shown before "Mostrar mais"
   let root = null, memo = "", expanded = false;
+  const CONTROLS = "button, a, input, select, textarea, label";
+  const shutOf = (state) => !!(state.ui && state.ui.tnCollapsed);
   function mount(el) {
     root = el;
     root.addEventListener("change", (e) => {
@@ -52,6 +66,10 @@ GK.ui.techneeds = (function () {
       if (tc && cb.checked) GK.ui.toast(t("tn.marked", { name: name(tc) }));
     });
     root.addEventListener("click", (e) => {
+      if (e.target.closest("[data-tn-fold]") || (e.target.closest("[data-tn-head]") && !e.target.closest(CONTROLS))) {
+        GK.store.actions.setUi({ tnCollapsed: !shutOf(GK.store.get()) });
+        return;
+      }
       const o = e.target.closest("[data-open]");
       if (o) { GK.ui.tech.open(o.dataset.open, { from: "plan" }); return; }
       if (e.target.closest("[data-tn-more]")) { expanded = !expanded; memo = ""; render(GK.store.get(), {}, GK.app.plan()); }
@@ -77,15 +95,31 @@ GK.ui.techneeds = (function () {
     if (!root) return;
     if (meta && meta.from === "search-toggle") return;
     if (!TK.available() || !state.goals.length) { if (memo !== "none") { root.innerHTML = ""; memo = "none"; } return; }
-    const sig = TK.signature(plan, state) + "|" + GK.i18n.lang() + "|" + expanded + "|" + JSON.stringify(state.overrides[GK.i18n.lang()] || {});
+    const shut = shutOf(state);
+    const sig = TK.signature(plan, state) + "|" + GK.i18n.lang() + "|" + expanded + "|" + shut + "|" + JSON.stringify(state.overrides[GK.i18n.lang()] || {});
     if (sig === memo) return;
     memo = sig;
     const need = TK.forPlan(plan, state);
     if (!need.techs.length && !need.other.length) { root.innerHTML = ""; return; }
     const shown = expanded ? need.techs : need.techs.slice(0, FIRST), rest = need.techs.length - shown.length;
     const other = need.other.map((o) => t(o.type === "perk" ? "tn.perk" : "tn.quest", { name: name(o) }));
+    const title = t("tn.title");
+    // the same thin toggle as "Matérias-primas" / "Etapas" (ui/summary.js foldBtn with sec); stable id for the focus
+    const tgl = `<button type="button" class="sec-fold" id="fold-tn" data-tn-fold aria-expanded="${!shut}" aria-controls="tn-body" title="${esc(t(shut ? "tn.expand" : "tn.collapse"))}" aria-label="${esc(t(shut ? "tn.expandX" : "tn.collapseX", { name: title }))}"><span class="sec-chev" aria-hidden="true"></span></button>`;
+    const head = `<div class="fold-head" data-tn-head><h2 class="h2" id="tn-h">${esc(title)} <span class="count">${need.techs.length}</span></h2>${tgl}</div>`;
+    if (shut) {
+      // folded: only the point totals (or, with no tech left, what else the plan needs)
+      const sum = need.techs.length
+        ? `<span class="tn-sum-l">${esc(t("tn.totalSum"))}</span>${GK.ui.tech.costHtml(need.cost)}`
+        : `<b>${esc(t("tn.other"))}</b> ${esc(other.join(" · "))}`;
+      root.innerHTML = `<section class="tn is-folded" aria-labelledby="tn-h">${head}
+        <p class="hint fold-sum tabnum" data-tn-head>${sum}</p><div id="tn-body" hidden></div>
+      </section>`;
+      return;
+    }
     root.innerHTML = `<section class="tn" aria-labelledby="tn-h">
-      <h2 class="h2" id="tn-h">${esc(t("tn.title"))} <span class="count">${need.techs.length}</span></h2>
+      ${head}
+      <div id="tn-body">
       ${need.techs.length ? `<p class="hint">${esc(t("tn.hint"))}</p>
       <div class="card tn-card">
         <div class="tn-total"><span class="tech-d-label">${esc(t("tn.total"))}</span>${GK.ui.tech.costHtml(need.cost, { big: true })}</div>
@@ -94,6 +128,7 @@ GK.ui.techneeds = (function () {
       </div>` : ""}
       ${other.length ? `<p class="tn-other"><b>${esc(t("tn.other"))}</b> ${esc(other.join(" · "))}</p>` : ""}
       <p class="tn-link"><a href="#tech">${esc(t("tn.openTab"))} ›</a></p>
+      </div>
     </section>`;
   }
   return { mount, render };

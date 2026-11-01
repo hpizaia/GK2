@@ -4,14 +4,14 @@ Built 2026-11-01. Names with `tr` = missing, machine or guess, most-used first (
 
 | kind | total | missing | machine | guess |
 |---|---:|---:|---:|---:|
-| Items | 820 | 0 | 6 | 0 |
+| Items | 838 | 0 | 6 | 0 |
 | Stations (same names-file key as the station item) | 79 | 0 | 0 | 0 |
 | Station extensions | 15 | 0 | 0 | 0 |
 | Categories | 53 | 0 | 45 | 0 |
 | Technologies / unlocks | 231 | 0 | 3 | 0 |
 | Masteries | 5 | 0 | 3 | 0 |
 | Zones | 23 | 0 | 1 | 0 |
-| Recipe names (when different from the output item) | 232 | 231 | 0 | 0 |
+| Recipe names (when different from the output item) | 235 | 231 | 0 | 0 |
 | Recipe notes (input / by-product, free text) | 75 | 1 | 74 | 0 |
 
 ## Items: needs review (machine / guess) (6)
@@ -31,13 +31,13 @@ Built 2026-11-01. Names with `tr` = missing, machine or guess, most-used first (
 |---:|---|---|---|
 | 355 | Building materials | Materiais de construção | machine |
 | 272 | Metals & ores | Metais e minérios | machine |
-| 99 | Resources | Recursos | machine |
+| 102 | Resources | Recursos | machine |
 | 85 | Building: Crafting station | Construção: estação de fabricação | machine |
+| 70 | (no wiki item page) | (sem página de item na wiki) | machine |
 | 64 | Foraging | Coleta | machine |
-| 58 | (no wiki item page) | (sem página de item na wiki) | machine |
 | 57 | Crafting materials | Materiais de fabricação | machine |
+| 49 | Books & paper | Livros e papel | machine |
 | 46 | Town supplies | Suprimentos da cidade | machine |
-| 43 | Books & paper | Livros e papel | machine |
 | 43 | Food | Comida | machine |
 | 40 | Potions | Poções | machine |
 | 31 | Drinks | Bebidas | machine |
@@ -89,7 +89,7 @@ Built 2026-11-01. Names with `tr` = missing, machine or guess, most-used first (
 |---:|---|---|---|
 | 86 | Smithing | Metalurgia | machine |
 | 56 | Anatomy | Anatomia | machine |
-| 39 | Book writing | Escrita de livros | machine |
+| 45 | Book writing | Escrita de livros | machine |
 
 ## Zones: needs review (machine / guess) (1)
 
@@ -344,8 +344,10 @@ Literal notes go in a names file's `__notes` map (`{"<English note>": "<pt>"}`);
 | 17 | 10 with Heat Saver | 10 com Economizador de Calor | pattern |  |
 | 17 | amount varies with the bed; +1 each with Seed Master | a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro | pattern |  |
 | 12 | any quality | qualquer qualidade | text |  |
+| 8 | 2 (4 with Cook) | 2 (4 com Cozinheiro) | pattern |  |
 | 8 | 50% chance with Alchemist | 50% de chance com Alquimista | pattern |  |
 | 8 | amount varies with the bed | a quantidade varia conforme o canteiro | text |  |
+| 7 | 20 (30 with Paper maker) | 20 (30 com Criador de Papel) | pattern |  |
 | 7 | 4 (6 with Cook II) | 4 (6 com Cozinheiro II) | pattern |  |
 | 6 | 1 (2 with Compost Chemist) | 1 (2 com Químico da Compostagem) | pattern |  |
 | 6 | 40% chance with Alchemist | 40% de chance com Alquimista | pattern |  |
@@ -355,7 +357,6 @@ Literal notes go in a names file's `__notes` map (`{"<English note>": "<pt>"}`);
 | 5 | 1 (2 with Tailor) | 1 (2 com Alfaiate) | pattern |  |
 | 5 | 4 (6 with Cook) | 4 (6 com Cozinheiro) | pattern |  |
 | 4 | 2 (3 with Cook II) | 2 (3 com Cozinheiro II) | pattern |  |
-| 4 | 20 (30 with Paper maker) | 20 (30 com Criador de Papel) | pattern |  |
 | 4 | 3 (5 with Cook II) | 3 (5 com Cozinheiro II) | pattern |  |
 | 4 | 7 (10 with Cook II) | 7 (10 com Cozinheiro II) | pattern |  |
 | 3 | 1 (2 with Cube distillations) | 1 (2 com Destilação em Cubo) | pattern |  |
@@ -372,7 +373,6 @@ Literal notes go in a names file's `__notes` map (`{"<English note>": "<pt>"}`);
 | 2 | 2 (3 with Cube distillations) | 2 (3 com Destilação em Cubo) | pattern |  |
 | 2 | 2 (3 with Fireman) | 2 (3 com Foguista) | pattern |  |
 | 2 | 2 (4 with Cook II) | 2 (4 com Cozinheiro II) | pattern |  |
-| 2 | 2 (4 with Cook) | 2 (4 com Cozinheiro) | pattern |  |
 | 2 | 3 (5 with Cube distillations) | 3 (5 com Destilação em Cubo) | pattern |  |
 | 2 | 4 (7 with Cube distillations) | 4 (7 com Destilação em Cubo) | pattern |  |
 | 2 | 5 (8 with Brewer) | 5 (8 com Cervejeiro) | pattern |  |

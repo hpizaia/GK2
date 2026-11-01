@@ -11,8 +11,11 @@
 /* ---------- planner layout ---------- */
 .planner { display: grid; gap: var(--s5); padding-block: var(--s4) var(--s6); }
 .col-plan { display: grid; gap: var(--s5); min-width: 0; }
-/* phones (one column): Hoje (one line) → Metas → Matérias-primas → Etapas → Tecnologias que faltam → Progresso,
-   Vantagens and "Copiar lista" last. The DOM keeps the desktop order (progress on top of the right column). */
+/* an empty panel (the progress card of an empty list) takes no grid row, so no gap above the next card: the right
+   column's first card lines up with the Hoje panel on the left (QA 2026-11 #12, 1280 px with an empty list) */
+.col-plan > :empty { display: none; }
+/* phones (one column): Hoje (one line) → Metas → Matérias-primas → Etapas → Tecnologias que faltam → Progresso
+   and Vantagens last. The DOM keeps the desktop order (progress on top of the right column). */
 @media (max-width: 899px) {
   .col-plan > [data-panel="checklist"] { order: 10; }
 }
@@ -70,8 +73,6 @@
     linear-gradient(180deg, var(--bevel-hi), transparent 60%), var(--moss);
   transition: width .3s ease;
 }
-.progress-actions { display: flex; flex-wrap: wrap; gap: var(--s2); }
-.copy-fallback { width: 100%; min-height: 160px; background: var(--bg-2); color: var(--ink); border: 1px solid var(--frame); border-radius: var(--r); padding: var(--s2); font-size: .8125rem; }
 .warn { padding: var(--s3) var(--s4); border: 1px solid var(--blood); border-radius: var(--r); color: var(--ink); background: var(--panel); font-size: .875rem; }
 
 /* rows (raw + steps) */
@@ -200,7 +201,6 @@
 .have-close { width: var(--tap); padding: 0; font-size: 1rem; }
 .row-group { color: var(--ink-2); font-style: italic; }
 .row-in i.perk-on, .row-extra i.perk-on { color: var(--moss); font-style: normal; font-weight: 700; }
-.badge-q { color: var(--accent); border: 1px solid var(--accent); }
 
 /* perk toggles in the progress card: folded into "Vantagens: 0 de 10 ligadas ›" (1.6.0, corte 8), a tap opens them */
 .perks-fold { display: grid; gap: var(--s2); }
@@ -232,10 +232,32 @@
    right with a pixel chevron (▾ open, ▸ folded); a tap on the header text toggles too */
 .fold-head { display: flex; align-items: center; gap: var(--s2); min-width: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .fold-head .h2 { flex: 1; min-width: 0; }
-/* Matérias-primas / Etapas (1.6.x): the toggle touched the card under it and its right edge; now 8 px above the card
-   and 13 px in (1 px card border + 12 px), over the column of controls inside */
+/* Matérias-primas / Etapas: the section header sits 8 px above its card */
 .summary-grid .fold-head { margin-bottom: var(--s2); }
-.summary-grid .fold-head > .fold-btn { margin-right: calc(var(--s3) + 1px); }
+/* a SECTION's toggle (1.8.x, seta das seções opção A: Matérias-primas, Etapas, Tecnologias que faltam, Hoje open):
+   no box, only a thin quiet chevron (9 px, 1.5 px stroke, --ink-3 ≥ 4.8:1) at the card's right edge; the invisible
+   44 px target reaches 10 px into the page margin. Turned › when folded. A STATION card keeps the boxed .fold-btn
+   below, so the two toggles never share a look or an x column (section chevron centre ≈ 7 px in from the card edge,
+   station box centre 34 px in). */
+.sec-fold {
+  flex: none; display: flex; align-items: center; justify-content: flex-end;
+  width: var(--tap); height: var(--tap); margin: 0 -10px 0 0; padding: 0 13px 0 0;
+  border: 0; background: transparent; color: var(--ink-3); cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.sec-fold:hover { color: var(--accent); }
+.sec-fold:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.sec-chev {
+  display: block; flex: none; width: 9px; height: 9px;
+  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg); transition: transform .15s ease;
+}
+[aria-expanded="false"] > .sec-chev { transform: translateX(-2px) rotate(-45deg); }
+@media (prefers-reduced-motion: reduce) { .sec-chev { transition: none; } }
+/* "Tecnologias que faltam" folds too: its header like the sections above; folded = "Total de pontos: …" */
+.tn .fold-head { margin-bottom: var(--s2); }
+.tn #tn-body > .hint { margin-top: 0; }
+.fold-sum .tp-cost { display: inline-flex; vertical-align: middle; }
+.fold-sum .tn-sum-l { margin-right: 6px; }
 .fold-btn { flex: none; width: var(--tap); padding: 0; color: var(--ink-2); }
 .fold-btn::before {
   content: ""; width: 8px; height: 8px; border-right: 3px solid currentColor; border-bottom: 3px solid currentColor;
@@ -261,8 +283,6 @@
 .today-pick-cell { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; cursor: pointer; }
 .today-pick-name { max-width: 100%; font-size: .75rem; font-weight: 700; line-height: 1.2; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .today-pick-cell:hover .today-pick-name { color: var(--ink); }
-/* the rename mode switch in the progress card: discreet until on */
-.names-toggle[aria-pressed="false"] { color: var(--ink-2); }
 
 /* ---------- footer, stale-data band and the credits QR card (1.4.1) ----------
    These rules belong with screens.css but live here by file ownership while other work runs in parallel; selectors

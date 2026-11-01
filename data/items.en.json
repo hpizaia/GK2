@@ -1904,12 +1904,14 @@
   "kind": "quality-variant",
   "category": "(no wiki item page)",
   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/6a41a46f-4465-4568-beb3-75f48fb77a33-i_bowl_sauerkraut.png",
-  "is_raw": true,
+  "is_raw": false,
   "obtain": "Quality grade of the base item (star craft result or enhancement recipe).",
   "sources": [],
   "page_url": null,
   "listed": true,
-  "recipe_ids": [],
+  "recipe_ids": [
+   "bowl-of-sauerkraut-bronze"
+  ],
   "base_item": "bowl-of-sauerkraut"
  },
  {
@@ -1924,7 +1926,8 @@
   "page_url": null,
   "listed": true,
   "recipe_ids": [
-   "food-enhancement-ii-from-bowl-of-sauerkraut-silver"
+   "food-enhancement-ii-from-bowl-of-sauerkraut-silver",
+   "bowl-of-sauerkraut-gold"
   ],
   "base_item": "bowl-of-sauerkraut"
  },
@@ -1940,7 +1943,8 @@
   "page_url": null,
   "listed": true,
   "recipe_ids": [
-   "food-enhancement-i-from-bowl-of-sauerkraut-bronze"
+   "food-enhancement-i-from-bowl-of-sauerkraut-bronze",
+   "bowl-of-sauerkraut-silver"
   ],
   "base_item": "bowl-of-sauerkraut"
  },
@@ -2545,9 +2549,7 @@
   "page_url": "https://wikily.gg/graveyard-keeper-2/items/cabbage",
   "listed": true,
   "recipe_ids": [
-   "grow-cabbage-bed-m8",
-   "grow-cabbage-bed-m10",
-   "grow-cabbage-bed-m12"
+   "grow-cabbage-bed-m8"
   ]
  },
  {
@@ -2568,6 +2570,22 @@
   ]
  },
  {
+  "id": "cabbage-gold",
+  "name": "Cabbage (gold)",
+  "kind": "quality-variant",
+  "category": "Farming",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/f80cdcd0-623b-4e94-a43e-8cc287cfbfff-i_cabbage_crop.png",
+  "is_raw": true,
+  "obtain": "Harvest: silver or gold seeds.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "cabbage",
+  "recipe_ids": [
+   "grow-cabbage-bed-m12"
+  ]
+ },
+ {
   "id": "cabbage-seed",
   "name": "Cabbage seed",
   "kind": "item",
@@ -2583,6 +2601,50 @@
   "page_url": "https://wikily.gg/graveyard-keeper-2/items/cabbage-seed",
   "listed": true,
   "recipe_ids": []
+ },
+ {
+  "id": "cabbage-seed-gold",
+  "name": "Cabbage seed (gold)",
+  "kind": "quality-variant",
+  "category": "Farming",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/c93d94b7-3c11-4ebc-a624-145706e883dd-i_cabbage_seed.png",
+  "is_raw": true,
+  "obtain": "Harvest by-product: silver or gold seeds.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "cabbage-seed",
+  "recipe_ids": []
+ },
+ {
+  "id": "cabbage-seed-silver",
+  "name": "Cabbage seed (silver)",
+  "kind": "quality-variant",
+  "category": "Farming",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/c93d94b7-3c11-4ebc-a624-145706e883dd-i_cabbage_seed.png",
+  "is_raw": true,
+  "obtain": "Harvest by-product: bronze or silver seeds.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "cabbage-seed",
+  "recipe_ids": []
+ },
+ {
+  "id": "cabbage-silver",
+  "name": "Cabbage (silver)",
+  "kind": "quality-variant",
+  "category": "Farming",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/f80cdcd0-623b-4e94-a43e-8cc287cfbfff-i_cabbage_crop.png",
+  "is_raw": true,
+  "obtain": "Harvest: bronze or silver seeds.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "cabbage",
+  "recipe_ids": [
+   "grow-cabbage-bed-m10"
+  ]
  },
  {
   "id": "cabbage-soup",
@@ -6261,6 +6323,34 @@
   "recipe_ids": []
  },
  {
+  "id": "grape-seeds-gold",
+  "name": "Grape Seeds (gold)",
+  "kind": "quality-variant",
+  "category": "Farming",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/c6f3d9ce-db8d-44d8-95ca-d20f4bb8a4ec-i_grapes_seed.png",
+  "is_raw": true,
+  "obtain": "Harvest by-product: silver or gold seeds.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "grape-seeds",
+  "recipe_ids": []
+ },
+ {
+  "id": "grape-seeds-silver",
+  "name": "Grape Seeds (silver)",
+  "kind": "quality-variant",
+  "category": "Farming",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/c6f3d9ce-db8d-44d8-95ca-d20f4bb8a4ec-i_grapes_seed.png",
+  "is_raw": true,
+  "obtain": "Harvest by-product: bronze or silver seeds.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "grape-seeds",
+  "recipe_ids": []
+ },
+ {
   "id": "grapes",
   "name": "Grapes",
   "kind": "item",
@@ -6275,9 +6365,7 @@
   "page_url": "https://wikily.gg/graveyard-keeper-2/items/grapes",
   "listed": true,
   "recipe_ids": [
-   "grow-grapes-bed-m12",
-   "grow-grapes-bed-m14",
-   "grow-grapes-bed-m16"
+   "grow-grapes-bed-m12"
   ]
  },
  {
@@ -6295,6 +6383,38 @@
    "plant-grape-seeds-bronze",
    "plant-grape-seeds-gold",
    "plant-grape-seeds-silver"
+  ]
+ },
+ {
+  "id": "grapes-gold",
+  "name": "Grapes (gold)",
+  "kind": "quality-variant",
+  "category": "Farming",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/2d19f366-432d-49e8-88b5-9504cdea29c6-i_grapes_crop.png",
+  "is_raw": true,
+  "obtain": "Harvest: silver or gold seeds.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "grapes",
+  "recipe_ids": [
+   "grow-grapes-bed-m16"
+  ]
+ },
+ {
+  "id": "grapes-silver",
+  "name": "Grapes (silver)",
+  "kind": "quality-variant",
+  "category": "Farming",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/2d19f366-432d-49e8-88b5-9504cdea29c6-i_grapes_crop.png",
+  "is_raw": true,
+  "obtain": "Harvest: bronze or silver seeds.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "grapes",
+  "recipe_ids": [
+   "grow-grapes-bed-m14"
   ]
  },
  {
@@ -9049,12 +9169,14 @@
   "kind": "quality-variant",
   "category": "(no wiki item page)",
   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/0e4133ca-f6c8-4e15-b009-618a12d73b85-i_newspaper.png",
-  "is_raw": true,
+  "is_raw": false,
   "obtain": "Quality grade of the base item (star craft result or enhancement recipe).",
   "sources": [],
   "page_url": null,
   "listed": true,
-  "recipe_ids": [],
+  "recipe_ids": [
+   "printing-press-bronze"
+  ],
   "base_item": "newspaper"
  },
  {
@@ -9069,7 +9191,8 @@
   "page_url": null,
   "listed": true,
   "recipe_ids": [
-   "improve-newspaper-ii"
+   "improve-newspaper-ii",
+   "printing-press-gold"
   ],
   "base_item": "newspaper"
  },
@@ -9085,7 +9208,8 @@
   "page_url": null,
   "listed": true,
   "recipe_ids": [
-   "improve-newspaper-i"
+   "improve-newspaper-i",
+   "printing-press-silver"
   ],
   "base_item": "newspaper"
  },
@@ -9234,9 +9358,7 @@
    "green": 2
   },
   "recipe_ids": [
-   "grow-onion-bed-m10",
-   "grow-onion-bed-m12",
-   "grow-onion-bed-m14"
+   "grow-onion-bed-m10"
   ]
  },
  {
@@ -9254,6 +9376,22 @@
    "plant-onion-seed-bronze",
    "plant-onion-seed-gold",
    "plant-onion-seed-silver"
+  ]
+ },
+ {
+  "id": "onion-gold",
+  "name": "Onion (gold)",
+  "kind": "quality-variant",
+  "category": "Farming",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/75e6f3db-a1f1-40d1-9113-07f8fcbb7227-i_onion_crop.png",
+  "is_raw": true,
+  "obtain": "Harvest: silver or gold seeds.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "onion",
+  "recipe_ids": [
+   "grow-onion-bed-m14"
   ]
  },
  {
@@ -9291,6 +9429,50 @@
   "page_url": "https://wikily.gg/graveyard-keeper-2/items/onion-seed",
   "listed": true,
   "recipe_ids": []
+ },
+ {
+  "id": "onion-seed-gold",
+  "name": "Onion seed (gold)",
+  "kind": "quality-variant",
+  "category": "Farming",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/ef7b599e-2f64-4ae5-90f0-5f5189909bf2-i_onion_seed.png",
+  "is_raw": true,
+  "obtain": "Harvest by-product: silver or gold seeds.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "onion-seed",
+  "recipe_ids": []
+ },
+ {
+  "id": "onion-seed-silver",
+  "name": "Onion seed (silver)",
+  "kind": "quality-variant",
+  "category": "Farming",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/ef7b599e-2f64-4ae5-90f0-5f5189909bf2-i_onion_seed.png",
+  "is_raw": true,
+  "obtain": "Harvest by-product: bronze or silver seeds.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "onion-seed",
+  "recipe_ids": []
+ },
+ {
+  "id": "onion-silver",
+  "name": "Onion (silver)",
+  "kind": "quality-variant",
+  "category": "Farming",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/75e6f3db-a1f1-40d1-9113-07f8fcbb7227-i_onion_crop.png",
+  "is_raw": true,
+  "obtain": "Harvest: bronze or silver seeds.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "onion",
+  "recipe_ids": [
+   "grow-onion-bed-m12"
+  ]
  },
  {
   "id": "open-corpse-dumping-point",
@@ -10326,9 +10508,7 @@
    "green": 3
   },
   "recipe_ids": [
-   "grow-pumpkin-bed-m12",
-   "grow-pumpkin-bed-m14",
-   "grow-pumpkin-bed-m16"
+   "grow-pumpkin-bed-m12"
   ]
  },
  {
@@ -10349,6 +10529,22 @@
   ]
  },
  {
+  "id": "pumpkin-gold",
+  "name": "Pumpkin (gold)",
+  "kind": "quality-variant",
+  "category": "Farming",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/8489e08c-75e0-478e-9e7b-b8b97b054180-i_pumpkin_crop.png",
+  "is_raw": true,
+  "obtain": "Harvest: silver or gold seeds.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "pumpkin",
+  "recipe_ids": [
+   "grow-pumpkin-bed-m16"
+  ]
+ },
+ {
   "id": "pumpkin-seeds",
   "name": "Pumpkin Seeds",
   "kind": "item",
@@ -10364,6 +10560,50 @@
   "page_url": "https://wikily.gg/graveyard-keeper-2/items/pumpkin-seeds",
   "listed": true,
   "recipe_ids": []
+ },
+ {
+  "id": "pumpkin-seeds-gold",
+  "name": "Pumpkin Seeds (gold)",
+  "kind": "quality-variant",
+  "category": "Farming",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/765a7679-1ba7-4aa0-a2cc-b040a7667baf-i_pumpkin_seed.png",
+  "is_raw": true,
+  "obtain": "Harvest by-product: silver or gold seeds.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "pumpkin-seeds",
+  "recipe_ids": []
+ },
+ {
+  "id": "pumpkin-seeds-silver",
+  "name": "Pumpkin Seeds (silver)",
+  "kind": "quality-variant",
+  "category": "Farming",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/765a7679-1ba7-4aa0-a2cc-b040a7667baf-i_pumpkin_seed.png",
+  "is_raw": true,
+  "obtain": "Harvest by-product: bronze or silver seeds.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "pumpkin-seeds",
+  "recipe_ids": []
+ },
+ {
+  "id": "pumpkin-silver",
+  "name": "Pumpkin (silver)",
+  "kind": "quality-variant",
+  "category": "Farming",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/8489e08c-75e0-478e-9e7b-b8b97b054180-i_pumpkin_crop.png",
+  "is_raw": true,
+  "obtain": "Harvest: bronze or silver seeds.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "pumpkin",
+  "recipe_ids": [
+   "grow-pumpkin-bed-m14"
+  ]
  },
  {
   "id": "pumpkin-soup",
@@ -12329,12 +12569,14 @@
   "kind": "quality-variant",
   "category": "(no wiki item page)",
   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/386b3872-8fca-42df-8940-66027ef048c4-i_scroll_story.png",
-  "is_raw": true,
+  "is_raw": false,
   "obtain": "Quality grade of the base item (star craft result or enhancement recipe).",
   "sources": [],
   "page_url": null,
   "listed": true,
-  "recipe_ids": [],
+  "recipe_ids": [
+   "story-bronze"
+  ],
   "base_item": "story"
  },
  {
@@ -12349,7 +12591,8 @@
   "page_url": null,
   "listed": true,
   "recipe_ids": [
-   "improve-story-ii"
+   "improve-story-ii",
+   "story-gold"
   ],
   "base_item": "story"
  },
@@ -12365,7 +12608,8 @@
   "page_url": null,
   "listed": true,
   "recipe_ids": [
-   "improve-story-i"
+   "improve-story-i",
+   "story-silver"
   ],
   "base_item": "story"
  },
@@ -13766,12 +14010,14 @@
   "kind": "quality-variant",
   "category": "(no wiki item page)",
   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/d0b60cbe-1c65-47c2-b722-8c6f2006510a-i_vegetable_salad.png",
-  "is_raw": true,
+  "is_raw": false,
   "obtain": "Quality grade of the base item (star craft result or enhancement recipe).",
   "sources": [],
   "page_url": null,
   "listed": true,
-  "recipe_ids": [],
+  "recipe_ids": [
+   "vegetable-salad-bronze"
+  ],
   "base_item": "vegetable-salad"
  },
  {
@@ -13786,7 +14032,8 @@
   "page_url": null,
   "listed": true,
   "recipe_ids": [
-   "food-enhancement-ii-from-vegetable-salad-silver"
+   "food-enhancement-ii-from-vegetable-salad-silver",
+   "vegetable-salad-gold"
   ],
   "base_item": "vegetable-salad"
  },
@@ -13802,7 +14049,8 @@
   "page_url": null,
   "listed": true,
   "recipe_ids": [
-   "food-enhancement-i-from-vegetable-salad-bronze"
+   "food-enhancement-i-from-vegetable-salad-bronze",
+   "vegetable-salad-silver"
   ],
   "base_item": "vegetable-salad"
  },
@@ -14194,11 +14442,7 @@
   "page_url": "https://wikily.gg/graveyard-keeper-2/items/wine",
   "listed": true,
   "recipe_ids": [
-   "drink-enhancement-i-from-wine-bronze",
-   "drink-enhancement-ii-from-wine-silver",
-   "wine-from-grape-juice-bronze",
-   "wine-from-grape-juice-gold",
-   "wine-from-grape-juice-silver"
+   "wine-from-grape-juice-bronze"
   ]
  },
  {
@@ -14221,6 +14465,40 @@
   },
   "recipe_ids": [
    "build-wine-barrel"
+  ]
+ },
+ {
+  "id": "wine-gold",
+  "name": "Wine (gold)",
+  "kind": "quality-variant",
+  "category": "Drinks",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/ce2c4541-df0b-40c3-aa04-7181e660203c-i_bottle_red_vine_2.png",
+  "is_raw": false,
+  "obtain": "Made from ingredients of the same grade, or improved from the grade below.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "wine",
+  "recipe_ids": [
+   "drink-enhancement-ii-from-wine-silver",
+   "wine-from-grape-juice-gold"
+  ]
+ },
+ {
+  "id": "wine-silver",
+  "name": "Wine (silver)",
+  "kind": "quality-variant",
+  "category": "Drinks",
+  "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/ce2c4541-df0b-40c3-aa04-7181e660203c-i_bottle_red_vine_2.png",
+  "is_raw": false,
+  "obtain": "Made from ingredients of the same grade, or improved from the grade below.",
+  "sources": [],
+  "page_url": null,
+  "listed": true,
+  "base_item": "wine",
+  "recipe_ids": [
+   "drink-enhancement-i-from-wine-bronze",
+   "wine-from-grape-juice-silver"
   ]
  },
  {

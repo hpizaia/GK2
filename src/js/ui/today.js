@@ -78,8 +78,10 @@ GK.ui.today = (function () {
   let root = null, memo = "", notes = null;
   let opened = new Set(), openedDay = null;   // event rows opened by a tap (forgotten when the day changes)
   const collapsed = (state) => !!(state.ui && state.ui.todayCollapsed);
-  // the 44 px fold toggle (chevron drawn in CSS: .fold-btn); same id in both states so the focus stays on it
-  const foldBtn = (open, label) => `<button type="button" class="btn fold-btn" id="today-tgl" data-today-tgl aria-expanded="${open}" aria-controls="today-body" title="${esc(t(open ? "today.collapse" : "today.expand"))}" aria-label="${esc(t(open ? "today.collapseX" : "today.expandX", { name: label }))}"></button>`;
+  // the 44 px fold toggle; same id in both states so the focus stays on it. Open (a section heading): the thin
+  // chevron with no box of the planner's sections (.sec-fold, 1.8.x opção A); folded (the one-line card): the boxed
+  // .fold-btn of the station cards, inside its card
+  const foldBtn = (open, label, sec) => `<button type="button" class="${sec ? "sec-fold" : "btn fold-btn"}" id="today-tgl" data-today-tgl aria-expanded="${open}" aria-controls="today-body" title="${esc(t(open ? "today.collapse" : "today.expand"))}" aria-label="${esc(t(open ? "today.collapseX" : "today.expandX", { name: label }))}">${sec ? `<span class="sec-chev" aria-hidden="true"></span>` : ""}</button>`;
   const CONTROLS = "button, a, input, select, textarea, label";
   // the events that carry a "feito hoje" tick (data/days.json `task`: something to do or buy)
   const tasks = (d) => d.events.filter((ev) => ev.task !== false).length;
@@ -215,7 +217,7 @@ GK.ui.today = (function () {
     }
     if (!d) {
       root.innerHTML = `<section class="today today-ask" aria-labelledby="today-h">
-        <div class="fold-head" data-today-head><h2 class="h2" id="today-h">${esc(t("today.ask"))}</h2>${foldBtn(!shut, t("today.title"))}</div>
+        <div class="fold-head" data-today-head><h2 class="h2" id="today-h">${esc(t("today.ask"))}</h2>${foldBtn(!shut, t("today.title"), true)}</div>
         ${shut ? `<div id="today-body" hidden></div>` : `<div id="today-body">
         <p class="hint">${esc(t("today.askHint"))}</p>
         <div class="today-picks" role="group" aria-label="${esc(t("today.ask"))}">${w.days.map((x) =>
@@ -246,7 +248,7 @@ GK.ui.today = (function () {
     const done = ticked(state, d), all = tasks(d) > 0 && done.length === tasks(d);
     const typed = notes ? notes.keep() : () => {};
     root.innerHTML = `<section class="today" aria-labelledby="today-h">
-      <div class="fold-head" data-today-head><h2 class="h2 today-h" id="today-h"${dayStyle}><span class="sr-only">${esc(t("today.title"))}: </span>${DY().tile(d, 26)}<span class="today-h-t">${esc(name(d.name))} <span class="count tabnum">${state.dayNumber != null ? `${esc(t("days.counter", { n: state.dayNumber }))} · ` : ""}<span id="today-count">${esc(countText(state, d))}</span></span></span></h2>${noteBtn(d, state)}<span class="today-rule" aria-hidden="true"></span>${foldBtn(true, t("today.title"))}</div>
+      <div class="fold-head" data-today-head><h2 class="h2 today-h" id="today-h"${dayStyle}><span class="sr-only">${esc(t("today.title"))}: </span>${DY().tile(d, 26)}<span class="today-h-t">${esc(name(d.name))} <span class="count tabnum">${state.dayNumber != null ? `${esc(t("days.counter", { n: state.dayNumber }))} · ` : ""}<span id="today-count">${esc(countText(state, d))}</span></span></span></h2>${noteBtn(d, state)}<span class="today-rule" aria-hidden="true"></span>${foldBtn(true, t("today.title"), true)}</div>
       <div class="card today-card" id="today-body"${dayStyle}>
         ${d.events.length ? `<ul class="today-evs">${d.events.map((ev, i) => evRow(ev, i, done.indexOf(i) >= 0, opened.has(i), state)).join("")}</ul>` : `<p class="hint today-none">${esc(t("today.nothing"))}</p>`}
         ${all ? `<p class="today-all" role="status">${esc(t("today.allDone"))}</p>` : ""}

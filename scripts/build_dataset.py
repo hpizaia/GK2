@@ -171,6 +171,38 @@ def ref_item(key, name, icon=None):
     return ensure_virtual(name or key, icon)
 
 
+# ---------------------------------------------------------------- quality grades (bronze / silver / gold)
+# The wiki names a graded reference "Wine (silver)" but points it to the plain item page (key "wine"): ref_item()
+# alone would drop the grade, and the Barrel's three recipes would all make the same Wine. graded_ref() keeps it:
+#   "<X> (bronze)" -> the plain item <x> (the common item IS the bronze one: saved plans keep "wine", "cabbage");
+#   "<X> (silver|gold)" -> "<x>-silver|gold", a quality-variant item (base_item <x>, the base's icon and category).
+# Families without a wiki item page (Grape Juice, Story, Newspaper, Salad, Sauerkraut) already resolve by name
+# to their own "<x>-<grade>" items. Recipes listed in NO_GRADE stay as before: organ improvers make "(gold)" from
+# "Any <organ>" (both levels), which is not a bronze -> silver -> gold ladder (docs/revisao-ux/qualidade-auditoria.md).
+GRADE_RX = re.compile(r"^(.*\S)\s*\((bronze|silver|gold)\)$", re.I)
+NO_GRADE = ("improve-organ-",)
+variant_of = {}     # variant id -> (base id, grade)
+
+
+def graded_ref(key, name, icon=None):
+    m = GRADE_RX.match(name or "")
+    if not (m and key in items and items[key]["kind"] == "item"):
+        return ref_item(key, name, icon)
+    grade = m.group(2).lower()
+    if grade == "bronze":
+        return key
+    base = items[key]
+    vid = f"{key}-{grade}"
+    if vid not in items:
+        add_item(vid, name=f"{base['name']} ({grade})", kind="quality-variant", icon=base["icon"] or icon,
+                 category=base["category"])
+        items[vid]["listed"] = base["listed"]
+        items[vid]["base_item"] = key
+        name_to_id.setdefault(items[vid]["name"].lower(), vid)
+    variant_of[vid] = (key, grade)
+    return vid
+
+
 def station_ref(name):
     if not name:
         return None
@@ -207,9 +239,10 @@ for key, d in RECIPES.items():
     card = d.get("card") or {}
     card_inputs = card.get("inputs") or []
     card_outputs = card.get("outputs") or []
+    ref = ref_item if key.startswith(NO_GRADE) else graded_ref
     inputs = []
     for idx, i in enumerate(d["inputs"]):
-        iid = ref_item(i["key"], i["name"], i.get("icon"))
+        iid = ref(i["key"], i["name"], i.get("icon"))
         ent = {"item": iid, "qty": i["qty"]}
         note = card_inputs[idx].get("note") if idx < len(card_inputs) else None
         if note:
@@ -218,7 +251,7 @@ for key, d in RECIPES.items():
     # outputs: data outputs carry keys/qty, card outputs carry the perk/chance notes (same order)
     outs = []
     for idx, o in enumerate(d["outputs"]):
-        iid = ref_item(o["key"], o["name"], o.get("icon"))
+        iid = ref(o["key"], o["name"], o.get("icon"))
         ent = {"item": iid, "qty": o["qty"]}
         note = card_outputs[idx].get("note") if idx < len(card_outputs) else None
         if note:
@@ -426,10 +459,12 @@ for ik, d in ITEMS.items():
         if sig in seen_grow:
             continue
         seen_grow.add(sig)
-        ins = [{"item": href_slug(i["href"]), "qty": to_int(i.get("count"))} for i in g["inputs"]]
+        # the bed of a bronze seed gives bronze + silver, of a silver seed silver + gold, of a gold seed gold: the
+        # wiki names each line "Cabbage (Silver)" on the plain page, so the grade is kept as for recipes
+        ins = [{"item": graded_ref(href_slug(i["href"]), i.get("name")), "qty": to_int(i.get("count"))} for i in g["inputs"]]
         outs = []
         for o in g["outputs"]:
-            ent = {"item": href_slug(o["href"]), "qty": to_int(o.get("count"))}
+            ent = {"item": graded_ref(href_slug(o["href"]), o.get("name")), "qty": to_int(o.get("count"))}
             if o.get("note"):
                 ent["note"] = o["note"]
             outs.append(ent)
@@ -457,8 +492,59 @@ for ik, d in ITEMS.items():
             "note": g.get("note"),
             "listed": True,
             "calculator_default": False,
-            "source_url": f"{WIKI}/items/{primary['item']}",
+            "source_url": f"{WIKI}/items/{variant_of.get(primary['item'], (primary['item'],))[0]}",
         })
+
+# ---------------------------------------------------------------- 5. star crafts of a graded family
+# Story, Newspaper ("Printing Press"), Vegetable salad and Bowl of sauerkraut are star crafts: the grade of the result
+# depends on the successful ticks (star_quality: silver at N, gold at M). The wiki's recipe makes the plain item
+# ("Story", hidden; the prayers ask for it), so nothing made the bronze one and the silver / gold ones only came
+# from the improvement recipes. Each grade gets a copy of the star craft, id "<recipe>-<grade>", output
+# "<x>-<grade>"; the original recipe stays as it was. Same inputs, yield, station, thresholds: no new numbers.
+star_clones = []
+for r in list(recipes):
+    out = r["output"]["item"]
+    if r["type"] != "star_craft" or not r["star_quality"] or out.endswith(("-bronze", "-silver", "-gold")):
+        continue
+    grades = [g for g in ("bronze", "silver", "gold")
+              if items.get(f"{out}-{g}", {}).get("kind") == "quality-variant"]
+    if len(grades) != 3:
+        continue
+    for g in grades:
+        c = json.loads(json.dumps(r))
+        c["id"] = f"{r['id']}-{g}"
+        c["output"] = {"item": f"{out}-{g}", "qty": r["output"]["qty"]}
+        c["star_grade"] = g
+        c["calculator_default"] = False
+        star_clones.append(c)
+recipes.extend(star_clones)
+
+# ---------------------------------------------------------------- quality upgrades
+# A recipe whose output is a grade of a family and which takes a lower grade of the same family ("Drink enhancement
+# I": Wine (bronze) + Spices -> Wine (silver); "Improve story I": 2 Story (bronze) -> 1 Story (silver)) is an upgrade:
+# build.py lists it after the recipes that make that grade directly (the Barrel with silver Grape Juice, the silver
+# star craft), so the planner's default is the direct one and the upgrade an alternative.
+GRADE_RANK = {"bronze": 0, "silver": 1, "gold": 2}
+
+
+def grade_of(iid):
+    if iid in variant_of:
+        return variant_of[iid]
+    rec = items.get(iid) or {}
+    m = GRADE_RX.match(rec.get("name") or "")
+    if rec.get("kind") == "quality-variant" and m:
+        base = rec.get("base_item") or name_to_id.get(m.group(1).lower()) or m.group(1).lower()
+        return base, m.group(2).lower()
+    return iid, None   # a plain item of a family is its bronze grade (graded_ref)
+
+
+for r in recipes:
+    fam, g = grade_of(r["output"]["item"])
+    if g in ("silver", "gold"):
+        for i in r["inputs"]:
+            f2, g2 = grade_of(i["item"])
+            if f2 == fam and GRADE_RANK.get(g2 or "bronze") < GRADE_RANK[g]:
+                r["quality_upgrade"] = True
 
 # ---------------------------------------------------------------- calculator default flags
 by_output = collections.defaultdict(list)
@@ -494,6 +580,18 @@ for r in recipes:
     for ref in [r["output"]] + r["extra_outputs"] + r["inputs"]:
         assert ref["item"] in items, ref
 
+# crops and seeds of the crop beds (their grades come from the seed): obtain texts of their silver / gold variants
+crops = {variant_of.get(r["output"]["item"], (r["output"]["item"],))[0] for r in recipes if r["type"] == "grow"}
+seeds = {variant_of.get(i["item"], (i["item"],))[0] for r in recipes if r["type"] == "grow" for i in r["inputs"]}
+VARIANT_OBTAIN = {
+    ("crop", "silver"): "Harvest: bronze or silver seeds.",
+    ("crop", "gold"): "Harvest: silver or gold seeds.",
+    ("seed", "silver"): "Harvest by-product: bronze or silver seeds.",
+    ("seed", "gold"): "Harvest by-product: silver or gold seeds.",
+    ("made", "silver"): "Made from ingredients of the same grade, or improved from the grade below.",
+    ("made", "gold"): "Made from ingredients of the same grade, or improved from the grade below.",
+}
+
 producers = collections.defaultdict(set)
 for r in recipes:
     producers[r["output"]["item"]].add(r["type"])
@@ -522,7 +620,18 @@ for iid, rec in items.items():
                 members = [name_to_id.get(p.strip().lower()) for p in nm.split(" or ")]
         rec["group_members"] = [x for x in members if x]
         rec["obtain"] = rec["obtain"] or "Wildcard ingredient: any one of the listed group members."
-    if rec["kind"] == "quality-variant":
+    if rec["kind"] == "quality-variant" and iid in variant_of:
+        # a grade kept by graded_ref(): how to get it, short and honest (docs/revisao-ux/qualidade-pesquisa.md: the
+        # grade of a crop comes from the seed; a bronze seed gives bronze + silver, silver gives silver + gold, gold gold)
+        base, grade = variant_of[iid]
+        rec["base_item"] = base
+        if base in crops:
+            rec["obtain"] = VARIANT_OBTAIN["crop", grade]
+        elif base in seeds:
+            rec["obtain"] = VARIANT_OBTAIN["seed", grade]
+        else:
+            rec["obtain"] = VARIANT_OBTAIN["made", grade]
+    elif rec["kind"] == "quality-variant":
         base = re.sub(r"\s*\((bronze|silver|gold)\)$", "", rec["name"])
         rec["base_item"] = name_to_id.get(base.lower())
         rec["obtain"] = rec["obtain"] or "Quality grade of the base item (star craft result or enhancement recipe)."

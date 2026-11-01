@@ -7,23 +7,23 @@
    "en"
   ],
   "counts": {
-   "items": 820,
-   "recipes": 695,
+   "items": 838,
+   "recipes": 707,
    "stations": 79,
    "categories": 53,
    "techs": 231,
-   "multiRecipeItems": 66,
+   "multiRecipeItems": 71,
    "noexpRecipes": 17,
    "tr": {
     "official": 785,
-    "likely": 29,
+    "likely": 47,
     "guess": 0,
     "machine": 6,
     "missing": 0
    },
-   "cycles": 8,
+   "cycles": 7,
    "errors": 0,
-   "warnings": 206
+   "warnings": 205
   },
   "sources": [
    "derived",
@@ -4709,7 +4709,7 @@
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/6a41a46f-4465-4568-beb3-75f48fb77a33-i_bowl_sauerkraut.png",
    "tr": "likely",
-   "raw": true,
+   "raw": false,
    "obtain": {
     "pt": "Grau de qualidade do item base (resultado de fabricação com estrelas ou receita de aprimoramento).",
     "en": "Quality grade of the base item (star craft result or enhancement recipe)."
@@ -4717,8 +4717,11 @@
    "kind": "quality-variant",
    "listed": true,
    "unobtainable": false,
-   "recipes": [],
-   "defaultRecipe": null
+   "recipes": [
+    "bowl-of-sauerkraut-bronze"
+   ],
+   "defaultRecipe": "bowl-of-sauerkraut-bronze",
+   "base": "bowl-of-sauerkraut"
   },
   "bowl-of-sauerkraut-gold": {
    "id": "bowl-of-sauerkraut-gold",
@@ -4739,9 +4742,11 @@
    "listed": true,
    "unobtainable": false,
    "recipes": [
+    "bowl-of-sauerkraut-gold",
     "food-enhancement-ii-from-bowl-of-sauerkraut-silver"
    ],
-   "defaultRecipe": "food-enhancement-ii-from-bowl-of-sauerkraut-silver"
+   "defaultRecipe": "bowl-of-sauerkraut-gold",
+   "base": "bowl-of-sauerkraut"
   },
   "bowl-of-sauerkraut-silver": {
    "id": "bowl-of-sauerkraut-silver",
@@ -4762,9 +4767,11 @@
    "listed": true,
    "unobtainable": false,
    "recipes": [
+    "bowl-of-sauerkraut-silver",
     "food-enhancement-i-from-bowl-of-sauerkraut-bronze"
    ],
-   "defaultRecipe": "food-enhancement-i-from-bowl-of-sauerkraut-bronze"
+   "defaultRecipe": "bowl-of-sauerkraut-silver",
+   "base": "bowl-of-sauerkraut"
   },
   "brain": {
    "id": "brain",
@@ -6469,8 +6476,6 @@
    "listed": true,
    "unobtainable": false,
    "recipes": [
-    "grow-cabbage-bed-m10",
-    "grow-cabbage-bed-m12",
     "grow-cabbage-bed-m8"
    ],
    "defaultRecipe": null,
@@ -6548,6 +6553,30 @@
    "defaultRecipe": "plant-cabbage-seed-bronze",
    "key": "garden_cabbage"
   },
+  "cabbage-gold": {
+   "id": "cabbage-gold",
+   "pt": "Repolho (ouro)",
+   "en": "Cabbage (gold)",
+   "cat": {
+    "pt": "Agricultura",
+    "en": "Farming"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/f80cdcd0-623b-4e94-a43e-8cc287cfbfff-i_cabbage_crop.png",
+   "tr": "likely",
+   "raw": true,
+   "obtain": {
+    "pt": "Colheita: semente prata ou ouro.",
+    "en": "Harvest: silver or gold seeds."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [
+    "grow-cabbage-bed-m12"
+   ],
+   "defaultRecipe": null,
+   "base": "cabbage"
+  },
   "cabbage-seed": {
    "id": "cabbage-seed",
    "pt": "Semente de Repolho",
@@ -6612,6 +6641,74 @@
     0,
     2
    ]
+  },
+  "cabbage-seed-gold": {
+   "id": "cabbage-seed-gold",
+   "pt": "Semente de Repolho (ouro)",
+   "en": "Cabbage seed (gold)",
+   "cat": {
+    "pt": "Agricultura",
+    "en": "Farming"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/c93d94b7-3c11-4ebc-a624-145706e883dd-i_cabbage_seed.png",
+   "tr": "likely",
+   "raw": true,
+   "obtain": {
+    "pt": "Sobra da colheita: semente prata ou ouro.",
+    "en": "Harvest by-product: silver or gold seeds."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [],
+   "defaultRecipe": null,
+   "base": "cabbage-seed"
+  },
+  "cabbage-seed-silver": {
+   "id": "cabbage-seed-silver",
+   "pt": "Semente de Repolho (prata)",
+   "en": "Cabbage seed (silver)",
+   "cat": {
+    "pt": "Agricultura",
+    "en": "Farming"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/c93d94b7-3c11-4ebc-a624-145706e883dd-i_cabbage_seed.png",
+   "tr": "likely",
+   "raw": true,
+   "obtain": {
+    "pt": "Sobra da colheita: semente bronze ou prata.",
+    "en": "Harvest by-product: bronze or silver seeds."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [],
+   "defaultRecipe": null,
+   "base": "cabbage-seed"
+  },
+  "cabbage-silver": {
+   "id": "cabbage-silver",
+   "pt": "Repolho (prata)",
+   "en": "Cabbage (silver)",
+   "cat": {
+    "pt": "Agricultura",
+    "en": "Farming"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/f80cdcd0-623b-4e94-a43e-8cc287cfbfff-i_cabbage_crop.png",
+   "tr": "likely",
+   "raw": true,
+   "obtain": {
+    "pt": "Colheita: semente bronze ou prata.",
+    "en": "Harvest: bronze or silver seeds."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [
+    "grow-cabbage-bed-m10"
+   ],
+   "defaultRecipe": null,
+   "base": "cabbage"
   },
   "cabbage-soup": {
    "id": "cabbage-soup",
@@ -13157,10 +13254,10 @@
    "listed": true,
    "unobtainable": false,
    "recipes": [
-    "drink-enhancement-ii-from-grape-juice-silver",
-    "grape-juice-from-grapes-gold"
+    "grape-juice-from-grapes-gold",
+    "drink-enhancement-ii-from-grape-juice-silver"
    ],
-   "defaultRecipe": "drink-enhancement-ii-from-grape-juice-silver"
+   "defaultRecipe": "grape-juice-from-grapes-gold"
   },
   "grape-juice-silver": {
    "id": "grape-juice-silver",
@@ -13181,10 +13278,10 @@
    "listed": true,
    "unobtainable": false,
    "recipes": [
-    "drink-enhancement-i-from-grape-juice-bronze",
-    "grape-juice-from-grapes-silver"
+    "grape-juice-from-grapes-silver",
+    "drink-enhancement-i-from-grape-juice-bronze"
    ],
-   "defaultRecipe": "drink-enhancement-i-from-grape-juice-bronze"
+   "defaultRecipe": "grape-juice-from-grapes-silver"
   },
   "grape-pie": {
    "id": "grape-pie",
@@ -13274,6 +13371,50 @@
     1
    ]
   },
+  "grape-seeds-gold": {
+   "id": "grape-seeds-gold",
+   "pt": "Sementes de Uva (ouro)",
+   "en": "Grape Seeds (gold)",
+   "cat": {
+    "pt": "Agricultura",
+    "en": "Farming"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/c6f3d9ce-db8d-44d8-95ca-d20f4bb8a4ec-i_grapes_seed.png",
+   "tr": "likely",
+   "raw": true,
+   "obtain": {
+    "pt": "Sobra da colheita: semente prata ou ouro.",
+    "en": "Harvest by-product: silver or gold seeds."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [],
+   "defaultRecipe": null,
+   "base": "grape-seeds"
+  },
+  "grape-seeds-silver": {
+   "id": "grape-seeds-silver",
+   "pt": "Sementes de Uva (prata)",
+   "en": "Grape Seeds (silver)",
+   "cat": {
+    "pt": "Agricultura",
+    "en": "Farming"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/c6f3d9ce-db8d-44d8-95ca-d20f4bb8a4ec-i_grapes_seed.png",
+   "tr": "likely",
+   "raw": true,
+   "obtain": {
+    "pt": "Sobra da colheita: semente bronze ou prata.",
+    "en": "Harvest by-product: bronze or silver seeds."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [],
+   "defaultRecipe": null,
+   "base": "grape-seeds"
+  },
   "grapes": {
    "id": "grapes",
    "pt": "Uvas",
@@ -13293,9 +13434,7 @@
    "listed": true,
    "unobtainable": false,
    "recipes": [
-    "grow-grapes-bed-m12",
-    "grow-grapes-bed-m14",
-    "grow-grapes-bed-m16"
+    "grow-grapes-bed-m12"
    ],
    "defaultRecipe": null,
    "key": "grape",
@@ -13347,6 +13486,54 @@
    ],
    "defaultRecipe": "plant-grape-seeds-bronze",
    "key": "garden_grapes"
+  },
+  "grapes-gold": {
+   "id": "grapes-gold",
+   "pt": "Uvas (ouro)",
+   "en": "Grapes (gold)",
+   "cat": {
+    "pt": "Agricultura",
+    "en": "Farming"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/2d19f366-432d-49e8-88b5-9504cdea29c6-i_grapes_crop.png",
+   "tr": "likely",
+   "raw": true,
+   "obtain": {
+    "pt": "Colheita: semente prata ou ouro.",
+    "en": "Harvest: silver or gold seeds."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [
+    "grow-grapes-bed-m16"
+   ],
+   "defaultRecipe": null,
+   "base": "grapes"
+  },
+  "grapes-silver": {
+   "id": "grapes-silver",
+   "pt": "Uvas (prata)",
+   "en": "Grapes (silver)",
+   "cat": {
+    "pt": "Agricultura",
+    "en": "Farming"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/2d19f366-432d-49e8-88b5-9504cdea29c6-i_grapes_crop.png",
+   "tr": "likely",
+   "raw": true,
+   "obtain": {
+    "pt": "Colheita: semente bronze ou prata.",
+    "en": "Harvest: bronze or silver seeds."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [
+    "grow-grapes-bed-m14"
+   ],
+   "defaultRecipe": null,
+   "base": "grapes"
   },
   "grated-beets": {
    "id": "grated-beets",
@@ -18633,7 +18820,7 @@
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/0e4133ca-f6c8-4e15-b009-618a12d73b85-i_newspaper.png",
    "tr": "likely",
-   "raw": true,
+   "raw": false,
    "obtain": {
     "pt": "Grau de qualidade do item base (resultado de fabricação com estrelas ou receita de aprimoramento).",
     "en": "Quality grade of the base item (star craft result or enhancement recipe)."
@@ -18641,8 +18828,11 @@
    "kind": "quality-variant",
    "listed": true,
    "unobtainable": false,
-   "recipes": [],
-   "defaultRecipe": null
+   "recipes": [
+    "printing-press-bronze"
+   ],
+   "defaultRecipe": "printing-press-bronze",
+   "base": "newspaper"
   },
   "newspaper-gold": {
    "id": "newspaper-gold",
@@ -18663,9 +18853,11 @@
    "listed": true,
    "unobtainable": false,
    "recipes": [
+    "printing-press-gold",
     "improve-newspaper-ii"
    ],
-   "defaultRecipe": "improve-newspaper-ii"
+   "defaultRecipe": "printing-press-gold",
+   "base": "newspaper"
   },
   "newspaper-silver": {
    "id": "newspaper-silver",
@@ -18686,9 +18878,11 @@
    "listed": true,
    "unobtainable": false,
    "recipes": [
+    "printing-press-silver",
     "improve-newspaper-i"
    ],
-   "defaultRecipe": "improve-newspaper-i"
+   "defaultRecipe": "printing-press-silver",
+   "base": "newspaper"
   },
   "newspaper-silver-or-gold": {
    "id": "newspaper-silver-or-gold",
@@ -18985,9 +19179,7 @@
    "listed": true,
    "unobtainable": false,
    "recipes": [
-    "grow-onion-bed-m10",
-    "grow-onion-bed-m12",
-    "grow-onion-bed-m14"
+    "grow-onion-bed-m10"
    ],
    "defaultRecipe": null,
    "key": "onion:1",
@@ -19070,6 +19262,30 @@
    ],
    "defaultRecipe": "plant-onion-seed-bronze",
    "key": "garden_onion"
+  },
+  "onion-gold": {
+   "id": "onion-gold",
+   "pt": "Cebola (ouro)",
+   "en": "Onion (gold)",
+   "cat": {
+    "pt": "Agricultura",
+    "en": "Farming"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/75e6f3db-a1f1-40d1-9113-07f8fcbb7227-i_onion_crop.png",
+   "tr": "likely",
+   "raw": true,
+   "obtain": {
+    "pt": "Colheita: semente prata ou ouro.",
+    "en": "Harvest: silver or gold seeds."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [
+    "grow-onion-bed-m14"
+   ],
+   "defaultRecipe": null,
+   "base": "onion"
   },
   "onion-rings": {
    "id": "onion-rings",
@@ -19181,6 +19397,74 @@
     0,
     2
    ]
+  },
+  "onion-seed-gold": {
+   "id": "onion-seed-gold",
+   "pt": "Semente de Cebola (ouro)",
+   "en": "Onion seed (gold)",
+   "cat": {
+    "pt": "Agricultura",
+    "en": "Farming"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/ef7b599e-2f64-4ae5-90f0-5f5189909bf2-i_onion_seed.png",
+   "tr": "likely",
+   "raw": true,
+   "obtain": {
+    "pt": "Sobra da colheita: semente prata ou ouro.",
+    "en": "Harvest by-product: silver or gold seeds."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [],
+   "defaultRecipe": null,
+   "base": "onion-seed"
+  },
+  "onion-seed-silver": {
+   "id": "onion-seed-silver",
+   "pt": "Semente de Cebola (prata)",
+   "en": "Onion seed (silver)",
+   "cat": {
+    "pt": "Agricultura",
+    "en": "Farming"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/ef7b599e-2f64-4ae5-90f0-5f5189909bf2-i_onion_seed.png",
+   "tr": "likely",
+   "raw": true,
+   "obtain": {
+    "pt": "Sobra da colheita: semente bronze ou prata.",
+    "en": "Harvest by-product: bronze or silver seeds."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [],
+   "defaultRecipe": null,
+   "base": "onion-seed"
+  },
+  "onion-silver": {
+   "id": "onion-silver",
+   "pt": "Cebola (prata)",
+   "en": "Onion (silver)",
+   "cat": {
+    "pt": "Agricultura",
+    "en": "Farming"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/75e6f3db-a1f1-40d1-9113-07f8fcbb7227-i_onion_crop.png",
+   "tr": "likely",
+   "raw": true,
+   "obtain": {
+    "pt": "Colheita: semente bronze ou prata.",
+    "en": "Harvest: bronze or silver seeds."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [
+    "grow-onion-bed-m12"
+   ],
+   "defaultRecipe": null,
+   "base": "onion"
   },
   "open-corpse-dumping-point": {
    "id": "open-corpse-dumping-point",
@@ -21156,9 +21440,7 @@
    "listed": true,
    "unobtainable": false,
    "recipes": [
-    "grow-pumpkin-bed-m12",
-    "grow-pumpkin-bed-m14",
-    "grow-pumpkin-bed-m16"
+    "grow-pumpkin-bed-m12"
    ],
    "defaultRecipe": null,
    "key": "pumpkin",
@@ -21221,6 +21503,30 @@
    "defaultRecipe": "plant-pumpkin-seeds-bronze",
    "key": "garden_pumpkin"
   },
+  "pumpkin-gold": {
+   "id": "pumpkin-gold",
+   "pt": "Abóbora (ouro)",
+   "en": "Pumpkin (gold)",
+   "cat": {
+    "pt": "Agricultura",
+    "en": "Farming"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/8489e08c-75e0-478e-9e7b-b8b97b054180-i_pumpkin_crop.png",
+   "tr": "likely",
+   "raw": true,
+   "obtain": {
+    "pt": "Colheita: semente prata ou ouro.",
+    "en": "Harvest: silver or gold seeds."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [
+    "grow-pumpkin-bed-m16"
+   ],
+   "defaultRecipe": null,
+   "base": "pumpkin"
+  },
   "pumpkin-seeds": {
    "id": "pumpkin-seeds",
    "pt": "Sementes de Abóbora",
@@ -21278,6 +21584,74 @@
     20,
     2
    ]
+  },
+  "pumpkin-seeds-gold": {
+   "id": "pumpkin-seeds-gold",
+   "pt": "Sementes de Abóbora (ouro)",
+   "en": "Pumpkin Seeds (gold)",
+   "cat": {
+    "pt": "Agricultura",
+    "en": "Farming"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/765a7679-1ba7-4aa0-a2cc-b040a7667baf-i_pumpkin_seed.png",
+   "tr": "likely",
+   "raw": true,
+   "obtain": {
+    "pt": "Sobra da colheita: semente prata ou ouro.",
+    "en": "Harvest by-product: silver or gold seeds."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [],
+   "defaultRecipe": null,
+   "base": "pumpkin-seeds"
+  },
+  "pumpkin-seeds-silver": {
+   "id": "pumpkin-seeds-silver",
+   "pt": "Sementes de Abóbora (prata)",
+   "en": "Pumpkin Seeds (silver)",
+   "cat": {
+    "pt": "Agricultura",
+    "en": "Farming"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/765a7679-1ba7-4aa0-a2cc-b040a7667baf-i_pumpkin_seed.png",
+   "tr": "likely",
+   "raw": true,
+   "obtain": {
+    "pt": "Sobra da colheita: semente bronze ou prata.",
+    "en": "Harvest by-product: bronze or silver seeds."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [],
+   "defaultRecipe": null,
+   "base": "pumpkin-seeds"
+  },
+  "pumpkin-silver": {
+   "id": "pumpkin-silver",
+   "pt": "Abóbora (prata)",
+   "en": "Pumpkin (silver)",
+   "cat": {
+    "pt": "Agricultura",
+    "en": "Farming"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/8489e08c-75e0-478e-9e7b-b8b97b054180-i_pumpkin_crop.png",
+   "tr": "likely",
+   "raw": true,
+   "obtain": {
+    "pt": "Colheita: semente bronze ou prata.",
+    "en": "Harvest: bronze or silver seeds."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [
+    "grow-pumpkin-bed-m14"
+   ],
+   "defaultRecipe": null,
+   "base": "pumpkin"
   },
   "pumpkin-soup": {
    "id": "pumpkin-soup",
@@ -25308,7 +25682,7 @@
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/386b3872-8fca-42df-8940-66027ef048c4-i_scroll_story.png",
    "tr": "likely",
-   "raw": true,
+   "raw": false,
    "obtain": {
     "pt": "Grau de qualidade do item base (resultado de fabricação com estrelas ou receita de aprimoramento).",
     "en": "Quality grade of the base item (star craft result or enhancement recipe)."
@@ -25316,8 +25690,11 @@
    "kind": "quality-variant",
    "listed": true,
    "unobtainable": false,
-   "recipes": [],
-   "defaultRecipe": null
+   "recipes": [
+    "story-bronze"
+   ],
+   "defaultRecipe": "story-bronze",
+   "base": "story"
   },
   "story-gold": {
    "id": "story-gold",
@@ -25338,9 +25715,11 @@
    "listed": true,
    "unobtainable": false,
    "recipes": [
+    "story-gold",
     "improve-story-ii"
    ],
-   "defaultRecipe": "improve-story-ii"
+   "defaultRecipe": "story-gold",
+   "base": "story"
   },
   "story-silver": {
    "id": "story-silver",
@@ -25361,9 +25740,11 @@
    "listed": true,
    "unobtainable": false,
    "recipes": [
+    "story-silver",
     "improve-story-i"
    ],
-   "defaultRecipe": "improve-story-i"
+   "defaultRecipe": "story-silver",
+   "base": "story"
   },
   "study-table": {
    "id": "study-table",
@@ -28086,7 +28467,7 @@
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/d0b60cbe-1c65-47c2-b722-8c6f2006510a-i_vegetable_salad.png",
    "tr": "likely",
-   "raw": true,
+   "raw": false,
    "obtain": {
     "pt": "Grau de qualidade do item base (resultado de fabricação com estrelas ou receita de aprimoramento).",
     "en": "Quality grade of the base item (star craft result or enhancement recipe)."
@@ -28094,8 +28475,11 @@
    "kind": "quality-variant",
    "listed": true,
    "unobtainable": false,
-   "recipes": [],
-   "defaultRecipe": null
+   "recipes": [
+    "vegetable-salad-bronze"
+   ],
+   "defaultRecipe": "vegetable-salad-bronze",
+   "base": "vegetable-salad"
   },
   "vegetable-salad-gold": {
    "id": "vegetable-salad-gold",
@@ -28116,9 +28500,11 @@
    "listed": true,
    "unobtainable": false,
    "recipes": [
+    "vegetable-salad-gold",
     "food-enhancement-ii-from-vegetable-salad-silver"
    ],
-   "defaultRecipe": "food-enhancement-ii-from-vegetable-salad-silver"
+   "defaultRecipe": "vegetable-salad-gold",
+   "base": "vegetable-salad"
   },
   "vegetable-salad-silver": {
    "id": "vegetable-salad-silver",
@@ -28139,9 +28525,11 @@
    "listed": true,
    "unobtainable": false,
    "recipes": [
+    "vegetable-salad-silver",
     "food-enhancement-i-from-vegetable-salad-bronze"
    ],
-   "defaultRecipe": "food-enhancement-i-from-vegetable-salad-bronze"
+   "defaultRecipe": "vegetable-salad-silver",
+   "base": "vegetable-salad"
   },
   "vegetable-soup": {
    "id": "vegetable-soup",
@@ -28808,11 +29196,7 @@
    "listed": true,
    "unobtainable": false,
    "recipes": [
-    "wine-from-grape-juice-bronze",
-    "wine-from-grape-juice-gold",
-    "wine-from-grape-juice-silver",
-    "drink-enhancement-i-from-wine-bronze",
-    "drink-enhancement-ii-from-wine-silver"
+    "wine-from-grape-juice-bronze"
    ],
    "defaultRecipe": "wine-from-grape-juice-bronze",
    "key": "grape_wine",
@@ -28882,6 +29266,56 @@
    ],
    "defaultRecipe": "build-wine-barrel",
    "key": "wine_barrel"
+  },
+  "wine-gold": {
+   "id": "wine-gold",
+   "pt": "Vinho (ouro)",
+   "en": "Wine (gold)",
+   "cat": {
+    "pt": "Bebidas",
+    "en": "Drinks"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/ce2c4541-df0b-40c3-aa04-7181e660203c-i_bottle_red_vine_2.png",
+   "tr": "likely",
+   "raw": false,
+   "obtain": {
+    "pt": "Feito com ingredientes do mesmo grau ou melhorado a partir do grau abaixo.",
+    "en": "Made from ingredients of the same grade, or improved from the grade below."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [
+    "wine-from-grape-juice-gold",
+    "drink-enhancement-ii-from-wine-silver"
+   ],
+   "defaultRecipe": "wine-from-grape-juice-gold",
+   "base": "wine"
+  },
+  "wine-silver": {
+   "id": "wine-silver",
+   "pt": "Vinho (prata)",
+   "en": "Wine (silver)",
+   "cat": {
+    "pt": "Bebidas",
+    "en": "Drinks"
+   },
+   "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/ce2c4541-df0b-40c3-aa04-7181e660203c-i_bottle_red_vine_2.png",
+   "tr": "likely",
+   "raw": false,
+   "obtain": {
+    "pt": "Feito com ingredientes do mesmo grau ou melhorado a partir do grau abaixo.",
+    "en": "Made from ingredients of the same grade, or improved from the grade below."
+   },
+   "kind": "quality-variant",
+   "listed": true,
+   "unobtainable": false,
+   "recipes": [
+    "wine-from-grape-juice-silver",
+    "drink-enhancement-i-from-wine-bronze"
+   ],
+   "defaultRecipe": "wine-from-grape-juice-silver",
+   "base": "wine"
   },
   "wood-wedge": {
    "id": "wood-wedge",
@@ -33576,7 +34010,7 @@
    "station": "kitchen-oven",
    "in": [
     {
-     "item": "pumpkin",
+     "item": "pumpkin-gold",
      "qty": 2
     },
     {
@@ -33634,7 +34068,7 @@
    "station": "kitchen-oven",
    "in": [
     {
-     "item": "pumpkin",
+     "item": "pumpkin-silver",
      "qty": 2
     },
     {
@@ -34639,6 +35073,192 @@
    "star_quality": {
     "silver": 4,
     "gold": 7
+   }
+  },
+  {
+   "id": "bowl-of-sauerkraut-bronze",
+   "out": {
+    "item": "bowl-of-sauerkraut-bronze",
+    "qty": 2,
+    "note": {
+     "pt": "2 (4 com Cozinheiro)",
+     "en": "2 (4 with Cook)"
+    }
+   },
+   "station": "kitchen-table",
+   "in": [
+    {
+     "item": "cabbage",
+     "qty": 3
+    },
+    {
+     "item": "salt",
+     "qty": 1
+    },
+    {
+     "item": "seed-oil",
+     "qty": 1
+    }
+   ],
+   "tech": {
+    "pt": "Pratos de repolho",
+    "en": "Cabbage dishes",
+    "id": "cabbage-dishes",
+    "type": "technology"
+   },
+   "type": "star_craft",
+   "cd": false,
+   "listed": true,
+   "noexp": false,
+   "cyc": false,
+   "alt": [
+    "kitchen-table-ii"
+   ],
+   "ext": null,
+   "extra": [],
+   "mastery": {
+    "type": {
+     "pt": "Agricultura",
+     "en": "Farming"
+    },
+    "level": 4
+   },
+   "ticks": 7,
+   "energy": 2,
+   "example": false,
+   "runes": null,
+   "zone": null,
+   "star_quality": {
+    "silver": 4,
+    "gold": 7
+   },
+   "name": {
+    "pt": "Pote de chucrute",
+    "en": "Bowl of sauerkraut"
+   }
+  },
+  {
+   "id": "bowl-of-sauerkraut-gold",
+   "out": {
+    "item": "bowl-of-sauerkraut-gold",
+    "qty": 2,
+    "note": {
+     "pt": "2 (4 com Cozinheiro)",
+     "en": "2 (4 with Cook)"
+    }
+   },
+   "station": "kitchen-table",
+   "in": [
+    {
+     "item": "cabbage",
+     "qty": 3
+    },
+    {
+     "item": "salt",
+     "qty": 1
+    },
+    {
+     "item": "seed-oil",
+     "qty": 1
+    }
+   ],
+   "tech": {
+    "pt": "Pratos de repolho",
+    "en": "Cabbage dishes",
+    "id": "cabbage-dishes",
+    "type": "technology"
+   },
+   "type": "star_craft",
+   "cd": false,
+   "listed": true,
+   "noexp": false,
+   "cyc": false,
+   "alt": [
+    "kitchen-table-ii"
+   ],
+   "ext": null,
+   "extra": [],
+   "mastery": {
+    "type": {
+     "pt": "Agricultura",
+     "en": "Farming"
+    },
+    "level": 4
+   },
+   "ticks": 7,
+   "energy": 2,
+   "example": false,
+   "runes": null,
+   "zone": null,
+   "star_quality": {
+    "silver": 4,
+    "gold": 7
+   },
+   "name": {
+    "pt": "Pote de chucrute",
+    "en": "Bowl of sauerkraut"
+   }
+  },
+  {
+   "id": "bowl-of-sauerkraut-silver",
+   "out": {
+    "item": "bowl-of-sauerkraut-silver",
+    "qty": 2,
+    "note": {
+     "pt": "2 (4 com Cozinheiro)",
+     "en": "2 (4 with Cook)"
+    }
+   },
+   "station": "kitchen-table",
+   "in": [
+    {
+     "item": "cabbage",
+     "qty": 3
+    },
+    {
+     "item": "salt",
+     "qty": 1
+    },
+    {
+     "item": "seed-oil",
+     "qty": 1
+    }
+   ],
+   "tech": {
+    "pt": "Pratos de repolho",
+    "en": "Cabbage dishes",
+    "id": "cabbage-dishes",
+    "type": "technology"
+   },
+   "type": "star_craft",
+   "cd": false,
+   "listed": true,
+   "noexp": false,
+   "cyc": false,
+   "alt": [
+    "kitchen-table-ii"
+   ],
+   "ext": null,
+   "extra": [],
+   "mastery": {
+    "type": {
+     "pt": "Agricultura",
+     "en": "Farming"
+    },
+    "level": 4
+   },
+   "ticks": 7,
+   "energy": 2,
+   "example": false,
+   "runes": null,
+   "zone": null,
+   "star_quality": {
+    "silver": 4,
+    "gold": 7
+   },
+   "name": {
+    "pt": "Pote de chucrute",
+    "en": "Bowl of sauerkraut"
    }
   },
   {
@@ -45232,7 +45852,7 @@
    "station": "kitchen-oven",
    "in": [
     {
-     "item": "cabbage",
+     "item": "cabbage-gold",
      "qty": 2
     },
     {
@@ -45294,7 +45914,7 @@
    "station": "kitchen-oven",
    "in": [
     {
-     "item": "cabbage",
+     "item": "cabbage-silver",
      "qty": 2
     },
     {
@@ -46591,7 +47211,7 @@
   {
    "id": "drink-enhancement-i-from-wine-bronze",
    "out": {
-    "item": "wine",
+    "item": "wine-silver",
     "qty": 1
    },
    "station": "kitchen-table",
@@ -46612,10 +47232,10 @@
     "type": "technology"
    },
    "type": "hand_craft",
-   "cd": true,
+   "cd": false,
    "listed": true,
    "noexp": false,
-   "cyc": true,
+   "cyc": false,
    "alt": [
     "kitchen-table-ii"
    ],
@@ -46691,13 +47311,13 @@
   {
    "id": "drink-enhancement-ii-from-wine-silver",
    "out": {
-    "item": "wine",
+    "item": "wine-gold",
     "qty": 1
    },
    "station": "kitchen-table",
    "in": [
     {
-     "item": "wine",
+     "item": "wine-silver",
      "qty": 1
     },
     {
@@ -46715,7 +47335,7 @@
    "cd": false,
    "listed": true,
    "noexp": false,
-   "cyc": true,
+   "cyc": false,
    "alt": [
     "kitchen-table-ii"
    ],
@@ -48866,7 +49486,7 @@
    "station": "vine-press",
    "in": [
     {
-     "item": "grapes",
+     "item": "grapes-gold",
      "qty": 6
     },
     {
@@ -48914,7 +49534,7 @@
    "station": "vine-press",
    "in": [
     {
-     "item": "grapes",
+     "item": "grapes-silver",
      "qty": 6
     },
     {
@@ -49244,13 +49864,13 @@
   {
    "id": "grow-cabbage-bed-m10",
    "out": {
-    "item": "cabbage",
+    "item": "cabbage-silver",
     "qty": null
    },
    "station": "cabbage-bed",
    "in": [
     {
-     "item": "cabbage-seed",
+     "item": "cabbage-seed-silver",
      "qty": 4
     }
    ],
@@ -49264,7 +49884,7 @@
    "ext": null,
    "extra": [
     {
-     "item": "cabbage",
+     "item": "cabbage-gold",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II",
@@ -49272,7 +49892,7 @@
      }
     },
     {
-     "item": "cabbage-seed",
+     "item": "cabbage-seed-silver",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro",
@@ -49280,7 +49900,7 @@
      }
     },
     {
-     "item": "cabbage-seed",
+     "item": "cabbage-seed-gold",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
@@ -49312,13 +49932,13 @@
   {
    "id": "grow-cabbage-bed-m12",
    "out": {
-    "item": "cabbage",
+    "item": "cabbage-gold",
     "qty": null
    },
    "station": "cabbage-bed",
    "in": [
     {
-     "item": "cabbage-seed",
+     "item": "cabbage-seed-gold",
      "qty": 4
     }
    ],
@@ -49332,7 +49952,7 @@
    "ext": null,
    "extra": [
     {
-     "item": "cabbage-seed",
+     "item": "cabbage-seed-gold",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
@@ -49384,7 +50004,7 @@
    "ext": null,
    "extra": [
     {
-     "item": "cabbage",
+     "item": "cabbage-silver",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II",
@@ -49400,7 +50020,7 @@
      }
     },
     {
-     "item": "cabbage-seed",
+     "item": "cabbage-seed-silver",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
@@ -49556,7 +50176,7 @@
    "ext": null,
    "extra": [
     {
-     "item": "grapes",
+     "item": "grapes-silver",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II e Senhor das Uvas",
@@ -49572,7 +50192,7 @@
      }
     },
     {
-     "item": "grape-seeds",
+     "item": "grape-seeds-silver",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
@@ -49604,13 +50224,13 @@
   {
    "id": "grow-grapes-bed-m14",
    "out": {
-    "item": "grapes",
+    "item": "grapes-silver",
     "qty": null
    },
    "station": "grapes-bed",
    "in": [
     {
-     "item": "grape-seeds",
+     "item": "grape-seeds-silver",
      "qty": 4
     }
    ],
@@ -49624,7 +50244,7 @@
    "ext": null,
    "extra": [
     {
-     "item": "grapes",
+     "item": "grapes-gold",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II e Senhor das Uvas",
@@ -49632,7 +50252,7 @@
      }
     },
     {
-     "item": "grape-seeds",
+     "item": "grape-seeds-silver",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro",
@@ -49640,7 +50260,7 @@
      }
     },
     {
-     "item": "grape-seeds",
+     "item": "grape-seeds-gold",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
@@ -49672,13 +50292,13 @@
   {
    "id": "grow-grapes-bed-m16",
    "out": {
-    "item": "grapes",
+    "item": "grapes-gold",
     "qty": null
    },
    "station": "grapes-bed",
    "in": [
     {
-     "item": "grape-seeds",
+     "item": "grape-seeds-gold",
      "qty": 4
     }
    ],
@@ -49692,7 +50312,7 @@
    "ext": null,
    "extra": [
     {
-     "item": "grape-seeds",
+     "item": "grape-seeds-gold",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
@@ -49796,7 +50416,7 @@
    "ext": null,
    "extra": [
     {
-     "item": "onion",
+     "item": "onion-silver",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II",
@@ -49812,7 +50432,7 @@
      }
     },
     {
-     "item": "onion-seed",
+     "item": "onion-seed-silver",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
@@ -49844,13 +50464,13 @@
   {
    "id": "grow-onion-bed-m12",
    "out": {
-    "item": "onion",
+    "item": "onion-silver",
     "qty": null
    },
    "station": "onion-bed",
    "in": [
     {
-     "item": "onion-seed",
+     "item": "onion-seed-silver",
      "qty": 4
     }
    ],
@@ -49864,7 +50484,7 @@
    "ext": null,
    "extra": [
     {
-     "item": "onion",
+     "item": "onion-gold",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II",
@@ -49872,7 +50492,7 @@
      }
     },
     {
-     "item": "onion-seed",
+     "item": "onion-seed-silver",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro",
@@ -49880,7 +50500,7 @@
      }
     },
     {
-     "item": "onion-seed",
+     "item": "onion-seed-gold",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
@@ -49912,13 +50532,13 @@
   {
    "id": "grow-onion-bed-m14",
    "out": {
-    "item": "onion",
+    "item": "onion-gold",
     "qty": null
    },
    "station": "onion-bed",
    "in": [
     {
-     "item": "onion-seed",
+     "item": "onion-seed-gold",
      "qty": 4
     }
    ],
@@ -49932,7 +50552,7 @@
    "ext": null,
    "extra": [
     {
-     "item": "onion-seed",
+     "item": "onion-seed-gold",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
@@ -49984,7 +50604,7 @@
    "ext": null,
    "extra": [
     {
-     "item": "pumpkin",
+     "item": "pumpkin-silver",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II",
@@ -50000,7 +50620,7 @@
      }
     },
     {
-     "item": "pumpkin-seeds",
+     "item": "pumpkin-seeds-silver",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
@@ -50032,13 +50652,13 @@
   {
    "id": "grow-pumpkin-bed-m14",
    "out": {
-    "item": "pumpkin",
+    "item": "pumpkin-silver",
     "qty": null
    },
    "station": "pumpkin-bed",
    "in": [
     {
-     "item": "pumpkin-seeds",
+     "item": "pumpkin-seeds-silver",
      "qty": 4
     }
    ],
@@ -50052,7 +50672,7 @@
    "ext": null,
    "extra": [
     {
-     "item": "pumpkin",
+     "item": "pumpkin-gold",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II",
@@ -50060,7 +50680,7 @@
      }
     },
     {
-     "item": "pumpkin-seeds",
+     "item": "pumpkin-seeds-silver",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro",
@@ -50068,7 +50688,7 @@
      }
     },
     {
-     "item": "pumpkin-seeds",
+     "item": "pumpkin-seeds-gold",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
@@ -50100,13 +50720,13 @@
   {
    "id": "grow-pumpkin-bed-m16",
    "out": {
-    "item": "pumpkin",
+    "item": "pumpkin-gold",
     "qty": null
    },
    "station": "pumpkin-bed",
    "in": [
     {
-     "item": "pumpkin-seeds",
+     "item": "pumpkin-seeds-gold",
      "qty": 4
     }
    ],
@@ -50120,7 +50740,7 @@
    "ext": null,
    "extra": [
     {
-     "item": "pumpkin-seeds",
+     "item": "pumpkin-seeds-gold",
      "qty": null,
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
@@ -54060,7 +54680,7 @@
    "station": "kitchen-oven",
    "in": [
     {
-     "item": "onion",
+     "item": "onion-gold",
      "qty": 3
     },
     {
@@ -54122,7 +54742,7 @@
    "station": "kitchen-oven",
    "in": [
     {
-     "item": "onion",
+     "item": "onion-silver",
      "qty": 3
     },
     {
@@ -54736,7 +55356,7 @@
    "station": "garden-bed",
    "in": [
     {
-     "item": "cabbage-seed",
+     "item": "cabbage-seed-gold",
      "qty": 4
     }
    ],
@@ -54775,7 +55395,7 @@
    "station": "garden-bed",
    "in": [
     {
-     "item": "cabbage-seed",
+     "item": "cabbage-seed-silver",
      "qty": 4
     }
    ],
@@ -54931,7 +55551,7 @@
    "station": "vine-trellis",
    "in": [
     {
-     "item": "grape-seeds",
+     "item": "grape-seeds-gold",
      "qty": 4
     }
    ],
@@ -54970,7 +55590,7 @@
    "station": "vine-trellis",
    "in": [
     {
-     "item": "grape-seeds",
+     "item": "grape-seeds-silver",
      "qty": 4
     }
    ],
@@ -55087,7 +55707,7 @@
    "station": "garden-bed",
    "in": [
     {
-     "item": "onion-seed",
+     "item": "onion-seed-gold",
      "qty": 4
     }
    ],
@@ -55126,7 +55746,7 @@
    "station": "garden-bed",
    "in": [
     {
-     "item": "onion-seed",
+     "item": "onion-seed-silver",
      "qty": 4
     }
    ],
@@ -55204,7 +55824,7 @@
    "station": "garden-bed",
    "in": [
     {
-     "item": "pumpkin-seeds",
+     "item": "pumpkin-seeds-gold",
      "qty": 4
     }
    ],
@@ -55243,7 +55863,7 @@
    "station": "garden-bed",
    "in": [
     {
-     "item": "pumpkin-seeds",
+     "item": "pumpkin-seeds-silver",
      "qty": 4
     }
    ],
@@ -56037,6 +56657,174 @@
    }
   },
   {
+   "id": "printing-press-bronze",
+   "out": {
+    "item": "newspaper-bronze",
+    "qty": 20,
+    "note": {
+     "pt": "20 (30 com Criador de Papel)",
+     "en": "20 (30 with Paper maker)"
+    }
+   },
+   "station": "printing-press",
+   "in": [
+    {
+     "item": "any-story",
+     "qty": 1
+    },
+    {
+     "item": "clean-paper",
+     "qty": 10
+    }
+   ],
+   "tech": {
+    "pt": "Jornal",
+    "en": "Newspaper",
+    "id": "newspaper",
+    "type": "technology"
+   },
+   "type": "star_craft",
+   "cd": false,
+   "listed": true,
+   "noexp": false,
+   "cyc": false,
+   "alt": [],
+   "ext": null,
+   "extra": [],
+   "mastery": {
+    "type": {
+     "pt": "Escrita de livros",
+     "en": "Book writing"
+    },
+    "level": 8
+   },
+   "ticks": 10,
+   "energy": 2,
+   "example": false,
+   "runes": null,
+   "zone": null,
+   "star_quality": {
+    "silver": 6,
+    "gold": 10
+   },
+   "name": {
+    "pt": "Prensa móvel",
+    "en": "Printing Press"
+   }
+  },
+  {
+   "id": "printing-press-gold",
+   "out": {
+    "item": "newspaper-gold",
+    "qty": 20,
+    "note": {
+     "pt": "20 (30 com Criador de Papel)",
+     "en": "20 (30 with Paper maker)"
+    }
+   },
+   "station": "printing-press",
+   "in": [
+    {
+     "item": "any-story",
+     "qty": 1
+    },
+    {
+     "item": "clean-paper",
+     "qty": 10
+    }
+   ],
+   "tech": {
+    "pt": "Jornal",
+    "en": "Newspaper",
+    "id": "newspaper",
+    "type": "technology"
+   },
+   "type": "star_craft",
+   "cd": false,
+   "listed": true,
+   "noexp": false,
+   "cyc": false,
+   "alt": [],
+   "ext": null,
+   "extra": [],
+   "mastery": {
+    "type": {
+     "pt": "Escrita de livros",
+     "en": "Book writing"
+    },
+    "level": 8
+   },
+   "ticks": 10,
+   "energy": 2,
+   "example": false,
+   "runes": null,
+   "zone": null,
+   "star_quality": {
+    "silver": 6,
+    "gold": 10
+   },
+   "name": {
+    "pt": "Prensa móvel",
+    "en": "Printing Press"
+   }
+  },
+  {
+   "id": "printing-press-silver",
+   "out": {
+    "item": "newspaper-silver",
+    "qty": 20,
+    "note": {
+     "pt": "20 (30 com Criador de Papel)",
+     "en": "20 (30 with Paper maker)"
+    }
+   },
+   "station": "printing-press",
+   "in": [
+    {
+     "item": "any-story",
+     "qty": 1
+    },
+    {
+     "item": "clean-paper",
+     "qty": 10
+    }
+   ],
+   "tech": {
+    "pt": "Jornal",
+    "en": "Newspaper",
+    "id": "newspaper",
+    "type": "technology"
+   },
+   "type": "star_craft",
+   "cd": false,
+   "listed": true,
+   "noexp": false,
+   "cyc": false,
+   "alt": [],
+   "ext": null,
+   "extra": [],
+   "mastery": {
+    "type": {
+     "pt": "Escrita de livros",
+     "en": "Book writing"
+    },
+    "level": 8
+   },
+   "ticks": 10,
+   "energy": 2,
+   "example": false,
+   "runes": null,
+   "zone": null,
+   "star_quality": {
+    "silver": 6,
+    "gold": 10
+   },
+   "name": {
+    "pt": "Prensa móvel",
+    "en": "Printing Press"
+   }
+  },
+  {
    "id": "pro-rod",
    "out": {
     "item": "pro-rod",
@@ -56210,7 +56998,7 @@
    "station": "kitchen-oven",
    "in": [
     {
-     "item": "pumpkin",
+     "item": "pumpkin-gold",
      "qty": 2
     },
     {
@@ -56272,7 +57060,7 @@
    "station": "kitchen-oven",
    "in": [
     {
-     "item": "pumpkin",
+     "item": "pumpkin-silver",
      "qty": 2
     },
     {
@@ -59117,6 +59905,174 @@
    }
   },
   {
+   "id": "story-bronze",
+   "out": {
+    "item": "story-bronze",
+    "qty": 1
+   },
+   "station": "writing-desk",
+   "in": [
+    {
+     "item": "faith",
+     "qty": 3
+    },
+    {
+     "item": "clean-paper",
+     "qty": 2
+    },
+    {
+     "item": "ink",
+     "qty": 1
+    }
+   ],
+   "tech": {
+    "pt": "Livros",
+    "en": "Books I",
+    "id": "books-i",
+    "type": "technology"
+   },
+   "type": "star_craft",
+   "cd": false,
+   "listed": true,
+   "noexp": false,
+   "cyc": false,
+   "alt": [],
+   "ext": null,
+   "extra": [],
+   "mastery": {
+    "type": {
+     "pt": "Escrita de livros",
+     "en": "Book writing"
+    },
+    "level": 6
+   },
+   "ticks": 10,
+   "energy": 2,
+   "example": false,
+   "runes": null,
+   "zone": null,
+   "star_quality": {
+    "silver": 6,
+    "gold": 10
+   },
+   "name": {
+    "pt": "História",
+    "en": "Story"
+   }
+  },
+  {
+   "id": "story-gold",
+   "out": {
+    "item": "story-gold",
+    "qty": 1
+   },
+   "station": "writing-desk",
+   "in": [
+    {
+     "item": "faith",
+     "qty": 3
+    },
+    {
+     "item": "clean-paper",
+     "qty": 2
+    },
+    {
+     "item": "ink",
+     "qty": 1
+    }
+   ],
+   "tech": {
+    "pt": "Livros",
+    "en": "Books I",
+    "id": "books-i",
+    "type": "technology"
+   },
+   "type": "star_craft",
+   "cd": false,
+   "listed": true,
+   "noexp": false,
+   "cyc": false,
+   "alt": [],
+   "ext": null,
+   "extra": [],
+   "mastery": {
+    "type": {
+     "pt": "Escrita de livros",
+     "en": "Book writing"
+    },
+    "level": 6
+   },
+   "ticks": 10,
+   "energy": 2,
+   "example": false,
+   "runes": null,
+   "zone": null,
+   "star_quality": {
+    "silver": 6,
+    "gold": 10
+   },
+   "name": {
+    "pt": "História",
+    "en": "Story"
+   }
+  },
+  {
+   "id": "story-silver",
+   "out": {
+    "item": "story-silver",
+    "qty": 1
+   },
+   "station": "writing-desk",
+   "in": [
+    {
+     "item": "faith",
+     "qty": 3
+    },
+    {
+     "item": "clean-paper",
+     "qty": 2
+    },
+    {
+     "item": "ink",
+     "qty": 1
+    }
+   ],
+   "tech": {
+    "pt": "Livros",
+    "en": "Books I",
+    "id": "books-i",
+    "type": "technology"
+   },
+   "type": "star_craft",
+   "cd": false,
+   "listed": true,
+   "noexp": false,
+   "cyc": false,
+   "alt": [],
+   "ext": null,
+   "extra": [],
+   "mastery": {
+    "type": {
+     "pt": "Escrita de livros",
+     "en": "Book writing"
+    },
+    "level": 6
+   },
+   "ticks": 10,
+   "energy": 2,
+   "example": false,
+   "runes": null,
+   "zone": null,
+   "star_quality": {
+    "silver": 6,
+    "gold": 10
+   },
+   "name": {
+    "pt": "História",
+    "en": "Story"
+   }
+  },
+  {
    "id": "summon-fairy",
    "out": {
     "item": "summon-fairy",
@@ -60224,7 +61180,7 @@
      "qty": 1
     },
     {
-     "item": "cabbage",
+     "item": "cabbage-gold",
      "qty": 6
     }
    ],
@@ -60277,7 +61233,7 @@
      "qty": 1
     },
     {
-     "item": "cabbage",
+     "item": "cabbage-silver",
      "qty": 8
     }
    ],
@@ -60434,7 +61390,7 @@
      "qty": 1
     },
     {
-     "item": "onion",
+     "item": "onion-gold",
      "qty": 6
     }
    ],
@@ -60485,7 +61441,7 @@
      "qty": 1
     },
     {
-     "item": "onion",
+     "item": "onion-silver",
      "qty": 8
     }
    ],
@@ -60587,7 +61543,7 @@
      "qty": 1
     },
     {
-     "item": "pumpkin",
+     "item": "pumpkin-gold",
      "qty": 2
     }
    ],
@@ -60638,7 +61594,7 @@
      "qty": 1
     },
     {
-     "item": "pumpkin",
+     "item": "pumpkin-silver",
      "qty": 3
     }
    ],
@@ -60836,7 +61792,7 @@
      "qty": 1
     },
     {
-     "item": "cabbage",
+     "item": "cabbage-gold",
      "qty": 6
     }
    ],
@@ -60886,7 +61842,7 @@
      "qty": 1
     },
     {
-     "item": "cabbage",
+     "item": "cabbage-silver",
      "qty": 8
     }
    ],
@@ -61036,7 +61992,7 @@
      "qty": 1
     },
     {
-     "item": "onion",
+     "item": "onion-gold",
      "qty": 4
     }
    ],
@@ -61086,7 +62042,7 @@
      "qty": 1
     },
     {
-     "item": "onion",
+     "item": "onion-silver",
      "qty": 6
     }
    ],
@@ -61186,7 +62142,7 @@
      "qty": 1
     },
     {
-     "item": "pumpkin",
+     "item": "pumpkin-gold",
      "qty": 1
     }
    ],
@@ -61236,7 +62192,7 @@
      "qty": 1
     },
     {
-     "item": "pumpkin",
+     "item": "pumpkin-silver",
      "qty": 2
     }
    ],
@@ -61328,7 +62284,7 @@
    "station": "kitchen-i",
    "in": [
     {
-     "item": "wine",
+     "item": "wine-gold",
      "qty": 4
     }
    ],
@@ -61374,7 +62330,7 @@
    "station": "kitchen-i",
    "in": [
     {
-     "item": "wine",
+     "item": "wine-silver",
      "qty": 6
     }
    ],
@@ -61632,7 +62588,7 @@
    "station": "kitchen-oven",
    "in": [
     {
-     "item": "onion",
+     "item": "onion-gold",
      "qty": 1
     },
     {
@@ -61694,7 +62650,7 @@
    "station": "kitchen-oven",
    "in": [
     {
-     "item": "onion",
+     "item": "onion-silver",
      "qty": 1
     },
     {
@@ -62138,6 +63094,192 @@
    }
   },
   {
+   "id": "vegetable-salad-bronze",
+   "out": {
+    "item": "vegetable-salad-bronze",
+    "qty": 2,
+    "note": {
+     "pt": "2 (4 com Cozinheiro)",
+     "en": "2 (4 with Cook)"
+    }
+   },
+   "station": "kitchen-table",
+   "in": [
+    {
+     "item": "onion",
+     "qty": 2
+    },
+    {
+     "item": "carrot",
+     "qty": 2
+    },
+    {
+     "item": "beet",
+     "qty": 2
+    }
+   ],
+   "tech": {
+    "pt": "Pratos de vegetais",
+    "en": "Vegetable dishes",
+    "id": "vegetable-dishes",
+    "type": "technology"
+   },
+   "type": "star_craft",
+   "cd": false,
+   "listed": true,
+   "noexp": false,
+   "cyc": false,
+   "alt": [
+    "kitchen-table-ii"
+   ],
+   "ext": null,
+   "extra": [],
+   "mastery": {
+    "type": {
+     "pt": "Agricultura",
+     "en": "Farming"
+    },
+    "level": 4
+   },
+   "ticks": 7,
+   "energy": 2,
+   "example": false,
+   "runes": null,
+   "zone": null,
+   "star_quality": {
+    "silver": 4,
+    "gold": 7
+   },
+   "name": {
+    "pt": "Salada",
+    "en": "Vegetable salad"
+   }
+  },
+  {
+   "id": "vegetable-salad-gold",
+   "out": {
+    "item": "vegetable-salad-gold",
+    "qty": 2,
+    "note": {
+     "pt": "2 (4 com Cozinheiro)",
+     "en": "2 (4 with Cook)"
+    }
+   },
+   "station": "kitchen-table",
+   "in": [
+    {
+     "item": "onion",
+     "qty": 2
+    },
+    {
+     "item": "carrot",
+     "qty": 2
+    },
+    {
+     "item": "beet",
+     "qty": 2
+    }
+   ],
+   "tech": {
+    "pt": "Pratos de vegetais",
+    "en": "Vegetable dishes",
+    "id": "vegetable-dishes",
+    "type": "technology"
+   },
+   "type": "star_craft",
+   "cd": false,
+   "listed": true,
+   "noexp": false,
+   "cyc": false,
+   "alt": [
+    "kitchen-table-ii"
+   ],
+   "ext": null,
+   "extra": [],
+   "mastery": {
+    "type": {
+     "pt": "Agricultura",
+     "en": "Farming"
+    },
+    "level": 4
+   },
+   "ticks": 7,
+   "energy": 2,
+   "example": false,
+   "runes": null,
+   "zone": null,
+   "star_quality": {
+    "silver": 4,
+    "gold": 7
+   },
+   "name": {
+    "pt": "Salada",
+    "en": "Vegetable salad"
+   }
+  },
+  {
+   "id": "vegetable-salad-silver",
+   "out": {
+    "item": "vegetable-salad-silver",
+    "qty": 2,
+    "note": {
+     "pt": "2 (4 com Cozinheiro)",
+     "en": "2 (4 with Cook)"
+    }
+   },
+   "station": "kitchen-table",
+   "in": [
+    {
+     "item": "onion",
+     "qty": 2
+    },
+    {
+     "item": "carrot",
+     "qty": 2
+    },
+    {
+     "item": "beet",
+     "qty": 2
+    }
+   ],
+   "tech": {
+    "pt": "Pratos de vegetais",
+    "en": "Vegetable dishes",
+    "id": "vegetable-dishes",
+    "type": "technology"
+   },
+   "type": "star_craft",
+   "cd": false,
+   "listed": true,
+   "noexp": false,
+   "cyc": false,
+   "alt": [
+    "kitchen-table-ii"
+   ],
+   "ext": null,
+   "extra": [],
+   "mastery": {
+    "type": {
+     "pt": "Agricultura",
+     "en": "Farming"
+    },
+    "level": 4
+   },
+   "ticks": 7,
+   "energy": 2,
+   "example": false,
+   "runes": null,
+   "zone": null,
+   "star_quality": {
+    "silver": 4,
+    "gold": 7
+   },
+   "name": {
+    "pt": "Salada",
+    "en": "Vegetable salad"
+   }
+  },
+  {
    "id": "vegetable-soup",
    "out": {
     "item": "vegetable-soup",
@@ -62246,7 +63388,7 @@
   {
    "id": "wine-from-grape-juice-gold",
    "out": {
-    "item": "wine",
+    "item": "wine-gold",
     "qty": 4,
     "note": {
      "pt": "4 (5 com Vinicultor)",
@@ -62294,7 +63436,7 @@
   {
    "id": "wine-from-grape-juice-silver",
    "out": {
-    "item": "wine",
+    "item": "wine-silver",
     "qty": 4,
     "note": {
      "pt": "4 (5 com Vinicultor)",

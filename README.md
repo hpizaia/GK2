@@ -38,7 +38,7 @@ Made by **Hugo Pizaia**, a Brazilian player who is not a programmer, with [Claud
 - **Goals.** Search in English or Portuguese, accents optional (`swor` finds *Sword*). Set quantities with − / + (hold to repeat).
 - **Raw materials.** Everything to gather, buy or already have in a chest, with totals.
 - **Steps per station.** What to craft at each bench, how many runs, yield and leftovers. Follow top to bottom: no station depends on one further down.
-- **Perks** that change yields ("Cook II") recalculate the plan. **Copy list** as text.
+- **Perks** that change yields ("Cook II") recalculate the plan.
 
 #### Alternative recipes and the checklist
 

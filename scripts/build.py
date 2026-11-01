@@ -612,6 +612,7 @@ class Builder:
 
         for r in recipes:
             r.pop("_idx", None)
+            r.pop("_up", None)
 
         self.items = {k: items[k] for k in sorted(items)}
         self.produced = produced
@@ -847,6 +848,7 @@ class Builder:
             "zone": self.loc_list(zone, "zone") if zone else None,
             "_station_name": sname,
             "_alt_names": alt_names,
+            "_up": bool(r.get("quality_upgrade")),
         }
         # made_text: "3 (5 with Cook II)" -> out.note {pt, en} (the page reads the perk bonus from it); a plain
         # number equal to the output qty says nothing more and is dropped
@@ -878,8 +880,10 @@ class Builder:
         return nr
 
     def recipe_sort_key(self, r):
-        # usable first, then calculator_default, listed, type preference, input order
-        return (r["noexp"], r["cyc"], not r["cd"], not r["listed"],
+        # usable first, then the direct ones before a quality upgrade (Vinho (prata): the Barril with silver Grape Juice
+        # before "Wine (bronze) + Spices"; build_dataset.py quality_upgrade), calculator_default, listed, type
+        # preference, input order
+        return (r["noexp"], r["cyc"], r["_up"], not r["cd"], not r["listed"],
                 TYPE_RANK.get(r["type"], len(TYPE_RANK)), r["_idx"])
 
     def norm_item(self, iid, name, it, recipes):
@@ -914,6 +918,9 @@ class Builder:
         gkey = self.langs[0].game_key(name) if self.langs else None
         if gkey:
             out["key"] = gkey
+        base = it.get("base_item")
+        if out["kind"] == "quality-variant" and isinstance(base, str) and base:
+            out["base"] = base   # the family's plain item ("wine" for wine-silver; GK.data.family)
         members = it.get("group_members")
         if isinstance(members, list) and members:
             out["members"] = [self.resolve(m, f"{iid} group_members") for m in members]

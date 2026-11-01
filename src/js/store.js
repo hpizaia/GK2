@@ -107,18 +107,35 @@ GK.store = (function () {
     return order[(((i + num - a.number) % L) + L) % L];
   }
   // ui: which planner panels are collapsed. stationCollapsed keys come from ui/summary.js ("<station id>[#repeat]").
-  // "Hoje" starts folded (one line) until the player opens it (1.3.4); editNames = the ✎ rename pencils are shown
-  // (a contributor mode, off by default).
-  const UI_FLAGS = ["todayCollapsed", "stepsCollapsed", "rawCollapsed", "editNames", "bigText"]; // bigText = "Letra grande" (ui/footer.js, GK.theme.big; absent = off)
+  // "Hoje" starts folded (one line) until the player opens it (1.3.4). (1.8.x: the flag of the "Editar nomes" mode
+  // is gone; an old saved one is dropped here. Renaming is in the Receitas detail, GK.store overrides.)
+  // 1.8.x (seta das seções, opção A): "Tecnologias que faltam" folds too (tnCollapsed); techCols = the columns of the
+  // Tecnologias tab the player opened or folded by hand, per branch: {branchId: {column: true (open) | false}}; a
+  // column with no entry follows the rule of ui/tech.js (only the first column with something left starts open)
+  const UI_FLAGS = ["todayCollapsed", "stepsCollapsed", "rawCollapsed", "tnCollapsed", "bigText"]; // bigText = "Letra grande" (ui/footer.js, GK.theme.big; absent = off)
   // activeList (schema 5): id of the list open on this device (null = the first one); per device, never synced
-  const freshUi = () => ({ todayCollapsed: true, stepsCollapsed: false, rawCollapsed: false, editNames: false, stationCollapsed: {}, activeList: null });
+  const freshUi = () => ({ todayCollapsed: true, stepsCollapsed: false, rawCollapsed: false, tnCollapsed: false, stationCollapsed: {}, techCols: {}, activeList: null });
   const validId = (v) => typeof v === "string" && /^[A-Za-z0-9_-]{1,40}$/.test(v);
+  const isMap = (v) => !!v && typeof v === "object" && !Array.isArray(v);
+  const validCol = (k) => /^[1-9][0-9]?$/.test(k);
+  function cleanTechCols(m) {
+    const out = {};
+    if (!isMap(m)) return out;
+    for (const [b, cols] of Object.entries(m).slice(0, 40)) {
+      if (!validId(b) || !isMap(cols)) continue;
+      const c = {};
+      for (const [k, v] of Object.entries(cols)) if (validCol(k) && typeof v === "boolean") c[k] = v;
+      if (Object.keys(c).length) out[b] = c;
+    }
+    return out;
+  }
   function cleanUi(o) {
-    const u = freshUi(), src = o && typeof o === "object" && !Array.isArray(o) ? o : {};
+    const u = freshUi(), src = isMap(o) ? o : {};
     for (const k of UI_FLAGS) if (k in src) u[k] = !!src[k];
     if (validId(src.activeList)) u.activeList = src.activeList;
-    const m = src.stationCollapsed && typeof src.stationCollapsed === "object" && !Array.isArray(src.stationCollapsed) ? src.stationCollapsed : {};
+    const m = isMap(src.stationCollapsed) ? src.stationCollapsed : {};
     for (const [k, v] of Object.entries(m)) if (v && k && k.length <= 200) u.stationCollapsed[k] = true;
+    u.techCols = cleanTechCols(src.techCols);
     return u;
   }
   const EMPTY_LIST = () => ({ goals: [], choice: {}, have: {}, done: {}, example: false });
@@ -149,7 +166,7 @@ GK.store = (function () {
     dayDone: null,       // {day, number, ids: [event index]}: "Feito hoje" ticks; reset when the day changes (synced, 1.3.4)
     dayNotes: {},        // dayId -> "levar 3 peixes para o Pescador": "Bilhete do dia", ≤ NOTE_MAX chars (synced, 1.3.4)
     recents: [],         // [itemId]: last added to goals, newest first, ≤ RECENTS_MAX ("Recentes" in the search; synced)
-    ui: freshUi(),       // planner panels the player collapsed + the rename mode (per device, never synced; 1.3.1)
+    ui: freshUi(),       // planner panels the player collapsed, Letra grande, the open list (per device, never synced; 1.3.1)
     updatedAt: "",       // ISO time of the last change to a SYNCED field ("" = never touched; schema 4)
     syncBase: "",        // updatedAt of the last version both this device and the account held (GK.sync; local)
   });
@@ -206,7 +223,16 @@ GK.store = (function () {
   // a list name: one line, at most LIST_NAME_MAX characters ("" = the default name, shown translated)
   const cleanName = (v) => (typeof v === "string" ? Array.from(v.replace(/\s+/g, " ").trim()).slice(0, LIST_NAME_MAX).join("").trim() : "");
   const isoOr = (v, d) => (typeof v === "string" && ISO.test(v) ? v : d);
-  const listContent = (o) => ({ goals: cleanGoals(o.goals), choice: strMap(o.choice), have: haveMap(o.have), done: doneMap(o.done), example: !!o.example });
+  // 1.9 (qualidade): a plan saved before the build kept the grades planned "Vinho (prata)" as the goal "wine" with the
+  // Barril's silver recipe chosen; GK.data.gradeMoves turns it into the goal "wine-silver" (choice and step tick too).
+  // Every copy (local, account doc, legacy flat plan) passes here, once the data is loaded; a plan without such a
+  // choice is returned as it was.
+  function listContent(o) {
+    const c = { goals: cleanGoals(o.goals), choice: strMap(o.choice), have: haveMap(o.have), done: doneMap(o.done), example: !!o.example };
+    const m = GK.data && GK.data.gradeMoves ? GK.data.gradeMoves(c.goals, c.choice, c.done) : null;
+    if (m) { c.goals = m.goals.map((g) => ({ item: g.item, qty: clampQty(g.qty) })); c.choice = m.choice; c.done = m.done; }
+    return c;
+  }
   const contentKey = (l) => JSON.stringify([l.goals, l.choice, l.have, l.done, !!l.example]);
   function cleanList(o) {
     if (!o || typeof o !== "object" || Array.isArray(o) || !validId(o.id)) return null;
@@ -546,8 +572,6 @@ GK.store = (function () {
         if (on) { const c = clampHave(qty); s.have[item] = c == null ? true : c; } else delete s.have[item];
       });
     },
-    // "Limpar marcações": every tick, and the "tenho tudo" of the raw rows listed in haveIds (partial numbers stay)
-    clearDone(haveIds) { update((s) => { s.done = {}; (haveIds || []).forEach((id) => { delete s.have[id]; }); }); },
     setLang(code) { update((s) => { s.lang = code; }, { from: "lang" }); },
     setTheme(mode) { update((s) => { s.theme = THEMES.indexOf(mode) >= 0 ? mode : "auto"; }, { from: "theme" }); },
     setShowHidden(on) { update((s) => { s.showHidden = !!on; }, { from: "search-toggle" }); },
@@ -557,6 +581,17 @@ GK.store = (function () {
         const u = (s.ui = cleanUi(s.ui)), p = patch && typeof patch === "object" ? patch : {};
         for (const k of UI_FLAGS) if (k in p) u[k] = !!p[k];
         if (p.stationCollapsed && typeof p.stationCollapsed === "object") u.stationCollapsed = cleanUi({ stationCollapsed: p.stationCollapsed }).stationCollapsed;
+      }, { from: "ui" });
+    },
+    // one column of the Tecnologias tab opened (true) or folded (false) by the player (ui/tech.js), per branch;
+    // open = null forgets the choice (the column follows the default rule again)
+    setTechCol(branch, col, open) {
+      const k = String(col);
+      if (!validId(branch) || !validCol(k)) return;
+      update((s) => {
+        const u = (s.ui = cleanUi(s.ui)), m = (u.techCols[branch] = u.techCols[branch] || {});
+        if (open === null || open === undefined) delete m[k]; else m[k] = !!open;
+        if (!Object.keys(m).length) delete u.techCols[branch];
       }, { from: "ui" });
     },
     // one station card collapsed / expanded (key from ui/summary.js); on = undefined flips it

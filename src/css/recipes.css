@@ -347,3 +347,16 @@
 .asked-g:first-child { border-top: 0; }
 .asked-g + li > .rc-line { border-top: 0; }
 @media (prefers-reduced-motion: reduce) { .rc-asked > summary .rc-chev { transition: none; } }
+/* 1.8.x: the name's "não oficial" / "editado" tag in the detail is the rename button (ui/recipes.js); the form is the
+   shared .edit-form (components.css). 44 px hit area around the small tag (::after). */
+.badge-btn { position: relative; background: transparent; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.badge-btn::after { content: ""; position: absolute; inset: -14px -4px; }
+.badge-btn:hover, .badge-btn[aria-expanded="true"] { color: var(--accent); border-color: var(--accent); }
+.badge-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.badge-pen { margin-left: 4px; letter-spacing: 0; }
+.rc-rename { margin: 0; }
+.rc-rename-more { flex-basis: 100%; margin: 0; }
+.rc-copy-box { flex-basis: 100%; display: grid; gap: var(--s2); }
+.rc-copy-box[hidden] { display: none; }
+.rc-copy-box .hint { margin: 0; }
+.copy-fallback { width: 100%; min-height: 160px; background: var(--bg-2); color: var(--ink); border: 1px solid var(--frame); border-radius: var(--r); padding: var(--s2); font-size: .8125rem; }

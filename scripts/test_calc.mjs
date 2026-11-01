@@ -139,10 +139,14 @@ await test("Vinho ×5 and the cyclic refusal", () => {
   const r = rawMap(p);
   eq([r.grapes, r.sand, r.log], [48, 6, 1], "raw grapes/sand/log");
   eq(stepOf(p, "fuel").need, 60, "fuel 60");
-  const q = plan([{ item: "wine", qty: 5 }], { choice: { wine: "drink-enhancement-i-from-wine-bronze" } });
-  eq(q.refused, ["wine"], "refused");
-  const w = q.raw.find((x) => x.item === "wine");
-  check(w && w.reason === "refused" && w.qty === 5, "wine becomes a raw material");
+  // 1.9: "Wine (bronze) + Spices" makes Vinho (prata) now: chosen for "wine" it is not a recipe of that item (ignored)
+  const q0 = plan([{ item: "wine", qty: 5 }], { choice: { wine: "drink-enhancement-i-from-wine-bronze" } });
+  eq([q0.refused, rawMap(q0).grapes], [[], 48], "an old choice whose recipe now makes another grade is ignored");
+  // the refusal itself: a recipe that consumes its own output (Aprimorar órgão I on Pele)
+  const q = plan([{ item: "skin", qty: 5 }], { choice: { skin: "improve-organ-i-from-any-skin" } });
+  eq(q.refused, ["skin"], "refused");
+  const w = q.raw.find((x) => x.item === "skin");
+  check(w && w.reason === "refused" && w.qty === 5, "skin becomes a raw material");
   eq(q.steps.length, 0, "nothing to craft");
 });
 
@@ -252,13 +256,13 @@ await test("real data: made_text yield bonuses (out.note) and star thresholds", 
 await test("gold/silver recipes consume the graded input and read differently", () => {
   const g = D.recipeById["baked-pumpkin-from-pumpkin-gold"], b = D.recipeById["baked-pumpkin-from-pumpkin-bronze"];
   eq(g.quality, "gold", "quality from the name");
-  check(g.in.some((i) => i.item === "pumpkin-gold" && i.baseItem === "pumpkin"), "gold recipe uses pumpkin-gold");
+  check(g.in.some((i) => i.item === "pumpkin-gold"), "gold recipe uses pumpkin-gold");
   check(b.in.some((i) => i.item === "pumpkin"), "bronze recipe keeps the plain pumpkin");
   const v = D.items["pumpkin-gold"];
-  check(v && v.synthetic && v.kind === "quality-variant" && v.pt === "Abóbora (ouro)", "synthetic variant named in pt");
-  check(D.recipeById["wine-from-grape-juice-gold"].in[0].item === "grape-juice-gold", "real variants untouched");
-  check(D.recipeById["grape-juice-from-grapes-gold"].in.some((i) => i.item === "grapes"), "output carries the grade: input untouched");
-  check(D.recipeById["drink-enhancement-ii-from-wine-silver"].in.some((i) => i.item === "wine"), "self-upgrade untouched");
+  // 1.9: the build keeps the grade: a real item of the data (base pumpkin), not one the page makes up
+  check(v && !v.synthetic && v.kind === "quality-variant" && v.base === "pumpkin" && v.pt === "Abóbora (ouro)", "real variant named in pt");
+  check(!Object.values(D.items).some((it) => it.synthetic), "no synthetic variant left");
+  check(D.recipeById["wine-from-grape-juice-gold"].in[0].item === "grape-juice-gold", "Barril: Suco de Uva (ouro) in");
   const p = plan([{ item: "baked-pumpkin", qty: 7 }], { choice: { "baked-pumpkin": g.id } });
   eq(rawMap(p)["pumpkin-gold"], 2, "plan asks for gold pumpkins");
   // no item's recipe chooser shows two options with the same text (letters aside)
@@ -433,10 +437,7 @@ await test("ticks follow the quantity (1.8.0: corte 9 + C3), old ticks kept", ()
   check(stepOf(p10, "fuel").need > stepOf(p3, "fuel").need && !C.stepChecked(stepOf(p10, "fuel"), st().done), "step pending when the need grows");
   A.toggleDone("step:fuel", true); eq(st().done["step:fuel"], true, "no quantity: true");
   A.toggleDone("step:fuel", false); check(!("step:fuel" in st().done), "untick");
-  // Limpar marcações: every tick, plus the raw rows' "tenho tudo" listed; partial numbers stay
-  A.checkRaw("log", 3, true); A.setHave("fat", 1); A.toggleDone("step:fuel", true, 50);
-  A.clearDone(["log"]);
-  eq([st().done, st().have], [{}, { fat: 1 }], "clearDone(haveIds)");
+  check(!("clearDone" in A), "no clearDone (\"Limpar marcações\" left the progress card in 1.8.x)");
   // doneCovers
   eq([C.doneCovers(true, 99), C.doneCovers(3, 3), C.doneCovers(3, 4), C.doneCovers(undefined, 1), C.doneCovers(0, 0)], [true, true, false, false, false], "doneCovers");
   // sanitize (account doc / local copy): numbers kept, other truthy values become true, falsy dropped
@@ -1039,14 +1040,14 @@ await test("ficha do item: sell / price / study / asked reach the page", () => {
 
 await test("grades: the star's grade on items and lines, always bronze, silver, gold (1.8.0)", () => {
   const G = GK.data, R = G.GRADE_RANK;
-  eq(["grape-juice-bronze", "grape-juice-silver", "grape-juice-gold", "cabbage-silver", "cabbage", "wine"].map((id) => G.itemGrade(D.items[id])),
-    ["bronze", "silver", "gold", "silver", null, null], "item grades (real and synthetic variants; the plain item has none)");
+  eq(["grape-juice-bronze", "grape-juice-silver", "grape-juice-gold", "cabbage-silver", "cabbage", "wine", "wine-gold"].map((id) => G.itemGrade(D.items[id])),
+    ["bronze", "silver", "gold", "silver", null, null, "gold"], "item grades (the plain item has none: its lines carry bronze)");
   const lineOf = (rid, item) => D.recipeById[rid].in.find((l) => l.item === item);
   eq(lineOf("supply-vegetables-from-cabbage-bronze", "cabbage").grade, "bronze", "bronze keeps the plain Repolho, with the bronze star");
-  eq(lineOf("supply-vegetables-from-cabbage-gold", "cabbage-gold").grade, "gold", "gold points to the variant");
-  eq(lineOf("drink-enhancement-i-from-wine-bronze", "wine").grade, "bronze", "circular: Vinho (bronze) stays Vinho");
-  eq(lineOf("drink-enhancement-ii-from-wine-silver", "wine").grade, "silver", "circular: Vinho (silver) stays Vinho");
-  check(!lineOf("grape-juice-from-grapes-bronze", "grapes").grade, "the output's grade (Suco de Uva (bronze) from Uvas) does not mark the Uvas");
+  check(!!lineOf("supply-vegetables-from-cabbage-gold", "cabbage-gold"), "gold points to the variant");
+  eq(lineOf("drink-enhancement-i-from-wine-bronze", "wine").grade, "bronze", "melhoria I: the plain Vinho in, read as bronze");
+  check(!!lineOf("drink-enhancement-ii-from-wine-silver", "wine-silver"), "melhoria II: Vinho (prata) in");
+  eq(lineOf("grape-juice-from-grapes-bronze", "grapes").grade, "bronze", "Prensa bronze: the plain Uvas, read as bronze");
   // every list of recipes of an item: a family (same id but the grade) in bronze, silver, gold order
   let fams = 0;
   for (const [id, rs] of Object.entries(D.byOut)) {
@@ -1058,7 +1059,7 @@ await test("grades: the star's grade on items and lines, always bronze, silver, 
     }
   }
   check(fams > 20, "families checked: " + fams);
-  eq(D.byOut.wine.slice(0, 3).map((r) => r.quality), ["bronze", "silver", "gold"], "Vinho: bronze, prata, ouro");
+  eq(D.byOut["supply-wine"].map((r) => r.quality), ["bronze", "silver", "gold"], "Suprimento: Vinho: bronze, prata, ouro");
   eq(GK.calc.search("suco de uva", D, { lang: "pt" }).results.map((r) => r.id).filter((id) => /^grape-juice-/.test(id)),
     ["grape-juice-bronze", "grape-juice-silver", "grape-juice-gold"], "search: bronze, prata, ouro (alphabetical would be bronze, ouro, prata)");
   eq(GK.calc.search("uva", D, { lang: "en" }).results.map((r) => r.id).filter((id) => /^grape-juice-/.test(id)),
@@ -1071,14 +1072,18 @@ await test("grades: the star's grade on items and lines, always bronze, silver, 
 
 await test("receitas agrupadas: GK.calc.recipeGroups (1.8.0, consertos.md §10)", () => {
   const groups = (id) => GK.calc.recipeGroups(GK.data.recipesFor(id), D);
-  // Vinho: the three Barril recipes in one card (mode q: same ingredient, grades), mastery per grade; the 2 circular folded
-  const w = groups("wine");
-  eq(w.cards.length, 1, "Vinho: one card");
+  // Suprimento: Vinho: the three recipes in one card (mode q: same ingredient, grades), the amount per grade (8 / 6 / 4).
+  // (Up to 1.8.1 the example was Vinho itself, whose three Barril recipes all made the same item: 1.9 gives each grade
+  // its own Vinho.)
+  const w = groups("supply-wine");
+  eq(w.cards.length, 1, "Suprimento: Vinho: one card");
   const g = w.cards[0];
-  eq([g.group, g.mode, g.masteryEach, g.qtyEach], [true, "q", true, false], "Vinho: grades of one ingredient, mastery per grade");
-  eq(g.options.map((o) => [o.grade, o.line.qty, o.r.mastery.level]), [["bronze", 4, 10], ["silver", 4, 12], ["gold", 4, 14]], "Vinho: bronze/prata/ouro 4× Suco de Uva, Agricultura 10/12/14");
-  eq(g.fixed, [], "Vinho: no shared line");
-  eq(w.cyc.map((r) => r.id), ["drink-enhancement-i-from-wine-bronze", "drink-enhancement-ii-from-wine-silver"], "Vinho: circular ones folded");
+  eq([g.group, g.mode, g.masteryEach, g.qtyEach], [true, "q", false, true], "Suprimento: Vinho: grades of one ingredient, amount per grade");
+  eq(g.options.map((o) => [o.grade, o.line.qty, o.line.item]), [["bronze", 8, "wine"], ["silver", 6, "wine-silver"], ["gold", 4, "wine-gold"]], "bronze/prata/ouro 8 / 6 / 4 Vinho");
+  eq(g.fixed, [], "Suprimento: Vinho: no shared line");
+  eq(w.cyc, [], "nothing circular");
+  eq(groups("wine-silver").cards.map((c) => c.r && c.r.id), ["wine-from-grape-juice-silver", "drink-enhancement-i-from-wine-bronze"], "Vinho (prata): Barril first, the melhoria a card of its own");
+  eq(groups("wine-silver").cyc, [], "Vinho (prata): the melhoria is not circular");
   // Suprimentos: Vegetais: 11 recipes, one card, mode alt, rows: plain ones first, then the graded ones
   const s = groups("supply-vegetables"), sg = s.cards[0];
   eq([s.cards.length, sg.mode, sg.recipes.length, sg.masteryEach], [1, "alt", 11, false], "Suprimentos: Vegetais: one card of 11");
@@ -1109,7 +1114,294 @@ await test("receitas agrupadas: GK.calc.recipeGroups (1.8.0, consertos.md §10)"
     const gs = GK.calc.recipeGroups(D.byOut[id], D).cards.filter((c) => c.group);
     if (gs.length) { items++; recipes += gs.reduce((n, c) => n + c.recipes.length, 0); }
   }
-  eq([items, recipes], [8, 42], "8 items have a group card; 42 recipes in them");
+  // 1.9: Vinho left the count (its three Barril recipes now make three items): 7 items, 39 recipes
+  eq([items, recipes], [7, 39], "7 items have a group card; 39 recipes in them");
+});
+
+// ---------------------------------------------------------------- 1.9: qualidade (docs/revisao-ux/consertos.md "Qualidade")
+await test("qualidade: Vinho (prata) has its own recipe, the Barril with Suco (prata) makes it, the melhoria is not circular", () => {
+  const ws = D.items["wine-silver"], wg = D.items["wine-gold"];
+  check(ws && !ws.synthetic && ws.base === "wine" && ws.grade === "silver" && wg && wg.grade === "gold", "Vinho (prata) / (ouro) are items of the data");
+  eq(ws.defaultRecipe, "wine-from-grape-juice-silver", "Vinho (prata): default = Barril with Suco de Uva (prata)");
+  eq(wg.defaultRecipe, "wine-from-grape-juice-gold", "Vinho (ouro): default = Barril with Suco de Uva (ouro)");
+  eq(GK.data.recipesFor("wine-silver").map((r) => r.id), ["wine-from-grape-juice-silver", "drink-enhancement-i-from-wine-bronze"], "the melhoria stays an alternative");
+  const b = D.recipeById["wine-from-grape-juice-silver"];
+  eq([b.out.item, b.out.qty, b.in.map((l) => [l.item, l.qty]), b.quality], ["wine-silver", 4, [["grape-juice-silver", 4]], "silver"], "Barril: 4 Suco de Uva (prata) → 4 Vinho (prata)");
+  eq(["bronze", "silver", "gold"].map((g) => D.recipeById["wine-from-grape-juice-" + g].out.item), ["wine", "wine-silver", "wine-gold"], "each Barril grade makes its own Vinho");
+  const m1 = D.recipeById["drink-enhancement-i-from-wine-bronze"], m2 = D.recipeById["drink-enhancement-ii-from-wine-silver"];
+  eq([m1.out.item, m1.in.map((l) => l.item), m1.cyc, m1.quality], ["wine-silver", ["wine", "spices"], false, "silver"], "melhoria I: Vinho + Especiarias → Vinho (prata)");
+  eq([m2.out.item, m2.in.map((l) => l.item), m2.cyc, m2.quality], ["wine-gold", ["wine-silver", "umami"], false, "gold"], "melhoria II: Vinho (prata) + Umami → Vinho (ouro)");
+  for (const id of ["wine-silver", "wine-gold", "grape-juice-silver", "grape-juice-gold", "vegetable-salad-gold", "bowl-of-sauerkraut-silver", "story-gold", "newspaper-silver"])
+    check(GK.data.recipesFor(id).every((r) => !r.cyc && !r.in.some((l) => l.item === id)), id + ": no recipe consumes what it makes");
+  const p = plan([{ item: "wine-silver", qty: 6 }]);
+  eq([p.refused, stepOf(p, "wine-silver") && stepOf(p, "wine-silver").recipe.id, stepOf(p, "grape-juice-silver") && stepOf(p, "grape-juice-silver").need, rawMap(p)["grapes-silver"]],
+    [[], "wine-from-grape-juice-silver", 8, 48], "meta Vinho (prata) ×6: Barril, 8 Suco (prata), 48 Uvas (prata)");
+  check(!p.raw.some((r) => r.item === "wine-silver"), "Vinho (prata) is no longer a raw material");
+  const p2 = plan([{ item: "wine-gold", qty: 1 }], { choice: { "wine-gold": "drink-enhancement-ii-from-wine-silver" } });
+  eq([stepOf(p2, "wine-gold").recipe.id, stepOf(p2, "wine-silver").recipe.id, stepOf(p2, "wine") && stepOf(p2, "wine").recipe.id],
+    ["drink-enhancement-ii-from-wine-silver", "wine-from-grape-juice-silver", undefined], "Vinho (ouro) by the melhoria: Vinho (prata) + Umami, the prata from its Barril");
+  // rendimentos por grau (dados por receita): Suprimento: Vinho 8 / 6 / 4; Sopa de repolho 4 / 7 / 10
+  eq(["bronze", "silver", "gold"].map((g) => D.recipeById["supply-wine-from-wine-" + g].in[0].qty), [8, 6, 4], "Suprimento: Vinho 8 / 6 / 4");
+  eq(["bronze", "silver", "gold"].map((g) => D.recipeById["cabbage-soup-from-cabbage-" + g].out.qty), [4, 7, 10], "Sopa de repolho 4 / 7 / 10");
+});
+
+await test("qualidade: the Prensa asks for Uvas of the juice's grade; crops tell how to get them", () => {
+  eq(["bronze", "silver", "gold"].map((g) => D.recipeById["grape-juice-from-grapes-" + g].in.find((l) => /^grapes/.test(l.item)).item), ["grapes", "grapes-silver", "grapes-gold"], "6 Uvas of the same grade");
+  eq(["grape-juice-silver", "grape-juice-gold"].map((id) => D.items[id].defaultRecipe), ["grape-juice-from-grapes-silver", "grape-juice-from-grapes-gold"], "Suco (prata/ouro): default = the Prensa");
+  for (const id of ["grapes", "cabbage", "onion", "pumpkin"]) for (const g of ["silver", "gold"]) {
+    const it = D.items[id + "-" + g];
+    check(it && it.base === id && !it.defaultRecipe && it.obtain && it.obtain.pt === (g === "silver" ? "Colheita: semente bronze ou prata." : "Colheita: semente prata ou ouro."), `${id}-${g}: no craft recipe, "como obter" says the seed`);
+    check(it && it.obtain.en === (g === "silver" ? "Harvest: bronze or silver seeds." : "Harvest: silver or gold seeds."), `${id}-${g}: en text`);
+  }
+  // the bed of each seed grade: a silver seed gives silver + gold (Canteiro de Repolho, Agricultura 10)
+  const bed = D.recipeById["grow-cabbage-bed-m10"];
+  eq([bed.in[0].item, bed.out.item, bed.extra.slice(0, 3).map((l) => l.item)], ["cabbage-seed-silver", "cabbage-silver", ["cabbage-gold", "cabbage-seed-silver", "cabbage-seed-gold"]], "Canteiro: semente prata → prata + ouro");
+  eq(D.recipeById["plant-cabbage-seed-gold"].in[0].item, "cabbage-seed-gold", "Plantar semente (ouro) takes the gold seed");
+  const p = plan([{ item: "cabbage-soup", qty: 7 }], { choice: { "cabbage-soup": "cabbage-soup-from-cabbage-silver" } });
+  const r = p.raw.find((x) => x.item === "cabbage-silver");
+  check(r && r.qty === 2, "Repolho (prata) is a raw material of the plan");
+});
+
+await test("qualidade: star crafts make every grade (História, Jornal, Salada, Chucrute)", () => {
+  for (const [rid, fam] of [["story", "story"], ["printing-press", "newspaper"], ["vegetable-salad", "vegetable-salad"], ["bowl-of-sauerkraut", "bowl-of-sauerkraut"]]) {
+    const o = D.recipeById[rid];
+    eq(o.out.item, fam, rid + ": the original recipe keeps its output (the prayers ask for the plain História)");
+    for (const g of ["bronze", "silver", "gold"]) {
+      const c = D.recipeById[rid + "-" + g];
+      check(c && c.out.item === fam + "-" + g && c.out.qty === o.out.qty && JSON.stringify(c.in) === JSON.stringify(o.in) && JSON.stringify(c.star) === JSON.stringify(o.star) && c.type === "star_craft",
+        `${rid}-${g}: same star craft, makes ${fam}-${g}`);
+      eq(D.items[fam + "-" + g].defaultRecipe, rid + "-" + g, `${fam}-${g}: default = the star craft`);
+    }
+  }
+  eq(GK.data.recipesFor("story-silver").map((r) => r.id), ["story-silver", "improve-story-i"], "História (prata): escrever, or 2 bronze → 1 prata");
+  eq(GK.data.recipesFor("newspaper-gold").map((r) => r.id), ["printing-press-gold", "improve-newspaper-ii"], "Jornal (ouro): imprimir, or 20 prata + 1 História (ouro)");
+  // a goal that asks for História (bronze) / Jornal (bronze): made at the Escrivaninha / Prensa, not "Coleta ou compra"
+  const p = plan([{ item: "primer", qty: 1 }, { item: "20-zombie-limit-for-2-weeks", qty: 1 }], { groupChoice: { "any-newspaper": "newspaper-bronze" } });
+  check(!p.raw.some((r) => r.item === "story-bronze" || r.item === "newspaper-bronze"), "História / Jornal (bronze) are not raw materials");
+  eq([stepOf(p, "story-bronze") && stepOf(p, "story-bronze").recipe.id, stepOf(p, "newspaper-bronze") && stepOf(p, "newspaper-bronze").recipe.id], ["story-bronze", "printing-press-bronze"], "their steps");
+});
+
+await test("qualidade: Bronze Polido has no grade; no grade word in the recipe labels; no grade badge in the steps", () => {
+  const pb = D.recipeById["polished-bronze"];
+  eq([pb.quality, GK.data.itemGrade(D.items["polished-bronze"]), GK.data.family(pb), GK.data.family(D.items["polished-bronze"])], [null, null, null, null], "Bronze Polido: no quality");
+  eq(Object.values(D.items).filter((it) => it.grade && !/-(bronze|silver|gold)$/.test(it.id)).length, 0, "a grade only on graded ids");
+  const st = GK.store.get();
+  const labs = GK.ui.fmt.recipeLabels(GK.data.recipesFor("grape-juice-silver"), st, GK.data.recipesFor("grape-juice-silver"));
+  eq(labs.length, 2, "Suco de Uva (prata): two options");
+  check(/^6 Uvas \(prata\) \+ 1 Garrafa/.test(labs[0]) && /^1 Suco de Uva \(bronze\) \+ 1 Especiarias → 1/.test(labs[1]) && labs.every((l) => !/ · (bronze|prata|ouro)\b/.test(l)),
+    "labels: the ingredients tell them apart, no grade word: " + labs.join(" | "));
+  eq([GK.ui.fmt.recipeTag(D.recipeById["drink-enhancement-ii-from-grape-juice-silver"]), GK.ui.fmt.recipeTag(D.recipeById["cabbage-soup-from-cabbage-gold"])], ["", ""], "recipeTag: no grade word");
+  const src = fs.readFileSync(path.join(ROOT, "src/js/ui/summary.js"), "utf8");
+  check(!/badge-q/.test(src), "Etapas: no grade badge (badge-q) left");
+  check(/badge-goal/.test(src), "Etapas: the META badge stays");
+});
+
+await test("qualidade: a plan saved up to 1.8.1 opens (goal wine + the Barril prata chosen; goal wine-silver)", () => {
+  const env = makeEnv(), S = env.GK.store;
+  env.GK.data.load(JSON.parse(JSON.stringify(PAYLOAD)));
+  env.localStorage.setItem("gk2-companion", JSON.stringify({ schemaVersion: 5, updatedAt: "2026-10-30T00:00:00.000Z", ui: { activeList: "main" },
+    lists: [{ id: "main", name: "", createdAt: "1970-01-01T00:00:00.000Z", updatedAt: "2026-10-30T00:00:00.000Z",
+      goals: [{ item: "wine", qty: 4 }, { item: "supply-wine", qty: 1 }, { item: "wine-silver", qty: 2 }],
+      choice: { wine: "wine-from-grape-juice-silver", "supply-wine": "supply-wine-from-wine-silver", "grape-juice-silver": "drink-enhancement-i-from-grape-juice-bronze" },
+      have: { "wine-silver": 1, "cabbage-silver": true }, done: { "step:wine": 4, "raw:grapes": true } },
+    { id: "l2", name: "Ouro", createdAt: "2026-10-01T00:00:00.000Z", updatedAt: "2026-10-01T00:00:00.000Z",
+      goals: [{ item: "wine", qty: 1 }], choice: { wine: "drink-enhancement-ii-from-wine-silver" }, have: {}, done: {} }] }));
+  check(S.load(), "loaded");
+  const s = S.get();
+  eq(s.goals, [{ item: "wine-silver", qty: 6 }, { item: "supply-wine", qty: 1 }], "goal wine planned with the Barril prata → Vinho (prata), merged with the one there");
+  const sorted = (o) => Object.fromEntries(Object.entries(o).sort());
+  eq(sorted(s.choice), sorted({ "wine-silver": "wine-from-grape-juice-silver", "supply-wine": "supply-wine-from-wine-silver", "grape-juice-silver": "drink-enhancement-i-from-grape-juice-bronze" }), "choices kept (the Vinho one moved to Vinho (prata))");
+  eq([s.have, sorted(s.done)], [{ "wine-silver": 1, "cabbage-silver": true }, sorted({ "step:wine-silver": 4, "raw:grapes": true })], "have and ticks kept (the step tick moved with its goal)");
+  const l2 = s.lists.find((l) => l.id === "l2");
+  eq([l2.goals, l2.choice], [[{ item: "wine-gold", qty: 1 }], { "wine-gold": "drink-enhancement-ii-from-wine-silver" }], "the other list too: melhoria II → Vinho (ouro)");
+  let p;
+  try { p = env.GK.calc.plan(s.goals, env.GK.data.get(), { choice: s.choice, have: s.have }); } catch (e) { check(false, "plan threw " + e); }
+  check(p && !p.refused.length && p.steps.some((x) => x.item === "wine-silver" && x.recipe.id === "wine-from-grape-juice-silver"), "the plan makes Vinho (prata) at the Barril");
+  check(p && p.steps.some((x) => x.item === "grape-juice-silver" && x.recipe.id === "drink-enhancement-i-from-grape-juice-bronze"), "the saved Suco (prata) choice still applies");
+  // nothing to move: the same object comes back untouched (no stamp, no push)
+  eq(env.GK.data.gradeMoves([{ item: "crate", qty: 1 }], { "steel-sword": "r-x" }, {}), null, "a plan without an old grade choice is left alone");
+  // the account doc (sanitizeRemote) goes through the same move
+  const f = S.sanitizeRemote({ goals: [{ item: "wine", qty: 2 }], choice: { wine: "wine-from-grape-juice-gold" } });
+  eq([f.lists[0].goals, f.lists[0].choice], [[{ item: "wine-gold", qty: 2 }], { "wine-gold": "wine-from-grape-juice-gold" }], "account doc: moved as well");
+});
+
+await test("renomear no detalhe (Receitas): the \"não oficial\" tag opens the name's field; Salvar / Voltar ao nome original", () => {
+  const env = makeEnv(), G = env.GK, ctx = env.ctx;
+  G.data.load(JSON.parse(JSON.stringify(PAYLOAD)));
+  // a small fake DOM: the module only writes innerHTML and listens on its root
+  const fake = () => {
+    const kids = {}, ls = {};
+    return { hidden: false, innerHTML: "", value: "", open: false, classList: { add() {} }, ls,
+      querySelector: (q) => (kids[q] = kids[q] || fake()), querySelectorAll: () => [], addEventListener: (t, f) => { (ls[t] = ls[t] || []).push(f); },
+      contains: () => true, focus() {}, setAttribute() {}, appendChild() {} };
+  };
+  const toasts = [], copied = [];
+  ctx.sessionStorage = { getItem: () => null, setItem() {} };
+  ctx.scrollTo = () => {}; ctx.scrollY = 0; ctx.location = { hash: "recipes" }; ctx.CSS = { escape: (x) => x };
+  G.router = { current: () => "recipes", tab: () => ({ screen: "recipes" }), TABS: [], register() {}, onChange() {}, detailHistory: () => ({ push() {}, pop() {} }) };
+  G.app = { registerPanel() {} };
+  G.ui.toast = (m) => toasts.push(m);
+  G.util.copyText = async (txt) => { copied.push(txt); return true; };
+  vm.runInContext(fs.readFileSync(path.join(ROOT, "src/js/ui/recipes.js"), "utf8"), ctx, { filename: "recipes.js" });
+  const R = G.ui.recipes, root = fake();
+  R.mount(root);
+  const detail = root.querySelector(".rc-detail");
+  const fire = (type, data, extra) => root.ls[type].forEach((f) => f(Object.assign({ preventDefault() {}, target: { closest: () => ({ dataset: data, elements: { v: { value: extra } }, getAttribute: () => null }) } }, {})));
+  const click = (data) => fire("click", data);
+  const id = "village-toilet", it = G.data.item(id);
+  eq(it && it.tr, "machine", "fixture: Banheiro da vila is an unofficial (machine) name");
+  R.open(id);
+  let h = detail.innerHTML;
+  check(/<button type="button" class="badge badge-btn" id="rc-rename" data-rename aria-expanded="false"[^>]*aria-label="Renomear Banheiro da vila">não oficial<span class="badge-pen" aria-hidden="true">✎<\/span><\/button>/.test(h), "the tag is a button labelled \"Renomear Banheiro da vila\"");
+  check(!/data-rename-form/.test(h), "no field until the tag is tapped");
+  click({ rename: "" });
+  h = detail.innerHTML;
+  check(/<form class="edit-form rc-rename" id="rc-rename-box" data-rename-form>/.test(h) && /id="rc-rename-in" name="v" value="Banheiro da vila"/.test(h), "tap: the field opens with the name");
+  check(/aria-expanded="true" aria-controls="rc-rename-box"/.test(h) && />Salvar</.test(h) && />Cancelar</.test(h), "Salvar / Cancelar; the tag says it is open");
+  check(!/data-rename-reset/.test(h), "no \"Voltar ao nome original\" before an edit");
+  click({ renameCancel: "" });
+  check(!/data-rename-form/.test(detail.innerHTML), "Cancelar closes it");
+  click({ rename: "" });
+  fire("submit", {}, "  Privada da vila ");
+  eq(G.store.get().overrides, { pt: { [id]: "Privada da vila" } }, "Salvar writes GK.store overrides (the synced edited names)");
+  eq(toasts.pop(), "Nome salvo: Privada da vila", "toast");
+  h = detail.innerHTML;
+  check(/class="rc-name" id="rc-detail-h" tabindex="-1">Privada da vila</.test(h) && /class="badge badge-edited badge-btn"[^>]*aria-label="Renomear Privada da vila">editado</.test(h) && !/data-rename-form/.test(h), "the new name, the \"editado\" tag (still the rename button), the field closed");
+  click({ rename: "" });
+  h = detail.innerHTML;
+  check(/id="rc-rename-reset" data-rename-reset>Voltar ao nome original</.test(h), "edited: \"Voltar ao nome original\"");
+  check(/data-export-names>Exportar nomes editados \(1\)</.test(h), "the contributor's export sits in the open field");
+  click({ exportNames: "" });
+  eq(JSON.parse(copied.pop() || "{}"), { "Village toilet": { pt: "Privada da vila", source: "user", confidence: "guess" } }, "export: JSON keyed by the English name");
+  click({ renameReset: "" });
+  eq(G.store.get().overrides, {}, "Voltar ao nome original: the edit is gone");
+  check(/>Banheiro da vila</.test(detail.innerHTML) && /aria-label="Renomear Banheiro da vila">não oficial</.test(detail.innerHTML), "back to the original name and the \"não oficial\" tag");
+  // the same name saved again is a no-op; an official name has no tag, so nothing to rename
+  click({ rename: "" }); fire("submit", {}, "Banheiro da vila");
+  eq([G.store.get().overrides, toasts.length], [{}, 1], "saving the same name changes nothing");
+  R.open("crate");
+  check(!/data-rename/.test(detail.innerHTML), "an official name (Caixote): no rename tag");
+  G.i18n.set("en"); R.open(id);
+  check(!/data-rename/.test(detail.innerHTML), "English: no \"unofficial\" tag, no rename");
+});
+
+// ---------------------------------------------------------------- seta das seções, opção A (1.8.x)
+// Tecnologias tab: only the first column with something left starts open; the player's choice is kept per branch
+function techEnv() {
+  const env = makeEnv(), G = env.GK, ctx = env.ctx;
+  G.data.load(JSON.parse(JSON.stringify(PAYLOAD)));
+  vm.runInContext(fs.readFileSync(path.join(ROOT, "src/js/tech.js"), "utf8"), ctx, { filename: "tech.js" });
+  return env;
+}
+// Engenharia as in the owner's capture: columns 1-3 done, part of 4-6 (marking the last tech of a column implies
+// every tech before it)
+function engineeringAt12(G) {
+  const TK = G.tech, bid = TK.branches()[0].id, cols = TK.columns(bid);
+  const mark = {};
+  for (const g of cols.slice(0, 3)) for (const t of g.techs) mark[t.id] = true;
+  return { TK, bid, cols, mark };
+}
+
+await test("Tecnologias: only the next column opens by default (columns 1-3 done, 4 has techs left)", () => {
+  const { GK: G } = techEnv();
+  const { TK, bid, cols, mark } = engineeringAt12(G);
+  check(cols.length >= 6, "Engenharia has many columns (" + cols.length + ")");
+  eq(cols.map((g) => g.column), [...cols.map((g) => g.column)].sort((a, b) => a - b), "columns in order");
+  eq(TK.nextColumn(bid, new Set()), cols[0].column, "nothing researched: column 1 is the next one");
+  const done = TK.researchedSet(mark);
+  const nxt = TK.nextColumn(bid, done);
+  eq(nxt, cols[3].column, "columns 1-3 done: column 4 is the next one");
+  const open = cols.filter((g) => TK.columnOpen(g.column, nxt, {})).map((g) => g.column);
+  eq(open, [cols[3].column], "only column 4 starts open (done ones and later ones folded)");
+  // everything researched: no column opens
+  const all = {}; for (const t of TK.inBranch(bid)) all[t.id] = true;
+  eq(TK.nextColumn(bid, TK.researchedSet(all)), null, "whole branch researched: no next column");
+  check(cols.every((g) => !TK.columnOpen(g.column, null, {})), "…and every column starts folded");
+  // implied research counts: marking a column-4 tech implies its parents
+  const c4 = cols[3].techs[0];
+  check(TK.researchedSet({ [c4.id]: true }).has(c4.parents[0] || c4.id), "a marked tech implies its parents");
+  // the player's choice wins over the rule, in both directions
+  const choice = { [cols[1].column]: true, [nxt]: false };
+  eq(cols.filter((g) => TK.columnOpen(g.column, nxt, choice)).map((g) => g.column), [cols[1].column], "choice: 2 opened, 4 folded by hand");
+});
+
+await test("Tecnologias: the opened / folded columns are kept per branch (ui.techCols, per device, cleaned, not synced)", async () => {
+  const env = techEnv(), G = env.GK, S = G.store, A = S.actions;
+  const b0 = G.tech.branches()[0].id, b1 = G.tech.branches()[1].id;
+  eq(S.get().ui.techCols, {}, "fresh: no choice");
+  A.setTechCol(b0, 2, true); A.setTechCol(b0, 4, false); A.setTechCol(b1, 1, true);
+  eq(S.get().ui.techCols, { [b0]: { 2: true, 4: false }, [b1]: { 1: true } }, "kept per branch");
+  A.setTechCol(b1, 1, null);
+  eq(S.get().ui.techCols, { [b0]: { 2: true, 4: false } }, "null forgets the choice (and the empty branch)");
+  A.setTechCol("bad id!", 2, true); A.setTechCol(b0, 0, true); A.setTechCol(b0, "x", true); A.setTechCol(b0, 100, true);
+  eq(S.get().ui.techCols, { [b0]: { 2: true, 4: false } }, "bad branch / column ignored");
+  await env.clock.tick(500);
+  const saved = JSON.parse(env.localStorage.getItem("gk2-companion"));
+  eq(saved.ui.techCols, { [b0]: { 2: true, 4: false } }, "saved on this device");
+  // a reload keeps it; junk in a saved copy is dropped
+  saved.ui.techCols[b0]["7"] = "yes"; saved.ui.techCols["<x>"] = { 1: true }; saved.ui.techCols[b1] = [true];
+  saved.ui.tnCollapsed = 1;
+  const env2 = techEnv();
+  env2.localStorage.setItem("gk2-companion", JSON.stringify(saved));
+  check(env2.GK.store.load(), "reloaded");
+  eq(env2.GK.store.get().ui.techCols, { [b0]: { 2: true, 4: false } }, "reload: kept, junk dropped");
+  eq(env2.GK.store.get().ui.tnCollapsed, true, "\"Tecnologias que faltam\" folded is kept too");
+  // the account doc never carries ui (per device)
+  check(!("ui" in env2.GK.store.syncPayload(env2.GK.store.get())) && env2.GK.store.SYNCED.indexOf("ui") < 0, "not synced");
+});
+
+await test("Tecnologias tab (ui/tech.js): headers fold, the next column stays put while ticking, ✓ on done columns", async () => {
+  const env = techEnv(), G = env.GK, ctx = env.ctx;
+  const { TK, bid, cols, mark } = engineeringAt12(G);
+  const fake = () => {
+    const kids = {}, ls = {};
+    return { hidden: false, innerHTML: "", value: "", ls, querySelector: (q) => (kids[q] = kids[q] || fake()), querySelectorAll: () => [],
+      addEventListener: (t, f) => { (ls[t] = ls[t] || []).push(f); }, focus() {}, setAttribute() {}, scrollIntoView() {}, getBoundingClientRect: () => ({ top: 0 }) };
+  };
+  ctx.CSS = { escape: (x) => x }; ctx.location = { hash: "tech" }; ctx.scrollTo = () => {}; ctx.scrollY = 0;
+  ctx.getComputedStyle = () => ({ getPropertyValue: () => "" });
+  G.router = { current: () => "tech", tab: () => ({ screen: "tech" }), register() {}, onChange() {}, detailHistory: () => ({ push() {}, pop() {} }) };
+  G.app = { registerPanel() {} };
+  G.ui.toast = () => {};
+  vm.runInContext(fs.readFileSync(path.join(ROOT, "src/js/ui/tech.js"), "utf8"), ctx, { filename: "ui/tech.js" });
+  const T = G.ui.tech, root = fake(), S = G.store;
+  T.mount(root);
+  S.update((s) => { s.researched = Object.assign({}, mark); }, { from: "tech" });
+  const draw = (meta) => { T.render(S.get(), meta || {}); return root.innerHTML; };
+  const heads = (h) => [...h.matchAll(/<button type="button" class="tc-btn" id="tcol-[^"]+-(\d+)" data-tcol="\d+" aria-expanded="(true|false)" aria-controls="([^"]+)" aria-label="([^"]+)">(.*?)<\/button>/g)]
+    .map((m) => ({ col: +m[1], open: m[2] === "true", ctl: m[3], label: m[4], inner: m[5] }));
+  let h = draw({ from: "router" }), hs = heads(h);
+  eq(hs.length, cols.length, "one header button per column");
+  eq(hs.filter((x) => x.open).map((x) => x.col), [cols[3].column], "only column 4 open");
+  check(hs.slice(0, 3).every((x) => /class="tc-ok"/.test(x.inner)) && !hs.slice(3).some((x) => /class="tc-ok"/.test(x.inner)), "✓ only on the done columns");
+  check(/aria-label="Expandir: Coluna 1, 1 de 1 pesquisadas"|aria-label="Expandir: Coluna 1, \d+ de \d+ pesquisadas"/.test(h), "label: Expandir: Coluna 1, n de n pesquisadas");
+  check(/<span class="tc-t">Coluna 4<\/span><span class="tc-chev" aria-hidden="true"><\/span><span class="tc-r"><span class="count">/.test(h), "the chevron right after the title, the count after it");
+  check(new RegExp(`<div class="card list" id="${hs[3].ctl}">`).test(h) && new RegExp(`<div id="${hs[0].ctl}" hidden></div>`).test(h), "aria-controls points at the rows (folded: empty and hidden)");
+  // ticking every tech of column 4 does not fold it under the finger (the next column is kept for this visit)
+  S.update((s) => { for (const t of cols[3].techs) s.researched[t.id] = true; }, { from: "tech" });
+  hs = heads(draw());
+  eq(hs.filter((x) => x.open).map((x) => x.col), [cols[3].column], "column 4 done while on the screen: still open");
+  check(/class="tc-ok"/.test(hs[3].inner), "…with its ✓");
+  // the next visit opens the new next column
+  hs = heads(draw({ from: "router" }));
+  eq(hs.filter((x) => x.open).map((x) => x.col), [cols[4].column], "next visit: column 5 open, 4 folded");
+  // a tap on a header: the choice is kept (and wins over the rule)
+  const click = (sel, data) => root.ls.click.forEach((f) => f({ target: { closest: (q) => (q === sel ? { dataset: data } : null) } }));
+  click("[data-tcol]", { tcol: String(cols[1].column) });
+  click("[data-tcol]", { tcol: String(cols[4].column) });
+  eq(S.get().ui.techCols, { [bid]: { [cols[1].column]: true, [cols[4].column]: false } }, "taps saved per branch");
+  hs = heads(draw({ from: "router" }));
+  eq(hs.filter((x) => x.open).map((x) => x.col), [cols[1].column], "after a new visit: column 2 open (by hand), 5 folded (by hand)");
+  // opening a tech of a folded column opens that column (the list comes back to its row)
+  const t7 = cols[6].techs[0];
+  T.open(t7.id);
+  eq(S.get().ui.techCols[bid][cols[6].column], true, "open(id): its column opens");
+  // a search lists its hits whatever is folded
+  const q = G.i18n.name(cols[0].techs[0]);
+  root.ls.input.forEach((f) => f({ target: { id: "tech-q", value: q } }));
+  await env.clock.tick(200);
+  h = root.querySelector("#tech-list").innerHTML;
+  check(h.includes('class="hint tech-results"') && !h.includes("data-tcol") && h.includes(`data-open="${cols[0].techs[0].id}"`), "search: hits listed from a folded column, no fold headers");
 });
 
 // ---------------------------------------------------------------- done

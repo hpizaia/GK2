@@ -38,6 +38,31 @@
   font: 800 .75rem/1.3 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: var(--gold);
 }
 .tech-col .count { letter-spacing: 0; }
+/* 1.8.x (seta das seções, opção A): a branch column's header is the 44 px button that folds it (ui/tech.js); the
+   negative margins keep the old rhythm around the taller target. The column's chevron sits right after "COLUNA N":
+   smaller and lighter than the rows' "›" (a 4 px box, ~8 px drawn, about the capitals' height, 1.5 px stroke; the
+   "›" is a 22 px glyph with a ~2 px stroke; both --ink-3, ≥ 4.8:1) and never in their x column (the "›" sits 17 px
+   in from the card's right edge, the chevron ~70 px in from its left one); the count (and ✓ when done) stays right. */
+.tech-col.tc { display: block; margin: -8px 0 -2px; }
+.tech-colgroup.is-folded .tech-col.tc { margin-bottom: 0; }
+.tc-btn {
+  display: flex; align-items: center; gap: var(--s2); width: 100%; min-height: var(--tap); margin: 0; padding: 0;
+  border: 0; background: transparent; color: inherit; font: inherit; letter-spacing: inherit; text-transform: inherit;
+  text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.tc-btn:hover { color: var(--accent); }
+.tc-btn:hover .tc-chev { color: var(--accent); }
+.tc-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tc-btn .count { letter-spacing: 0; }
+.tc-chev {
+  display: block; flex: none; width: 4px; height: 4px; margin-left: 2px; color: var(--ink-3);
+  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+  transform: translateY(-1px) rotate(45deg); transition: transform .15s ease;
+}
+.tc-btn[aria-expanded="false"] .tc-chev { transform: translateX(-1px) rotate(-45deg); }
+@media (prefers-reduced-motion: reduce) { .tc-chev { transition: none; } }
+.tc-r { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; }
+.tc-ok { color: var(--moss); font-size: .9375rem; line-height: 1; letter-spacing: 0; }
 .tech-row { grid-template-columns: 44px 40px minmax(0, 1fr) 16px; min-height: 64px; padding-right: var(--s2); }
 .tech-open {
   display: block; width: 100%; min-width: 0; min-height: var(--tap); padding: 4px 0; margin: 0;
