@@ -3,8 +3,12 @@
    First use (1.6.0, corte 20): one line above the example list, "Exemplo: busque o que quer fabricar e ele substitui
    esta lista."; an empty list shows only its empty card. The first goal added replaces the example (GK.store addGoal);
    its "Desfazer" toast now lives in ui/search.js (corte 13). The item icon opens it in Receitas (corte 6, no "i").
-   Phones (< 480 px of list width): the stepper and ✕ go on a second line under the name (planner.css, container
-   query on .goal-list).
+   1.8.x (protos/metas-quantidade, opção 2): "− N +" on the name's line at the right, its right edge on the card's
+   12 px line (the column of the "× N ▾" of Matérias-primas and Etapas), at every width; the name wraps instead. No
+   separate ✕: at quantity 1 the "−" is a red ✕ that removes the goal (same id, so the focus stays on it). The
+   "< 480 px: stepper and ✕ on a second line" layout is gone. Removing shows "Saiu das metas: Vinho · Desfazer"
+   (GK.ui.fmt.undoToast): the goal comes back at its place with its quantity (GK.store restoreGoal). "Limpar metas"
+   keeps its two-tap confirmation instead.
    Lists (schema 5, css/lists.css): with two or more lists, "Lista: <nome> ▾" under the title opens a menu (each list
    with its number of goals, "Nova lista…", "Renomear", "Apagar" and a one-line note); with one list only a discreet
    "+ Criar outra lista" at the end. Create / rename use a small form in the page, delete a confirmation in the page.
@@ -24,6 +28,7 @@ GK.i18n.add({
     "goals.inc": "Aumentar quantidade de {name}",
     "goals.qty": "Quantidade de {name}",
     "goals.remove": "Remover {name}",
+    "goals.removed": "Saiu das metas: {name}",
     "lists.label": "Lista:",
     "lists.btn": "Lista: {name}. Trocar de lista",
     "lists.menu": "Trocar de lista",
@@ -63,6 +68,7 @@ GK.i18n.add({
     "goals.inc": "Increase amount of {name}",
     "goals.qty": "Amount of {name}",
     "goals.remove": "Remove {name}",
+    "goals.removed": "Removed from goals: {name}",
     "lists.label": "List:",
     "lists.btn": "List: {name}. Switch list",
     "lists.menu": "Switch list",
@@ -160,6 +166,22 @@ GK.ui.goals = (function () {
     }, HOLD_DELAY);
   }
   function endHold() { stopHold(); setTimeout(() => { swallowClick = false; }, 0); }
+  // the ✕ (quantity 1): the goal goes, a toast offers "Desfazer" (same place, same quantity; only on the same list)
+  function removeWithUndo(item) {
+    const st = S().get(), at = st.goals.findIndex((x) => x.item === item);
+    if (at < 0) return;
+    const goal = { item, qty: st.goals[at].qty }, listId = (S().activeList(st) || {}).id;
+    const rest = JSON.stringify(st.goals.filter((x) => x.item !== item)), wasExample = !!st.example;
+    const nm = name(GK.data.get().items[item], st.overrides);
+    S().actions.removeGoal(item);
+    GK.ui.fmt.undoToast(t("goals.removed", { name: nm }), () => {
+      const now = S().get();
+      if ((S().activeList(now) || {}).id !== listId) return;
+      // the example comes back as the example only if nothing else changed in between
+      S().actions.restoreGoal(goal, at, wasExample && JSON.stringify(now.goals) === rest);
+      const b = document.getElementById("dec-" + domId(item)); if (b) b.focus({ preventScroll: true });
+    });
+  }
   function mount(el) {
     root = el;
     root.addEventListener("pointerdown", startHold);
@@ -198,11 +220,12 @@ GK.ui.goals = (function () {
         const lb = document.getElementById("list-btn") || document.getElementById("list-more"); if (lb) lb.focus();
         return;
       }
-      if ((b.dataset.dec || b.dataset.inc) && swallowClick) { swallowClick = false; return; }
+      // a hold that ran "−" down to 1 must not remove the goal: the click that ends it can land on the ✕ now there
+      if ((b.dataset.dec || b.dataset.inc || b.dataset.remove) && swallowClick) { swallowClick = false; return; }
       if (b.dataset.recipeOpen) { GK.ui.recipes.open(b.dataset.recipeOpen, { from: "plan" }); return; }
       if (b.dataset.dec) A.bumpQty(b.dataset.dec, -1);
       else if (b.dataset.inc) A.bumpQty(b.dataset.inc, +1);
-      else if (b.dataset.remove) A.removeGoal(b.dataset.remove);
+      else if (b.dataset.remove) removeWithUndo(b.dataset.remove);
       else if (b.dataset.try) GK.ui.search.add(b.dataset.try);
       else if (b.hasAttribute("data-clear")) {
         if (!confirming) {
@@ -296,13 +319,12 @@ GK.ui.goals = (function () {
       return `<div class="goal">
         ${GK.ui.fmt.slotButton(it, nm)}
         <div class="goal-main"><div class="goal-name">${esc(nm)}${GK.ui.fmt.otherName(it)}${GK.ui.fmt.badges(it, state.overrides)}</div><div class="goal-sub">${esc(GK.ui.fmt.stationOf(g.item, state))}</div></div>
-        <div class="goal-ctl">
-          <div class="stepper">
-            <button type="button" id="dec-${id}" data-dec="${esc(g.item)}" aria-label="${esc(t("goals.dec", { name: nm }))}">−</button>
-            <input id="qty-${id}" data-qty="${esc(g.item)}" type="number" inputmode="numeric" min="1" max="999" value="${g.qty}" aria-label="${esc(t("goals.qty", { name: nm }))}">
-            <button type="button" id="inc-${id}" data-inc="${esc(g.item)}" aria-label="${esc(t("goals.inc", { name: nm }))}">+</button>
-          </div>
-          <button type="button" class="btn btn-ghost btn-danger" id="rm-${id}" data-remove="${esc(g.item)}" aria-label="${esc(t("goals.remove", { name: nm }))}">✕</button>
+        <div class="stepper">
+          ${g.qty <= 1
+            ? `<button type="button" class="st-rm" id="dec-${id}" data-remove="${esc(g.item)}" aria-label="${esc(t("goals.remove", { name: nm }))}">✕</button>`
+            : `<button type="button" id="dec-${id}" data-dec="${esc(g.item)}" aria-label="${esc(t("goals.dec", { name: nm }))}">−</button>`}
+          <input id="qty-${id}" data-qty="${esc(g.item)}" type="number" inputmode="numeric" min="1" max="999" value="${g.qty}" aria-label="${esc(t("goals.qty", { name: nm }))}">
+          <button type="button" id="inc-${id}" data-inc="${esc(g.item)}" aria-label="${esc(t("goals.inc", { name: nm }))}">+</button>
         </div>
       </div>`;
     }).join("") + `</div>` + bottom;

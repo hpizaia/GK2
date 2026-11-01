@@ -515,6 +515,16 @@ GK.store = (function () {
     setQty(item, qty, meta) { update((s) => { touchGoals(s); const g = s.goals.find((x) => x.item === item); if (g) g.qty = clampQty(qty); }, meta); },
     bumpQty(item, d) { update((s) => { touchGoals(s); const g = s.goals.find((x) => x.item === item); if (g) g.qty = clampQty(g.qty + d); }); },
     removeGoal(item) { update((s) => { touchGoals(s); s.goals = s.goals.filter((x) => x.item !== item); }); },
+    // "Desfazer" after a goal was removed (ui/goals.js, the ✕ at quantity 1): it comes back at its place with its
+    // quantity (its recipe choices and ticks were never dropped); example = it was removed from the untouched example
+    restoreGoal(goal, index, example) {
+      if (!goal || typeof goal.item !== "string" || state.goals.some((x) => x.item === goal.item)) return;
+      update((s) => {
+        const at = Math.max(0, Math.min(Math.floor(+index) || 0, s.goals.length));
+        s.goals.splice(at, 0, { item: goal.item, qty: clampQty(goal.qty) });
+        if (example) s.example = true;
+      }, { from: "goals-undo" });
+    },
     clearGoals() { update((s) => { s.goals = []; s.done = {}; s.example = false; }); },
     // no stamp: an untouched example never overwrites a plan saved in the account
     seedExample(goals) { update((s) => { s.goals = goals.map((g) => ({ item: g.item, qty: clampQty(g.qty) })); s.example = true; }, { from: "example", noStamp: true }); },

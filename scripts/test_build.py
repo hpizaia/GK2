@@ -1333,13 +1333,36 @@ class PlannerUx(unittest.TestCase):
         self.assertEqual(order, sorted(order))   # desktop keeps the DOM order; only CSS reorders the phone column
         self.assertIn("todayCollapsed: true", self.read("js/store.js"))   # #4c: Hoje starts as one line
 
-    def test_planner_goal_rows_two_lines(self):
-        """#3: a narrow goal list puts the stepper and ✕ under the name; names wrap at whole words."""
-        css = self.read("css/planner.css")
-        self.assertIn("container: goals / inline-size", css)
-        narrow = css.split("@container goals (max-width: 479px) {", 1)[1].split("\n}", 1)[0]
-        self.assertIn("grid-template-columns: 40px minmax(0, 1fr)", narrow)
-        self.assertIn(".goal-ctl { grid-column: 2;", narrow)
+    def test_planner_goal_rows_one_line(self):
+        """#3, redone in 1.8.x (protos/metas-quantidade, opção 2): "− N +" on the name's line at every width (no more
+        second line under 480 px); no separate ✕: at quantity 1 the "−" is a red ✕ that removes the goal, labelled
+        "Remover <nome>" / "Remove <name>"; names wrap at whole words."""
+        css, g = self.read("css/planner.css"), self.read("js/ui/goals.js")
+        for gone in ("@container goals", "container: goals", ".goal-ctl"):
+            self.assertNotIn(gone, css, gone)
+        for gone in ("goal-ctl", 'id="rm-'):
+            self.assertNotIn(gone, g, gone)
+        self.assertRegex(css, r"\n\.goal \{[^}]*grid-template-columns: 40px minmax\(0, 1fr\) auto;")
+        self.assertIn(".goal > .stepper { grid-column: 3; }", css)
+        self.assertRegex(css, r"\.stepper button\.st-rm \{[^}]*color: var\(--blood\)")
+        self.assertIn("g.qty <= 1", g)
+        self.assertIn('class="st-rm" id="dec-${id}" data-remove="${esc(g.item)}" aria-label="${esc(t("goals.remove", { name: nm }))}">✕</button>', g)
+        self.assertIn('id="dec-${id}" data-dec="${esc(g.item)}" aria-label="${esc(t("goals.dec", { name: nm }))}">−</button>', g)
+        self.assertIn('id="inc-${id}" data-inc="${esc(g.item)}" aria-label="${esc(t("goals.inc", { name: nm }))}">+</button>', g)
+        for k, pt, en in (("goals.dec", "Diminuir", "Decrease"), ("goals.inc", "Aumentar", "Increase"), ("goals.remove", "Remover {name}", "Remove {name}")):
+            self.assertRegex(g, r'"%s": "%s' % (re.escape(k), re.escape(pt)))
+            self.assertRegex(g, r'"%s": "%s' % (re.escape(k), re.escape(en)))
+        # a hold that runs "−" down to 1 does not remove the goal with the click that ends it
+        self.assertIn("(b.dataset.dec || b.dataset.inc || b.dataset.remove) && swallowClick", g)
+        # the ✕ removes with "Desfazer" (the app's undo toast); "Limpar metas" keeps its two-tap confirmation
+        self.assertIn("else if (b.dataset.remove) removeWithUndo(b.dataset.remove);", g)
+        self.assertNotIn("A.removeGoal(", g)
+        self.assertIn('GK.ui.fmt.undoToast(t("goals.removed", { name: nm }), () => {', g)
+        self.assertIn("S().actions.restoreGoal(goal, at,", g)
+        self.assertIn('"goals.removed": "Saiu das metas: {name}"', g)
+        self.assertIn('"goals.removed": "Removed from goals: {name}"', g)
+        self.assertIn("restoreGoal(goal, index, example) {", self.read("js/store.js"))
+        self.assertIn('t(confirming ? "goals.confirm" : "goals.clear")', g)
         name = re.search(r"\n\.goal-name \{(.*?)\}", css).group(1)
         self.assertIn("overflow-wrap: normal", name)
         self.assertIn("hyphens: auto", name)
@@ -2011,6 +2034,12 @@ class Cuts160(unittest.TestCase):
         self.assertRegex(css, r"\.tick \{[^}]*width: var\(--tap\); height: var\(--tap\)")
         # the raw rows' quantity is the steps' "× N ▾"
         self.assertIn("qtyButton(r.item, nm, r.qty, open, true)", self.read("js/ui/summary.js"))
+        # Metas (1.8.x, opção 2): "− N +" at the row's right end, on the same 12 px line inside the card as the "× N ▾"
+        # of Matérias-primas and Etapas (x 361 at 390 px, 331 at 360 px), no margin pushing it off that line
+        goal = re.search(r"\n\.goal \{([^}]*)\}", css).group(1)
+        self.assertIn("padding: 6px var(--s3);", goal)
+        self.assertNotRegex(css, r"\.goal[^{]*\.stepper[^{]*\{[^}]*margin")
+        self.assertNotRegex(css, r"\n\.stepper \{[^}]*margin")
         self.assertRegex(css, r"\.fold-btn \{[^}]*width: var\(--tap\)")
 
     def test_planner_general(self):

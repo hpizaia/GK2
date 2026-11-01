@@ -1,5 +1,17 @@
 [
   {
+    "version": "1.8.1",
+    "date": "2026-11-01",
+    "pt": [
+      "Metas: o seletor “− N +” fica à direita, na linha do nome e na mesma coluna da quantidade das Matérias-primas e Etapas; cada meta ficou mais baixa",
+      "Com quantidade 1, o “−” vira um ✕ que remove a meta, com aviso “Saiu das metas · Desfazer” que devolve a meta no mesmo lugar"
+    ],
+    "en": [
+      "Goals: the “− N +” picker sits on the right, on the name's line and in the same column as the Raw materials and Steps amounts; each goal is shorter",
+      "At amount 1, “−” turns into an ✕ that removes the goal, with a “Removed from goals · Undo” notice that puts it back in place"
+    ]
+  },
+  {
     "version": "1.8.0",
     "date": "2026-11-01",
     "pt": [

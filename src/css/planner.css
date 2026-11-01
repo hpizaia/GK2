@@ -21,33 +21,22 @@
 
 /* goals */
 .goals { display: grid; gap: var(--s2); }
-.goal-list { margin-top: var(--s3); container: goals / inline-size; }
+.goal-list { margin-top: var(--s3); }
 .goals-intro { margin: var(--s2) 0 0; font-size: .9375rem; line-height: 1.35; color: var(--ink-2); max-width: 60ch; }
 .goals-intro + .goal-list { margin-top: var(--s2); }
+/* one line at every width (1.8.x, protos/metas-quantidade opção 2): icon | name (wraps, 2-3 lines on a 360 px
+   phone) | "− N +" centred on the name block, its right edge on the card's 12 px line, the column of the "× N ▾" of
+   Matérias-primas and Etapas. The stepper's "−" is a red ✕ at quantity 1 (ui/goals.js). */
 .goal {
-  display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: center; gap: var(--s2) var(--s2);
-  min-height: 64px; padding: var(--s2) var(--s1) var(--s2) var(--s3); border-top: 1px solid var(--seam);
+  display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: center; gap: 0 var(--s2);
+  min-height: 56px; padding: 6px var(--s3); border-top: 1px solid var(--seam);
 }
 .goal:first-child { border-top: 0; }
 .goal-main { min-width: 0; }
 /* whole words (hyphenated when the language allows), never "Supriment / os" */
 .goal-name { font-weight: 700; font-size: 1rem; line-height: 1.2; overflow-wrap: normal; hyphens: auto; -webkit-hyphens: auto; }
-/* a narrow list (phones, and the desktop's left column): stepper and ✕ on a second line under the name */
-@container goals (max-width: 479px) {
-  .goal { grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px; padding-block: 6px; }
-  .goal > .slot { align-self: start; margin-top: 2px; }
-  .goal > .slot-btn { margin-top: 0; }
-  .goal-ctl { grid-column: 2; justify-content: space-between; margin-left: -4px; }
-}
-@supports not (container-type: inline-size) {
-  @media (max-width: 479px) {
-    .goal { grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px; padding-block: 6px; }
-    .goal-ctl { grid-column: 2; justify-content: space-between; }
-  }
-}
+.goal > .stepper { grid-column: 3; }
 .goal-sub { font-size: .8125rem; color: var(--ink-2); }
-.goal-ctl { display: flex; align-items: center; gap: 2px; }
-.goal-ctl .btn { padding: 0; width: var(--tap); }
 .stepper { display: inline-flex; align-items: stretch; }
 .stepper button {
   width: var(--tap); min-height: var(--tap); border: 1px solid var(--frame); background: var(--panel-2); color: var(--ink);
@@ -55,6 +44,7 @@
   touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; /* press and hold */
 }
 .stepper button:first-child { border-radius: var(--r) 0 0 var(--r); }
+.stepper button.st-rm { color: var(--blood); font-size: 1.125rem; } /* "−" at quantity 1: removes the goal */
 .stepper button:last-child { border-radius: 0 var(--r) var(--r) 0; }
 .stepper input {
   width: max(46px, 2.3em); min-height: var(--tap); border: 1px solid var(--gold); border-left: 0; border-right: 0; /* ≥ 3:1 on --bg-2 */

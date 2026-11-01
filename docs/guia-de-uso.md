@@ -12,7 +12,7 @@ No topo ficam as abas **Planejador**, **Receitas** e **Tecnologias**, o botão d
 1. Na busca, digite o nome do que quer fabricar, em português ou inglês. Não precisa de acento nem do nome inteiro: "caix" acha "Caixote".
 2. Toque no resultado (ou em "+ Adicionar"). Ele entra em **Metas** com quantidade 1.
 3. Ajuste a quantidade com − e +. **Segure** o botão para a conta correr sozinha, ou digite o número.
-4. O ✕ tira uma meta. "Limpar metas" tira todas (pede confirmação).
+4. Com quantidade 1, o − vira um ✕ que tira a meta; o aviso "Saiu das metas" tem **Desfazer**. "Limpar metas" tira todas (pede confirmação).
 
 Na primeira visita aparece uma lista de exemplo. Mude as quantidades ou limpe a lista para começar a sua.
 

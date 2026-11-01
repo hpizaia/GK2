@@ -3,6 +3,11 @@
 
 # Histórico de atualizações — Companheiro GK2
 
+## 1.8.1 — 2026-11-01
+
+- Metas: o seletor “− N +” fica à direita, na linha do nome e na mesma coluna da quantidade das Matérias-primas e Etapas; cada meta ficou mais baixa
+- Com quantidade 1, o “−” vira um ✕ que remove a meta, com aviso “Saiu das metas · Desfazer” que devolve a meta no mesmo lugar
+
 ## 1.8.0 — 2026-11-01
 
 - Receitas agrupadas: receitas que só trocam um ingrediente viram um cartão só. No Vinho, um “Barril de Vinho” com bronze / prata / ouro (cada um com a sua maestria); nos Suprimentos: Vegetais, “E mais um destes” com cada vegetal; tocar numa qualidade já troca a receita do planejador
@@ -120,6 +125,11 @@
 ---
 
 # Update history — GK2 Companion
+
+## 1.8.1 — 2026-11-01
+
+- Goals: the “− N +” picker sits on the right, on the name's line and in the same column as the Raw materials and Steps amounts; each goal is shorter
+- At amount 1, “−” turns into an ✕ that removes the goal, with a “Removed from goals · Undo” notice that puts it back in place
 
 ## 1.8.0 — 2026-11-01
 

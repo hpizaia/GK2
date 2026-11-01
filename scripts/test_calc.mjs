@@ -379,6 +379,29 @@ await test("store migration keeps have=true, partial numbers and unknown local f
   env.GK.store.actions.setPerk("heat-saver", true); eq(env.GK.store.get().perks, { "heat-saver": true }, "setPerk");
 });
 
+await test("removing a goal can be undone: same place, same quantity, choices kept (Metas ✕, 1.8.x)", () => {
+  const env = makeEnv(), S = env.GK.store, A = S.actions;
+  env.localStorage.setItem("gk2-companion", JSON.stringify({ schemaVersion: 4, goals: [{ item: "wine", qty: 1 }, { item: "steel-sword", qty: 3 }, { item: "crate", qty: 12 }],
+    choice: { "steel-sword": "r-x" }, done: { "step:steel-sword": true }, updatedAt: "2026-01-01T00:00:00.000Z" }));
+  check(S.load(), "loaded");
+  A.removeGoal("steel-sword");
+  eq(S.get().goals.map((g) => g.item), ["wine", "crate"], "removed");
+  A.restoreGoal({ item: "steel-sword", qty: 3 }, 1, false);
+  eq(S.get().goals, [{ item: "wine", qty: 1 }, { item: "steel-sword", qty: 3 }, { item: "crate", qty: 12 }], "back at its place with its quantity");
+  eq([S.get().choice, S.get().done], [{ "steel-sword": "r-x" }, { "step:steel-sword": true }], "recipe choice and ticks kept");
+  A.restoreGoal({ item: "steel-sword", qty: 9 }, 0, false);
+  eq(S.get().goals.length, 3, "no duplicate when it is already there");
+  A.removeGoal("crate"); A.restoreGoal({ item: "crate", qty: 2000 }, 99, false);
+  eq(S.get().goals[2], { item: "crate", qty: 999 }, "index clamped to the end, quantity clamped");
+  // removed from the untouched example: the undo gives the example back
+  const env2 = makeEnv(), S2 = env2.GK.store;
+  S2.actions.seedExample([{ item: "crate", qty: 1 }, { item: "wine", qty: 2 }]);
+  S2.actions.removeGoal("crate");
+  check(!S2.get().example, "a removal adopts the example");
+  S2.actions.restoreGoal({ item: "crate", qty: 1 }, 0, true);
+  eq([S2.get().goals.map((g) => g.item), S2.get().example], [["crate", "wine"], true], "the example is back");
+});
+
 await test("ticks follow the quantity (1.8.0: corte 9 + C3), old ticks kept", () => {
   const C = GK.calc, S = GK.store;
   // a copy saved before 1.8.0: ticks are plain true; they stay ticked whatever the quantity (no number to compare)
