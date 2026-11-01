@@ -1,6 +1,6 @@
 # Backlog — Companheiro GK2
 
-01/11/2026 · versão atual **1.7.0**, publicada (app, site e release v1.7.0 no GitHub)
+01/11/2026 · versão atual **1.8.0**, publicada (app, site e release v1.8.0 no GitHub)
 
 Este arquivo substitui o backlog anterior (Etapas 0 a 5). O histórico do que já foi feito está no [CHANGELOG.md](../../CHANGELOG.md).
 
@@ -8,9 +8,10 @@ Esforço: **P** até 2 h · **M** meio dia a um dia · **G** vários dias. Quand
 
 ## Onde estamos
 
-**Publicado:** 1.7.0 (01/11, 05:50): app versão 12, site versão 10, release v1.7.0 com o arquivo único. Antes dela, a 1.6.0 (01/11, madrugada).
+**Publicado:** 1.8.0 (01/11, manhã): app versão 13, site versão 11, release v1.8.0 com o arquivo único. Antes dela, a 1.7.0 (01/11, 05:50).
 
 **Saiu hoje:**
+- **1.8.0:** **receitas agrupadas** (um cartão por estação quando só muda um ingrediente; qualidade bronze/prata/ouro como escolha que troca a receita do planejador; circulares recolhidas em "Melhorar a qualidade"), **estrela de qualidade** no ícone em todo o app (nome sem "(prata)" nas listas, palavra embaixo), **moedas em pixel** no "Quem compra" (unidade conferida: bronze, 100/100), **cortes 9 e 19**, **C3** (marcação acompanha a quantidade), **grade única no Planejador** (pedido do Hugo: número da estação na coluna das caixinhas, ícone da estação na coluna dos ícones), 2.1 a 2.5, QA #5 #6 #7 #9 #13, 2.8 no site, caixinhas de Tecnologias e Hoje de volta ao lugar. Comparação: https://claude.ai/artifact/VwmRF7TjJeNBRknDMZgC6w · protótipo: https://claude.ai/artifact/T4QxsVK8UVetbF7n8xnVmE. Relatório interno: `docs/revisao-ux/consertos.md`.
 - **1.4.0:** o painel Hoje ganhou "feito hoje", a prévia de amanhã, o bilhete por dia e a opção "Letra grande". No celular, o Planejador mostra Matérias-primas e Etapas logo depois das Metas, as abas ficam fixas e as linhas ficaram mais baixas; site e READMEs revisados.
 - **1.5.0:** listas separadas ("Lista: Igreja ▾") e recentes na busca. O detalhe do item ganhou "Onde conseguir", energia e efeito no estilo do jogo; rodapé enxuto, QR nos Créditos e aviso de dados velhos.
 - **1.5.1:** o cartão "Próximo passo" (ideia 5, que entrou na 1.5.0) saiu a seu pedido: na prática atrapalhava no topo do Planejador. A lista de etapas continua igual.
@@ -67,7 +68,7 @@ Objetivo: tirar o ruído sem perder nenhum dado (o plano longo cai de cerca de 1
 | **Histórico de atualizações** | | | |
 | ✓ Corte 16 | Só a versão atual aberta; as antigas viram uma linha cada | P\* | — |
 | **Depois** | | | |
-| Cortes 9 e 19 | Juntar a caixinha com "Já tenho → Tudo" (9); esconder "Fabricar com" circular da Pele (19) | M\* / P\* | 9: item 2.3 |
+| ✓ Cortes 9 e 19 | Feitos na 1.8.0 | — | — |
 
 ### 2. Consertos pequenos
 
@@ -75,14 +76,16 @@ Objetivo: tirar os defeitos que atrapalham o uso de todo dia, antes de qualquer 
 
 | item | o que é | esforço | depende de |
 |---|---|---|---|
-| 2.1 | Gesto de voltar do celular no detalhe de Receitas e de Tecnologias volta para a lista | M\* | o artifact deixar usar o histórico |
-| 2.2 | Nomes PT repetidos ("Tinta" = Ink e Paint): mostrar o nome EN pequeno (D3) | P | — |
-| 2.3 | "Marcado" acompanha a quantidade: marcar 3 e pedir 10 volta a pendente (C3) | P | — |
-| 2.4 | "Sem receita" na lista de Receitas vira "Coleta ou compra" (`app.md`, Receitas 4) | P\* | — |
-| 2.5 | "Texto do jogo" nos Dias parece link: trocar por um ícone de aspas pequeno (`app.md`, Dias 2) | P\* | — |
+| ✓ 2.1 | (1.8.0; falta confirmar no celular real, junto com 2.6) Gesto de voltar do celular no detalhe de Receitas e de Tecnologias volta para a lista | M\* | o artifact deixar usar o histórico |
+| ✓ 2.2 | (1.8.0) Nomes PT repetidos ("Tinta" = Ink e Paint): mostrar o nome EN pequeno (D3) | P | — |
+| ✓ 2.3 | (1.8.0) "Marcado" acompanha a quantidade: marcar 3 e pedir 10 volta a pendente (C3) | P | — |
+| ✓ 2.4 | (1.8.0) "Sem receita" na lista de Receitas vira "Coleta ou compra" (`app.md`, Receitas 4) | P\* | — |
+| ✓ 2.5 | (1.8.0) "Texto do jogo" nos Dias parece link: trocar por um ícone de aspas pequeno (`app.md`, Dias 2) | P\* | — |
 | 2.6 | Testar num iPhone e num Android reais: atalho na tela de início e teclado cobrindo o aviso | P\* | um celular de cada |
-| 2.7 | QA de 31/10 (`docs/revisao-ux/qa-2026-11.md`): ~~"Recentes" abre sozinho depois de adicionar (médio)~~ feito na 1.6.0; foco perdido ao fechar o aviso e ao apagar lista; aviso "Adicionado" fica após Desfazer; "Dados de 2026-11-01" nos Créditos; "Anatomia 0"; rótulo da Pele cortado com letra grande; "Limpar lista" × "Apagar lista" | P cada | — |
-| 2.8 | Site: trocar a frase "o rodapé mostra Só neste aparelho" (o rodapé não mostra mais nada sem conta) | P | — |
+| 2.7 | QA de 31/10 (`docs/revisao-ux/qa-2026-11.md`): ~~"Recentes" abre sozinho depois de adicionar (médio)~~ feito na 1.6.0; ~~foco perdido ao fechar o aviso e ao apagar lista; aviso "Adicionado" fica após Desfazer; "Anatomia 0"; rótulo da Pele cortado; "Limpar lista" × "Apagar lista"~~ feitos na 1.8.0. Sobram: "Dados de 2026-11-01" nos Créditos (#8), aspas retas no changelog (#11), cartão vazio desalinhado em 1280 (#12) | P cada | — |
+| 2.9 | Etapas: o selo da receita ("BRONZE") aparece ao lado de "Suco de Uva (prata)" e confunde; reescrever | P\* | — |
+| 2.10 | Metas fora da grade nova (sem caixinha; decidido manter) e quantidade das Etapas no topo da linha: só mexer se incomodar | P\* | — |
+| ✓ 2.8 | (1.8.0) Site: trocar a frase "o rodapé mostra Só neste aparelho" (o rodapé não mostra mais nada sem conta) | P | — |
 
 ### 3. Missão como meta
 
@@ -143,7 +146,7 @@ Objetivo: guardar o que vale a pena, mas só entra se o uso pedir ou se você de
 |---|---|---|---|
 | **Dados e tradução** | | | |
 | 6.10 | Traduzir os 231 nomes de receita (D2) | P/M | — |
-| 6.11 | Revisar 45 categorias e 3 maestrias traduzidas por máquina (D4) | P\* | — |
+| 6.11 | Revisar 45 categorias e 3 maestrias traduzidas por máquina (D4); e dois nomes PT suspeitos achados na 1.8.0: "Sucata de Cobre" para Bronze Scrap e "Anotação…" para uma chave | P\* | — |
 | 6.12 | Qualidade prata/ouro marcada no build, e não deduzida na página (C2/D1) | M | — |
 | 6.13 | Alquimia por runas: calcular as misturas válidas | G\* | — |
 | 6.14 | Script para levar ao arquivo de tradução os nomes editados no app | P\* | — |
