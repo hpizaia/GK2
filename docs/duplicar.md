@@ -13,6 +13,7 @@ Todos os comandos rodam na raiz do projeto. Use `python3 -I` (modo isolado). Pon
 | **Python 3** (só biblioteca padrão) | tudo: build, dados, testes | sim |
 | **git** | clonar e ver o que uma atualização de dados mudou | sim |
 | **Node** | `scripts/test_calc.mjs` (cálculo, armazenamento, sincronização) | opcional |
+| **cwebp** (`brew install webp`) | gerar o sprite dos ícones em WebP sem perda no `make_sprite.py` (ou `--png`, sem ele) | só para refazer o sprite |
 | **Pillow** | empacotar o sprite mais rápido no `make_sprite.py` (há reserva só com a biblioteca padrão) | opcional |
 | **Windows + Graveyard Keeper 2** (Steam) | exportar os nomes oficiais dos arquivos do seu jogo | opcional |
 | **Conta do Claude + [Claude Code](https://claude.com/claude-code)** | publicar como Claude Artifact, com sincronização por conta | opcional |

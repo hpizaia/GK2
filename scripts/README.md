@@ -1,6 +1,6 @@
 # scripts/: o que cada um faz
 
-Tudo é Python 3 só com a biblioteca padrão (Pillow é opcional no `make_sprite.py`), menos o `test_calc.mjs`, que roda no Node. Rode sempre da raiz do projeto, com `python3 -I`, e ponha os caminhos entre aspas, porque a pasta tem espaços. O roteiro completo de atualização (patch do jogo) está em [`docs/atualizacao.md`](../docs/atualizacao.md). Opções e schema do build estão em [`README-build.md`](README-build.md) (em inglês; o nome fica assim porque o código em `src/` e `scripts/` aponta para ele).
+Tudo é Python 3 só com a biblioteca padrão (no `make_sprite.py`, o Pillow é opcional e o `cwebp` é obrigatório: `brew install webp`), menos o `test_calc.mjs`, que roda no Node. Rode sempre da raiz do projeto, com `python3 -I`, e ponha os caminhos entre aspas, porque a pasta tem espaços. O roteiro completo de atualização (patch do jogo) está em [`docs/atualizacao.md`](../docs/atualizacao.md). Opções e schema do build estão em [`README-build.md`](README-build.md) (em inglês; o nome fica assim porque o código em `src/` e `scripts/` aponta para ele).
 
 ## Pipeline principal (o que roda a cada versão)
 
@@ -13,7 +13,7 @@ Tudo é Python 3 só com a biblioteca padrão (Pillow é opcional no `make_sprit
 | `validate.py [data/gk2.json]` | Confere um `gk2.json` (refs soltas, quantidades, ciclos, padrões). O `build.py` já o chama | Avulso, para ver o relatório completo (`--json`, `--quiet`) | `data/gk2.json` → relatório no terminal (exit 1 se houver erro grave) |
 | `build_techs.py` | Monta a árvore de tecnologias pt/EN (custos, pais/filhos, desbloqueios, notas, ícones) e valida (DAG etc.). `--check` só valida | Depois do `build.py` (lê o `gk2.json`) ou quando mudar nome | `data/raw/api-technologies-all.json`, `data/gk2.json`, as 3 camadas de nomes, `data/game-texts/gk2_textos.json` (outro caminho: `--game-text`) → `data/techs.json` |
 | `fetch_icons.py [--techs]` | Baixa cada URL de ícone distinta (≤ 5 req/s, pula o que já existe). `--techs` inclui os ícones próprios da árvore | Quando aparecem itens ou tecnologias novos | `data/gk2.json` (+ `data/techs.json`) → `data/icons/<id>.png` (ignorado no git) |
-| `make_sprite.py` | Empacota os ícones numa folha única (células de 32 px, ícones iguais compartilham célula) | Depois do `fetch_icons.py` | `data/icons/*.png` → `data/sprite.json` (manifesto com o PNG em `data:`) + `data/sprite.png` |
+| `make_sprite.py` | Empacota os ícones numa folha única (células de 32 px, ícones iguais compartilham célula). No app vai um WebP sem perda (`cwebp`; o `dwebp` confere pixel a pixel); sem `cwebp` o script para, e `--png` usa o PNG de propósito | Depois do `fetch_icons.py` | `data/icons/*.png` → `data/sprite.json` (manifesto com o WebP em `data:`) + `data/sprite.png` (a mesma folha em PNG, de referência) |
 
 ## Testes e release
 
@@ -32,7 +32,7 @@ Antes de cada commit ou publicação basta um comando: `python3 -I scripts/check
 
 | script | o que faz | quando rodar | entradas → saídas |
 |---|---|---|---|
-| `shots/compare.py [--ref REF] [--only-capture]` | Abre o app de `REF:dist/preview.html` (padrão `HEAD`) e o `dist/preview.html` atual no Chrome headless, nos mesmos casos (`shots/casos.json`: cada aba e tela principal, pt/en, 390/1280 px, claro/escuro), e compara pixels, HTML e texto visíveis, estado do app, erros de JS e o resumo do `GK.data`. Uma linha por caso, exit 1 se algo mudou. Lento (~30 s): fica fora do `check.py`. Detalhes em [`shots/README.md`](shots/README.md) | Antes e depois de refatorar (depois do build); `--only-capture` para tirar prints | as duas páginas → `.shots/compare/` (ou `.shots/capturas/`), fora do git |
+| `shots/compare.py [--ref REF \| --antes ARQ] [--tolerancia N] [--only-capture]` | Abre o app de `REF:dist/preview.html` (padrão `HEAD`) e o `dist/preview.html` atual no Chrome headless, nos mesmos casos (`shots/casos.json`: cada aba e tela principal, pt/en, 390/1280 px, claro/escuro), e compara pixels, HTML e texto visíveis, estado do app, erros de JS e o resumo do `GK.data`. Uma linha por caso (o DIFERENTE diz a maior diferença de cor, "máx 1/255"), exit 1 se algo mudou; `--tolerancia 1` aceita 1/255 e conta os pixels aceitos. Lento (~30 s): fica fora do `check.py`. Detalhes em [`shots/README.md`](shots/README.md) | Antes e depois de refatorar (depois do build); `--only-capture` para tirar prints | as duas páginas → `.shots/compare/` (ou `.shots/capturas/`), fora do git |
 
 ## Camada pt-BR de reserva (GK1 + tradução de máquina)
 

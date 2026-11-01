@@ -8,8 +8,7 @@ Esforço: **P** até 2 h · **M** meio dia a um dia · **G** vários dias. Quand
 
 - **Publicado:** 1.8.4 (01/11): app, site e release v1.8.4 no GitHub, com mídia e textos da 1.8.4. **O Hugo vai segurar as atualizações do app por um tempo.** Falta só trocar a imagem de prévia do GitHub (`docs/media/social-preview.png`, envio manual).
 - **Dados:** o jogo está na **1.011** (30/10) e as receitas da wiki ainda na **1.010**; o aviso de dados velhos está ligado. Os textos oficiais do jogo já são da 1.011.
-- **Manutenção** (nada muda para o jogador). Rodadas 1 a 3 feitas em 01/11: um comando para testar tudo (`scripts/check.py`), `scripts/release.py` para fechar versão, trava de push (`scripts/git-hooks/pre-push`), `CLAUDE.md` com as regras, comparação de telas antes/depois (`scripts/shots/`), paridade dos textos pt/en, e limpeza (código morto, testes repetidos, documentos, build sem mudança só por data). O que vem:
-  - **4** peso: sprite em WebP sem perda (item 6.22; precisa do sim do Hugo: iPhone com iOS 13 ou mais velho perde os ícones);
+- **Manutenção** (nada muda para o jogador). Rodadas 1 a 4 feitas em 01/11: um comando para testar tudo (`scripts/check.py`), `scripts/release.py` para fechar versão, trava de push (`scripts/git-hooks/pre-push`), `CLAUDE.md` com as regras, comparação de telas antes/depois (`scripts/shots/`), paridade dos textos pt/en, limpeza (código morto, testes repetidos, documentos, build sem mudança só por data) e, na 4, o sprite dos ícones em WebP sem perda (item 6.22: o app cai de 2,44 MB para 2,00 MB, ou de 909 KB para 575 KB comprimido; iPhone com iOS 13 ou mais velho fica sem ícones, com a letra). O app mais leve sai na próxima versão publicada (o artifact não foi republicado). O que vem:
   - **5** dados: camadas de nomes de 5 para 3, busca em português com trava de idioma, um script para atualizar os dados;
   - **6** código do app: qualidade pronta no build (item 6.12), arquivos grandes divididos, textos pt/en em arquivos próprios;
   - **7** (opcional) dividir `build.py` e `test_build.py` por assunto.
@@ -88,7 +87,7 @@ Guardados: só entram se o uso pedir ou se o Hugo decidir.
 | 6.20 | Selo "não oficial" quebrando a linha em nomes longos | P\* | — |
 | 6.21 | Navegador compartilhado sem login: avisar antes de levar o plano anônimo para a conta | P\* | — |
 | **Peso, testes e licença** | | | |
-| 6.22 | Sprite em WebP sem perdas, cerca de 430 KB a menos (F1) | P | manutenção 4 |
+| 6.22 | ~~Sprite em WebP sem perdas, cerca de 430 KB a menos (F1)~~ feito na manutenção 4 (−444 KB); vai para o changelog na próxima versão | P | — |
 | 6.23 | Testes das telas (os 3 testes já rodam juntos no `check.py`, e o `scripts/shots/` compara o visual) | M | — |
 | 6.25 | Autorização do wikily (X4): e-mail enviado em 31/10, esperar a resposta | P | resposta do wikily |
 | 6.26 | Tirar o `dist/` do git, só se o tamanho incomodar | P | — |

@@ -13,6 +13,7 @@ All commands run from the project root. Use `python3 -I` (isolated mode). Quote 
 | **Python 3** (standard library only) | everything: build, data, tests | yes |
 | **git** | cloning, seeing what a data refresh changed | yes |
 | **Node** | `scripts/test_calc.mjs` (planner maths, storage, sync) | optional |
+| **cwebp** (`brew install webp`) | the lossless WebP icon sprite in `make_sprite.py` (or `--png`, without it) | only to remake the sprite |
 | **Pillow** | faster sprite packing in `make_sprite.py` (there is a stdlib fallback) | optional |
 | **Windows + Graveyard Keeper 2** (Steam) | exporting the official names from your own game files | optional |
 | **Claude account + [Claude Code](https://claude.com/claude-code)** | publishing as a Claude Artifact with per-account sync | optional |

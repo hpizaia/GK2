@@ -4,13 +4,16 @@
     python3 -I scripts/shots/compare.py                 # HEAD:dist/preview.html × dist/preview.html (~30 s)
     python3 -I scripts/shots/compare.py --ref v1.8.4    # outra ref (commit, tag, branch)
     python3 -I scripts/shots/compare.py --filtro receitas,busca   # só os casos com esses trechos no nome
+    python3 -I scripts/shots/compare.py --tolerancia 1  # diferença de até 1/255 por canal conta como igual (e é contada)
+    python3 -I scripts/shots/compare.py --antes ARQ.html  # um arquivo no lugar da ref (o mesmo dos dois lados: 0 pixel)
     python3 -I scripts/shots/compare.py --only-capture  # só captura o dist/preview.html atual (prints para ver)
 
 Rode o build antes (python3 -I scripts/build.py --built AAAA-MM-DD): compara o dist/preview.html do disco.
 Abre as duas páginas nos mesmos casos (scripts/shots/casos.json) com scripts/shots/capture.mjs (Chrome headless,
 sem servidor) e compara, caso a caso: os pixels da página inteira, o HTML e o texto do que está visível, o estado
 do app e os erros de JS; e, uma vez, o resumo do GK.data (pega dado que mudou sem aparecer na tela).
-Uma linha por caso (igual / DIFERENTE / ERRO); exit 0 só se tudo for igual.
+Uma linha por caso (igual / DIFERENTE / ERRO; o DIFERENTE diz a maior diferença de cor por canal, "máx 1/255"
+é invisível); exit 0 só se tudo for igual. Padrão --tolerancia 0 (exato): é o que vale para refatorar.
 
 Saída (fora do git, apagada a cada rodada): .shots/compare/ com antes/, depois/ (PNG, HTML, texto e JSON de cada
 caso) e diferencas/ (imagem com os pixels diferentes em vermelho e o diff do HTML e do texto de cada caso diferente).
@@ -115,7 +118,13 @@ def comparar_dados(a, b):
     for k in sorted(set(a["chaves"]) | set(b["chaves"])):
         x, y = a["chaves"].get(k), b["chaves"].get(k)
         if x != y:
-            out.append(f"{k}: " + ("novo" if x is None else "saiu" if y is None else f"{x['n']}→{y['n']} entradas, conteúdo mudou"))
+            txt = "novo" if x is None else "saiu" if y is None else f"{x['n']}→{y['n']} entradas, conteúdo mudou"
+            pa, pb = a.get("metaPartes"), b.get("metaPartes")
+            if k == "meta" and pa is not None and pb is not None:
+                partes = sorted(i for i in set(pa) | set(pb) if pa.get(i) != pb.get(i))
+                txt += ": " + ", ".join(partes) + (" (a imagem dos ícones: o efeito na tela está nos pixels acima)"
+                                                   if partes == ["sprite.image"] else "")
+            out.append(f"{k}: {txt}")
     for nome, chave in (("itens", "items"), ("receitas", "receitas")):
         x, y = a.get(chave, {}), b.get(chave, {})
         mud = sorted(i for i in set(x) | set(y) if x.get(i) != y.get(i))
@@ -130,6 +139,7 @@ def comparar(saida, resumo):
     """Uma linha por caso; devolve quantos diferem (ou deram erro)."""
     pixels = ler_json(saida / "pixels.json") or {}
     A, B, dif = saida / "antes", saida / "depois", saida / "diferencas"
+    tol = resumo.get("tolerancia", 0)
     ruins = 0
     for caso in resumo["casos"]:
         nome, escala = caso["nome"], caso["escala"]
@@ -143,7 +153,9 @@ def comparar(saida, resumo):
         if px.get("diferentes"):
             ta = px.get("tamanhos") or []
             tam = f", altura {ta[1] // escala}→{ta[3] // escala}px" if len(ta) == 4 and ta[1] != ta[3] else ""
-            motivos.append(f"{px['diferentes']} pixels em {onde(px, ib, escala)}{tam} → diferencas/{nome}.png")
+            fora = f" acima de {tol}/255" if tol else ""
+            motivos.append(f"{px['diferentes']} pixels{fora} (máx {px.get('delta', '?')}/255) em {onde(px, ib, escala)}{tam}"
+                           f" → diferencas/{nome}.png")
         for tipo in ("html", "texto"):
             a, b = ler(A / f"{nome}.{tipo}.txt"), ler(B / f"{nome}.{tipo}.txt")
             if tipo == "html":
@@ -163,23 +175,27 @@ def comparar(saida, resumo):
             motivos.append(f"erros de JS: antes {ea or 'nenhum'}, depois {eb or 'nenhum'}")
         elif eb:
             print(f"  AVISO      {nome}: os dois lados têm erros de JS: {eb[:2]}")
+        tolerados = f" (tolerância {tol}: {px['tolerados']} px)" if px.get("tolerados") else ""
         if motivos:
             ruins += 1
-            print(f"  DIFERENTE  {nome}")
+            print(f"  DIFERENTE  {nome}{tolerados}")
             for m in motivos:
                 print(f"               {m}")
         else:
-            print(f"  igual      {nome}")
+            print(f"  igual      {nome}{tolerados}")
     return ruins
 
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--ref", default="HEAD", help="ref do git com o 'antes' (padrão HEAD)")
+    ap.add_argument("--antes", help="um arquivo como 'antes', no lugar da ref (o mesmo da --pagina: prova de 0 pixel)")
     ap.add_argument("--only-capture", action="store_true", help="só captura o dist/preview.html atual em .shots/capturas/")
     ap.add_argument("--pagina", default=PAGINA, help=f"a página 'depois' (padrão {PAGINA})")
     ap.add_argument("--filtro", help="só os casos com um destes trechos no nome (separados por vírgula)")
     ap.add_argument("--paralelo", type=int, default=4, help="Chromes ao mesmo tempo (padrão 4)")
+    ap.add_argument("--tolerancia", type=int, default=0, metavar="N",
+                    help="pixel com diferença de até N/255 por canal conta como igual (padrão 0: exato); o resumo conta quantos")
     ap.add_argument("--saida", help="pasta de saída (padrão .shots/compare ou .shots/capturas); é apagada antes")
     args = ap.parse_args(argv)
 
@@ -192,7 +208,9 @@ def main(argv=None):
         die(f"{saida} não está vazia e não é uma saída deste script: escolha outra pasta")
     shutil.rmtree(saida, ignore_errors=True)
     saida.mkdir(parents=True)
-    extra = ["--paralelo", str(args.paralelo)] + (["--filtro", args.filtro] if args.filtro else [])
+    if not 0 <= args.tolerancia <= 255:
+        die("--tolerancia vai de 0 a 255")
+    extra = ["--paralelo", str(args.paralelo), "--tolerancia", str(args.tolerancia)] + (["--filtro", args.filtro] if args.filtro else [])
     t0 = time.time()
 
     if args.only_capture:
@@ -204,15 +222,22 @@ def main(argv=None):
 
     tmp = Path(tempfile.mkdtemp(prefix="gk2-compare-"))
     try:
-        r = subprocess.run(["git", "show", f"{args.ref}:{PAGINA}"], cwd=ROOT, capture_output=True)
-        if r.returncode != 0:
-            die(f"git show {args.ref}:{PAGINA} falhou: {r.stderr.decode(errors='replace').strip()}")
+        if args.antes:
+            arq = (ROOT / args.antes).resolve()
+            if not arq.is_file():
+                die(f"{args.antes} não existe")
+            conteudo, nome_antes = arq.read_bytes(), args.antes
+        else:
+            r = subprocess.run(["git", "show", f"{args.ref}:{PAGINA}"], cwd=ROOT, capture_output=True)
+            if r.returncode != 0:
+                die(f"git show {args.ref}:{PAGINA} falhou: {r.stderr.decode(errors='replace').strip()}")
+            conteudo, nome_antes = r.stdout, f"{args.ref}:{PAGINA}"
         # as duas com o mesmo nome de arquivo, cada uma na sua pasta: só o conteúdo difere
         (tmp / "antes").mkdir()
         (tmp / "depois").mkdir()
-        (tmp / "antes" / "preview.html").write_bytes(r.stdout)
+        (tmp / "antes" / "preview.html").write_bytes(conteudo)
         shutil.copy2(pagina, tmp / "depois" / "preview.html")
-        print(f"comparando {args.ref}:{PAGINA} (antes) × {args.pagina} (depois) → {saida}")
+        print(f"comparando {nome_antes} (antes) × {args.pagina} (depois) → {saida}")
         rc, log = rodar_capture(["--saida", str(saida), "--antes", str(tmp / "antes" / "preview.html"),
                                  "--depois", str(tmp / "depois" / "preview.html"), *extra])
     finally:
@@ -232,7 +257,13 @@ def main(argv=None):
         print("  igual      dados (GK.data)")
     n = len(resumo["casos"])
     veredito = "TUDO IGUAL" if not ruins and rc == 0 else f"{ruins} DIFERENTE(S)/ERRO(S)"
-    print(f"\ncompare {args.ref}: {veredito} — {n} casos + dados em {time.time() - t0:.0f}s; arquivos em {saida}")
+    px = [v for v in (ler_json(saida / "pixels.json") or {}).values() if "erro" not in v]
+    tolerados = sum(v.get("tolerados", 0) for v in px)
+    if args.tolerancia:
+        veredito += f" (tolerância {args.tolerancia}: {tolerados} px em {sum(1 for v in px if v.get('tolerados'))} casos)"
+    maximo = max((v.get("delta", 0) for v in px), default=0)
+    print(f"\ncompare {nome_antes}: {veredito} — {n} casos + dados em {time.time() - t0:.0f}s; maior diferença de cor"
+          f" {maximo}/255; arquivos em {saida}")
     return 0 if not ruins and rc == 0 else 1
 
 

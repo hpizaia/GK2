@@ -9,7 +9,7 @@ may contain spaces, so quote them.
 | `scripts/validate.py` | Checks a merged `gk2.json`. build.py also runs it on every build |
 | `scripts/test_build.py` | Tests on `scripts/fixtures/` (plus a read-only smoke test on the real data) |
 | `scripts/fetch_icons.py` | Downloads every distinct `icon` URL of `data/gk2.json` (items + stations) into `data/icons/<id>.png` (≤ 5 req/s, skips existing files) |
-| `scripts/make_sprite.py` | Packs `data/icons/*.png` into one sprite sheet: `data/sprite.json` (manifest with a `data:` PNG) + `data/sprite.png` |
+| `scripts/make_sprite.py` | Packs `data/icons/*.png` into one sprite sheet: `data/sprite.json` (manifest with a lossless WebP `data:` URI, made by `cwebp`) + `data/sprite.png` (the same sheet as a PNG, reference copy) |
 
 ## Run
 
@@ -30,7 +30,7 @@ python3 -I scripts/build.py --no-src
 
 # icons -> sprite (once, or when icons change), then rebuild
 python3 -I scripts/fetch_icons.py            # data/icons/<id>.png
-python3 -I scripts/make_sprite.py            # data/sprite.json + data/sprite.png (Pillow optional)
+python3 -I scripts/make_sprite.py            # data/sprite.json + data/sprite.png (needs cwebp: brew install webp; Pillow optional)
 python3 -I scripts/build.py
 
 # validate an existing build (exit 1 on hard errors)

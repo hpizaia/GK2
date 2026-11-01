@@ -2,7 +2,7 @@
 """Pack data/icons/*.png into one sprite sheet + manifest for the GK2 planner page.
 
     python3 -I scripts/make_sprite.py                          # data/icons -> data/sprite.json (+ data/sprite.png)
-    python3 -I scripts/make_sprite.py --icons DIR --out PATH.json [--size N]
+    python3 -I scripts/make_sprite.py --icons DIR --out PATH.json [--size N] [--png]
     python3 -I scripts/build.py                                # then rebuild: the page embeds data/sprite.json
 
 Icons saved at an integer zoom (the wiki serves pixel art at 4x) are first reduced exactly to their native size.
@@ -13,11 +13,19 @@ prefix (tech__<slug>, tp__red, branch__<key>, written by fetch_icons.py --techs;
 medallions of data/days.json) become ids tech:<slug>, tp:red, branch:<key>, day:<id>.
 
 Manifest (data/sprite.json):
-    { "image": "data:image/png;base64,...", "size": 32, "cols": 27, "rows": 26,
-      "icons": { "<id>": [col, row], ... }, "count": {"files": 806, "cells": 685} }
+    { "image": "data:image/webp;base64,...", "size": 32, "cols": 27, "rows": 27,
+      "icons": { "<id>": [col, row], ... }, "count": {"files": 836, "cells": 715} }
+
+The embedded image is a lossless WebP (about 60% smaller than the PNG; Safari/iOS 14+ and every current browser).
+It needs `cwebp` (Homebrew: `brew install webp`, which also brings `dwebp`): cwebp -lossless -z 9 -exact, no
+metadata, single-threaded, so the same icons and the same cwebp give the same bytes. There is no silent fallback:
+without cwebp the script stops; `--png` embeds the PNG on purpose. When `dwebp` is present the WebP is decoded
+back and must match the sheet pixel for pixel (RGBA), or the script stops. data/sprite.png (the same sheet as a
+PNG, the reference copy) is always written next to the manifest.
 
 Uses Pillow when it can be imported; otherwise a small stdlib PNG reader/writer (8-bit and palette PNGs,
-non-interlaced and Adam7) that covers the wiki's icons. Exit codes: 0 ok, 1 some icons unreadable, 2 usage.
+non-interlaced and Adam7) that covers the wiki's icons. Exit codes: 0 ok, 1 some icons unreadable, 2 usage or
+cwebp missing, 3 the WebP failed (cwebp error, or dwebp decodes it differently from the sheet).
 """
 
 import argparse
@@ -26,8 +34,11 @@ import hashlib
 import json
 import math
 import os
+import shutil
 import struct
+import subprocess
 import sys
+import tempfile
 import zlib
 from pathlib import Path
 
@@ -266,8 +277,63 @@ def save_sheet(cols, rows, cell, cells):
         im.putdata(sheet)
         buf = io.BytesIO()
         im.save(buf, "PNG", optimize=True)
-        return W, H, buf.getvalue()
-    return W, H, png_write(W, H, sheet)
+        return W, H, buf.getvalue(), sheet
+    return W, H, png_write(W, H, sheet), sheet
+
+
+# --------------------------------------------------------------------------- WebP (cwebp / dwebp)
+
+CWEBP_ARGS = ["-quiet", "-lossless", "-z", "9", "-exact", "-metadata", "none"]   # no -mt: same bytes every run
+NO_CWEBP = ("make_sprite: o cwebp não foi encontrado, e o sprite do app é um WebP sem perda.\n"
+            "  Instale com:  brew install webp   (traz o cwebp e o dwebp)\n"
+            "  Ou, de propósito, gere o sprite em PNG (cerca de 330 KB a mais no app):  make_sprite.py --png")
+
+
+class WebpError(Exception):
+    pass
+
+
+def webp_size(data):
+    """(width, height) from a lossless WebP header (RIFF/WEBP/VP8L), or None when it is not one."""
+    if len(data) < 25 or data[:4] != b"RIFF" or data[8:16] != b"WEBPVP8L" or data[20] != 0x2F:
+        return None
+    bits = int.from_bytes(data[21:25], "little")
+    return (bits & 0x3FFF) + 1, ((bits >> 14) & 0x3FFF) + 1
+
+
+def pam_read(data):
+    """dwebp -pam output -> (width, height, raw RGBA bytes)."""
+    head, sep, body = data.partition(b"ENDHDR\n")
+    fields = dict(line.split(b" ", 1) for line in head.split(b"\n")[1:] if b" " in line)
+    if not sep or not head.startswith(b"P7\n") or fields.get(b"DEPTH") != b"4" or fields.get(b"MAXVAL") != b"255":
+        raise WebpError("dwebp: unexpected PAM output")
+    return int(fields[b"WIDTH"]), int(fields[b"HEIGHT"]), body
+
+
+def webp_encode(png, W, H, sheet):
+    """PNG bytes of the sheet -> lossless WebP bytes, checked against the sheet's pixels.
+    Returns (webp, note): note says how it was checked."""
+    cwebp, dwebp = shutil.which("cwebp"), shutil.which("dwebp")
+    with tempfile.TemporaryDirectory(prefix="gk2-sprite-") as t:
+        src, dst, pam = Path(t) / "sprite.png", Path(t) / "sprite.webp", Path(t) / "sprite.pam"
+        src.write_bytes(png)
+        r = subprocess.run([cwebp, *CWEBP_ARGS, str(src), "-o", str(dst)], capture_output=True, text=True)
+        if r.returncode or not dst.exists():
+            raise WebpError(f"cwebp failed ({r.returncode}): {(r.stderr or r.stdout).strip()[:300]}")
+        webp = dst.read_bytes()
+        if webp_size(webp) != (W, H):
+            raise WebpError(f"cwebp wrote {webp_size(webp)}, expected a lossless WebP of {W}x{H}")
+        if not dwebp:
+            return webp, "not decoded back (dwebp missing)"
+        r = subprocess.run([dwebp, "-quiet", "-pam", str(dst), "-o", str(pam)], capture_output=True, text=True)
+        if r.returncode or not pam.exists():
+            raise WebpError(f"dwebp failed ({r.returncode}): {(r.stderr or r.stdout).strip()[:300]}")
+        w, h, raw = pam_read(pam.read_bytes())
+    want = bytes(c for p in sheet for c in p)
+    if (w, h) != (W, H) or raw != want:
+        diff = sum(1 for i in range(0, min(len(raw), len(want)), 4) if raw[i: i + 4] != want[i: i + 4])
+        raise WebpError(f"dwebp decodes {w}x{h} with {diff} pixels different from the {W}x{H} sheet")
+    return webp, "dwebp: identical to the sheet, pixel for pixel"
 
 
 # --------------------------------------------------------------------------- CLI
@@ -277,7 +343,12 @@ def main(argv=None):
     ap.add_argument("--icons", default=str(ROOT / "data" / "icons"), help="folder of <id>.png files")
     ap.add_argument("--out", default=str(ROOT / "data" / "sprite.json"), help="manifest path (PNG written next to it)")
     ap.add_argument("--size", type=int, help="cell size in px (default: native if all icons <= 40 px, else 32)")
+    ap.add_argument("--png", action="store_true",
+                    help="embed the PNG instead of the lossless WebP (no cwebp needed; about 330 KB more in the page)")
     args = ap.parse_args(argv)
+    if not args.png and not shutil.which("cwebp"):
+        print(NO_CWEBP, file=sys.stderr)
+        return 2
 
     files = sorted(p for p in Path(args.icons).glob("*.png") if p.is_file())
     if not files:
@@ -308,9 +379,18 @@ def main(argv=None):
         icons[iid] = by_hash[key]
     cols = max(1, math.ceil(math.sqrt(len(cells))))
     rows = math.ceil(len(cells) / cols)
-    W, H, png = save_sheet(cols, rows, cell, cells)
+    W, H, png, sheet = save_sheet(cols, rows, cell, cells)
+    if args.png:
+        mime, image, note = "image/png", png, "PNG on request (--png)"
+    else:
+        try:
+            image, note = webp_encode(png, W, H, sheet)
+        except WebpError as e:
+            print(f"make_sprite: WebP rejected, nothing written: {e}", file=sys.stderr)
+            return 3
+        mime, note = "image/webp", f"WebP lossless {len(image):,} bytes, {note}"
     manifest = {
-        "image": "data:image/png;base64," + base64.b64encode(png).decode("ascii"),
+        "image": f"data:{mime};base64," + base64.b64encode(image).decode("ascii"),
         "size": cell, "cols": cols, "rows": rows,
         "icons": {iid: [n % cols, n // cols] for iid, n in icons.items()},
         "count": {"files": len(imgs), "cells": len(cells)},
@@ -325,7 +405,7 @@ def main(argv=None):
     for d in dims:
         sizes[d] = sizes.get(d, 0) + 1
     print(f"make_sprite: {len(imgs)} icons -> {len(cells)} cells of {cell}px, sheet {W}x{H}, "
-          f"PNG {len(png):,} bytes, manifest {out.stat().st_size:,} bytes "
+          f"PNG {len(png):,} bytes; embedded: {note}; manifest {out.stat().st_size:,} bytes "
           f"({'Pillow' if Image is not None else 'stdlib PNG codec'}); zoom undone {dict(sorted(zooms.items()))}; "
           f"native sizes {dict(sorted(sizes.items()))}; {sum(1 for d in dims if d > cell)} scaled down to fit")
     for name, err in bad:

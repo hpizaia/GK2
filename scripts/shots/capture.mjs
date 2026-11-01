@@ -6,7 +6,8 @@
 
    Quem chama no dia a dia é o compare.py (veja scripts/shots/README.md). Opções: --casos ARQ (padrão: casos.json
    ao lado), --filtro a,b (só os casos cujo nome contém um dos trechos), --paralelo N (Chromes ao mesmo tempo, padrão 4),
-   --tempo-limite S (padrão 300: passou disso, fecha os Chromes e sai com erro).
+   --tempo-limite S (padrão 300: passou disso, fecha os Chromes e sai com erro), --tolerancia N (padrão 0: na
+   comparação, um pixel cuja maior diferença por canal é ≤ N conta como igual, mas é contado em "tolerados").
 
    Cada caso de casos.json vira uma captura por idioma × tela: semeia localStorage["gk2-companion"] (e o
    sessionStorage, se o caso pedir), abre a página na rota, roda os passos (clicar, digitar, tecla) e grava em
@@ -25,7 +26,8 @@
    - rede: só as fontes do Google Fonts passam, e sempre com os mesmos bytes (cache em .shots/cache-fontes/; a
      primeira vez baixa). Qualquer outro pedido de rede é bloqueado;
    - espera de verdade em vez de pausa fixa: o "Carregando" sumir, document.fonts.ready, o sprite decodificado e o
-     tamanho da página parar de mudar.
+     tamanho da página parar de mudar; e, logo antes da foto, de novo sprite, fontes e dois quadros;
+   - na hora da foto, os elementos "sticky" viram "relative" (ver ANTES_DA_FOTO) e é uma foto só por captura.
    Contra processo preso: o Chrome roda com --remote-debugging-pipe (sem porta; morre sozinho quando este processo
    termina, até num kill -9), tempo-limite global, SIGINT/SIGTERM/exceção fecham o Chrome e apagam o perfil.
 */
@@ -47,7 +49,7 @@ const CACHE_FONTES = path.join(ROOT, ".shots", "cache-fontes");
 
 // ------------------------------------------------------------------ argumentos
 function args(argv) {
-  const o = { casos: path.join(HERE, "casos.json"), paralelo: 4, tempo: 300, filtro: null, paginas: [] };
+  const o = { casos: path.join(HERE, "casos.json"), paralelo: 4, tempo: 300, tolerancia: 0, filtro: null, paginas: [] };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i], v = () => argv[++i];
     if (a === "--saida") o.saida = path.resolve(v());
@@ -57,6 +59,7 @@ function args(argv) {
     else if (a === "--filtro") o.filtro = v().split(",").filter(Boolean);
     else if (a === "--paralelo") o.paralelo = Math.max(1, +v() || 1);
     else if (a === "--tempo-limite") o.tempo = Math.max(10, +v() || 300);
+    else if (a === "--tolerancia") o.tolerancia = Math.min(255, Math.max(0, Math.floor(+v() || 0)));
     else if (a.startsWith("--")) sair(`opção desconhecida: ${a}`);
     else o.paginas.push(path.resolve(a));
   }
@@ -223,6 +226,25 @@ const PRONTO = `(async () => {
   await document.fonts.ready;
   return { pronto: !document.getElementById("boot-msg"), fontes: Array.from(document.fonts).filter((f) => f.status !== "unloaded").map((f) => f.family + " " + f.weight + " " + f.style + " " + f.status).sort() };
 })()`;
+// logo antes da foto (depois de coletar o HTML): os elementos "sticky" viram "relative" sem deslocamento (com a página
+// no topo, é onde já estavam: a foto não muda) e espera o sprite decodificado, as fontes e dois quadros pintados.
+// Por quê: com o cabeçalho sticky do desktop (e a busca aberta nele), a foto da página inteira às vezes saía sem um
+// elemento fora da tela (um botão de ícone inteiro, com moldura), ~1 caso em 10 rodadas. Devolve quantos eram sticky.
+const ANTES_DA_FOTO = `(async () => {
+  const quadro = () => new Promise((r) => requestAnimationFrame(() => r()));
+  let n = 0;
+  for (const el of document.querySelectorAll("*")) {
+    if (getComputedStyle(el).position !== "sticky") continue;
+    n++;
+    el.style.setProperty("position", "relative", "important");
+    for (const k of ["top", "right", "bottom", "left"]) el.style.setProperty(k, "auto", "important");
+  }
+  const sp = document.getElementById("gk-sprite"), m = sp && /url\\("([^"]+)"\\)/.exec(sp.textContent);
+  if (m) { const im = new Image(); im.src = m[1]; await im.decode().catch(() => {}); }
+  await document.fonts.ready;
+  await quadro(); await quadro();
+  return n;
+})()`;
 // o que está visível: HTML, texto, estado do store, caixas dos painéis (para dizer "onde" mudou)
 const COLETAR = `(() => {
   const vis = (el) => el && !el.hidden && el.getClientRects().length > 0;
@@ -271,7 +293,13 @@ const DADOS = `(() => {
   const items = {}, receitas = {};
   for (const id of Object.keys(D.items || {}).sort()) items[id] = h(ser(D.items[id], D.items[id], new Set()));
   for (const r of D.recipes || []) receitas[r.id] = h(ser(r, r, new Set()));
-  return { meta: { built: D.meta && D.meta.built, version: D.meta && D.meta.version }, schema: GK.store.SCHEMA, chaves, items, receitas };
+  // meta por partes (o sprite separado em imagem e o resto): para dizer o que mudou dentro dela
+  const metaPartes = {};
+  for (const [k, v] of Object.entries(D.meta || {})) {
+    if (k === "sprite" && v && typeof v === "object") for (const [k2, v2] of Object.entries(v)) metaPartes["sprite." + k2] = um(v2).hash;
+    else metaPartes[k] = um(v).hash;
+  }
+  return { meta: { built: D.meta && D.meta.built, version: D.meta && D.meta.version }, schema: GK.store.SCHEMA, chaves, metaPartes, items, receitas };
 })()`;
 
 // ------------------------------------------------------------------ uma captura
@@ -357,13 +385,15 @@ async function capturar(b, C, v, pagina, dir) {
     }
     const m = await b.cdp("Page.getLayoutMetrics", {}, s);
     const altura = Math.min(ALTURA_MAX, Math.ceil(m.cssContentSize.height));
+    const sticky = await avaliar(b, s, ANTES_DA_FOTO, "preparar a foto");
+    // uma foto só: uma segunda foto logo depois da primeira sai diferente (o anel de foco da busca some)
     const { data } = await b.cdp("Page.captureScreenshot", { format: "png", captureBeyondViewport: true,
       clip: { x: 0, y: 0, width: v.tela.largura, height: altura, scale: 1 } }, s);
     fs.writeFileSync(path.join(dir, v.nome + ".png"), Buffer.from(data, "base64"));
     fs.writeFileSync(path.join(dir, v.nome + ".html.txt"), info.html.replace(/></g, ">\n<") + "\n");
     fs.writeFileSync(path.join(dir, v.nome + ".texto.txt"), info.texto + "\n");
     const json = { caso: v.nome, rota: info.rota, tema: info.tema, lang: info.lang, alturaPagina: Math.ceil(m.cssContentSize.height),
-      alturaCaptura: altura, escala: v.tela.escala, fontes: pronto.fontes, erros: aba.erros, caixas: info.caixas, estado: info.estado };
+      alturaCaptura: altura, escala: v.tela.escala, sticky, fontes: pronto.fontes, erros: aba.erros, caixas: info.caixas, estado: info.estado };
     fs.writeFileSync(path.join(dir, v.nome + ".json"), JSON.stringify(json, null, 1) + "\n");
     return { png: data, erros: aba.erros };
   } finally { await aba.fim(); }
@@ -380,14 +410,16 @@ async function resumoDados(b, pagina, dir) {
 }
 
 // ------------------------------------------------------------------ comparar pixels (no próprio Chrome)
-async function comparar(b, pa, pb, escala) {
+// devolve diferentes (pixels acima da tolerância), tolerados (diferentes, mas ≤ tolerância), delta (a maior diferença
+// por canal entre todos os pixels que não são idênticos, de 0 a 255) e, se algum passou da tolerância, caixa e imagem
+async function comparar(b, pa, pb, escala, tol) {
   if (!b.abaComparar) {
     const { targetId } = await b.cdp("Target.createTarget", { url: "about:blank" });
     const { sessionId } = await b.cdp("Target.attachToTarget", { targetId, flatten: true });
     b.abaComparar = { s: sessionId, targetId };
     await b.cdp("Runtime.enable", {}, sessionId);
   }
-  if (pa === pb) return { diferentes: 0 };
+  if (pa === pb) return { diferentes: 0, tolerados: 0, delta: 0 };
   const expr = `(async () => {
     const ler = async (b64) => createImageBitmap(await (await fetch("data:image/png;base64," + b64)).blob());
     const [x, y] = await Promise.all([ler(${JSON.stringify(pa)}), ler(${JSON.stringify(pb)})]);
@@ -397,22 +429,25 @@ async function comparar(b, pa, pb, escala) {
     const out = new OffscreenCanvas(W, H), g = out.getContext("2d");
     g.fillStyle = "#fff"; g.fillRect(0, 0, W, H); g.globalAlpha = 0.25; g.drawImage(y, 0, 0); g.globalAlpha = 1;
     const img = g.getImageData(0, 0, W, H), d = img.data;
-    let n = 0, x0 = W, y0 = H, x1 = -1, y1 = -1, delta = 0;
+    let n = 0, tolerados = 0, x0 = W, y0 = H, x1 = -1, y1 = -1, delta = 0;
     for (let i = 0; i < p.length; i += 4) {
-      if (p[i] === q[i] && p[i + 1] === q[i + 1] && p[i + 2] === q[i + 2] && p[i + 3] === q[i + 3]) {
+      const dp = Math.max(Math.abs(p[i] - q[i]), Math.abs(p[i + 1] - q[i + 1]), Math.abs(p[i + 2] - q[i + 2]), Math.abs(p[i + 3] - q[i + 3]));
+      if (dp > delta) delta = dp;
+      if (dp <= ${tol}) {
+        if (dp) tolerados++;
         const cinza = (d[i] + d[i + 1] + d[i + 2]) / 3; d[i] = d[i + 1] = d[i + 2] = cinza; continue;
       }
-      n++; delta = Math.max(delta, Math.abs(p[i] - q[i]), Math.abs(p[i + 1] - q[i + 1]), Math.abs(p[i + 2] - q[i + 2]), Math.abs(p[i + 3] - q[i + 3])); d[i] = 230; d[i + 1] = 0; d[i + 2] = 0; d[i + 3] = 255;
+      n++; d[i] = 230; d[i + 1] = 0; d[i + 2] = 0; d[i + 3] = 255;
       const k = i / 4, X = k % W, Y = (k - X) / W;
       if (X < x0) x0 = X; if (X > x1) x1 = X; if (Y < y0) y0 = Y; if (Y > y1) y1 = Y;
     }
-    if (!n) return { diferentes: 0, tamanhos: [x.width, x.height, y.width, y.height] };
+    if (!n) return { diferentes: 0, tolerados, delta, tamanhos: [x.width, x.height, y.width, y.height] };
     g.putImageData(img, 0, 0);
     g.strokeStyle = "#e60000"; g.lineWidth = Math.max(2, ${escala} * 2); g.strokeRect(x0 - 4, y0 - 4, x1 - x0 + 9, y1 - y0 + 9);
     const blob = await out.convertToBlob({ type: "image/png" });
     const bytes = new Uint8Array(await blob.arrayBuffer());
     let bin = ""; for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
-    return { diferentes: n, delta, caixa: [x0, y0, x1, y1], tamanhos: [x.width, x.height, y.width, y.height], imagem: btoa(bin) };
+    return { diferentes: n, tolerados, delta, caixa: [x0, y0, x1, y1], tamanhos: [x.width, x.height, y.width, y.height], imagem: btoa(bin) };
   })()`;
   return avaliar(b, b.abaComparar.s, expr, "comparar pixels");
 }
@@ -447,7 +482,7 @@ async function main() {
       try {
         for (const [lado, p] of lados) r[lado || "depois"] = await comPrazo(capturar(b, C, v, p, path.join(o.saida, lado)), 45000, `capturar ${v.nome}`);
         if (o.antes) {
-          const c = await comparar(b, r.antes.png, r.depois.png, v.tela.escala);
+          const c = await comparar(b, r.antes.png, r.depois.png, v.tela.escala, o.tolerancia);
           if (c.imagem) {
             fs.mkdirSync(path.join(o.saida, "diferencas"), { recursive: true });
             fs.writeFileSync(path.join(o.saida, "diferencas", v.nome + ".png"), Buffer.from(c.imagem, "base64"));
@@ -469,7 +504,7 @@ async function main() {
     clearTimeout(tempo);
   }
   const resumo = { casos: lista.map((v) => ({ nome: v.nome, escala: v.tela.escala })), segundos: Math.round((Date.now() - t0) / 100) / 10,
-    semFontes, chrome: versao[0].product };
+    tolerancia: o.tolerancia, semFontes, chrome: versao[0].product };
   fs.writeFileSync(path.join(o.saida, "resumo.json"), JSON.stringify(resumo, null, 1) + "\n");
   if (o.antes) fs.writeFileSync(path.join(o.saida, "pixels.json"), JSON.stringify(pixels, null, 1) + "\n");
   if (semFontes) console.log("AVISO: as fontes do Google Fonts não vieram (sem rede e sem cache): capturas com a fonte reserva");

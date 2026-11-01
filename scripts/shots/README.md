@@ -8,6 +8,8 @@ python3 -I scripts/build.py --built AAAA-MM-DD      # primeiro o build: compara 
 python3 -I scripts/shots/compare.py                 # HEAD × árvore de trabalho (~30 s); exit 0 = tudo igual
 python3 -I scripts/shots/compare.py --ref v1.8.4    # contra outra ref (commit, tag)
 python3 -I scripts/shots/compare.py --filtro receitas,busca   # só alguns casos
+python3 -I scripts/shots/compare.py --tolerancia 1  # diferença de cor de até 1/255 conta como igual (e é contada)
+python3 -I scripts/shots/compare.py --antes dist/preview.html  # um arquivo no lugar da ref (o mesmo: prova de 0 pixel)
 python3 -I scripts/shots/compare.py --only-capture  # só tira os prints do app atual (para mostrar ao Hugo)
 ```
 
@@ -21,8 +23,12 @@ Para cada caso de `casos.json`, em cada idioma e tela (390 px celular e 1280 px 
 - o **estado** do app depois de abrir (o que o `GK.store` guardou) e os **erros de JS**.
 
 E uma vez por página, o **resumo do `GK.data`** (um hash por item, por receita e por bloco): pega dado que mudou
-sem aparecer em nenhuma tela. Uma linha por caso: `igual`, `DIFERENTE` (com quantos pixels, onde e qual painel) ou
-`ERRO`.
+sem aparecer em nenhuma tela. Uma linha por caso: `igual`, `DIFERENTE` (com quantos pixels, a maior diferença de cor
+por canal, onde e qual painel) ou `ERRO`. "máx 1/255" é invisível: acontece, por exemplo, quando a imagem dos ícones
+muda de formato (PNG → WebP) e o Chrome decodifica por outro caminho. Para essas mudanças, `--tolerancia 1` conta esses
+pixels como iguais e diz quantos foram tolerados (`igual (tolerância 1: 952 px)`); o padrão é 0 (exato), o que vale
+para refatorar. Mudou só a imagem dos ícones? A linha dos dados diz `meta … sprite.image`: o efeito na tela está nos
+pixels.
 
 ## Onde fica a saída (fora do git)
 
@@ -45,7 +51,11 @@ estado semeado. Para um caso novo, copie um parecido; os passos possíveis estã
 
 Relógio, fuso e idioma fixos; um perfil novo e um contexto isolado por captura; movimento reduzido (o app tira as
 transições) e cursor de texto invisível; só as fontes passam pela rede, sempre com os mesmos bytes; um Chrome por
-aba em paralelo e rasterização completa. Rodar duas vezes a mesma página dá 0 pixel de diferença.
+aba em paralelo e rasterização completa; logo antes da foto, de novo sprite decodificado, fontes e dois quadros; os
+elementos `sticky` (o cabeçalho do desktop, a coluna de metas) viram `relative` no mesmo lugar (com o cabeçalho sticky
+e a busca aberta, a foto da página inteira às vezes saía sem um botão de ícone fora da tela); e uma foto só por
+captura (uma segunda foto logo em seguida perde o anel de foco da busca). Rodar duas vezes a mesma página
+(`--antes dist/preview.html`) dá 0 pixel de diferença.
 
 ## Processos
 
