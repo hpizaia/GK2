@@ -13,17 +13,18 @@ Pastas, pipeline de build, telas e módulos, limites do artifact e camadas de no
 | `data/icons/` | Um PNG por item, estação ou tecnologia | não (regenerável, vira o sprite) |
 | `scripts/` | Pipeline Python (só biblioteca padrão) e testes. Tabela em [`scripts/README.md`](../scripts/README.md) | sim |
 | `scripts/fixtures/` | Dados pequenos para o `test_build.py` | sim |
-| `tools/exportar-textos/` | Exportador dos textos do jogo (Windows) e `juntar_nomes.py` | sim |
-| `prototype/index.html` | Página de desenvolvimento (com esqueleto HTML), gerada | sim |
+| `tools/exportar-textos/` | Exportador dos textos do jogo (Windows) e `juntar_nomes.py`. Resumo em [`tools/README.md`](../tools/README.md) | sim |
+| `prototype/index.html` | Página de desenvolvimento (com esqueleto HTML), gerada. Ver [`prototype/README.md`](../prototype/README.md) | sim (o `index.html.bak` do modo `--inject` não) |
 | `dist/index.html` | A página do artifact (sem esqueleto), gerada. `dist/preview.html` é a mesma coisa com esqueleto, para ver localmente | sim |
-| `docs/` | Estes documentos, as imagens do README (`docs/media/`) | sim |
+| `docs/` | Estes documentos (índice em [`docs/README.md`](README.md)) e as imagens dos READMEs (`docs/media/`, ver [`docs/media/README.md`](media/README.md)) | sim |
 | `docs/projeto/` | Documentos de projeto: [`SPEC.md`](projeto/SPEC.md) (especificação), [`DESIGN.md`](projeto/DESIGN.md) (design), [`BACKLOG.md`](projeto/BACKLOG.md) (pendências), [`AUDITORIA.md`](projeto/AUDITORIA.md) (auditoria da v1.1). Parte do conteúdo descreve a versão 1.2 | sim |
+| `docs/revisao-ux/` | Relatórios internos e capturas da revisão de UX de 31/10/2026 | não (está no `.gitignore`) |
 | `site/` | Página de apresentação do projeto (outro Claude Artifact), ver `site/README.md` | sim |
 | `.github/` | Modelos de issue (`ISSUE_TEMPLATE/`) | sim |
 | `historico/` | Transcrições e arquivos de sessões passadas, só no disco local | não (está no `.gitignore`; o histórico fica no repositório privado `hpizaia/GK2-historico`) |
 | `VERSION`, `CHANGELOG.md` | Versão atual. O changelog é gerado a partir de `data/changelog.json` | sim |
 | `.claude/launch.json` | Servidores locais `prototype` (porta 8765) e `dist` (porta 8766) | sim |
-| `tradução windows/` | Sobra da cópia do Windows: a `.venv` e um link de compatibilidade para `data/game-texts/gk2_textos.json` | não |
+| `tradução windows/` | Sobra da cópia do Windows: só a `.venv` do exportador (`gk2_textos_en/.venv`, 54 MB). O link de compatibilidade que havia nela já não existe | não |
 
 ## Pipeline
 

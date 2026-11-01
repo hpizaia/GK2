@@ -1,6 +1,6 @@
 # scripts/: o que cada um faz
 
-Tudo é Python 3 só com a biblioteca padrão (Pillow é opcional no `make_sprite.py`), menos o `test_calc.mjs`, que roda no Node. Rode sempre da raiz do projeto, com `python3 -I`, e ponha os caminhos entre aspas, porque a pasta tem espaços. O roteiro completo de atualização (patch do jogo) está em [`docs/atualizacao.md`](../docs/atualizacao.md). Opções e schema do build estão em [`README-build.md`](README-build.md).
+Tudo é Python 3 só com a biblioteca padrão (Pillow é opcional no `make_sprite.py`), menos o `test_calc.mjs`, que roda no Node. Rode sempre da raiz do projeto, com `python3 -I`, e ponha os caminhos entre aspas, porque a pasta tem espaços. O roteiro completo de atualização (patch do jogo) está em [`docs/atualizacao.md`](../docs/atualizacao.md). Opções e schema do build estão em [`README-build.md`](README-build.md) (em inglês; o nome fica assim porque o código em `src/` e `scripts/` aponta para ele).
 
 ## Pipeline principal (o que roda a cada versão)
 

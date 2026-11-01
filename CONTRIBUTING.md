@@ -56,7 +56,7 @@ node scripts/test_calc.mjs            # planner maths, storage and sync tests
 - Every user-facing string goes through `GK.i18n.add` in **both** `pt` and `en`.
 - No new runtime dependencies: the page must stay a single self-contained HTML file that works inside a Claude Artifact (no external images, scripts only from allowed CDNs with pinned versions).
 - User-visible changes get a short line, in `pt` and `en`, in the top entry of `data/changelog.json`. `CHANGELOG.md` is generated.
-- Architecture and data docs (Portuguese): [`docs/arquitetura.md`](docs/arquitetura.md), [`docs/dados.md`](docs/dados.md).
+- Architecture and data docs (Portuguese): [`docs/arquitetura.md`](docs/arquitetura.md), [`docs/dados.md`](docs/dados.md). Index of every document: [`docs/README.md`](docs/README.md).
 
 By contributing code or docs you agree that your contribution is published under the project's code licence, **MIT** (see [`LICENSE`](LICENSE)). The licence covers the code only: the game data, names, icons and screenshots are not covered (see the scope notice in [`LICENSE`](LICENSE) and [`docs/dados.md`](docs/dados.md)). Name corrections you send are added to the name files in `data/`, which follow the same rules as the rest of the game data.
 

@@ -1,7 +1,8 @@
 # Reddit demo clip (English)
 
 Files: `gif-reddit-demo-en.gif` (540 px wide, ~18 s, loops), `reddit-demo-en.mp4` (720 px wide, H.264, same clip).
-Also made the same way: `site/media/hero-en.gif` (390 px wide, ~9 s, English copy of `site/media/hero.gif`).
+Also made the same way: `site/media/hero-en.gif` (390 px wide, ~9 s, English counterpart of `site/media/hero-pt.gif`; `docs/media/hero-en.gif` is an identical copy, used at the top of the main README).
+Index of every file in this folder: [`README.md`](README.md).
 
 How they were made (2026-10-31, app v1.3.1):
 

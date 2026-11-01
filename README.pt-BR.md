@@ -146,7 +146,7 @@ O repositório já traz os dados montados e o sprite, então um clone novo monta
 | `data/` | Entradas e saídas do build: itens, receitas, camadas de nomes, tecnologias, dias, sprite, changelog |
 | `dist/`, `prototype/` | Páginas geradas. **Edite `src/`, nunca estas.** O `dist/preview.html` é o app inteiro num arquivo só |
 | `site/` | A página de apresentação do projeto (outro Claude Artifact) |
-| `docs/` | Documentação, as imagens usadas aqui e os documentos de projeto (`docs/projeto/`) |
+| `docs/` | Documentação ([índice](docs/README.md)), as imagens usadas aqui e os documentos de projeto (`docs/projeto/`) |
 
 ## Faça a sua cópia
 

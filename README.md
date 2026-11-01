@@ -148,7 +148,7 @@ The repository already contains the built data and sprite, so a fresh clone buil
 | `data/` | Build inputs and outputs: items, recipes, name layers, techs, days, sprite, changelog |
 | `dist/`, `prototype/` | Generated pages. **Edit `src/`, never these.** `dist/preview.html` is the whole app in one file |
 | `site/` | The project's presentation page (another Claude Artifact) |
-| `docs/` | Documentation, the media used here and the project documents (`docs/projeto/`) |
+| `docs/` | Documentation ([index](docs/README.md)), the media used here and the project documents (`docs/projeto/`) |
 
 ## Duplicate it for yourself
 
