@@ -1,10 +1,14 @@
 /* GK.ui.days: the Dias screen (#days): the 6-day week as the game HUD's wheel (the official day medallions from the
    sprite on a ring, Gluttony at 12 o'clock and the rest counter-clockwise in meta.order; the current day's medallion
    stands out of the ring with an arrow pointing at it), a "Hoje" bar (current day, HUD day counter with calibration,
-   "Avançar dia", "Esquecer o dia"), the selected day's card (events grouped by kind, "não confirmado" for medium/low
-   confidence, source in the tooltip, unlock quest, detail, the official game text) with "Hoje é este dia", a compact
-   6-row week table, "Como funciona" and the data credit line. Each medallion on the wheel carries its short name
-   ("Gula", "Ira"), so two similar reds never depend on colour alone. Under its header the day card holds that
+   "Avançar dia", and "Ajustar o dia ›", a toggle (aria-expanded) that shows "Esquecer o dia" and "Recalibrar"), the
+   selected day's card (name, "N coisas", events grouped by kind, "não confirmado" for medium/low confidence, source in
+   the tooltip, unlock quest, detail, the official game text) with "Hoje é este dia" when it is not today already
+   (the HOJE badge says it), a compact 6-row week table, and "Como funciona" (folded, at the top; it also says that
+   the short lines are the app's own). 1.6.0 cut the fixed hint, the "Ira · Wrath" line, the permanent "Calibrado com
+   o dia 61 = Ira…" sentence (the toast after calibrating says it once) and the wiki credit line (it is in Créditos).
+   Each medallion on the wheel carries its short name ("Gula", "Ira"), so two similar reds never depend on colour
+   alone. Under its header the day card holds that
    weekday's "Bilhete do dia" (one short note, GK.store dayNotes; noteBox below, shared with ui/today.js).
    Data: the payload's `days` block (data/days.json, embedded by scripts/build.py). GK.data does not keep that block
    itself, so this module wraps GK.data.load once to keep it as GK.data.get().days (no-op if data.js ever does).
@@ -20,7 +24,6 @@ GK.i18n.add({
   pt: {
     "tab.days": "Dias",
     "days.title": "Dias da semana",
-    "days.hint": "A semana do jogo tem 6 dias, e cada um libera coisas que só acontecem nele. Toque num dia da roda para ver o que dá para fazer.",
     "days.wheel": "Roda da semana",
     "days.med": "{name}: {n} coisas",
     "days.medToday": "{name} (hoje): {n} coisas",
@@ -31,13 +34,12 @@ GK.i18n.add({
     "days.todayUnsetHint": "Toque na roda o símbolo que a seta aponta no jogo e use “Hoje é este dia”, ou digite o contador se já calibrou.",
     "days.nothing": "Nada especial registrado para este dia.",
     "days.setToday": "Hoje é este dia",
-    "days.isToday": "Hoje é este dia ✓",
     "days.advance": "Avançar dia",
     "days.forget": "Esquecer o dia",
+    "days.adjust": "Ajustar o dia",
     "days.number": "Contador do jogo",
     "days.numberPh": "nº",
-    "days.calibrated": "Calibrado com o dia {n} = {name}. Agora basta digitar o número do dia.",
-    "days.recalibrate": "recalibrar",
+    "days.recalibrate": "Recalibrar",
     "days.calibrateHint": "Para calibrar, informe uma vez o dia de hoje e o número do canto da tela (ex.: dia 60 = Orgulho); depois basta digitar o número.",
     "days.setToast": "Hoje: {name}",
     "days.setToastN": "Hoje: {name} · dia {n}",
@@ -49,7 +51,6 @@ GK.i18n.add({
     "days.recalToast": "Calibração apagada. Informe o dia e o número de novo.",
     "days.week": "A semana",
     "days.how": "Como funciona",
-    "days.credit": "Dados dos dias em parte da wiki do Graveyard Keeper 2 no Wikily (https://wikily.gg/graveyard-keeper-2), © NX Software. Conteúdo do jogo © Lazy Bear Games / tinyBuild.",
     "days.orderUnsure": "A ordem dos dias vem de guias e da wiki; o jogo não a escreve.",
     "days.machineNote": "As frases curtas foram escritas para este app; o texto oficial do jogo fica em “Texto do jogo”.",
     "days.unconfirmed": "não confirmado",
@@ -84,7 +85,6 @@ GK.i18n.add({
   en: {
     "tab.days": "Days",
     "days.title": "Days of the week",
-    "days.hint": "The game week has 6 days, and each one opens things that only happen on it. Tap a day on the wheel to see what you can do.",
     "days.wheel": "Week wheel",
     "days.med": "{name}: {n} things",
     "days.medToday": "{name} (today): {n} things",
@@ -95,13 +95,12 @@ GK.i18n.add({
     "days.todayUnsetHint": "Tap on the wheel the symbol the arrow points at in the game and use “Today is this day”, or type the counter once calibrated.",
     "days.nothing": "Nothing special recorded for this day.",
     "days.setToday": "Today is this day",
-    "days.isToday": "Today is this day ✓",
     "days.advance": "Next day",
     "days.forget": "Forget the day",
+    "days.adjust": "Adjust the day",
     "days.number": "Game counter",
     "days.numberPh": "no.",
-    "days.calibrated": "Calibrated with day {n} = {name}. Now just type the day number.",
-    "days.recalibrate": "recalibrate",
+    "days.recalibrate": "Recalibrate",
     "days.calibrateHint": "To calibrate, give today's day and the number in the screen corner once (e.g. day 60 = Pride); after that, just type the number.",
     "days.setToast": "Today: {name}",
     "days.setToastN": "Today: {name} · day {n}",
@@ -113,7 +112,6 @@ GK.i18n.add({
     "days.recalToast": "Calibration cleared. Give the day and the number again.",
     "days.week": "The week",
     "days.how": "How it works",
-    "days.credit": "Day data partly from the Graveyard Keeper 2 Wiki by Wikily (https://wikily.gg/graveyard-keeper-2), © NX Software. Game content © Lazy Bear Games / tinyBuild.",
     "days.orderUnsure": "The order of the days comes from guides and the wiki; the game never writes it.",
     "days.machineNote": "The short lines were written for this app; the official game text is under “Game text”.",
     "days.unconfirmed": "unconfirmed",
@@ -263,7 +261,7 @@ GK.ui.days = (function () {
     weekCache = {
       days,
       meta: { notes: locOf(meta.notes), orderNote: locOf(meta.order_note), greed: meta.greed ? locOf(meta.greed.note) : null,
-        orderConfidence: meta.order_confidence || null, credits: typeof meta.credits === "string" ? meta.credits : null },
+        orderConfidence: meta.order_confidence || null },
     };
     return weekCache;
   }
@@ -377,6 +375,7 @@ GK.ui.days = (function () {
 
   // ---- screen state ----
   let root = null, sel = null, lastDay, memo = "", dirty = true;
+  let adjOpen = false;   // "Ajustar o dia ›" open (per visit; closes after forgetting or recalibrating)
   const notes = noteBox("days", () => rerender());
   const isOn = () => GK.router.current() === "days";
 
@@ -416,25 +415,29 @@ GK.ui.days = (function () {
     </div>`;
   }
 
-  // ---- "Hoje" bar: current day, counter + calibration, advance, forget ----
+  // ---- "Hoje" bar: current day, counter + calibration, advance, "Ajustar o dia ›" (forget, recalibrate) ----
   function todayBar(state) {
     const cur = current(state), a = state.dayAnchor, ad = a ? day(a.day) : null;
     const head = cur ? `${tile(cur, 30)}<p class="days-tb-line"><b>${esc(t("days.todayIs", { name: name(cur.name) }))}</b>${state.dayNumber != null ? ` · <span class="tabnum">${esc(t("days.counter", { n: state.dayNumber }))}</span>` : ""}</p>`
       : `<p class="days-tb-line"><b>${esc(t("days.todayUnset"))}</b><span class="days-tb-sub">${esc(t("days.todayUnsetHint"))}</span></p>`;
-    const cal = a && ad
-      ? `<p class="days-cal">${esc(t("days.calibrated", { n: a.number, name: name(ad.sin) }))} <button type="button" class="days-link" id="days-recal" data-recal>${esc(t("days.recalibrate"))}</button></p>`
-      : `<p class="days-cal">${esc(t("days.calibrateHint"))}</p>`;
+    // calibrated: nothing to say (the toast said it once); else how to calibrate
+    const cal = a && ad ? "" : `<p class="days-cal">${esc(t("days.calibrateHint"))}</p>`;
+    // the two rare controls, one tap away
+    const rare = [cur ? `<button type="button" class="btn btn-ghost btn-sm" id="days-forget" data-forget>${esc(t("days.forget"))}</button>` : "",
+      a && ad ? `<button type="button" class="btn btn-ghost btn-sm" id="days-recal" data-recal>${esc(t("days.recalibrate"))}</button>` : ""].filter(Boolean);
+    if (!rare.length) adjOpen = false;
     return `<section class="card days-tb" aria-labelledby="days-tb-h">
       <h3 class="sr-only" id="days-tb-h">${esc(cur ? t("days.todayIs", { name: name(cur.name) }) : t("days.todayUnset"))}</h3>
       <div class="days-tb-head">${head}</div>
       <div class="days-tb-ctl">
         <label class="days-num" for="days-num"><span class="days-num-l">${esc(t("days.number"))}</span>
-          <input type="number" id="days-num" inputmode="numeric" min="1" max="99999" step="1" placeholder="${esc(t("days.numberPh"))}" value="${state.dayNumber != null ? state.dayNumber : ""}" aria-describedby="days-cal-hint">
+          <input type="number" id="days-num" inputmode="numeric" min="1" max="99999" step="1" placeholder="${esc(t("days.numberPh"))}" value="${state.dayNumber != null ? state.dayNumber : ""}"${cal ? ` aria-describedby="days-cal-hint"` : ""}>
         </label>
         <button type="button" class="btn" id="days-adv" data-advance${cur ? "" : " disabled"}>${esc(t("days.advance"))} ›</button>
-        ${cur ? `<button type="button" class="btn btn-ghost btn-sm" id="days-forget" data-forget>${esc(t("days.forget"))}</button>` : ""}
+        ${rare.length ? `<button type="button" class="btn btn-ghost btn-sm days-adj" id="days-adj" data-adjust aria-expanded="${adjOpen}" aria-controls="days-adj-in">${esc(t("days.adjust"))} <span class="days-adj-chev" aria-hidden="true">›</span></button>` : ""}
       </div>
-      <div id="days-cal-hint">${cal}</div>
+      ${rare.length ? `<div class="days-adj-in" id="days-adj-in"${adjOpen ? "" : " hidden"}>${rare.join("")}</div>` : ""}
+      ${cal ? `<div id="days-cal-hint">${cal}</div>` : ""}
     </section>`;
   }
 
@@ -472,22 +475,19 @@ GK.ui.days = (function () {
   function card(d, state) {
     const cur = current(state), isToday = !!cur && cur.id === d.id, lang = GK.i18n.lang();
     const unofficial = lang !== "en" && (d.tr === "machine" || d.tr === "guess") ? `<span class="badge">${esc(t("badge.unofficial"))}</span>` : "";
-    const machine = d.events.some((e) => e.tr === "machine" && e.quote);
-    const otherSin = lang === "en" ? d.sin.pt : d.sin.en;
     return `<article class="card days-card" aria-labelledby="days-card-h"${d.color ? ` style="--day:${esc(d.color)}"` : ""}>
       <header class="days-card-head">
         ${tile(d, 40, "days-tile-lg")}
         <div class="days-card-title">
           <h2 id="days-card-h">${esc(name(d.name))}${isToday ? `<span class="badge days-today-badge">${esc(t("days.todayBadge"))}</span>` : ""}${unofficial}</h2>
-          <span class="row-sub">${esc(name(d.sin))}${otherSin && otherSin !== name(d.sin) ? ` · <span lang="${lang === "en" ? "pt-BR" : "en"}">${esc(otherSin)}</span>` : ""} · ${esc(t("days.count", { n: d.events.length }))}</span>
+          <span class="row-sub">${esc(t("days.count", { n: d.events.length }))}</span>
         </div>
       </header>
       <div class="days-note-box">${notes.html(d, state)}</div>
       <div class="days-card-body">${eventsByKind(d, state)}</div>
-      ${machine ? `<p class="days-mt">${esc(t("days.machineNote"))}</p>` : ""}
-      <div class="days-ctl">
-        <button type="button" class="btn${isToday ? " toggle" : ""}" id="days-set" data-set-day="${esc(d.id)}" aria-pressed="${isToday}">${esc(t(isToday ? "days.isToday" : "days.setToday"))}</button>
-      </div>
+      ${isToday ? "" : `<div class="days-ctl">
+        <button type="button" class="btn" id="days-set" data-set-day="${esc(d.id)}">${esc(t("days.setToday"))}</button>
+      </div>`}
     </article>`;
   }
   // ---- compact week table ----
@@ -510,6 +510,8 @@ GK.ui.days = (function () {
   function howHtml(w) {
     const m = w.meta, parts = [m.notes, m.orderNote, m.greed].filter(Boolean).map((x) => `<p>${esc(name(x))}</p>`);
     if (!m.orderNote && m.orderConfidence && m.orderConfidence !== "official") parts.push(`<p class="days-unsure">${esc(t("days.orderUnsure"))}</p>`);
+    // the app's own short lines, when some day quotes the game's text beside them
+    if (w.days.some((d) => d.events.some((e) => e.tr === "machine" && e.quote))) parts.push(`<p class="days-mt">${esc(t("days.machineNote"))}</p>`);
     return parts.length ? `<details class="days-how"><summary>${esc(t("days.how"))}</summary>${parts.join("")}</details>` : "";
   }
 
@@ -535,13 +537,11 @@ GK.ui.days = (function () {
     root.innerHTML = `<div class="days-screen">
       <div class="days-head">
         <div class="section-head"><h2 class="h2">${esc(t("days.title"))}</h2></div>
-        <p class="hint">${esc(t("days.hint"))}</p>
         ${howHtml(w)}
       </div>
       <div class="days-wheel-box">${wheel(w, state)}${todayBar(state)}</div>
       <div class="days-detail">${card(day(sel), state)}</div>
       <div class="days-table">${table(w, state)}</div>
-      ${w.meta.credits ? `<p class="days-credit">${esc(GK.i18n.lang() === "en" ? w.meta.credits : t("days.credit"))}</p>` : ""}
     </div>`;
     // keep open <details> open across re-renders (same position = same key)
     root.querySelectorAll("details").forEach((x, i) => { x.dataset.k = sel + ":" + i; if (open.indexOf(x.dataset.k) >= 0) x.open = true; });
@@ -578,12 +578,15 @@ GK.ui.days = (function () {
       const s = e.target.closest("[data-set-day]");
       if (s) { setToday(s.dataset.setDay); return; }
       if (e.target.closest("[data-advance]")) { advance(); return; }
+      if (e.target.closest("[data-adjust]")) { adjOpen = !adjOpen; rerender(); return; }
       if (e.target.closest("[data-recal]")) {
+        adjOpen = false;
         GK.store.actions.clearAnchor(); GK.ui.toast(t("days.recalToast"));
         const f = root.querySelector("#days-num"); if (f) f.focus({ preventScroll: true });
         return;
       }
       if (e.target.closest("[data-forget]")) {
+        adjOpen = false;
         GK.store.actions.setDay(null); GK.ui.toast(t("days.forgotToast"));
         const b = root.querySelector("#days-set"); if (b) b.focus({ preventScroll: true });
         return;

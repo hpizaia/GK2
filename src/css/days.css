@@ -15,6 +15,7 @@
 .days-how summary { display: inline-flex; align-items: center; min-height: var(--tap); cursor: pointer; font-weight: 700; color: var(--accent); }
 .days-how p { margin: 0 0 var(--s2); }
 .days-unsure { color: var(--ink-3); font-style: italic; }
+.days-how .days-mt { font-style: italic; }
 
 /* the wheel: an SVG ring + hub + arrow behind HTML medallion buttons placed in % of the box */
 .days-wheel-box { display: grid; gap: var(--s3); align-content: start; }
@@ -61,11 +62,11 @@
 .days-tb-ctl { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--s2); }
 .days-tb-ctl .btn[disabled] { opacity: .45; cursor: default; }
 .days-cal { margin: 0; font-size: .8125rem; color: var(--ink-2); }
-.days-link {
-  display: inline-flex; align-items: center; min-height: var(--tap); padding: 0 4px; margin: -12px 0;
-  border: 0; background: transparent; color: var(--accent); font: 700 .8125rem/1 var(--f-body); text-decoration: underline; cursor: pointer;
-}
-.days-credit { grid-column: 1 / -1; margin: var(--s2) 0 0; font-size: .75rem; color: var(--ink-3); overflow-wrap: anywhere; }
+/* "Ajustar o dia ›": a toggle in the controls row; open, "Esquecer o dia" and "Recalibrar" in a row under it */
+.days-adj-chev { display: inline-block; margin-left: 4px; transition: transform .15s; }
+.days-adj[aria-expanded="true"] .days-adj-chev { transform: rotate(90deg); }
+.days-adj-in { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.days-adj-in[hidden] { display: none; }
 
 /* icon tiles (sprite icon or drawn glyph) */
 .days-tile {
@@ -110,7 +111,6 @@
 }
 button.days-item { cursor: pointer; }
 button.days-item:hover { border-color: var(--accent); }
-.days-mt { margin: 0; padding: 0 var(--s4) var(--s2); font-size: .8125rem; color: var(--ink-3); font-style: italic; }
 .days-ctl { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--s2); padding: var(--s3) var(--s4) 0; border-top: 1px solid var(--seam); }
 .days-ctl .btn[disabled] { opacity: .45; cursor: default; }
 .days-num { display: inline-grid; gap: 2px; font: 800 .6875rem/1.2 var(--f-body); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
@@ -188,6 +188,12 @@ button.days-item:hover { border-color: var(--accent); }
   font-variant-numeric: tabular-nums lining-nums; -moz-appearance: textfield; appearance: textfield;
 }
 .today .fold-head { margin-bottom: var(--s2); }
+/* open "Hoje": one heading, medallion + "Dia da Ira" + "dia 61 · 5 coisas" */
+.today-h { align-items: center; }
+.today-h .days-tile { flex: none; }
+/* name and count flow as one text; the count never breaks inside ("dia 61 · 1/5 feitas") */
+.today-h-t { min-width: 0; }
+.today-h .count { white-space: nowrap; }
 .today-ask .fold-head { margin-bottom: 0; }
 /* folded "Hoje": one row (medallion, "Hoje: X · N coisas", Avançar, toggle) */
 .today-mini .today-head { border-bottom: 0; gap: var(--s2); padding: 6px 6px 6px var(--s2); cursor: pointer; -webkit-tap-highlight-color: transparent; }

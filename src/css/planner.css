@@ -1,4 +1,6 @@
-/* planner.css: the planner screen: layout, goals, progress, raw/step rows, station cards, the planner-extra slot. */
+/* planner.css: the planner screen: layout, goals, progress, raw/step rows, station cards, the planner-extra slot.
+   1.6.0: a step's "×2 ▾" quantity button (.qty-btn), the "Por execução … ▾" recipe selector (.step-pick), the folded
+   perks line (.perks-sum); gone: the progress card's count line (.stats) and the example note (.example-note). */
 /* ---------- planner layout ---------- */
 .planner { display: grid; gap: var(--s5); padding-block: var(--s4) var(--s6); }
 .col-plan { display: grid; gap: var(--s5); min-width: 0; }
@@ -27,6 +29,7 @@
 @container goals (max-width: 479px) {
   .goal { grid-template-columns: 40px minmax(0, 1fr); row-gap: 4px; padding-block: 6px; }
   .goal > .slot { align-self: start; margin-top: 2px; }
+  .goal > .slot-btn { margin-top: 0; }
   .goal-ctl { grid-column: 2; justify-content: space-between; margin-left: -4px; }
 }
 @supports not (container-type: inline-size) {
@@ -52,7 +55,6 @@
   font-variant-numeric: tabular-nums lining-nums; -moz-appearance: textfield; appearance: textfield;
 }
 .stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-.example-note { margin: var(--s2) 0 0; padding: var(--s2) var(--s3); font-size: .875rem; color: var(--ink-2); border: 1px dashed var(--gold); border-radius: var(--r); }
 .empty { padding: var(--s4); }
 .empty p { margin: 0 0 var(--s3); color: var(--ink-2); }
 .plan-empty { display: none; } /* phones: the goals empty state already says it */
@@ -71,7 +73,6 @@
     linear-gradient(180deg, var(--bevel-hi), transparent 60%), var(--moss);
   transition: width .3s ease;
 }
-.stats { font-size: .875rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .progress-actions { display: flex; flex-wrap: wrap; gap: var(--s2); }
 .copy-fallback { width: 100%; min-height: 160px; background: var(--bg-2); color: var(--ink); border: 1px solid var(--frame); border-radius: var(--r); padding: var(--s2); font-size: .8125rem; }
 .warn { padding: var(--s3) var(--s4); border: 1px solid var(--blood); border-radius: var(--r); color: var(--ink); background: var(--panel); font-size: .875rem; }
@@ -95,8 +96,38 @@
 .row-sub { display: block; font-size: .8125rem; color: var(--ink-2); line-height: 1.35; margin-top: 2px; }
 .row-in { display: block; font-size: .9375rem; line-height: 1.35; color: var(--ink-2); margin-top: 2px; } /* read while crafting */
 .row-in b { color: var(--ink); font-weight: 700; }
+/* a step with other recipes (1.6.0, corte 3): the line "Por execução: 1 Tora → 3 ▾" is the selector. The <select>
+   is transparent over the whole box (a tap anywhere opens the native list; it keeps its aria-label); ▾ in amber.
+   fit-content + max-width 100%: never wider than the row (360 px phones) */
+.step-pick {
+  position: relative; display: flex; align-items: center; gap: 6px; width: fit-content; max-width: 100%;
+  min-height: var(--tap); margin-top: 4px; padding: 2px 8px; border: 1px solid var(--frame); border-radius: var(--r);
+  background: var(--panel-2); box-shadow: inset 0 1px 0 var(--bevel-hi), inset 0 -2px 0 var(--bevel-lo); cursor: pointer;
+}
+.step-pick-txt { min-width: 0; overflow-wrap: break-word; }
+.step-pick-chev { flex: none; color: var(--accent); font-size: .875rem; line-height: 1; }
+.step-pick select {
+  position: absolute; inset: 0; width: 100%; height: 100%; min-width: 0; margin: 0; padding: 0;
+  opacity: 0; cursor: pointer; font-size: 1rem; /* ≥ 16 px: no zoom on focus in iOS */
+}
+.step-pick:hover { border-color: var(--accent); }
+.step-pick:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
 .row-qty { font-weight: 800; font-size: 1.375rem; color: var(--accent); font-variant-numeric: tabular-nums lining-nums; text-align: right; padding-left: var(--s2); white-space: nowrap; }
 .row-qty small { font-size: .875rem; color: var(--ink-3); font-weight: 700; margin-right: 1px; }
+/* a step's "×2 ▾" (1.6.0, corte 1): the quantity is the 44 px button that opens "Tenho __ de 2" (still amber, top
+   right); a goal step keeps the plain number. The field opens in the row's actions line. */
+.row-qty.qty-btn {
+  justify-self: end; align-self: start; display: inline-flex; align-items: center; gap: 2px;
+  min-height: var(--tap); min-width: var(--tap); margin: -6px -4px 0 var(--s2); padding: 0 6px 0 8px;
+  border: 1px solid var(--frame); border-radius: var(--r); background: var(--panel-2); line-height: 1;
+  box-shadow: inset 0 1px 0 var(--bevel-hi), inset 0 -2px 0 var(--bevel-lo);
+  font-family: var(--f-body); cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+}
+.qty-btn:hover, .qty-btn[aria-expanded="true"] { border-color: var(--accent); }
+.qty-btn:active { box-shadow: inset 0 2px 0 var(--bevel-lo); }
+.qty-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.qty-chev { margin-left: 2px; font-size: .75rem; color: var(--ink-3); }
+.qty-btn[aria-expanded="true"] .qty-chev { color: var(--accent); }
 .row-actions { grid-column: 3 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); margin-top: var(--s2); }
 /* raw rows (1.3.4, ≈ 72 px): line 1 = name + "i" | quantity; line 2 = "como obter" on ONE line | "Já tenho".
    Wider controls (recipe / group choosers, the "tenho N de M" field) wrap below. */
@@ -161,8 +192,21 @@
 .row-in i.perk-on, .row-extra i.perk-on { color: var(--moss); font-style: normal; font-weight: 700; }
 .badge-q { color: var(--accent); border: 1px solid var(--accent); }
 
-/* perk toggles in the progress card */
+/* perk toggles in the progress card: folded into "Vantagens: 0 de 10 ligadas ›" (1.6.0, corte 8), a tap opens them */
+.perks-fold { display: grid; gap: var(--s2); }
+.perks-sum {
+  display: flex; align-items: center; gap: 6px; width: 100%; min-height: var(--tap); padding: 0; border: 0; background: transparent;
+  color: var(--ink-2); font: 400 .9375rem/1.2 var(--f-body); text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.perks-sum .perks-label { margin-right: 0; }
+.perks-sum b { color: var(--ink); font-weight: 800; }
+.perks-chev { margin-left: auto; padding: 0 var(--s2); color: var(--accent); font-size: 1.375rem; line-height: 1; transition: transform .15s ease; }
+.perks-sum[aria-expanded="true"] .perks-chev { transform: rotate(90deg); }
+.perks-sum:hover b, .perks-sum:hover .perks-chev { color: var(--accent); }
+.perks-sum:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .perks-chev { transition: none; } }
 .perks { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
+.perks[hidden] { display: none; }
 .perks-label { font-size: .8125rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); margin-right: 2px; }
 
 /* future planner modules mount here (GK.app.registerPanel(m, { slot: "planner-extra" })); empty = no gap */

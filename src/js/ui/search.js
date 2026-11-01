@@ -3,8 +3,14 @@
    (aria-activedescendant), Enter adds it (or the first one), Esc clears; the count is announced politely.
    Placeholder = the purpose ("Buscar item para fabricar…"), not the item count (1.3.4).
    "Recentes": focusing the box while it is empty opens the same popup with the last RECENT_SHOWN items added to goals
-   (GK.store state.recents, newest first) as options; typing replaces them with the results; tap / Enter adds (same
-   action as a result). No recents = the popup stays closed, as before.
+   (GK.store state.recents, newest first) that are not already goals of the open list, as options; typing replaces
+   them with the results; tap / Enter adds (same action as a result). No recents to show = the popup stays closed.
+   Right after an add (1.6.0, QA 2026-11 médio 1) the emptied box keeps the focus but the recents stay closed
+   ("quiet"): they come back on the next tap on the box, an ↓, or when the focus leaves and comes back.
+   Toasts (1.6.0): "+ Espada de Aço" for a new goal, "Espada de Aço: agora 4" for one already there. The first goal
+   that replaces the example list (GK.store meta.exampleReplaced, from any screen: this module subscribes) gets ONE
+   toast with "Desfazer" (GK.ui.fmt.undoToast): "+ Tábua reforçada · exemplo removido"; add() then skips
+   its own, in the same "+ X" form as the plain toast (the data has no item gender, so no participle).
    Owns: [data-panel="search"]. Exposes: GK.ui.search.{mount, render, add}; registered as a panel.
 */
 GK.i18n.add({
@@ -26,8 +32,9 @@ GK.i18n.add({
     "search.hiddenMore.other": "Mostrar itens ocultos (+{n})",
     "search.hiddenTag": "oculto",
     "search.hiddenTitle": "Oculto na wiki, sem fonte no jogo atual, ou não é um item",
-    "toast.added": "Adicionado às metas: {name}",
+    "toast.added": "+ {name}",
     "toast.bumped": "{name}: agora {n}",
+    "toast.replaced": "+ {name} · exemplo removido",
   },
   en: {
     "search.label": "Search for an item to craft",
@@ -47,8 +54,9 @@ GK.i18n.add({
     "search.hiddenMore.other": "Show hidden items (+{n})",
     "search.hiddenTag": "hidden",
     "search.hiddenTitle": "Hidden on the wiki, unobtainable in the current game, or not an item",
-    "toast.added": "Added to goals: {name}",
+    "toast.added": "+ {name}",
     "toast.bumped": "{name}: now {n}",
+    "toast.replaced": "+ {name} · example removed",
   },
 });
 
@@ -56,6 +64,8 @@ GK.ui.search = (function () {
   const { t, name } = GK.i18n, { esc, slot } = GK.util;
   let root, input, pop, list, meta, status, clearBtn;
   let active = -1;   // index of the highlighted option (aria-activedescendant), -1 = none
+  let quiet = false;     // just added: the emptied box does not reopen the recents until the next tap / focus
+  let replaced = false;  // set by the store subscription while addGoal runs: the first goal replaced the example
   const RECENT_SHOWN = 6;
   const options = () => [...list.querySelectorAll('[role="option"]')];
   function setOpen(open) {
@@ -103,8 +113,9 @@ GK.ui.search = (function () {
   }
   // the empty box, focused: the recents as options (icon + name, one line). false = none to show
   function renderRecent() {
-    if (document.activeElement !== input) return false;
-    const st = GK.store.get(), ids = (st.recents || []).filter((id) => !!GK.data.item(id)).slice(0, RECENT_SHOWN);
+    if (quiet || document.activeElement !== input) return false;
+    const st = GK.store.get(), inList = new Set(st.goals.map((g) => g.item));
+    const ids = (st.recents || []).filter((id) => !!GK.data.item(id) && !inList.has(id)).slice(0, RECENT_SHOWN);
     if (!ids.length) return false;
     meta.innerHTML = `<div class="results-meta"><span id="q-recent-h">${esc(t("search.recent"))}</span></div>`;
     list.setAttribute("aria-labelledby", "q-recent-h");
@@ -122,9 +133,12 @@ GK.ui.search = (function () {
   const renderSoon = GK.util.debounce(renderResults, 70);
   function add(id) {
     const before = GK.store.get().goals.find((g) => g.item === id);
+    replaced = false;
     const n = GK.store.actions.addGoal(id, 1);
     const nm = name(GK.data.item(id), GK.store.get().overrides);
-    GK.ui.toast(before ? t("toast.bumped", { name: nm, n }) : t("toast.added", { name: nm }));
+    if (!replaced) GK.ui.toast(before ? t("toast.bumped", { name: nm, n }) : t("toast.added", { name: nm }));
+    // the box empties and keeps the focus, but the recents stay closed until the next tap (QA 2026-11 médio 1)
+    quiet = true;
     input.value = ""; renderResults(); input.focus();
   }
   function mount(el) {
@@ -139,7 +153,7 @@ GK.ui.search = (function () {
       <span class="sr-only" id="q-status" role="status" aria-live="polite"></span>`;
     input = root.querySelector("#q"); pop = root.querySelector("#q-pop"); list = root.querySelector("#q-results");
     meta = root.querySelector("#q-meta"); status = root.querySelector("#q-status"); clearBtn = root.querySelector("#q-clear");
-    input.addEventListener("input", () => { clearBtn.hidden = !input.value; renderSoon(); });
+    input.addEventListener("input", () => { quiet = false; clearBtn.hidden = !input.value; renderSoon(); });
     input.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         if (!input.value.trim()) {                     // the recents: Enter adds only the one picked with ↓/↑
@@ -152,7 +166,7 @@ GK.ui.search = (function () {
         if (o) { e.preventDefault(); add(o.dataset.add); }
       } else if (e.key === "Escape") { if (input.value) { e.preventDefault(); input.value = ""; renderResults(); } else setOpen(false); }
       else if (e.key === "ArrowDown") {
-        if (pop.hidden) renderResults();
+        if (pop.hidden) { quiet = false; renderResults(); }
         if (options().length) { e.preventDefault(); setActive(active + 1); }
       } else if (e.key === "ArrowUp") {
         if (options().length) { e.preventDefault(); setActive(active <= 0 ? -1 : active - 1); }
@@ -163,12 +177,23 @@ GK.ui.search = (function () {
     list.addEventListener("mousedown", (e) => { if (e.target.closest('[role="option"]')) e.preventDefault(); });
     list.addEventListener("click", (e) => { const o = e.target.closest("[data-add]"); if (o) add(o.dataset.add); });
     meta.addEventListener("click", (e) => { if (e.target.closest("[data-hidden-toggle]")) GK.store.actions.setShowHidden(!GK.store.get().showHidden); });
-    clearBtn.addEventListener("click", () => { input.value = ""; input.focus(); renderResults(); });
+    clearBtn.addEventListener("click", () => { quiet = false; input.value = ""; input.focus(); renderResults(); });
     // e.target may have been re-rendered away (detached) by the click itself: not an outside click
     document.addEventListener("click", (e) => { if (e.target.isConnected && !root.contains(e.target)) setOpen(false); });
     input.addEventListener("focus", () => renderResults());
-    // a tap on the box after Esc closed the popup brings it back (results, or the recents when empty)
-    input.addEventListener("click", () => { if (pop.hidden) renderResults(); });
+    input.addEventListener("blur", () => { quiet = false; });
+    // a tap on the box after Esc (or an add) closed the popup brings it back (results, or the recents when empty)
+    input.addEventListener("click", () => { quiet = false; if (pop.hidden) renderResults(); });
+    // the first goal replaced the example list (here, in Receitas, anywhere): one toast, with "Desfazer"
+    GK.store.subscribe((st, m) => {
+      const snap = m && m.exampleReplaced;
+      if (!snap) return;
+      replaced = true;
+      const g = st.goals[st.goals.length - 1], it = g && GK.data.item(g.item);
+      if (!it) return;
+      const nm = name(it, st.overrides);
+      GK.ui.fmt.undoToast(t("toast.replaced", { name: nm }), () => GK.store.actions.restoreExample(snap));
+    });
   }
   function render(state, meta2) {
     input.placeholder = t("search.placeholder");

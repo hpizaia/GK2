@@ -7,12 +7,14 @@
    Exposes: GK.ui.tech.{mount, render, open(techId, {from}), costHtml(cost, {big}), techSlot(tech), badges(tech)}.
    open(id, {from: "plan"}) adds a "‹ Voltar: <screen>" button that returns to that screen at its old scroll position.
    Unlocked items (data-item="<item id>") are buttons that open the item in Receitas (GK.ui.recipes.open).
+   1.6.0 (cortes 7, 17): shorter top hint; the detail drops "Libera N receitas do Planejador" and shows "Marcar
+   pré-requisitos como pesquisados" only when 2+ of them are missing (with 1, tapping it is the same thing).
 */
 GK.i18n.add({
   pt: {
     "tab.tech": "Tecnologias",
     "tech.title": "Tecnologias",
-    "tech.hint": "Marque o que você já pesquisou no jogo. Marcar uma tecnologia conta as anteriores como pesquisadas. O Planejador usa isso para mostrar o que falta para as suas metas.",
+    "tech.hint": "Marque o que já pesquisou; as anteriores contam junto.",
     "tech.count": "{done} de {total} pesquisadas",
     "tech.branchCount": "{done}/{total}",
     "tech.branches": "Ramos da árvore",
@@ -60,8 +62,6 @@ GK.i18n.add({
     "tech.children": "Leva a",
     "tech.noChildren": "Nada: é o fim deste caminho.",
     "tech.notes": "Notas",
-    "tech.recipes.one": "Libera {n} receita do Planejador.",
-    "tech.recipes.other": "Libera {n} receitas do Planejador.",
     "tech.clear": "Limpar pesquisadas",
     "tech.clearAsk.one": "Desmarcar a {n} tecnologia pesquisada?",
     "tech.clearAsk.other": "Desmarcar as {n} tecnologias pesquisadas?",
@@ -74,7 +74,7 @@ GK.i18n.add({
   en: {
     "tab.tech": "Technologies",
     "tech.title": "Technologies",
-    "tech.hint": "Check what you have already researched in the game. Checking a technology counts the ones before it as researched. The Planner uses this to show what is missing for your goals.",
+    "tech.hint": "Check what you have researched; the ones before count too.",
     "tech.count": "{done} of {total} researched",
     "tech.branchCount": "{done}/{total}",
     "tech.branches": "Tree branches",
@@ -122,8 +122,6 @@ GK.i18n.add({
     "tech.children": "Leads to",
     "tech.noChildren": "Nothing: this path ends here.",
     "tech.notes": "Notes",
-    "tech.recipes.one": "Unlocks {n} Planner recipe.",
-    "tech.recipes.other": "Unlocks {n} Planner recipes.",
     "tech.clear": "Clear researched",
     "tech.clearAsk.one": "Uncheck the {n} researched technology?",
     "tech.clearAsk.other": "Uncheck all {n} researched technologies?",
@@ -320,14 +318,13 @@ GK.ui.tech = (function () {
       <section class="tech-d-sec">
         <h3>${esc(t("tech.parents"))} <span class="count">${parents.length}</span></h3>
         ${parents.length ? `<ul class="tech-links">${parents.map((x) => techLink(x, state, done)).join("")}</ul>` : `<p class="hint">${esc(t("tech.noParents"))}</p>`}
-        ${anc.length ? (missingAnc.length
+        ${anc.length ? (missingAnc.length >= 2
           ? `<button type="button" class="btn btn-sm" data-mark-parents="${esc(tc.id)}">${esc(t("tech.markParents"))} (${num(missingAnc.length)})</button>`
-          : `<p class="hint">${esc(t("tech.parentsDone"))}</p>`) : ""}
+          : missingAnc.length ? "" : `<p class="hint">${esc(t("tech.parentsDone"))}</p>`) : ""}
       </section>
       <section class="tech-d-sec">
         <h3>${esc(t("tech.unlocks"))} <span class="count">${tc.unlocks.length}</span></h3>
         ${tc.unlocks.length ? `<ul class="tech-unlocks">${tc.unlocks.map(unlockRow).join("")}</ul>` : `<p class="hint">${esc(t("tech.noUnlocks"))}</p>`}
-        ${tc.recipes.length ? `<p class="hint">${esc(t("tech.recipes", { n: tc.recipes.length }))}</p>` : ""}
       </section>
       <section class="tech-d-sec">
         <h3>${esc(t("tech.children"))} <span class="count">${children.length}</span></h3>

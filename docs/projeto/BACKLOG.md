@@ -1,6 +1,6 @@
 # Backlog — Companheiro GK2
 
-31/10/2026 · versão atual **1.5.1**
+31/10/2026 · versão atual **1.6.0** (commit local; publicação do app e do site aguarda a confirmação do Hugo)
 
 Este arquivo substitui o backlog anterior (Etapas 0 a 5). O histórico do que já foi feito está no [CHANGELOG.md](../../CHANGELOG.md).
 
@@ -8,15 +8,16 @@ Esforço: **P** até 2 h · **M** meio dia a um dia · **G** vários dias. Quand
 
 ## Onde estamos
 
-**Publicado:** 1.5.1 (app e site republicados em 31/10 à noite; release v1.5.0 no GitHub, commit da 1.5.1 enviado).
+**Publicado:** 1.5.1 (app e site republicados em 31/10 à noite; release v1.5.0 no GitHub, commit da 1.5.1 enviado). **1.6.0:** pronta e commitada em 31/10 à noite, ainda não publicada.
 
 **Saiu hoje:**
 - **1.4.0:** o painel Hoje ganhou "feito hoje", a prévia de amanhã, o bilhete por dia e a opção "Letra grande". No celular, o Planejador mostra Matérias-primas e Etapas logo depois das Metas, as abas ficam fixas e as linhas ficaram mais baixas; site e READMEs revisados.
 - **1.5.0:** listas separadas ("Lista: Igreja ▾") e recentes na busca. O detalhe do item ganhou "Onde conseguir", energia e efeito no estilo do jogo; rodapé enxuto, QR nos Créditos e aviso de dados velhos.
 - **1.5.1:** o cartão "Próximo passo" (ideia 5, que entrou na 1.5.0) saiu a seu pedido: na prática atrapalhava no topo do Planejador. A lista de etapas continua igual.
+- **1.6.0:** os 16 cortes de ruído aprovados (rodada 1) e o conserto do "Recentes" (2.7). Etapas mais curtas ("Já tenho" atrás do ×N, linha de requisitos enxuta, seletor de receita na própria linha, execuções só quando diferem), a figura do item abre a receita (sai o "i"), Vantagens recolhidas, dicas fixas cortadas ou encurtadas, Dias e Hoje com menos "hoje", Receitas sem "· 1 receita" e com "Construir no Cemitério", Histórico com só a versão atual aberta, um aviso só no primeiro uso.
 
 **Esperando a sua decisão:**
-1. ~~Os 16 cortes~~ **Aprovados todos em 31/10 à noite**, pelos protótipos. **Implementação iniciada em 31/10 à noite (1.6.0), junto com o conserto do "Recentes" (2.7).** As 18 dúvidas de detalhe das páginas do protótipo ficaram sem resposta: na implementação, usar a opção mostrada no "Depois" e perguntar só se travar.
+1. ~~Os 16 cortes~~ **Feitos na 1.6.0** (31/10 à noite), junto com o conserto do "Recentes" (2.7); as 18 dúvidas de detalhe foram resolvidas como o "Depois" dos protótipos mostrava. **Falta só a sua confirmação para publicar** o app e o site.
 2. O **plano de UI** (`docs/projeto/PLANO-UI-JOGO.md`): a primeira versão (janelas de couro e madeira) foi recusada por pesada em 31/10; a regra passou a ser "limpo e minimalista, só sinais do jogo". Decisão de 31/10 à noite: **primeiro os cortes e os consertos; a UI volta depois, com o plano atual como base** (rodada 4).
 3. As **ideias ainda sem decisão**: 6, 7 (missão como meta, rodada 3), 15, 16, 18, 19 e 20 (rodada 6).
 
@@ -31,38 +32,38 @@ Esforço: **P** até 2 h · **M** meio dia a um dia · **G** vários dias. Quand
 
 ## Próximas rodadas
 
-### 1. Cortes aprovados
+### 1. Cortes aprovados — feitos na 1.6.0
 
 Objetivo: tirar o ruído sem perder nenhum dado (o plano longo cai de cerca de 1.950 para 1.520 palavras e de 18 para 14,5 telas).
 
-**Todos os 16 aprovados em 31/10/2026 à noite** (protótipos em https://claude.ai/artifact/3CD3kTbWmzXBBRrqwBhb6i). O corte 5 (rodapé) já saiu na 1.5.0 e o corte 15 (Próximo passo) deixou de existir com a 1.5.1. Os mesmos cortes valem para os textos em inglês. Detalhes em `docs/revisao-ux/simplificar.md`.
+**Todos os 16 aprovados em 31/10/2026 à noite e implementados na 1.6.0 na mesma noite** (✓ na tabela) (protótipos em https://claude.ai/artifact/3CD3kTbWmzXBBRrqwBhb6i). O corte 5 (rodapé) já saiu na 1.5.0 e o corte 15 (Próximo passo) deixou de existir com a 1.5.1. Os mesmos cortes valem para os textos em inglês. Detalhes em `docs/revisao-ux/simplificar.md`.
 
 | item | o que é | esforço | depende de |
 |---|---|---|---|
 | **Planejador › Etapas** | | | |
-| Corte 1 | "Já tenho" sai da linha própria: tocar no "×2" abre o "Tenho N de M" | M\* | — |
-| Corte 2 | Linha "Requer…" curta ("Olaria I · Engenharia 2") e sem a tecnologia já pesquisada | P\* | — |
-| Corte 3 | O seletor de receita vira a própria linha "Por execução: 1 Tora → 3 ▾" | M\* | — |
-| Corte 4 | "24 execuções" só aparece quando é diferente da quantidade | P\* | — |
+| ✓ Corte 1 | "Já tenho" sai da linha própria: tocar no "×2" abre o "Tenho N de M" | M\* | — |
+| ✓ Corte 2 | Linha "Requer…" curta ("Olaria I · Engenharia 2") e sem a tecnologia já pesquisada | P\* | — |
+| ✓ Corte 3 | O seletor de receita vira a própria linha "Por execução: 1 Tora → 3 ▾" | M\* | — |
+| ✓ Corte 4 | "24 execuções" só aparece quando é diferente da quantidade | P\* | — |
 | **Planejador, outras partes** | | | |
-| Corte 6 | Sai o botão "i": tocar no ícone do item abre a receita | M\* | — |
-| Corte 8 | Saem os contadores repetidos; Vantagens viram "0 de 10 ligadas ›" | P\* | — |
-| Corte 14 | Hoje aberto: título "Dia da Ira · dia 61 · 5 coisas", sem nome repetido nos eventos | P\* | — |
-| Corte 20 | Primeiro uso: uma frase só no lugar de três | P\* | — |
+| ✓ Corte 6 | Sai o botão "i": tocar no ícone do item abre a receita | M\* | — |
+| ✓ Corte 8 | Saem os contadores repetidos; Vantagens viram "0 de 10 ligadas ›" | P\* | — |
+| ✓ Corte 14 | Hoje aberto: título "Dia da Ira · dia 61 · 5 coisas", sem nome repetido nos eventos | P\* | — |
+| ✓ Corte 20 | Primeiro uso: uma frase só no lugar de três | P\* | — |
 | **Topo das seções e das abas** | | | |
-| Corte 7 | Dicas fixas: cortar 4 e encurtar 2 (Tecnologias e Tecnologias que faltam) | P\* | — |
+| ✓ Corte 7 | Dicas fixas: cortar 4 e encurtar 2 (Tecnologias e Tecnologias que faltam) | P\* | — |
 | **Dias** | | | |
-| Corte 10 | Frase das "frases curtas" vai para "Como funciona"; sai o crédito em inglês | P\* | — |
-| Corte 11 | Menos "Hoje": sem "Ira · Wrath", sem botão quando já é hoje, "Ajustar o dia ›" | P\* | — |
+| ✓ Corte 10 | Frase das "frases curtas" vai para "Como funciona"; sai o crédito em inglês | P\* | — |
+| ✓ Corte 11 | Menos "Hoje": sem "Ira · Wrath", sem botão quando já é hoje, "Ajustar o dia ›" | P\* | — |
 | **Receitas** | | | |
-| Corte 12 | Lista: sem "· 1 receita", "Construir no Cemitério", "Buscar item", ocultos no fim | P\* | — |
-| Corte 18 | Detalhe: "Também em" uma vez só; some o "Usado em" vazio | P\* | — |
+| ✓ Corte 12 | Lista: sem "· 1 receita", "Construir no Cemitério", "Buscar item", ocultos no fim | P\* | — |
+| ✓ Corte 18 | Detalhe: "Também em" uma vez só; some o "Usado em" vazio | P\* | — |
 | **Tecnologias** | | | |
-| Corte 17 | Detalhe: sai "Libera 2 receitas…"; botão de pré-requisitos só com 2 ou mais | P\* | — |
+| ✓ Corte 17 | Detalhe: sai "Libera 2 receitas…"; botão de pré-requisitos só com 2 ou mais | P\* | — |
 | **Avisos (toasts)** | | | |
-| Corte 13 | Dois avisos viram um; sem aviso de "Avançar dia" quando o Hoje está à vista | P\* | — |
+| ✓ Corte 13 | Dois avisos viram um; sem aviso de "Avançar dia" quando o Hoje está à vista | P\* | — |
 | **Histórico de atualizações** | | | |
-| Corte 16 | Só a versão atual aberta; as antigas viram uma linha cada | P\* | — |
+| ✓ Corte 16 | Só a versão atual aberta; as antigas viram uma linha cada | P\* | — |
 | **Depois** | | | |
 | Cortes 9 e 19 | Juntar a caixinha com "Já tenho → Tudo" (9); esconder "Fabricar com" circular da Pele (19) | M\* / P\* | 9: item 2.3 |
 
@@ -78,7 +79,7 @@ Objetivo: tirar os defeitos que atrapalham o uso de todo dia, antes de qualquer 
 | 2.4 | "Sem receita" na lista de Receitas vira "Coleta ou compra" (`app.md`, Receitas 4) | P\* | — |
 | 2.5 | "Texto do jogo" nos Dias parece link: trocar por um ícone de aspas pequeno (`app.md`, Dias 2) | P\* | — |
 | 2.6 | Testar num iPhone e num Android reais: atalho na tela de início e teclado cobrindo o aviso | P\* | um celular de cada |
-| 2.7 | QA de 31/10 (`docs/revisao-ux/qa-2026-11.md`): "Recentes" abre sozinho depois de adicionar (médio); foco perdido ao fechar o aviso e ao apagar lista; aviso "Adicionado" fica após Desfazer; "Dados de 2026-11-01" nos Créditos; "Anatomia 0"; rótulo da Pele cortado com letra grande; "Limpar lista" × "Apagar lista" | P cada | — |
+| 2.7 | QA de 31/10 (`docs/revisao-ux/qa-2026-11.md`): ~~"Recentes" abre sozinho depois de adicionar (médio)~~ feito na 1.6.0; foco perdido ao fechar o aviso e ao apagar lista; aviso "Adicionado" fica após Desfazer; "Dados de 2026-11-01" nos Créditos; "Anatomia 0"; rótulo da Pele cortado com letra grande; "Limpar lista" × "Apagar lista" | P cada | — |
 | 2.8 | Site: trocar a frase "o rodapé mostra Só neste aparelho" (o rodapé não mostra mais nada sem conta) | P | — |
 
 ### 3. Missão como meta

@@ -1,4 +1,5 @@
-/* screens.css: secondary screens (soon placeholder, update history, credits), footer, sync chip, toast (+ the undo toast). */
+/* screens.css: secondary screens (soon placeholder, update history, credits), footer, sync chip, toast (+ the undo toast).
+   1.6.0: the older versions of the update history fold into one 44 px row each (.cl-old, .cl-toggle). */
 /* soon screen + footer + toast */
 .soon-screen { padding-block: var(--s6); }
 .soon-card { padding: var(--s5); max-width: 560px; }
@@ -48,6 +49,20 @@
 .cl-date { font-size: .875rem; font-weight: 700; color: var(--ink-3); }
 .cl-notes { margin: 0; padding-left: 1.25em; color: var(--ink-2); }
 .cl-notes li { margin: 2px 0; overflow-wrap: anywhere; }
+/* older versions (corte 16): "Versão 1.5.0  31 de outubro · 8 novidades  ›", a full-width button that opens the notes */
+.cl-head-old { margin: 0; font-size: 1rem; }
+.cl-toggle {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 2px var(--s2); width: 100%; min-height: var(--tap); padding: 4px 0;
+  border: 0; background: transparent; color: var(--ink); font: inherit; text-align: left; cursor: pointer;
+}
+.cl-toggle:hover .cl-version { color: var(--accent); }
+.cl-toggle:focus-visible { outline-offset: 2px; }
+.cl-toggle .cl-version { font-weight: 800; }
+.cl-toggle .cl-chev { margin-left: auto; padding-left: var(--s2); color: var(--accent); font-size: 1.25rem; line-height: 1; transition: transform .15s; }
+.cl-toggle[aria-expanded="true"] .cl-chev { transform: rotate(90deg); }
+.cl-old .cl-notes { margin-top: var(--s2); }
+.cl-notes[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) { .cl-toggle .cl-chev { transition: none; } }
 
 /* credits (#credits, ui/credits.js): the .cl-card / .cl-back look, short sections with a seam between them */
 .screen-credits { padding-block: var(--s5) var(--s6); }

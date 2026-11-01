@@ -1,8 +1,11 @@
 /* GK.ui.fmt: shared bits of markup for item names, recipes and stations (badges, recipe labels,
    tech lines, the editable name block) and the "Desfazer" toast. No state, no panel.
-   Exposes: GK.ui.fmt.{badges, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, infoButton, undoToast}.
-   infoButton(itemId, name): the 44 px "i" button (data-recipe-open) that opens the item in Receitas; every planner
+   Exposes: GK.ui.fmt.{badges, buildLabel, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, slotButton, undoToast}.
+   slotButton(item, name): the item's icon as a 44 px button (data-recipe-open) that opens it in Receitas; every planner
    panel that shows one handles the click itself (GK.ui.recipes.open(id, {from: "plan"})).
+   1.6.0: the "i" button left the planner names (corte 6: the icon opens the recipe); techLine(r, state) drops the
+   words "Requer" / "Maestria:" / "Extensão:" and the technologies already researched (corte 2); stationOf reads
+   "Construir no Cemitério" (buildLabel, corte 12); recipeLabels can leave out one station (corte 3).
    undoToast(msg, onUndo): a toast with a "Desfazer" button (its own #toast-undo element, created on first use, after
    #toast in <body>; it sits above #toast when both show). 6 s, paused while it holds the focus or the pointer.
 */
@@ -11,6 +14,11 @@ GK.i18n.add({
     "recipe.hidden": "oculta",
     "recipe.cyc": "circular",
     "station.build": "Construção (no local)",
+    "station.buildIn.m": "Construir no {place}",
+    "station.buildIn.f": "Construir na {place}",
+    "station.buildIn.fp": "Construir nas {place}",
+    "station.buildList": "Construir em: {places}",
+    "station.buildAnywhere": "Construir em qualquer lugar",
     "badge.unofficial": "não oficial",
     "badge.unofficialTitle": "Tradução não oficial do nome",
     "quality.bronze": "bronze",
@@ -34,6 +42,11 @@ GK.i18n.add({
     "recipe.hidden": "hidden",
     "recipe.cyc": "circular",
     "station.build": "Built in place",
+    "station.buildIn.m": "Build at {place}",
+    "station.buildIn.f": "Build at {place}",
+    "station.buildIn.fp": "Build at {place}",
+    "station.buildList": "Build at: {places}",
+    "station.buildAnywhere": "Build anywhere",
     "badge.unofficial": "unofficial",
     "badge.unofficialTitle": "Unofficial name translation",
     "quality.bronze": "bronze",
@@ -63,14 +76,29 @@ GK.ui.fmt = (function () {
     if (GK.i18n.lang() !== "en" && UNOFFICIAL[it.tr]) return `<span class="badge" title="${esc(t("badge.unofficialTitle"))}">${esc(t("badge.unofficial"))}</span>`;
     return "";
   }
+  // "Construir no Cemitério" / "Build at Graveyard" (corte 12, 1.6.0): the label of a build pseudo-station
+  // (GK.data zoneStation: build: true + the zone's {pt, en}). pt needs the gender of the place; a zone that lists
+  // several places ("Pátio, Cemitério, …") reads "Construir em: …"; the generic one (no zone) keeps "station.build".
+  // A regular station returns its plain name.
+  const PLACE_F = { "Fábrica": 1, "Igreja": 1, "Casa": 1, "Adega do Vinhedo": 1, "Serraria": 1, "Pedreira": 1, "Margem do Rio": 1, "Mina Antiga": 1, "Aldeia": 1 };
+  const PLACE_FP = { "Casernas": 1 };
+  function buildLabel(station, overrides) {
+    if (!station) return "";
+    if (!station.build) return name(station, overrides);
+    if (station.i18n) return t("station.build");
+    const nm = name(station, overrides);
+    if (/anywhere|qualquer lugar/i.test(station.en || nm)) return t("station.buildAnywhere");
+    if (nm.indexOf(",") >= 0) return t("station.buildList", { places: nm });
+    const g = PLACE_FP[nm] ? "fp" : PLACE_F[nm] ? "f" : "m";
+    return t("station.buildIn." + g, { place: nm });
+  }
   // station label of the recipe the planner would use for this item (for search / goals sub-lines)
   function stationOf(id, state) {
     const D = GK.data.get();
     const h = GK.calc.howToMake(id, D, state.choice, state.have, state.perks);
     const rs = GK.data.recipesFor(id);
     if (!h.r) return t("search.raw");
-    const st = name(h.r.station, state.overrides);
-    const label = h.r.station.build && !h.r.station.i18n ? `${t("station.build")} · ${st}` : st;
+    const label = buildLabel(h.r.station, state.overrides);
     return rs.length > 1 ? t("search.recipes", { station: label, n: rs.length }) : label;
   }
   // what sets a recipe apart from its siblings: the quality grade ("ouro"), else its own name ("Board (Sawhorse)").
@@ -103,7 +131,8 @@ GK.ui.fmt = (function () {
     return `${ins}${out ? " → " + num(out) : ""}${st}${r.quality ? " · " + t("quality." + r.quality) : ""}${tags.length ? " (" + tags.join(", ") + ")" : ""}`;
   }
   // labels for a list of options (`all` = the item's full list, kept for callers). The station is left out when
-  // every option uses the same one. Two options never read the same: a repeat gets a short tag, then a number.
+  // every option uses the same one, or (opts.omitStation = a station id) on the options made at that station: the
+  // step's card already names it. Two options never read the same: a repeat gets a short tag, then a number.
   // The tag is the recipe's own name cut before " from " (1.4.1): "Improve organ I from Any Skin" made the Pele
   // selector 440-640 px wide on a 390 px phone; the cut keeps "Improve organ I" / "Improve organ II" apart.
   function shortTag(r) {
@@ -111,10 +140,11 @@ GK.ui.fmt = (function () {
     const cut = n.split(/ from /i)[0].trim();
     return cut.length > 28 ? cut.slice(0, 27).trimEnd() + "…" : cut;
   }
-  function recipeLabels(list, state, all) {
+  function recipeLabels(list, state, all, opts) {
     const sid = (r) => (r.station && (r.station.id || r.station.en)) || "";
     const noStation = list.length > 1 && list.every((r) => sid(r) === sid(list[0]));
-    const out = list.map((r, k) => recipeLabel(r, k, state, { noStation }));
+    const omit = opts && opts.omitStation;
+    const out = list.map((r, k) => recipeLabel(r, k, state, { noStation: noStation || (omit != null && sid(r) === omit) }));
     const dup = (k) => out.some((x, j) => j !== k && x === out[k]);
     const extra = out.map((s, k) => (dup(k) && list[k].name && !list[k].quality && shortTag(list[k]) ? " — " + shortTag(list[k]) : ""));
     extra.forEach((x, k) => { out[k] += x; });
@@ -122,21 +152,41 @@ GK.ui.fmt = (function () {
     nth.forEach((x, k) => { out[k] += x; });
     return out;
   }
-  function techLine(r) {
-    const out = [];
-    if (r.tech) {
-      const key = r.tech.type === "quest" ? "steps.techQuest" : r.tech.type === "perk" ? "steps.techPerk" : "steps.tech";
-      out.push(t(key, { tech: name(r.tech) }));
-    }
-    if (r.mastery) out.push(t("steps.mastery", { type: name(r.mastery.type), level: r.mastery.level == null ? "" : r.mastery.level }));
-    if (r.ext) out.push(t("steps.ext", { ext: name(r.ext) }));
-    return out;
+  // what a recipe needs, short (1.6.0, corte 2): "Olaria I · Engenharia 2 · Foles de ferraria". No "Requer",
+  // "Maestria:" or "Extensão:"; quests and perks keep "Missão:" / "Vantagem:" (their names alone read like items).
+  // A technology already researched (GK.tech.researchedSet: marked + ancestors) is left out; a mastery of level 0
+  // shows only its type. state is optional (no state: nothing is left out).
+  // (the store edits state.researched in place: the memo key is its list of marked ids)
+  let resMemo = { key: null, set: null };
+  function researched(state) {
+    const r = state && state.researched;
+    if (!r || !GK.tech || typeof GK.tech.researchedSet !== "function" || !GK.tech.available()) return null;
+    const key = Object.keys(r).filter((k) => r[k]).join(",");
+    if (resMemo.key !== key) resMemo = { key, set: GK.tech.researchedSet(r) };
+    return resMemo.set;
   }
-  // the "i" button: opens the item's detail on the Receitas screen (only when that screen exists)
-  const INFO_SVG = '<svg width="16" height="16" viewBox="0 0 9 9" aria-hidden="true" focusable="false" shape-rendering="crispEdges" fill="currentColor"><path d="M2 0h5v1H2zM1 1h1v1H1zM7 1h1v1H7zM0 2h1v5H0zM8 2h1v5H8zM1 7h1v1H1zM7 7h1v1H7zM2 8h5v1H2zM4 2h1v1H4zM4 4h1v3H4z"/></svg>';
-  function infoButton(itemId, nm) {
-    if (!GK.ui.recipes || typeof GK.ui.recipes.open !== "function") return "";
-    return `<button type="button" class="info-ico" data-recipe-open="${esc(itemId)}" title="${esc(t("info.title"))}" aria-label="${esc(t("info.label", { name: nm }))}">${INFO_SVG}</button>`;
+  function techLine(r, state) {
+    const out = [], done = researched(state);
+    if (r.tech) {
+      const type = r.tech.type;
+      if (type === "quest") out.push(t("steps.techQuest", { tech: name(r.tech) }));
+      else if (type === "perk") out.push(t("steps.techPerk", { tech: name(r.tech) }));
+      else if (!(done && r.tech.id && done.has(r.tech.id))) out.push(name(r.tech));
+    }
+    if (r.mastery) {
+      const ty = name(r.mastery.type), lv = r.mastery.level;
+      out.push(lv ? `${ty} ${lv}` : ty);
+    }
+    if (r.ext) out.push(name(r.ext));
+    return out.filter(Boolean);
+  }
+  // the item's icon as a button (1.6.0, corte 6, in place of the "i"): opens the item on the Receitas screen. Same
+  // markup as GK.util.slot, in a <button> with the "Abrir X em Receitas" label; a plain icon when there is no Receitas.
+  function slotButton(it, nm) {
+    const s = GK.util.slot(it, nm);
+    if (!it || !GK.ui.recipes || typeof GK.ui.recipes.open !== "function" || !/^<span class="slot">/.test(s)) return s;
+    return `<button type="button" class="slot slot-btn" data-recipe-open="${esc(it.id)}" title="${esc(t("info.title"))}" aria-label="${esc(t("info.label", { name: nm }))}">` +
+      s.slice('<span class="slot">'.length, -"</span>".length) + "</button>";
   }
   // name + pencil + inline edit form when editing. The name is plain text: only the checkbox (and its 44 px
   // .tick box) toggles "done" (AUDITORIA U3). labelFor is kept for callers; it is no longer used.
@@ -153,7 +203,7 @@ GK.ui.fmt = (function () {
       </form>`;
     }
     const pencil = canEdit ? `<button type="button" class="edit-ico" data-edit="${esc(it.id)}" title="${esc(t("edit.button"))}" aria-label="${esc(t("edit.label", { name: nm }))}">✎</button>` : "";
-    return `<span class="row-name"><span class="row-label">${esc(nm)}</span>${pencil}${infoButton(it.id, nm)}${extraBadges || ""}${badges(it, overrides)}</span>`;
+    return `<span class="row-name"><span class="row-label">${esc(nm)}</span>${pencil}${extraBadges || ""}${badges(it, overrides)}</span>`;
   }
   // "Areia: você já tem tudo [Desfazer]": the undo toast (see the header)
   let undoTimer = null;
@@ -184,5 +234,5 @@ GK.ui.fmt = (function () {
     if (plain) plain.hidden = true;
     arm();
   }
-  return { badges, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, infoButton, undoToast };
+  return { badges, buildLabel, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, slotButton, undoToast };
 })();

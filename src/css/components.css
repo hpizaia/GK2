@@ -1,4 +1,5 @@
-/* components.css: shared pieces used by every screen: .card, .h2, .hint, .btn, .slot/.ico icons, .badge, name editing. */
+/* components.css: shared pieces used by every screen: .card, .h2, .hint, .btn, .slot/.ico icons, .badge, name editing.
+   1.6.0: .slot-btn (the item icon as the "open in Receitas" button). */
 /* ---------- shared pieces ---------- */
 .card {
   background:
@@ -43,6 +44,16 @@
 .slot-sm { width: 32px; height: 32px; }
 .slot-sm img { width: 26px; height: 26px; }
 .slot-sm .slot-letter { font-size: 18px; }
+/* the item icon as a button (1.6.0, corte 6, GK.ui.fmt.slotButton: opens the item in Receitas, in place of the "i"):
+   a 44 px framed tile that sits in the 40 px icon column (margin -2px), raised, pressed on tap */
+.slot.slot-btn {
+  width: var(--tap); height: var(--tap); margin: -2px; padding: 0; font: inherit; color: inherit; cursor: pointer;
+  border-color: var(--frame); touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+  box-shadow: inset 0 0 0 1px var(--bevel-lo), inset 0 2px 0 var(--bevel-lo), 0 2px 0 var(--shadow);
+}
+.slot-btn:hover { border-color: var(--accent); }
+.slot-btn:active { transform: translateY(1px); box-shadow: inset 0 0 0 1px var(--bevel-lo), inset 0 2px 0 var(--bevel-lo); }
+.slot-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .badge {
   display: inline-block; vertical-align: 2px; margin-left: 6px; padding: 1px 5px;
@@ -99,7 +110,8 @@
 .results-empty { margin: 0; }
 .results-empty-ctl { display: block; margin-top: var(--s2); }
 
-/* "i": open the item in Receitas (planner names, ui/fmt.js infoButton); same 44 px hit area trick as .edit-ico */
+/* "i" (the footer's stale-data note, ui/footer.js; the planner names lost theirs in 1.6.0: the icon opens Receitas);
+   same 44 px hit area trick as .edit-ico */
 .info-ico {
   display: inline-grid; place-items: center; vertical-align: middle; width: var(--tap); height: var(--tap); margin: -12px -10px -12px -6px;
   border: 0; background: transparent; color: var(--ink-3); cursor: pointer; border-radius: var(--r); line-height: 1; padding: 0;

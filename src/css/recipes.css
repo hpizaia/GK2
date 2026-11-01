@@ -1,4 +1,5 @@
-/* recipes.css: the Receitas screen (#recipes, ui/recipes.js): browse (search, filter chips, item rows) and item detail. */
+/* recipes.css: the Receitas screen (#recipes, ui/recipes.js): browse (search, filter chips, item rows) and item detail.
+   1.6.0: "Mostrar itens ocultos" at the end of the list (.rc-hidden-end); "Todas também em" once (.rc-alt-all). */
 .screen-recipes { padding-block: var(--s4) var(--s6); }
 .rc-top { display: grid; gap: var(--s2); margin-bottom: var(--s3); }
 .rc-top .hint { margin: 0; }
@@ -52,6 +53,7 @@
 .rc-empty { margin: 0; padding: var(--s4); color: var(--ink-2); }
 .rc-more { width: 100%; margin-top: var(--s2); }
 .card .rc-more { margin: 0; border-top: 1px solid var(--seam); border-radius: 0; clip-path: none; }
+.rc-hidden-end { margin-top: var(--s3); }
 
 /* detail */
 .rc-nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); margin: 0 0 var(--s3) calc(var(--s3) * -1); }
@@ -83,6 +85,7 @@
 .rc-sec { min-width: 0; }
 .rc-sec > .section-head, .rc-sec > .h2 { margin-bottom: var(--s3); }
 .rc-recipes { display: grid; gap: var(--s4); }
+.rc-sec > .rc-alt-all { margin-top: 0; }
 .rc-recipe .station-h h4 { margin: 0; flex: 1; min-width: 0; font: 800 1.0625rem/1.2 var(--f-body); overflow-wrap: anywhere; }
 .rc-yield { font-size: .8125rem; font-weight: 800; color: var(--accent); white-space: nowrap; }
 .rc-recipe-body { display: grid; gap: var(--s2); padding: var(--s2) 0 var(--s3); }

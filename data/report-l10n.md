@@ -1,6 +1,6 @@
 # Localisation gaps: `pt`
 
-Built 2026-11-01. Names with `tr` = missing, machine or guess, most-used first ("uses" = number of recipes that reference the name as output, input, by-product, station, category, tech...). Translate from the top. Add entries to the sourced names file (key = exact English name, value `{"pt": ..., "source": ..., "confidence": "official|likely|guess"}`).
+Built 2026-10-31. Names with `tr` = missing, machine or guess, most-used first ("uses" = number of recipes that reference the name as output, input, by-product, station, category, tech...). Translate from the top. Add entries to the sourced names file (key = exact English name, value `{"pt": ..., "source": ..., "confidence": "official|likely|guess"}`).
 
 | kind | total | missing | machine | guess |
 |---|---:|---:|---:|---:|

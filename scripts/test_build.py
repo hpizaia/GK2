@@ -1788,5 +1788,134 @@ class FactsBuild(unittest.TestCase):
             self.assertNotIn(".where", (ROOT / "src" / "js" / "ui" / f).read_text(encoding="utf-8"))
 
 
+
+class Cuts160(unittest.TestCase):
+    """1.6.0: the 16 approved noise cuts (docs/revisao-ux/simplificar.md §2, prototypes in protos/cortes/) and the
+    "Recentes" fix (qa-2026-11 médio 1). Source-level checks on src/, plus GK.ui.fmt.buildLabel / techLine in node."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.src = ROOT / "src"
+        cls.read = lambda self, f: (self.src / f).read_text(encoding="utf-8")
+
+    def test_steps_rows(self):
+        """Cortes 1-4: "×2 ▾" opens "Tenho __ de 2"; short tech line; the "Por execução" line is the recipe picker;
+        crafts only when they differ from the quantity."""
+        s, f, css = self.read("js/ui/summary.js"), self.read("js/ui/fmt.js"), self.read("css/planner.css")
+        self.assertIn('class="row-qty qty-btn"', s)
+        self.assertIn('"steps.qtyLabel"', s)
+        for gone in ('"steps.hint"', '"raw.hint"', '"steps.recipe":', '"steps.have"', '"fold.raw.', '"fold.steps.'):
+            self.assertNotIn(gone, s, gone)
+        self.assertIn("function stepPicker(", s)
+        self.assertIn('class="row-in step-pick"', s)
+        self.assertIn("s.runs > 1 && s.runs !== s.need", s)
+        self.assertIn("function techLine(r, state)", f)
+        for gone in ('"steps.tech"', '"steps.mastery"', '"steps.ext"', "infoButton("):
+            self.assertNotIn(gone, f, gone)
+        self.assertIn("GK.tech.researchedSet", f)
+        self.assertRegex(css, r"\.step-pick select \{[^}]*opacity: 0")
+        self.assertRegex(css, r"\.qty-btn \{[^}]*min-height: var\(--tap\)")
+
+    def test_planner_general(self):
+        """Cortes 6, 8, 20, 13 (goals side): the icon opens Receitas; no stats line; perks fold; one first-use line;
+        the example-replaced toast moved to search.js."""
+        g, c, f, comp = self.read("js/ui/goals.js"), self.read("js/ui/checklist.js"), self.read("js/ui/fmt.js"), self.read("css/components.css")
+        self.assertIn("function slotButton(", f)
+        self.assertIn('class="slot slot-btn"', f)
+        self.assertIn("GK.ui.fmt.slotButton(", g)
+        for gone in ("exampleGone", '"goals.intro"', "example-note", "GK.store.subscribe", "infoButton"):
+            self.assertNotIn(gone, g, gone)
+        self.assertIn('"goals.example": "Exemplo: busque o que quer fabricar e ele substitui esta lista."', g)
+        for gone in ('class="stats"', '"stats.'):
+            self.assertNotIn(gone, c, gone)
+        self.assertIn('id="perks-tgl"', c)
+        self.assertIn('aria-expanded="${perksOpen}"', c)
+        self.assertIn(".slot.slot-btn {", comp)
+        self.assertIn(".info-ico {", comp)   # the footer's stale-data "i" keeps its style
+        self.assertIn('"tn.hint": "Pesquise nesta ordem; marque o que já tem."', self.read("js/ui/techneeds.js"))
+
+    def test_days_today_search(self):
+        """Cortes 7, 10, 11, 13, 14 and the Recentes fix (days.js, today.js, search.js)."""
+        d, t, q = self.read("js/ui/days.js"), self.read("js/ui/today.js"), self.read("js/ui/search.js")
+        for gone in ('"days.hint"', '"days.credit"', '"days.calibrated"', '"days.isToday"', "days-credit"):
+            self.assertNotIn(gone, d, gone)
+        self.assertIn('"days.adjust": "Ajustar o dia"', d)
+        self.assertIn("data-adjust aria-expanded=", d)
+        self.assertIn('"days.machineNote"', d)          # moved into "Como funciona"
+        self.assertIn("const namedIn", t)
+        self.assertIn('class="h2 today-h"', t)
+        self.assertNotIn("days.advToast", t)            # no toast from the Hoje panel; days.js keeps its own
+        self.assertIn("days.advToastN", d)
+        self.assertIn('"toast.added": "+ {name}"', q)
+        self.assertIn('"toast.replaced": "+ {name} · exemplo removido"', q)
+        self.assertIn("m && m.exampleReplaced", q)
+        self.assertIn("restoreExample(snap)", q)
+        self.assertIn("if (quiet || document.activeElement !== input) return false;", q)
+        self.assertIn("!inList.has(id)", q)
+
+    def test_recipes_tech_changelog(self):
+        """Cortes 7, 12, 16, 17, 18 (recipes.js, tech.js, changelog.js)."""
+        r, k, c, css = self.read("js/ui/recipes.js"), self.read("js/ui/tech.js"), self.read("js/ui/changelog.js"), self.read("css/screens.css")
+        for gone in ('"rc.hint"', '"rc.usedInNone"'):
+            self.assertNotIn(gone, r, gone)
+        self.assertIn('"rc.altAll"', r)
+        self.assertIn("rc-hidden-end", r)
+        self.assertIn("GK.ui.fmt.buildLabel(", r)
+        self.assertIn("row.n > 1", r)
+        self.assertIn('"rc.placeholder": "Buscar item"', r)
+        self.assertNotIn('"rc.placeholder": "Buscar entre', r)
+        self.assertNotIn('"tech.recipes.', k)
+        self.assertIn("missingAnc.length >= 2", k)
+        self.assertIn('"tech.hint": "Marque o que já pesquisou; as anteriores contam junto."', k)
+        self.assertIn("aria-expanded", c)
+        self.assertIn("aria-controls", c)
+        self.assertIn('"changelog.notes.one"', c)
+        self.assertRegex(css, r"\.cl-toggle \{[^}]*min-height: var\(--tap\)")
+
+    @unittest.skipUnless(shutil.which("node"), "node not installed")
+    def test_build_label_and_tech_line(self):
+        """GK.ui.fmt.buildLabel: "Construir no Cemitério" / "na Igreja" / "nas Casernas" / "em: A, B" / "Build at …";
+        techLine(r, state): no prefixes, researched techs dropped, mastery level 0 = type only."""
+        stub = r"""
+global.window = global;
+global.navigator = { language: "pt-BR" };
+global.document = { addEventListener() {}, createElement() { return { style: {}, appendChild() {}, setAttribute() {} }; },
+  head: { appendChild() {} }, documentElement: {}, getElementById() { return null; } };
+"""
+        harness = stub + self.read("js/core.js") + self.read("js/util.js") + self.read("js/i18n.js") + \
+            '\nGK.i18n.add({ pt: { "search.raw": "Matéria-prima", "steps.techQuest": "Missão: {tech}", "steps.techPerk": "Vantagem: {tech}" }, en: {} });\n' + \
+            'GK.tech = { available: () => true, researchedSet: (r) => new Set(Object.keys(r).filter((k) => r[k])) };\n' + \
+            self.read("js/ui/fmt.js") + r"""
+const F = GK.ui.fmt, z = (pt, en) => ({ id: "zone:" + en, build: true, pt, en });
+const out = {};
+GK.i18n.set("pt");
+out.pt = [z("Cemitério", "Graveyard"), z("Igreja", "Church"), z("Casernas", "Barracks"), z("Pátio, Cemitério", "Yard, Graveyard"),
+  z("Qualquer lugar", "Anywhere"), { id: "build", i18n: "station.build", build: true }, { id: "sawhorse", pt: "Cavalete", en: "Sawhorse" }].map((s) => F.buildLabel(s));
+GK.i18n.set("en");
+out.en = [z("Cemitério", "Graveyard"), z("Casernas", "Barracks"), z("Pátio, Cemitério", "Yard, Graveyard")].map((s) => F.buildLabel(s));
+GK.i18n.set("pt");
+const r = { tech: { id: "pottery-i", type: "technology", pt: "Olaria I", en: "Pottery I" }, mastery: { type: { pt: "Engenharia", en: "Building" }, level: 2 }, ext: { pt: "Foles", en: "Bellows" } };
+out.line = F.techLine(r, { researched: {} });
+out.lineDone = F.techLine(r, { researched: { "pottery-i": true } });
+out.lineNoState = F.techLine(r);
+out.level0 = F.techLine({ mastery: { type: { pt: "Anatomia", en: "Anatomy" }, level: 0 } }, { researched: {} });
+out.quest = F.techLine({ tech: { id: "q", type: "quest", pt: "A missão", en: "The quest" } }, { researched: { q: true } });
+console.log(JSON.stringify(out));
+"""
+        with tempfile.TemporaryDirectory() as t:
+            p = Path(t) / "h.js"
+            p.write_text(harness, encoding="utf-8")
+            res = subprocess.run(["node", str(p)], capture_output=True, text=True, timeout=60)
+        self.assertEqual(res.returncode, 0, res.stderr)
+        out = json.loads(res.stdout.strip().splitlines()[-1])
+        self.assertEqual(out["pt"], ["Construir no Cemitério", "Construir na Igreja", "Construir nas Casernas", "Construir em: Pátio, Cemitério",
+                                     "Construir em qualquer lugar", "Construção (no local)", "Cavalete"])
+        self.assertEqual(out["en"], ["Build at Graveyard", "Build at Barracks", "Build at: Yard, Graveyard"])
+        self.assertEqual(out["line"], ["Olaria I", "Engenharia 2", "Foles"])
+        self.assertEqual(out["lineDone"], ["Engenharia 2", "Foles"])
+        self.assertEqual(out["lineNoState"], ["Olaria I", "Engenharia 2", "Foles"])
+        self.assertEqual(out["level0"], ["Anatomia"])
+        self.assertEqual(out["quest"], ["Missão: A missão"])
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

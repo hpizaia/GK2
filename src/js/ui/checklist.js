@@ -1,6 +1,8 @@
 /* GK.ui.checklist: progress bar, perk toggles ("Vantagens"), copy as text, clear checks, export edited names, and
    the "Editar nomes" switch (GK.store ui.editNames: shows the ✎ rename pencils on the planner rows; a contributor
    tool, off by default). On phones this card comes last in the planner (planner.css, CSS order).
+   1.6.0 (corte 8): no "20 matérias-primas · 41 etapas · 26 estações" line (the section titles count them); the perks
+   fold into one line "Vantagens: 0 de 10 ligadas ›" that opens the toggles (folded by default; this module's state).
    Owns: [data-panel="checklist"] and the change handler of every [data-done] checkbox on the planner.
    Exposes: GK.ui.checklist.{mount, render, asText, exportNames}; registered as a panel.
 */
@@ -13,12 +15,6 @@ GK.i18n.add({
     "progress.copied": "Lista copiada",
     "progress.copyFail": "Não deu para copiar automaticamente. O texto está selecionado abaixo: copie com o menu do sistema.",
     "progress.cleared": "Marcações limpas",
-    "stats.raw.one": "{n} matéria-prima",
-    "stats.raw.other": "{n} matérias-primas",
-    "stats.steps.one": "{n} etapa",
-    "stats.steps.other": "{n} etapas",
-    "stats.stations.one": "{n} estação",
-    "stats.stations.other": "{n} estações",
     "export.button": "Exportar nomes editados ({n})",
     "names.edit": "Editar nomes",
     "names.editTitle": "Mostra o lápis ✎ ao lado de cada nome, para corrigir traduções",
@@ -28,6 +24,8 @@ GK.i18n.add({
     "copy.goals": "Metas",
     "copy.haveN": "tenho {n}",
     "perks.title": "Vantagens",
+    "perks.sumLabel": "Vantagens:",
+    "perks.sum": "{on} de {total} ligadas",
     "perks.hint": "Vantagens que mudam quantidades neste plano. Ligue as que você já tem no jogo.",
     "perks.toggle": "Vantagem {name}: {state}",
     "perks.on": "ligada",
@@ -41,12 +39,6 @@ GK.i18n.add({
     "progress.copied": "List copied",
     "progress.copyFail": "Couldn't copy automatically. The text is selected below: copy it with your system menu.",
     "progress.cleared": "Checks cleared",
-    "stats.raw.one": "{n} raw material",
-    "stats.raw.other": "{n} raw materials",
-    "stats.steps.one": "{n} step",
-    "stats.steps.other": "{n} steps",
-    "stats.stations.one": "{n} station",
-    "stats.stations.other": "{n} stations",
     "export.button": "Export edited names ({n})",
     "names.edit": "Edit names",
     "names.editTitle": "Shows the ✎ pencil next to each name, to fix translations",
@@ -56,6 +48,8 @@ GK.i18n.add({
     "copy.goals": "Goals",
     "copy.haveN": "have {n}",
     "perks.title": "Perks",
+    "perks.sumLabel": "Perks:",
+    "perks.sum": "{on} of {total} on",
     "perks.hint": "Perks that change amounts in this plan. Turn on the ones you already have in the game.",
     "perks.toggle": "Perk {name}: {state}",
     "perks.on": "on",
@@ -65,7 +59,7 @@ GK.i18n.add({
 
 GK.ui.checklist = (function () {
   const { t, name, num } = GK.i18n, { esc } = GK.util;
-  let root;
+  let root, perksOpen = false;   // "Vantagens: 0 de 10 ligadas ›" opened (this device, this session)
   const keysOf = (plan) => plan.raw.map((r) => "raw:" + r.item).concat(plan.steps.map((s) => "step:" + s.item));
   function asText(state, plan) {
     const D = GK.data.get(), nm = (id) => name(D.items[id], state.overrides);
@@ -115,19 +109,23 @@ GK.ui.checklist = (function () {
       if (b.id === "clear-done") { GK.store.actions.clearDone(); GK.ui.toast(t("progress.cleared")); }
       if (b.id === "copy-list") copyOrShow(asText(GK.store.get(), GK.app.plan()), t("progress.copied"), "progress.copyFail");
       if (b.id === "export-names") copyOrShow(exportNames(GK.store.get()), t("export.copied"), "export.fail");
+      if (b.id === "perks-tgl") { perksOpen = !perksOpen; render(GK.store.get(), {}, GK.app.plan()); const tg = document.getElementById("perks-tgl"); if (tg) tg.focus(); return; }
       if (b.dataset.perk) GK.store.actions.setPerk(b.dataset.perk, b.getAttribute("aria-pressed") !== "true");
       if (b.id === "edit-names") GK.store.actions.setUi({ editNames: b.getAttribute("aria-pressed") !== "true" });
     });
   }
-  // "Vantagens: [Economizador de Calor] [Cremador]": only the perks this plan's recipes mention
+  // "Vantagens: 0 de 2 ligadas ›", then (opened) "Vantagens: [Economizador de Calor] [Cremador]": only the perks
+  // this plan's recipes mention
   function perkRow(plan) {
     const list = (plan.perks || []).filter((p) => GK.data.perks()[p.id]);
     if (!list.length) return "";
+    const on = list.filter((p) => p.active).length;
+    const tgl = `<button type="button" class="perks-sum" id="perks-tgl" aria-expanded="${perksOpen}" aria-controls="perks-body"><span class="perks-label">${esc(t("perks.sumLabel"))}</span> <b class="tabnum">${esc(t("perks.sum", { on: num(on), total: num(list.length) }))}</b><span class="perks-chev" aria-hidden="true">›</span></button>`;
     const chips = list.map((p) => {
       const nm = name(GK.data.perks()[p.id]);
       return `<button type="button" class="chip" id="perk-${GK.util.domId(p.id)}" data-perk="${esc(p.id)}" aria-pressed="${p.active}" title="${esc(t("perks.toggle", { name: nm, state: t(p.active ? "perks.on" : "perks.off") }))}">${esc(nm)}</button>`;
     }).join("");
-    return `<div class="perks" role="group" aria-labelledby="perks-h" aria-describedby="perks-hint"><span class="perks-label" id="perks-h">${esc(t("perks.title"))}</span>${chips}<span class="sr-only" id="perks-hint">${esc(t("perks.hint"))}</span></div>`;
+    return `<div class="perks-fold">${tgl}<div class="perks" id="perks-body" role="group" aria-labelledby="perks-h" aria-describedby="perks-hint"${perksOpen ? "" : " hidden"}><span class="perks-label" id="perks-h">${esc(t("perks.title"))}</span>${chips}<span class="sr-only" id="perks-hint">${esc(t("perks.hint"))}</span></div></div>`;
   }
   function render(state, meta, plan) {
     if (meta && meta.from === "search-toggle") return;
@@ -145,7 +143,6 @@ GK.ui.checklist = (function () {
         <span class="progress-num">${esc(t("progress.count", { done, total }))} · ${num(pct)}%</span>
       </div>
       <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${done}" aria-label="${esc(t("progress.title"))}"><div class="bar-fill" style="width:${pct}%"></div></div>
-      <div class="stats">${esc(t("stats.raw", { n: plan.raw.length }))} · ${esc(t("stats.steps", { n: plan.steps.length }))} · ${esc(t("stats.stations", { n: plan.stations.length }))}</div>
       ${perkRow(plan)}
       <div class="progress-actions">
         <button type="button" class="btn btn-sm" id="copy-list">${esc(t("progress.copy"))}</button>

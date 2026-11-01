@@ -2,13 +2,14 @@
    recipe of the current plan (GK.tech.forPlan), point totals per colour, the list in research order with an
    inline "Já pesquisei" checkbox, and the quests / perks the plan also needs. Hidden when nothing is missing.
    Re-renders only when the plan's tech signature, the researched set or the language changes.
+   1.6.0 (corte 7): the hint is one short line, "Pesquise nesta ordem; marque o que já tem."
    Owns: its <div data-panel="tech-needs"> in [data-slot="planner-extra"].
    Exposes: GK.ui.techneeds.{mount, render}. Registered via GK.app.registerPanel(..., {slot: "planner-extra"}).
 */
 GK.i18n.add({
   pt: {
     "tn.title": "Tecnologias que faltam",
-    "tn.hint": "Para fabricar tudo do plano (estações incluídas), pesquise nesta ordem. Marque aqui o que já pesquisou.",
+    "tn.hint": "Pesquise nesta ordem; marque o que já tem.",
     "tn.total": "Total de pontos",
     "tn.more.one": "Mostrar mais {n}",
     "tn.more.other": "Mostrar mais {n}",
@@ -22,7 +23,7 @@ GK.i18n.add({
   },
   en: {
     "tn.title": "Technologies still needed",
-    "tn.hint": "To craft everything in the plan (stations included), research in this order. Check what you already have here.",
+    "tn.hint": "Research in this order; check what you already have.",
     "tn.total": "Total points",
     "tn.more.one": "Show {n} more",
     "tn.more.other": "Show {n} more",

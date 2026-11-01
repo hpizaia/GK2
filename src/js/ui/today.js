@@ -1,10 +1,14 @@
 /* GK.ui.today: planner slot panel "Hoje" (above "Tecnologias que faltam"). With the current weekday set
-   (GK.store day): "Hoje: Dia da Ira · 3 coisas", that day's events as a compact list, each with a 44 px
-   "feito hoje" checkbox (GK.store dayDone, synced; the ticks reset by themselves when the day changes: advance,
-   another day picked, or a counter that lands on another day), "Tudo feito hoje ✓" once every event is ticked,
-   that weekday's "Bilhete do dia" (GK.store dayNotes, synced; edited in place through GK.ui.days.noteBox),
+   (GK.store day), open: the heading "Dia da Ira · dia 61 · 3 coisas" with the day's medallion (1.6.0: one line instead
+   of "Hoje dia 61" over "Hoje: Dia da Ira · 3 coisas"; screen readers still hear "Hoje:" first), that day's events
+   as a compact list (the "· Agatha (a Freira)" suffix only when the event's text does not already name that person:
+   namedIn), each with a 44 px "feito hoje" checkbox (GK.store dayDone, synced; the ticks reset by themselves when
+   the day changes: advance, another day picked, or a counter that lands on another day), "Tudo feito hoje ✓" once
+   every event is ticked, that weekday's "Bilhete do dia" (GK.store dayNotes, synced; edited in place through GK.ui.days.noteBox),
    a smaller "Amanhã: Dia da Preguiça · 2 coisas" with tomorrow's events one line each and tomorrow's note
    (a tap opens the Dias screen on that day: GK.ui.days.open), then "Avançar dia" and "Ver semana" (→ #days).
+   "Avançar dia" here shows no toast (1.6.0): the panel's own line already shows the new day (the Dias screen keeps
+   its toast).
    Without a day: "Qual dia é hoje no jogo?" and the 6 day medallions as buttons (tap = set),
    plus the HUD counter field once calibrated (GK.store dayAnchor: the number alone gives the day).
    Nothing when the page has no week data. Re-renders only when (day, dayNumber, calibration, collapsed, lang,
@@ -105,12 +109,8 @@ GK.ui.today = (function () {
         if (adv) adv.focus({ preventScroll: true });
         return;
       }
-      if (e.target.closest("[data-today-adv]")) {
-        if (!GK.store.actions.advanceDay()) return;
-        const st = GK.store.get(), d = DY().current(st);
-        if (d) GK.ui.toast(st.dayNumber != null ? t("days.advToastN", { name: name(d.name), n: st.dayNumber }) : t("days.advToast", { name: name(d.name) }));
-        return;
-      }
+      // no toast: the Hoje line under the finger already shows the new day
+      if (e.target.closest("[data-today-adv]")) { GK.store.actions.advanceDay(); return; }
       const tm = e.target.closest("[data-today-tmr]");
       if (tm) { DY().open(tm.dataset.todayTmr); return; }
       const w = e.target.closest("[data-today-week]");
@@ -135,8 +135,13 @@ GK.ui.today = (function () {
       if (adv) adv.focus({ preventScroll: true });
     });
   }
+  // the words of a name, folded (no accents, lower case), without articles / prepositions
+  const STOP = /^(a|o|as|os|da|do|das|dos|de|e|the|of|and)$/;
+  const words = (s) => String(s).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().split(/[^a-z0-9]+/).filter((w) => w && !STOP.test(w));
+  // "Agatha (a Freira)" is already in "A Freira do Burro Peludo: Agatha entrega…" (any word of the name, whole word)
+  const namedIn = (who, text) => { const tw = new Set(words(text)); return words(who).some((w) => tw.has(w)); };
   function evRow(ev, i, done) {
-    const who = DY().whoText(ev), text = DY().eventText(ev);
+    const text = DY().eventText(ev), whoAll = DY().whoText(ev), who = whoAll && !namedIn(whoAll, text) ? whoAll : "";
     return `<li class="today-ev${done ? " is-done" : ""}"${ev.source ? ` title="${esc(t("days.source", { src: ev.source }))}"` : ""}>
       <label class="tick today-tick"><input type="checkbox" id="today-done-${i}" data-today-done="${i}"${done ? " checked" : ""} aria-label="${esc(t("today.check", { text }))}"></label>
       <span class="today-ev-ico" title="${esc(t("days.kind." + ev.kind))}">${DY().kindIcon(ev.kind, 16)}<span class="sr-only">${esc(t("days.kind." + ev.kind))}: </span></span>
@@ -192,7 +197,6 @@ GK.ui.today = (function () {
       </section>`;
       return;
     }
-    const counter = state.dayNumber != null ? ` <span class="count tabnum">${esc(t("days.counter", { n: state.dayNumber }))}</span>` : "";
     const dayStyle = d.color ? ` style="--day:${esc(d.color)}"` : "";
     if (shut) {
       // one compact row: medallion, "Hoje: X" over "N coisas · dia N", Avançar, toggle (the heading stays for screen readers)
@@ -213,12 +217,8 @@ GK.ui.today = (function () {
     const done = ticked(state, d), all = d.events.length > 0 && done.length === d.events.length;
     const typed = notes ? notes.keep() : () => {};
     root.innerHTML = `<section class="today" aria-labelledby="today-h">
-      <div class="fold-head" data-today-head><h2 class="h2" id="today-h">${esc(t("today.title"))}${counter}</h2>${foldBtn(true, t("today.title"))}</div>
+      <div class="fold-head" data-today-head><h2 class="h2 today-h" id="today-h"${dayStyle}><span class="sr-only">${esc(t("today.title"))}: </span>${DY().tile(d, 26)}<span class="today-h-t">${esc(name(d.name))} <span class="count tabnum">${state.dayNumber != null ? `${esc(t("days.counter", { n: state.dayNumber }))} · ` : ""}<span id="today-count">${esc(countText(state, d))}</span></span></span></h2>${foldBtn(true, t("today.title"))}</div>
       <div class="card today-card" id="today-body"${dayStyle}>
-        <div class="today-head">
-          ${DY().tile(d, 26)}
-          <p class="today-line"><b>${esc(t("today.line", { name: name(d.name) }))}</b> · <span id="today-count">${esc(countText(state, d))}</span></p>
-        </div>
         ${d.events.length ? `<ul class="today-evs">${d.events.map((ev, i) => evRow(ev, i, done.indexOf(i) >= 0)).join("")}</ul>` : `<p class="hint today-none">${esc(t("today.nothing"))}</p>`}
         ${all ? `<p class="today-all" role="status">${esc(t("today.allDone"))}</p>` : ""}
         <div class="today-note-box">${notes ? notes.html(d, state) : ""}</div>

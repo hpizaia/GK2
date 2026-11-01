@@ -3,6 +3,17 @@
 
 # Histórico de atualizações — Companheiro GK2
 
+## 1.6.0 — 2026-10-31
+
+- Etapas mais curtas: o “Já tenho” fica atrás da quantidade (toque em “×2 ▾”), a linha de requisitos ficou enxuta (“Olaria I · Engenharia 2”) e esconde a tecnologia que você já marcou como pesquisada, o seletor de receita está na própria linha “Por execução”, e o número de execuções só aparece quando é diferente da quantidade
+- Planejador: tocar na figura do item abre a receita (o botão “i” saiu); o Progresso perdeu os contadores repetidos e as Vantagens ficam recolhidas numa linha (“Vantagens: 0 de 10 ligadas ›”); no primeiro uso, uma frase só explica o exemplo
+- Dicas fixas no topo: saíram as de Matérias-primas, Etapas, Receitas e Dias; as de Tecnologias e Tecnologias que faltam ficaram curtas
+- Dias e Hoje: menos “hoje” repetido (sem a linha “Ira · Wrath”, sem o botão quando o dia já é hoje, “Esquecer o dia” e “recalibrar” atrás de “Ajustar o dia ›”, a frase das frases curtas dentro de “Como funciona”, sem o parágrafo de crédito); o painel Hoje aberto tem o título “Dia da Ira · dia 61 · 5 coisas” e não repete o nome de quem aparece na frase
+- Receitas: sem “· 1 receita” na lista, “Construir no Cemitério” no lugar de “Construção (no local) · Cemitério” (também nas Metas e na busca), campo “Buscar item”, “Mostrar itens ocultos” no fim da lista; no detalhe, “Também em” aparece uma vez só e a seção “Usado em” some quando está vazia. Tecnologias: sai a frase “Libera N receitas do Planejador”; o botão de pré-requisitos só aparece com 2 ou mais
+- Avisos: no primeiro uso, um aviso só (“Tábua reforçada adicionada · exemplo removido · Desfazer”); fora dele, “+ Tábua reforçada”; “Avançar dia” no painel Hoje não mostra mais aviso
+- Histórico de atualizações: só a versão atual fica aberta; as antigas viram uma linha cada e abrem ao tocar
+- Busca: a lista “Recentes” não abre mais sozinha logo depois de adicionar um item e deixa de fora o que já está nas metas
+
 ## 1.5.1 — 2026-10-31
 
 - O cartão "Próximo passo" foi removido: na prática ele atrapalhava mais do que ajudava no topo do Planejador. A lista de etapas continua a mesma
@@ -89,6 +100,17 @@
 ---
 
 # Update history — GK2 Companion
+
+## 1.6.0 — 2026-10-31
+
+- Shorter steps: “Have it” sits behind the quantity (tap “×2 ▾”), the requirements line is lean (“Pottery I · Building 2”) and hides a technology you already marked as researched, the recipe picker is the “Per craft” line itself, and the number of crafts shows only when it differs from the quantity
+- Planner: tapping the item's picture opens its recipe (the “i” button is gone); Progress lost the repeated counters and Perks fold into one line (“Perks: 0 of 10 on ›”); on first use a single sentence explains the example
+- Fixed hints at the top: the ones on Raw materials, Steps, Recipes and Days are gone; Technologies and Technologies still needed got short ones
+- Days and Today: less repeated “today” (no “Wrath · Ira” line, no button when the day already is today, “Forget the day” and “recalibrate” behind “Adjust the day ›”, the short-lines note inside “How it works”, no credit paragraph); the open Today panel is titled “Day of Wrath · day 61 · 5 things” and no longer repeats a name already in the sentence
+- Recipes: no “· 1 recipe” in the list, “Build at Graveyard” instead of “Built in place · Graveyard” (also in Goals and the search), “Search items” field, “Show hidden items” at the end of the list; in the detail, “Also at” shows once and the “Used in” section hides when empty. Technologies: the “Unlocks N planner recipes” line is gone; the prerequisites button shows only with 2 or more
+- Notices: on first use a single one (“Reinforced plank added · example removed · Undo”); after that, “+ Reinforced plank”; “Next day” in the Today panel no longer shows a notice
+- Update history: only the current version is open; older ones are one line each and open on tap
+- Search: the “Recent” list no longer opens by itself right after adding an item, and leaves out what is already in the goals
 
 ## 1.5.1 — 2026-10-31
 
