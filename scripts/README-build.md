@@ -5,7 +5,7 @@ may contain spaces, so quote them.
 
 | script | what it does |
 |---|---|
-| `scripts/build.py` | Merges items, recipes and names into `data/gk2.json` and `data/gk2.min.json`, writes the reports, assembles the page from `src/` (data, version and changelog embedded) and regenerates `CHANGELOG.md` |
+| `scripts/build.py` | Merges items, recipes and names into `data/gk2.json`, writes the reports, assembles the page from `src/` (data, version and changelog embedded) and regenerates `CHANGELOG.md` |
 | `scripts/validate.py` | Checks a merged `gk2.json`. build.py also runs it on every build |
 | `scripts/test_build.py` | Tests on `scripts/fixtures/` (plus a read-only smoke test on the real data) |
 | `scripts/fetch_icons.py` | Downloads every distinct `icon` URL of `data/gk2.json` (items + stations) into `data/icons/<id>.png` (≤ 5 req/s, skips existing files) |
@@ -14,22 +14,19 @@ may contain spaces, so quote them.
 ## Run
 
 ```sh
-# everything: data/gk2.json, gk2.min.json, both reports, CHANGELOG.md, and the page assembled from src/:
+# everything: data/gk2.json, both reports, CHANGELOG.md, and the page assembled from src/:
 #   prototype/index.html  local dev page (full document skeleton)
 #   dist/index.html       Claude Artifact page (no skeleton, no remote icon URLs)
 #   dist/preview.html     dist/index.html inside a minimal skeleton, for local viewing
-# The sprite (data/sprite.json) is embedded when it exists.
+# The sprite (data/sprite.json) is embedded when it exists. meta.built = the date of the last release
+# (data/changelog.json), so rebuilding on another day writes nothing.
 python3 -I scripts/build.py
 
-# publish a version: dates the top entry of data/changelog.json (if still null) with the build date
+# publish a version: dates the top entry of data/changelog.json (if still null) with today's date
 python3 -I scripts/build.py --release
 
 # data only (no page)
 python3 -I scripts/build.py --no-src
-
-# legacy: embed the data in an existing single-file page (in place + .bak, or into --out)
-python3 -I scripts/build.py --inject some/page.html
-python3 -I scripts/build.py --inject some/page.html --out dist/index.html --artifact --sprite data/sprite.json
 
 # icons -> sprite (once, or when icons change), then rebuild
 python3 -I scripts/fetch_icons.py            # data/icons/<id>.png
@@ -54,31 +51,29 @@ Options for `build.py`:
 | `--names PATH` (repeatable) | `data/names.official.pt-BR.json`, `data/names.recipes.pt-BR.json`, `data/names.wiki.pt-BR.json`, `data/names.pt-BR.json`, `data/names.machine.pt-BR.json` | pt layers. A missing file is skipped with a note in the report. An entry with `"fix": "<reason>"` is a correction of the official text: it wins over every layer and tier and keeps its own confidence (`data/README-l10n.md`) |
 | `--lang FIELD=PATH[,PATH]` (repeatable) | none | extra language (see below) |
 | `--out-dir DIR` | `data/` | where the JSON and the reports go |
-| `--src DIR` | `src/` when `src/manifest.json` exists and `--inject` is not given | assemble the page from `DIR` and write `DIR/../prototype/index.html`, `DIR/../dist/index.html`, `DIR/../dist/preview.html`. `VERSION`, `data/changelog.json`, `data/sprite.json` and `CHANGELOG.md` are read/written in `DIR/..` |
+| `--src DIR` | `src/` when `src/manifest.json` exists | assemble the page from `DIR` and write `DIR/../prototype/index.html`, `DIR/../dist/index.html`, `DIR/../dist/preview.html`. `VERSION`, `data/changelog.json`, `data/sprite.json` and `CHANGELOG.md` are read/written in `DIR/..` |
 | `--no-src` | | data only, no page |
 | `--release` | | set the `date` of the top `data/changelog.json` entry to the build date (`--built` / `SOURCE_DATE_EPOCH` / today) when it is `null`. Exit 2 when `VERSION` and the top entry differ |
-| `--inject HTML` / `--out PATH` | | legacy: replace the content of `<script id="gk2-data" type="application/json">…</script>` in an existing page |
-| `--allow-errors` | off | write the JSON and inject even with hard errors (the exit code stays 1) |
-| `--built YYYY-MM-DD` | `SOURCE_DATE_EPOCH`, else today (UTC) | `meta.built` |
+| `--allow-errors` | off | write the JSON and the page even with hard errors (the exit code stays 1) |
+| `--built YYYY-MM-DD` | `SOURCE_DATE_EPOCH`, else the date of the newest dated `data/changelog.json` entry (the last release), else today (UTC); with `--release`: today | `meta.built` (in `gk2.json`, the reports and the page; the page does not show it) |
 | `--source NAME` (repeatable) | | extra entry in `meta.sources` |
 | `--sprite PATH.json` | `data/sprite.json` (src mode, when present) | embed a `make_sprite.py` manifest as `meta.sprite`; the page draws icons from it |
-| `--techs PATH.json` | `data/techs.json` when present, in src mode or with the default `--items`/`--recipes` | technology tree (`scripts/build_techs.py`, see `data/README-techs.md`): recipe `tech` names of type technology follow it (also in `gk2.json`), and the page embeds a compact copy as `techs`. In `--inject` mode it is embedded only when given explicitly |
+| `--techs PATH.json` | `data/techs.json` when present, in src mode or with the default `--items`/`--recipes` | technology tree (`scripts/build_techs.py`, see `data/README-techs.md`): recipe `tech` names of type technology follow it (also in `gk2.json`), and the page embeds a compact copy as `techs` |
 | `--no-techs` | | ignore `data/techs.json` (cannot be combined with `--techs`) |
-| `--days PATH.json` | `data/days.json` when present, in src mode or with the default `--items`/`--recipes` | the 6-day week (`scripts/build_days.py`, see `data/README-days.md`), embedded in the page as `days` (see below). Absent file = no `days` block, no error; a malformed one is exit 2. In `--inject` mode it is embedded only when given explicitly |
+| `--days PATH.json` | `data/days.json` when present, in src mode or with the default `--items`/`--recipes` | the 6-day week (`scripts/build_days.py`, see `data/README-days.md`), embedded in the page as `days` (see below). Absent file = no `days` block, no error; a malformed one is exit 2 |
 | `--no-days` | | ignore `data/days.json` (cannot be combined with `--days`) |
-| `--artifact` | | with `--inject … --out PATH`: Claude Artifact page (see below) + `preview.html` next to it |
 | `--quiet` | | no stdout summary. Errors still go to stderr |
 
-**Exit codes:** `0` ok (warnings allowed), `1` hard validation errors, `2` usage or IO error (missing input, page
-without a data block or with more than one, a broken `src/` manifest or template, a source file containing
+**Exit codes:** `0` ok (warnings allowed), `1` hard validation errors, `2` usage or IO error (missing input, a
+template without one data block, a broken `src/` manifest or template, a source file containing
 `</script` / `</style`, a malformed `VERSION` or `data/changelog.json`).
 
-With hard errors, `gk2.json` and `gk2.min.json` are **not** written (the previous good build is kept) and nothing is
-injected. Both reports are always written.
+With hard errors, `gk2.json` and the pages are **not** written (the previous good build is kept). Both reports are
+always written.
 
-**Idempotent:** a file is rewritten only when its bytes change, so a second run with the same inputs on the same
-day touches nothing and prints `wrote nothing (all outputs up to date)`. The `.bak` copy is made only when the page
-actually changes. Output order is deterministic: items and stations are sorted by id, and recipes keep their input
+**Idempotent:** a file is rewritten only when its bytes change, and `meta.built` defaults to the last release's
+date, so a second run with the same inputs (any day) touches nothing and prints `wrote nothing (all outputs up to
+date)`. Output order is deterministic: items and stations are sorted by id, and recipes keep their input
 order.
 
 **Injection safety:** in the embedded JSON every `<` becomes `<` (and U+2028/2029 are escaped too). The JSON
@@ -88,8 +83,7 @@ stays valid and no `</script>` or `<!--` can end the block. Read it with
 **Where the data block sits:** after the markup (after `</footer>` and the toast) and before the modules. The
 shell then paints from the first ~75 KB of the page instead of after the ~1.75 MB of data (UX review #9: `<header`
 moved from byte 1,816,040 to ~73,000 of `dist/preview.html`); the modules still run after the block is parsed, so
-`GK.data.load()` finds it at boot. The build finds the tag by its id wherever it is (both `<!-- @data -->` in src
-mode and `--inject`), so moving it needs no build change. `#boot-msg` ("Carregando o Companheiro… · Loading…",
+`GK.data.load()` finds it at boot. The build finds the tag by its id wherever it is, so moving it needs no build change. `#boot-msg` ("Carregando o Companheiro… · Loading…",
 static and bilingual because no module has run yet) shows while the page downloads; `app.js` removes it at boot.
 
 ## The page sources (`src/`)
@@ -105,8 +99,8 @@ src/
   js/core.js           window.GK + GK.app.registerPanel (keep FIRST)
   js/util.js i18n.js data.js store.js calc.js router.js theme.js sync.js
   js/tech.js           GK.tech: pure functions over the technology tree (prerequisites, missing techs, costs)
-  js/ui/fmt.js header.js search.js goals.js summary.js checklist.js soon.js (generic placeholder) changelog.js
-       footer.js toast.js
+  js/ui/fmt.js header.js search.js goals.js summary.js checklist.js changelog.js credits.js footer.js qr.js
+       toast.js
   js/ui/recipes.js     the Receitas screen (#recipes): browse, filters, item detail, "Usado em", add to goals
   js/ui/tech.js        the Tecnologias screen (#tech);  js/ui/techneeds.js  planner panel "Tecnologias que faltam"
   js/ui/days.js        the Dias screen (#days: week wheel, day card, week table); js/ui/today.js  planner panel "Hoje"
@@ -145,9 +139,7 @@ GK.app.registerPanel(GK.ui.recipes, { id: "recipes", panel: "recipes", order: 80
 GK.app.registerPanel(GK.ui.techNeeds, { id: "tech-needs", slot: "planner-extra", order: 80 });
 ```
 
-Registering a route id that already exists replaces it. A tab can start as a placeholder
-(`GK.router.register({ id, labelKey, screen: "soon", soon: true })`, rendered by `ui/soon.js`) and later be taken
-over by its real screen; Receitas and Tecnologias did this in 1.2.0, and no placeholder is registered now.
+Registering a route id that already exists replaces it.
 Hash routes are bare tokens (`#recipes`), the only form the Artifact viewer passes through.
 
 ## Version and update history
@@ -266,21 +258,22 @@ quality grades `"<Base> (bronze|silver|gold|silver or gold)"` → `"<pt Base> (b
 **Game keys:** when a names entry has `gameKey` (the official file has it for every entry), items get it as an
 optional `key` field.
 
-## Page payload (what `--inject` embeds)
+## Page payload (what the page embeds)
 
-`gk2.min.json` stays the full schema. The embedded copy is smaller: `{pt, en}` objects whose texts are identical become
+`gk2.json` stays the full schema. The embedded copy is smaller: `{pt, en}` objects whose texts are identical become
 one string (obtain texts, notes, zones, categories…), `items[].id` is dropped (it is the key), and
-`meta.collapsed: true` is set. With `--sprite`, `meta.sprite` = `{image, size, cols, rows, icons: {id: [col, row]}}`
+`meta.collapsed: true` is set. With a sprite (`data/sprite.json` or `--sprite`), `meta.sprite` = `{image, size, cols, rows, icons: {id: [col, row]}}`
 (icons limited to known item/station ids plus the `tech:*`, `tp:*` and `branch:*` ids of the technology tree). `meta.version` and `meta.changelog` carry `VERSION` and
 `data/changelog.json` when they exist, and `meta.data` = `{"wiki": "1.010", "game": "1.011"}` the game versions of the
-two sources (`WIKI_GAME_VERSION`; the official names file's `_meta.game_version`, else `GAME_TEXT_VERSION`), shown in
+two sources (the `wiki` field of `data/game-version.json`; the official names file's `_meta.game_version`, else
+`GAME_TEXT_VERSION`), shown in
 the footer (page only: `gk2.json` does not have them). The page's `GK.data` normalizes both forms.
 
-`--artifact` (needs `--out`): Claude Artifacts wrap the page in their own document, so the output has no doctype,
+`dist/index.html`: Claude Artifacts wrap the page in their own document, so it has no doctype,
 `<html>`, `<head>`, `<body>`, charset or viewport meta (removed outside `<script>`/`<style>` only; the page then
 starts with `<title>`), and every remote `icon` URL is set to `null` (the Artifact CSP blocks external images:
 icons come from the sprite, else a letter tile). `preview.html` (same content inside a minimal skeleton) is written
-next to it for local viewing. The source page keeps its skeleton.
+next to it for local viewing. `prototype/index.html` keeps the skeleton.
 
 ### `techs` (the technology tree, page only)
 
@@ -370,7 +363,7 @@ The code needs no other change. To make `--lang es=…` the default, add it to `
 
 ## Fixtures
 
-`scripts/fixtures/` holds 16 items, 13 recipes, two names layers and `page.html`. They cover:
+`scripts/fixtures/` holds 16 items, 13 recipes and two names layers. They cover:
 
 - a dangling ref (`glue`)
 - a 3-item cycle (beet → seed → beet, beet → fertilizer → beet)
@@ -385,6 +378,6 @@ The code needs no other change. To make `--lang es=…` the default, add it to `
 
 The technology tests (`TechsBuild`, `RealTechs` in `test_build.py`) use a 3-tech tree written inline (`FIX_TECHS`:
 a given root, a hidden child with a reputation gate, a second branch). They cover `apply_tech_names`, the compact
-`techs` payload, the sprite filter, `--techs` / `--no-techs` in src and inject mode, `GK.tech` itself (run in
+`techs` payload, the sprite filter, `--techs` / `--no-techs` in src mode, `GK.tech` itself (run in
 node with a stub `GK.data`, skipped without node) and, on the real data, the payload size (< 250 kB) and the
 recipe names in `gk2.json`.

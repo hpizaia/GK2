@@ -31,7 +31,6 @@
     "js/ui/goals.js",
     "js/ui/summary.js",
     "js/ui/checklist.js",
-    "js/ui/soon.js",
     "js/ui/recipes.js",
     "js/ui/tech.js",
     "js/ui/techneeds.js",

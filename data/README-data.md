@@ -16,6 +16,8 @@ Built by `scripts/build_dataset.py` from cached API responses in `data/raw/`.
 | `raw/api-<dataset>-all.json` | concatenated rows per dataset |
 | `raw/calculator-props.json` | props of the crafting-calculator React island (the calculator's own one-recipe-per-item graph) |
 
+`gk2.min.json` was removed on 2026-11-01 (only the tests read it): the merged dataset is `gk2.json`.
+
 (`raw/l10n/` was not created by this extraction. It belongs to a separate localisation task.)
 
 ## Record counts
@@ -166,8 +168,8 @@ https://wikily.gg/api/wikis/graveyard-keeper-2/datasets/alchemy-formulas/list?..
 
 ## Quality grades (bronze, silver, gold)
 
-Rule since 1.9 (`scripts/build_dataset.py`, `graded_ref()` and sections 5-6; the research is in
-`docs/revisao-ux/qualidade-pesquisa.md`, the inventory in `docs/revisao-ux/qualidade-auditoria.md`):
+Rule since 1.9 (`scripts/build_dataset.py`, `graded_ref()` and sections 5-6; the research and the inventory
+are internal reports):
 
 - **The grade is kept.** The wiki writes a graded reference as "Wine (silver)" but points it to the plain item page
   (`wine`). A reference "<X> (bronze)" resolves to the plain item: **the plain item is the bronze grade** (`wine`,

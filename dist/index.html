@@ -166,7 +166,6 @@ a { color: var(--accent); }
 .tab:hover { color: var(--ink); }
 .tab[aria-current="page"]:hover { color: var(--accent); }
 .tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
-.tab .soon { font-size: .625rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); border: 1px solid var(--seam); padding: 1px 4px; border-radius: 2px; }
 .tabs-desk { display: none; }
 /* phones: the bar that stays on screen (44 px tabs + 1 px trim); its height feeds --hdr-h (app.js) */
 .tabs-mob-band {
@@ -349,7 +348,6 @@ a { color: var(--accent); }
    height through padding that does not change the line (negative margins), nothing else is clickable around it */
 .foot-links { display: flex; flex-wrap: wrap; gap: 0 var(--s4); margin: var(--s1) 0 0 calc(var(--s2) * -1); }
 .foot-links a { display: inline-flex; align-items: center; min-height: var(--tap); padding: 0 var(--s2); font-weight: 700; font-size: .875rem; }
-.foot-data a { display: inline-block; padding-block: 14px; margin-block: -14px; }
 
 /* ==== src/css/planner.css ==== */
 /* planner.css: the planner screen: layout, goals, progress, raw/step rows, station cards, the planner-extra slot.
@@ -661,18 +659,12 @@ footer.foot .foot-stale-note { margin: var(--s1) 0 0; max-width: 60ch; color: va
 .cr-qr-url { margin: 0; color: var(--ink-3); font-size: .75rem; overflow-wrap: anywhere; }
 
 /* ==== src/css/screens.css ==== */
-/* screens.css: secondary screens (soon placeholder, update history, credits), footer, sync chip, toast (+ the undo toast).
+/* screens.css: secondary screens (update history, credits), footer, sync chip, toast (+ the undo toast).
    1.6.0: the older versions of the update history fold into one 44 px row each (.cl-old, .cl-toggle). */
-/* soon screen + footer + toast */
-.soon-screen { padding-block: var(--s6); }
-.soon-card { padding: var(--s5); max-width: 560px; }
-.soon-card h2 { margin: 0 0 var(--s2); font: 700 1.75rem/1.1 var(--f-display); }
-.soon-card p { color: var(--ink-2); margin: 0 0 var(--s4); }
+/* footer + toast */
 .foot { padding-block: var(--s5) var(--s6); font-size: .8125rem; color: var(--ink-3); border-top: 1px solid var(--seam); }
 .foot p { margin: 0 0 4px; }
-.foot .sync-line { margin-bottom: var(--s3); }
 /* "Letra grande" switch (ui/footer.js): the first line of the footer, a 44 px pressed-state button */
-.foot .foot-ctl { margin: 0 0 var(--s3); }
 .big-toggle { gap: var(--s2); font-size: .875rem; }
 .big-aa { font: 800 1.15em/1 var(--f-body); letter-spacing: 0; }
 .foot .foot-version { margin-top: var(--s3); color: var(--ink-2); }
@@ -1666,7 +1658,6 @@ button.days-item:hover { border-color: var(--accent); }
       <section data-slot="planner-extra" id="planner-extra"></section>
     </div>
   </section>
-  <section class="wrap soon-screen" data-screen="soon" hidden data-panel="soon"></section>
   <!-- other screens (e.g. #changelog) get their <section data-screen> from GK.router.ensureScreens() -->
 </main>
 
@@ -1843,7 +1834,7 @@ GK.i18n = (function () {
    Owns: items, stations, recipes and their indexes (byOut, usedIn, search index); meta (built, version,
    changelog, sprite); the perk list parsed from recipe notes (D.perks); the payload's technology tree block as
    D.techs (raw; GK.tech normalizes it).
-   Exposes: GK.data.{load, get, item, recipe, recipesFor, hasRecipe, norm, words, parseBonus, perks} (+ the grade helpers below).
+   Exposes: GK.data.{load, get, item, recipe, recipesFor, norm, words, parseBonus, perks} (+ the grade helpers below).
    Load-time enrichments (no build change needed):
    - bonus: input / by-product / output notes shaped "N (M with X)", "N, or M with X", "+N each with X" or
      "M with X" become line.bonus = {perk: "X" (en), perks: [perkId], qty: M | null, add: N | null}; the perk
@@ -1853,9 +1844,6 @@ GK.i18n = (function () {
      input ("Cabbage soup from Cabbage (gold)"); never read from the id alone (Bronze Polido has none).
    - grades kept by the build (1.9, docs/revisao-ux/consertos.md "Qualidade"): "Wine (silver)" is the item wine-silver
      (base: wine) in the payload; the plain item is the bronze one. gradeMoves() moves a plan saved before that.
-   - quality inputs (AUDITORIA C2/D1): a "<X> from <Y> (silver|gold)" recipe whose output is not itself a quality
-     variant consumes the graded <Y>, not the plain one: the input is pointed to "<y>-<grade>" (the real variant
-     item, or a synthetic one: kind quality-variant, raw, synthetic: true, base: <y>, the base's icon).
    - grades (1.8.0, receitas agrupadas): item.grade = "bronze" | "silver" | "gold" on a quality variant (its id ends in
      -bronze / -silver / -gold); line.grade on the input a "<X> from <Y> (grade)" recipe names, also where the item stays
      the plain one (bronze: the common <Y> is the bronze one; a circular recipe: the input is the output itself). Shown
@@ -1871,7 +1859,6 @@ GK.data = (function () {
     meta: {}, items: {}, stations: {}, recipes: [], recipeById: {}, byOut: {}, usedIn: {},
     index: [], visibleCount: 0, perks: {}, techs: null, days: null,
   };
-  const GRADES = { bronze: { pt: "bronze", en: "bronze" }, silver: { pt: "prata", en: "silver" }, gold: { pt: "ouro", en: "gold" } };
   const HIDDEN_KINDS = { virtual: 1, action: 1 };
   let LANGS = ["pt", "en"];
   // {pt, en} | "same text" | null  ->  {pt, en, …} | null
@@ -1960,17 +1947,13 @@ GK.data = (function () {
   // the Barrel with silver Grape Juice, and from "Wine (bronze) + Spices"); else the grade its name gives the input it
   // changes ("Cabbage soup from Cabbage (gold)"). Never from the id alone: "polished-bronze" is not a grade.
   const gradeOf = (r) => {
-    const st = r.star_quality || r.star;
-    if (typeof st === "string" && GRADES[st.toLowerCase()]) return st.toLowerCase();
     const out = D.items[r.out.item];
     if (out && out.grade) return out.grade;
     const m = r.name && /\((bronze|silver|gold)\)\s*$/i.exec(r.name.en || "");
     return m ? m[1].toLowerCase() : null;
   };
-  // "<X> from <Y> (bronze|silver|gold)": mark the <Y> input with the grade; silver and gold point the plain <Y> to its
-  // graded variant (see the header). Bronze keeps the plain item (the common one is the bronze one), and so does a
-  // circular recipe (its input is the output itself): there the grade is only shown (line.grade).
-  function qualityInputs(spriteIcons) {
+  // "<X> from <Y> (bronze|silver|gold)": mark the <Y> input with the grade (line.grade, shown only)
+  function qualityInputs() {
     for (const r of D.recipes) {
       if (!r.name) continue;
       const m = /^.+? from (.+?) \((bronze|silver|gold)\)\s*$/i.exec(r.name.en || "");
@@ -1981,25 +1964,8 @@ GK.data = (function () {
       const base = D.items[line.item];
       if (base.kind === "quality-variant" || base.members) continue;
       // since 1.9 the build keeps the grade (silver / gold inputs are their own items): what is left here is the plain
-      // item read as bronze ("Wine (bronze)" in "Drink enhancement I", "Cabbage (bronze)" in a soup); the rest is for
-      // an older payload whose silver / gold input still names the plain item
+      // item read as bronze ("Wine (bronze)" in "Drink enhancement I", "Cabbage (bronze)" in a soup)
       line.grade = grade;
-      const out = D.items[r.out.item];
-      if (grade === "bronze" || line.item === r.out.item || (out && out.kind === "quality-variant")) continue;
-      const vid = base.id + "-" + grade;
-      if (!D.items[vid]) {
-        const g = GRADES[grade], o = {};
-        LANGS.forEach((l) => { o[l] = `${base[l] || base.en} (${g[l] || g.en})`; });
-        D.items[vid] = normItem(vid, Object.assign(o, {
-          tr: base.tr, cat: base.cat, icon: base.icon, kind: "quality-variant", raw: true, recipes: [], defaultRecipe: null,
-          obtain: { pt: `${base.pt} com qualidade ${g.pt} (colheita ou fabricação com estrelas).`, en: `${base.en} of ${g.en} quality (star harvest or star craft).` },
-        }));
-        D.items[vid].synthetic = true;
-        D.items[vid].base = base.id;
-        if (spriteIcons && spriteIcons[base.id] && !spriteIcons[vid]) spriteIcons[vid] = spriteIcons[base.id];
-      }
-      line.baseItem = base.id;
-      line.item = vid;
     }
   }
   // ---- grades: bronze, silver, gold (see the header) ------------------------------------------------
@@ -2192,7 +2158,7 @@ GK.data = (function () {
       if (nr && !D.recipeById[nr.id]) { D.recipes.push(nr); D.recipeById[nr.id] = nr; }
     });
     const icons = D.meta.sprite && D.meta.sprite.icons;
-    qualityInputs(icons);
+    qualityInputs();
     for (const it of Object.values(D.items)) {
       const m = it.kind === "quality-variant" && GRADE_SUFFIX.exec(it.id);
       if (!m) continue;
@@ -2241,7 +2207,6 @@ GK.data = (function () {
     item: (id) => D.items[id],
     recipe: (id) => D.recipeById[id],
     recipesFor: (id) => D.byOut[id] || [],
-    hasRecipe: (id) => !!(D.byOut[id] && D.byOut[id].length),
   };
 })();
 
@@ -3656,10 +3621,10 @@ GK.router = (function () {
   let current = "plan";
   const subs = [];
   const DEFAULT = "plan";
-  // {id, labelKey, screen = id, order = 100, tab = true, soon = false}; same id again = replace
+  // {id, labelKey, screen = id, order = 100, tab = true}; same id again = replace
   function register(r) {
     if (!r || !r.id) throw new Error("GK.router.register: id is required");
-    const route = Object.assign({ screen: r.id, order: 100, tab: true, soon: false }, r);
+    const route = Object.assign({ screen: r.id, order: 100, tab: true }, r);
     const i = TABS.findIndex((t) => t.id === route.id);
     if (i >= 0) TABS.splice(i, 1);
     TABS.push(route);
@@ -4314,7 +4279,6 @@ GK.i18n.add({
     "theme.darkTitle": "Tema escuro (noite)",
     "theme.cycle": "Tema: {mode}. Tocar para mudar para {next}",
     "tabs.label": "Telas",
-    "tab.soon": "em breve",
   },
   en: {
     "app.title": "GK2 <b>Companion</b>",
@@ -4331,7 +4295,6 @@ GK.i18n.add({
     "theme.darkTitle": "Dark theme (night)",
     "theme.cycle": "Theme: {mode}. Tap to switch to {next}",
     "tabs.label": "Screens",
-    "tab.soon": "soon",
   },
 });
 
@@ -4387,7 +4350,7 @@ GK.ui.header = (function () {
     document.getElementById("brand").setAttribute("aria-label", t("app.titlePlain"));
     document.title = t("app.titlePlain");
     const tabs = GK.router.tabs().map((tb) =>
-      `<a class="tab" href="#${tb.id}"${tb.id === cur ? ' aria-current="page"' : ""}>${esc(t(tb.labelKey))}${tb.soon ? ` <span class="soon">${esc(t("tab.soon"))}</span>` : ""}</a>`
+      `<a class="tab" href="#${tb.id}"${tb.id === cur ? ' aria-current="page"' : ""}>${esc(t(tb.labelKey))}</a>`
     ).join("");
     document.querySelectorAll('[data-slot="tabs"]').forEach((n) => { n.innerHTML = tabs; n.setAttribute("aria-label", t("tabs.label")); });
     const langEl = document.querySelector('[data-slot="lang"]');
@@ -5534,44 +5497,6 @@ GK.ui.checklist = (function () {
 
 GK.app.registerPanel(GK.ui.checklist, { id: "checklist", panel: "checklist", order: 40 });
 
-/* ==== src/js/ui/soon.js ==== */
-/* GK.ui.soon: generic placeholder screen for a tab that is not built yet. No placeholder is registered right now
-   (Receitas and Tecnologias have their own screens since 1.2.0); the module stays so a future tab can start as
-   one line:
-     GK.router.register({ id: "<id>", labelKey: "<key>", screen: "soon", soon: true, order: 40 })
-   and later take its id over with a real screen (see scripts/README-build.md, "Adding a module").
-   Owns: [data-panel="soon"] (the <section data-screen="soon"> of src/index.html).
-   Exposes: GK.ui.soon.{mount, render}; registered as a panel.
-*/
-GK.i18n.add({
-  pt: {
-    "soon.title": "{tab}: em breve",
-    "soon.body": "Esta tela ainda está sendo construída. Por enquanto, use o Planejador.",
-    "soon.back": "Voltar ao Planejador",
-  },
-  en: {
-    "soon.title": "{tab}: coming soon",
-    "soon.body": "This screen is still being built. For now, use the Planner.",
-    "soon.back": "Back to the Planner",
-  },
-});
-
-GK.ui.soon = (function () {
-  const { t } = GK.i18n, { esc } = GK.util;
-  let root;
-  return {
-    mount(el) { root = el; },
-    render() {
-      if (!root) return;
-      const tb = GK.router.tab(GK.router.current());
-      if (!tb.soon) { if (root.innerHTML) root.innerHTML = ""; return; }
-      root.innerHTML = `<div class="card soon-card"><h2>${esc(t("soon.title", { tab: t(tb.labelKey) }))}</h2><p>${esc(t("soon.body"))}</p><a class="btn" href="#plan">${esc(t("soon.back"))}</a></div>`;
-    },
-  };
-})();
-
-GK.app.registerPanel(GK.ui.soon, { id: "soon", panel: "soon", order: 60 });
-
 /* ==== src/js/ui/recipes.js ==== */
 /* GK.ui.recipes: the Receitas screen (#recipes). Browse every item (own search box, category and station
    chips with counts, hidden-items toggle, 60 rows per page) and an item detail (recipes with inputs, unlock,
@@ -5631,7 +5556,6 @@ GK.i18n.add({
     "rc.more": "Mostrar mais ({n} restantes)",
     "rc.hiddenShow": "Mostrando itens ocultos",
     "rc.hiddenMore": "Mostrar itens ocultos (+{n})",
-    "rc.hiddenNone": "Mostrar itens ocultos",
     "rc.recipes.one": "{n} receita",
     "rc.recipes.other": "{n} receitas",
     "rc.raw": "Coleta ou compra",
@@ -5749,7 +5673,6 @@ GK.i18n.add({
     "rc.more": "Show more ({n} left)",
     "rc.hiddenShow": "Showing hidden items",
     "rc.hiddenMore": "Show hidden items (+{n})",
-    "rc.hiddenNone": "Show hidden items",
     "rc.recipes.one": "{n} recipe",
     "rc.recipes.other": "{n} recipes",
     "rc.raw": "Gather or buy",
@@ -7617,8 +7540,8 @@ GK.app.registerPanel(GK.ui.techneeds, { id: "tech-needs", slot: "planner-extra",
    Each medallion on the wheel carries its short name ("Gula", "Ira"), so two similar reds never depend on colour
    alone. Under its header the day card holds that
    weekday's "Bilhete do dia" (one short note, GK.store dayNotes; noteBox below, shared with ui/today.js).
-   Data: the payload's `days` block (data/days.json, embedded by scripts/build.py). GK.data does not keep that block
-   itself, so this module wraps GK.data.load once to keep it as GK.data.get().days (no-op if data.js ever does).
+   Data: the payload's `days` block (data/days.json, embedded by scripts/build.py), kept by GK.data.load as
+   GK.data.get().days.
    Owns: [data-panel="days"] (section created by GK.router.ensureScreens), the route "days" and its tab "tab.days",
    the shared week helpers below. State: GK.store day / dayNumber / dayAnchor / dayNotes (setDay, setDayNumber,
    advanceDay, clearAnchor, setDayNote).
@@ -7755,17 +7678,6 @@ GK.i18n.add({
     "days.note.cleared": "Note removed: {name}",
   },
 });
-
-// keep the payload's `days` block on GK.data.get().days (GK.data.load drops unknown top-level blocks)
-(function () {
-  const load = GK.data.load;
-  GK.data.load = function (json) {
-    const j = json || JSON.parse(document.getElementById("gk2-data").textContent || "{}");
-    const D = load(j);
-    if (D) D.days = j.days || (j.meta && j.meta.days) || null;
-    return D;
-  };
-})();
 
 GK.ui.days = (function () {
   const { t, name, num } = GK.i18n, { esc } = GK.util;

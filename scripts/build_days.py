@@ -470,16 +470,28 @@ def validate(doc: dict) -> None:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--check", action="store_true", help="build and validate only")
-    ap.add_argument("--date", default=_dt.date.today().isoformat(), help="value for meta.built")
+    ap.add_argument("--date", help="value for meta.built (default: today, but data/days.json keeps its date when "
+                                   "nothing else changed)")
     args = ap.parse_args(argv)
-    doc = build(args.date)
+    doc = build(args.date or _dt.date.today().isoformat())
+    if not args.date:   # same week as on disk: keep its meta.built (it goes into the page; a rerun writes nothing)
+        try:
+            old = json.loads(OUT.read_text(encoding="utf-8"))
+            if dict(old, meta=dict(old["meta"], built=doc["meta"]["built"])) == doc:
+                doc = old
+        except (OSError, ValueError, KeyError, TypeError):
+            pass
     validate(doc)
     n_ev = sum(len(d["events"]) for d in doc["days"])
     n_m = sum(len(d["mentions"]) for d in doc["days"])
     if args.check:
         print(f"ok: 6 days, {n_ev} events, {n_m} mentions (nothing written)")
         return 0
-    OUT.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    text = json.dumps(doc, ensure_ascii=False, indent=1) + "\n"
+    if OUT.exists() and OUT.read_text(encoding="utf-8") == text:
+        print(f"{OUT.relative_to(ROOT)} up to date: 6 days, {n_ev} events, {n_m} mentions (nothing written)")
+        return 0
+    OUT.write_text(text, encoding="utf-8")
     print(f"wrote {OUT.relative_to(ROOT)}: 6 days, {n_ev} events, {n_m} mentions")
     return 0
 

@@ -127,4 +127,3 @@
    height through padding that does not change the line (negative margins), nothing else is clickable around it */
 .foot-links { display: flex; flex-wrap: wrap; gap: 0 var(--s4); margin: var(--s1) 0 0 calc(var(--s2) * -1); }
 .foot-links a { display: inline-flex; align-items: center; min-height: var(--tap); padding: 0 var(--s2); font-weight: 700; font-size: .875rem; }
-.foot-data a { display: inline-block; padding-block: 14px; margin-block: -14px; }

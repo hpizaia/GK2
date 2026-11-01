@@ -1,15 +1,9 @@
-/* screens.css: secondary screens (soon placeholder, update history, credits), footer, sync chip, toast (+ the undo toast).
+/* screens.css: secondary screens (update history, credits), footer, sync chip, toast (+ the undo toast).
    1.6.0: the older versions of the update history fold into one 44 px row each (.cl-old, .cl-toggle). */
-/* soon screen + footer + toast */
-.soon-screen { padding-block: var(--s6); }
-.soon-card { padding: var(--s5); max-width: 560px; }
-.soon-card h2 { margin: 0 0 var(--s2); font: 700 1.75rem/1.1 var(--f-display); }
-.soon-card p { color: var(--ink-2); margin: 0 0 var(--s4); }
+/* footer + toast */
 .foot { padding-block: var(--s5) var(--s6); font-size: .8125rem; color: var(--ink-3); border-top: 1px solid var(--seam); }
 .foot p { margin: 0 0 4px; }
-.foot .sync-line { margin-bottom: var(--s3); }
 /* "Letra grande" switch (ui/footer.js): the first line of the footer, a 44 px pressed-state button */
-.foot .foot-ctl { margin: 0 0 var(--s3); }
 .big-toggle { gap: var(--s2); font-size: .875rem; }
 .big-aa { font: 800 1.15em/1 var(--f-body); letter-spacing: 0; }
 .foot .foot-version { margin-top: var(--s3); color: var(--ink-2); }

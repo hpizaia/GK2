@@ -17,18 +17,20 @@ Um documento por linha, com o que ele responde. Os documentos de `docs/` são em
 
 | pasta | o que tem | git |
 |---|---|---|
-| [`projeto/`](projeto/) | Documentos de projeto: [`SPEC.md`](projeto/SPEC.md) (especificação), [`DESIGN.md`](projeto/DESIGN.md) (design visual e de interface), [`BACKLOG.md`](projeto/BACKLOG.md) (pendências), [`AUDITORIA.md`](projeto/AUDITORIA.md) (auditoria da v1.1, histórica). O plano da interface no estilo do jogo (`PLANO-UI-JOGO.md`) entra aqui quando ficar pronto | sim |
+| [`projeto/`](projeto/) | Documentos de projeto: [`SPEC.md`](projeto/SPEC.md) (especificação), [`DESIGN.md`](projeto/DESIGN.md) (design visual e de interface), [`BACKLOG.md`](projeto/BACKLOG.md) (pendências), [`AUDITORIA.md`](projeto/AUDITORIA.md) (auditoria da v1.1, histórica), [`PLANO-UI-JOGO.md`](projeto/PLANO-UI-JOGO.md) (sinais do jogo na interface, em espera). O status do projeto fica na seção "Onde estamos" do `BACKLOG.md` | sim |
 | [`media/`](media/) | Imagens e GIFs dos READMEs e do guia de uso. O que é cada arquivo e onde é usado: [`media/README.md`](media/README.md) | sim |
-| `revisao-ux/` | Relatórios internos e capturas da revisão de UX de 31/10/2026. Interno: fica só no disco local | não (está no `.gitignore`) |
+| `revisao-ux/` | Relatórios internos (revisões, QA, pesquisas) e capturas. Interno: fica só no disco local | não (está no `.gitignore`) |
 
 ## Documentos em outras pastas
 
 | arquivo | o que tem |
 |---|---|
 | [`../README.md`](../README.md), [`../README.pt-BR.md`](../README.pt-BR.md) | Apresentação do projeto no GitHub (inglês e português) |
+| [`../CLAUDE.md`](../CLAUDE.md) | Regras e comandos para o Claude Code neste projeto (testes, release, armadilhas, decisões que não se reabrem) |
 | [`../CONTRIBUTING.md`](../CONTRIBUTING.md) | Como relatar nome, evento do dia, receita ou bug, e as regras para quem manda código |
 | [`../CHANGELOG.md`](../CHANGELOG.md) | Histórico de versões. **Gerado** pelo `build.py` a partir de `data/changelog.json`: não edite à mão |
-| [`../scripts/README.md`](../scripts/README.md) | Tabela de todos os scripts: o que fazem, quando rodar, entradas e saídas |
+| [`../scripts/README.md`](../scripts/README.md) | Tabela de todos os scripts: o que fazem, quando rodar, entradas e saídas. Inclui `check.py` (testes e conferências num comando só) e `release.py` (fechar uma versão) |
+| [`../scripts/shots/README.md`](../scripts/shots/README.md) | Capturas de tela e comparação do app antes/depois, pixel a pixel |
 | [`../scripts/README-build.md`](../scripts/README-build.md) | Referência técnica do `build.py` (inglês): opções, schema do `gk2.json`, contrato dos módulos de `src/`, validação |
 | [`../data/README-data.md`](../data/README-data.md) | Dataset de receitas e itens do wikily (inglês): arquivos, contagens, schema, `facts.json`, lacunas |
 | [`../data/README-l10n.md`](../data/README-l10n.md) | Pesquisa das fontes de nomes pt-BR e a camada `names.pt-BR.json` (inglês) |

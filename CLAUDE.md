@@ -35,7 +35,7 @@ Se existir `CLAUDE.local.md` (privado, fora do git), leia também.
 ```sh
 python3 -I scripts/check.py            # testes + build reprodutível + versões; tem que passar antes de entregar
 python3 -I scripts/check.py --release  # versão mais rígida, antes de publicar
-python3 -I scripts/build.py --built AAAA-MM-DD   # build do dia a dia (data: ver "meta.built" abaixo)
+python3 -I scripts/build.py                      # build do dia a dia (usa a data da última release; ver "meta.built")
 python3 -I scripts/test_build.py && python3 -I scripts/test_techs.py && node scripts/test_calc.mjs
 python3 -I scripts/shots/compare.py    # depois do build: o app de HEAD × o atual, pixel a pixel (~30 s); antes de refatorar
 ```
@@ -71,9 +71,9 @@ Patch do jogo ou wiki atualizada: `docs/atualizacao.md`.
 
 ## Armadilhas conhecidas
 
-- **meta.built:** sem `--built`, o build grava a data de hoje e vários arquivos gerados mudam só por isso.
-  No dia a dia use a data do topo de `data/changelog.json` (a da última release). Se um build mudou só
-  a data, `git diff --stat` mostra; desfaça com `git checkout -- <arquivo>`. `--release` é que data a versão.
+- **meta.built:** sem `--built`, o build usa a data da última release de `data/changelog.json`; rodar noutro
+  dia não muda nenhum arquivo. Só o `--release` usa a data de hoje (é ele que data a versão). `build_days.py` e
+  `build_techs.py` mantêm a data do arquivo quando nada mais mudou.
 - wikily: a API só devolve português com `locale=pt-br` (minúsculo); `pt-BR` volta em inglês.
 - Um teste exige que o erro de digitação "Trigorigo" não exista no app: não escreva essa forma no changelog.
 - Republicar o app: nunca passe `capabilities`. Republicar artifact de outra sessão: o tool exige ler a

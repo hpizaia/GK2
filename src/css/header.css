@@ -57,7 +57,6 @@
 .tab:hover { color: var(--ink); }
 .tab[aria-current="page"]:hover { color: var(--accent); }
 .tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
-.tab .soon { font-size: .625rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); border: 1px solid var(--seam); padding: 1px 4px; border-radius: 2px; }
 .tabs-desk { display: none; }
 /* phones: the bar that stays on screen (44 px tabs + 1 px trim); its height feeds --hdr-h (app.js) */
 .tabs-mob-band {

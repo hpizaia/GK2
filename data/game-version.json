@@ -1,5 +1,6 @@
 {
-  "_comment": "Latest Graveyard Keeper 2 version out there (scripts/build.py embeds it as meta.gameVersion). When latest is newer than the wiki recipes (meta.data.wiki), the footer and a dismissible band under the tabs say the data may be out of date (src/js/ui/footer.js).",
+  "_comment": "latest: the newest Graveyard Keeper 2 version out there (scripts/build.py embeds it as meta.gameVersion). wiki: the game version the wiki recipes describe (embedded as meta.data.wiki; the footer shows it). When latest is newer than wiki, the footer says the data may be out of date (src/js/ui/footer.js).",
+  "wiki": "1.010",
   "latest": "1.011",
   "date": "2026-10-30",
   "note": {

@@ -12,8 +12,7 @@ outra coisa: as regras de lá valem para você. Responda em português do Brasil
 - O que a tarefa pediu, com as mudanças na árvore de trabalho (sem commit), e um relatório curto:
   o que mudou (arquivo:linha), como conferiu (comandos e resultado), o que ficou em aberto.
 - Antes de entregar qualquer mudança em `src/`, `data/` ou `scripts/`: rode `python3 -I scripts/check.py`
-  e diga o resultado. Build avulso só com `--built` (data do topo de `data/changelog.json`), nunca
-  `--release`.
+  e diga o resultado. Build avulso: `python3 -I scripts/build.py`, nunca `--release`.
 - Mudança visual: só se a tarefa disser que o protótipo já foi aprovado. Senão, entregue um protótipo
   (no seu scratchpad ou em `docs/revisao-ux/protos/<assunto>/`) e pare.
 - Capturas e arquivos temporários: no seu scratchpad ou em `docs/revisao-ux/` (interno).

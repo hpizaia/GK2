@@ -4,15 +4,13 @@
 Reads   data/items.en.json, data/recipes.en.json and the translation layers
         (data/names.official.pt-BR.json, data/names.recipes.pt-BR.json, data/names.wiki.pt-BR.json,
         data/names.pt-BR.json, data/names.machine.pt-BR.json; all optional),
-writes  data/gk2.json, data/gk2.min.json, data/report-l10n.md, data/report-build.md
-and builds the page:
-  - default (src/manifest.json exists, no --inject): assembles src/index.html + src/css/* + src/js/* in
-    manifest order, embeds the data and writes prototype/index.html (dev, with the document skeleton),
-    dist/index.html (Claude Artifact, no skeleton) and dist/preview.html;
-  - --inject PAGE (legacy): embeds the minified JSON into <script id="gk2-data" type="application/json">
-    of an existing page.
-Both embed VERSION and data/changelog.json as meta.version / meta.changelog, and CHANGELOG.md is
-regenerated from data/changelog.json on every build (--release dates an unreleased top entry).
+writes  data/gk2.json, data/report-l10n.md, data/report-build.md
+and builds the page (unless --no-src): assembles src/index.html + src/css/* + src/js/* in manifest order, embeds
+the data and writes prototype/index.html (dev, with the document skeleton), dist/index.html (Claude Artifact, no
+skeleton) and dist/preview.html. The page embeds VERSION and data/changelog.json as meta.version / meta.changelog,
+and CHANGELOG.md is regenerated from data/changelog.json on every build (--release dates an unreleased top entry).
+meta.built defaults to the date of the last release in data/changelog.json, so a rebuild on another day writes
+nothing; --release uses today.
 
 Python 3 stdlib only. Run with:  python3 -I scripts/build.py [options]
 See scripts/README-build.md for the schema and options.
@@ -25,7 +23,6 @@ import importlib.util
 import json
 import os
 import re
-import shutil
 import sys
 import unicodedata
 from collections import defaultdict
@@ -46,9 +43,8 @@ TIER_RANK = {t: i for i, t in enumerate(TIERS)}
 TYPE_PREF = ("hand_craft", "star_craft", "auto", "factory", "building", "alchemy", "grow")
 TYPE_RANK = {t: i for i, t in enumerate(TYPE_PREF)}
 NOEXP_TYPES = {"grow"}   # recipes whose yield is unknown: kept, but never expanded
-# Game versions of the two sources (see docs/dados.md): the wiki's recipes describe 1.010; the official texts were
-# exported from 1.011 (a names file's `_meta.game_version` wins over GAME_TEXT_VERSION). Page only: meta.data.
-WIKI_GAME_VERSION = "1.010"
+# Game version of the official texts when no names file has `_meta.game_version` (page only: meta.data.game). The
+# wiki recipes' game version is the `wiki` field of data/game-version.json (load_wiki_version()).
 GAME_TEXT_VERSION = "1.011"
 
 
@@ -1196,35 +1192,12 @@ def fill_data(html, payload, where):
     """html with the content of its single <script id="gk2-data" ...> replaced by payload (SystemExit(2) otherwise)."""
     matches = list(SCRIPT_RE.finditer(html))
     if len(matches) != 1:
-        raise SystemExit(_die(f"--inject: expected exactly one <script id=\"gk2-data\"> in {where}, "
+        raise SystemExit(_die(f"--src: expected exactly one <script id=\"gk2-data\"> in {where}, "
                               f"found {len(matches)}"))
     m = matches[0]
     if "application/json" not in m.group(1).lower():
         print(f"build: warning: gk2-data script tag in {where} has no type=\"application/json\"", file=sys.stderr)
     return html[:m.start(3)] + payload + html[m.end(3):]
-
-
-def inject(html_path, out_path, payload, artifact=False):
-    """Replace the content of <script id="gk2-data" ...> with payload. Returns (changed, out_path).
-    artifact=True also strips the document skeleton and writes <out>/preview.html (skeleton re-added)."""
-    src = Path(html_path)
-    try:
-        html = src.read_text(encoding="utf-8")
-    except OSError as e:
-        raise SystemExit(_die(f"--inject: cannot read {src}: {e}"))
-    new = fill_data(html, payload, src)
-    dst = Path(out_path) if out_path else src
-    if artifact:
-        if dst.resolve() == src.resolve():
-            raise SystemExit(_die("--artifact needs --out (the source page keeps its skeleton for local dev)"))
-        new = artifact_page(new)
-        write_if_changed(dst.with_name("preview.html"), preview_page(new))
-    if dst.exists() and dst.read_text(encoding="utf-8") == new:
-        return False, dst
-    if dst.resolve() == src.resolve():
-        shutil.copy2(src, src.with_name(src.name + ".bak"))
-    write_if_changed(dst, new)
-    return True, dst
 
 
 # --------------------------------------------------------------------------- page payload
@@ -1422,8 +1395,9 @@ def techs_payload(doc, ds):
     return {"tp": loc(tp), "branches": branches, "techs": techs}
 
 
-def data_versions(name_paths):
-    """{"wiki": "1.010", "game": "1.011"}: the game version of the wiki data and of the official texts."""
+def data_versions(name_paths, wiki=None):
+    """{"wiki": "1.010", "game": "1.011"}: the game version of the wiki data (`wiki`, from load_wiki_version()) and of
+    the official texts (the first names file with `_meta.game_version`, else GAME_TEXT_VERSION)."""
     game = None
     for p in name_paths:
         try:
@@ -1433,12 +1407,12 @@ def data_versions(name_paths):
         if isinstance(m, dict) and isinstance(m.get("game_version"), str) and m["game_version"].strip():
             game = m["game_version"].strip()
             break
-    return {"wiki": WIKI_GAME_VERSION, "game": game or GAME_TEXT_VERSION}
+    return {"wiki": wiki, "game": game or GAME_TEXT_VERSION}
 
 
 def page_payload(ds, sprite=None, artifact=False, version=None, changelog=None, techs=None, data=None, days=None,
                  game_version=None):
-    """The JSON embedded in the page: gk2.min.json minus redundancy.
+    """The JSON embedded in the page: gk2.json minus redundancy.
 
     - {pt, en} pairs with identical text collapse to one string (obtain texts, notes, zones...).
     - items[].id is dropped (it is the key).
@@ -1642,6 +1616,23 @@ def load_game_version(root):
             "note": {k: v for k, v in note.items() if isinstance(v, str) and v.strip()}}
 
 
+def load_wiki_version(root):
+    """The `wiki` field of data/game-version.json of the project root: the game version the wiki recipes describe
+    ("1.010"; the page shows it as meta.data.wiki and warns when `latest` is newer). None when the file is absent;
+    a file without a valid `wiki`: exit 2."""
+    gp = Path(root) / "data" / "game-version.json"
+    if not gp.exists():
+        return None
+    try:
+        wiki = json.loads(gp.read_text(encoding="utf-8")).get("wiki")
+    except (OSError, ValueError, AttributeError) as e:
+        raise SystemExit(_die(f"game-version: cannot read {gp}: {e}"))
+    if not (isinstance(wiki, str) and re.match(r"^\d+(\.\d+)*$", wiki)):
+        raise SystemExit(_die(f"game-version: {gp} needs {{\"wiki\": \"1.010\", ...}} "
+                              "(the game version the wiki recipes describe)"))
+    return wiki
+
+
 def changelog_json(cl):
     return json.dumps(cl, ensure_ascii=False, indent=2) + "\n"
 
@@ -1670,12 +1661,17 @@ def rel(p):
         return p.name
 
 
-def built_date(arg):
+def built_date(arg, changelog=None, release=False):
+    """meta.built: --built, else SOURCE_DATE_EPOCH, else (without --release) the date of the newest dated
+    data/changelog.json entry, i.e. the last release (the same every day: a rebuild writes nothing), else today (UTC)."""
     if arg:
         return arg
     sde = os.environ.get("SOURCE_DATE_EPOCH")
     if sde and sde.isdigit():
         return _dt.datetime.fromtimestamp(int(sde), _dt.timezone.utc).date().isoformat()
+    last = next((e["date"] for e in changelog or [] if e.get("date")), None)
+    if last and not release:
+        return last
     return _dt.datetime.now(_dt.timezone.utc).date().isoformat()
 
 
@@ -1693,16 +1689,12 @@ def main(argv=None):
                          "A file whose name contains '.machine.' is treated as the machine layer.")
     ap.add_argument("--lang", action="append", default=[], metavar="FIELD=PATH[,PATH]",
                     help="extra language, e.g. es=data/names.es.json (output field `es`, `tr_es`)")
-    ap.add_argument("--out-dir", default=str(DATA), help="where gk2.json, gk2.min.json and reports go")
-    ap.add_argument("--inject", metavar="HTML", help="embed gk2.min.json into <script id=\"gk2-data\">")
-    ap.add_argument("--out", metavar="PATH", help="with --inject: output HTML (default: in place + .bak)")
+    ap.add_argument("--out-dir", default=str(DATA), help="where gk2.json and the reports go")
     ap.add_argument("--allow-errors", action="store_true",
-                    help="write gk2.json / inject even with hard errors (exit code stays 1)")
-    ap.add_argument("--built", help="override meta.built (default: SOURCE_DATE_EPOCH or today, UTC)")
+                    help="write gk2.json and the page even with hard errors (exit code stays 1)")
+    ap.add_argument("--built", help="override meta.built (default: SOURCE_DATE_EPOCH, else the date of the last "
+                                    "release in data/changelog.json, else today, UTC; with --release: today)")
     ap.add_argument("--source", action="append", default=[], help="extra meta.sources entry")
-    ap.add_argument("--artifact", action="store_true",
-                    help="with --inject and --out: Claude Artifact page (no doctype/html/head/body, no "
-                         "charset/viewport metas, no remote icon URLs) + preview.html next to it")
     ap.add_argument("--sprite", metavar="PATH.json",
                     help="icon sprite manifest (scripts/make_sprite.py) embedded as meta.sprite")
     ap.add_argument("--techs", metavar="PATH.json",
@@ -1716,26 +1708,24 @@ def main(argv=None):
     ap.add_argument("--src", metavar="DIR",
                     help="assemble the page from DIR (manifest.json, index.html, css/, js/) and write "
                          "DIR/../prototype/index.html, DIR/../dist/index.html and DIR/../dist/preview.html "
-                         "(default: src/ when src/manifest.json exists and --inject is not given)")
+                         "(default: src/ when src/manifest.json exists)")
     ap.add_argument("--no-src", action="store_true", help="data only: do not build the page from src/")
     ap.add_argument("--release", action="store_true",
                     help="set the date of the top data/changelog.json entry to the build date when it is null")
     ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args(argv)
-    if args.artifact and not (args.inject and args.out):
-        ap.error("--artifact needs --inject HTML --out PATH")
-    if args.src and (args.inject or args.no_src):
-        ap.error("--src cannot be combined with --inject or --no-src")
+    if args.src and args.no_src:
+        ap.error("--src cannot be combined with --no-src")
     if args.techs and args.no_techs:
         ap.error("--techs cannot be combined with --no-techs")
     if args.days and args.no_days:
         ap.error("--days cannot be combined with --no-days")
-    if args.src is None and not args.inject and not args.no_src and (ROOT / "src" / "manifest.json").exists():
+    if args.src is None and not args.no_src and (ROOT / "src" / "manifest.json").exists():
         args.src = str(ROOT / "src")
     # the project root holds VERSION, data/changelog.json and CHANGELOG.md (src/.. in src mode)
     proj = Path(args.src).resolve().parent if args.src else ROOT
     version, changelog = load_version(proj), load_changelog(proj)
-    game_version = load_game_version(proj)
+    game_version, wiki_version = load_game_version(proj), load_wiki_version(proj)
     if args.release:
         if changelog is None:
             ap.error(f"--release needs {proj / 'data' / 'changelog.json'}")
@@ -1758,7 +1748,7 @@ def main(argv=None):
     langs = parse_lang_specs(specs, log)
 
     b = Builder(raw_items, raw_recipes, langs, log, extra_sources=args.source).run()
-    built = built_date(args.built)
+    built = built_date(args.built, changelog, args.release)
     ds = b.dataset(built)
     rep = validate.validate(ds, pre_issues=b.pre)
     ds = b.dataset(built, rep)
@@ -1825,18 +1815,16 @@ def main(argv=None):
         written.append(rel(proj / "CHANGELOG.md"))
     if ok_to_write:
         pretty = json.dumps(ds, ensure_ascii=False, indent=1) + "\n"
-        mini = dumps_min(ds)
         if write_if_changed(out_dir / "gk2.json", pretty):
             written.append("gk2.json")
-        if write_if_changed(out_dir / "gk2.min.json", mini + "\n"):
-            written.append("gk2.min.json")
         if args.src:
             sprite_path = args.sprite or (proj / "data" / "sprite.json" if (proj / "data" / "sprite.json").exists() else None)
             sprite = load_sprite(sprite_path) if sprite_path else None
             pages = []
             for artifact in (False, True):
                 payload = dumps_min(page_payload(ds, sprite=sprite, artifact=artifact, version=version,
-                                                 changelog=changelog, techs=techs, data=data_versions(names),
+                                                 changelog=changelog, techs=techs,
+                                                 data=data_versions(names, wiki_version),
                                                  days=days, game_version=game_version))
                 html = assemble(args.src, payload, warn=False)
                 if artifact:
@@ -1850,18 +1838,6 @@ def main(argv=None):
                 if not args.quiet:
                     size = dst.stat().st_size
                     print(f"build: page {rel(dst)} = {size:,} bytes ({size / 1048576:.2f} MB)")
-        if args.inject:
-            sprite = load_sprite(args.sprite) if args.sprite else None
-            payload = dumps_min(page_payload(ds, sprite=sprite, artifact=args.artifact, version=version,
-                                             changelog=changelog, techs=techs if args.techs else None,
-                                             data=data_versions(names), days=days if args.days else None))
-            changed, dst = inject(args.inject, args.out, payload, artifact=args.artifact)
-            if changed:
-                written.append(str(dst))
-            if not args.quiet:
-                size = dst.stat().st_size
-                print(f"build: page {rel(dst)} = {size:,} bytes ({size / 1048576:.2f} MB; data {len(payload):,} bytes"
-                      f"{', sprite ' + format(len(sprite['image']), ',') + ' bytes' if sprite else ''})")
     if not args.quiet:
         c = ds["meta"]["counts"]
         print(f"build: {c['items']} items, {c['recipes']} recipes, {c['stations']} stations; "

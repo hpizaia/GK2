@@ -16,7 +16,8 @@ python3 -I scripts/shots/compare.py --only-capture  # só tira os prints do app 
 Para cada caso de `casos.json`, em cada idioma e tela (390 px celular e 1280 px desktop, claro e escuro):
 
 - os **pixels** da página inteira (até 12 000 px de altura), comparados dentro do próprio Chrome;
-- o **HTML** e o **texto** do que está visível (cabeçalho, busca, a tela aberta, rodapé);
+- o **HTML** e o **texto** do que está visível (cabeçalho, busca, a tela aberta, rodapé); no HTML, o espaço em
+  branco entre tags não conta (indentação e linhas vazias não mudam a tela);
 - o **estado** do app depois de abrir (o que o `GK.store` guardou) e os **erros de JS**.
 
 E uma vez por página, o **resumo do `GK.data`** (um hash por item, por receita e por bloco): pega dado que mudou

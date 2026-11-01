@@ -7,18 +7,18 @@ Pastas, pipeline de build, telas e módulos, limites do artifact e camadas de no
 | pasta / arquivo | o que tem | git |
 |---|---|---|
 | `src/` | Código da página: `index.html` (modelo), `css/`, `js/` (módulos `GK.*`), `manifest.json` (ordem de montagem) | sim |
-| `data/` | Dados de entrada e saída do build: `items.en.json`, `recipes.en.json`, camadas `names*.pt-BR.json`, `gk2.json`/`gk2.min.json`, `techs.json`, `sprite.json`/`sprite.png`, `changelog.json`, relatórios `report-*.md`, READMEs | sim |
+| `data/` | Dados de entrada e saída do build: `items.en.json`, `recipes.en.json`, camadas `names*.pt-BR.json`, `facts.json`, `days.json`, `game-version.json`, `gk2.json`, `techs.json`, `sprite.json`/`sprite.png`, `changelog.json`, relatórios `report-*.md`, READMEs | sim |
 | `data/game-texts/` | Texto oficial do jogo: `gk2_textos.json` (en/pt) e `RELATORIO-exportacao.md` | sim. Os 11 idiomas, os CSVs e `_resumo.json` ficam fora |
 | `data/raw/` | Cache da API do wikily, props do calculador, pesquisa de localização (`l10n/`) | não (19 MB, regenerável) |
 | `data/icons/` | Um PNG por item, estação ou tecnologia | não (regenerável, vira o sprite) |
 | `scripts/` | Pipeline Python (só biblioteca padrão) e testes. Tabela em [`scripts/README.md`](../scripts/README.md) | sim |
 | `scripts/fixtures/` | Dados pequenos para o `test_build.py` | sim |
 | `tools/exportar-textos/` | Exportador dos textos do jogo (Windows) e `juntar_nomes.py`. Resumo em [`tools/README.md`](../tools/README.md) | sim |
-| `prototype/index.html` | Página de desenvolvimento (com esqueleto HTML), gerada. Ver [`prototype/README.md`](../prototype/README.md) | sim (o `index.html.bak` do modo `--inject` não) |
+| `prototype/index.html` | Página de desenvolvimento (com esqueleto HTML), gerada. Ver [`prototype/README.md`](../prototype/README.md) | sim |
 | `dist/index.html` | A página do artifact (sem esqueleto), gerada. `dist/preview.html` é a mesma coisa com esqueleto, para ver localmente | sim |
 | `docs/` | Estes documentos (índice em [`docs/README.md`](README.md)) e as imagens dos READMEs (`docs/media/`, ver [`docs/media/README.md`](media/README.md)) | sim |
 | `docs/projeto/` | Documentos de projeto: [`SPEC.md`](projeto/SPEC.md) (especificação), [`DESIGN.md`](projeto/DESIGN.md) (design), [`BACKLOG.md`](projeto/BACKLOG.md) (pendências), [`AUDITORIA.md`](projeto/AUDITORIA.md) (auditoria da v1.1). Parte do conteúdo descreve a versão 1.2 | sim |
-| `docs/revisao-ux/` | Relatórios internos e capturas da revisão de UX de 31/10/2026 | não (está no `.gitignore`) |
+| `docs/revisao-ux/` | Relatórios internos (revisões, QA, pesquisas) e capturas | não (está no `.gitignore`) |
 | `site/` | Página de apresentação do projeto (outro Claude Artifact), ver `site/README.md` | sim |
 | `.github/` | Modelos de issue (`ISSUE_TEMPLATE/`) | sim |
 | `historico/` | Transcrições e arquivos de sessões passadas, só no disco local | não (está no `.gitignore`; o histórico fica no repositório privado `hpizaia/GK2-historico`) |
@@ -40,16 +40,19 @@ Pastas, pipeline de build, telas e módulos, limites do artifact e camadas de no
                                                 │           │
                                 juntar_nomes.py ▼           │
                         data/names.official.pt-BR.json      │
-                        data/names.machine.pt-BR.json       │
+ escritos à mão: names.recipes, names.wiki,     │           │
+   names.machine (sem gerador)                  │           │
+ api-items + quests ─build_facts.py─► data/facts.json       │
                                                 │           │
                                                 ▼           ▼
-                                 build.py ──► data/gk2.json, gk2.min.json, report-*.md
+                                 build.py ──► data/gk2.json, report-*.md
                                     │  ▲
-                                    │  └─ data/techs.json ◄── build_techs.py ◄── gk2.json, api-technologies, nomes, gk2_textos
+                                    │  ├─ data/techs.json ◄── build_techs.py ◄── gk2.json, api-technologies, nomes, gk2_textos
+                                    │  └─ data/days.json  ◄── build_days.py  ◄── gk2.json, gk2_textos (+ eventos escritos à mão)
                                     │
                  fetch_icons.py ◄───┘ (gk2.json, techs.json) ──► data/icons/ ──make_sprite.py──► data/sprite.json
                                     │
- src/ + VERSION + changelog.json + sprite.json + techs.json
+ src/ + VERSION + changelog.json + sprite.json + techs.json + facts.json + days.json
                                     ▼
                                  build.py ──► prototype/index.html, dist/index.html, dist/preview.html, CHANGELOG.md
                                                                      │
@@ -75,7 +78,7 @@ Cada arquivo de `src/js/` é um módulo `GK.*` que começa com um comentário di
 | Sincronização | `sync.js` (+ `store.js`) | Documento privado da conta, mesclagem entre aparelhos, armazenamento local por conta |
 | Base | `core.js`, `util.js`, `i18n.js`, `data.js`, `store.js`, `calc.js`, `tech.js`, `router.js`, `ui/fmt.js`, `app.js` | Namespace e registro de painéis, dicionários, carga dos dados, estado, cálculo do plano, árvore de tecnologias, rotas, marcação compartilhada, boot |
 
-`ui/soon.js` é o marcador "em breve" para uma aba futura (nenhuma o usa hoje). Os módulos puros (`data`, `calc`, `store`, `sync`, `ui/fmt`) têm testes em `scripts/test_calc.mjs`; `tech.js` e a sintaxe de todos os módulos, em `scripts/test_build.py`.
+Os módulos puros (`data`, `calc`, `store`, `sync`, `ui/fmt`) têm testes em `scripts/test_calc.mjs`; `tech.js` e a sintaxe de todos os módulos, em `scripts/test_build.py`.
 
 ## Limites do Claude Artifact
 

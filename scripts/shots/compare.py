@@ -19,6 +19,7 @@ Com --only-capture: .shots/capturas/. Precisa de node e do Google Chrome (variá
 import argparse
 import difflib
 import json
+import re
 import shutil
 import signal
 import subprocess
@@ -67,6 +68,15 @@ def rodar_capture(argumentos):
 
 def ler(p):
     return p.read_text(encoding="utf-8") if p.is_file() else None
+
+
+ENTRE_TAGS = re.compile(r">\s+<")
+
+
+def html_normal(s):
+    """O HTML sem o espaço em branco entre tags (indentação, linhas vazias): só ele mudar não muda a tela (os
+    pixels e o texto pegam o caso raro em que muda). Texto dentro das tags e atributos ficam como estão."""
+    return None if s is None else ENTRE_TAGS.sub(">\n<", s)
 
 
 def ler_json(p):
@@ -136,6 +146,8 @@ def comparar(saida, resumo):
             motivos.append(f"{px['diferentes']} pixels em {onde(px, ib, escala)}{tam} → diferencas/{nome}.png")
         for tipo in ("html", "texto"):
             a, b = ler(A / f"{nome}.{tipo}.txt"), ler(B / f"{nome}.{tipo}.txt")
+            if tipo == "html":
+                a, b = html_normal(a), html_normal(b)
             if a != b:
                 dif.mkdir(exist_ok=True)
                 (dif / f"{nome}.{tipo}.diff").write_text(diff_texto(a or "", b or "", f"antes/{nome}", f"depois/{nome}"), encoding="utf-8")

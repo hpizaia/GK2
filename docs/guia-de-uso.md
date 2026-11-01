@@ -110,8 +110,9 @@ O jogo tem uma semana de 6 dias, cada um com um símbolo na roda do canto da tel
 - **Avançar dia:** quando dormir no jogo, toque em "Avançar dia" no painel Hoje ou na aba Dias.
 - **Calibrar pelo contador:** o jogo mostra o número do dia no canto (por exemplo, 60). Informe uma vez o número e o dia ("dia 60 = Orgulho"); daí em diante basta digitar o número novo que o app descobre o dia da semana. "Recalibrar" apaga essa referência.
 - **"Não confirmado":** eventos que vieram só de guias, e não do texto do jogo, levam esse selo. Se você perceber um erro jogando, me avise que corrijo.
-- **Feito hoje:** cada evento do dia tem uma caixinha. Marque o que já fez; as marcações zeram sozinhas quando o dia muda.
-- **Amanhã:** abaixo dos eventos, o painel Hoje mostra o dia seguinte e o que preparar antes de dormir no jogo. Toque para abrir aquele dia na aba Dias.
-- **Bilhete do dia:** um recado curto por dia da semana ("levar 3 peixes para o Pescador"), que volta sempre naquele dia. Dá para escrever no painel Hoje ou na aba Dias.
+- **Painel Hoje:** uma linha por evento do dia. Toque na linha para ver o texto inteiro, com quem e o texto do jogo.
+- **Feito hoje:** os eventos que pedem uma ação (fazer ou comprar algo) têm uma caixinha. Marque o que já fez; as marcações zeram sozinhas quando o dia muda.
+- **Amanhã e o resto da semana:** toque em "Ver semana" no painel Hoje, ou abra a aba Dias.
+- **Bilhete do dia:** um recado curto por dia da semana ("levar 3 peixes para o Pescador"), que volta sempre naquele dia. Dá para escrever no painel Hoje (botão ✎) ou na aba Dias.
 - **Letra grande:** o botão "Letra grande" no rodapé aumenta o texto do app, para olhar de longe enquanto joga. O app também acompanha o tamanho de letra do celular.
 - O dia atual, a calibração, as marcações e os bilhetes sincronizam com a sua conta, como o resto do progresso.

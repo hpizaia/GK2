@@ -30,10 +30,10 @@ GK.router = (function () {
   let current = "plan";
   const subs = [];
   const DEFAULT = "plan";
-  // {id, labelKey, screen = id, order = 100, tab = true, soon = false}; same id again = replace
+  // {id, labelKey, screen = id, order = 100, tab = true}; same id again = replace
   function register(r) {
     if (!r || !r.id) throw new Error("GK.router.register: id is required");
-    const route = Object.assign({ screen: r.id, order: 100, tab: true, soon: false }, r);
+    const route = Object.assign({ screen: r.id, order: 100, tab: true }, r);
     const i = TABS.findIndex((t) => t.id === route.id);
     if (i >= 0) TABS.splice(i, 1);
     TABS.push(route);

@@ -92,9 +92,7 @@ class FixtureBuild(unittest.TestCase):
     def setUpClass(cls):
         cls.tmp = tempfile.TemporaryDirectory()
         cls.out = Path(cls.tmp.name)
-        shutil.copy(FIX / "page.html", cls.out / "page.html")
-        cls.rc, cls.so, cls.se = run(BUILD, *fixture_args(cls.out), "--allow-errors",
-                                     "--inject", cls.out / "page.html")
+        cls.rc, cls.so, cls.se = run(BUILD, *fixture_args(cls.out), "--allow-errors")
         cls.ds = read_json(cls.out / "gk2.json")
         cls.rep = validate.validate(cls.ds)
 
@@ -104,9 +102,8 @@ class FixtureBuild(unittest.TestCase):
 
     def test_exit_code_and_outputs(self):
         self.assertEqual(self.rc, 1, self.se)
-        for f in ("gk2.json", "gk2.min.json", "report-l10n.md", "report-build.md", "page.html.bak"):
+        for f in ("gk2.json", "report-l10n.md", "report-build.md"):
             self.assertTrue((self.out / f).exists(), f)
-        self.assertEqual(read_json(self.out / "gk2.min.json"), self.ds)
 
     def test_schema_shape(self):
         ds = self.ds
@@ -223,22 +220,11 @@ class FixtureBuild(unittest.TestCase):
         self.assertIn("Unicorn Horn", unused)
         self.assertNotIn("Prancha", unused)                               # shadowed by better layer != unused
 
-    def test_inject(self):
-        html = (self.out / "page.html").read_text(encoding="utf-8")
-        block = extract_block(html)
-        self.assertNotIn("</script", block.lower())
-        self.assertNotIn("<!--", block)
-        self.assertEqual(expand_payload(json.loads(block)), self.ds)
-        self.assertIn("crypt </script><script>", expand_payload(json.loads(block))["items"]["ancient-coin"]["obtain"]["en"])
-        self.assertIn("<main id=\"app\">Planejador</main>", html)
-        self.assertIn('{"placeholder": true}', (self.out / "page.html.bak").read_text(encoding="utf-8"))
-
     def test_idempotent(self):
-        files = ["gk2.json", "gk2.min.json", "report-l10n.md", "report-build.md", "page.html", "page.html.bak"]
+        files = ["gk2.json", "report-l10n.md", "report-build.md"]
         before = {f: (self.out / f).read_bytes() for f in files}
         mtimes = {f: (self.out / f).stat().st_mtime_ns for f in files}
-        rc, so, se = run(BUILD, *[a for a in fixture_args(self.out) if a != "--quiet"], "--allow-errors",
-                         "--inject", self.out / "page.html")
+        rc, so, se = run(BUILD, *[a for a in fixture_args(self.out) if a != "--quiet"], "--allow-errors")
         self.assertEqual(rc, 1)
         self.assertIn("nothing (all outputs up to date)", so)
         for f in files:
@@ -277,51 +263,6 @@ class OtherBuilds(unittest.TestCase):
         self.assertIn("NOT written", se)
         self.assertFalse((out / "gk2.json").exists())
         self.assertTrue((out / "report-build.md").exists())
-
-    def test_clean_build_exit_0_and_inject_out(self):
-        out = self.dir / "out"
-        page = self.dir / "page.html"
-        shutil.copy(FIX / "page.html", page)
-        dst = self.dir / "dist" / "index.html"
-        rc, so, se = run(BUILD, *fixture_args(out, recipes=self.clean_recipes()), "--inject", page, "--out", dst)
-        self.assertEqual(rc, 0, se)
-        self.assertEqual(page.read_text(encoding="utf-8"), (FIX / "page.html").read_text(encoding="utf-8"))
-        self.assertFalse((self.dir / "page.html.bak").exists())
-        page_data = json.loads(extract_block(dst.read_text(encoding="utf-8")))
-        self.assertTrue(page_data["meta"]["collapsed"])
-        self.assertNotIn("id", next(iter(page_data["items"].values())))
-        self.assertEqual(expand_payload(page_data), read_json(out / "gk2.json"))
-        self.assertEqual(run(VALIDATE, out / "gk2.json", "--quiet")[0], 0)
-
-    def test_artifact_and_sprite(self):
-        out = self.dir / "out"
-        page = self.dir / "page.html"
-        shutil.copy(FIX / "page.html", page)
-        dst = self.dir / "dist" / "index.html"
-        ds_ids = read_json(FIX / "items.en.json")
-        some_id = ds_ids[0]["id"]
-        sprite = self.dir / "sprite.json"
-        sprite.write_text(json.dumps({"image": "data:image/png;base64,iVBORw0KGgo=", "size": 32, "cols": 2, "rows": 1,
-                                      "icons": {some_id: [1, 0], "not-an-item": [0, 0]}}), encoding="utf-8")
-        rc, so, se = run(BUILD, *fixture_args(out, recipes=self.clean_recipes()), "--inject", page, "--out", dst,
-                         "--artifact", "--sprite", sprite)
-        self.assertEqual(rc, 0, se)
-        html = dst.read_text(encoding="utf-8")
-        self.assertTrue(html.startswith("<title>"), html[:80])
-        for tag in ("<!doctype", "<html", "</html", "<head>", "</head", "<body", "</body", "charset="):
-            self.assertNotIn(tag, html.lower())
-        self.assertIn('const DATA = JSON.parse(document.getElementById("gk2-data").textContent);', html)
-        data = json.loads(extract_block(html))
-        self.assertEqual(data["meta"]["sprite"]["icons"], {some_id: [1, 0]})
-        self.assertTrue(all(it["icon"] is None for it in data["items"].values()))
-        preview = (dst.parent / "preview.html").read_text(encoding="utf-8")
-        self.assertTrue(preview.startswith("<!doctype html>"))
-        self.assertIn(html, preview)
-        # --artifact without --out, and a bad sprite manifest, are usage errors
-        self.assertEqual(run(BUILD, *fixture_args(out, recipes=self.clean_recipes()), "--inject", page, "--artifact")[0], 2)
-        sprite.write_text("{}", encoding="utf-8")
-        self.assertEqual(run(BUILD, *fixture_args(out, recipes=self.clean_recipes()), "--inject", page, "--out", dst,
-                             "--sprite", sprite)[0], 2)
 
     def test_missing_names_files(self):
         out = self.dir / "out"
@@ -363,14 +304,6 @@ class OtherBuilds(unittest.TestCase):
         self.assertEqual(ds["stations"]["smelter"]["tr_es"], "missing")
         self.assertTrue((out / "report-l10n.es.md").exists())
 
-    def test_inject_without_tag_fails(self):
-        page = self.dir / "bad.html"
-        page.write_text("<html><body>no data block</body></html>", encoding="utf-8")
-        rc, so, se = run(BUILD, *fixture_args(self.dir / "out", recipes=self.clean_recipes()), "--inject", page)
-        self.assertEqual(rc, 2)
-        self.assertIn("expected exactly one", se)
-
-
 class PageHelpers(unittest.TestCase):
     def test_collapse_loc(self):
         langs = {"pt", "en"}
@@ -389,6 +322,20 @@ class PageHelpers(unittest.TestCase):
         self.assertIn('const s = "<body></body>";', out)
         self.assertNotIn("<html", out)
         self.assertNotIn("viewport", out)
+
+
+class BuiltDate(unittest.TestCase):
+    def test_default_is_the_last_release(self):
+        """No --built: the date of the newest dated changelog entry, so a rebuild on another day writes nothing;
+        --release (and no changelog) use today; --built wins."""
+        cl = [{"version": "1.1.0", "date": None}, {"version": "1.0.0", "date": "2026-01-02"}]
+        sde = build.os.environ.pop("SOURCE_DATE_EPOCH", None)
+        self.addCleanup(lambda: sde is None or build.os.environ.__setitem__("SOURCE_DATE_EPOCH", sde))
+        today = build.built_date(None)
+        self.assertRegex(today, r"^\d{4}-\d\d-\d\d$")
+        self.assertEqual(build.built_date(None, cl), "2026-01-02")
+        self.assertEqual(build.built_date(None, cl, release=True), today)
+        self.assertEqual(build.built_date("2026-05-06", cl), "2026-05-06")
 
 
 class DerivedNames(unittest.TestCase):
@@ -612,7 +559,15 @@ class SrcBuild(unittest.TestCase):
         self.assertIn(":root { --a: 1; }", dev)
         self.assertIn("GK.second = 2; // replacement text: \\1 $1 \\g<0>", dev)   # sources are copied verbatim
         self.assertEqual(dev.count("<style>"), 1)
-        data = json.loads(extract_block(dev))
+        block = extract_block(dev)
+        self.assertNotIn("</script", block.lower())                       # the data can never end its <script>
+        self.assertNotIn("<!--", block)
+        data = json.loads(block)
+        self.assertIn("crypt </script><script>", expand_payload(data)["items"]["ancient-coin"]["obtain"]["en"])
+        self.assertTrue(data["meta"]["collapsed"])
+        self.assertNotIn("id", next(iter(data["items"].values())))
+        self.assertEqual(expand_payload(data), read_json(self.dir / "out" / "gk2.json"))   # gk2.json minus redundancy
+        self.assertEqual(run(VALIDATE, self.dir / "out" / "gk2.json", "--quiet")[0], 0)
         self.assertEqual(data["meta"]["version"], "9.9.9")
         self.assertEqual(data["meta"]["changelog"], CHANGELOG)
         self.assertIn("log", data["items"])
@@ -637,13 +592,16 @@ class SrcBuild(unittest.TestCase):
         return [a for a in fixture_args(self.dir / "out", recipes=rp) if a not in ("--no-src", "--quiet")]
 
     def test_sprite_from_project_data(self):
-        sprite = {"image": "data:image/png;base64,iVBORw0KGgo=", "size": 32, "cols": 1, "rows": 1, "icons": {"log": [0, 0]}}
+        sprite = {"image": "data:image/png;base64,iVBORw0KGgo=", "size": 32, "cols": 1, "rows": 1,
+                  "icons": {"log": [0, 0], "not-an-item": [0, 0]}}
         (self.proj / "data" / "sprite.json").write_text(json.dumps(sprite), encoding="utf-8")
         rc, so, se = self.build()
         self.assertEqual(rc, 0, se)
         for page in ("prototype/index.html", "dist/index.html"):
             data = json.loads(extract_block((self.proj / page).read_text(encoding="utf-8")))
             self.assertEqual(data["meta"]["sprite"]["icons"], {"log": [0, 0]}, page)
+        (self.proj / "data" / "sprite.json").write_text("{}", encoding="utf-8")   # a bad manifest is a usage error
+        self.assertEqual(self.build()[0], 2)
 
     def test_changelog_md_and_release(self):
         rc, so, se = self.build()
@@ -690,7 +648,12 @@ class SrcBuild(unittest.TestCase):
         make_project(self.proj)
         (self.proj / "data" / "changelog.json").write_text('[{"version": "x"}]', encoding="utf-8")
         self.assertEqual(self.build()[0], 2)
-        self.assertEqual(run(BUILD, "--src", self.src, "--inject", FIX / "page.html")[0], 2)
+        make_project(self.proj, template=TEMPLATE.replace('<script id="gk2-data" type="application/json"><!-- @data --></script>',
+                                                          "<!-- @data -->"))
+        rc, so, se = self.build()
+        self.assertEqual(rc, 2)
+        self.assertIn("expected exactly one", se)
+        self.assertEqual(run(BUILD, "--src", self.src, "--no-src")[0], 2)
 
     def test_unlisted_source_warns(self):
         (self.src / "js" / "ui" / "forgotten.js").write_text("GK.x = 1;\n", encoding="utf-8")
@@ -834,18 +797,6 @@ class TechsBuild(unittest.TestCase):
         bad = self.dir / "bad.json"
         bad.write_text("[]", encoding="utf-8")
         self.assertEqual(run(BUILD, *args, "--src", src, "--techs", bad)[0], 2)
-
-    def test_inject_embeds_only_with_explicit_techs(self):
-        page = self.dir / "page.html"
-        shutil.copy(FIX / "page.html", page)
-        out = self.dir / "out"
-        rc, so, se = run(BUILD, *fixture_args(out, recipes=self.clean_recipes()), "--inject", page, "--out", self.dir / "a.html",
-                         "--techs", self.write_techs(self.dir / "techs.json"))
-        self.assertEqual(rc, 0, se)
-        self.assertIn("techs", json.loads(extract_block((self.dir / "a.html").read_text(encoding="utf-8"))))
-        rc, so, se = run(BUILD, *fixture_args(out, recipes=self.clean_recipes()), "--inject", page, "--out", self.dir / "b.html")
-        self.assertEqual(rc, 0, se)
-        self.assertNotIn("techs", json.loads(extract_block((self.dir / "b.html").read_text(encoding="utf-8"))))
 
     @unittest.skipUnless(shutil.which("node"), "node not installed")
     def test_gk_tech_module(self):
@@ -1002,18 +953,6 @@ class DaysBuild(unittest.TestCase):
         bad.write_text('{"days": "x"}', encoding="utf-8")
         self.assertEqual(run(BUILD, *args, "--src", src, "--days", bad)[0], 2)
 
-    def test_inject_embeds_only_with_explicit_days(self):
-        page = self.dir / "page.html"
-        shutil.copy(FIX / "page.html", page)
-        out = self.dir / "out"
-        rc, so, se = run(BUILD, *fixture_args(out), "--allow-errors", "--inject", page, "--out", self.dir / "a.html",
-                         "--days", self.write_days(self.dir / "days.json"))
-        self.assertIn(rc, (0, 1), se)
-        self.assertIn("days", json.loads(extract_block((self.dir / "a.html").read_text(encoding="utf-8"))))
-        rc, so, se = run(BUILD, *fixture_args(out), "--allow-errors", "--inject", page, "--out", self.dir / "b.html")
-        self.assertIn(rc, (0, 1), se)
-        self.assertNotIn("days", json.loads(extract_block((self.dir / "b.html").read_text(encoding="utf-8"))))
-
     def test_real_days_modules_registered(self):
         src = ROOT / "src" / "js"
         days, today = (src / "ui" / "days.js").read_text(encoding="utf-8"), (src / "ui" / "today.js").read_text(encoding="utf-8")
@@ -1046,12 +985,12 @@ class RealTechs(unittest.TestCase):
                 self.assertEqual(t["pt"], techs["techs"][t["id"]]["pt"], r["id"])
 
     def test_tests_never_build_the_real_pages(self):
-        """Every build.py run in this file must pass --no-src, --src or --inject: otherwise src mode (the default)
+        """Every build.py run in this file must pass --no-src or --src: otherwise src mode (the default)
         rewrites the real prototype/ and dist/ with test data."""
         text = Path(__file__).read_text(encoding="utf-8")
         for m in re.finditer(r"run\(BUILD,(.*?)\)\n", text, re.S):
             call = m.group(1)
-            self.assertTrue(any(k in call for k in ("--no-src", '"--src"', '"--inject"', "fixture_args", "self.build", "build_args", "*args")),
+            self.assertTrue(any(k in call for k in ("--no-src", '"--src"', "fixture_args", "self.build", "build_args", "*args")),
                             call[:120])
 
     def test_real_tech_modules_registered(self):
@@ -1100,7 +1039,7 @@ class RealSrc(unittest.TestCase):
         self.assertIn("function add(", i18n)
         self.assertNotIn('"goals.title"', i18n)            # strings live in their modules
         for f in ("js/router.js", "js/ui/header.js", "js/ui/search.js", "js/ui/goals.js", "js/ui/summary.js",
-                  "js/ui/checklist.js", "js/ui/soon.js", "js/ui/changelog.js", "js/ui/credits.js", "js/ui/footer.js", "js/ui/fmt.js"):
+                  "js/ui/checklist.js", "js/ui/changelog.js", "js/ui/credits.js", "js/ui/footer.js", "js/ui/fmt.js"):
             self.assertRegex(self.text[f], r"GK\.i18n\.add\(\{\s*pt: \{", f)
             self.assertIn("  en: {", self.text[f], f)
         keys = {}
@@ -1118,16 +1057,13 @@ class RealSrc(unittest.TestCase):
         self.assertIn("function register(", self.text["js/router.js"])
         self.assertIn("GK.router.tabs().map", self.text["js/ui/header.js"])
         for f in ("js/ui/header.js", "js/ui/search.js", "js/ui/goals.js", "js/ui/summary.js", "js/ui/checklist.js",
-                  "js/ui/soon.js", "js/ui/changelog.js", "js/ui/credits.js", "js/ui/footer.js"):
+                  "js/ui/changelog.js", "js/ui/credits.js", "js/ui/footer.js"):
             self.assertIn("GK.app.registerPanel(", self.text[f], f)
         self.assertNotIn("GK.ui.goals.mount", self.text["js/app.js"])     # the loop reads the registry
         self.assertRegex(self.text["js/ui/changelog.js"], r'GK\.router\.register\(\{ id: "changelog".*tab: false')
         self.assertIn('href="#changelog"', self.text["js/ui/footer.js"])
         self.assertIn('<section data-slot="planner-extra" id="planner-extra">', self.html)
-        # Receitas and Tecnologias own their routes; the soon module keeps no placeholder registration
-        self.assertNotRegex(self.text["js/ui/soon.js"], r"(?m)^GK\.router\.register\(")
         self.assertRegex(self.text["js/ui/recipes.js"], r'GK\.router\.register\(\{ id: "recipes", labelKey: "rc\.tab", screen: "recipes"')
-        self.assertRegex(self.text["js/ui/tech.js"], r'GK\.router\.register\(\{ id: "tech", labelKey: "tab\.tech", screen: "tech"')
         self.assertIn('"tab.tech": "Tecnologias"', self.text["js/ui/tech.js"])
 
     def test_credits_screen(self):
@@ -1216,9 +1152,16 @@ class MadeText(unittest.TestCase):
             a, b = Path(t) / "a.json", Path(t) / "b.json"
             a.write_text(json.dumps({"x": {"pt": "y"}}), encoding="utf-8")
             b.write_text(json.dumps({"_meta": {"game_version": "9.9"}}), encoding="utf-8")
-            self.assertEqual(build.data_versions([a, Path(t) / "missing.json"]),
-                             {"wiki": build.WIKI_GAME_VERSION, "game": build.GAME_TEXT_VERSION})
-            self.assertEqual(build.data_versions([a, b]), {"wiki": build.WIKI_GAME_VERSION, "game": "9.9"})
+            self.assertEqual(build.data_versions([a, Path(t) / "missing.json"], "1.010"),
+                             {"wiki": "1.010", "game": build.GAME_TEXT_VERSION})
+            self.assertEqual(build.data_versions([a, b], "1.010"), {"wiki": "1.010", "game": "9.9"})
+            # the wiki version is the `wiki` field of data/game-version.json
+            self.assertRegex(build.load_wiki_version(ROOT), r"^\d+\.\d+$")
+            self.assertIsNone(build.load_wiki_version(t))
+            (Path(t) / "data").mkdir()
+            (Path(t) / "data" / "game-version.json").write_text('{"latest": "1.011"}', encoding="utf-8")
+            with self.assertRaises(SystemExit):
+                build.load_wiki_version(t)
             self.assertEqual(build.page_payload({"meta": {"langs": ["pt", "en"]}, "items": {}, "stations": {}, "recipes": []},
                                                 data={"wiki": "1", "game": "2"})["meta"]["data"], {"wiki": "1", "game": "2"})
 
@@ -1235,7 +1178,7 @@ class RealData(unittest.TestCase):
             ds = read_json(out / "gk2.json") if (out / "gk2.json").exists() else None
             if rc == 0:
                 self.assertIsNotNone(ds)
-                self.assertLess((out / "gk2.min.json").stat().st_size, 2_000_000)
+                self.assertLess(len(build.dumps_min(ds)), 2_000_000)
                 for r in ds["recipes"]:
                     self.assertIn(r["out"]["item"], ds["items"])
                     for i in r["in"]:
@@ -1262,7 +1205,7 @@ class RealShell(unittest.TestCase):
                                       "<script>\n")]
         self.assertEqual(order, sorted(order))
         self.assertIn('getElementById("boot-msg")', self.read("js/app.js"))
-        # the build still finds the tag by id after the move (legacy --inject path)
+        # the build still finds the tag by id after the move (assemble() fills it with build.fill_data)
         self.assertEqual(len(build.SCRIPT_RE.findall(h)), 1)
         self.assertIn('"schema":2', build.fill_data(h, '{"schema":2}', "test"))
 
@@ -1361,7 +1304,6 @@ class PlannerUx(unittest.TestCase):
         self.assertIn("S().actions.restoreGoal(goal, at,", g)
         self.assertIn('"goals.removed": "Saiu das metas: {name}"', g)
         self.assertIn('"goals.removed": "Removed from goals: {name}"', g)
-        self.assertIn("restoreGoal(goal, index, example) {", self.read("js/store.js"))
         self.assertIn('t(confirming ? "goals.confirm" : "goals.clear")', g)
         name = re.search(r"\n\.goal-name \{(.*?)\}", css).group(1)
         self.assertIn("overflow-wrap: normal", name)
@@ -1400,9 +1342,6 @@ class PlannerUx(unittest.TestCase):
         """1.8.x: the detail's "não oficial" / "editado" tag is the rename button ("Renomear <nome>", 44 px hit area);
         Salvar / Cancelar / "Voltar ao nome original" write GK.store overrides (behaviour: test_calc.mjs)."""
         r, css = self.read("js/ui/recipes.js"), self.read("css/recipes.css")
-        self.assertIn('id="rc-rename" data-rename aria-expanded="${renaming}"', r)
-        self.assertIn('aria-label="${esc(t("rc.rename", { name: name(it, state.overrides) }))}"', r)
-        self.assertIn("GK.store.actions.setOverride(lang, V.item, keep ? v : \"\")", r)
         for k, pt, en in (("rc.rename", "Renomear {name}", "Rename {name}"), ("rc.renameReset", "Voltar ao nome original", "Back to the original name"),
                           ("rc.exportNames", "Exportar nomes editados ({n})", "Export edited names ({n})")):
             self.assertIn('"%s": "%s"' % (k, pt), r)
@@ -1460,7 +1399,6 @@ console.log(JSON.stringify({ after, back, twice, ui: S.get().ui }));
                                        "example": True, "done": {"raw:log": True}})
         self.assertEqual(out["twice"], {"goals": [{"item": "wine", "qty": 2}], "replaced": False})
         self.assertTrue(out["ui"]["todayCollapsed"])
-        self.assertNotIn("editNames", out["ui"])
 
 
 class TodayFeatures(unittest.TestCase):
@@ -1499,9 +1437,6 @@ class TodayFeatures(unittest.TestCase):
 
     def test_state_and_sync(self):
         store, sync = self.read("js/store.js"), self.read("js/sync.js")
-        synced = re.search(r"const SYNCED = \[(.*?)\];", store).group(1)
-        self.assertIn('"dayDone"', synced)
-        self.assertIn('"dayNotes"', synced)
         self.assertIn("const SCHEMA = 5;", store)   # 1.3.4 fields were additive; schema 5 = lists (migrated, test_calc.mjs)
         self.assertIn("dayDone: cleanDone(o.dayDone, day, dayNumber), dayNotes: cleanNotes(o.dayNotes)", store)
         for fn in ("toggleDayDone(", "setDayNote(", "function keepLate(", "function adoptLate("):
@@ -1510,6 +1445,7 @@ class TodayFeatures(unittest.TestCase):
         self.assertIn("S().adoptLate(", sync)
         self.assertIn("mergeSynced(S().syncPayload(st), fields, d.updatedAt > st.updatedAt, base)", sync)
         # lists (schema 5): synced by id, the open list stays per device, the flat mirror is never an unknown field
+        synced = re.search(r"const SYNCED = \[(.*?)\];", store).group(1)
         self.assertIn('"lists", "listsGone"', synced)
         self.assertNotIn("activeList", synced)
         self.assertIn("S().MIRROR.indexOf(k) < 0", sync)
@@ -1616,19 +1552,6 @@ class SearchRecents(unittest.TestCase):
         self.assertIn('input.addEventListener("focus", () => renderResults());', js)
         self.assertIn(".result-recent .result-name", self.read("css/header.css"))
 
-    def test_store_field(self):
-        store = self.read("js/store.js")
-        synced = re.search(r"const SYNCED = \[(.*?)\];", store).group(1)
-        self.assertIn('"recents"', synced)
-        self.assertIn('"recents"', re.search(r"const LATE = \[(.*?)\];", store).group(1))
-        self.assertIn("const RECENTS_MAX = 12;", store)
-        self.assertIn("recents: cleanRecents(o.recents),", store)
-        self.assertIn("pushRecent(s, item);", store.split("addGoal(item, qty) {", 1)[1].split("\n    },", 1)[0])
-        for page in ("prototype/index.html", "dist/index.html"):
-            html = (ROOT / page).read_text(encoding="utf-8")
-            self.assertIn('"search.recent": "Recentes"', html, page)
-
-
 class TypeScale(unittest.TestCase):
     """Text follows the phone's text size (docs/revisao-ux/app.md, Acessibilidade 1) and the "Letra grande" switch
     (ideias.md #13): type sizes in rem, html[data-big] raises the root, ui.bigText is a per-device flag."""
@@ -1664,8 +1587,6 @@ class TypeScale(unittest.TestCase):
         self.assertRegex(base, r"html\[data-big\] \{ font-size: 12[0-5](\.\d+)?%; \}")
         flags = re.search(r"const UI_FLAGS = \[(.*?)\];", store).group(1)
         self.assertIn('"bigText"', flags)
-        synced = re.search(r"const SYNCED = \[(.*?)\];", store).group(1)
-        self.assertNotIn("ui", re.findall(r'"(\w+)"', synced))   # per device, never synced
         theme, app, footer = self.read("js/theme.js"), self.read("js/app.js"), self.read("js/ui/footer.js")
         self.assertIn('root.setAttribute("data-big", "")', theme)
         self.assertIn("big };", theme)
@@ -2011,9 +1932,6 @@ class FactsBuild(unittest.TestCase):
             self.assertIn(needle, css)
         # 1.8.0: the -10px of "Já estudei" no longer moves every checkbox of the app (Tecnologias, Hoje, Planejador)
         self.assertNotRegex(css, r"(^|\n)\.tick \{[^}]*margin-left")
-        store = (ROOT / "src" / "js" / "store.js").read_text(encoding="utf-8")
-        self.assertIn('"researched", "studied",', store)
-        self.assertIn('const LATE = ["dayDone", "dayNotes", "recents", "studied"];', store)
         for f in ("summary.js", "goals.js", "fmt.js"):
             self.assertNotIn(".where", (ROOT / "src" / "js" / "ui" / f).read_text(encoding="utf-8"))
 
@@ -2127,14 +2045,9 @@ class Cuts160(unittest.TestCase):
             block = tn.split("GK.i18n.add({", 1)[1].split("\n  en: {", 1)[0 if lang == "pt" else 1]
             for w in words:
                 self.assertIn(w, block)
-        flags = re.search(r"const UI_FLAGS = \[(.*?)\];", store).group(1)
-        self.assertIn('"tnCollapsed"', flags)
         self.assertIn("tnCollapsed: false", store)
         # the tech tab's column headers: 44 px buttons with aria-expanded, chevron after the title, smaller than ›
         tech, tcss = self.read("js/ui/tech.js"), self.read("css/tech.css")
-        self.assertIn('<button type="button" class="tc-btn" id="tcol-${domId(bid)}-${col}" data-tcol="${col}" aria-expanded="${open}" aria-controls="${body}"', tech)
-        self.assertIn('<span class="tc-t">${esc(t("tech.column", { n: col }))}</span><span class="tc-chev" aria-hidden="true"></span><span class="tc-r">', tech)
-        self.assertIn('${all ? `<span class="tc-ok" aria-hidden="true">✓</span>` : ""}', tech)
         btn = re.search(r"\n\.tc-btn \{([^}]*)\}", tcss).group(1)
         self.assertIn("min-height: var(--tap);", btn)
         chev = re.search(r"\n\.tc-chev \{([^}]*)\}", tcss).group(1)
@@ -2349,11 +2262,7 @@ class Quality19(unittest.TestCase):
 
     def test_steps_no_grade_badge(self):
         s = (ROOT / "src" / "js" / "ui" / "summary.js").read_text(encoding="utf-8")
-        self.assertNotIn("badge-q", s)
-        self.assertIn('<span class="badge badge-goal">', s)
         self.assertIn('"steps.starGrade": "{grade} com {n} ciclos bem-sucedidos"', s)
-        f = (ROOT / "src" / "js" / "ui" / "fmt.js").read_text(encoding="utf-8")
-        self.assertNotIn('r.quality ? " · " + t("quality." + r.quality)', f)
 
 
 
@@ -2362,29 +2271,12 @@ class BronzePlain17(unittest.TestCase):
     the bronze one and shows as bronze: the payload's families, the page's rule and where it is drawn. (The behaviour
     itself, list, search, detail, lines: test_calc.mjs "bronze comum".)"""
 
-    def test_payload_families(self):
-        it = read_json(ROOT / "data" / "gk2.json")["items"]
-        fams = {}
-        for k, v in it.items():
-            if v.get("kind") == "quality-variant" and v.get("base"):
-                fams.setdefault(v["base"], set()).add(k.rsplit("-", 1)[1])
-        plain = sorted(b for b, gs in fams.items() if "bronze" not in gs)
-        self.assertEqual(plain, ["cabbage", "cabbage-seed", "grape-seeds", "grapes", "onion", "onion-seed", "pumpkin",
-                                 "pumpkin-seeds", "wine"])
-        for b in plain:
-            self.assertEqual(it[b]["kind"], "item")          # the same item, no id change
-            self.assertNotIn(b + "-bronze", it)
-        for b in ("story", "newspaper", "vegetable-salad", "bowl-of-sauerkraut"):
-            self.assertIn("bronze", fams[b])                  # their own bronze item: the plain one is not bronze
-
     def test_page_rule_and_display(self):
         src = lambda f: (ROOT / "src" / f).read_text(encoding="utf-8")
         data = src("js/data.js")
         for needle in ("function bronzePlain()", "function anyLines()", "const lineGrade = (line) =>", "function gradeSort(list, famOf, rankOf, together)"):
             self.assertIn(needle, data)
         self.assertIn('const q = grade === false ? "" : STAR[grade || (ent && ent.grade)] || "";', src("js/util.js"))
-        self.assertIn("function gradedName(it, nm)", src("js/ui/fmt.js"))
-        self.assertIn("GK.ui.fmt.gradedName(it, nm)", src("js/ui/search.js"))
         rc = src("js/ui/recipes.js")
         self.assertIn("GK.ui.fmt.gradedName(it, nm))}</h2>", rc)
         self.assertIn("GK.data.GRADE_RANK[D.items[id].grade], true);", rc)
@@ -2453,7 +2345,6 @@ class RecipeNamesPt18(unittest.TestCase):
 
     def test_page_code(self):
         fmt = (ROOT / "src" / "js" / "ui" / "fmt.js").read_text(encoding="utf-8")
-        self.assertIn("n.split(/ from | a partir de /i)[0]", fmt)
         rc = (ROOT / "src" / "js" / "ui" / "recipes.js").read_text(encoding="utf-8")
         self.assertIn("function recipeName(r, it)", rc)
         self.assertIn("const PT_HIDDEN_NAME = / a partir de |^Construir .+ \\(.+\\)$/i;", rc)

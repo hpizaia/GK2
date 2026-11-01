@@ -10,8 +10,8 @@
    Each medallion on the wheel carries its short name ("Gula", "Ira"), so two similar reds never depend on colour
    alone. Under its header the day card holds that
    weekday's "Bilhete do dia" (one short note, GK.store dayNotes; noteBox below, shared with ui/today.js).
-   Data: the payload's `days` block (data/days.json, embedded by scripts/build.py). GK.data does not keep that block
-   itself, so this module wraps GK.data.load once to keep it as GK.data.get().days (no-op if data.js ever does).
+   Data: the payload's `days` block (data/days.json, embedded by scripts/build.py), kept by GK.data.load as
+   GK.data.get().days.
    Owns: [data-panel="days"] (section created by GK.router.ensureScreens), the route "days" and its tab "tab.days",
    the shared week helpers below. State: GK.store day / dayNumber / dayAnchor / dayNotes (setDay, setDayNumber,
    advanceDay, clearAnchor, setDayNote).
@@ -148,17 +148,6 @@ GK.i18n.add({
     "days.note.cleared": "Note removed: {name}",
   },
 });
-
-// keep the payload's `days` block on GK.data.get().days (GK.data.load drops unknown top-level blocks)
-(function () {
-  const load = GK.data.load;
-  GK.data.load = function (json) {
-    const j = json || JSON.parse(document.getElementById("gk2-data").textContent || "{}");
-    const D = load(j);
-    if (D) D.days = j.days || (j.meta && j.meta.days) || null;
-    return D;
-  };
-})();
 
 GK.ui.days = (function () {
   const { t, name, num } = GK.i18n, { esc } = GK.util;

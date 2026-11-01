@@ -71,9 +71,11 @@ O progresso fica só no `localStorage` do navegador. As fontes vêm do Google Fo
 Só quando o jogo ou a wiki mudar. Antes, confira se a wiki já descreve a versão nova do jogo. Respeite a wiki: o coletor espera 1 segundo entre pedidos, e os dados são © NX Software (veja [Créditos e direitos](../README.pt-BR.md#créditos-e-direitos)); mantenha a sua cópia sem fins comerciais.
 
 ```sh
-for s in recipes items buildings crafting-stations technologies alchemy-formulas; do
+mkdir -p data/raw/days
+for s in recipes items buildings crafting-stations technologies alchemy-formulas quests; do
   python3 -I scripts/fetch_dataset.py "$s" data/raw || break
 done
+cp data/raw/api-quests-all.json data/raw/days/probe-quests.json   # missões que pedem itens
 python3 -I scripts/build_dataset.py "$PWD"
 git diff --stat data/items.en.json data/recipes.en.json
 ```
@@ -82,6 +84,7 @@ git diff --stat data/items.en.json data/recipes.en.json
 - O `build_dataset.py` imprime contagens e listas de problemas (`dangling`, `unmatched calc`…). Compare com a vez anterior; o normal é tudo vazio ou quase.
 - O `data/raw/calculator-props.json` (qual receita o calculador da wiki prefere) é opcional e fica atrás de um desafio do navegador; veja "Calculador" em [`docs/atualizacao.md`](atualizacao.md).
 - Itens novos precisam de uma entrada na camada de reserva: `python3 -I scripts/build_names.py data`.
+- Nomes de receita em português e correções de nomes ficam em duas camadas escritas à mão, `data/names.recipes.pt-BR.json` e `data/names.wiki.pt-BR.json`. Receita nova aparece em inglês até alguém acrescentá-la (como buscar o nome na wiki em português: "Nomes de receita em português" em [`docs/atualizacao.md`](atualizacao.md)).
 
 ## 5. Nomes oficiais do seu próprio jogo (opcional, Windows)
 
@@ -98,9 +101,10 @@ git diff --stat data/names.official.pt-BR.json
 
 Leia a saída: "pt alterado" (o jogo mudou uma tradução), "gameKey sem texto" (chave que sumiu) e "conferir à mão" (nomes com ícone no meio do texto).
 
-## 6. Ícones, tecnologias e dias
+## 6. Fatos do item, ícones, tecnologias e dias
 
 ```sh
+python3 -I scripts/build_facts.py           # data/facts.json: quem vende, quem compra, estudo, pedidos (do cache do passo 4)
 python3 -I scripts/build.py --no-src        # só dados: data/gk2.json e os relatórios
 python3 -I scripts/fetch_icons.py           # data/icons/<id>.png, só o que falta (fora do git)
 python3 -I scripts/build_techs.py           # data/techs.json (exit 1 se a árvore tiver erro)
@@ -125,7 +129,7 @@ python3 -I scripts/test_build.py && python3 -I scripts/test_techs.py && node scr
 | `dist/index.html` | A página do Artifact (é esta que vai para o Claude) |
 | `dist/preview.html` | A mesma página com esqueleto de documento (abrir localmente ou hospedar como `index.html`) |
 | `prototype/index.html` | Página de desenvolvimento |
-| `data/gk2.json`, `data/gk2.min.json` | O conjunto de dados montado (schema em [`scripts/README-build.md`](../scripts/README-build.md)) |
+| `data/gk2.json` | O conjunto de dados montado (schema em [`scripts/README-build.md`](../scripts/README-build.md)) |
 | `data/report-build.md`, `data/report-l10n.md` | Relatório do build (tem que dar 0 erros) e nomes sem tradução, do mais usado para o menos usado |
 | `CHANGELOG.md` | Gerado a partir de `data/changelog.json`. Não edite à mão |
 

@@ -3,7 +3,7 @@
 
     python3 -I scripts/make_sprite.py                          # data/icons -> data/sprite.json (+ data/sprite.png)
     python3 -I scripts/make_sprite.py --icons DIR --out PATH.json [--size N]
-    python3 -I scripts/build.py --inject prototype/index.html --out dist/index.html --artifact --sprite data/sprite.json
+    python3 -I scripts/build.py                                # then rebuild: the page embeds data/sprite.json
 
 Icons saved at an integer zoom (the wiki serves pixel art at 4x) are first reduced exactly to their native size.
 Cell size: the icons' native size when every icon is at most 40 px, otherwise 32 px (override with --size).

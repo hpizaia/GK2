@@ -542,6 +542,13 @@ def main(argv=None):
         print(f"build_techs: ERROR: {e}", file=sys.stderr)
     if not args.check:
         out = Path(args.out)
+        try:   # same tree as on disk: keep its meta.built (a rerun on another day writes nothing)
+            old = json.loads(out.read_text(encoding="utf-8"))
+            if dict(old, meta=dict(old["meta"], built=doc["meta"]["built"])) == doc:
+                print(f"build_techs: {out} up to date (nothing written)")
+                return 1 if rep["errors"] else 0
+        except (OSError, ValueError, KeyError, TypeError):
+            pass
         out.parent.mkdir(parents=True, exist_ok=True)
         tmp = out.with_name(out.name + ".tmp")
         tmp.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")

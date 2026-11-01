@@ -7,19 +7,25 @@ cd GK2
 git status                     # comece com a árvore limpa: fica fácil ver o que o patch mudou
 ```
 
-Dependências entre os passos: `build_techs.py` lê o `gk2.json`, e o `build.py` lê o `techs.json` (nomes das tecnologias nas receitas, árvore na página). Os ícones saem do `gk2.json` e do `techs.json`. Por isso o build roda duas vezes: só dados no passo 4 e completo no passo 6.
+Dependências entre os passos: `build_techs.py` e `build_days.py` leem o `gk2.json`, e o `build.py` lê o `techs.json`, o `facts.json` e o `days.json`. Os ícones saem do `gk2.json` e do `techs.json`. Por isso o build roda duas vezes: só dados no passo 4 e completo no passo 6.
+
+Patch só do jogo (o wiki ainda não mudou): pule o passo 1 e troque `latest`, `date` e `note` em `data/game-version.json`. É isso que liga o aviso de dados velhos no app.
 
 ## 1. Atualizar os dados do wikily
 
 Primeiro confira se o wiki já foi atualizado: a página do wiki diz a versão do jogo que descreve. Sem isso não adianta continuar.
 
 ```sh
-for s in recipes items buildings crafting-stations technologies alchemy-formulas; do
+mkdir -p data/raw/days
+for s in recipes items buildings crafting-stations technologies alchemy-formulas quests; do
   python3 -I scripts/fetch_dataset.py "$s" data/raw || break
 done
+cp data/raw/api-quests-all.json data/raw/days/probe-quests.json   # missões que pedem itens (lido pelo build_facts.py)
 python3 -I scripts/build_dataset.py "$PWD"
 git diff --stat data/items.en.json data/recipes.en.json     # o que mudou
 ```
+
+- **Versão do wiki:** troque o campo `"wiki"` de `data/game-version.json` (hoje `"1.010"`) pela versão que o wiki descreve. É o número do rodapé ("receitas 1.0xx"); enquanto ele for menor que o `latest` de `data/game-version.json`, o aviso de dados velhos continua no app.
 
 - O `fetch_dataset.py` grava `data/raw/api-<slug>-offsetNNNN.json` e `api-<slug>-all.json` (fora do git). O `build_dataset.py` só lê os `-all.json`.
 - O `build_dataset.py` imprime contagens e listas de problemas (`dangling`, `unmatched calc`, `build variants unresolved`). Compare com a versão anterior: o normal é tudo vazio ou quase.
@@ -56,21 +62,44 @@ python3 -I tools/exportar-textos/juntar_nomes.py --atualizar
 git diff --stat data/names.official.pt-BR.json
 ```
 
-- **Use sempre `--atualizar`.** Ele parte do `names.official.pt-BR.json` atual, troca `pt`/`en_game` pelo texto novo da mesma `gameKey`, mantém as 32 entradas ligadas à mão (zonas, perks, `matched_by`) e acrescenta as `gameKey` novas do `names.pt-BR.json`. Sem o flag, o arquivo é refeito só pelas 972 `gameKey` e perde as outras 32.
+- **Use sempre `--atualizar`.** Ele parte do `names.official.pt-BR.json` atual, troca `pt`/`en_game` pelo texto novo da mesma `gameKey`, mantém as 48 entradas ligadas à mão (zonas, perks, `matched_by`) e acrescenta as `gameKey` novas do `names.pt-BR.json`. Sem o flag, o arquivo é refeito só pelas 972 `gameKey` e perde as outras 48.
 - Leia a saída: "pt alterado" (o jogo mudou a tradução), "gameKey sem texto" (chave que sumiu; a entrada fica como estava) e "conferir à mão" (4 nomes com ícone no meio do texto, como "Poção Tóxica de `<sprite>`").
 - **Item novo sem gameKey:** procure a chave pelo texto inglês e acrescente a entrada à mão no `names.official.pt-BR.json`, no mesmo formato, com `"matched_by": "en-text"`:
   ```sh
   python3 -I -c 'import json,sys; t=json.load(open("data/game-texts/gk2_textos.json")); q=sys.argv[1].lower(); [print(k, v) for k,v in t.items() if q in (v["en"] or "").lower()]' "Nome em inglês"
   ```
 
-## 4. Dados provisórios e ícones
+## 4. Fatos do item, dados provisórios, dias e ícones
 
 ```sh
+python3 -I scripts/build_facts.py           # data/facts.json: quem vende, quem compra, estudo, pedidos, efeito
 python3 -I scripts/build.py --no-src        # data/gk2.json etc., sem a página
+python3 -I scripts/build_days.py --date AAAA-MM-DD   # só se os textos do jogo mudaram (passo 2): data/days.json
 python3 -I scripts/fetch_icons.py           # data/icons/<id>.png (só baixa o que falta)
 ```
 
-O `build.py --no-src` termina com exit 1 se houver erro grave. Nesse caso leia `data/report-build.md` antes de seguir.
+- O `build_facts.py` lê o cache do wiki (`data/raw/api-items-all.json` e `data/raw/days/probe-quests.json`), o `items.en.json`, os textos do jogo e o `names.official.pt-BR.json`; por isso vem depois dos passos 1 a 3. Só regrava o `facts.json` se o conteúdo mudar. Para só conferir: `--check`.
+- O `build_days.py` lê `data/game-texts/gk2_textos.json` e o `data/gk2.json` (por isso vem depois do build só de dados). Os eventos de cada dia são escritos à mão no próprio script (`EVENTS`). Use em `--date` a data do dia: ela vai para `meta.built` do `days.json` e para a página. Para só conferir: `--check`.
+- O `build.py --no-src` termina com exit 1 se houver erro grave. Nesse caso leia `data/report-build.md` antes de seguir.
+
+**Nomes de receita em português.** Receita nova chega em inglês: aparece na seção "Recipe names" do `data/report-l10n.md`. Os nomes ficam em `data/names.recipes.pt-BR.json`, escrito à mão (chave = nome inglês exato). A primeira versão (231 nomes, 1.8.4) foi montada com scripts que não estão no repositório; para poucas receitas novas, faça à mão:
+
+1. Busque o nome na wiki em português. A API é a mesma do passo 1, com `locale=pt-br` **em minúsculas** (`pt-BR` e `pt` voltam em inglês, sem erro). O `fetch_dataset.py` só busca em inglês, então use uma cópia dele:
+   ```sh
+   mkdir -p data/raw/pt
+   sed 's/"locale": "en"/"locale": "pt-br"/' scripts/fetch_dataset.py > data/raw/pt/fetch_pt.py
+   for s in recipes alchemy-formulas; do python3 -I data/raw/pt/fetch_pt.py "$s" data/raw/pt || break; done
+   python3 -I -c '
+   import json,sys
+   W={}
+   for s,p in (("recipes",""),("alchemy-formulas","alchemy-")):
+       for r in json.load(open(f"data/raw/pt/api-{s}-all.json"))["rows"]: W[p+r["key"]]=r["data"]["name"]
+   for r in json.load(open("data/recipes.en.json")):
+       if r["name"]==sys.argv[1]: print(r["id"], "->", W.get(r["id"], "(sem nome na wiki)"))' "Nome inglês da receita"
+   ```
+   Confira que o resultado veio em português.
+2. Acrescente a entrada no mesmo formato das outras: da wiki, `"source": "wikily-pt", "confidence": "likely"`; texto inteiro do jogo, `"game-files"`/`"official"`; montado por nós a partir de nomes oficiais (construções, plantio, fórmula de alquimia), `"derived"`/`"guess"` (a página mostra o selo "não oficial"). Escreva o grau como o app: "(ouro)", "(prata)", "(bronze)", nunca o "(qualidade ouro)" da wiki.
+3. Rode o build de novo e confira que a receita saiu do `report-l10n.md`.
 
 ## 5. Tecnologias (e os ícones delas)
 

@@ -233,7 +233,7 @@ GK.router    hash routes (#plan, #recipes, #tech, #changelog); register({id, lab
              header renders the tab bar from it; missing <section data-screen> are created
 GK.theme / GK.sync   theme attribute; account sync (Artifact db + user; merge field by field, keeps unknown fields)
 GK.ui.*      header, search, goals, summary, checklist, techneeds (planner); recipes (#recipes); tech (#tech);
-             changelog, soon, footer, toast (+ fmt helpers):
+             changelog, footer, toast (+ fmt helpers):
              each {mount(el, planRoot), render(state, meta, plan)}, registered with GK.app.registerPanel
 GK.app       boot: data → store → i18n → theme → mount registered panels → router; render loop
 ```

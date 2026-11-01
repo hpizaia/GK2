@@ -21,7 +21,6 @@ GK.i18n.add({
     "theme.darkTitle": "Tema escuro (noite)",
     "theme.cycle": "Tema: {mode}. Tocar para mudar para {next}",
     "tabs.label": "Telas",
-    "tab.soon": "em breve",
   },
   en: {
     "app.title": "GK2 <b>Companion</b>",
@@ -38,7 +37,6 @@ GK.i18n.add({
     "theme.darkTitle": "Dark theme (night)",
     "theme.cycle": "Theme: {mode}. Tap to switch to {next}",
     "tabs.label": "Screens",
-    "tab.soon": "soon",
   },
 });
 
@@ -94,7 +92,7 @@ GK.ui.header = (function () {
     document.getElementById("brand").setAttribute("aria-label", t("app.titlePlain"));
     document.title = t("app.titlePlain");
     const tabs = GK.router.tabs().map((tb) =>
-      `<a class="tab" href="#${tb.id}"${tb.id === cur ? ' aria-current="page"' : ""}>${esc(t(tb.labelKey))}${tb.soon ? ` <span class="soon">${esc(t("tab.soon"))}</span>` : ""}</a>`
+      `<a class="tab" href="#${tb.id}"${tb.id === cur ? ' aria-current="page"' : ""}>${esc(t(tb.labelKey))}</a>`
     ).join("");
     document.querySelectorAll('[data-slot="tabs"]').forEach((n) => { n.innerHTML = tabs; n.setAttribute("aria-label", t("tabs.label")); });
     const langEl = document.querySelector('[data-slot="lang"]');
