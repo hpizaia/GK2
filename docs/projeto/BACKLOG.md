@@ -1,6 +1,6 @@
 # Backlog — Companheiro GK2
 
-01/11/2026 · versão atual **1.6.0**, publicada (app, site e release v1.6.0 no GitHub)
+01/11/2026 · versão atual **1.7.0**, publicada (app, site e release v1.7.0 no GitHub)
 
 Este arquivo substitui o backlog anterior (Etapas 0 a 5). O histórico do que já foi feito está no [CHANGELOG.md](../../CHANGELOG.md).
 
@@ -8,16 +8,18 @@ Esforço: **P** até 2 h · **M** meio dia a um dia · **G** vários dias. Quand
 
 ## Onde estamos
 
-**Publicado:** 1.6.0 (01/11, madrugada): app versão 11, site versão 9, release v1.6.0 com o arquivo único. Sessões laterais da noite arquivadas.
+**Publicado:** 1.7.0 (01/11, 05:50): app versão 12, site versão 10, release v1.7.0 com o arquivo único. Antes dela, a 1.6.0 (01/11, madrugada).
 
 **Saiu hoje:**
 - **1.4.0:** o painel Hoje ganhou "feito hoje", a prévia de amanhã, o bilhete por dia e a opção "Letra grande". No celular, o Planejador mostra Matérias-primas e Etapas logo depois das Metas, as abas ficam fixas e as linhas ficaram mais baixas; site e READMEs revisados.
 - **1.5.0:** listas separadas ("Lista: Igreja ▾") e recentes na busca. O detalhe do item ganhou "Onde conseguir", energia e efeito no estilo do jogo; rodapé enxuto, QR nos Créditos e aviso de dados velhos.
 - **1.5.1:** o cartão "Próximo passo" (ideia 5, que entrou na 1.5.0) saiu a seu pedido: na prática atrapalhava no topo do Planejador. A lista de etapas continua igual.
+- **1.7.0:** a **ficha completa do item** pedida pelo amigo do Hugo, no detalhe das Receitas: "Quem compra" (preço por comerciante, "até" do preço base, curtidas, nota "i"), "Estudar" (pontos por cor, custo em Ciência e Fé, caixa "Já estudei" sincronizada) e "Pedido em" (recolhido, com aviso de spoiler: missões, restauração e encomendas do povoado); 197 compradores, 333 estudos, 122 pedidos, +48 KB. **Hoje enxuto:** uma linha por acontecimento com título curto escrito à mão, toque expande, caixa só nas tarefas, sem o bloco "Amanhã", bilhete como ícone ✎, "?" no não confirmado. **Espaçamentos do Planejador** consertados (seta de recolher, alinhamento de figura/caixa/nome, seta da estação, ×N ▾ e "Já tenho"). Comparações: espaços https://claude.ai/artifact/MzwpVQAgCZgYGQcAjX4n2H · Hoje https://claude.ai/artifact/9Ny5TryApVob9G85V3pH5H · ficha https://claude.ai/artifact/THYhuuW9XihfsjbnaB9oVi.
 - **1.6.0:** os 16 cortes de ruído aprovados (rodada 1) e o conserto do "Recentes" (2.7). Etapas mais curtas ("Já tenho" atrás do ×N, linha de requisitos enxuta, seletor de receita na própria linha, execuções só quando diferem), a figura do item abre a receita (sai o "i"), Vantagens recolhidas, dicas fixas cortadas ou encurtadas, Dias e Hoje com menos "hoje", Receitas sem "· 1 receita" e com "Construir no Cemitério", Histórico com só a versão atual aberta, um aviso só no primeiro uso.
 
 **Esperando a sua decisão:**
-1. ~~Os 16 cortes~~ **Feitos na 1.6.0** (31/10 à noite), junto com o conserto do "Recentes" (2.7); as 18 dúvidas de detalhe foram resolvidas como o "Depois" dos protótipos mostrava. **Falta só a sua confirmação para publicar** o app e o site.
+1. ~~Os 16 cortes~~ **Feitos e publicados na 1.6.0**; a ficha, o Hoje enxuto e os espaçamentos **publicados na 1.7.0**.
+1b. Três detalhes da ficha que ficaram em aberto: como mostrar preço em prata/bronze (hoje "12 prata"), "curtidas" ou "likes" como no jogo, e se os +48 KB incomodam no celular. Dois eventos do Hoje sem caixa de marcar ("Pagamento do Armazém", "Agatha entrega corpos") e o título curto "Agatha (Encruzilhada)": confirmar se é isso mesmo.
 2. O **plano de UI** (`docs/projeto/PLANO-UI-JOGO.md`): a primeira versão (janelas de couro e madeira) foi recusada por pesada em 31/10; a regra passou a ser "limpo e minimalista, só sinais do jogo". Decisão de 31/10 à noite: **primeiro os cortes e os consertos; a UI volta depois, com o plano atual como base** (rodada 4).
 3. As **ideias ainda sem decisão**: 6, 7 (missão como meta, rodada 3), 15, 16, 18, 19 e 20 (rodada 6).
 
