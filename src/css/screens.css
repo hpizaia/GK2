@@ -25,7 +25,7 @@
 .sync-chip[data-state="error"]::before { background: var(--blood); }
 .toast {
   position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
-  z-index: 50; max-width: calc(100% - 32px); padding: 10px 16px; border-radius: var(--r);
+  z-index: 50; width: max-content; max-width: calc(100% - 32px); padding: 10px 16px; border-radius: var(--r);
   background: var(--slate); color: var(--ink); border: 1px solid var(--gold); box-shadow: 0 6px 20px var(--shadow);
   font-weight: 700; font-size: .9375rem;
 }
@@ -34,7 +34,7 @@
 .toast-undo[hidden] { display: none; }
 .toast-undo .toast-msg { min-width: 0; overflow-wrap: break-word; }
 .toast-undo .toast-undo-btn { flex: none; color: var(--accent); border-color: var(--gold); }
-#toast:not([hidden]) ~ .toast-undo { bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+#toast:not([hidden]) ~ .toast-undo { bottom: calc(90px + env(safe-area-inset-bottom, 0px)); }
 
 /* update history (#changelog, ui/changelog.js) */
 .screen-changelog { padding-block: var(--s5) var(--s6); }

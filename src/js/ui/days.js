@@ -49,6 +49,7 @@ GK.i18n.add({
     "days.recalToast": "Calibração apagada. Informe o dia e o número de novo.",
     "days.week": "A semana",
     "days.how": "Como funciona",
+    "days.credit": "Dados dos dias em parte da wiki do Graveyard Keeper 2 no Wikily (https://wikily.gg/graveyard-keeper-2), © NX Software. Conteúdo do jogo © Lazy Bear Games / tinyBuild.",
     "days.orderUnsure": "A ordem dos dias vem de guias e da wiki; o jogo não a escreve.",
     "days.machineNote": "As frases curtas foram escritas para este app; o texto oficial do jogo fica em “Texto do jogo”.",
     "days.unconfirmed": "não confirmado",
@@ -112,6 +113,7 @@ GK.i18n.add({
     "days.recalToast": "Calibration cleared. Give the day and the number again.",
     "days.week": "The week",
     "days.how": "How it works",
+    "days.credit": "Day data partly from the Graveyard Keeper 2 Wiki by Wikily (https://wikily.gg/graveyard-keeper-2), © NX Software. Game content © Lazy Bear Games / tinyBuild.",
     "days.orderUnsure": "The order of the days comes from guides and the wiki; the game never writes it.",
     "days.machineNote": "The short lines were written for this app; the official game text is under “Game text”.",
     "days.unconfirmed": "unconfirmed",
@@ -539,7 +541,7 @@ GK.ui.days = (function () {
       <div class="days-wheel-box">${wheel(w, state)}${todayBar(state)}</div>
       <div class="days-detail">${card(day(sel), state)}</div>
       <div class="days-table">${table(w, state)}</div>
-      ${w.meta.credits ? `<p class="days-credit">${esc(w.meta.credits)}</p>` : ""}
+      ${w.meta.credits ? `<p class="days-credit">${esc(GK.i18n.lang() === "en" ? w.meta.credits : t("days.credit"))}</p>` : ""}
     </div>`;
     // keep open <details> open across re-renders (same position = same key)
     root.querySelectorAll("details").forEach((x, i) => { x.dataset.k = sel + ":" + i; if (open.indexOf(x.dataset.k) >= 0) x.open = true; });
