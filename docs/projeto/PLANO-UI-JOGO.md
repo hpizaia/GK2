@@ -1,7 +1,7 @@
 # Plano: sinais do jogo na interface (Companheiro GK2)
 
 > 31/10/2026, sobre a versão 1.5.1. Documento de plano: nada disto está no app ainda.
-> Protótipo: [`docs/revisao-ux/protos/ui-jogo/`](../revisao-ux/protos/ui-jogo/index.html). É o app 1.5.1 de verdade com as mudanças pontuais e um botão **Atual / Novo** para comparar. Capturas em `shots/`.
+> Protótipo: `docs/revisao-ux/protos/ui-jogo/` (pasta interna, fora do git; publicado como artifact privado em https://claude.ai/artifact/C7aaTk2E5Z7sNQsuniYdie). É o app 1.5.1 de verdade com as mudanças pontuais e um botão **Atual / Novo** para comparar. Capturas em `shots/`.
 
 ## 1. Resumo em 5 linhas
 
