@@ -1,0 +1,104 @@
+{
+  "_comentario": [
+    "Casos das capturas (scripts/shots/README.md). Cada caso vira uma captura por idioma × tela.",
+    "estadoBase + estados[nome] = o localStorage['gk2-companion'] de um jogador, no schema de schemaVersion (o de",
+    "src/js/store.js; o capture.mjs avisa quando a página estiver noutro). Sem 'lists', o capture monta uma lista só",
+    "('Minha lista', id main) com goals/choice/have/done. lang e theme vêm da variante (idioma, tela.tema).",
+    "Caso: nome, rota (#plan, #recipes, #tech, #days, #credits, #changelog), estado (nome em estados; sem estado =",
+    "primeira visita, com o plano de exemplo), sessao (sessionStorage: gk2-recipes-view abre uma ficha de Receitas),",
+    "passos ({clicar: seletor} | {digitar: texto, em: seletor} | {tecla: Enter} | {rolar: seletor}; espera: ms),",
+    "idiomas (padrão pt) e telas (padrão telasPadrao). Hoje = 1º de novembro de 2026, dia 61 (Ira)."
+  ],
+  "schemaVersion": 5,
+  "telas": {
+    "cel-escuro": { "largura": 390, "altura": 844, "escala": 2, "celular": true, "tema": "dark" },
+    "cel-claro": { "largura": 390, "altura": 844, "escala": 2, "celular": true, "tema": "light" },
+    "desk-claro": { "largura": 1280, "altura": 900, "escala": 1, "celular": false, "tema": "light" },
+    "desk-escuro": { "largura": 1280, "altura": 900, "escala": 1, "celular": false, "tema": "dark" }
+  },
+  "telasPadrao": ["cel-escuro", "desk-claro"],
+  "estadoBase": {
+    "overrides": {}, "showHidden": false, "researched": {}, "studied": [], "groupChoice": {}, "perks": {},
+    "day": "wrath", "dayNumber": 61, "dayAnchor": { "number": 61, "day": "wrath" }, "dayDone": null, "dayNotes": {},
+    "recents": [],
+    "ui": { "todayCollapsed": true, "stepsCollapsed": false, "rawCollapsed": false, "tnCollapsed": false,
+            "stationCollapsed": {}, "techCols": {}, "activeList": null, "bigText": false },
+    "updatedAt": "2026-10-31T12:00:00.000Z", "syncBase": ""
+  },
+  "estados": {
+    "curto": {
+      "goals": [{ "item": "wine", "qty": 5 }, { "item": "crate", "qty": 3 }]
+    },
+    "longo": {
+      "goals": [
+        { "item": "supply-building-materials-ii", "qty": 50 }, { "item": "assembly-bench-sewing-machine", "qty": 1 },
+        { "item": "expand-military-building-area", "qty": 1 }, { "item": "supply-engineering-mechanism", "qty": 12 },
+        { "item": "miracle-growth-elixir", "qty": 5 }, { "item": "red-techbook-ii", "qty": 2 }, { "item": "iron-sword", "qty": 3 }
+      ]
+    },
+    "hoje": {
+      "goals": [
+        { "item": "supply-building-materials-ii", "qty": 50 }, { "item": "assembly-bench-sewing-machine", "qty": 1 },
+        { "item": "expand-military-building-area", "qty": 1 }
+      ],
+      "ui": { "todayCollapsed": false },
+      "dayDone": { "day": "wrath", "number": 61, "ids": [0] },
+      "dayNotes": { "wrath": "Levar 3 peixes para o Pescador", "greed": "Vender ossos" }
+    },
+    "qualidade": {
+      "goals": [{ "item": "wine-silver", "qty": 6 }, { "item": "cabbage-soup", "qty": 7 }],
+      "choice": { "cabbage-soup": "cabbage-soup-from-cabbage-silver" },
+      "have": { "grapes": 10 },
+      "done": { "raw:sand": 6 }
+    },
+    "duas-listas": {
+      "lists": [
+        { "id": "main", "name": "Igreja", "createdAt": "1970-01-01T00:00:00.000Z", "updatedAt": "2026-10-31T12:00:00.000Z",
+          "goals": [{ "item": "supply-building-materials-ii", "qty": 50 }, { "item": "red-techbook-ii", "qty": 2 }],
+          "choice": {}, "have": {}, "done": {}, "example": false },
+        { "id": "l2armas", "name": "Armas", "createdAt": "2026-10-31T12:00:00.000Z", "updatedAt": "2026-10-31T12:00:00.000Z",
+          "goals": [{ "item": "iron-sword", "qty": 3 }, { "item": "master-sword", "qty": 1 }],
+          "choice": {}, "have": {}, "done": {}, "example": false }
+      ],
+      "listsGone": {}, "legacyOf": "l2armas",
+      "ui": { "activeList": "l2armas" }
+    },
+    "letra-grande": {
+      "goals": [{ "item": "wine", "qty": 5 }, { "item": "crate", "qty": 3 }],
+      "ui": { "bigText": true }
+    },
+    "recentes": {
+      "goals": [{ "item": "wine", "qty": 5 }, { "item": "crate", "qty": 3 }],
+      "recents": ["iron-sword", "pumpkin-soup", "carp", "crate", "furnace-i", "red-techbook-ii", "master-sword"]
+    },
+    "tecnologias": {
+      "goals": [{ "item": "crate", "qty": 1 }],
+      "researched": { "zombie-assistant": true, "oiled-wood": true, "woodworking-ii": true, "circular-saw": true,
+        "market-stalls-i": true, "chopping": true, "woodworking-i": true, "the-concept-of-stone": true, "suit-up": true,
+        "tool-rack": true, "pottery-i": true }
+    }
+  },
+  "casos": [
+    { "nome": "exemplo", "rota": "plan", "idiomas": ["pt", "en"] },
+    { "nome": "plano-curto", "rota": "plan", "estado": "curto", "telas": ["cel-escuro", "cel-claro", "desk-claro", "desk-escuro"] },
+    { "nome": "plano-longo", "rota": "plan", "estado": "longo", "idiomas": ["pt", "en"] },
+    { "nome": "hoje-aberto", "rota": "plan", "estado": "hoje" },
+    { "nome": "qualidade", "rota": "plan", "estado": "qualidade" },
+    { "nome": "duas-listas", "rota": "plan", "estado": "duas-listas" },
+    { "nome": "letra-grande", "rota": "plan", "estado": "letra-grande", "telas": ["cel-escuro"] },
+    { "nome": "busca-recentes", "rota": "plan", "estado": "recentes", "passos": [{ "clicar": "#q" }] },
+    { "nome": "busca-vinho", "rota": "plan", "estado": "curto", "passos": [{ "digitar": "vinho", "em": "#q" }] },
+    { "nome": "busca-wine", "rota": "plan", "estado": "curto", "idiomas": ["en"], "telas": ["desk-claro"],
+      "passos": [{ "digitar": "wine", "em": "#q" }] },
+    { "nome": "receitas-lista", "rota": "recipes", "estado": "curto", "idiomas": ["pt", "en"] },
+    { "nome": "receitas-ficha-vinho-prata", "rota": "recipes", "estado": "curto", "idiomas": ["pt", "en"],
+      "sessao": { "gk2-recipes-view": { "item": "wine-silver" } } },
+    { "nome": "receitas-ficha-abobora", "rota": "recipes", "estado": "curto", "telas": ["desk-escuro"],
+      "sessao": { "gk2-recipes-view": { "item": "pumpkin" } } },
+    { "nome": "tecnologias", "rota": "tech", "estado": "tecnologias", "idiomas": ["pt", "en"] },
+    { "nome": "tecnologia-detalhe", "rota": "tech", "estado": "tecnologias", "passos": [{ "clicar": "#tech-list [data-open]" }] },
+    { "nome": "dias", "rota": "days", "estado": "curto", "idiomas": ["pt", "en"] },
+    { "nome": "creditos", "rota": "credits", "estado": "curto", "idiomas": ["pt", "en"] },
+    { "nome": "changelog", "rota": "changelog", "estado": "curto" }
+  ]
+}

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-/* Tests for the planner's pure modules: GK.data, GK.calc, GK.store, GK.sync (and GK.ui.fmt's recipe labels).
+/* Tests for the planner's pure modules: GK.data, GK.calc, GK.store, GK.sync (and GK.ui.fmt's recipe labels), plus the
+   pt/en parity of every text key (all modules of src/manifest.json but app.js).
    No dependencies. Run from anywhere:  node scripts/test_calc.mjs
    The modules are loaded from src/js/ in src/manifest.json order (only the ones listed in MODULES) inside a vm
    context with a fake window / document / localStorage and a fake clock; the dataset is the payload embedded
@@ -1582,6 +1583,33 @@ await test("Tecnologias tab (ui/tech.js): headers fold, columns with something l
   await env.clock.tick(200);
   h = root.querySelector("#tech-list").innerHTML;
   check(h.includes('class="hint tech-results"') && !h.includes("data-tcol") && h.includes(`data-open="${cols[0].techs[0].id}"`), "search: hits listed from a folded column, no fold headers");
+});
+
+// ---------------------------------------------------------------- textos: pt e en com as mesmas chaves
+await test("i18n: every text key of every module (src/manifest.json) exists, non-empty, in each language", () => {
+  // all the page's modules but app.js (it boots), in a bare page: the dictionary is what GK.i18n.add() calls merged
+  const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, "src/manifest.json"), "utf8"));
+  const node = () => ({ style: { setProperty() {} }, dataset: {}, classList: { add() {}, remove() {}, toggle() {} },
+    setAttribute() {}, getAttribute: () => null, removeAttribute() {}, hasAttribute: () => false, appendChild() {},
+    addEventListener() {}, querySelector: () => null, querySelectorAll: () => [], textContent: "" });
+  const ctx = { console, Intl, navigator: { language: "pt-BR", languages: ["pt-BR"] }, location: { hash: "" },
+    setTimeout() {}, clearTimeout() {}, setInterval() {}, clearInterval() {}, addEventListener() {}, removeEventListener() {},
+    document: { addEventListener() {}, createElement: node, head: node(), body: node(), documentElement: node(),
+      getElementById: () => null, querySelector: () => null, querySelectorAll: () => [] } };
+  ctx.window = ctx;
+  vm.createContext(ctx);
+  const mods = manifest.js.filter((m) => m !== "js/app.js");
+  check(mods.length >= 20, `the manifest lists the modules (${mods.length})`);
+  for (const m of mods) vm.runInContext(fs.readFileSync(path.join(ROOT, "src", m), "utf8"), ctx, { filename: m });
+  const { DICT, LANGS } = ctx.GK.i18n;
+  eq(Object.keys(DICT).sort(), LANGS.map((l) => l.code).sort(), "GK.i18n.add() only adds the languages in LANGS");
+  const all = new Set(Object.values(DICT).flatMap((d) => Object.keys(d)));
+  check(all.size > 300, `the dictionary was filled (${all.size} keys)`);
+  for (const l of LANGS) {
+    const d = DICT[l.code] || {};
+    eq([...all].filter((k) => !(k in d)).sort(), [], `keys missing in ${l.code}`);
+    eq(Object.keys(d).filter((k) => typeof d[k] !== "string" || !d[k].trim()).sort(), [], `empty texts in ${l.code}`);
+  }
 });
 
 // ---------------------------------------------------------------- done

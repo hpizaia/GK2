@@ -20,6 +20,9 @@ tools/exportar-textos/gk2_exportacao_log.txt
 .venv/
 venv/
 
+# capturas e comparações de scripts/shots/ (e o cache das fontes do Google Fonts)
+.shots/
+
 # backups automáticos do build e caches
 *.bak
 __pycache__/

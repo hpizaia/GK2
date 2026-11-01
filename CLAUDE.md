@@ -37,6 +37,7 @@ python3 -I scripts/check.py            # testes + build reprodutível + versões
 python3 -I scripts/check.py --release  # versão mais rígida, antes de publicar
 python3 -I scripts/build.py --built AAAA-MM-DD   # build do dia a dia (data: ver "meta.built" abaixo)
 python3 -I scripts/test_build.py && python3 -I scripts/test_techs.py && node scripts/test_calc.mjs
+python3 -I scripts/shots/compare.py    # depois do build: o app de HEAD × o atual, pixel a pixel (~30 s); antes de refatorar
 ```
 Ver o app: servidor `dist` do `.claude/launch.json` → http://127.0.0.1:8766/preview.html.
 Detalhe de cada script em `scripts/README.md`; opções do build em `scripts/README-build.md`.
@@ -81,8 +82,9 @@ Patch do jogo ou wiki atualizada: `docs/atualizacao.md`.
 - `docs/projeto/DESIGN.md` não muda de lugar: `test_build.py` confere o caminho na 1ª linha de `src/css/tokens.css`.
 - Qualidade: o item sem sufixo é o bronze; os ids `-silver`/`-gold` ficam por causa de planos salvos.
 - Pares que mudam juntos: `README.md` e `README.pt-BR.md`; `docs/duplicar.md` e `docs/duplicate.md`.
-- Capturas que semeiam `localStorage["gk2-companion"]` gravam `schemaVersion`: use o `SCHEMA` atual de
-  `src/js/store.js`.
+- Capturas de tela: use `scripts/shots/` (`compare.py --only-capture` para prints; casos em `casos.json`), não
+  páginas de semente avulsas. Ao subir o `SCHEMA` de `src/js/store.js`, atualize `schemaVersion` e os estados de
+  `scripts/shots/casos.json` (o `capture.mjs` avisa).
 - O Reddit é bloqueado para todas as ferramentas do Claude: peça print ou PDF ao Hugo.
 - A imagem de prévia do GitHub (`docs/media/social-preview.png`) é enviada à mão em Settings.
 

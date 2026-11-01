@@ -26,7 +26,13 @@ Antes de cada commit ou publicação basta um comando: `python3 -I scripts/check
 | `site_preview.py [--check]` | Regenera `site/preview.html` a partir de `site/index.html` (funções usadas também pelo `check.py` e pelo `release.py`) | Depois de editar `site/index.html` | `site/index.html` → `site/preview.html` |
 | `test_build.py` | Testes do `build.py` e do `validate.py` sobre `scripts/fixtures/` (saídas em pasta temporária), mais um teste de fumaça nos dados reais | Antes de cada commit/publicação | `scripts/fixtures/*`, `data/*.en.json` → só o resultado dos testes |
 | `test_techs.py` | Testes do `build_techs.py` nos dados reais. Também acusa `data/techs.json` desatualizado. Sem `data/raw/` (fora do git), pula tudo com aviso | Depois de mexer em tecnologias ou nomes | `data/raw/api-technologies-all.json`, `data/gk2.json`, nomes, tabela do jogo → só o resultado dos testes |
-| `test_calc.mjs` | Testes do JavaScript da página no node, sem dependências: `GK.data`, `GK.calc` (casos reais, ordem das estações, "tenho N", grupos, vantagens, prata/ouro), `GK.store` (migração, mesclagem) e `GK.sync` (versão, campos desconhecidos, ouvinte, nova tentativa, armazenamento por conta). Rodar com `node scripts/test_calc.mjs` | Depois de mexer em `src/js/` ou nos dados, antes de publicar | `src/js/*.js`, dados embutidos em `prototype/index.html` (ou `data/gk2.json`) → só o resultado dos testes |
+| `test_calc.mjs` | Testes do JavaScript da página no node, sem dependências: `GK.data`, `GK.calc` (casos reais, ordem das estações, "tenho N", grupos, vantagens, prata/ouro), `GK.store` (migração, mesclagem), `GK.sync` (versão, campos desconhecidos, ouvinte, nova tentativa, armazenamento por conta) e as chaves de texto (toda chave de `GK.i18n.add` em pt e en). Rodar com `node scripts/test_calc.mjs` | Depois de mexer em `src/js/` ou nos dados, antes de publicar | `src/js/*.js`, dados embutidos em `prototype/index.html` (ou `data/gk2.json`) → só o resultado dos testes |
+
+## Capturas e comparação visual (`scripts/shots/`)
+
+| script | o que faz | quando rodar | entradas → saídas |
+|---|---|---|---|
+| `shots/compare.py [--ref REF] [--only-capture]` | Abre o app de `REF:dist/preview.html` (padrão `HEAD`) e o `dist/preview.html` atual no Chrome headless, nos mesmos casos (`shots/casos.json`: cada aba e tela principal, pt/en, 390/1280 px, claro/escuro), e compara pixels, HTML e texto visíveis, estado do app, erros de JS e o resumo do `GK.data`. Uma linha por caso, exit 1 se algo mudou. Lento (~30 s): fica fora do `check.py`. Detalhes em [`shots/README.md`](shots/README.md) | Antes e depois de refatorar (depois do build); `--only-capture` para tirar prints | as duas páginas → `.shots/compare/` (ou `.shots/capturas/`), fora do git |
 
 ## Camada pt-BR de reserva (GK1 + tradução de máquina)
 
