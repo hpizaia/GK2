@@ -7,146 +7,18 @@
    Exposes: GK.ui.tech.{mount, render, open(techId, {from}), costHtml(cost, {big}), techSlot(tech), badges(tech)}.
    open(id, {from: "plan"}) adds a "‹ Voltar: <screen>" button that returns to that screen at its old scroll position.
    Unlocked items (data-item="<item id>") are buttons that open the item in Receitas (GK.ui.recipes.open).
-   1.6.0 (cortes 7, 17): shorter top hint; the detail drops "Libera N receitas do Planejador" and shows "Marcar
-   pré-requisitos como pesquisados" only when 2+ of them are missing (with 1, tapping it is the same thing).
-   1.8.0: the phone's back gesture closes a detail opened on this screen (GK.router.detailHistory: one entry when the
-   detail opens over the list; "‹ Voltar à lista" drops it).
-   1.8.x (seta das seções, opção A): each "COLUNA N … x/y" header is a 44 px button that folds its column. Every
-   column with something left to research starts open (GK.tech.pendingColumns); only a done one (N/N, with a green
-   ✓) starts folded. (1.8.2 opened only the first of them; the owner wants them all open.) What the player opens or
+   The detail shows "Marcar pré-requisitos como pesquisados" only when 2+ of them are missing (with 1, tapping it is
+   the same thing). The phone's back gesture closes a detail opened on this screen (GK.router.detailHistory: one entry
+   when the detail opens over the list; "‹ Voltar à lista" drops it).
+   Each "COLUNA N … x/y" header is a 44 px button that folds its column. Every column with something left to research
+   starts open (GK.tech.pendingColumns; all of them, the owner's choice); only a done one (N/N, with a green ✓)
+   starts folded. What the player opens or
    folds by hand is kept per branch (GK.store ui.techCols, per device, never synced) and wins over the rule. The
    open columns are worked out when the screen is shown and kept while the player ticks there, so ticking the
    last tech of a column does not fold it under the finger (it folds on the next visit).
    The thin chevron sits right after "COLUNA N" (never in the x column of the rows' "›"). A search lists its hits
    by branch, never folded. Opening a tech's detail opens its column (the list comes back to that row).
 */
-GK.i18n.add({
-  pt: {
-    "tab.tech": "Tecnologias",
-    "tech.title": "Tecnologias",
-    "tech.hint": "Marque o que já pesquisou; as anteriores contam junto.",
-    "tech.count": "{done} de {total} pesquisadas",
-    "tech.branchCount": "{done}/{total}",
-    "tech.branches": "Ramos da árvore",
-    "tech.search": "Buscar tecnologia ou item",
-    "tech.searchLabel": "Buscar nas tecnologias",
-    "tech.searchClear": "Limpar busca",
-    "tech.results.one": "{n} tecnologia encontrada",
-    "tech.results.other": "{n} tecnologias encontradas",
-    "tech.noResults": "Nenhuma tecnologia com “{q}”.",
-    "tech.viaUnlock": "desbloqueia {name}",
-    "tech.column": "Coluna {n}",
-    "tech.colCollapse": "Recolher: Coluna {n}, {done} de {total} pesquisadas",
-    "tech.colExpand": "Expandir: Coluna {n}, {done} de {total} pesquisadas",
-    "tech.researched": "Já pesquisei",
-    "tech.researchedLabel": "Já pesquisei: {name}",
-    "tech.implied": "pesquisada (vem antes de {name})",
-    "tech.impliedTitle": "Conta como pesquisada porque {name} está marcada. Para desmarcar, desmarque {name}.",
-    "tech.free": "grátis",
-    "tech.cost": "Custo",
-    "tech.points.red": "pontos vermelhos",
-    "tech.points.green": "pontos verdes",
-    "tech.points.blue": "pontos azuis",
-    "tech.badge.rep": "rep. {level}",
-    "tech.badge.repTitle": "Requer {level} de reputação com {who}",
-    "tech.badge.hidden": "oculta",
-    "tech.badge.hiddenTitle": "Fica escondida na árvore até ser revelada (veja as notas)",
-    "tech.badge.given": "dada pela história",
-    "tech.badge.givenTitle": "Você recebe de graça num evento da história; não precisa comprar",
-    "tech.badge.unofficial": "nome não oficial",
-    "tech.open": "Ver detalhes de {name}",
-    "tech.back": "Voltar à lista",
-    "tech.backTo": "Voltar: {name}",
-    "tech.unlockOpen": "Abrir {name} em Receitas",
-    "tech.close": "Fechar",
-    "tech.where": "{branch} · coluna {n}",
-    "tech.parents": "Pré-requisitos",
-    "tech.noParents": "Nenhum: é uma das primeiras do ramo.",
-    "tech.markParents": "Marcar pré-requisitos como pesquisados",
-    "tech.markedParents.one": "{n} pré-requisito marcado como pesquisado",
-    "tech.markedParents.other": "{n} pré-requisitos marcados como pesquisados",
-    "tech.parentsDone": "Todos os pré-requisitos já estão pesquisados.",
-    "tech.unlocks": "Desbloqueia",
-    "tech.noUnlocks": "Nada para fabricar ou construir.",
-    "tech.kind.building": "construção",
-    "tech.kind.recipe": "fórmula",
-    "tech.at": "em {station}",
-    "tech.children": "Leva a",
-    "tech.noChildren": "Nada: é o fim deste caminho.",
-    "tech.notes": "Notas",
-    "tech.clear": "Limpar pesquisadas",
-    "tech.clearAsk.one": "Desmarcar a {n} tecnologia pesquisada?",
-    "tech.clearAsk.other": "Desmarcar as {n} tecnologias pesquisadas?",
-    "tech.clearYes": "Sim, limpar",
-    "tech.clearNo": "Cancelar",
-    "tech.cleared": "Tecnologias desmarcadas",
-    "tech.empty": "Os dados da árvore de tecnologias não estão nesta página.",
-    "tech.missing": "Tecnologia não encontrada.",
-  },
-  en: {
-    "tab.tech": "Technologies",
-    "tech.title": "Technologies",
-    "tech.hint": "Check what you have researched; the ones before count too.",
-    "tech.count": "{done} of {total} researched",
-    "tech.branchCount": "{done}/{total}",
-    "tech.branches": "Tree branches",
-    "tech.search": "Search a technology or item",
-    "tech.searchLabel": "Search technologies",
-    "tech.searchClear": "Clear search",
-    "tech.results.one": "{n} technology found",
-    "tech.results.other": "{n} technologies found",
-    "tech.noResults": "No technology matches “{q}”.",
-    "tech.viaUnlock": "unlocks {name}",
-    "tech.column": "Column {n}",
-    "tech.colCollapse": "Collapse: Column {n}, {done} of {total} researched",
-    "tech.colExpand": "Expand: Column {n}, {done} of {total} researched",
-    "tech.researched": "Researched",
-    "tech.researchedLabel": "Researched: {name}",
-    "tech.implied": "researched (comes before {name})",
-    "tech.impliedTitle": "Counts as researched because {name} is checked. To uncheck it, uncheck {name}.",
-    "tech.free": "free",
-    "tech.cost": "Cost",
-    "tech.points.red": "red points",
-    "tech.points.green": "green points",
-    "tech.points.blue": "blue points",
-    "tech.badge.rep": "rep. {level}",
-    "tech.badge.repTitle": "Needs {level} reputation with {who}",
-    "tech.badge.hidden": "hidden",
-    "tech.badge.hiddenTitle": "Hidden in the tree until revealed (see the notes)",
-    "tech.badge.given": "story gift",
-    "tech.badge.givenTitle": "Given for free by a story event; nothing to buy",
-    "tech.badge.unofficial": "unofficial name",
-    "tech.open": "Show details of {name}",
-    "tech.back": "Back to the list",
-    "tech.backTo": "Back: {name}",
-    "tech.unlockOpen": "Open {name} in Recipes",
-    "tech.close": "Close",
-    "tech.where": "{branch} · column {n}",
-    "tech.parents": "Prerequisites",
-    "tech.noParents": "None: it is one of the first in its branch.",
-    "tech.markParents": "Mark prerequisites as researched",
-    "tech.markedParents.one": "{n} prerequisite marked as researched",
-    "tech.markedParents.other": "{n} prerequisites marked as researched",
-    "tech.parentsDone": "Every prerequisite is already researched.",
-    "tech.unlocks": "Unlocks",
-    "tech.noUnlocks": "Nothing to craft or build.",
-    "tech.kind.building": "building",
-    "tech.kind.recipe": "formula",
-    "tech.at": "at {station}",
-    "tech.children": "Leads to",
-    "tech.noChildren": "Nothing: this path ends here.",
-    "tech.notes": "Notes",
-    "tech.clear": "Clear researched",
-    "tech.clearAsk.one": "Uncheck the {n} researched technology?",
-    "tech.clearAsk.other": "Uncheck all {n} researched technologies?",
-    "tech.clearYes": "Yes, clear",
-    "tech.clearNo": "Cancel",
-    "tech.cleared": "Technologies unchecked",
-    "tech.empty": "The technology tree data is not in this page.",
-    "tech.missing": "Technology not found.",
-  },
-});
-
 GK.ui.tech = (function () {
   const { t, name, num } = GK.i18n, { esc, domId } = GK.util;
   const TK = GK.tech;
@@ -163,10 +35,7 @@ GK.ui.tech = (function () {
   const isOn = () => GK.router.current() === "tech";
 
   // ---- shared bits (also used by ui/techneeds.js) ----
-  function spritePos(id) {
-    const sp = GK.data.get().meta && GK.data.get().meta.sprite;
-    return sp && sp.icons && id ? sp.icons[id] : null;
-  }
+  const { spritePos } = GK.data;
   // tech icon in an item slot (sprite id: item/station id or tech:<slug>)
   function techSlot(tc, small) {
     return GK.util.slot(tc.icon ? { id: tc.icon } : null, name(tc), small);
@@ -370,7 +239,7 @@ GK.ui.tech = (function () {
         <button type="button" class="btn btn-sm btn-confirm" id="tech-clear-yes" data-clear-yes>${esc(t("tech.clearYes"))}</button>
         <button type="button" class="btn btn-sm btn-ghost" id="tech-clear-no" data-clear-no>${esc(t("tech.clearNo"))}</button></div>`;
     }
-    // a rare action: at the end of the screen, and only when something is marked (UX review: it read as an error at the top)
+    // a rare action: at the end of the screen, and only when something is marked (at the top it read as an error)
     return n ? `<button type="button" class="btn btn-sm btn-ghost btn-danger" id="tech-clear" data-clear>${esc(t("tech.clear"))}</button>` : "";
   }
   function render(state, meta) {
@@ -479,8 +348,7 @@ GK.ui.tech = (function () {
       if (o) { open(o.dataset.open); return; }
       if (e.target.closest("[data-close]")) { close(); if (hist) hist.pop(false); return; }
       if (e.target.closest("[data-back-route]")) { backToOrigin(); return; }
-      const ro = e.target.closest("[data-recipe-open]");
-      if (ro) { GK.ui.recipes.open(ro.dataset.recipeOpen, { from: "tech" }); return; }
+      if (GK.ui.fmt.recipeClick(e, "tech")) return;
       const tcb = e.target.closest("[data-tcol]");
       if (tcb) {
         const st = S.get(), col = +tcb.dataset.tcol;

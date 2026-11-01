@@ -11,7 +11,10 @@ import vm from "node:vm";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const MODULES = ["js/core.js", "js/util.js", "js/i18n.js", "js/data.js", "js/store.js", "js/calc.js", "js/sync.js", "js/ui/fmt.js"];
+const MODULES = ["js/core.js", "js/util.js", "js/i18n.js", "js/i18n/pt.js", "js/i18n/en.js", "js/data.js", "js/store.js", "js/calc.js", "js/sync.js", "js/ui/fmt.js"];
+// the Receitas screen: its pieces (ui/recipes-cards.js, ui/recipes-facts.js) and ui/recipes.js, in src/manifest.json order
+const RECIPES = JSON.parse(fs.readFileSync(path.join(ROOT, "src/manifest.json"), "utf8")).js.filter((m) => m.startsWith("js/ui/recipes"));
+const loadRecipes = (ctx) => { for (const m of RECIPES) vm.runInContext(fs.readFileSync(path.join(ROOT, "src", m), "utf8"), ctx, { filename: m }); };
 
 // ---------------------------------------------------------------- tiny test runner
 let passed = 0, failed = 0;
@@ -199,17 +202,27 @@ await test("group choice replaces the group and merges demand", () => {
 });
 
 // ---------------------------------------------------------------- perk bonuses
-await test("perk bonus notes are parsed (data load)", () => {
-  const b = GK.data.parseBonus({ en: "3 (5 with Cook II)", pt: "3 (5 com Cozinheiro II)" });
-  eq([b.perk, b.perks, b.qty, b.add], ["Cook II", ["cook-ii"], 5, null], "N (M with X)");
-  eq(GK.data.parseBonus({ en: "1, or 2 with Cremator", pt: "1, ou 2 com Cremador" }).qty, 2, "N, or M with X");
-  const c = GK.data.parseBonus({ en: "amount varies with the bed; +1 each with Farmer II and Grape Master", pt: "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II e Senhor das Uvas" });
-  eq([c.perks, c.add, c.qty], [["farmer-ii", "grape-master"], 1, null], "+N each with X and Y");
-  eq(GK.data.parseBonus({ en: "50% chance with Alchemist" }), null, "chance is not a quantity");
+await test("perk bonuses come from the build (line.bonus, the perks table): the page reads them as they come", () => {
+  // the shapes themselves ("N (M with X)", "N, or M with X", "+N each with X", "M with X") are read by build.py
+  // (note_bonus, test_build.py PerkBonus); here: the payload already carries them and GK.data keeps them as they are
+  const lines = (r) => r.in.concat(r.extra, [r.out]);
+  const raw = PAYLOAD.recipes.flatMap((r) => (r.in || []).concat(r.extra || [], [r.out])).filter((l) => l.bonus);
+  check(raw.length >= 150 && PAYLOAD.perks && Object.keys(PAYLOAD.perks).length >= 20, `payload: ${raw.length} lines with a bonus, a perks table`);
+  const all = D.recipes.flatMap(lines);
+  const withNote = (rx) => all.filter((l) => l.note && rx.test(l.note.en));
+  eq(withNote(/\(\d+ with Cook II\)/).every((l) => l.bonus && l.bonus.perk === "Cook II" && l.bonus.perks[0] === "cook-ii" && l.bonus.qty > 0 && l.bonus.add === null), true, "N (M with X)");
+  const crem = withNote(/^1, or 2 with Cremator$/);
+  check(crem.length && crem.every((l) => l.bonus.qty === 2 && l.bonus.add === null), "N, or M with X");
+  const fg = withNote(/\+1 each with Farmer II and Grape Master/);
+  check(fg.length && fg.every((l) => JSON.stringify([l.bonus.perks, l.bonus.add, l.bonus.qty]) === JSON.stringify([["farmer-ii", "grape-master"], 1, null])), "+N each with X and Y (after another segment)");
+  const ch = withNote(/^\d+% chance with/);
+  check(ch.length && ch.every((l) => !l.bonus), "a chance is not a quantity");
+  check(all.filter((l) => l.bonus).length === raw.length, "every bonus of the payload, no other");
   const P = GK.data.perks();
   eq(P["heat-saver"] && P["heat-saver"].pt, "Economizador de Calor", "pt name from note.pt");
   eq(P["cremator"] && P["cremator"].pt, "Cremador", "Cremator → Cremador");
   check(P["farmer-ii"] && P["grape-master"], "both perks of an 'and' note");
+  eq(Object.keys(P["cook-ii"]).sort(), ["en", "id", "pt", "uses"], "perk entry {id, en, pt, uses}");
 });
 
 await test("perk bonus changes the plan (Heat Saver) and the yield (synthetic Cook II)", () => {
@@ -222,13 +235,14 @@ await test("perk bonus changes the plan (Heat Saver) and the yield (synthetic Co
   // baked-apple: "5 (7 with Cook)"; its fuel chain (firewood): "10 (15 with Axeman)"
   eq(off.perks, [{ id: "axeman", active: false }, { id: "cook", active: false }, { id: "heat-saver", active: false }], "plan.perks lists the relevant perks");
   eq(on.perks.find((p) => p.id === "heat-saver"), { id: "heat-saver", active: true }, "plan.perks active");
-  // output bonus in a synthetic payload (out.note), then the real one (build.py exports made_text as out.note)
+  // output bonus in a synthetic payload (out.bonus as build.py writes it), then the real one (made_text → out.note + out.bonus)
   const env = makeEnv();
   const mini = {
     meta: { schema: 1 },
     items: { stew: { pt: "Ensopado", en: "Stew", defaultRecipe: "stew" }, meat: { pt: "Carne", en: "Meat", raw: true, defaultRecipe: null } },
     stations: { pot: { pt: "Panela", en: "Pot" } },
-    recipes: [{ id: "stew", out: { item: "stew", qty: 3, note: { pt: "3 (5 com Cozinheiro II)", en: "3 (5 with Cook II)" } }, station: "pot", in: [{ item: "meat", qty: 2 }] }],
+    recipes: [{ id: "stew", out: { item: "stew", qty: 3, note: { pt: "3 (5 com Cozinheiro II)", en: "3 (5 with Cook II)" }, bonus: { perk: "Cook II", perks: ["cook-ii"], qty: 5 } }, station: "pot", in: [{ item: "meat", qty: 2 }] }],
+    perks: { "cook-ii": { pt: "Cozinheiro II", en: "Cook II", uses: 1 } },
   };
   const D2 = env.GK.data.load(mini);
   const a = env.GK.calc.plan([{ item: "stew", qty: 10 }], D2, {}), b = env.GK.calc.plan([{ item: "stew", qty: 10 }], D2, { perks: { "cook-ii": true } });
@@ -1073,7 +1087,7 @@ await test("grades: the star's grade on items and lines, always bronze, silver, 
   eq([G.stripGrade("Suco de Uva (prata)"), G.stripGrade("Grape Juice (gold)"), G.stripGrade("Bronze Polido")], ["Suco de Uva", "Grape Juice", "Bronze Polido"], "stripGrade");
 });
 
-await test("receitas agrupadas: GK.calc.recipeGroups (1.8.0, consertos.md §10)", () => {
+await test("receitas agrupadas: GK.calc.recipeGroups", () => {
   const groups = (id) => GK.calc.recipeGroups(GK.data.recipesFor(id), D);
   // Suprimento: Vinho: the three recipes in one card (mode q: same ingredient, grades), the amount per grade (8 / 6 / 4).
   // (Up to 1.8.1 the example was Vinho itself, whose three Barril recipes all made the same item: 1.9 gives each grade
@@ -1125,7 +1139,7 @@ await test("receitas agrupadas: GK.calc.recipeGroups (1.8.0, consertos.md §10)"
   eq([items, recipes], [11, 51], "11 items have a group card; 51 recipes in them");
 });
 
-// ---------------------------------------------------------------- 1.9: qualidade (docs/revisao-ux/consertos.md "Qualidade")
+// ---------------------------------------------------------------- qualidade: graded items (bronze, prata, ouro)
 await test("qualidade: Vinho (prata) has its own recipe, the Barril with Suco (prata) makes it, the melhoria is not circular", () => {
   const ws = D.items["wine-silver"], wg = D.items["wine-gold"];
   check(ws && !ws.synthetic && ws.base === "wine" && ws.grade === "silver" && wg && wg.grade === "gold", "Vinho (prata) / (ouro) are items of the data");
@@ -1228,13 +1242,43 @@ await test("qualidade: a plan saved up to 1.8.1 opens (goal wine + the Barril pr
   check(p && !p.refused.length && p.steps.some((x) => x.item === "wine-silver" && x.recipe.id === "wine-from-grape-juice-silver"), "the plan makes Vinho (prata) at the Barril");
   check(p && p.steps.some((x) => x.item === "grape-juice-silver" && x.recipe.id === "drink-enhancement-i-from-grape-juice-bronze"), "the saved Suco (prata) choice still applies");
   // nothing to move: the same object comes back untouched (no stamp, no push)
-  eq(env.GK.data.gradeMoves([{ item: "crate", qty: 1 }], { "steel-sword": "r-x" }, {}), null, "a plan without an old grade choice is left alone");
+  eq(env.GK.store.gradeMoves([{ item: "crate", qty: 1 }], { "steel-sword": "r-x" }, {}), null, "a plan without an old grade choice is left alone");
   // the account doc (sanitizeRemote) goes through the same move
   const f = S.sanitizeRemote({ goals: [{ item: "wine", qty: 2 }], choice: { wine: "wine-from-grape-juice-gold" } });
   eq([f.lists[0].goals, f.lists[0].choice], [[{ item: "wine-gold", qty: 2 }], { "wine-gold": "wine-from-grape-juice-gold" }], "account doc: moved as well");
 });
 
-// ---------------------------------------------------------------- 2026-11: the plain item is the bronze one (consertos.md §17)
+// ---------------------------------------------------------------- the build hands the grades and the defaults (2026-11)
+await test("payload: the grades come ready from the build; left-out fields read as their default", () => {
+  const PI = PAYLOAD.items, PR = PAYLOAD.recipes;
+  // item.grade: the 33 variants (from the id) and the 9 bronze plain items; GK.data keeps exactly those
+  const graded = Object.keys(PI).filter((id) => PI[id].grade).sort();
+  eq(graded.length, 42, "33 variants + 9 bronze plain items carry item.grade in the payload");
+  eq(Object.values(D.items).filter((it) => it.grade).map((it) => it.id).sort(), graded, "GK.data: the same items, no other");
+  eq(["pumpkin", "wine", "wine-silver", "grape-juice-bronze", "story", "polished-bronze"].map((id) => PI[id].grade || null), ["bronze", "bronze", "silver", "bronze", null, null], "pumpkin / wine bronze, wine-silver silver; story and Bronze Polido none");
+  // recipe.quality (86), line.grade (14, all bronze), line.anyGrade (16)
+  const q = PR.filter((r) => r.quality);
+  eq([q.length, q.filter((r) => r.quality === "bronze").length, q.filter((r) => r.quality === "silver").length, q.filter((r) => r.quality === "gold").length], [86, 22, 32, 32], "recipe.quality in the payload");
+  eq(D.recipes.filter((r) => r.quality).length, 86, "GK.data: the same 86, null on the rest");
+  check(D.recipes.every((r) => r.quality === null || GK.data.GRADE_RANK[r.quality] != null), "quality is a grade or null");
+  const ins = PR.flatMap((r) => r.in || []);
+  eq([ins.filter((l) => l.grade).length, ins.filter((l) => l.grade && l.grade !== "bronze").length, ins.filter((l) => l.anyGrade).length], [14, 0, 16], "line.grade (bronze) and line.anyGrade");
+  eq(PR.find((r) => r.id === "drink-enhancement-i-from-wine-bronze").in.find((l) => l.item === "wine").grade, "bronze", "melhoria I: the plain Vinho, read as bronze");
+  // a variant without its own icon draws its base's (the sprite in the payload already has it)
+  const icons = PAYLOAD.meta.sprite && PAYLOAD.meta.sprite.icons;
+  if (icons) check(Object.keys(PI).filter((id) => PI[id].kind === "quality-variant" && PI[id].base && icons[PI[id].base]).every((id) => icons[id]), "every variant has an icon in the sprite table");
+  // defaults left out by build.py drop_defaults: GK.data fills them
+  const bare = Object.keys(PI).find((id) => !("listed" in PI[id]) && !("kind" in PI[id]) && !("unobtainable" in PI[id]));
+  check(bare && D.items[bare].listed === true && D.items[bare].kind === "item" && D.items[bare].unobtainable === false && D.items[bare].icon === (PI[bare].icon || null), "item defaults: " + bare);
+  const rb = PR.find((r) => !("cd" in r) && !("listed" in r) && !("alt" in r) && !("extra" in r) && !("type" in r));
+  const nr = rb && D.recipeById[rb.id];
+  check(nr && nr.cd === false && nr.listed === true && nr.noexp === false && nr.cyc === false && nr.example === false && nr.type === "hand_craft" &&
+    Array.isArray(nr.alt) && !nr.alt.length && Array.isArray(nr.extra) && !nr.extra.length && nr.runes === null && nr.zone === null && nr.ext === null, "recipe defaults: " + (rb && rb.id));
+  const one = PR.find((r) => (r.in || []).some((l) => !("qty" in l)));
+  check(one && D.recipeById[one.id].in.every((l) => l.qty > 0), "an input without qty is 1: " + (one && one.id));
+});
+
+// ---------------------------------------------------------------- the plain item is the bronze one
 const BRONZE_PLAIN = ["cabbage", "cabbage-seed", "grape-seeds", "grapes", "onion", "onion-seed", "pumpkin", "pumpkin-seeds", "wine"];
 await test("bronze comum: the plain item of a family with silver / gold is bronze; the rest is left alone", () => {
   const G = GK.data;
@@ -1296,7 +1340,7 @@ await test("bronze comum: the Receitas list, the detail and the lines (ui/recipe
   G.router = { current: () => "recipes", tab: () => ({ screen: "recipes" }), TABS: [], register() {}, onChange() {}, detailHistory: () => ({ push() {}, pop() {} }) };
   G.app = { registerPanel() {} };
   G.ui.toast = () => {};
-  vm.runInContext(fs.readFileSync(path.join(ROOT, "src/js/ui/recipes.js"), "utf8"), ctx, { filename: "recipes.js" });
+  loadRecipes(ctx);
   const R = G.ui.recipes, root = fake();
   R.mount(root);
   R.open("crate");   // builds the list's index (lazy)
@@ -1378,7 +1422,7 @@ await test("nomes de receita: the card hides \"X a partir de Y\" and \"Construir
   G.router = { current: () => "recipes", tab: () => ({ screen: "recipes" }), TABS: [], register() {}, onChange() {}, detailHistory: () => ({ push() {}, pop() {} }) };
   G.app = { registerPanel() {} };
   G.ui.toast = () => {};
-  vm.runInContext(fs.readFileSync(path.join(ROOT, "src/js/ui/recipes.js"), "utf8"), ctx, { filename: "recipes.js" });
+  loadRecipes(ctx);
   const R = G.ui.recipes, root = fake();
   R.mount(root);
   const names = (id) => { R.open(id); return [...root.querySelector(".rc-detail").innerHTML.matchAll(/<p class="rc-rname">([\s\S]*?)<\/p>/g)].map((m) => m[1]); };
@@ -1418,7 +1462,7 @@ await test("renomear no detalhe (Receitas): the \"não oficial\" tag opens the n
   G.app = { registerPanel() {} };
   G.ui.toast = (m) => toasts.push(m);
   G.util.copyText = async (txt) => { copied.push(txt); return true; };
-  vm.runInContext(fs.readFileSync(path.join(ROOT, "src/js/ui/recipes.js"), "utf8"), ctx, { filename: "recipes.js" });
+  loadRecipes(ctx);
   const R = G.ui.recipes, root = fake();
   R.mount(root);
   const detail = root.querySelector(".rc-detail");
@@ -1610,6 +1654,92 @@ await test("i18n: every text key of every module (src/manifest.json) exists, non
     eq([...all].filter((k) => !(k in d)).sort(), [], `keys missing in ${l.code}`);
     eq(Object.keys(d).filter((k) => typeof d[k] !== "string" || !d[k].trim()).sort(), [], `empty texts in ${l.code}`);
   }
+  // src/js/i18n/en.js follows pt.js line by line (same keys, same order): a review of one is a review of the other
+  eq(Object.keys(DICT.en), Object.keys(DICT.pt), "en.js lists the keys of pt.js in the same order");
+});
+
+// ---------------------------------------------------------------- helpers shared by several screens
+await test("shared helpers: the fold toggle (GK.ui.fmt.foldBtn)", () => {
+  const F = GK.ui.fmt;
+  GK.i18n.set("pt");
+  eq(F.foldBtn('id="fold-raw" data-fold="raw"', true, "Matérias-primas", "raw-body", true),
+    '<button type="button" class="sec-fold" id="fold-raw" data-fold="raw" aria-expanded="true" aria-controls="raw-body" title="Recolher" aria-label="Recolher: Matérias-primas"><span class="sec-chev" aria-hidden="true"></span></button>',
+    "a section, open: the thin chevron");
+  eq(F.foldBtn('id="today-tgl" data-today-tgl', false, "Hoje", "today-body"),
+    '<button type="button" class="btn fold-btn" id="today-tgl" data-today-tgl aria-expanded="false" aria-controls="today-body" title="Expandir" aria-label="Expandir: Hoje"></button>',
+    "a card, folded: the boxed button, no chevron span");
+  GK.i18n.set("en");
+  check(/title="Collapse" aria-label="Collapse: A &amp; B"/.test(F.foldBtn('id="x"', true, "A & B", "b", true)), "English, the label escaped");
+  GK.i18n.set("pt");
+  eq(F.CONTROLS, "button, a, input, select, textarea, label", "a tap on these never folds the header");
+});
+
+await test("shared helpers: a click on an item icon opens Receitas (GK.ui.fmt.recipeClick)", () => {
+  const { GK: G } = makeEnv(), opened = [];
+  G.ui.recipes = { open: (id, o) => opened.push([id, o.from]) };
+  const ev = (hit) => ({ target: { closest: (sel) => (sel === "[data-recipe-open]" && hit ? { dataset: { recipeOpen: hit } } : null) } });
+  eq([G.ui.fmt.recipeClick(ev("wine"), "plan"), G.ui.fmt.recipeClick(ev(null), "tech"), G.ui.fmt.recipeClick(ev("crate"), "days")],
+    [true, false, true], "true only on an icon");
+  eq(opened, [["wine", "plan"], ["crate", "days"]], "opens the item, back to the screen it came from");
+});
+
+await test("shared helpers: a graded name split for a list (GK.ui.fmt.graded: search, Receitas)", () => {
+  const g = GK.ui.fmt.graded;
+  GK.i18n.set("pt");
+  eq(g(D.items["pumpkin-silver"], "Abóbora (prata)"), { name: "Abóbora", word: "prata", grade: "silver" }, "a variant: the name without the grade, the word apart");
+  eq(g(D.items.pumpkin, "Abóbora"), { name: "Abóbora", word: "bronze", grade: "bronze" }, "the plain bronze item");
+  eq(g(D.items.pumpkin, "Abóbora", false), { name: "Abóbora", word: "", grade: null }, "grade false (an \"Any X\" line): nothing");
+  eq(g(D.items.carrot, "Cenoura", "gold"), { name: "Cenoura", word: "ouro", grade: "gold" }, "a line's own grade wins");
+  eq(g(D.items.carrot, "Cenoura"), { name: "Cenoura", word: "", grade: null }, "no grade");
+});
+
+await test("shared helpers: the quality star (GK.util.qstar: icons and the group card's grade picks)", () => {
+  eq(["bronze", "silver", "gold", null, undefined, "x"].map(GK.util.qstar),
+    ['<span class="qstar q-b" aria-hidden="true"></span>', '<span class="qstar q-s" aria-hidden="true"></span>', '<span class="qstar q-g" aria-hidden="true"></span>', "", "", ""],
+    "one star per grade, none otherwise");
+  check(GK.util.slot(D.items["wine-silver"], "Vinho").endsWith(GK.util.qstar("silver") + "</span>"), "GK.util.slot draws the same star");
+});
+
+await test("shared helpers: the \"não oficial\" table and the hidden tag of Receitas (GK.ui.fmt.UNOFFICIAL, rcCards.hiddenTag)", () => {
+  const env = makeEnv(), G = env.GK;
+  G.data.load(JSON.parse(JSON.stringify(PAYLOAD)));
+  vm.runInContext(fs.readFileSync(path.join(ROOT, "src/js/ui/recipes-cards.js"), "utf8"), env.ctx, { filename: "ui/recipes-cards.js" });
+  eq(Object.keys(G.ui.fmt.UNOFFICIAL).sort(), ["guess", "machine", "missing"], "the tr values that read \"não oficial\"");
+  eq([G.ui.rcCards.hiddenTag({ hidden: true }), G.ui.rcCards.hiddenTag({ hidden: true, unobtainable: true })],
+    [`<span class="badge badge-hidden">${G.i18n.t("rc.hidden")}</span>`, `<span class="badge badge-hidden">${G.i18n.t("rc.unobt")}</span>`],
+    "hidden / unobtainable");
+});
+
+await test("shared helpers: the recipe the planner uses (GK.calc.recipeFor: howToMake and the Receitas \"Em uso\")", () => {
+  const C = GK.calc, id = Object.keys(D.byOut).find((k) => D.items[k].defaultRecipe && D.byOut[k].length > 1 && !D.items[k].members);
+  const def = D.items[id].defaultRecipe, other = D.byOut[id].find((r) => r.id !== def).id, foreign = D.recipes.find((r) => r.out.item !== id).id;
+  eq([C.recipeFor(id, D, {}).id, C.recipeFor(id, D, null).id], [def, def], "no choice: the default");
+  eq(C.recipeFor(id, D, { [id]: other }).id, other, "the player's choice");
+  eq(C.recipeFor(id, D, { [id]: foreign }).id, def, "a choice that makes another item: the default");
+  eq(C.recipeFor("no-such-item", D, {}), null, "an unknown item: null");
+  eq(C.howToMake(id, D, { [id]: other }).r.id, other, "howToMake expands the same one");
+  // GK.calc.expandable: the planner's pickers and the Receitas "Usar"
+  eq([{ in: [1] }, { in: [] }, { in: [1], noexp: true }].map(C.expandable), [true, false, false], "expandable: ≥1 input and not noexp");
+  eq(D.recipes.filter(C.expandable).length, D.recipes.filter((r) => r.in.length > 0 && !r.noexp).length, "expandable on the payload");
+});
+
+await test("shared helpers: one normalizer for the localized values (GK.data.loc: items, GK.tech, GK.ui.days)", () => {
+  const L = GK.data.loc;
+  eq([L(null), L(""), L(undefined), L(3)], [null, null, null, null], "nothing");
+  eq(L("Gula"), { pt: "Gula", en: "Gula" }, "one text: every language");
+  eq([L({ en: "Plank" }), L({ pt: "Tábua" }), L({ pt: "Tábua", en: "Plank", tr: "likely" })],
+    [{ en: "Plank", pt: "Plank" }, { pt: "Tábua", en: "Tábua" }, { pt: "Tábua", en: "Plank", tr: "likely" }], "a missing language from the other, other keys kept");
+  const src = { pt: "a", en: null };
+  check(L(src) !== src && src.en === null, "a copy: the payload is not changed");
+  check(/const \{ loc \} = GK\.data;/.test(fs.readFileSync(path.join(ROOT, "src/js/ui/days.js"), "utf8")) && /const loc = \(v\) => GK\.data\.loc\(v\);/.test(fs.readFileSync(path.join(ROOT, "src/js/tech.js"), "utf8")),
+    "GK.tech and GK.ui.days read their blocks with it");
+});
+
+await test("shared helpers: a sprite cell (GK.data.spritePos: the tech gems and branches, the day medallions)", () => {
+  const icons = (D.meta.sprite && D.meta.sprite.icons) || {};
+  check(["wine", "tp:red", "day:wrath"].every((k) => Array.isArray(icons[k])), "the payload has the sprite (item, tech point, day)");
+  eq([GK.data.spritePos("wine"), GK.data.spritePos("tp:red"), GK.data.spritePos("day:wrath")], [icons.wine, icons["tp:red"], icons["day:wrath"]], "the [col, row] of an id");
+  eq([GK.data.spritePos("no-such-icon"), GK.data.spritePos(""), GK.data.spritePos(null)], [undefined, null, null], "none");
 });
 
 // ---------------------------------------------------------------- done

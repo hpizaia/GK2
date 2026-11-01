@@ -178,7 +178,7 @@ def ref_item(key, name, icon=None):
 #   "<X> (silver|gold)" -> "<x>-silver|gold", a quality-variant item (base_item <x>, the base's icon and category).
 # Families without a wiki item page (Grape Juice, Story, Newspaper, Salad, Sauerkraut) already resolve by name
 # to their own "<x>-<grade>" items. Recipes listed in NO_GRADE stay as before: organ improvers make "(gold)" from
-# "Any <organ>" (both levels), which is not a bronze -> silver -> gold ladder (docs/revisao-ux/qualidade-auditoria.md).
+# "Any <organ>" (both levels), which is not a bronze -> silver -> gold ladder.
 GRADE_RX = re.compile(r"^(.*\S)\s*\((bronze|silver|gold)\)$", re.I)
 NO_GRADE = ("improve-organ-",)
 variant_of = {}     # variant id -> (base id, grade)
@@ -621,7 +621,7 @@ for iid, rec in items.items():
         rec["group_members"] = [x for x in members if x]
         rec["obtain"] = rec["obtain"] or "Wildcard ingredient: any one of the listed group members."
     if rec["kind"] == "quality-variant" and iid in variant_of:
-        # a grade kept by graded_ref(): how to get it, short and honest (docs/revisao-ux/qualidade-pesquisa.md: the
+        # a grade kept by graded_ref(): how to get it, short and honest (the
         # grade of a crop comes from the seed; a bronze seed gives bronze + silver, silver gives silver + gold, gold gold)
         base, grade = variant_of[iid]
         rec["base_item"] = base

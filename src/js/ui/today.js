@@ -1,6 +1,6 @@
 /* GK.ui.today: planner slot panel "Hoje" (above "Tecnologias que faltam"). With the current weekday set
-   (GK.store day), open: the heading "Dia da Ira · dia 61 · 5 coisas" with the day's medallion (1.6.0: one line instead
-   of "Hoje dia 61" over "Hoje: Dia da Ira · 3 coisas"; screen readers still hear "Hoje:" first) and, beside the count,
+   (GK.store day), open: the heading "Dia da Ira · dia 61 · 5 coisas" with the day's medallion (screen readers hear "Hoje:"
+   first) and, beside the count,
    a small ✎ button "Bilhete deste dia" that opens that weekday's note field (GK.store dayNotes, synced; edited in
    place through GK.ui.days.noteBox). Then that day's events, ONE line each: the short part of the sentence
    (shortText: the event's hand-written `short` title, else the title before ": ", else the whole sentence; ellipsis
@@ -12,14 +12,13 @@
    (GK.store dayDone, synced; the ticks reset by themselves when the day changes: advance, another day picked, or a
    counter that lands on another day); "Tudo feito hoje ✓" once every task is ticked. A written note shows as one
    line under the events (a tap edits it); with no note only the ✎ button is there. Then "Avançar dia" and
-   "Ver semana" (→ #days). "Amanhã" left the panel in 1.6.0 (it is in "Ver semana" and the Dias tab).
-   "Avançar dia" here shows no toast (1.6.0): the panel's own line already shows the new day (the Dias screen keeps
-   its toast).
+   "Ver semana" (→ #days); tomorrow is in "Ver semana" and the Dias tab. "Avançar dia" here shows no toast: the
+   panel's own line already shows the new day (the Dias screen keeps its toast).
    Without a day: "Qual dia é hoje no jogo?" and the 6 day medallions as buttons (tap = set),
    plus the HUD counter field once calibrated (GK.store dayAnchor: the number alone gives the day).
    Nothing when the page has no week data. Re-renders only when (day, dayNumber, calibration, collapsed, lang,
    ticks, today's note, note editing, opened rows) change.
-   Collapsible (GK.store ui.todayCollapsed, per device; folded by default since 1.3.4): the toggle at the header's
+   Collapsible (GK.store ui.todayCollapsed, per device; folded by default): the toggle at the header's
    right or a tap on the header text; collapsed = one compact row "Hoje: Dia da Ira" over "3 coisas · dia 61" (or
    "2/3 feitas" once a task is ticked: counted over the tasks) with the medallion, "Avançar dia" and the toggle, or,
    with no day set, the row "Marcar o dia do jogo". The day picker shows each day's sin name under its medallion (the
@@ -27,51 +26,6 @@
    Owns: its <div data-panel="today"> in [data-slot="planner-top"]. Uses the week helpers of GK.ui.days.
    Exposes: GK.ui.today.{mount, render, shortText}. Registered via GK.app.registerPanel(..., {slot: "planner-top", order: 5}).
 */
-GK.i18n.add({
-  pt: {
-    "today.title": "Hoje",
-    "today.line": "Hoje: {name}",
-    "today.ask": "Qual dia é hoje no jogo?",
-    "today.askHint": "Toque no símbolo que a seta da roda aponta no jogo.",
-    "today.pick": "Hoje é {name}",
-    "today.week": "Ver semana",
-    "today.nothing": "Nada especial registrado para hoje.",
-    "today.orNumber": "ou o contador do jogo:",
-    "today.collapse": "Recolher",
-    "today.expand": "Expandir",
-    "today.collapseX": "Recolher: {name}",
-    "today.expandX": "Expandir: {name}",
-    "today.advShort": "Avançar dia",
-    "today.mark": "Marcar o dia do jogo",
-    "today.doneN": "{done}/{n} feitas",
-    "today.check": "Feito hoje: {text}",
-    "today.allDone": "Tudo feito hoje ✓",
-    "today.note": "Bilhete deste dia",
-    "today.unsure": "Não confirmado",
-  },
-  en: {
-    "today.title": "Today",
-    "today.line": "Today: {name}",
-    "today.ask": "Which day is it in the game?",
-    "today.askHint": "Tap the symbol the wheel's arrow points at in the game.",
-    "today.pick": "Today is {name}",
-    "today.week": "See the week",
-    "today.nothing": "Nothing special recorded for today.",
-    "today.orNumber": "or the game counter:",
-    "today.collapse": "Collapse",
-    "today.expand": "Expand",
-    "today.collapseX": "Collapse: {name}",
-    "today.expandX": "Expand: {name}",
-    "today.advShort": "Next day",
-    "today.mark": "Set the game day",
-    "today.doneN": "{done}/{n} done",
-    "today.check": "Done today: {text}",
-    "today.allDone": "All done today ✓",
-    "today.note": "Note for this day",
-    "today.unsure": "Unconfirmed",
-  },
-});
-
 GK.ui.today = (function () {
   const { t, name } = GK.i18n, { esc } = GK.util;
   const DY = () => GK.ui.days;
@@ -79,10 +33,9 @@ GK.ui.today = (function () {
   let opened = new Set(), openedDay = null;   // event rows opened by a tap (forgotten when the day changes)
   const collapsed = (state) => !!(state.ui && state.ui.todayCollapsed);
   // the 44 px fold toggle; same id in both states so the focus stays on it. Open (a section heading): the thin
-  // chevron with no box of the planner's sections (.sec-fold, 1.8.x opção A); folded (the one-line card): the boxed
+  // chevron with no box of the planner's sections (.sec-fold); folded (the one-line card): the boxed
   // .fold-btn of the station cards, inside its card
-  const foldBtn = (open, label, sec) => `<button type="button" class="${sec ? "sec-fold" : "btn fold-btn"}" id="today-tgl" data-today-tgl aria-expanded="${open}" aria-controls="today-body" title="${esc(t(open ? "today.collapse" : "today.expand"))}" aria-label="${esc(t(open ? "today.collapseX" : "today.expandX", { name: label }))}">${sec ? `<span class="sec-chev" aria-hidden="true"></span>` : ""}</button>`;
-  const CONTROLS = "button, a, input, select, textarea, label";
+  const foldBtn = (open, label, sec) => GK.ui.fmt.foldBtn('id="today-tgl" data-today-tgl', open, label, "today-body", sec);
   // the events that carry a "feito hoje" tick (data/days.json `task`: something to do or buy)
   const tasks = (d) => d.events.filter((ev) => ev.task !== false).length;
   // ticked event indexes of today that still exist in the data and are tasks
@@ -105,7 +58,7 @@ GK.ui.today = (function () {
     notes.bind(root);
     root.addEventListener("click", (e) => {
       const tg = e.target.closest("[data-today-tgl]");
-      if (tg || (e.target.closest("[data-today-head]") && !e.target.closest(CONTROLS))) {
+      if (tg || (e.target.closest("[data-today-head]") && !e.target.closest(GK.ui.fmt.CONTROLS))) {
         GK.store.actions.setUi({ todayCollapsed: !collapsed(GK.store.get()) });
         return;
       }
@@ -131,8 +84,7 @@ GK.ui.today = (function () {
       }
       const w = e.target.closest("[data-today-week]");
       if (w) { DY().open(GK.store.get().day); return; }
-      const ro = e.target.closest("[data-recipe-open]");
-      if (ro && GK.ui.recipes) GK.ui.recipes.open(ro.dataset.recipeOpen, { from: "plan" });
+      if (GK.ui.recipes) GK.ui.fmt.recipeClick(e, "plan");
     });
     root.addEventListener("change", (e) => {
       const cb = e.target.closest && e.target.closest("[data-today-done]");

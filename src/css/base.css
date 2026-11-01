@@ -1,5 +1,5 @@
 /* base.css: reset, root font size ("Letra grande"), body ground and noise overlay, links, focus ring, .sr-only, .tabnum,
-   .wrap gutter. Type is in rem everywhere (DESIGN.md §2), so the root size below scales the whole app. */
+   .wrap gutter. Type is in rem everywhere, so the root size below scales the whole app. */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 /* "Letra grande" (footer switch, GK.store ui.bigText, set by GK.theme.big): 16 -> 20 px base, on top of the phone's

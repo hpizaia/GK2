@@ -3,33 +3,10 @@
    data/changelog.json: [{version, date: "YYYY-MM-DD" | null (unreleased), pt: [...], en: [...]}], newest first.
    Owns: the "changelog" route and its screen section (created by GK.router.ensureScreens).
    Exposes: GK.ui.changelog.{mount, render}; registered as a panel.
-   1.6.0 (corte 16): only the current version (the first entry) is open; each older one is a single 44 px row,
+   Only the current version (the first entry) is open; each older one is a single 44 px row,
    "Versão 1.5.1 · 31 de outubro · 8 novidades ›", a button (aria-expanded / aria-controls) that opens its notes.
    Which ones are open lives in this module only (forgotten on reload).
 */
-GK.i18n.add({
-  pt: {
-    "changelog.title": "Histórico de atualizações",
-    "changelog.back": "← Voltar ao planejador",
-    "changelog.version": "Versão {version}",
-    "changelog.unreleased": "em desenvolvimento",
-    "changelog.current": "versão atual",
-    "changelog.empty": "Nenhuma atualização registrada.",
-    "changelog.notes.one": "{n} novidade",
-    "changelog.notes.other": "{n} novidades",
-  },
-  en: {
-    "changelog.title": "Update history",
-    "changelog.back": "← Back to the planner",
-    "changelog.version": "Version {version}",
-    "changelog.unreleased": "in development",
-    "changelog.current": "current version",
-    "changelog.empty": "No updates recorded.",
-    "changelog.notes.one": "{n} change",
-    "changelog.notes.other": "{n} changes",
-  },
-});
-
 GK.ui.changelog = (function () {
   const { t } = GK.i18n, { esc } = GK.util;
   let root, wasHere = false;

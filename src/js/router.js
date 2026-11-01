@@ -9,22 +9,13 @@
    next one where it was (the top on a first visit), before the onChange listeners run, so a module that places
    the page itself (the Receitas list, "‹ Voltar" returns, #changelog) still wins. forget(screen) drops a saved
    position, so the next visit starts at the top (GK.ui.days.open uses it).
-   detailHistory(screen, onBack) (1.8.0, backlog 2.1): the phone's back gesture closes a detail (Receitas, Tecnologias).
+   detailHistory(screen, onBack): the phone's back gesture closes a detail (Receitas, Tecnologias).
    push() when a detail opens adds a history entry on the same URL ({gk<screen>: depth}); the browser's back fires
    popstate and onBack() runs once per entry left, while that screen is on display. pop(all) after an in-app
    "Voltar" drops our entries too, when the current one is ours (else it does nothing: the button already went
    back). Every history call is in try/catch: inside the artifact's iframe the history may not work, and then the
    in-app buttons are all there is.
 */
-GK.i18n.add({
-  pt: {
-    "tab.plan": "Planejador",
-  },
-  en: {
-    "tab.plan": "Planner",
-  },
-});
-
 GK.router = (function () {
   const TABS = [];   // every registered route, sorted by order (tab: false ones too)
   let current = "plan";

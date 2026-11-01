@@ -2,8 +2,7 @@
    Type sizes are not tokens: each rule sets its own size in rem (16 px = 1 rem), so the phone's text size and
    "Letra grande" (html[data-big], base.css) scale them; spacing, borders, icons and --tap stay in px.
    Theme contract (GK.theme): dark on bare :root, light under prefers-color-scheme or [data-theme="light"].
-   1.3.x contrast pass (UX review): --frame (controls) went #4a4954 -> #74707f dark (1.85:1 -> 3.4:1 on --panel) and
-   #9a8664 -> #806c4c light (2.4:1 -> 3.4:1 on --bg-2); the old values live on as --frame-soft for cards and slots. */
+   --frame (controls) is >= 3:1 on its grounds; --frame-soft is the quieter frame for cards and slots. */
 /* Layout: sticky slate header with search on a night-teal ground; one column of wood cards on
    phones, two columns ≥900px (goals | plan), raw list beside station cards ≥1180px.
    Dark (night) is the default theme; light = parchment by day. */
@@ -58,3 +57,19 @@
   --shadow: rgba(80, 50, 20, .16); --noise-o: .05;
   color-scheme: light;
 }
+/* Game palette: colours drawn from the game's own art, not from the theme. Only the "Efeito de uso" tooltip
+   parchment changes with the theme (dimmed a little on the night theme so it does not glare); the same light
+   contract as above. Runes (Receitas) and tech points (Tecnologias) are close but not the same reds, greens and blues. */
+:root {
+  --tip-bg: #c9ae7e; --tip-bg-2: #bea171; --tip-ink: #34200f; --tip-lbl: #634a2c; --tip-edge: #7a5a36; --tip-rule: #8d6f48;
+  --tip-hi: rgba(255, 244, 220, .35);                                          /* tooltip inner edge light */
+  --en: #2f86d6; --en-hi: #6cb8ff; --en-lo: #1b5a9e; --en-ink: #134680; --ins-ink: #5d2a86;   /* energy, inspiration */
+  --hud: #262a35; --hud-edge: #4d5263; --hud-track: #12151c;                   /* HUD-style energy bar */
+  --buff-hi: #f3d77a; --buff: #c98f2c; --buff-lo: #6e4514;                     /* round buff icon */
+  --stack: #f2cb4c; --stack-edge: #2a1606;                                     /* stack number in the slot corner */
+  --rune-red: #c8453a; --rune-green: #5f9a3c; --rune-blue: #3f78c0;            /* alchemy runes */
+  --tp-red: #d0453a; --tp-green: #4f9e3a; --tp-blue: #3f6fd0;                  /* tech points */
+  --qr-paper: #fffaf0;                                                         /* the QR code's ground (Créditos) */
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --tip-bg: #d8bf8f; --tip-bg-2: #ccb07c; } }
+:root[data-theme="light"] { --tip-bg: #d8bf8f; --tip-bg-2: #ccb07c; }

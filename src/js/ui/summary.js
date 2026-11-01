@@ -1,157 +1,33 @@
 /* GK.ui.summary: raw totals and steps grouped by station (+ recipe choice, "Já tenho" /
    "tenho N de M", the member choice of group items).
-   Raw rows are two lines (1.3.4): name + "i" | quantity, then "como obter" cut to one line (full text in the row's
-   title and in the "i" detail) beside "Já tenho". "Tudo" shows an undo toast ("Areia: você já tem tudo ·
-   Desfazer") and moves the focus to the next row. (1.8.x: no ✎ rename pencils here; renaming is in the item's
-   Receitas detail, ui/recipes.js.) Station cards are numbered 1, 2, 3… in display order.
+   Station cards are numbered 1, 2, 3… in display order. Renaming is in the item's Receitas detail (ui/recipes.js),
+   not here.
    Collapsible (GK.store ui, per device): "Matérias-primas" (rawCollapsed), "Etapas por estação" (stepsCollapsed)
    and each station card (ui.stationCollapsed[stationKey], key = station id, "#<repeat>" for a card that comes back);
    a folded part keeps its header (with counts) and skips rendering its rows.
-   1.6.0 (cortes 1-4, 6, 7, 8): a step's "×2 ▾" quantity is the button that opens "Tenho __ de 2" (no "Já tenho" line;
-   goal steps keep a plain number); the tech line is short and drops researched techs (GK.ui.fmt.techLine(r, state));
-   with other recipes, the "Por execução: 1 Tora → 3 ▾" line itself is the recipe <select>; the number of crafts
-   shows only when it is more than 1 and differs from the quantity; the item icon opens Receitas (no "i"); no fixed hints above the
-   two sections; a folded section says only "0/20 marcados" ("26 estações · 0/41 marcados" for the steps).
-   1.8.0 (corte 9 + C3): a raw row's checkbox is "tenho tudo" (GK.store checkRaw: have = the quantity it asks for), the
-   row goes to "Você já tem" with an undo toast; its quantity "20 ▾" opens "Tenho __ de 20" for a partial number (no
-   "Já tenho" button, no "Tudo" there). Grade única: name and "como obter" as one block centred on the icon; the
-   quantity is the steps' "× 20 ▾"; choosers and the field go on a line of their own (.row-more). Ticks follow the quantity (GK.calc rawChecked / stepChecked): a row ticked at 3
-   is pending again when the plan asks for 10. A step's tick keeps its quantity (toggleDone(key, on, need)).
-   Corte 19: no "Fabricar com" when every recipe left is circular (Pele).
-   1.8.x (seta das seções, opção A): the toggle of "Matérias-primas" / "Etapas por estação" is a thin, quiet chevron
-   with no box (.sec-fold: an invisible 44 px target at the section's right edge), turned › when folded; each station
-   card keeps its boxed 44 px toggle (.fold-btn), so the two never look alike.
-   1.8.x: a step's other stations and its tech line share one small line ("ou: Lenheiro II · Metalurgia 1").
+   Steps: the "×2 ▾" quantity is the button that opens "Tenho __ de 2" (goal steps keep a plain number); the tech line
+   is short and leaves out researched techs (GK.ui.fmt.techLine(r, state)); with other recipes, the "Por execução:
+   1 Tora → 3 ▾" line itself is the recipe <select>; the number of crafts shows only when it is more than 1 and
+   differs from the quantity; the item icon opens Receitas; a folded section says only "0/20 marcados" ("26 estações ·
+   0/41 marcados" for the steps). A step's other stations and its tech line share one small line ("ou: Lenheiro II ·
+   Metalurgia 1").
+   Raw rows: the checkbox is "tenho tudo" (GK.store checkRaw: have = the quantity it asks for), the row goes to "Você
+   já tem" with an undo toast and the focus moves to the next row; the quantity "20 ▾" opens "Tenho __ de 20" for a
+   partial number. Name and "como obter" (cut to one line, the whole text in the row's title) form one block centred
+   on the icon; choosers and the field go on a line of their own (.row-more). No "Fabricar com" when every recipe
+   left is circular (Pele).
+   Ticks follow the quantity (GK.calc rawChecked / stepChecked): a row ticked at 3 is pending again when the plan asks
+   for 10. A step's tick keeps its quantity (toggleDone(key, on, need)).
+   The toggle of "Matérias-primas" / "Etapas por estação" is a thin, quiet chevron with no box (.sec-fold: an
+   invisible 44 px target at the section's right edge), turned › when folded; each station card keeps its boxed 44 px
+   toggle (.fold-btn), so the two never look alike.
    Owns: [data-panel="summary"]. Exposes: GK.ui.summary.{mount, render, stationKey}; registered as a panel.
 */
-GK.i18n.add({
-  pt: {
-    "raw.title": "Matérias-primas",
-    "raw.haveGroup": "Você já tem",
-    "raw.cycle": "receita circular",
-    "raw.refused": "receita sem ganho",
-    "raw.noexp": "colheita: rendimento varia",
-    "raw.members": "Serve qualquer um: {names}",
-    "raw.asRaw": "Matéria-prima (não fabricar)",
-    "raw.recipe": "Fabricar com",
-    "raw.use": "Usar:",
-    "raw.useLabel": "Qual item usar para {name}",
-    "raw.useAny": "Qualquer um ({names})",
-    "raw.group": "(grupo) {name}",
-    "have.label": "Tenho",
-    "have.of": "de {n}",
-    "have.inputLabel": "Quantos {name} você já tem (de {n})",
-    "have.all": "Tudo",
-    "have.allLabel": "Já tenho todos os {n} de {name}",
-    "have.ok": "OK",
-    "have.cancel": "Fechar",
-    "have.allToast": "{name}: você já tem tudo",
-    "have.clear": "Limpar",
-    "have.clearLabel": "Esquecer quantos {name} eu tenho",
-    "steps.title": "Etapas por estação",
-    "steps.order": "Estação {n} de {total}",
-    "steps.runs.one": "{n}\u00a0execução",
-    "steps.runs.other": "{n}\u00a0execuções",
-    "steps.yield": "rende\u00a0{n} cada",
-    "steps.yieldPerk": "rende\u00a0{n} com {perk}",
-    "steps.withPerk": "com {perk}",
-    "steps.yieldIf": "{n} com {perk}",
-    "steps.starGrade": "{grade} com {n} ciclos bem-sucedidos",
-    "steps.starAny": "o grau sai dos ciclos bem-sucedidos",
-    "steps.groupLine": "grupo: {name}",
-    "steps.again": "de novo",
-    "steps.againTitle": "Esta estação aparece de novo: estas etapas dependem de outra estação acima.",
-    "steps.left": "sobra\u00a0{n}",
-    "steps.per": "Por execução:",
-    "steps.recipeLabel": "Receita de {name}",
-    "steps.qtyLabel": "{name}: {n}. Tocar para dizer quantos você já tem",
-    "steps.techQuest": "Missão: {tech}",
-    "steps.techPerk": "Vantagem: {tech}",
-    "steps.alt": "ou: {names}",
-    "steps.extra": "Também rende (não somado):",
-    "steps.example": "mistura de exemplo",
-    "steps.exampleTitle": "Alquimia: qualquer combinação de ingredientes com as mesmas runas funciona",
-    "steps.goal": "meta",
-    "steps.check": "Marcar {name} como feito",
-    "fold.collapse": "Recolher",
-    "fold.expand": "Expandir",
-    "fold.collapseX": "Recolher: {name}",
-    "fold.expandX": "Expandir: {name}",
-    "fold.done": "{done}/{total} marcados",
-    "fold.doneSr": "{done} de {total} marcados",
-    "fold.stations.one": "{n} estação",
-    "fold.stations.other": "{n} estações",
-    "plan.empty": "Adicione uma meta para ver os ingredientes e as etapas.",
-    "cycle.warn": "Receita circular em {names}. Esses itens foram tratados como matéria-prima.",
-    "refused.warn": "A receita escolhida para {names} consome o próprio item sem ganho líquido; foi tratada como matéria-prima. Escolha outra receita na lista.",
-  },
-  en: {
-    "raw.title": "Raw materials",
-    "raw.haveGroup": "You already have",
-    "raw.cycle": "circular recipe",
-    "raw.refused": "no net gain",
-    "raw.noexp": "harvest: yield varies",
-    "raw.members": "Any of: {names}",
-    "raw.asRaw": "Raw material (don't craft)",
-    "raw.recipe": "Craft with",
-    "raw.use": "Use:",
-    "raw.useLabel": "Which item to use for {name}",
-    "raw.useAny": "Any ({names})",
-    "raw.group": "(group) {name}",
-    "have.label": "I have",
-    "have.of": "of {n}",
-    "have.inputLabel": "How many {name} you already have (of {n})",
-    "have.all": "All",
-    "have.allLabel": "I have all {n} {name}",
-    "have.ok": "OK",
-    "have.cancel": "Close",
-    "have.allToast": "{name}: you have it all",
-    "have.clear": "Clear",
-    "have.clearLabel": "Forget how many {name} I have",
-    "steps.title": "Steps by station",
-    "steps.order": "Station {n} of {total}",
-    "steps.runs.one": "{n}\u00a0craft",
-    "steps.runs.other": "{n}\u00a0crafts",
-    "steps.yield": "makes\u00a0{n} each",
-    "steps.yieldPerk": "makes\u00a0{n} with {perk}",
-    "steps.withPerk": "with {perk}",
-    "steps.yieldIf": "{n} with {perk}",
-    "steps.starGrade": "{grade} at {n} successful ticks",
-    "steps.starAny": "the grade comes from the successful ticks",
-    "steps.groupLine": "group: {name}",
-    "steps.again": "again",
-    "steps.againTitle": "This station comes back: these steps need another station above.",
-    "steps.left": "{n}\u00a0left over",
-    "steps.per": "Per craft:",
-    "steps.recipeLabel": "Recipe for {name}",
-    "steps.qtyLabel": "{name}: {n}. Tap to say how many you already have",
-    "steps.techQuest": "Quest: {tech}",
-    "steps.techPerk": "Perk: {tech}",
-    "steps.alt": "or: {names}",
-    "steps.extra": "Also yields (not counted):",
-    "steps.example": "example mix",
-    "steps.exampleTitle": "Alchemy: any mix of ingredients with the same runes works",
-    "steps.goal": "goal",
-    "steps.check": "Mark {name} as done",
-    "fold.collapse": "Collapse",
-    "fold.expand": "Expand",
-    "fold.collapseX": "Collapse: {name}",
-    "fold.expandX": "Expand: {name}",
-    "fold.done": "{done}/{total} checked",
-    "fold.doneSr": "{done} of {total} checked",
-    "fold.stations.one": "{n} station",
-    "fold.stations.other": "{n} stations",
-    "plan.empty": "Add a goal to see the ingredients and steps.",
-    "cycle.warn": "Circular recipe in {names}. Those items were treated as raw materials.",
-    "refused.warn": "The recipe chosen for {names} consumes the item itself with no net gain, so it was treated as a raw material. Pick another recipe from the list.",
-  },
-});
-
 GK.ui.summary = (function () {
   const { t, name, num } = GK.i18n, { esc, slot, domId } = GK.util;
   const F = GK.ui.fmt;
   let root;
-  let haveOpen = null;      // item id whose "tenho N de M" field was just opened from "Já tenho"
+  let haveOpen = null;      // item id whose "tenho N de M" field was just opened from its quantity button
   const focusId = (id) => { const el = document.getElementById(id); if (el) { el.focus(); if (el.select) el.select(); } };
   function applyHave(id, raw) {
     const A = GK.store.actions, v = String(raw == null ? "" : raw).trim();
@@ -162,18 +38,15 @@ GK.ui.summary = (function () {
   // folding: "raw" | "steps" | "st:<station key>"; the toggle and its header carry the same data-fold value
   const ui = (state) => state.ui || {};
   const stationKey = (g) => g.station.id + (g.repeat > 1 ? "#" + g.repeat : "");
-  const FOLD_CONTROLS = "button, a, input, select, textarea, label";
   function toggleFold(k) {
     const A = GK.store.actions, u = ui(GK.store.get());
     if (k === "raw") A.setUi({ rawCollapsed: !u.rawCollapsed });
     else if (k === "steps") A.setUi({ stepsCollapsed: !u.stepsCollapsed });
     else if (k.indexOf("st:") === 0) A.toggleStation(k.slice(3));
   }
-  // the 44 px toggle at a header's right; stable id so focus survives re-renders. A station card: the boxed .fold-btn
-  // (chevron drawn in CSS); a section (sec = true): the thin chevron with no box (.sec-fold > .sec-chev)
-  function foldBtn(k, open, label, bodyId, sec) {
-    return `<button type="button" class="${sec ? "sec-fold" : "btn fold-btn"}" id="fold-${domId(k)}" data-fold="${esc(k)}" aria-expanded="${open}" aria-controls="${bodyId}" title="${esc(t(open ? "fold.collapse" : "fold.expand"))}" aria-label="${esc(t(open ? "fold.collapseX" : "fold.expandX", { name: label }))}">${sec ? `<span class="sec-chev" aria-hidden="true"></span>` : ""}</button>`;
-  }
+  // the 44 px toggle at a header's right (GK.ui.fmt.foldBtn). A station card: the boxed .fold-btn; a section
+  // (sec = true): the thin chevron with no box
+  const foldBtn = (k, open, label, bodyId, sec) => GK.ui.fmt.foldBtn(`id="fold-${domId(k)}" data-fold="${esc(k)}"`, open, label, bodyId, sec);
   function mount(el) {
     root = el;
     root.addEventListener("click", (e) => {
@@ -181,9 +54,8 @@ GK.ui.summary = (function () {
       const fb = e.target.closest("[data-fold]");
       if (fb) { toggleFold(fb.dataset.fold); return; }
       const fh = e.target.closest("[data-fold-head]");
-      if (fh && !e.target.closest(FOLD_CONTROLS)) { toggleFold(fh.dataset.foldHead); return; }
-      const ro = e.target.closest("[data-recipe-open]");
-      if (ro) { GK.ui.recipes.open(ro.dataset.recipeOpen, { from: "plan" }); return; }
+      if (fh && !e.target.closest(GK.ui.fmt.CONTROLS)) { toggleFold(fh.dataset.foldHead); return; }
+      if (GK.ui.fmt.recipeClick(e, "plan")) return;
       const ho = e.target.closest("[data-have-open]");
       if (ho) {
         // a step's "×2 ▾" toggles the field it opened (a kept "tenho N" field only takes the focus)
@@ -240,7 +112,7 @@ GK.ui.summary = (function () {
       if (back) back.focus();
     });
   }
-  // a raw row's checkbox = "tenho tudo" (corte 9): ticked, the row moves to "Você já tem", so the focus goes to the
+  // a raw row's checkbox = "tenho tudo": ticked, the row moves to "Você já tem", so the focus goes to the
   // row that followed it and a toast offers "Desfazer"; unticked, it comes back to the list (focus stays on it)
   function rawTick(cb) {
     const A = GK.store.actions, st = GK.store.get(), id = cb.dataset.rawCheck, d = domId(id);
@@ -260,22 +132,20 @@ GK.ui.summary = (function () {
       if (back) back.focus();
     });
   }
-  // recipes that can actually expand (≥1 input, not noexp); zero-input "zombie production" and
-  // grow recipes only describe where a raw material comes from
-  const expandable = (r) => r.in.length > 0 && !r.noexp;
+  const { expandable } = GK.calc;   // recipes that can actually expand (≥1 input, not noexp)
   // "Fabricar com [ … ▾]" (raw rows; the steps use stepPicker)
   function chooser(itemId, current, state, withRaw, labelKey) {
     const id = domId(itemId), D = GK.data.get(), nm = name(D.items[itemId], state.overrides);
     const all = GK.data.recipesFor(itemId);
     const shown = all.filter((r) => expandable(r) || (current && r.id === current.id));
-    // corte 19: as a raw material, with only circular recipes to offer (Pele), the selector has nothing to give
+    // as a raw material, with only circular recipes to offer (Pele), the selector has nothing to give
     if (withRaw && !current && shown.every((r) => r.cyc)) return "";
     const labels = F.recipeLabels(shown, state, all);
     const opts = (withRaw ? `<option value=""${current ? "" : " selected"}>${esc(t("raw.asRaw"))}</option>` : "") +
       shown.map((r, k) => `<option value="${esc(r.id)}"${current && r.id === current.id ? " selected" : ""}>${esc(labels[k])}</option>`).join("");
     return `<span class="select-wrap"><label for="choice-${id}">${esc(t(labelKey))}</label><select id="choice-${id}" data-choice="${esc(itemId)}" aria-label="${esc(t("steps.recipeLabel", { name: nm }))}">${opts}</select></span>`;
   }
-  // a step with other recipes (1.6.0, corte 3): the "Por execução: 1 Tora → 3 ▾" line is the recipe <select>
+  // a step with other recipes: the "Por execução: 1 Tora → 3 ▾" line is the recipe <select>
   // (transparent, over the whole line: a tap anywhere on it opens the native list). The options leave out the card's
   // own station ("1 Tora → 4 · Serra Circular" names only another one).
   function stepPicker(s, state, D, ins) {
@@ -377,7 +247,7 @@ GK.ui.summary = (function () {
     else if (r.out.bonus && r.out.bonus.add != null) meta.push(t("steps.yield", { n: s.yield }) + ` (${t("steps.yieldIf", { n: "+" + num(r.out.bonus.add), perk: perkName(r.out.bonus) })})`);
     else if (s.yield > 1 || r.out.note) meta.push(t("steps.yield", { n: s.yield }) + (r.out.note ? ` (${name(r.out.note)})` : ""));
     if (s.leftover > 0) meta.push(t("steps.left", { n: s.leftover }));
-    // a star craft that makes one grade (1.9: História (ouro) written at the Escrivaninha): the grade it aims at, from
+    // a star craft that makes one grade (História (ouro) written at the Escrivaninha): the grade it aims at, from
     // the recipe's own thresholds; bronze (or a threshold the data does not give) says only where the grade comes from
     const sg = it.grade && r.star ? r.star[it.grade] : null;
     if (it.grade && r.star) meta.push(sg != null ? t("steps.starGrade", { grade: t("quality." + it.grade), n: sg }) : t("steps.starAny"));
@@ -390,7 +260,7 @@ GK.ui.summary = (function () {
       qty = qtyButton(s.item, nm, s.need, open, true);
       if (open) actions.push(haveControls(s.item, nm, s.demand, state, false));
     }
-    // one small line (1.8.x): "ou: Lenheiro II · Metalurgia 1" = the other stations, then the short tech line; either
+    // one small line: "ou: Lenheiro II · Metalurgia 1" = the other stations, then the short tech line; either
     // part alone when the other is empty; a long one wraps as running text, a level or tier staying with its word
     // ("Metalurgia 2", "Lenheiro II": no lone "2" on the next line)
     const note = (r.alt.length ? [t("steps.alt", { names: r.alt.map((a) => name(a, state.overrides)).join(", ") })] : [])
@@ -398,7 +268,7 @@ GK.ui.summary = (function () {
     if (note.length) actions.push(`<span class="tech">${esc(note.join(" · "))}</span>`);
     const ins = lineList(s.ins, state, D);
     const perRun = s.alts > 1 ? stepPicker(s, state, D, ins) : `<span class="row-in">${esc(t("steps.per"))} ${ins}</span>`;
-    // no grade badge (1.9, BACKLOG 2.9): the name and the star already say the grade of what the step makes, and the
+    // no grade badge: the name and the star already say the grade of what the step makes, and the
     // "Por execução" line names the graded ingredient ("1 Suco de Uva (prata) · 1 Umami → 1")
     const extraBadges = (s.isGoal ? `<span class="badge badge-goal">${esc(t("steps.goal"))}</span>` : "") +
       (r.example ? ` <span class="badge badge-ex" title="${esc(t("steps.exampleTitle"))}">${esc(t("steps.example"))}</span>` : "");
@@ -441,7 +311,7 @@ GK.ui.summary = (function () {
     const doneBadge = (done, total, cls) => `<span class="${cls} tabnum"><span aria-hidden="true">${num(done)}/${num(total)}</span><span class="sr-only">${esc(t("fold.doneSr", { done, total }))}</span></span>`;
     const nSt = plan.stations.length;
     const stations = U.stepsCollapsed ? "" : plan.stations.map((g, gi) => {
-      // cards numbered in display order (the old depth badge "etapa N" collided with "Etapas" = rows)
+      // cards numbered in display order (a depth badge "etapa N" would collide with "Etapas" = rows)
       const numBox = `<span class="station-n tabnum" aria-hidden="true">${num(gi + 1)}</span>`;
       const numSr = `<span class="sr-only">${esc(t("steps.order", { n: gi + 1, total: nSt }))}: </span>`;
       const stName = name(g.station, state.overrides);

@@ -22,7 +22,7 @@ What comes from data/raw/api-items-all.json (the wiki's item dataset, already ca
   * study:  Study Table points by colour + the Science and Faith it costs (`studyCards`).
   * asked:  who asks for it outside recipes: quests (data/raw/days/probe-quests.json `needs`, with the quest giver),
             town restorations and town orders (`usedIn` kinds Town / Order). Repairs, battles, bait, sermons, bags,
-            combat and the game description are left out on purpose (docs/revisao-ux/dados-ficha.md).
+            combat and the game description are left out on purpose.
 Money is stored in bronze (1 silver = 100 bronze, 1 gold = 100 silver).
 Names (traders, places, quests, buffs) are interned into small tables keyed by slug, so each item stores ids.
 pt names (Texts.loc): a correction (`fix`) of the names layers, the game's own text table
@@ -57,8 +57,7 @@ ORDER = {"buy": 0, "fish": 1, "gather": 2}
 ITEM_HREF = ("/items/", "/crafting-stations/", "/buildings/")
 
 # Hand glossary for source names the game text table does not have (tr "machine": the page marks them
-# "não oficial"). Vocabulary follows the app's pt obtain texts ("pilhas de sucata"...); 2026-11 (consertos.md §18,
-# docs/revisao-ux/revisao-nomes-wiki.md): 7 names follow the wiki PT / the game's own words ("Depósito de pedra",
+# "não oficial"). Vocabulary follows the app's pt obtain texts ("pilhas de sucata"...); 7 names follow the wiki PT / the game's own words ("Depósito de pedra",
 # "Madeira trazida pela maré", "Cogumelos pantaneiros", "Buraco de areia", "Prateleira quebrada").
 MT = {
     "Tree": "Árvore", "Creepy tree": "Árvore sinistra", "Dead tree": "Árvore morta", "Driftwood": "Madeira trazida pela maré",

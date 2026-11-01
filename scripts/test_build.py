@@ -53,8 +53,28 @@ def read_json(p):
     return json.loads(Path(p).read_text(encoding="utf-8"))
 
 
+_TEXTS = {}
+
+
+def texts(lang):
+    """{key: text} of src/js/i18n/<lang>.js (pt.js, en.js): every text of the page, by screen, in file order."""
+    if lang not in _TEXTS:
+        src = (ROOT / "src" / "js" / "i18n" / f"{lang}.js").read_text(encoding="utf-8")
+        pairs = re.findall(r'^\s*"([a-zA-Z]+\.[\w.-]+)": "((?:[^"\\]|\\.)*)"', src, re.M) + \
+            re.findall(r', "([a-zA-Z]+\.[\w.-]+)": "((?:[^"\\]|\\.)*)"', src)   # a line may hold several keys
+        _TEXTS[lang] = {k: json.loads('"%s"' % v) for k, v in pairs}
+    return _TEXTS[lang]
+
+
+def recipes_src():
+    """The Receitas screen's code: ui/recipes-cards.js, ui/recipes-facts.js and ui/recipes.js (src/manifest.json order)."""
+    js = read_json(ROOT / "src" / "manifest.json")["js"]
+    return "\n".join((ROOT / "src" / f).read_text(encoding="utf-8") for f in js if f.startswith("js/ui/recipes"))
+
+
 def expand_payload(page):
-    """Undo build.page_payload (collapsed {pt, en} strings, dropped items[].id), like GK.data does."""
+    """Undo build.page_payload (collapsed {pt, en} strings, dropped items[].id, default values left out), like GK.data
+    does."""
     langs = page["meta"]["langs"]
     loc_keys = {"cat", "obtain", "note", "ext", "zone", "name", "type"}
 
@@ -70,8 +90,26 @@ def expand_payload(page):
     TYPES = {"hand_craft", "star_craft", "auto", "factory", "building", "alchemy", "grow",
              "technology", "quest", "perk"}
     out = walk(page)
+    # the fields build.py drop_defaults() leaves out, with the value GK.data (src/js/data.js) gives a missing one
+    item_def = {"cat": None, "obtain": None, "icon": None, "tr": "missing", "kind": "item", "listed": True,
+                "unobtainable": False}
+    recipe_def = {"station": None, "in": [], "tech": None, "type": "hand_craft", "cd": False, "listed": True,
+                  "noexp": False, "cyc": False, "alt": [], "ext": None, "extra": [], "mastery": None, "ticks": None,
+                  "energy": None, "example": False, "runes": None, "zone": None}
     for iid, it in out["items"].items():
+        for k, v in item_def.items():
+            it.setdefault(k, v)
         it["id"] = iid
+    for st in out["stations"].values():
+        st.setdefault("icon", None)
+        st.setdefault("tr", "missing")
+    for r in out["recipes"]:
+        for k, v in recipe_def.items():
+            r.setdefault(k, list(v) if isinstance(v, list) else v)
+        for ln in r["in"]:
+            ln.setdefault("qty", 1)
+        for ln in r["extra"] + [r["out"]]:
+            ln.setdefault("qty", None)
     out["meta"].pop("collapsed", None)
     out["meta"].pop("sprite", None)
     out["meta"].pop("version", None)
@@ -107,7 +145,7 @@ class FixtureBuild(unittest.TestCase):
 
     def test_schema_shape(self):
         ds = self.ds
-        self.assertEqual(set(ds), {"meta", "items", "stations", "recipes"})
+        self.assertEqual(set(ds), {"meta", "items", "stations", "recipes", "perks"})
         self.assertEqual(ds["meta"]["built"], "2026-01-01")
         self.assertIn("wikily.gg", ds["meta"]["sources"])
         self.assertNotIn("machine", ds["meta"]["sources"])
@@ -577,7 +615,7 @@ class SrcBuild(unittest.TestCase):
         for tag in ("<!doctype", "<html", "<head>", "<body", "charset="):
             self.assertNotIn(tag, art.lower())
         self.assertIn("/* ==== src/js/app.js ==== */", art)
-        self.assertTrue(all(it["icon"] is None for it in json.loads(extract_block(art))["items"].values()))
+        self.assertTrue(all(it.get("icon") is None for it in json.loads(extract_block(art))["items"].values()))
         preview = (self.proj / "dist" / "preview.html").read_text(encoding="utf-8")
         self.assertTrue(preview.startswith("<!doctype html>"))
         self.assertIn(art, preview)
@@ -800,11 +838,13 @@ class TechsBuild(unittest.TestCase):
 
     @unittest.skipUnless(shutil.which("node"), "node not installed")
     def test_gk_tech_module(self):
-        """src/js/tech.js (GK.tech) on the fixture tree, in node with a stub GK.data."""
+        """src/js/tech.js (GK.tech) on the fixture tree, in node with a stub GK.data (and the real GK.data.loc)."""
         ds = {"meta": {"langs": ["pt", "en"]}, "items": {"plank": {"pt": "Tábua", "en": "Plank"}}, "stations": {}}
         payload = build.techs_payload(FIX_TECHS, ds)
         harness = r"""
-const GK = { data: { get: () => D, load: (j) => j } };
+const GK = {};
+""" + (ROOT / "src" / "js" / "data.js").read_text(encoding="utf-8") + r"""
+GK.data = { get: () => D, load: (j) => j, loc: GK.data.loc };
 const D = { items: { plank: { id: "plank", pt: "Tábua", en: "Plank", tr: "likely", defaultRecipe: null },
                      box: { id: "box", pt: "Caixa", en: "Box", defaultRecipe: "box" },
                      ingot: { id: "ingot", pt: "Lingote", en: "Ingot", defaultRecipe: "ingot" } },
@@ -959,9 +999,9 @@ class DaysBuild(unittest.TestCase):
         self.assertRegex(days, r'GK\.router\.register\(\{ id: "days", labelKey: "tab\.days", screen: "days"')
         self.assertIn('GK.app.registerPanel(GK.ui.days, { id: "days", panel: "days"', days)
         self.assertIn('slot: "planner-top", order: 5', today)
-        for text in (days, today):
-            self.assertRegex(text, r"GK\.i18n\.add\(\{\s*pt: \{")
-            self.assertIn("  en: {", text)
+        for lang in ("pt", "en"):
+            for pre in ("days.", "today."):
+                self.assertTrue(any(k.startswith(pre) for k in texts(lang)), (lang, pre))
         if (ROOT / "data" / "days.json").exists():
             doc = build.load_days(ROOT / "data" / "days.json")
             self.assertEqual(len(doc["days"]), 6)
@@ -1000,9 +1040,10 @@ class RealTechs(unittest.TestCase):
         self.assertIn('GK.app.registerPanel(GK.ui.tech, { id: "tech", panel: "tech"', ui)
         self.assertIn('slot: "planner-extra", order: 10', needs)
         for text in (ui, needs):
-            self.assertRegex(text, r"GK\.i18n\.add\(\{\s*pt: \{")
-            self.assertIn("  en: {", text)
             self.assertNotIn("confirm(", text)
+        for lang in ("pt", "en"):
+            for pre in ("tech.", "tn."):
+                self.assertTrue(any(k.startswith(pre) for k in texts(lang)), (lang, pre))
         self.assertIn("GK.tech = (function", (src / "tech.js").read_text(encoding="utf-8"))
 
 
@@ -1034,22 +1075,34 @@ class RealSrc(unittest.TestCase):
         for f, text in self.text.items():
             self.assertTrue(text.lstrip().startswith("/*"), f"{f} must begin with a comment (what it owns / exposes)")
 
-    def test_i18n_per_module(self):
+    def test_i18n_files(self):
+        """Every text is in src/js/i18n/pt.js and en.js, loaded right after js/i18n.js (before any module that uses
+        them); no other module adds texts. en.js follows pt.js: the same keys in the same order, under the same
+        section titles, with the same {placeholders}. (The dictionary itself, loaded: test_calc.mjs.)"""
+        js = self.man["js"]
+        i = js.index("js/i18n.js")
+        self.assertEqual(js[i + 1:i + 3], ["js/i18n/pt.js", "js/i18n/en.js"])
         i18n = self.text["js/i18n.js"]
         self.assertIn("function add(", i18n)
-        self.assertNotIn('"goals.title"', i18n)            # strings live in their modules
-        for f in ("js/router.js", "js/ui/header.js", "js/ui/search.js", "js/ui/goals.js", "js/ui/summary.js",
-                  "js/ui/checklist.js", "js/ui/changelog.js", "js/ui/credits.js", "js/ui/footer.js", "js/ui/fmt.js"):
-            self.assertRegex(self.text[f], r"GK\.i18n\.add\(\{\s*pt: \{", f)
-            self.assertIn("  en: {", self.text[f], f)
-        keys = {}
+        self.assertNotIn('"goals.title"', i18n)
         for f, text in self.text.items():
-            for k in re.findall(r'^\s+"([a-zA-Z]+\.[\w.]+)":', text, re.M):
-                keys.setdefault(k, set()).add(f)
-        self.assertEqual({k: v for k, v in keys.items() if len(v) > 1}, {}, "a key is defined by two modules")
-        self.assertIn("changelog.title", keys)
-        self.assertIn("footer.history", keys)
-        self.assertIn("footer.credits", keys)
+            if f.endswith(".js") and not f.startswith("js/i18n"):
+                self.assertNotIn("GK.i18n.add(", text, f)
+        for lang in ("pt", "en"):
+            src = self.text[f"js/i18n/{lang}.js"]
+            self.assertEqual(src.count("GK.i18n.add({ %s: {" % lang), 1, lang)
+            keys = re.findall(r'"([a-zA-Z]+\.[\w.-]+)": "', src)
+            self.assertEqual(len(keys), len(set(keys)), f"{lang}.js: a key is defined twice")
+            self.assertEqual(len(keys), len(texts(lang)), lang)
+        pt, en = texts("pt"), texts("en")
+        self.assertEqual(list(en), list(pt), "en.js: the keys of pt.js, in the same order")
+        section = lambda lang: re.findall(r"^  // ---- (.*) ----$", self.text[f"js/i18n/{lang}.js"], re.M)
+        self.assertEqual(section("en"), section("pt"))
+        self.assertGreater(len(section("pt")), 10)
+        holes = lambda s: sorted(re.findall(r"\{\w+\}", s))
+        self.assertEqual([k for k in pt if holes(pt[k]) != holes(en[k])], [], "different {placeholders} in pt and en")
+        for k in ("changelog.title", "footer.history", "footer.credits"):
+            self.assertIn(k, pt)
 
     def test_registries(self):
         self.assertIn("GK.app = (function", self.text["js/core.js"])
@@ -1064,7 +1117,7 @@ class RealSrc(unittest.TestCase):
         self.assertIn('href="#changelog"', self.text["js/ui/footer.js"])
         self.assertIn('<section data-slot="planner-extra" id="planner-extra">', self.html)
         self.assertRegex(self.text["js/ui/recipes.js"], r'GK\.router\.register\(\{ id: "recipes", labelKey: "rc\.tab", screen: "recipes"')
-        self.assertIn('"tab.tech": "Tecnologias"', self.text["js/ui/tech.js"])
+        self.assertEqual(texts("pt")["tab.tech"], "Tecnologias")
 
     def test_credits_screen(self):
         """#credits: a route-only screen in the assembled page, reached from the footer's version line."""
@@ -1073,16 +1126,14 @@ class RealSrc(unittest.TestCase):
         self.assertIn('GK.app.registerPanel(GK.ui.credits, { id: "credits", panel: "credits"', self.html)
         self.assertIn('<a href="#credits" id="foot-credits">', self.html)
         self.assertLess(self.html.index('id="foot-changelog"'), self.html.index('id="foot-credits"'))
-        self.assertIn('"footer.credits": "Créditos"', self.text["js/ui/footer.js"])
-        self.assertIn('"footer.credits": "Credits"', self.text["js/ui/footer.js"])
+        self.assertEqual((texts("pt")["footer.credits"], texts("en")["footer.credits"]), ("Créditos", "Credits"))
         # every credits.* text exists in both languages
-        pt, en = cr.split("\n  en: {", 1)
-        keys = lambda part: set(re.findall(r'^\s+"(credits\.[\w.]+)":', part, re.M))
-        self.assertTrue(keys(pt) and keys(pt) == keys(en), keys(pt) ^ keys(en))
+        keys = lambda lang: {k for k, v in texts(lang).items() if k.startswith("credits.") and v.strip()}
+        self.assertTrue(keys("pt") and keys("pt") == keys("en"), keys("pt") ^ keys("en"))
         for url in ("https://wikily.gg/graveyard-keeper-2", "https://github.com/hpizaia/GK2"):
             self.assertIn(url, cr)
         self.assertIn('target="_blank" rel="noopener"', cr)
-        self.assertIn("Graveyard Keeper 2 © Lazy Bear Games / tinyBuild", cr)
+        self.assertTrue(texts("pt")["credits.game.p1"].startswith("Graveyard Keeper 2 © Lazy Bear Games / tinyBuild"))
         self.assertIn('meta.from === "search-toggle"', cr)
         self.assertIn(".screen-credits", self.text["css/screens.css"])
 
@@ -1133,7 +1184,9 @@ class MadeText(unittest.TestCase):
             ds = read_json(d / "gk2.json")
             R = {r["id"]: r for r in ds["recipes"]}
             self.assertEqual(R["nail"]["out"], {"item": "nail", "qty": 5,
-                                                "note": {"pt": "5 (8 com Ferreiro)", "en": "5 (8 with Blacksmith)"}})
+                                                "note": {"pt": "5 (8 com Ferreiro)", "en": "5 (8 with Blacksmith)"},
+                                                "bonus": {"perk": "Blacksmith", "perks": ["blacksmith"], "qty": 8}})
+            self.assertEqual(ds["perks"]["blacksmith"], {"pt": "Ferreiro", "en": "Blacksmith", "uses": 1})
             self.assertEqual(R["plank"]["out"], {"item": "plank", "qty": 2})
             self.assertEqual(R["coal"]["out"]["note"], {"pt": "2-3", "en": "2-3"})
             self.assertEqual(R["fertilized-beet"]["star_quality"], {"silver": 6, "gold": 10})
@@ -1310,7 +1363,7 @@ class RealShell(unittest.TestCase):
         self.assertIn('GK.router.forget("days")', self.read("js/ui/days.js"))
 
     def test_footer_links_tap_area(self):
-        css = self.read("css/components.css")
+        css = self.read("css/screens.css")
         self.assertRegex(css, r"\.foot-links a \{[^}]*min-height: var\(--tap\)")
         self.assertIn('<nav class="foot-links"', self.read("js/ui/footer.js"))
 
@@ -1330,7 +1383,7 @@ class RealShell(unittest.TestCase):
 
 
 class PlannerUx(unittest.TestCase):
-    """UX review of the Planejador (docs/revisao-ux/app.md #1, #3, #4, #5, #6, #8, #10): order on phones, compact
+    """The Planejador's layout and flows: order on phones, compact
     goal and raw rows, first use, "Tudo" with undo, numbered station cards, short recipe labels."""
 
     @classmethod
@@ -1350,7 +1403,7 @@ class PlannerUx(unittest.TestCase):
         self.assertIn("todayCollapsed: true", self.read("js/store.js"))   # #4c: Hoje starts as one line
 
     def test_planner_goal_rows_one_line(self):
-        """#3, redone in 1.8.x (protos/metas-quantidade, opção 2): "− N +" on the name's line at every width (no more
+        """Goal rows: "− N +" on the name's line at every width (no more
         second line under 480 px); no separate ✕: at quantity 1 the "−" is a red ✕ that removes the goal, labelled
         "Remover <nome>" / "Remove <name>"; names wrap at whole words."""
         css, g = self.read("css/planner.css"), self.read("js/ui/goals.js")
@@ -1366,8 +1419,8 @@ class PlannerUx(unittest.TestCase):
         self.assertIn('id="dec-${id}" data-dec="${esc(g.item)}" aria-label="${esc(t("goals.dec", { name: nm }))}">−</button>', g)
         self.assertIn('id="inc-${id}" data-inc="${esc(g.item)}" aria-label="${esc(t("goals.inc", { name: nm }))}">+</button>', g)
         for k, pt, en in (("goals.dec", "Diminuir", "Decrease"), ("goals.inc", "Aumentar", "Increase"), ("goals.remove", "Remover {name}", "Remove {name}")):
-            self.assertRegex(g, r'"%s": "%s' % (re.escape(k), re.escape(pt)))
-            self.assertRegex(g, r'"%s": "%s' % (re.escape(k), re.escape(en)))
+            self.assertTrue(texts("pt")[k].startswith(pt), k)
+            self.assertTrue(texts("en")[k].startswith(en), k)
         # a hold that runs "−" down to 1 does not remove the goal with the click that ends it
         self.assertIn("(b.dataset.dec || b.dataset.inc || b.dataset.remove) && swallowClick", g)
         # the ✕ removes with "Desfazer" (the app's undo toast); "Limpar metas" keeps its two-tap confirmation
@@ -1375,8 +1428,7 @@ class PlannerUx(unittest.TestCase):
         self.assertNotIn("A.removeGoal(", g)
         self.assertIn('GK.ui.fmt.undoToast(t("goals.removed", { name: nm }), () => {', g)
         self.assertIn("S().actions.restoreGoal(goal, at,", g)
-        self.assertIn('"goals.removed": "Saiu das metas: {name}"', g)
-        self.assertIn('"goals.removed": "Removed from goals: {name}"', g)
+        self.assertEqual((texts("pt")["goals.removed"], texts("en")["goals.removed"]), ("Saiu das metas: {name}", "Removed from goals: {name}"))
         self.assertIn('t(confirming ? "goals.confirm" : "goals.clear")', g)
         name = re.search(r"\n\.goal-name \{(.*?)\}", css).group(1)
         self.assertIn("overflow-wrap: normal", name)
@@ -1409,16 +1461,17 @@ class PlannerUx(unittest.TestCase):
         self.assertNotIn("clearDone", st)
         for gone in (".progress-actions", ".names-toggle", ".edit-ico", ".copy-fallback"):
             self.assertNotIn(gone, css, gone)
-        self.assertIn('"goals.clear": "Limpar metas"', self.read("js/ui/goals.js"))
+        for gone in ("progress.copy", "progress.clear", "names.edit", "export.button", "copy.header"):
+            self.assertFalse([k for k in texts("pt") if k.startswith(gone)], gone)
+        self.assertEqual(texts("pt")["goals.clear"], "Limpar metas")
 
     def test_rename_in_recipes_detail(self):
         """1.8.x: the detail's "não oficial" / "editado" tag is the rename button ("Renomear <nome>", 44 px hit area);
         Salvar / Cancelar / "Voltar ao nome original" write GK.store overrides (behaviour: test_calc.mjs)."""
-        r, css = self.read("js/ui/recipes.js"), self.read("css/recipes.css")
+        css = self.read("css/recipes.css")
         for k, pt, en in (("rc.rename", "Renomear {name}", "Rename {name}"), ("rc.renameReset", "Voltar ao nome original", "Back to the original name"),
                           ("rc.exportNames", "Exportar nomes editados ({n})", "Export edited names ({n})")):
-            self.assertIn('"%s": "%s"' % (k, pt), r)
-            self.assertIn('"%s": "%s"' % (k, en), r)
+            self.assertEqual((texts("pt")[k], texts("en")[k]), (pt, en))
         self.assertRegex(css, r"\.badge-btn::after \{[^}]*inset: -14px -4px")
         self.assertIn(".copy-fallback {", css)
 
@@ -1428,18 +1481,19 @@ class PlannerUx(unittest.TestCase):
         body = s.split("function haveAll(btn) {", 1)[1].split("\n  }\n", 1)[0]
         self.assertIn("GK.ui.fmt.undoToast(", body)
         self.assertIn("target.focus()", body)
-        self.assertIn('"have.allToast": "{name}: você já tem tudo"', s)
+        self.assertEqual(texts("pt")["have.allToast"], "{name}: você já tem tudo")
         self.assertIn("function undoToast(msg, onUndo)", f)
-        self.assertIn('"undo.button": "Desfazer"', f)
-        self.assertIn(".toast-undo[hidden] { display: none; }", self.read("css/screens.css"))
+        self.assertEqual(texts("pt")["undo.button"], "Desfazer")
+        self.assertIn(".toast-undo { display: flex;", self.read("css/screens.css"))
+        self.assertIn("[hidden] { display: none !important; }", self.read("css/base.css"))   # wins over that display: flex
 
     def test_planner_stations_numbered_and_labels(self):
         """#8 + #10: cards numbered in display order (no "etapa N" depth badge); recipe labels without the letter
         or the repeated "receita: …" line."""
         s, f = self.read("js/ui/summary.js"), self.read("js/ui/fmt.js")
         self.assertIn('class="station-n tabnum"', s)
-        self.assertNotIn('"steps.stage"', s)
-        self.assertNotIn('"steps.recipeName"', s)
+        for gone in ("steps.stage", "steps.recipeName"):
+            self.assertNotIn(gone, texts("pt"), gone)
         self.assertNotIn("String.fromCharCode(65", f)
         self.assertIn("today-pick-name", self.read("js/ui/today.js"))   # quick win: names under the day medallions
 
@@ -1475,8 +1529,8 @@ console.log(JSON.stringify({ after, back, twice, ui: S.get().ui }));
 
 
 class TodayFeatures(unittest.TestCase):
-    """docs/revisao-ux/ideias.md #2-#3 in the Hoje panel and the Dias card: "feito hoje" ticks (GK.store dayDone) and
-    "Bilhete do dia" (GK.store dayNotes). "Amanhã" (#1) left the Hoje panel in 1.6.0 (TodayCompact). The store / sync
+    """The Hoje panel and the Dias card: "feito hoje" ticks (GK.store dayDone) and
+    "Bilhete do dia" (GK.store dayNotes). No "Amanhã" in the Hoje panel (TodayCompact). The store / sync
     rules are tested in test_calc.mjs."""
 
     KEYS = {
@@ -1491,11 +1545,8 @@ class TodayFeatures(unittest.TestCase):
         cls.read = lambda self, f: (self.src / f).read_text(encoding="utf-8")
 
     def lang_keys(self, f):
-        """{lang: {key: text}} of a module's GK.i18n.add block."""
-        block = self.read(f).split("GK.i18n.add({", 1)[1].split("\n});", 1)[0]
-        pt, en = block.split("\n  en: {", 1)
-        grab = lambda b: dict(re.findall(r'^\s+"([a-zA-Z]+\.[\w.]+)": "((?:[^"\\]|\\.)*)",?$', b, re.M))
-        return {"pt": grab(pt), "en": grab(en)}
+        """{lang: {key: text}}: the texts of src/js/i18n (f, the module that uses them, only names the group)."""
+        return {"pt": texts("pt"), "en": texts("en")}
 
     def test_i18n_keys_in_both_languages(self):
         for f, keys in self.KEYS.items():
@@ -1505,7 +1556,7 @@ class TodayFeatures(unittest.TestCase):
                 self.assertTrue(k["en"].get(key), f"{f}: {key} missing in en")
                 # same placeholders in both languages
                 self.assertEqual(sorted(re.findall(r"\{\w+\}", k["pt"][key])), sorted(re.findall(r"\{\w+\}", k["en"][key])), key)
-            self.assertEqual(set(k["pt"]), set(k["en"]), f"{f}: pt and en define different keys")
+        self.assertEqual(set(k["pt"]), set(k["en"]), "pt and en define different keys")
         self.assertEqual(self.lang_keys("js/ui/days.js")["pt"]["days.note.add"], "Deixar um bilhete para este dia")
 
     def test_state_and_sync(self):
@@ -1541,7 +1592,7 @@ class TodayFeatures(unittest.TestCase):
 
 
 class TodayCompact(unittest.TestCase):
-    """The leaner Hoje panel (1.6.0, docs/revisao-ux/shots-hoje/comparacao.html): one line per event that opens in
+    """The compact Hoje panel: one line per event that opens in
     place, ticks only on tasks, no "Amanhã", the note as a ✎ button by the count, a short "?" for "não confirmado"."""
 
     @classmethod
@@ -1554,7 +1605,7 @@ class TodayCompact(unittest.TestCase):
         for gone in ("today-tmr", "today.tomorrow", "DY().next(", "function tomorrow("):
             self.assertNotIn(gone, today, gone)
         self.assertNotIn(".today-tmr", css)
-        self.assertIn("next(day)", self.read("js/ui/days.js"))   # the week helper stays (Dias screen)
+        self.assertRegex(self.read("js/ui/days.js"), r"return \{[^}]*\bnext\b")   # the week helper stays exported (Dias screen)
 
     def test_one_line_rows(self):
         today, css = self.read("js/ui/today.js"), self.read("css/days.css")
@@ -1615,10 +1666,7 @@ class SearchRecents(unittest.TestCase):
 
     def test_strings_and_popup(self):
         js = self.read("js/ui/search.js")
-        block = js.split("GK.i18n.add({", 1)[1].split("\n});", 1)[0]
-        pt, en = block.split("\n  en: {", 1)
-        self.assertIn('"search.recent": "Recentes"', pt)
-        self.assertIn('"search.recent": "Recent"', en)
+        self.assertEqual((texts("pt")["search.recent"], texts("en")["search.recent"]), ("Recentes", "Recent"))
         self.assertIn("const RECENT_SHOWN = 6;", js)
         self.assertIn("function renderRecent()", js)
         self.assertIn('class="result result-recent" role="option"', js)   # same options: tap / Enter = add()
@@ -1626,8 +1674,7 @@ class SearchRecents(unittest.TestCase):
         self.assertIn(".result-recent .result-name", self.read("css/header.css"))
 
 class TypeScale(unittest.TestCase):
-    """Text follows the phone's text size (docs/revisao-ux/app.md, Acessibilidade 1) and the "Letra grande" switch
-    (ideias.md #13): type sizes in rem, html[data-big] raises the root, ui.bigText is a per-device flag."""
+    """Text follows the phone's text size and the "Letra grande" switch: type sizes in rem, html[data-big] raises the root, ui.bigText is a per-device flag."""
 
     # px kept on purpose: the letter fallback fills a fixed px icon slot; the phone wordmark is a logo
     PX_OK = (".slot-letter", ".brand-name { min-width: 0")
@@ -1669,9 +1716,8 @@ class TypeScale(unittest.TestCase):
         self.assertIn('id="big-text" aria-pressed="${bigOn}"', footer)
         self.assertIn("setUi({ bigText:", footer)
         for lang, txt in (("pt", "Letra grande"), ("en", "Large text")):
-            block = footer.split("GK.i18n.add({", 1)[1].split("\n  en: {", 1)[0 if lang == "pt" else 1]
-            self.assertIn(f'"footer.bigText": "{txt}"', block)
-            self.assertIn('"footer.bigTitle": "', block)
+            self.assertEqual(texts(lang)["footer.bigText"], txt)
+            self.assertTrue(texts(lang)["footer.bigTitle"])
         # the phone tab band shares the row and wraps instead of hiding tabs in a sideways scroll
         header = self.read("css/header.css")
         self.assertIn(".tabs-mob-band .tabs { flex-wrap: wrap; overflow-x: visible; }", header)
@@ -1698,24 +1744,28 @@ class FooterNoticeQr(unittest.TestCase):
     def test_footer_short(self):
         f, cr = self.read("js/ui/footer.js"), self.read("js/ui/credits.js")
         render = f.split("render(state, meta) {", 1)[1]
-        # three links, 44 px (components.css), Letra grande kept, sync chip hidden unless account / error
+        # three links, 44 px (screens.css), Letra grande kept, sync chip hidden unless account / error
         self.assertEqual(re.findall(r'id="(foot-\w+)"', render.split("const links", 1)[1].split(";\n", 1)[0]),
                          ["foot-changelog", "foot-credits", "foot-site"])
         self.assertIn('id="big-text"', render)
         self.assertIn("const CHIP = { syncing: 1, synced: 1, error: 1 };", f)
         self.assertIn("el.hidden = !CHIP[st];", f)
-        self.assertIn(".sync-chip[hidden] { display: none; }", self.read("css/planner.css"))
+        self.assertIn("[hidden] { display: none !important; }", self.read("css/base.css"))   # hides the chip over its display: inline-flex
         # the credits line and the long note left the footer; Créditos keeps the wikily credit and gets the note
-        for gone in ('"footer.data"', '"footer.note"', '"footer.dataVersion"', "NX Software", "wikily"):
+        for gone in ("NX Software", "wikily"):
             self.assertNotIn(gone, f)
-        self.assertIn("(© NX Software)", cr)
-        self.assertIn('"credits.data.p3": "As quantidades são as de base;', cr)
+        for gone in ("footer.data", "footer.note", "footer.dataVersion"):
+            self.assertNotIn(gone, texts("pt"))
+        pt, en = texts("pt"), texts("en")
+        self.assertFalse([k for k, v in pt.items() if "NX Software" in v and not k.startswith("credits.")])
+        self.assertIn("(© NX Software)", pt["credits.data.p1"])
+        self.assertTrue(pt["credits.data.p3"].startswith("As quantidades são as de base;"))
         # the data's game versions, no build date (QA 2026-11 #8)
-        self.assertIn('"credits.data.p4": "Receitas da wiki (jogo {wiki}) · textos do jogo {game}."', cr)
-        self.assertIn('"credits.data.p4": "Wiki recipes (game {wiki}) · game texts {game}."', cr)
+        self.assertEqual(pt["credits.data.p4"], "Receitas da wiki (jogo {wiki}) · textos do jogo {game}.")
+        self.assertEqual(en["credits.data.p4"], "Wiki recipes (game {wiki}) · game texts {game}.")
         self.assertNotIn("m.built", cr)
         # one version line: one number when wiki and game agree
-        self.assertIn('"footer.line": "v{version} · dados do jogo {game}"', f)
+        self.assertEqual(pt["footer.line"], "v{version} · dados do jogo {game}")
         self.assertIn('t(game === wiki ? "footer.line" : "footer.lineMixed"', f)
 
     def test_game_version_embedded(self):
@@ -1766,18 +1816,17 @@ console.log(JSON.stringify({
         self.assertIsNone(out["same"])
         self.assertIsNone(out["older"])
         self.assertIsNone(out["none"])
-        for lang, txt in (("pt", '"footer.stale": "O jogo já está na {latest}; as receitas daqui são da {wiki}."'),
-                          ("en", '"footer.stale": "The game is on {latest}; recipes here are from {wiki}."')):
-            block = f.split("GK.i18n.add({", 1)[1].split("\n  en: {", 1)[0 if lang == "pt" else 1]
-            self.assertIn(txt, block)
+        for lang, txt in (("pt", "O jogo já está na {latest}; as receitas daqui são da {wiki}."),
+                          ("en", "The game is on {latest}; recipes here are from {wiki}.")):
+            self.assertEqual(texts(lang)["footer.stale"], txt)
 
     @unittest.skipUnless(shutil.which("node"), "node not installed")
     def test_credits_qr(self):
-        cr, css = self.read("js/ui/credits.js"), self.read("css/planner.css")
+        cr, css = self.read("js/ui/credits.js"), self.read("css/screens.css")
         self.assertIn('const APP_URL = "https://claude.ai/artifact/8hp57ZZTFoH6GyDQUdHZAn";', cr)
         self.assertIn('const WIDE = "(min-width: 900px) and (pointer: fine)";', cr)
         self.assertIn("if (!wide() || !GK.ui.qr) return \"\";", cr)           # no SVG made on a phone
-        self.assertIn('"credits.qr.say": "Aponte a câmera do celular para abrir o app lá."', cr)
+        self.assertEqual(texts("pt")["credits.qr.say"], "Aponte a câmera do celular para abrir o app lá.")
         self.assertIn(".cr-qr { display: none; }", css)
         self.assertIn("@media (min-width: 900px) and (pointer: fine) {", css)
         man = read_json(self.src / "manifest.json")["js"]
@@ -1965,26 +2014,29 @@ class FactsBuild(unittest.TestCase):
         self.assertGreaterEqual(c["where"], 250)
         self.assertEqual((c["buy"], c["fish"], c["energy"], c["buff"]), (176, 22, 59, 14))
         self.assertGreaterEqual(c["stack"], 540)
-        # ficha do item (docs/revisao-ux/dados-ficha.md): 197 bought, 333 studied, 39 cost Faith, 81 asked by quests
+        # item facts: 197 bought, 333 studied, 39 cost Faith, 81 asked by quests
         self.assertEqual((c["sell"], c["price"], c["study"], c["study_faith"]), (197, 197, 333, 39))
         self.assertGreaterEqual(c["sell_likes"], 70)
         self.assertEqual((c["asked_quest"], c["quests"], c["asked_town"], c["asked_order"]), (81, 60, 29, 22))
 
     def test_recipes_detail_uses_facts(self):
         """The item detail draws "Onde conseguir", the use tooltip and the stack; the planner files do not."""
-        js = (ROOT / "src" / "js" / "ui" / "recipes.js").read_text(encoding="utf-8")
-        for needle in ("function whereHtml(", "function tipHtml(", "function stackSlot(", "WHERE_CAP = 4", '"rc.where": "Onde conseguir"'):
+        js = recipes_src()
+        for needle in ("function whereHtml(", "function tipHtml(", "function stackSlot(", "WHERE_CAP = 4"):
             self.assertIn(needle, js)
+        self.assertEqual(texts("pt")["rc.where"], "Onde conseguir")
 
     def test_recipes_detail_ficha_blocks(self):
         """Ficha do item: "Quem compra", "Estudar" (+ "Já estudei", synced) and "Pedido em" (folded) in the item detail
         only; each block returns "" without its data; the planner and the list rows do not read the new fields."""
-        js = (ROOT / "src" / "js" / "ui" / "recipes.js").read_text(encoding="utf-8")
-        for needle in ("function sellHtml(", "function studyHtml(", "function askedHtml(", '"rc.sell": "Quem compra"',
-                       '"rc.study": "Estudar"', '"rc.studied": "Já estudei"', '"rc.asked": "Pedido em"', '"rc.sell": "Who buys it"',
+        js = recipes_src()
+        for needle in ("function sellHtml(", "function studyHtml(", "function askedHtml(",
                        "rc.askedWarn", 'id="rc-studied"', "setStudied(", 'class="card list rc-asked" id="rc-asked"${askedOpen ? " open" : ""}',
                        "GK.ui.tech.costHtml(cost, { big: true })"):
             self.assertIn(needle, js)
+        pt, en = texts("pt"), texts("en")
+        self.assertEqual((pt["rc.sell"], pt["rc.study"], pt["rc.studied"], pt["rc.asked"], en["rc.sell"]),
+                         ("Quem compra", "Estudar", "Já estudei", "Pedido em", "Who buys it"))
         for fn in ("sellHtml", "studyHtml", "askedHtml"):
             body = js.split(f"function {fn}(", 1)[1].split("\n  function ", 1)[0]
             self.assertIn('return "";', body, fn)
@@ -1992,7 +2044,7 @@ class FactsBuild(unittest.TestCase):
         detail = js.split("function detailHtml(", 1)[1]
         self.assertLess(detail.index("whereHtml(it"), detail.index("sellHtml(it"))
         self.assertLess(detail.index("sellHtml(it"), detail.index("studyHtml(it"))
-        self.assertLess(detail.index("${usedHtml}"), detail.index("${askedHtml(it, state)}"))
+        self.assertLess(detail.index("${usedHtml}"), detail.index("${askedHtml(it, state, askedOpen)}"))
         row = js.split("function rowHtml(", 1)[1].split("\n  function ", 1)[0]
         for f in (".sell", ".study", ".asked"):
             self.assertNotIn(f, row)
@@ -2011,8 +2063,7 @@ class FactsBuild(unittest.TestCase):
 
 
 class Cuts160(unittest.TestCase):
-    """1.6.0: the 16 approved noise cuts (docs/revisao-ux/simplificar.md §2, prototypes in protos/cortes/) and the
-    "Recentes" fix (qa-2026-11 médio 1). Source-level checks on src/, plus GK.ui.fmt.buildLabel / techLine in node."""
+    """The approved noise cuts (less text on screen) and the quiet "Recentes" after an add. Source-level checks on src/, plus GK.ui.fmt.buildLabel / techLine in node."""
 
     @classmethod
     def setUpClass(cls):
@@ -2025,8 +2076,9 @@ class Cuts160(unittest.TestCase):
         s, f, css = self.read("js/ui/summary.js"), self.read("js/ui/fmt.js"), self.read("css/planner.css")
         self.assertIn('class="row-qty qty-btn"', s)
         self.assertIn('"steps.qtyLabel"', s)
-        for gone in ('"steps.hint"', '"raw.hint"', '"steps.recipe":', '"steps.have"', '"fold.raw.', '"fold.steps.'):
-            self.assertNotIn(gone, s, gone)
+        for gone in ("steps.hint", "raw.hint", "steps.recipe", "steps.have"):
+            self.assertNotIn(gone, texts("pt"), gone)
+        self.assertFalse([k for k in texts("pt") if k.startswith(("fold.raw.", "fold.steps."))])
         self.assertIn("function stepPicker(", s)
         self.assertIn('class="row-in step-pick"', s)
         self.assertIn("s.runs > 1 && s.runs !== s.need", s)
@@ -2043,13 +2095,12 @@ class Cuts160(unittest.TestCase):
         self.assertIn('.concat(F.techLine(r, state)).map((x) => x.replace(/ (?=(?:\\d+|[IVX]+)(?:[ ,]|$))/g, "\\u00a0"));', s)
         self.assertNotIn("row-alt", s)
         self.assertNotIn(".row-alt", self.read("css/components.css"))
-        self.assertIn('"steps.alt": "ou: {names}"', s)
-        self.assertIn('"steps.alt": "or: {names}"', s)
+        self.assertEqual((texts("pt")["steps.alt"], texts("en")["steps.alt"]), ("ou: {names}", "or: {names}"))
         self.assertRegex(css, r"\.row-actions \{[^}]*flex-wrap: wrap;[^}]*margin-top: var\(--s2\)")
         self.assertIn(".tech { font-size: .8125rem; color: var(--ink-3); }", css)
 
     def test_planner_spacing(self):
-        """Spacing pass after 1.6.0 (docs/revisao-ux/shots-espacos): the section toggles keep 8 px above their card and
+        """Spacing: the section toggles keep 8 px above their card and
         sit on the 12 px line of the controls inside; the station toggle and "×2 ▾" end on that line too, with no
         negative margins pulling "×2 ▾" up against the station band; a row's icon and tick sit at the top, beside the
         name; 8 px between a raw row's quantity and its "Já tenho"; the 44 px targets stay."""
@@ -2096,28 +2147,28 @@ class Cuts160(unittest.TestCase):
         self.assertRegex(css, r"\.fold-btn \{[^}]*width: var\(--tap\)")
 
     def test_section_fold_option_a(self):
-        """Seta das seções, opção A (1.8.x, docs/revisao-ux/protos/seta-secao): Matérias-primas, Etapas, Tecnologias
+        """Section toggles: Matérias-primas, Etapas, Tecnologias
         que faltam and the open Hoje fold with the thin chevron (.sec-fold > .sec-chev, aria-expanded, a label per
         state); the station cards and the one-line Hoje keep the boxed .fold-btn. "Tecnologias que faltam" folded
         shows only "Total de pontos: …" (GK.store ui.tnCollapsed, per device)."""
-        summary, today, tn, store = (self.read("js/ui/summary.js"), self.read("js/ui/today.js"),
-                                     self.read("js/ui/techneeds.js"), self.read("js/store.js"))
-        self.assertIn('class="${sec ? "sec-fold" : "btn fold-btn"}" id="fold-${domId(k)}"', summary)
+        summary, today, tn, store, fmt = (self.read("js/ui/summary.js"), self.read("js/ui/today.js"),
+                                          self.read("js/ui/techneeds.js"), self.read("js/store.js"), self.read("js/ui/fmt.js"))
+        # one toggle for the three panels (GK.ui.fmt.foldBtn; its markup is checked in node by test_calc.mjs)
+        self.assertIn('class="${sec ? "sec-fold" : "btn fold-btn"}" ${attrs} aria-expanded="${open}"', fmt)
+        self.assertIn('<span class="sec-chev" aria-hidden="true"></span>', fmt)
+        self.assertIn('GK.ui.fmt.foldBtn(`id="fold-${domId(k)}" data-fold="${esc(k)}"`, open, label, bodyId, sec)', summary)
+        self.assertIn("""GK.ui.fmt.foldBtn('id="today-tgl" data-today-tgl', open, label, "today-body", sec)""", today)
         self.assertIn('${foldBtn("raw", !U.rawCollapsed, t("raw.title"), "raw-body", true)}', summary)
         self.assertIn('${foldBtn("steps", !U.stepsCollapsed, t("steps.title"), "steps-body", true)}', summary)
         self.assertIn("${foldBtn(fk, open, stName, body)}", summary)   # station: boxed
         self.assertIn('${foldBtn(true, t("today.title"), true)}', today)
         self.assertIn('${foldBtn(false, t("today.title"))}', today)     # one-line Hoje card: boxed
-        self.assertIn('<button type="button" class="sec-fold" id="fold-tn" data-tn-fold aria-expanded="${!shut}" aria-controls="tn-body"', tn)
-        self.assertIn('<span class="sec-chev" aria-hidden="true"></span>', tn)
+        self.assertIn("""GK.ui.fmt.foldBtn('id="fold-tn" data-tn-fold', !shut, title, "tn-body", true)""", tn)
         self.assertIn('setUi({ tnCollapsed: !shutOf(GK.store.get()) })', tn)
         self.assertIn('<span class="tn-sum-l">${esc(t("tn.totalSum"))}</span>${GK.ui.tech.costHtml(need.cost)}', tn)
         self.assertIn('expanded + "|" + shut + "|"', tn)   # folding re-renders the memoised panel
-        for lang, words in (("pt", ('"tn.totalSum": "Total de pontos:"', '"tn.collapseX": "Recolher: {name}"')),
-                            ("en", ('"tn.totalSum": "Total points:"', '"tn.collapseX": "Collapse: {name}"'))):
-            block = tn.split("GK.i18n.add({", 1)[1].split("\n  en: {", 1)[0 if lang == "pt" else 1]
-            for w in words:
-                self.assertIn(w, block)
+        for lang, words in (("pt", ("Total de pontos:", "Recolher: {name}")), ("en", ("Total points:", "Collapse: {name}"))):
+            self.assertEqual((texts(lang)["tn.totalSum"], texts(lang)["fold.collapseX"]), words)
         self.assertIn("tnCollapsed: false", store)
         # the tech tab's column headers: 44 px buttons with aria-expanded, chevron after the title, smaller than ›
         tech, tcss = self.read("js/ui/tech.js"), self.read("css/tech.css")
@@ -2127,7 +2178,8 @@ class Cuts160(unittest.TestCase):
         self.assertIn("width: 4px; height: 4px;", chev)
         self.assertIn("color: var(--ink-3);", chev)
         self.assertRegex(tcss, r"\.tech-chev \{[^}]*font-size: 1\.375rem")   # the rows' › stays the bigger one
-        self.assertIn(".tc-btn:focus-visible { outline: 2px solid var(--accent);", tcss)
+        self.assertIn(":focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }", self.read("css/base.css"))
+        self.assertNotRegex(tcss, r"\.tc-btn[^{]*\{[^}]*outline")   # the column button keeps that global ring
         # the search lists its hits by branch, with plain (never folded) headers
         search = tech.split("function searchList", 1)[1].split("function chips", 1)[0]
         self.assertNotIn("data-tcol", search)
@@ -2140,31 +2192,32 @@ class Cuts160(unittest.TestCase):
         self.assertIn("function slotButton(", f)
         self.assertIn('class="slot slot-btn${m[1] || ""}"', f)   # 1.8.0: keeps the quality star's has-q
         self.assertIn("GK.ui.fmt.slotButton(", g)
-        for gone in ("exampleGone", '"goals.intro"', "example-note", "GK.store.subscribe", "infoButton"):
+        for gone in ("exampleGone", "example-note", "GK.store.subscribe", "infoButton"):
             self.assertNotIn(gone, g, gone)
-        self.assertIn('"goals.example": "Exemplo: busque o que quer fabricar e ele substitui esta lista."', g)
-        for gone in ('class="stats"', '"stats.'):
-            self.assertNotIn(gone, c, gone)
+        self.assertNotIn("goals.intro", texts("pt"))
+        self.assertEqual(texts("pt")["goals.example"], "Exemplo: busque o que quer fabricar e ele substitui esta lista.")
+        self.assertNotIn('class="stats"', c)
+        self.assertFalse([k for k in texts("pt") if k.startswith("stats.")])
         self.assertIn('id="perks-tgl"', c)
         self.assertIn('aria-expanded="${perksOpen}"', c)
         self.assertIn(".slot.slot-btn {", comp)
-        self.assertIn(".info-ico {", comp)   # the footer's stale-data "i" keeps its style
-        self.assertIn('"tn.hint": "Pesquise nesta ordem; marque o que já tem."', self.read("js/ui/techneeds.js"))
+        self.assertIn(".info-ico {", self.read("css/screens.css"))   # the footer's stale-data "i" keeps its style
+        self.assertEqual(texts("pt")["tn.hint"], "Pesquise nesta ordem; marque o que já tem.")
 
     def test_days_today_search(self):
         """Cortes 7, 10, 11, 13, 14 and the Recentes fix (days.js, today.js, search.js)."""
         d, t, q = self.read("js/ui/days.js"), self.read("js/ui/today.js"), self.read("js/ui/search.js")
-        for gone in ('"days.hint"', '"days.credit"', '"days.calibrated"', '"days.isToday"', "days-credit"):
-            self.assertNotIn(gone, d, gone)
-        self.assertIn('"days.adjust": "Ajustar o dia"', d)
+        self.assertNotIn("days-credit", d)
+        for gone in ("days.hint", "days.credit", "days.calibrated", "days.isToday"):
+            self.assertNotIn(gone, texts("pt"), gone)
+        self.assertEqual(texts("pt")["days.adjust"], "Ajustar o dia")
         self.assertIn("data-adjust aria-expanded=", d)
-        self.assertIn('"days.machineNote"', d)          # moved into "Como funciona"
+        self.assertIn('t("days.machineNote")', d)       # moved into "Como funciona"
         self.assertIn("function shortText(ev)", t)
         self.assertIn('class="h2 today-h"', t)
         self.assertNotIn("days.advToast", t)            # no toast from the Hoje panel; days.js keeps its own
         self.assertIn("days.advToastN", d)
-        self.assertIn('"toast.added": "+ {name}"', q)
-        self.assertIn('"toast.replaced": "+ {name} · exemplo removido"', q)
+        self.assertEqual((texts("pt")["toast.added"], texts("pt")["toast.replaced"]), ("+ {name}", "+ {name} · exemplo removido"))
         self.assertIn("m && m.exampleReplaced", q)
         self.assertIn("restoreExample(snap)", q)
         self.assertIn("if (quiet || document.activeElement !== input) return false;", q)
@@ -2172,21 +2225,21 @@ class Cuts160(unittest.TestCase):
 
     def test_recipes_tech_changelog(self):
         """Cortes 7, 12, 16, 17, 18 (recipes.js, tech.js, changelog.js)."""
-        r, k, c, css = self.read("js/ui/recipes.js"), self.read("js/ui/tech.js"), self.read("js/ui/changelog.js"), self.read("css/screens.css")
-        for gone in ('"rc.hint"', '"rc.usedInNone"'):
-            self.assertNotIn(gone, r, gone)
-        self.assertIn('"rc.altAll"', r)
+        r, k, c, css = recipes_src(), self.read("js/ui/tech.js"), self.read("js/ui/changelog.js"), self.read("css/screens.css")
+        pt = texts("pt")
+        for gone in ("rc.hint", "rc.usedInNone"):
+            self.assertNotIn(gone, pt, gone)
+        self.assertIn('t("rc.altAll"', r)
         self.assertIn("rc-hidden-end", r)
         self.assertIn("GK.ui.fmt.buildLabel(", r)
         self.assertIn("row.n > 1", r)
-        self.assertIn('"rc.placeholder": "Buscar item"', r)
-        self.assertNotIn('"rc.placeholder": "Buscar entre', r)
-        self.assertNotIn('"tech.recipes.', k)
+        self.assertEqual(pt["rc.placeholder"], "Buscar item")
+        self.assertFalse([x for x in pt if x.startswith("tech.recipes.")])
         self.assertIn("missingAnc.length >= 2", k)
-        self.assertIn('"tech.hint": "Marque o que já pesquisou; as anteriores contam junto."', k)
+        self.assertEqual(pt["tech.hint"], "Marque o que já pesquisou; as anteriores contam junto.")
         self.assertIn("aria-expanded", c)
         self.assertIn("aria-controls", c)
-        self.assertIn('"changelog.notes.one"', c)
+        self.assertIn("changelog.notes.one", pt)
         self.assertRegex(css, r"\.cl-toggle \{[^}]*min-height: var\(--tap\)")
 
     @unittest.skipUnless(shutil.which("node"), "node not installed")
@@ -2200,7 +2253,7 @@ global.document = { addEventListener() {}, createElement() { return { style: {},
   head: { appendChild() {} }, documentElement: {}, getElementById() { return null; } };
 """
         harness = stub + self.read("js/core.js") + self.read("js/util.js") + self.read("js/i18n.js") + \
-            '\nGK.i18n.add({ pt: { "search.raw": "Matéria-prima", "steps.techQuest": "Missão: {tech}", "steps.techPerk": "Vantagem: {tech}" }, en: {} });\n' + \
+            self.read("js/i18n/pt.js") + self.read("js/i18n/en.js") + \
             'GK.tech = { available: () => true, researchedSet: (r) => new Set(Object.keys(r).filter((k) => r[k])) };\n' + \
             self.read("js/ui/fmt.js") + r"""
 const F = GK.ui.fmt, z = (pt, en) => ({ id: "zone:" + en, build: true, pt, en });
@@ -2235,7 +2288,7 @@ console.log(JSON.stringify(out));
         self.assertEqual(out["quest"], ["Missão: A missão"])
 
 class GroupedRecipes180(unittest.TestCase):
-    """1.8.0, receitas agrupadas (docs/revisao-ux/protos/receitas-agrupadas, consertos.md §10): the quality star is drawn
+    """Grouped recipes: the quality star is drawn
     in one place (GK.util.slot); the Receitas detail uses GK.calc.recipeGroups; a tap on an option sets the planner's
     recipe; the circular recipes fold; pixel coins; texts in pt and en. (The rule itself: test_calc.mjs.)"""
 
@@ -2246,21 +2299,23 @@ class GroupedRecipes180(unittest.TestCase):
     def test_star_in_one_place(self):
         util = self.read("js/util.js")
         self.assertIn("function slot(ent, label, small, grade)", util)
-        self.assertIn('<span class="qstar ${q}" aria-hidden="true"></span>', util)
+        self.assertIn('`<span class="qstar ${STAR[grade]}" aria-hidden="true"></span>`', util)   # GK.util.qstar
         for f in ("js/ui/summary.js", "js/ui/goals.js", "js/ui/search.js", "js/ui/today.js", "js/ui/days.js", "js/ui/fmt.js"):
             self.assertNotIn("qstar", self.read(f), f)   # they all go through GK.util.slot / GK.ui.fmt.slotButton
+        self.assertNotIn('class="qstar', recipes_src())   # the grade picks of a group card: GK.util.qstar
         comp = self.read("css/components.css")
         for needle in (".slot.has-q { position: relative; }", ".slot > .qstar { position: absolute; left: 1px; top: 1px;", ".q-b {", ".q-s {", ".q-g {"):
             self.assertIn(needle, comp)
 
     def test_detail_groups_and_pick(self):
-        js = self.read("js/ui/recipes.js")
+        js = recipes_src()
         for needle in ("GK.calc.recipeGroups(rs, D)", "function groupCard(", 'role="radiogroup"', 'role="radio"', "data-pick=",
                        "A.chooseRecipe(r.out.item, r.id === GK.data.item(r.out.item).defaultRecipe ? null : r.id)",
-                       '<details class="rc-cyc" id="rc-cyc"', '"rc.cycT": "Melhorar a qualidade"', '"rc.cycT": "Improve quality"',
-                       '"rc.qMore": "E mais um destes"', '"rc.qMore": "Plus one of these"', '"rc.inUseQ": "Em uso no planejador: {what}"',
-                       "GK.data.gradeSort(ids,", "GK.data.stripGrade("):
+                       '<details class="rc-cyc" id="rc-cyc"', "GK.data.gradeSort(ids,", "const { graded, UNOFFICIAL } = GK.ui.fmt;"):   # graded: tested in node (test_calc.mjs)
             self.assertIn(needle, js)
+        pt, en = texts("pt"), texts("en")
+        self.assertEqual((pt["rc.cycT"], en["rc.cycT"], pt["rc.qMore"], en["rc.qMore"], pt["rc.inUseQ"]),
+                         ("Melhorar a qualidade", "Improve quality", "E mais um destes", "Plus one of these", "Em uso no planejador: {what}"))
         group = js.split("function groupCard(", 1)[1].split("\n  function ", 1)[0]
         self.assertNotIn("data-use=", group)   # no "Usar esta receita" button in a group card: the options do it
 
@@ -2269,12 +2324,12 @@ class GroupedRecipes180(unittest.TestCase):
         self.assertRegex(css, r"\.coin \{[^}]*width: 16px; height: 16px;")
         self.assertIn(".sell-max .coin { width: 14px; height: 14px;", css)
         self.assertNotIn("radial-gradient(circle at 35% 35%", css)
-        self.assertIn('<span class="sr-only"> ${esc(t("rc.coin." + k))}</span>', self.read("js/ui/recipes.js"))
+        self.assertIn('<span class="sr-only"> ${esc(t("rc.coin." + k))}</span>', self.read("js/ui/recipes-facts.js"))
 
 
 
 class Quality19(unittest.TestCase):
-    """1.9, qualidade (docs/revisao-ux/qualidade-auditoria.md, consertos.md "Qualidade"): build_dataset.py keeps the
+    """Quality grades: build_dataset.py keeps the
     grade of "Wine (silver)" (wine-silver, base wine; bronze = the plain item), the star crafts make every grade, and
     build.py lists a quality upgrade after the recipe that makes that grade directly."""
 
@@ -2334,34 +2389,109 @@ class Quality19(unittest.TestCase):
         self.assertFalse(any(r["cyc"] for r in self.ds["recipes"] if r["out"]["item"].startswith(("wine", "grape-juice"))))
 
     def test_steps_no_grade_badge(self):
-        s = (ROOT / "src" / "js" / "ui" / "summary.js").read_text(encoding="utf-8")
-        self.assertIn('"steps.starGrade": "{grade} com {n} ciclos bem-sucedidos"', s)
+        self.assertEqual(texts("pt")["steps.starGrade"], "{grade} com {n} ciclos bem-sucedidos")
 
 
 
 class BronzePlain17(unittest.TestCase):
-    """2026-11 (consertos.md §17): the plain item of a graded family ("pumpkin" next to "pumpkin-silver" / "-gold") is
+    """The plain item of a graded family ("pumpkin" next to "pumpkin-silver" / "-gold") is
     the bronze one and shows as bronze: the payload's families, the page's rule and where it is drawn. (The behaviour
     itself, list, search, detail, lines: test_calc.mjs "bronze comum".)"""
 
     def test_page_rule_and_display(self):
         src = lambda f: (ROOT / "src" / f).read_text(encoding="utf-8")
         data = src("js/data.js")
-        for needle in ("function bronzePlain()", "function anyLines()", "const lineGrade = (line) =>", "function gradeSort(list, famOf, rankOf, together)"):
+        for needle in ("const lineGrade = (line) =>", "function gradeSort(list, famOf, rankOf, together)"):
             self.assertIn(needle, data)
-        self.assertIn('const q = grade === false ? "" : STAR[grade || (ent && ent.grade)] || "";', src("js/util.js"))
+        self.assertIn("def apply_grades(items, recipes):", (ROOT / "scripts" / "build.py").read_text(encoding="utf-8"))
+        self.assertIn("const g = grade === false ? null : grade || (ent && ent.grade);", src("js/util.js"))   # node: test_calc.mjs
         rc = src("js/ui/recipes.js")
         self.assertIn("GK.ui.fmt.gradedName(it, nm))}</h2>", rc)
         self.assertIn("GK.data.GRADE_RANK[D.items[id].grade], true);", rc)
         self.assertIn("GK.data.GRADE_RANK[D.items[x.id].grade], true);", src("js/calc.js"))
-        page = ROOT / "dist" / "preview.html"
+        page = ROOT / "dist" / "index.html"
         if page.exists():
-            self.assertIn("function bronzePlain()", page.read_text(encoding="utf-8"))
+            items = json.loads(extract_block(page.read_text(encoding="utf-8")))["items"]
+            plain = sorted(k for k, it in items.items() if it.get("grade") == "bronze" and it.get("kind", "item") != "quality-variant")
+            self.assertEqual(plain, ["cabbage", "cabbage-seed", "grape-seeds", "grapes", "onion", "onion-seed", "pumpkin",
+                                     "pumpkin-seeds", "wine"])
 
+
+
+class GradesAndBonusBuild(unittest.TestCase):
+    """2026-11: the grades and the perk bonuses come ready from the build (apply_grades, apply_bonuses, note_bonus);
+    GK.data reads them as they come (test_calc.mjs "payload: the grades come ready from the build")."""
+
+    def test_note_bonus_shapes(self):
+        nb = lambda en, pt=None: build.note_bonus({"en": en, "pt": pt if pt is not None else en})
+        self.assertEqual(nb("3 (5 with Cook II)", "3 (5 com Cozinheiro II)"),
+                         ({"perk": "Cook II", "perks": ["cook-ii"], "qty": 5}, [("cook-ii", "Cook II", "Cozinheiro II")]))
+        self.assertEqual(nb("1, or 2 with Cremator", "1, ou 2 com Cremador")[0], {"perk": "Cremator", "perks": ["cremator"], "qty": 2})
+        b, names = nb("amount varies with the bed; +1 each with Farmer II and Grape Master",
+                      "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II e Senhor das Uvas")
+        self.assertEqual(b, {"perk": "Farmer II and Grape Master", "perks": ["farmer-ii", "grape-master"], "add": 1})
+        self.assertEqual([n[2] for n in names], ["Fazendeiro II", "Senhor das Uvas"])
+        self.assertEqual(nb("10 with Heat Saver", "10 com Economizador de Calor")[0], {"perk": "Heat Saver", "perks": ["heat-saver"], "qty": 10})
+        self.assertIsNone(nb("50% chance with Alchemist"))                 # a chance is not a quantity
+        self.assertIsNone(nb("with Mason"))
+        self.assertIsNone(build.note_bonus(None))
+        # the pt side does not match (or names a different count): the English names stand in
+        self.assertEqual(nb("2 (3 with Cook)", "dois")[1], [("cook", "Cook", "Cook")])
+        self.assertEqual(build.perk_slug("Magpie’s Eye"), "magpie-s-eye")
+        # one table for the pt notes and the bonuses: every bonus shape has its pt template
+        self.assertEqual(len(build.BONUS_SHAPES), 4)
+        self.assertEqual(len(build.NOTE_PATTERNS_PT), len(build.NOTE_SHAPES))
+
+    def test_apply_bonuses_perk_table(self):
+        rs = [{"in": [{"item": "a", "qty": 1, "note": {"en": "2 (3 with Cook)", "pt": "2 (3 with Cook)"}}], "extra": [],
+               "out": {"item": "x", "qty": 1, "note": {"en": "1 (2 with Cook)", "pt": "1 (2 com Cozinheiro)"}}},
+              {"in": [], "extra": [{"item": "s", "qty": 1, "note": {"en": "50% chance with Mason", "pt": "50% de chance com Pedreiro"}}],
+               "out": {"item": "y", "qty": 1}}]
+        perks = build.apply_bonuses(rs)
+        self.assertEqual(perks, {"cook": {"pt": "Cozinheiro", "en": "Cook", "uses": 2}})   # the real pt name wins
+        self.assertEqual(rs[0]["in"][0]["bonus"], {"perk": "Cook", "perks": ["cook"], "qty": 3})
+        self.assertNotIn("bonus", rs[1]["extra"][0])
+
+    def test_apply_grades(self):
+        it = lambda en, **kw: dict({"en": en, "pt": en, "kind": "item"}, **kw)
+        items = {
+            "wine": it("Wine"), "wine-silver": it("Wine (silver)", kind="quality-variant", base="wine"),
+            "wine-gold": it("Wine (gold)", kind="quality-variant", base="wine"), "spices": it("Spices"),
+            "story": it("Story"), "story-bronze": it("Story (bronze)", kind="quality-variant", base="story"),
+            "story-silver": it("Story (silver)", kind="quality-variant", base="story"),
+            "polished-bronze": it("Polished Bronze"), "alcohol": it("Alcohol"), "soup": it("Soup"),
+        }
+        rec = lambda rid, out, ins, name=None: dict({"id": rid, "out": {"item": out, "qty": 1}, "extra": [],
+                                                     "in": [{"item": i, "qty": 1} for i in ins]}, **({"name": {"en": name, "pt": name}} if name else {}))
+        rs = [rec("up", "wine-silver", ["wine", "spices"], "Drink enhancement I from Wine (bronze)"),
+              rec("alc", "alcohol", ["wine"], "Alcohol from Any Wine"),
+              rec("soup-gold", "soup", ["wine-gold"], "Soup from Wine (gold)"),
+              rec("pb", "polished-bronze", ["spices"])]
+        build.apply_grades(items, rs)
+        self.assertEqual({k: v.get("grade") for k, v in items.items() if v.get("grade")},
+                         {"wine": "bronze", "wine-silver": "silver", "wine-gold": "gold", "story-bronze": "bronze", "story-silver": "silver"})
+        self.assertEqual([r.get("quality") for r in rs], ["silver", None, "gold", None])   # never from the id ("polished-bronze")
+        self.assertEqual(rs[0]["in"][0], {"item": "wine", "qty": 1, "grade": "bronze"})
+        self.assertEqual(rs[1]["in"][0], {"item": "wine", "qty": 1, "anyGrade": True})
+        self.assertNotIn("grade", rs[2]["in"][0])     # the input is the gold variant itself: no line grade
+
+    def test_drop_defaults(self):
+        page = {"items": {"a": {"pt": "A", "en": "A", "icon": None, "kind": "item", "listed": True, "unobtainable": False,
+                                "raw": False, "recipes": [], "defaultRecipe": None, "tr": "official"}},
+                "stations": {"s": {"pt": "S", "en": "S", "icon": None, "tr": "missing"}},
+                "recipes": [{"id": "r", "out": {"item": "a", "qty": 1}, "station": "s", "type": "hand_craft", "cd": False,
+                             "listed": False, "alt": [], "extra": [{"item": "b", "qty": None}], "runes": None,
+                             "in": [{"item": "b", "qty": 1}, {"item": "c", "qty": 2}]}]}
+        build.drop_defaults(page)
+        # raw, recipes, defaultRecipe and tr "official" stay: GK.data has no default for them (or another one)
+        self.assertEqual(page["items"]["a"], {"pt": "A", "en": "A", "raw": False, "recipes": [], "defaultRecipe": None, "tr": "official"})
+        self.assertEqual(page["stations"]["s"], {"pt": "S", "en": "S"})
+        self.assertEqual(page["recipes"][0], {"id": "r", "out": {"item": "a", "qty": 1}, "station": "s", "listed": False,
+                                              "extra": [{"item": "b"}], "in": [{"item": "b"}, {"item": "c", "qty": 2}]})
 
 
 class RecipeNamesPt18(unittest.TestCase):
-    """2026-11 (consertos.md §18, traducao-receitas.md fase 2): the recipe names (the entries with `recipes` of the
+    """The pt recipe names (the entries with `recipes` of the
     hand layer data/names.manual.pt-BR.json, read by default); the owner's 3 decisions: grade as "(ouro)",
     "X a partir de Y" left out of the pt card, "Canteiro de Trigorigo" fixed by a `fix` entry. (The page behaviour:
     test_calc.mjs "nomes de receita".)"""
@@ -2419,7 +2549,7 @@ class RecipeNamesPt18(unittest.TestCase):
 
     def test_page_code(self):
         fmt = (ROOT / "src" / "js" / "ui" / "fmt.js").read_text(encoding="utf-8")
-        rc = (ROOT / "src" / "js" / "ui" / "recipes.js").read_text(encoding="utf-8")
+        rc = (ROOT / "src" / "js" / "ui" / "recipes-cards.js").read_text(encoding="utf-8")
         self.assertIn("function recipeName(r, it)", rc)
         self.assertIn("const PT_HIDDEN_NAME = / a partir de |^Construir .+ \\(.+\\)$/i;", rc)
         self.assertIn("PT_HIDDEN_NAME.test(name(r.name))", rc)
@@ -2430,7 +2560,7 @@ class RecipeNamesPt18(unittest.TestCase):
 
 
 class WikiNames18(unittest.TestCase):
-    """2026-11 (consertos.md §18, revisao-nomes-wiki.md): the 18 swaps approved by the owner. 9 categories in the hand
+    """The 18 name swaps approved by the owner. 9 categories in the hand
     layer data/names.manual.pt-BR.json (field `game`), "Repair (X)" derived as "Consertar (X)", 7 source names of the
     MT glossary (build_facts.py). The 4 marked "conferir no jogo" stay as they were."""
     CATS = {"Building: Garden": "Construção: jardim", "Building: Garden tablets": "Construção: placas do jardim",

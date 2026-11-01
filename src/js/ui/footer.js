@@ -1,70 +1,15 @@
-/* GK.ui.footer (1.4.1: shorter): line 1 = the "Letra grande" switch (GK.store ui.bigText, per device, applied by
+/* GK.ui.footer: line 1 = the "Letra grande" switch (GK.store ui.bigText, per device, applied by
    GK.theme.big; here because the footer is on every screen and the header has no room at 360 px) and the sync chip,
    shown only with an account (syncing / synced) or on error; line 2 = the links with 44 px tap areas (update
    history, credits screen, project site); line 3 = one quiet version line "v1.4.0 · dados do jogo 1.011 (receitas
    1.010)" (meta.version, meta.data). The data credits and the note on amounts/names live on the Créditos screen.
    Stale data notice (meta.gameVersion = data/game-version.json, embedded by build.py): when its `latest` is newer
    than the wiki recipes (meta.data.wiki, compared as versions: 1.012 > 1.011), a line under the version with an "i"
-   that opens the note. (1.8.x: the thin band under the tabs with a ✕ is gone, the owner keeps only this line; the
-   old "gk2-companion.notice" key that remembered closing it is dropped on mount, never read.)
-   Owns: [data-panel="footer"] and the sync.* texts.
+   that opens the note. The old "gk2-companion.notice" key (it remembered closing a band that no longer exists) is
+   dropped on mount, never read.
+   Owns: [data-panel="footer"]; it shows the sync.* texts.
    Exposes: GK.ui.footer.{mount, render, stale, cmpVersion}; registered as a panel.
 */
-GK.i18n.add({
-  pt: {
-    "sync.loading": "Conectando à sua conta…",
-    "sync.syncing": "Sincronizando…",
-    "sync.synced": "Sincronizado {when}",
-    "sync.now": "agora",
-    "sync.min": "há {n} min",
-    "sync.hour": "há {n} h",
-    "sync.local": "Só neste aparelho",
-    "sync.error": "Não sincronizado",
-    "sync.loadingTitle": "Procurando o plano salvo na sua conta.",
-    "sync.syncedTitle": "Plano salvo na sua conta: abre igual no celular e no computador.",
-    "sync.localTitle": "O plano fica salvo só neste navegador.",
-    "sync.errorTitle": "Não deu para salvar na sua conta. O plano continua salvo neste aparelho; tento de novo na próxima alteração.",
-    "footer.version": "{app} v{version}",
-    "footer.history": "Histórico de atualizações",
-    "footer.credits": "Créditos",
-    "footer.site": "Site do projeto",
-    "footer.dataTitle": "Versão do jogo descrita pelas receitas do wiki e versão de onde vieram os nomes oficiais",
-    "footer.links": "Sobre o app",
-    "footer.bigText": "Letra grande",
-    "footer.line": "v{version} · dados do jogo {game}",
-    "footer.lineMixed": "v{version} · dados do jogo {game} (receitas {wiki})",
-    "footer.stale": "O jogo já está na {latest}; as receitas daqui são da {wiki}.",
-    "footer.staleMore": "Mais sobre a versão do jogo",
-    "footer.bigTitle": "Aumenta todo o texto do app, para ler de longe com o celular ao lado do jogo. Soma com o tamanho de letra do celular.",
-  },
-  en: {
-    "sync.loading": "Connecting to your account…",
-    "sync.syncing": "Syncing…",
-    "sync.synced": "Synced {when}",
-    "sync.now": "just now",
-    "sync.min": "{n} min ago",
-    "sync.hour": "{n} h ago",
-    "sync.local": "This device only",
-    "sync.error": "Not synced",
-    "sync.loadingTitle": "Looking for the plan saved in your account.",
-    "sync.syncedTitle": "Plan saved in your account: it opens the same on your phone and computer.",
-    "sync.localTitle": "The plan is saved in this browser only.",
-    "sync.errorTitle": "Couldn't save to your account. The plan is still saved on this device; I'll try again on your next change.",
-    "footer.version": "{app} v{version}",
-    "footer.history": "Update history",
-    "footer.credits": "Credits",
-    "footer.site": "Project site",
-    "footer.dataTitle": "Game version described by the wiki recipes, and version the official names come from",
-    "footer.links": "About the app",
-    "footer.bigText": "Large text",
-    "footer.line": "v{version} · game data {game}",
-    "footer.lineMixed": "v{version} · game data {game} (recipes {wiki})",
-    "footer.stale": "The game is on {latest}; recipes here are from {wiki}.",
-    "footer.staleMore": "More about the game version",
-    "footer.bigTitle": "Makes all the app's text bigger, to read from a distance with the phone beside the game. Adds to your phone's own text size.",
-  },
-});
-
 GK.ui.footer = (function () {
   const { t } = GK.i18n, esc = GK.util.esc;
   const SITE = "https://claude.ai/artifact/Bgn32T3eDPRFydxYoxgWTr";
@@ -120,7 +65,7 @@ GK.ui.footer = (function () {
           if (n) n.hidden = !noteOpen;
         }
       });
-      // the band under the tabs is gone (1.8.x): drop the key that remembered closing it (never read; private mode: no-op)
+      // drop the key of the old notice band (never read; private mode: no-op)
       try { localStorage.removeItem("gk2-companion.notice"); } catch (e) { /* storage blocked: nothing to drop */ }
       GK.sync.subscribe(chip);
       setInterval(() => { if (GK.sync.status() === "synced") chip(); }, 30000);

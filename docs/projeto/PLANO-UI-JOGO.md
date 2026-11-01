@@ -1,7 +1,7 @@
 # Plano: sinais do jogo na interface (Companheiro GK2)
 
 > 31/10/2026, sobre a versão 1.5.1. Documento de plano: nada disto está no app ainda.
-> Protótipo: `docs/revisao-ux/protos/ui-jogo/` (pasta interna, fora do git; publicado como artifact privado em https://claude.ai/artifact/C7aaTk2E5Z7sNQsuniYdie). É o app 1.5.1 de verdade com as mudanças pontuais e um botão **Atual / Novo** para comparar. Capturas em `shots/`.
+> Protótipo: numa pasta interna (fora do git), publicado como artifact privado em https://claude.ai/artifact/C7aaTk2E5Z7sNQsuniYdie. É o app 1.5.1 de verdade com as mudanças pontuais e um botão **Atual / Novo** para comparar.
 
 ## 1. Resumo em 5 linhas
 
@@ -117,14 +117,14 @@ A pesquisa continua valendo: ela mostra o que existe no jogo, e a seção 3 diz 
 
 ## 4. Tokens
 
-A base é a de hoje (`src/css/tokens.css` e o bloco do balão em `src/css/recipes.css`). Entram poucos tokens novos; três cores do balão escurecem um tom.
+A base é a de hoje (`src/css/tokens.css`, que desde 01/11/2026 guarda também a paleta do balão, e o bloco do balão em `src/css/recipes.css`). Entram poucos tokens novos; três cores do balão escurecem um tom.
 
 | Token | Escuro | Claro | Uso | Diferença para hoje |
 |---|---|---|---|---|
 | `--ok` | `#46c42a` | `#46c42a` | check verde (sempre sobre espaço escuro) | **novo** (hoje o marcado é `--moss` cheio) |
 | `--slot-d` | `#1c1a22` | `#1c1a22` | fundo do espaço do ícone e da caixinha | **novo**; hoje o espaço usa `--bg-2` (`#161d23` / `#e3d3b0`) |
 | `--slot-d-edge` | `#4a4757` | `#4a4757` | aro do espaço | hoje `--frame-soft` |
-| `--stack` / `--stack-edge` | `#f2cb4c` / `#2a1606` | iguais | número no canto do ícone | igual (já existe em `recipes.css`); sobe para `tokens.css` |
+| `--stack` / `--stack-edge` | `#f2cb4c` / `#2a1606` | iguais | número no canto do ícone | igual (já está em `tokens.css`, paleta do jogo) |
 | `--hud` / `--hud-edge` / `--hud-track` | `#262a35` / `#4d5263` / `#12151c` | iguais | cápsula da barra (Progresso e energia) | igual (já existe); sobe para `tokens.css` |
 | `--prog` (enchimento) | `#5fcf34`, brilho `#b8f08a`, sombra `#2f8f1a` | iguais | Progresso | hoje `--moss` liso com faixas |
 | `--close-bg` / `--close-rim` / `--close-ink` | `#8a1512` / `#e0454f` / `#ffe3cf` | iguais | × do aviso de patch | **novo** |
@@ -162,7 +162,7 @@ O balão novo (1.5.0) tem três textos abaixo de 4,5:1 no fundo do degradê, no 
 | Check verde | SVG de 9 × 8 px em `data:`, verde `--ok` com sombra `#12380a`, `shape-rendering: crispEdges`, 16 px dentro da caixinha de 24 px |
 | Cápsula | `.bar` com `padding: 3px`, `border: 2px solid var(--hud-edge)`, trilho em `::before`, marcas a cada 10 % em `::after` (`repeating-linear-gradient`), enchimento com degradê de 3 faixas |
 | × vermelho | `::before` com `inset: 8px` dentro do botão de 44 px: fundo `--close-bg`, aro de 2 px `--close-rim`; o × é o texto creme |
-| Raio da energia | SVG próprio de 9 × 11 px, no lugar do PNG da wiki que o balão usa hoje (`--bolt` em `recipes.css`) |
+| Raio da energia | SVG próprio de 9 × 11 px, no lugar do PNG da wiki que o balão usa hoje (o raio em `.gk-bolt`, `recipes.css`) |
 | Cérebro da insanidade | SVG próprio de 9 × 8 px, roxo |
 | Pilha | o `.stack-n` que já existe (texto com contorno de 1 px em 8 direções) |
 
@@ -240,4 +240,4 @@ Só o que muda. O resto (cabeçalho, abas, títulos, cartões, estações, Hoje,
 - wikily.gg, calendário de 6 dias: https://wikily.gg/graveyard-keeper-2/calendar
 - Resenhas sobre a interface (via busca): https://www.gamespew.com/2026/09/graveyard-keeper-2-review/ , https://www.thexboxhub.com/graveyard-keeper-2-review/
 - Google Fonts: https://fonts.google.com/specimen/Grenze , https://fonts.google.com/specimen/Grenze+Gotisch (pesos medidos em 31/10/2026, subconjunto latin)
-- No projeto: `docs/projeto/DESIGN.md` §2 (cores já amostradas da Steam), `docs/revisao-ux/protos/ideia-22.html` (balão e fontes), `data/game-texts/gk2_textos.json` (textos oficiais), `data/facts.json` e `data/gk2.json` (números do protótipo)
+- No projeto: `docs/projeto/DESIGN.md` §2 (cores já amostradas da Steam), `data/game-texts/gk2_textos.json` (textos oficiais), `data/facts.json` e `data/gk2.json` (números do protótipo)

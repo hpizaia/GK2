@@ -146,19 +146,19 @@ The data side:
 The interface side:
 
 4. Add an entry to `LANGS` in `src/js/i18n.js` (`{ code: "es", locale: "es", label: "ES", name: "Español" }`).
-5. Add an `es: {...}` block to every `GK.i18n.add({ pt: {...}, en: {...} })` call (16 modules: `grep -rl "GK.i18n.add" src/js`). Missing keys fall back to Portuguese.
+5. Copy `src/js/i18n/en.js` to `src/js/i18n/es.js`, change `en:` to `es:` on its `GK.i18n.add` line and translate the texts; list the file in `src/manifest.json`, right after `js/i18n/en.js`. Missing keys fall back to Portuguese.
 6. Rebuild. Details: "Adding a language" in [`scripts/README-build.md`](../scripts/README-build.md#adding-a-language-for-example-spanish).
 
 ## 9. Change the look
 
 - **Colours, fonts, spacing:** `src/css/tokens.css`. Dark (night) is on bare `:root`; light (parchment) is defined twice, under `@media (prefers-color-scheme: light)` and under `:root[data-theme="light"]`. Change both light blocks together.
 - **Fonts:** `--f-display` and `--f-body` in the tokens; the Google Fonts link is in `src/index.html`.
-- **Name of the app:** `<title>` in `src/index.html` and `app.title*` in `src/js/ui/header.js` (both languages).
+- **Name of the app:** `<title>` in `src/index.html` and `app.title*` in `src/js/i18n/pt.js` and `src/js/i18n/en.js`.
 - Design rationale: [`docs/projeto/DESIGN.md`](projeto/DESIGN.md). Rebuild after any change in `src/`; never edit `dist/` or `prototype/`.
 
 ## 10. Add a feature
 
-Each feature is its own module (`src/js/ui/<name>.js`, optional `src/css/<name>.css`), listed in `src/manifest.json`, with its own strings (`GK.i18n.add`), its own route (`GK.router.register`) and its own panel (`GK.app.registerPanel`). The contract, with an example, is "Adding a module" in [`scripts/README-build.md`](../scripts/README-build.md#adding-a-module-the-contract-for-parallel-work). This is what let several Claude Code agents build features in parallel without touching each other's files.
+Each feature is its own module (`src/js/ui/<name>.js`, optional `src/css/<name>.css`), listed in `src/manifest.json`, with its own strings (a section in `src/js/i18n/pt.js` and `en.js`), its own route (`GK.router.register`) and its own panel (`GK.app.registerPanel`). The contract, with an example, is "Adding a module" in [`scripts/README-build.md`](../scripts/README-build.md#adding-a-module-the-contract-for-parallel-work). This is what let several Claude Code agents build features in parallel without touching each other's files.
 
 ## Troubleshooting
 

@@ -66,7 +66,6 @@
 .days-adj-chev { display: inline-block; margin-left: 4px; transition: transform .15s; }
 .days-adj[aria-expanded="true"] .days-adj-chev { transform: rotate(90deg); }
 .days-adj-in { display: flex; flex-wrap: wrap; gap: var(--s2); }
-.days-adj-in[hidden] { display: none; }
 
 /* icon tiles (sprite icon or drawn glyph) */
 .days-tile {
@@ -123,7 +122,7 @@ button.days-item:hover { border-color: var(--accent); }
 .days-ctl { padding-bottom: var(--s3); }
 .days-ev-detail { font-size: .8125rem; color: var(--ink-2); line-height: 1.35; }
 .days-quote { font-size: .8125rem; color: var(--ink-2); }
-/* the game text opens from a small quote mark (1.8.0): a 44 px target, the mark at its left edge, quiet until open */
+/* the game text opens from a small quote mark: a 44 px target, the mark at its left edge, quiet until open */
 .days-quote summary {
   display: inline-flex; align-items: center; min-width: var(--tap); min-height: var(--tap); margin: -10px 0 -8px;
   list-style: none; cursor: pointer; font: 800 1.5rem/1 var(--f-body); color: var(--ink-3);
@@ -194,7 +193,6 @@ button.days-item:hover { border-color: var(--accent); }
 @media (prefers-reduced-motion: reduce) { .today-ev-chev { transition: none; } }
 /* the opened row: the whole sentence, "Não confirmado" in words, with whom, detail, items, game text */
 .today-more { grid-column: 2; display: grid; gap: 4px; padding: 0 var(--s1) var(--s2) 28px; font-size: .875rem; line-height: 1.35; color: var(--ink-2); }
-.today-more[hidden] { display: none; }
 .today-more-text { color: var(--ink); font-weight: 700; font-size: .9375rem; overflow-wrap: anywhere; }
 .today-more-unsure { font-style: italic; }
 .days-quote.is-open { display: grid; gap: 2px; }
@@ -203,6 +201,11 @@ button.days-item:hover { border-color: var(--accent); }
 .today-ctl { display: flex; flex-wrap: wrap; gap: var(--s2); padding: var(--s2) var(--s3) var(--s3); border-top: 1px solid var(--seam); }
 .today-ask .hint { margin-bottom: var(--s2); }
 .today-picks { display: flex; flex-wrap: wrap; gap: 6px; }
+/* day picker: the sin's name under each medallion (6 columns, fits 360 px) */
+.today-ask .today-picks { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; }
+.today-pick-cell { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; cursor: pointer; }
+.today-pick-name { max-width: 100%; font-size: .75rem; font-weight: 700; line-height: 1.2; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.today-pick-cell:hover .today-pick-name { color: var(--ink); }
 .today-pick {
   display: inline-grid; place-items: center; width: var(--tap); height: var(--tap); padding: 0; cursor: pointer; color: var(--ink);
   background: var(--panel-2); background: color-mix(in srgb, var(--day, var(--panel-2)) 30%, var(--panel-2));
@@ -227,6 +230,9 @@ button.days-item:hover { border-color: var(--accent); }
 .today-ask .fold-head { margin-bottom: 0; }
 /* folded "Hoje": one row (medallion, "Hoje: X · N coisas", Avançar, toggle) */
 .today-mini .today-head { border-bottom: 0; gap: var(--s2); padding: 6px 6px 6px var(--s2); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+/* "Hoje" without a day, folded (.today-mini too): one quiet row "Marcar o dia do jogo" */
+.today-mark .today-head { min-height: 52px; }
+.today-mark .today-line b { font-weight: 700; color: var(--ink); }
 .today-mini .today-head .days-tile { width: 32px; height: 32px; }
 .today-mini .today-line { flex: 1; font-size: .875rem; line-height: 1.25; overflow-wrap: anywhere; }
 .today-mini .today-adv-sm { flex: none; }
@@ -259,7 +265,7 @@ button.days-item:hover { border-color: var(--accent); }
 .today-note-line:hover .today-note-txt { text-decoration: underline; text-decoration-color: var(--seam); text-underline-offset: 3px; }
 .days-note-box { padding: 2px var(--s4); border-bottom: 1px solid var(--seam); background: var(--panel-2); }
 .today-nw { white-space: nowrap; }
-/* folded row: the day on the first line, "2/3 feitas · dia 61" under it (it wrapped there anyway at phone widths) */
+/* folded row: the day on the first line, "2/3 feitas · dia 61" under it (one layout at every width) */
 .today-mini .today-sub { display: block; font-size: .8125rem; }
 .today-mini .today-line b { display: block; }
 .day-note { display: flex; align-items: center; gap: var(--s2); min-width: 0; min-height: var(--tap); }

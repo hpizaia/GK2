@@ -1,7 +1,6 @@
 /* tech.css: the Tecnologias screen (ui/tech.js: branch chips, column groups, tech rows, detail, point icons)
-   and the planner panel "Tecnologias que faltam" (ui/techneeds.js). Uses the shared tokens, .row, .card, .badge. */
-:root { --tp-red: #d0453a; --tp-green: #4f9e3a; --tp-blue: #3f6fd0; }
-
+   and the planner panel "Tecnologias que faltam" (ui/techneeds.js). Uses the shared tokens (--tp-* in the game palette),
+   .row, .card, .badge. */
 .screen-tech { padding-block: var(--s4) var(--s6); }
 .tech-screen { display: grid; gap: var(--s5); min-width: 0; }
 .tech-main, .tech-detail { min-width: 0; }
@@ -38,8 +37,8 @@
   font: 800 .75rem/1.3 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: var(--gold);
 }
 .tech-col .count { letter-spacing: 0; }
-/* 1.8.x (seta das seções, opção A): a branch column's header is the 44 px button that folds it (ui/tech.js); the
-   negative margins keep the old rhythm around the taller target. The column's chevron sits right after "COLUNA N":
+/* a branch column's header is the 44 px button that folds it (ui/tech.js); the negative margins keep the rows'
+   rhythm around the taller target. The column's chevron sits right after "COLUNA N":
    smaller and lighter than the rows' "›" (a 4 px box, ~8 px drawn, about the capitals' height, 1.5 px stroke; the
    "›" is a 22 px glyph with a ~2 px stroke; both --ink-3, ≥ 4.8:1) and never in their x column (the "›" sits 17 px
    in from the card's right edge, the chevron ~70 px in from its left one); the count (and ✓ when done) stays right. */
@@ -52,7 +51,6 @@
 }
 .tc-btn:hover { color: var(--accent); }
 .tc-btn:hover .tc-chev { color: var(--accent); }
-.tc-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .tc-btn .count { letter-spacing: 0; }
 .tc-chev {
   display: block; flex: none; width: 4px; height: 4px; margin-left: 2px; color: var(--ink-3);
@@ -138,10 +136,17 @@
 .tech-unlock-main { min-width: 0; }
 .tech-unlock-name { display: block; font-weight: 700; font-size: .9375rem; line-height: 1.2; overflow-wrap: anywhere; }
 
-/* planner panel */
+/* planner panel; its rows use the planner's column grid (.tn-card .tn-row, planner.css) */
 .tn { min-width: 0; }
+/* it folds like the planner sections (planner.css .fold-head, .sec-fold); folded = "Total de pontos: …" */
+.tn .fold-head { margin-bottom: var(--s2); }
+.tn #tn-body > .hint { margin-top: 0; }
+.fold-sum .tp-cost { display: inline-flex; vertical-align: middle; }
+.fold-sum .tn-sum-l { margin-right: 6px; }
 .tn-card { overflow: hidden; }
 .tn-total { padding: var(--s3) var(--s4); background: var(--slate); border-bottom: 1px solid var(--gold); box-shadow: inset 0 1px 0 var(--bevel-hi); }
+/* the label on the slate band: --ink-3 measures ~4.1:1 on --slate (dark), --ink-2 passes */
+.tn-total .tech-d-label { color: var(--ink-2); }
 .tn-foot { border-top: 1px solid var(--seam); padding: 4px var(--s2); }
 .tn-foot .btn { min-height: var(--tap); }
 .tn-other { margin: var(--s3) 0 0; font-size: .875rem; color: var(--ink-2); }

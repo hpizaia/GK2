@@ -98,7 +98,7 @@ Semantic colours (moss/blood) are separate from the accent. Contrast: `--ink` on
   1.375 (22) quantities · 1.5 (24) item name in Receitas · 1.5625 (25) section titles (display) · 1.625 (26) desktop
   wordmark. Uppercase labels: .75rem, 700–800, letter-spacing .08em. Boxes that hold a number grow with it: the
   stepper field is `max(46px, 2.3em)` wide (46 px at the default size, "999" still fits with large text).
-- **"Letra grande"** (ideias.md #13, a lighter take on the "No jogo" mode #11): a per-device switch, `GK.store`
+- **"Letra grande"** (a lighter take on the "No jogo" mode): a per-device switch, `GK.store`
   `ui.bigText` via `setUi`, never synced. It is the first line of the footer (on every screen; the 360 px header has
   no room): a 44 px `.btn-sm.toggle` "Aa Letra grande" / "Aa Large text" with `aria-pressed`. `GK.theme.big(on)` sets
   `<html data-big>` at boot, before the first render, and on every store change; `html[data-big] { font-size: 125% }`
@@ -221,7 +221,7 @@ Sources live in `src/` (one JS file per module, CSS split by concern, order in `
 ```
 core.js      window.GK, GK.app.registerPanel(module, {id, panel | slot, order})
 GK.util      esc, domId, slot (sprite icons), copyText, debounce
-GK.i18n      LANGS[], DICT filled by each module via GK.i18n.add({pt, en}); t(key, vars), plurals, name(obj), num()
+GK.i18n      LANGS[], DICT filled by src/js/i18n/pt.js and en.js (GK.i18n.add); t(key, vars), plurals, name(obj), num()
 GK.data      load + normalize JSON → items, recipes, byOut, usedIn, stations, search index, meta (version, changelog)
 GK.store     single serializable state {schemaVersion, lang, theme, goals, choice, have, done, overrides,
              researched, groupChoice, perks, updatedAt, syncBase, …}; localStorage per account; mergeSynced
@@ -237,6 +237,6 @@ GK.ui.*      header, search, goals, summary, checklist, techneeds (planner); rec
              each {mount(el, planRoot), render(state, meta, plan)}, registered with GK.app.registerPanel
 GK.app       boot: data → store → i18n → theme → mount registered panels → router; render loop
 ```
-Add a language: a `GK.i18n.LANGS` entry, its strings in every module's `GK.i18n.add` call, and an `xx`
+Add a language: a `GK.i18n.LANGS` entry, a `src/js/i18n/xx.js` (a translated copy of `en.js`), and an `xx`
 field on items/stations/categories/techs (falls back to `en`). Add a tab or panel: a new module that calls
 `GK.router.register` and/or `GK.app.registerPanel` (planner add-ons use `slot: "planner-extra"`).

@@ -165,16 +165,68 @@ def text_or_none(v):
 
 # --------------------------------------------------------------------------- recipe notes (pt)
 
-# Recurring English shapes of the recipe input / by-product notes. The last group is a perk or tech
-# name ("Mason", "Farmer II and Grape Master"), resolved through the names layers.
-NOTE_PATTERNS_PT = (
-    (re.compile(r"^(\d+(?:\.\d+)?)% chance with (.+)$", re.I), "{0}% de chance com {1}"),
-    (re.compile(r"^(\d+), or (\d+) with (.+)$", re.I), "{0}, ou {1} com {2}"),
-    (re.compile(r"^(\d+) \((\d+) with (.+)\)$", re.I), "{0} ({1} com {2})"),
-    (re.compile(r"^\+(\d+) each with (.+)$", re.I), "+{0} cada com {1}"),
-    (re.compile(r"^(\d+) with (.+)$", re.I), "{0} com {1}"),
-    (re.compile(r"^with (.+)$", re.I), "com {0}"),
+# Recurring English shapes of the recipe input / by-product / output notes: (English regex, pt template, perk bonus).
+# The last group is a perk or tech name ("Mason", "Farmer II and Grape Master"), resolved through the names layers.
+# The bonus kind says what the shape does with the perk (note_bonus(), line.bonus on the page): "qty" = the amount
+# becomes the group before the name ("3 (5 with Cook II)": 5), "add" = that group is added to each ("+1 each with
+# Farmer II"); None = no amount (a chance, "with X").
+_NUM = r"(\d+(?:\.\d+)?)"
+NOTE_SHAPES = (
+    (rf"^{_NUM}% chance with (.+)$", "{0}% de chance com {1}", None),
+    (rf"^{_NUM}, or {_NUM} with (.+)$", "{0}, ou {1} com {2}", "qty"),
+    (rf"^{_NUM} \({_NUM} with (.+)\)$", "{0} ({1} com {2})", "qty"),
+    (rf"^\+{_NUM} each with (.+)$", "+{0} cada com {1}", "add"),
+    (rf"^{_NUM} with (.+)$", "{0} com {1}", "qty"),
+    (r"^with (.+)$", "com {0}", None),
 )
+NOTE_PATTERNS_PT = tuple((re.compile(en, re.I), tpl) for en, tpl, _ in NOTE_SHAPES)
+
+
+def _pt_shape(tpl):
+    """pt template -> the regex that reads it back ("{0} ({1} com {2})" -> numbers, then the perk names last); the pt
+    number may use a decimal comma."""
+    parts = re.split(r"\{(\d)\}", tpl)
+    last = len(parts) // 2 - 1
+    rx = "".join(re.escape(p) if i % 2 == 0 else ("(.+)" if int(p) == last else r"(\d+(?:[.,]\d+)?)")
+                 for i, p in enumerate(parts))
+    return re.compile(f"^{rx}$", re.I)
+
+
+# the shapes that carry a perk bonus: (en regex, pt regex, kind)
+BONUS_SHAPES = tuple((re.compile(en, re.I), _pt_shape(tpl), kind) for en, tpl, kind in NOTE_SHAPES if kind)
+
+
+def perk_slug(s):
+    """Perk name -> id, as the page always made it: "Cook II" -> "cook-ii", "Magpie’s Eye" -> "magpie-s-eye"."""
+    s = unicodedata.normalize("NFD", str(s).lower())
+    s = re.sub(r"[̀-ͯ]", "", s)
+    return re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+
+
+def note_bonus(note):
+    """note {pt, en} -> (bonus, names) | None: the first "; " segment of the English text in a bonus shape.
+    bonus = {"perk": "<English names>", "perks": [id], "qty": M} or {..., "add": N}; names = [(id, en, pt)], the pt
+    names read from the same segment of note.pt in the mirrored shape (the English one when it does not match or the
+    count differs)."""
+    if not isinstance(note, dict) or not note.get("en"):
+        return None
+    pt_text = note.get("pt") if note.get("pt") is not None else note.get("en")
+    en = [x.strip() for x in str(note["en"]).split(";")]
+    pt = [x.strip() for x in str(pt_text or "").split(";")]
+    for k, seg in enumerate(en):
+        for rx, rx_pt, kind in BONUS_SHAPES:
+            m = rx.match(seg)
+            if not m:
+                continue
+            v = float(m.groups()[-2])
+            v = int(v) if v.is_integer() else v
+            en_names = [x.strip() for x in re.split(r"\s+and\s+", m.groups()[-1], flags=re.I) if x.strip()]
+            mp = rx_pt.match(pt[k]) if k < len(pt) and pt[k] else None
+            pt_names = [x.strip() for x in re.split(r"\s+e\s+", mp.groups()[-1])] if mp else []
+            names = [(perk_slug(e), e, pt_names[i] if len(pt_names) == len(en_names) else e)
+                     for i, e in enumerate(en_names)]
+            return {"perk": m.groups()[-1].strip(), "perks": [n[0] for n in names], kind: v}, names
+    return None
 
 
 def translate_note_pt(en, text_hit, name_hit):
@@ -464,6 +516,8 @@ class Builder:
 
         self.items = {k: items[k] for k in sorted(items)}
         self.produced = produced
+        apply_grades(self.items, recipes)
+        self.perks = apply_bonuses(recipes)
         return self
 
     # ---- derived pt names (quality grades, "A or B" groups, "Any X", "Open (X)", "Repair (X)" -> "Consertar (X)")
@@ -518,7 +572,7 @@ class Builder:
                     x = part(m.group(2))
                     if x:
                         # "Consertar", as every concrete repair of the game ("Consertar Casa", "Consertar ponte") and
-                        # the wiki PT; "Reparar" is only the generic button (revisao-nomes-wiki.md, consertos.md §18)
+                        # the wiki PT; "Reparar" is only the generic button
                         pt = ("Abrir" if m.group(1) == "Open" else "Consertar") + f" ({x})"
             if pt:
                 layer.names[nk] = (pt, "likely", "derived", name)
@@ -823,7 +877,97 @@ class Builder:
             "items": self.items,
             "stations": {k: self.stations[k] for k in sorted(self.stations)},
             "recipes": self.recipes,
+            "perks": self.perks,
         }
+
+
+# --------------------------------------------------------------------------- quality grades and perk bonuses
+# What the page shows of the grades (the star in the icon corner, the bronze / silver / gold order) and of the perk
+# bonuses, set here once; GK.data (src/js/data.js) reads them as they come. Rule: data/README-data.md "Quality grades".
+
+GRADE_SUFFIX = re.compile(r"-(bronze|silver|gold)$")
+_GRADE_IN_NAME = re.compile(r"^.+? from (.+?) \((bronze|silver|gold)\)\s*$", re.I)   # "<X> from <Y> (grade)"
+_GRADE_AT_END = re.compile(r"\((bronze|silver|gold)\)\s*$", re.I)
+_FROM_ANY = re.compile(r"\bfrom Any (.+?)\s*$", re.I)
+
+
+def page_norm(s):
+    """GK.data.norm: accents and apostrophes off, lower case ("Magpie’s Eye" -> "magpies eye")."""
+    s = re.sub(r"[̀-ͯ]", "", unicodedata.normalize("NFD", str(s or "")))
+    return re.sub(r"[’'`´]", "", s.lower()).strip()
+
+
+def apply_grades(items, recipes):
+    """Set, in place, the grades the page shows (keys only where there is a grade):
+    - item.grade on a quality variant ("wine-silver": "silver", from the id) and on the plain item of a family with a
+      silver or gold variant and no bronze one ("wine", "pumpkin", "cabbage-seed": "bronze");
+    - recipe.quality = the grade of the variant it makes ("Wine (silver)" from the Barrel and from "Wine (bronze) +
+      Spices"), else the "(grade)" its name ends with ("Cabbage soup from Cabbage (gold)"); never from the id alone
+      ("polished-bronze" is not a grade); the bronze plain items do not count here;
+    - line.grade on the input a "<X> from <Y> (grade)" recipe names when it stays the plain item (the bronze one:
+      "Drink enhancement I from Wine (bronze)");
+    - line.anyGrade on the input of a "<X> from Any <Y>" recipe (any grade: no star on it)."""
+    en = {iid: page_norm(it.get("en") or it.get("pt") or iid) for iid, it in items.items()}
+
+    def rname(r):
+        nm = r.get("name")
+        if not isinstance(nm, dict):
+            return ""
+        return (nm.get("en") if nm.get("en") is not None else nm.get("pt")) or ""
+
+    def input_named(r, want):
+        return next((ln for ln in r["in"] if ln["item"] in items and en[ln["item"]] == want), None)
+
+    for r in recipes:
+        m = _GRADE_IN_NAME.match(rname(r))
+        ln = m and input_named(r, page_norm(m.group(1)))
+        if ln and items[ln["item"]].get("kind") != "quality-variant" and items[ln["item"]].get("members") is None:
+            ln["grade"] = m.group(2).lower()
+    for iid, it in items.items():
+        m = it.get("kind") == "quality-variant" and GRADE_SUFFIX.search(iid)
+        if m:
+            it["grade"] = m.group(1)
+    for r in recipes:
+        q = items.get(r["out"]["item"], {}).get("grade")
+        if not q:
+            m = _GRADE_AT_END.search(rname(r))
+            q = m and m.group(1).lower()
+        if q:
+            r["quality"] = q
+    fams = defaultdict(set)
+    for it in items.values():
+        if it.get("grade") and it.get("base"):
+            fams[it["base"]].add(it["grade"])
+    for iid, gs in fams.items():
+        it = items.get(iid)
+        if ("bronze" in gs or not gs & {"silver", "gold"} or not it or it.get("stub") or it.get("grade")
+                or it.get("members") is not None or it.get("kind") in ("quality-variant", "group")):
+            continue
+        it["grade"] = "bronze"
+    for r in recipes:
+        m = _FROM_ANY.search(rname(r))
+        ln = m and input_named(r, page_norm(m.group(1)))
+        if ln and not ln.get("grade"):
+            ln["anyGrade"] = True
+
+
+def apply_bonuses(recipes):
+    """Set line.bonus (note_bonus()) on every input, by-product and output whose note has a perk bonus, in place.
+    Returns the perk table {id: {pt, en, uses}} in the order met: the pt name is the first real one (not equal to
+    the English) a note gives; uses = how many lines name the perk."""
+    perks = {}
+    for r in recipes:
+        for ln in r["in"] + r["extra"] + [r["out"]]:
+            b = note_bonus(ln.get("note"))
+            if not b:
+                continue
+            ln["bonus"], names = b
+            for pid, en, pt in names:
+                p = perks.setdefault(pid, {"pt": pt, "en": en, "uses": 0})
+                if p["pt"] == p["en"] and pt != en:
+                    p["pt"] = pt
+                p["uses"] += 1
+    return perks
 
 
 # --------------------------------------------------------------------------- reports
@@ -1250,13 +1394,46 @@ def data_versions(name_paths, wiki=None):
     return {"wiki": wiki, "game": game or GAME_TEXT_VERSION}
 
 
+# Fields the page payload leaves out when they hold the value GK.data (src/js/data.js normItem / normRecipe / normLine
+# / the stations in load) gives a missing one: the loaded data is the same, about 140 KB less to embed. gk2.json keeps
+# them all (the public file says every field). A test (test_build.py, expand_payload) puts them back and compares.
+ITEM_DEFAULTS = {"cat": None, "obtain": None, "icon": None, "tr": "missing", "kind": "item", "listed": True,
+                 "unobtainable": False}
+STATION_DEFAULTS = {"icon": None, "tr": "missing"}
+RECIPE_DEFAULTS = {"station": None, "in": [], "tech": None, "type": "hand_craft", "cd": False, "listed": True,
+                   "noexp": False, "cyc": False, "alt": [], "ext": None, "extra": [], "mastery": None, "ticks": None,
+                   "energy": None, "example": False, "runes": None, "zone": None}
+
+
+def drop_defaults(page):
+    """Remove, in place, the default-valued fields of page["items" | "stations" | "recipes"] (ITEM_DEFAULTS…), the
+    qty of an input when it is 1 or null (GK.data reads a missing one as 1) and a null qty elsewhere."""
+    def strip(o, defaults):
+        for k, v in defaults.items():
+            if k in o and o[k] == v and type(o[k]) is type(v):
+                del o[k]
+
+    for it in page["items"].values():
+        strip(it, ITEM_DEFAULTS)
+    for st in page["stations"].values():
+        strip(st, STATION_DEFAULTS)
+    for r in page["recipes"]:
+        strip(r, RECIPE_DEFAULTS)
+        for ln in r.get("in", []):
+            if ln.get("qty", 1) in (1, None) and type(ln.get("qty", 1)) is not bool:
+                ln.pop("qty", None)
+        for ln in r.get("extra", []) + [r["out"]]:
+            if "qty" in ln and ln["qty"] is None:
+                del ln["qty"]
+
+
 def page_payload(ds, sprite=None, artifact=False, version=None, changelog=None, techs=None, data=None, days=None,
                  game_version=None):
     """The JSON embedded in the page: gk2.json minus redundancy.
 
     - {pt, en} pairs with identical text collapse to one string (obtain texts, notes, zones...).
-    - items[].id is dropped (it is the key).
-    - with a sprite: meta.sprite carries it; icons are drawn from it.
+    - items[].id is dropped (it is the key), and the fields holding their default value (drop_defaults()).
+    - with a sprite: meta.sprite carries it; icons are drawn from it (a quality variant without its own: the base's).
     - artifact mode: remote icon URLs are dropped (the Artifact CSP blocks external images).
     - meta.version / meta.changelog: the VERSION file and data/changelog.json, when given.
     - meta.data: {wiki, game} game versions of the sources (data_versions()), when given.
@@ -1276,7 +1453,13 @@ def page_payload(ds, sprite=None, artifact=False, version=None, changelog=None, 
     if sprite:
         known = set(out["items"]) | set(out["stations"]) | day_sprite_ids(days)
         icons = {k: v for k, v in sprite["icons"].items() if k in known or k.split(":", 1)[0] in SPRITE_NS}
+        # a grade the dataset kept ("wine-silver", base "wine") draws its family's icon (the star tells the grade)
+        for iid, it in out["items"].items():
+            base = it.get("base")
+            if it.get("kind") == "quality-variant" and it.get("grade") and base and iid not in icons and base in icons:
+                icons[iid] = icons[base]
         out["meta"]["sprite"] = dict(sprite, icons=icons)
+    drop_defaults(out)
     if techs is not None:
         out["techs"] = techs_payload(techs, ds)
     if days is not None:

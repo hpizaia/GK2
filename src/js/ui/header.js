@@ -5,41 +5,6 @@
    (the desktop layout). Tapping the tab of the screen already shown scrolls back to the top.
    Exposes: GK.ui.header.{mount, render}; registered as a panel.
 */
-GK.i18n.add({
-  pt: {
-    "app.title": "Companheiro <b>GK2</b>",
-    "app.titlePlain": "Companheiro GK2",
-    "app.tagline": "planejador de crafting",
-    "lang.label": "Idioma",
-    "lang.switch": "Mudar idioma para {name}",
-    "theme.label": "Tema",
-    "theme.auto": "Auto",
-    "theme.light": "Claro",
-    "theme.dark": "Escuro",
-    "theme.autoTitle": "Auto: segue o tema do sistema",
-    "theme.lightTitle": "Tema claro (pergaminho)",
-    "theme.darkTitle": "Tema escuro (noite)",
-    "theme.cycle": "Tema: {mode}. Tocar para mudar para {next}",
-    "tabs.label": "Telas",
-  },
-  en: {
-    "app.title": "GK2 <b>Companion</b>",
-    "app.titlePlain": "GK2 Companion",
-    "app.tagline": "crafting planner",
-    "lang.label": "Language",
-    "lang.switch": "Switch language to {name}",
-    "theme.label": "Theme",
-    "theme.auto": "Auto",
-    "theme.light": "Light",
-    "theme.dark": "Dark",
-    "theme.autoTitle": "Auto: follows the system theme",
-    "theme.lightTitle": "Light theme (parchment)",
-    "theme.darkTitle": "Dark theme (night)",
-    "theme.cycle": "Theme: {mode}. Tap to switch to {next}",
-    "tabs.label": "Screens",
-  },
-});
-
 GK.ui.header = (function () {
   const { t } = GK.i18n;
   // 9×9 pixel icons (crispEdges, currentColor)

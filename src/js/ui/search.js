@@ -1,69 +1,22 @@
 /* GK.ui.search: search box and results dropdown (debounced; only the dropdown re-renders while typing).
    ARIA combobox (APG "list autocomplete"): focus stays in the input, ↓/↑ move the active option
    (aria-activedescendant), Enter adds it (or the first one), Esc clears; the count is announced politely.
-   Placeholder = the purpose ("Buscar item para fabricar…"), not the item count (1.3.4).
+   Placeholder = the purpose ("Buscar item para fabricar…"), not the item count.
    "Recentes": focusing the box while it is empty opens the same popup with the last RECENT_SHOWN items added to goals
    (GK.store state.recents, newest first) that are not already goals of the open list, as options; typing replaces
    them with the results; tap / Enter adds (same action as a result). No recents to show = the popup stays closed.
-   Right after an add (1.6.0, QA 2026-11 médio 1) the emptied box keeps the focus but the recents stay closed
+   Right after an add the emptied box keeps the focus but the recents stay closed
    ("quiet"): they come back on the next tap on the box, an ↓, or when the focus leaves and comes back.
-   Toasts (1.6.0): "+ Espada de Aço" for a new goal, "Espada de Aço: agora 4" for one already there. The first goal
+   Toasts: "+ Espada de Aço" for a new goal, "Espada de Aço: agora 4" for one already there. The first goal
    that replaces the example list (GK.store meta.exampleReplaced, from any screen: this module subscribes) gets ONE
    toast with "Desfazer" (GK.ui.fmt.undoToast): "+ Tábua reforçada · exemplo removido"; add() then skips
    its own, in the same "+ X" form as the plain toast (the data has no item gender, so no participle).
-   1.8.0: a graded item (GK.data.itemGrade) reads "Suco de Uva" with "prata · …" below and the star on its icon; the
+   A graded item (GK.data.itemGrade) reads "Suco de Uva" with "prata · …" below and the star on its icon; the
    one-line Recentes keep the full name ("Suco de Uva (prata)"): there is no line below for the word.
-   2026-11 (consertos.md §17): the plain item of a graded family is the bronze one ("Abóbora": "bronze · …", the
+   The plain item of a graded family is the bronze one ("Abóbora": "bronze · …", the
    bronze star; in the Recentes "Abóbora (bronze)", GK.ui.fmt.gradedName); a family comes in one run, bronze first.
    Owns: [data-panel="search"]. Exposes: GK.ui.search.{mount, render, add}; registered as a panel.
 */
-GK.i18n.add({
-  pt: {
-    "search.label": "Buscar item para fabricar",
-    "search.placeholder": "Buscar item para fabricar…",
-    "search.clear": "Limpar busca",
-    "search.none": "Nada encontrado para “{q}”. Tente outro nome, em português ou inglês.",
-    "search.noneHidden": "Nada visível para “{q}”, mas há itens ocultos que combinam.",
-    "search.count.one": "{n} resultado",
-    "search.count.other": "{n} resultados",
-    "search.raw": "Matéria-prima",
-    "search.recipes": "{station} · {n} receitas",
-    "search.inList": "na lista: {n}",
-    "search.add": "+ Adicionar",
-    "search.recent": "Recentes",
-    "search.hiddenShow": "Mostrar itens ocultos",
-    "search.hiddenMore.one": "Mostrar itens ocultos (+{n})",
-    "search.hiddenMore.other": "Mostrar itens ocultos (+{n})",
-    "search.hiddenTag": "oculto",
-    "search.hiddenTitle": "Oculto na wiki, sem fonte no jogo atual, ou não é um item",
-    "toast.added": "+ {name}",
-    "toast.bumped": "{name}: agora {n}",
-    "toast.replaced": "+ {name} · exemplo removido",
-  },
-  en: {
-    "search.label": "Search for an item to craft",
-    "search.placeholder": "Search for an item to craft…",
-    "search.clear": "Clear search",
-    "search.none": "Nothing found for “{q}”. Try another name, in English or Portuguese.",
-    "search.noneHidden": "Nothing visible for “{q}”, but some hidden items match.",
-    "search.count.one": "{n} result",
-    "search.count.other": "{n} results",
-    "search.raw": "Raw material",
-    "search.recipes": "{station} · {n} recipes",
-    "search.inList": "in list: {n}",
-    "search.add": "+ Add",
-    "search.recent": "Recent",
-    "search.hiddenShow": "Show hidden items",
-    "search.hiddenMore.one": "Show hidden items (+{n})",
-    "search.hiddenMore.other": "Show hidden items (+{n})",
-    "search.hiddenTag": "hidden",
-    "search.hiddenTitle": "Hidden on the wiki, unobtainable in the current game, or not an item",
-    "toast.added": "+ {name}",
-    "toast.bumped": "{name}: now {n}",
-    "toast.replaced": "+ {name} · example removed",
-  },
-});
-
 GK.ui.search = (function () {
   const { t, name } = GK.i18n, { esc, slot } = GK.util;
   let root, input, pop, list, meta, status, clearBtn;
@@ -106,7 +59,7 @@ GK.ui.search = (function () {
       const it = D.items[r.id], nm = name(it, st.overrides), g = st.goals.find((x) => x.item === r.id);
       const hid = r.hidden ? `<span class="badge badge-hidden" title="${esc(t("search.hiddenTitle"))}">${esc(t("search.hiddenTag"))}</span>` : "";
       // a graded item: the name without "(prata)", the grade word first on the line below (the star is on the icon)
-      const gr = GK.data.itemGrade(it), shown = gr ? GK.data.stripGrade(nm) || nm : nm, word = gr ? t("quality." + gr) + " · " : "";
+      const gn = GK.ui.fmt.graded(it, nm), shown = gn.name, word = gn.grade ? gn.word + " · " : "";
       return `<li class="result" role="option" id="q-opt-${k}" aria-selected="false" data-add="${esc(r.id)}">
         ${slot(it, nm)}
         <span><span class="result-name">${esc(shown)}${GK.ui.fmt.otherName(it)}${GK.ui.fmt.badges(it, st.overrides)}${hid}</span><span class="result-sub">${esc(word)}${esc(GK.ui.fmt.stationOf(r.id, st))}${g ? " · " + esc(t("search.inList", { n: g.qty })) : ""}</span></span>
@@ -143,7 +96,7 @@ GK.ui.search = (function () {
     const n = GK.store.actions.addGoal(id, 1);
     const nm = name(GK.data.item(id), GK.store.get().overrides);
     if (!replaced) GK.ui.toast(before ? t("toast.bumped", { name: nm, n }) : t("toast.added", { name: nm }));
-    // the box empties and keeps the focus, but the recents stay closed until the next tap (QA 2026-11 médio 1)
+    // the box empties and keeps the focus, but the recents stay closed until the next tap
     quiet = true;
     input.value = ""; renderResults(); input.focus();
   }

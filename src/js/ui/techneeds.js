@@ -2,59 +2,17 @@
    recipe of the current plan (GK.tech.forPlan), point totals per colour, the list in research order with an
    inline "Já pesquisei" checkbox, and the quests / perks the plan also needs. Hidden when nothing is missing.
    Re-renders only when the plan's tech signature, the researched set or the language changes.
-   1.6.0 (corte 7): the hint is one short line, "Pesquise nesta ordem; marque o que já tem."
-   1.8.x (seta das seções, opção A): the panel folds like "Matérias-primas" / "Etapas" (the same thin chevron, a tap
+   The hint is one short line, "Pesquise nesta ordem; marque o que já tem."
+   The panel folds like "Matérias-primas" / "Etapas" (the same thin chevron, a tap
    on the header text too; GK.store ui.tnCollapsed, per device); folded, it shows only "Total de pontos: …".
    Owns: its <div data-panel="tech-needs"> in [data-slot="planner-extra"].
    Exposes: GK.ui.techneeds.{mount, render}. Registered via GK.app.registerPanel(..., {slot: "planner-extra"}).
 */
-GK.i18n.add({
-  pt: {
-    "tn.title": "Tecnologias que faltam",
-    "tn.collapse": "Recolher",
-    "tn.expand": "Expandir",
-    "tn.collapseX": "Recolher: {name}",
-    "tn.expandX": "Expandir: {name}",
-    "tn.totalSum": "Total de pontos:",
-    "tn.hint": "Pesquise nesta ordem; marque o que já tem.",
-    "tn.total": "Total de pontos",
-    "tn.more.one": "Mostrar mais {n}",
-    "tn.more.other": "Mostrar mais {n}",
-    "tn.less": "Mostrar menos",
-    "tn.other": "Também precisa:",
-    "tn.quest": "missão {name}",
-    "tn.perk": "vantagem {name}",
-    "tn.for": "para {names}",
-    "tn.openTab": "Abrir a árvore de tecnologias",
-    "tn.marked": "{name}: pesquisada",
-  },
-  en: {
-    "tn.title": "Technologies still needed",
-    "tn.collapse": "Collapse",
-    "tn.expand": "Expand",
-    "tn.collapseX": "Collapse: {name}",
-    "tn.expandX": "Expand: {name}",
-    "tn.totalSum": "Total points:",
-    "tn.hint": "Research in this order; check what you already have.",
-    "tn.total": "Total points",
-    "tn.more.one": "Show {n} more",
-    "tn.more.other": "Show {n} more",
-    "tn.less": "Show less",
-    "tn.other": "Also needed:",
-    "tn.quest": "quest {name}",
-    "tn.perk": "perk {name}",
-    "tn.for": "for {names}",
-    "tn.openTab": "Open the technology tree",
-    "tn.marked": "{name}: researched",
-  },
-});
-
 GK.ui.techneeds = (function () {
   const { t, name } = GK.i18n, { esc, domId } = GK.util;
   const TK = GK.tech;
   const FIRST = 8;          // rows shown before "Mostrar mais"
   let root = null, memo = "", expanded = false;
-  const CONTROLS = "button, a, input, select, textarea, label";
   const shutOf = (state) => !!(state.ui && state.ui.tnCollapsed);
   function mount(el) {
     root = el;
@@ -66,7 +24,7 @@ GK.ui.techneeds = (function () {
       if (tc && cb.checked) GK.ui.toast(t("tn.marked", { name: name(tc) }));
     });
     root.addEventListener("click", (e) => {
-      if (e.target.closest("[data-tn-fold]") || (e.target.closest("[data-tn-head]") && !e.target.closest(CONTROLS))) {
+      if (e.target.closest("[data-tn-fold]") || (e.target.closest("[data-tn-head]") && !e.target.closest(GK.ui.fmt.CONTROLS))) {
         GK.store.actions.setUi({ tnCollapsed: !shutOf(GK.store.get()) });
         return;
       }
@@ -104,8 +62,8 @@ GK.ui.techneeds = (function () {
     const shown = expanded ? need.techs : need.techs.slice(0, FIRST), rest = need.techs.length - shown.length;
     const other = need.other.map((o) => t(o.type === "perk" ? "tn.perk" : "tn.quest", { name: name(o) }));
     const title = t("tn.title");
-    // the same thin toggle as "Matérias-primas" / "Etapas" (ui/summary.js foldBtn with sec); stable id for the focus
-    const tgl = `<button type="button" class="sec-fold" id="fold-tn" data-tn-fold aria-expanded="${!shut}" aria-controls="tn-body" title="${esc(t(shut ? "tn.expand" : "tn.collapse"))}" aria-label="${esc(t(shut ? "tn.expandX" : "tn.collapseX", { name: title }))}"><span class="sec-chev" aria-hidden="true"></span></button>`;
+    // the same thin toggle as "Matérias-primas" / "Etapas" (GK.ui.fmt.foldBtn with sec); stable id for the focus
+    const tgl = GK.ui.fmt.foldBtn('id="fold-tn" data-tn-fold', !shut, title, "tn-body", true);
     const head = `<div class="fold-head" data-tn-head><h2 class="h2" id="tn-h">${esc(title)} <span class="count">${need.techs.length}</span></h2>${tgl}</div>`;
     if (shut) {
       // folded: only the point totals (or, with no tech left, what else the plan needs)

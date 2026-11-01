@@ -14,8 +14,8 @@ de itens iguais aos do jogo no idioma escolhido.
 ## Idiomas (i18n)
 - Seletor PT / EN no cabeçalho; escolha salva no estado. Padrão: pt-BR (ou inglês se `navigator.language`
   começar com "en").
-- Toda string da interface vem do dicionário. Cada módulo traz as suas com `GK.i18n.add({pt, en})` no topo do
-  próprio arquivo. Plurais por chave `.one` / `.other`.
+- Toda string da interface vem do dicionário, escrito em `src/js/i18n/pt.js` e `src/js/i18n/en.js` (uma seção por
+  tela, as mesmas chaves nos dois). Plurais por chave `.one` / `.other`.
 - Nomes de itens, estações, categorias e tecnologias são objetos `{pt, en}`. A busca casa nos dois idiomas, sem
   acento, independentemente do idioma exibido.
 - Nomes em pt vêm em camadas: **oficial (texto do jogo) > derivado / GK1 > máquina**. O que não é oficial leva o

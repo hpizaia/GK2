@@ -31,7 +31,7 @@ Atualizado em 2026-10-30, na documentação da 1.2.0. Os achados originais abaix
 | U4 combobox | Padrão combobox + listbox, `aria-activedescendant`, contagem anunciada |
 | U6 textos | "receita sem ganho", "Vantagem" em todas as telas, "não oficial" sem hífen nos selos e no rodapé; a nota do rodapé aponta para as Vantagens |
 | B1 (parte) | `scripts/test_calc.mjs`: cerca de 20 casos de `GK.data`, `GK.calc`, `GK.store`, `GK.sync` e rótulos do `GK.ui.fmt`. `test_build.py` testa `GK.tech` e a sintaxe de todos os módulos |
-| B2/B3/B4 higiene | `tradução windows/` fora do git; `collect_en_names.py` e `unwrap_browser_dump.py` removidos; `BRIEF-WINDOWS.md` em `historico/`; documentos em `docs/`; só `gk2_textos.json` e o relatório do export do jogo no git |
+| B2/B3/B4 higiene | `tradução windows/` fora do git; `collect_en_names.py` e `unwrap_browser_dump.py` removidos; `BRIEF-WINDOWS.md` fora do git; documentos em `docs/`; só `gk2_textos.json` e o relatório do export do jogo no git |
 | B5 (parte) | O build aceita `SOURCE_DATE_EPOCH` |
 | B6 documentação | `README.md`, `docs/` (dados, atualização, arquitetura, guia de uso), `SPEC.md` e `DESIGN.md` atualizados |
 
@@ -256,20 +256,20 @@ Recomendação: no claro, escurecer `--gold`/`--accent` no cabeçalho (ou usar `
 
 ## 6. Pipeline de build e testes, higiene do repositório
 
-> **Layout em 1.2.0.** Rastreados no git: `src/` (fontes da página), `scripts/` (+ `fixtures/`), `tools/exportar-textos/`, `data/` (entradas, `gk2.json`, `gk2.min.json`, `techs.json`, `sprite.json`/`sprite.png`, nomes, relatórios) e `data/game-texts/` (só `gk2_textos.json` e `RELATORIO-exportacao.md`), `prototype/index.html`, `dist/index.html` + `preview.html`, `docs/`, `historico/` (o zip de 10,6 MB e o `BRIEF-WINDOWS.md`). Fora do git: `data/raw/`, `data/icons/`, o dump completo do jogo, `tradução windows/` (só a `.venv` e um link de compatibilidade). Os commits antigos ainda carregam os dumps (cerca de 30 MB): limpar o histórico só se o tamanho do repositório incomodar. Mapa completo em `docs/arquitetura.md`.
+> **Layout em 1.2.0.** Rastreados no git: `src/` (fontes da página), `scripts/` (+ `fixtures/`), `tools/exportar-textos/`, `data/` (entradas, `gk2.json`, `gk2.min.json`, `techs.json`, `sprite.json`/`sprite.png`, nomes, relatórios) e `data/game-texts/` (só `gk2_textos.json` e `RELATORIO-exportacao.md`), `prototype/index.html`, `dist/index.html` + `preview.html`, `docs/` e a pasta de sessões antigas (o zip de 10,6 MB e o `BRIEF-WINDOWS.md`). Fora do git: `data/raw/`, `data/icons/`, o dump completo do jogo, `tradução windows/` (só a `.venv` e um link de compatibilidade). Os commits antigos ainda carregam os dumps (cerca de 30 MB): limpar o histórico só se o tamanho do repositório incomodar. Mapa completo em `docs/arquitetura.md`.
 
 **B1. Nenhum teste do JS.** Severidade média, esforço M.
 - Evidência: `GK.calc`, `GK.store.migrate/sanitizeRemote`, `GK.data.load` (forma "collapsed") e `GK.sync.onSnap` não têm teste. Os 27 testes cobrem só o Python.
 - Recomendação: `scripts/test_calc.mjs` (node, sem dependências) carregando os módulos de `src/` com um stub mínimo de `document`, como fiz nesta auditoria. Casos: os 6 da seção 1, invariantes sobre todas as metas, C1, ciclos sintéticos, migração v1→v4, `onSnap` com eco, cache, mais novo e mais antigo (com um `ref` falso). Chamar a partir do `test_build.py`.
 
 **B2. Artefatos gerados e dumps no git (cerca de 30 MB por commit de build).** Severidade média, esforço P.
-- Evidência (rastreados): `historico/*.zip` 10,6 MB; `tradução windows/gk2_textos_en/` 11 MB (`gk2_textos_todos.json` 8,9 MB, CSVs completos do jogo, cópia velha do `exportar_textos.py`); `dist/index.html` + `preview.html` 3,4 MB; `prototype/index.html` com os dados 1,8 MB; `gk2.min.json`; `sprite.json` (o `sprite.png` em base64, duplicado); `tools/exportar-textos/_teste_join.json`.
-- Recomendação: versionar fontes e `gk2.json`. Ignorar `dist/preview.html`, `gk2.min.json` e `sprite.json` (gerar a partir do PNG). Tirar o HTML com dados de `prototype/` ou `src/`, injetando só no `dist/`. Mover `historico/` e o export do jogo para fora do git, ou para `data/raw/game-text/` (ignorado). Guardar só `names.official.pt-BR.json` e um resumo.
+- Evidência (rastreados): zips de sessões antigas, 10,6 MB; `tradução windows/gk2_textos_en/` 11 MB (`gk2_textos_todos.json` 8,9 MB, CSVs completos do jogo, cópia velha do `exportar_textos.py`); `dist/index.html` + `preview.html` 3,4 MB; `prototype/index.html` com os dados 1,8 MB; `gk2.min.json`; `sprite.json` (o `sprite.png` em base64, duplicado); `tools/exportar-textos/_teste_join.json`.
+- Recomendação: versionar fontes e `gk2.json`. Ignorar `dist/preview.html`, `gk2.min.json` e `sprite.json` (gerar a partir do PNG). Tirar o HTML com dados de `prototype/` ou `src/`, injetando só no `dist/`. Mover as sessões antigas e o export do jogo para fora do git, ou para `data/raw/game-text/` (ignorado). Guardar só `names.official.pt-BR.json` e um resumo.
 
 **B3. Scripts superados ou de uso único.** Severidade baixa, esforço P.
 - `collect_en_names.py` (o README diz que foi substituído pelo `build_names.py`) e `unwrap_browser_dump.py` (uso único): remover.
 - `build_names.py`, `mt_glossary.py`, `fetch_gk1_langlinks.py` geraram camadas que a oficial já cobre: mover para `tools/legado/`.
-- `BRIEF-WINDOWS.md` (briefing de sessão): mover para `historico/`.
+- `BRIEF-WINDOWS.md` (briefing de sessão): mover para fora do git.
 - A cópia de `exportar_textos.py` em `tradução windows/` (12,5 KB × 40 KB em `tools/`) está desatualizada: remover.
 
 **B4. Pastas.** Severidade baixa, esforço P.

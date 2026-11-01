@@ -5,412 +5,42 @@
    state and in sessionStorage (gk2-recipes-view).
    Owns: [data-panel="recipes"] and the "recipes" route.
    Exposes: GK.ui.recipes.{mount, render, open(itemId, {from})}; registered as a panel. open(id, {from: "plan"})
-   (the planner's "i" buttons, the Tecnologias unlock rows) shows the detail with a "← Voltar: <screen>" button that
+   (the planner's item icons, the Tecnologias unlock rows) shows the detail with a "← Voltar: <screen>" button that
    returns to that screen at its old scroll position and focuses the button that opened the detail.
-   1.6.0 (cortes 7, 12, 13, 18): no top hint; rows say "Construir no Cemitério" (GK.ui.fmt.buildLabel) and the recipe
-   count only when > 1; "Mostrar itens ocultos" at the end of the list; "Também em" once when every recipe shares it;
-   no "Usado em" section when empty; no plain toast when the first goal replaces the example (search.js shows it).
-   Ficha completa (docs/revisao-ux/protos/ficha-item.html): "Quem compra" (items[].sell / .price / .fix),
-   "Estudar" (items[].study + the global "Já estudei", state.studied) and "Pedido em" (items[].asked: quests, town
-   restorations and orders), folded by default (spoiler). Each block only when the item has the data.
-   1.8.0: the phone's back gesture closes the detail (GK.router.detailHistory: an entry per item opened on this
-   screen; "← Voltar" and "Ver lista" drop them); a list row with no recipe says "Coleta ou compra" (rc.raw); a name
-   shared by two items shows the other language's name small (GK.ui.fmt.otherName); mastery level 0 shows no "0".
-   1.8.0, receitas agrupadas (protos/receitas-agrupadas): "Como fabricar" follows GK.calc.recipeGroups: one card for
+   Here: the view state, the list and its filters, the detail page, navigation, clicks, renaming. The recipe cards are
+   GK.ui.rcCards (ui/recipes-cards.js), the item facts GK.ui.rcFacts (ui/recipes-facts.js); the texts are the rc.*
+   keys of src/js/i18n/pt.js and en.js.
+   List: rows say "Construir no Cemitério" (GK.ui.fmt.buildLabel) and the recipe count only when > 1; "Mostrar itens
+   ocultos" at the end of the list; a row with no recipe says "Coleta ou compra" (rc.raw); a name shared by two items
+   shows the other language's name small (GK.ui.fmt.otherName).
+   Detail: "Também em" once when every recipe shares it; no "Usado em" section when empty; mastery level 0 shows no
+   "0"; no plain toast when the first goal replaces the example (search.js shows it). "Quem compra" (items[].sell /
+   .price / .fix), "Estudar" (items[].study + the global "Já estudei", state.studied) and "Pedido em" (items[].asked:
+   quests, town restorations and orders), folded by default (spoiler); each block only when the item has the data.
+   The phone's back gesture closes the detail (GK.router.detailHistory: an entry per item opened on this screen;
+   "← Voltar" and "Ver lista" drop them).
+   "Como fabricar" follows GK.calc.recipeGroups: one card for
    the recipes that differ only in one ingredient (its grade picked in the card: bronze / prata / ouro, or "E mais um
    destes" rows); a tap on an option sets the planner's recipe (no "Usar" button there); the circular recipes fold at
    the end ("Melhorar a qualidade · N"). A graded item shows its name without "(prata)", the star on its icon
    (GK.util.slot) and the grade word on the line below (list rows, ingredient lines, "Usado em"); bronze, prata, ouro
    in that order (GK.data.gradeSort). "Quem compra": pixel coins (recipes.css).
-   2026-11 (consertos.md §17): the plain item of a graded family is the bronze one (Abóbora, Vinho, Uvas, the seeds…):
+   The plain item of a graded family is the bronze one (Abóbora, Vinho, Uvas, the seeds…):
    the bronze star and word like the others, the list and the search keep the family in one run (bronze, prata, ouro),
    the detail title reads "Abóbora (bronze)" (GK.ui.fmt.gradedName). An "Any X" line ("Álcool de Qualquer Vinho") and
    a row of "E mais um destes" (it stands for the whole ingredient) show no star.
-   1.8.x, renomear: the detail's "não oficial" / "editado" tag is a button ("Renomear <nome>") that opens the name's
-   field under the header (Salvar / Cancelar, "Voltar ao nome original" once edited). It writes GK.store overrides
-   (lang -> {itemId: name}, synced like before); the planner's "Editar nomes" mode and its ✎ pencils are gone. The
-   open form also offers "Exportar nomes editados (N)": the JSON for data/names.pt-BR.json (CONTRIBUTING.md).
+   Renaming: the detail's "não oficial" / "editado" tag is a button ("Renomear <nome>") that opens the name's field
+   under the header (Salvar / Cancelar, "Voltar ao nome original" once edited). It writes GK.store overrides
+   (lang -> {itemId: name}, synced). The open form also offers "Exportar nomes editados (N)": the JSON a player pastes
+   into an issue (CONTRIBUTING.md), keyed by the English wiki name like the name files in data/.
 */
-GK.i18n.add({
-  pt: {
-    "rc.tab": "Receitas",
-    "rc.title": "Receitas",
-    "rc.searchLabel": "Buscar item nas receitas",
-    "rc.placeholder": "Buscar item",
-    "rc.clear": "Limpar busca",
-    "rc.filters": "Filtros",
-    "rc.filtersOn.one": "{n} ativo",
-    "rc.filtersOn.other": "{n} ativos",
-    "rc.cat": "Categoria",
-    "rc.station": "Estação",
-    "rc.all": "Ver todas ({n})",
-    "rc.less": "Ver menos",
-    "rc.noCat": "Sem categoria",
-    "rc.noRecipe": "Sem receita (coleta, compra…)",
-    "rc.clearFilters": "Limpar filtros",
-    "rc.removeFilter": "Remover filtro: {name}",
-    "rc.count.one": "{n} item",
-    "rc.count.other": "{n} itens",
-    "rc.none": "Nenhum item com esses filtros.",
-    "rc.noneQ": "Nada encontrado para “{q}”. Tente outro nome, em português ou inglês, ou limpe os filtros.",
-    "rc.more": "Mostrar mais ({n} restantes)",
-    "rc.hiddenShow": "Mostrando itens ocultos",
-    "rc.hiddenMore": "Mostrar itens ocultos (+{n})",
-    "rc.recipes.one": "{n} receita",
-    "rc.recipes.other": "{n} receitas",
-    "rc.raw": "Coleta ou compra",
-    "rc.open": "Ver receitas de {name}",
-    "rc.back": "← Voltar à lista",
-    "rc.backTo": "← Voltar: {name}",
-    "rc.toList": "Lista",
-    "rc.unofficial": "não oficial",
-    "rc.unofficialTitle": "Tradução não oficial do nome",
-    "rc.edited": "editado",
-    "rc.editedTitle": "Nome editado por você",
-    "rc.rename": "Renomear {name}",
-    "rc.renameHint": "toque para renomear",
-    "rc.renameInput": "Novo nome para {name} ({lang})",
-    "rc.renameSave": "Salvar",
-    "rc.renameCancel": "Cancelar",
-    "rc.renameReset": "Voltar ao nome original",
-    "rc.renamed": "Nome salvo: {name}",
-    "rc.renameRestored": "Nome original de volta: {name}",
-    "rc.exportNames": "Exportar nomes editados ({n})",
-    "rc.exportCopied": "Nomes editados copiados (JSON)",
-    "rc.exportFail": "Não deu para copiar automaticamente. O JSON está selecionado abaixo: copie com o menu do sistema.",
-    "rc.hidden": "oculto",
-    "rc.hiddenTitle": "Oculto na wiki ou não é um item de verdade",
-    "rc.unobt": "não obtenível",
-    "rc.unobtTitle": "Nada fornece este item na versão atual do jogo",
-    "rc.kind.building": "Construção",
-    "rc.kind.station": "Estação de trabalho",
-    "rc.kind.group": "Grupo de itens",
-    "rc.kind.quality-variant": "Variante de qualidade",
-    "rc.kind.virtual": "Item virtual",
-    "rc.kind.action": "Ação ou efeito",
-    "rc.addGoal": "Adicionar às metas",
-    "rc.qty": "Quantidade de {name}",
-    "rc.dec": "Diminuir quantidade",
-    "rc.inc": "Aumentar quantidade",
-    "rc.inGoals": "Nas metas: {n}",
-    "rc.toPlan": "Ver no Planejador",
-    "rc.obtain": "Como obter",
-    "rc.members": "Qualquer um destes serve",
-    "rc.memberOf": "Faz parte de",
-    "rc.runes": "Runas",
-    "rc.recipesTitle": "Como fabricar",
-    "rc.noRecipes": "Nenhuma receita fabrica este item: ele é coletado, comprado ou obtido de outra forma.",
-    "rc.qPick": "Qualidade do ingrediente",
-    "rc.qMore": "E mais um destes",
-    "rc.inUseQ": "Em uso no planejador: {what}",
-    "rc.cycT": "Melhorar a qualidade",
-    "rc.cycD": "Receitas que usam o próprio {name}",
-    "rc.recipeN": "Receita {l}",
-    "rc.makes": "rende {n}",
-    "rc.makesVar": "rendimento varia",
-    "rc.bonusYield": "Rende {n} com {perk}",
-    "rc.bonusAdd": "Rende +{n} com {perk}",
-    "rc.bonusOn": "vantagem ligada",
-    "rc.makesNote": "Rende: {note}",
-    "rc.star": "Qualidade: prata com {silver} ciclos bem-sucedidos, ouro com {gold}",
-    "rc.noInputs": "Sem ingredientes",
-    "rc.alt": "Também em: {names}",
-    "rc.altAll": "Todas também em: {names}",
-    "rc.tech": "Requer {tech}",
-    "rc.quest": "Missão: {tech}",
-    "rc.perk": "Vantagem: {tech}",
-    "rc.mastery": "Maestria: {type} {level}",
-    "rc.ext": "Extensão na estação: {ext}",
-    "rc.time.one": "Tempo: {n} ciclo",
-    "rc.time.other": "Tempo: {n} ciclos",
-    "rc.energy": "Energia: {n} por ciclo",
-    "rc.energyTotal": "Energia: {n} por ciclo ({total} no total)",
-    "rc.runesNeed": "Runas exigidas",
-    "rc.extra": "Subprodutos (não somados no plano)",
-    "rc.example": "mistura de exemplo",
-    "rc.exampleTitle": "Alquimia: qualquer combinação de ingredientes com as mesmas runas funciona",
-    "rc.hiddenRecipe": "oculta na wiki",
-    "rc.cyc": "circular",
-    "rc.noexp": "colheita",
-    "rc.default": "padrão",
-    "rc.inUse": "Em uso no planejador",
-    "rc.use": "Usar esta receita no planejador",
-    "rc.useDefault": "Voltar à receita padrão",
-    "rc.used": "O planejador vai usar {station} para {name}",
-    "rc.usedDefault": "Receita padrão de volta para {name}",
-    "rc.usedIn": "Usado em",
-    "rc.uses": "usa {n}",
-    "rc.via": "via {group}",
-    "rc.madeHere": "Fabricado aqui",
-    "rc.showAll": "Mostrar todos ({n})",
-    "rc.added": "Adicionado às metas: {name} ×{n}",
-    "rc.bumped": "{name}: agora {n} nas metas",
-    "rune.red": "Vermelha",
-    "rune.green": "Verde",
-    "rune.blue": "Azul",
-  },
-  en: {
-    "rc.tab": "Recipes",
-    "rc.title": "Recipes",
-    "rc.searchLabel": "Search items in the recipes",
-    "rc.placeholder": "Search items",
-    "rc.clear": "Clear search",
-    "rc.filters": "Filters",
-    "rc.filtersOn.one": "{n} on",
-    "rc.filtersOn.other": "{n} on",
-    "rc.cat": "Category",
-    "rc.station": "Station",
-    "rc.all": "Show all ({n})",
-    "rc.less": "Show fewer",
-    "rc.noCat": "No category",
-    "rc.noRecipe": "No recipe (gather, buy…)",
-    "rc.clearFilters": "Clear filters",
-    "rc.removeFilter": "Remove filter: {name}",
-    "rc.count.one": "{n} item",
-    "rc.count.other": "{n} items",
-    "rc.none": "No items match these filters.",
-    "rc.noneQ": "Nothing found for “{q}”. Try another name, in English or Portuguese, or clear the filters.",
-    "rc.more": "Show more ({n} left)",
-    "rc.hiddenShow": "Showing hidden items",
-    "rc.hiddenMore": "Show hidden items (+{n})",
-    "rc.recipes.one": "{n} recipe",
-    "rc.recipes.other": "{n} recipes",
-    "rc.raw": "Gather or buy",
-    "rc.open": "See the recipes for {name}",
-    "rc.back": "← Back to the list",
-    "rc.backTo": "← Back: {name}",
-    "rc.toList": "List",
-    "rc.unofficial": "unofficial",
-    "rc.unofficialTitle": "Unofficial name translation",
-    "rc.edited": "edited",
-    "rc.editedTitle": "Name edited by you",
-    "rc.rename": "Rename {name}",
-    "rc.renameHint": "tap to rename",
-    "rc.renameInput": "New name for {name} ({lang})",
-    "rc.renameSave": "Save",
-    "rc.renameCancel": "Cancel",
-    "rc.renameReset": "Back to the original name",
-    "rc.renamed": "Name saved: {name}",
-    "rc.renameRestored": "Original name back: {name}",
-    "rc.exportNames": "Export edited names ({n})",
-    "rc.exportCopied": "Edited names copied (JSON)",
-    "rc.exportFail": "Couldn't copy automatically. The JSON is selected below: copy it with your system menu.",
-    "rc.hidden": "hidden",
-    "rc.hiddenTitle": "Hidden on the wiki, or not a real item",
-    "rc.unobt": "unobtainable",
-    "rc.unobtTitle": "Nothing gives this item in the current game version",
-    "rc.kind.building": "Building",
-    "rc.kind.station": "Work station",
-    "rc.kind.group": "Item group",
-    "rc.kind.quality-variant": "Quality variant",
-    "rc.kind.virtual": "Virtual item",
-    "rc.kind.action": "Action or effect",
-    "rc.addGoal": "Add to goals",
-    "rc.qty": "Amount of {name}",
-    "rc.dec": "Decrease amount",
-    "rc.inc": "Increase amount",
-    "rc.inGoals": "In goals: {n}",
-    "rc.toPlan": "See in the Planner",
-    "rc.obtain": "How to get it",
-    "rc.members": "Any of these works",
-    "rc.memberOf": "Part of",
-    "rc.runes": "Runes",
-    "rc.recipesTitle": "How to make it",
-    "rc.noRecipes": "No recipe makes this item: it is gathered, bought or obtained some other way.",
-    "rc.qPick": "Ingredient quality",
-    "rc.qMore": "Plus one of these",
-    "rc.inUseQ": "Used by the planner: {what}",
-    "rc.cycT": "Improve quality",
-    "rc.cycD": "Recipes that use the {name} itself",
-    "rc.recipeN": "Recipe {l}",
-    "rc.makes": "makes {n}",
-    "rc.makesVar": "yield varies",
-    "rc.bonusYield": "Makes {n} with {perk}",
-    "rc.bonusAdd": "Makes +{n} with {perk}",
-    "rc.bonusOn": "perk on",
-    "rc.makesNote": "Makes: {note}",
-    "rc.star": "Quality: silver at {silver} successful ticks, gold at {gold}",
-    "rc.noInputs": "No ingredients",
-    "rc.alt": "Also at: {names}",
-    "rc.altAll": "All also at: {names}",
-    "rc.tech": "Needs {tech}",
-    "rc.quest": "Quest: {tech}",
-    "rc.perk": "Perk: {tech}",
-    "rc.mastery": "Mastery: {type} {level}",
-    "rc.ext": "Station extension: {ext}",
-    "rc.time.one": "Time: {n} tick",
-    "rc.time.other": "Time: {n} ticks",
-    "rc.energy": "Energy: {n} per tick",
-    "rc.energyTotal": "Energy: {n} per tick ({total} in total)",
-    "rc.runesNeed": "Runes needed",
-    "rc.extra": "By-products (not counted in the plan)",
-    "rc.example": "example mix",
-    "rc.exampleTitle": "Alchemy: any mix of ingredients with the same runes works",
-    "rc.hiddenRecipe": "hidden on the wiki",
-    "rc.cyc": "circular",
-    "rc.noexp": "harvest",
-    "rc.default": "default",
-    "rc.inUse": "Used by the planner",
-    "rc.use": "Use this recipe in the planner",
-    "rc.useDefault": "Back to the default recipe",
-    "rc.used": "The planner will use {station} for {name}",
-    "rc.usedDefault": "Default recipe restored for {name}",
-    "rc.usedIn": "Used in",
-    "rc.uses": "uses {n}",
-    "rc.via": "via {group}",
-    "rc.madeHere": "Made here",
-    "rc.showAll": "Show all ({n})",
-    "rc.added": "Added to goals: {name} ×{n}",
-    "rc.bumped": "{name}: now {n} in goals",
-    "rune.red": "Red",
-    "rune.green": "Green",
-    "rune.blue": "Blue",
-  },
-});
-// "Onde conseguir" (items[].where) and the game-style use tooltip (items[].use, .stack), from data/facts.json
-GK.i18n.add({
-  pt: {
-    "rc.where": "Onde conseguir",
-    "rc.whereMore": "mais {n}",
-    "rc.whereMoreLabel": "Mostrar mais {n} fontes",
-    "rc.questOnly": "Só de missão",
-    "rc.questOnlyTitle": "Nenhuma loja, coleta ou receita dá este item: só missões",
-    "rc.w.buy": "Comprar", "rc.w.fish": "Pescar", "rc.w.gather": "Coletar", "rc.w.quest": "Missão",
-    "rc.w.battle": "Batalha", "rc.w.chest": "Baú", "rc.w.found": "Achar", "rc.w.looter": "Saqueadores",
-    "rc.w.autopsy": "Autópsia", "rc.w.burial": "Recompensa", "rc.w.container": "Abrir", "rc.w.town": "Restauração",
-    "rc.w.study": "Mesa de estudo", "rc.w.church": "Igreja", "rc.w.start": "Início", "rc.w.outfit": "Traje",
-    "rc.w.resurrect": "Ressurreição", "rc.w.character": "Entrega",
-    "rc.w.level": "desde o nível {n}",
-    "rc.w.talk": "só conversando, sem loja",
-    "rc.w.noBait": "sem isca",
-    "rc.w.dayNight": "dia {d}% · noite {n}%",
-    "rc.w.allDay": "dia e noite {d}%",
-    "rc.w.chestOnce": "uma vez, no início do jogo",
-    "rc.w.once": "uma vez",
-    "rc.w.unofficialTitle": "Nome sem tradução oficial do jogo",
-    "rc.stack": "Pilha: {n} por espaço.",
-    "rc.stackOne": "Não empilha: um por espaço.",
-    "rc.stackTitle": "Pilha máxima: {n}",
-    "rc.useLbl": "Efeito de uso:",
-    "rc.energyName": "Energia",
-    "rc.insanityName": "insanidade",
-    "rc.bar": "{n} de 100 da barra de energia",
-    "rc.barLabel": "Enche {n} dos 100 pontos da barra de energia",
-    "rc.boost": "{v} com {buff}",
-    "rc.lasts": "Dura {t}.",
-    "rc.restart": "Usar outro reinicia o tempo.",
-    "rc.descUnofficial": "Descrição da wiki, sem texto oficial do jogo",
-  },
-  en: {
-    "rc.where": "Where to get it",
-    "rc.whereMore": "{n} more",
-    "rc.whereMoreLabel": "Show {n} more sources",
-    "rc.questOnly": "Quest only",
-    "rc.questOnlyTitle": "No shop, gathering or recipe gives this item: only quests",
-    "rc.w.buy": "Buy", "rc.w.fish": "Fish", "rc.w.gather": "Gather", "rc.w.quest": "Quest",
-    "rc.w.battle": "Battle", "rc.w.chest": "Chest", "rc.w.found": "Find", "rc.w.looter": "Looters",
-    "rc.w.autopsy": "Autopsy", "rc.w.burial": "Reward", "rc.w.container": "Open", "rc.w.town": "Restoration",
-    "rc.w.study": "Study Table", "rc.w.church": "Church", "rc.w.start": "Start", "rc.w.outfit": "Outfit",
-    "rc.w.resurrect": "Resurrection", "rc.w.character": "Delivered by",
-    "rc.w.level": "from trader level {n}",
-    "rc.w.talk": "in conversation, no shop",
-    "rc.w.noBait": "no bait",
-    "rc.w.dayNight": "day {d}% · night {n}%",
-    "rc.w.allDay": "day and night {d}%",
-    "rc.w.chestOnce": "once, at the start of the game",
-    "rc.w.once": "once",
-    "rc.w.unofficialTitle": "No official game translation for this name",
-    "rc.stack": "Stack: {n} per slot.",
-    "rc.stackOne": "Does not stack: one per slot.",
-    "rc.stackTitle": "Max stack: {n}",
-    "rc.useLbl": "Effect on use:",
-    "rc.energyName": "Energy",
-    "rc.insanityName": "insanity",
-    "rc.bar": "{n} of the 100-point energy bar",
-    "rc.barLabel": "Fills {n} of the 100 points of the energy bar",
-    "rc.boost": "{v} with {buff}",
-    "rc.lasts": "Lasts {t}.",
-    "rc.restart": "Using another restarts the timer.",
-    "rc.descUnofficial": "Wiki description, no official game text",
-  },
-});
-
-// "Quem compra", "Estudar", "Pedido em" (items[].sell / .price / .fix / .study / .asked, data/facts.json; ficha completa)
-GK.i18n.add({
-  pt: {
-    "rc.sell": "Quem compra",
-    "rc.sellInfo": "Sobre o preço",
-    "rc.sellNote": "Quanto cada um paga por 1 com o estoque normal dele (do nível 1 ao 3 do comerciante). Se ele já tem muitos, ou se você vende vários de uma vez, o preço cai; sem estoque, sobe até o preço base (o “até”). Peixes têm preço fixo. Curtidas: o máximo por semana vendendo para ele.",
-    "rc.sellNoteFix": "Preço fixo: quem compra paga sempre {n}, com ou sem estoque, como nos peixes.",
-    "rc.sellUpTo": "até {v}",
-    "rc.sellFix": "preço fixo",
-    "rc.sellLikes": "até +{n} curtidas por semana",
-    "rc.sellLikesFrom": "curtidas a partir do nível {lv}: até +{n} por semana",
-    "rc.sellLikesAny": "dá curtidas",
-    "rc.sellLikesAnyFrom": "dá curtidas a partir do nível {lv}",
-    "rc.sellLevel": "compra a partir do nível {n}",
-    "rc.coin.g": "ouro", "rc.coin.s": "prata", "rc.coin.b": "bronze",
-    "rc.study": "Estudar",
-    "rc.studied": "Já estudei",
-    "rc.studiedLabel": "Já estudei: {name}",
-    "rc.studyNote": "Uma vez só, na Mesa de Estudo; o item não é gasto.",
-    "rc.studyCost": "Custa {sci} de Ciência.",
-    "rc.studyCostFaith": "Custa {sci} de Ciência e {faith} de Fé.",
-    "rc.asked": "Pedido em",
-    "rc.askedShowQ.one": "Mostrar 1 missão",
-    "rc.askedShowQ.other": "Mostrar as {n} missões",
-    "rc.askedShowO.one": "Mostrar 1 uso no povoado",
-    "rc.askedShowO.other": "Mostrar {n} usos no povoado",
-    "rc.askedShowQO.one": "Mostrar 1 missão e {o} usos no povoado",
-    "rc.askedShowQO.other": "Mostrar {n} missões e {o} usos no povoado",
-    "rc.askedHide": "Esconder",
-    "rc.askedWarn": "Pode revelar parte da história (spoiler).",
-    "rc.askedQ": "Missões",
-    "rc.askedTown": "Restauração do povoado",
-    "rc.askedOrder": "Encomendas do povoado",
-    "rc.askedLevel": "nível {n}",
-    "rc.askedLikes": "+{n} curtidas",
-  },
-  en: {
-    "rc.sell": "Who buys it",
-    "rc.sellInfo": "About the price",
-    "rc.sellNote": "What each one pays for 1 at its usual stock (trader levels 1 to 3). If it already holds many, or you sell several at once, the price drops; short of stock, it rises up to the base price (the “up to”). Fish have a fixed price. Likes: the most a week from selling to it.",
-    "rc.sellNoteFix": "Fixed price: every buyer always pays {n}, with or without stock, like fish.",
-    "rc.sellUpTo": "up to {v}",
-    "rc.sellFix": "fixed price",
-    "rc.sellLikes": "up to +{n} Likes a week",
-    "rc.sellLikesFrom": "Likes from level {lv}: up to +{n} a week",
-    "rc.sellLikesAny": "gives Likes",
-    "rc.sellLikesAnyFrom": "gives Likes from level {lv}",
-    "rc.sellLevel": "buys from level {n}",
-    "rc.coin.g": "gold", "rc.coin.s": "silver", "rc.coin.b": "bronze",
-    "rc.study": "Study",
-    "rc.studied": "Studied",
-    "rc.studiedLabel": "Studied: {name}",
-    "rc.studyNote": "Once only, at the Study Table; the item is kept.",
-    "rc.studyCost": "Costs {sci} Science.",
-    "rc.studyCostFaith": "Costs {sci} Science and {faith} Faith.",
-    "rc.asked": "Asked for in",
-    "rc.askedShowQ.one": "Show 1 quest",
-    "rc.askedShowQ.other": "Show the {n} quests",
-    "rc.askedShowO.one": "Show 1 use in the Town",
-    "rc.askedShowO.other": "Show {n} uses in the Town",
-    "rc.askedShowQO.one": "Show 1 quest and {o} uses in the Town",
-    "rc.askedShowQO.other": "Show {n} quests and {o} uses in the Town",
-    "rc.askedHide": "Hide",
-    "rc.askedWarn": "May reveal part of the story (spoiler).",
-    "rc.askedQ": "Quests",
-    "rc.askedTown": "Town restoration",
-    "rc.askedOrder": "Town orders",
-    "rc.askedLevel": "level {n}",
-    "rc.askedLikes": "+{n} Likes",
-  },
-});
-
 GK.ui.recipes = (function () {
   const { t, name, num, edited } = GK.i18n, { esc, slot } = GK.util;
   const PAGE = 60, CHIPS = 8, LIST_CAP = 40, SKEY = "gk2-recipes-view";
-  const UNOFFICIAL = { guess: 1, machine: 1, missing: 1 };
+  const { graded, UNOFFICIAL } = GK.ui.fmt;
+  const { expandable } = GK.calc;
+  const { hiddenTag, stationLabel, runes, itemLine, altNames, sharedAlt, recipeCard, groupCard } = GK.ui.rcCards;
+  const { whereHtml, tipHtml, stackSlot, stackCap, sellHtml, studyHtml, askedHtml } = GK.ui.rcFacts;
   const BUILD = { id: "build", i18n: "station.build" }, NONE = { id: "none", i18n: "rc.noRecipe" }, NOCAT = { i18n: "rc.noCat" };
 
   let root, browseEl, detailEl, input, clearBtn, listEl, chipsEl, metaEl, moreEl, filtersEl, hiddenEl;
@@ -509,13 +139,6 @@ GK.ui.recipes = (function () {
     const more = total > CHIPS ? `<button type="button" class="chip chip-more" data-chip-more="${kind}" aria-expanded="${open}">${esc(open ? t("rc.less") : t("rc.all", { n: total }))}</button>` : "";
     return `<div class="chip-group" role="group" aria-labelledby="rc-${kind}-h"><h3 class="chip-h" id="rc-${kind}-h">${esc(t(kind === "cat" ? "rc.cat" : "rc.station"))}</h3><div class="chips">${html}${more}</div></div>`;
   }
-  // a graded item in a list: the name without "(prata)" and the grade word for the line below (the star is on the
-  // icon; colour alone is not enough). grade = a recipe line's own grade (the bronze plain Repolho); false = none (an
-  // "Any X" line). The plain item of a graded family is the bronze one (GK.data bronzePlain, consertos.md §17)
-  function graded(it, nm, grade) {
-    const g = grade === false ? null : grade || GK.data.itemGrade(it);
-    return g ? { name: GK.data.stripGrade(nm) || nm, word: t("quality." + g), grade: g } : { name: nm, word: "", grade: null };
-  }
   function rowHtml(row, state) {
     const D = GK.data.get(), it = D.items[row.id], nm = name(it, state.overrides);
     let sub;
@@ -525,7 +148,7 @@ GK.ui.recipes = (function () {
       const s = V.st && V.st !== "none" && stKey(row.main) !== V.st && IX.stations[V.st] ? IX.stations[V.st] : row.main;
       sub = GK.ui.fmt.buildLabel(s, state.overrides) + (row.n > 1 ? " · " + t("rc.recipes", { n: row.n }) : "");
     }
-    const hid = row.hidden ? `<span class="badge badge-hidden">${esc(t(it.unobtainable ? "rc.unobt" : "rc.hidden"))}</span>` : "";
+    const hid = row.hidden ? hiddenTag(it) : "";
     const g = graded(it, nm);
     return `<button type="button" class="rc-row" id="rc-row-${GK.util.domId(row.id)}" data-open="${esc(row.id)}" aria-label="${esc(t("rc.open", { name: nm }))}">
       ${slot(it, nm)}<span class="rc-row-main"><span class="rc-row-name">${esc(g.name)}${GK.ui.fmt.otherName(it)}${hid}</span><span class="rc-row-sub">${esc(g.word ? g.word + " · " + sub : sub)}</span></span><span class="rc-chev" aria-hidden="true">›</span></button>`;
@@ -575,13 +198,7 @@ GK.ui.recipes = (function () {
   }
 
   /* ---------- detail ---------- */
-  const expandable = (r) => r.in.length > 0 && !r.noexp;
-  function current(id, state) {
-    const D = GK.data.get(), c = state.choice[id] && D.recipeById[state.choice[id]];
-    if (c && c.out.item === id) return c;
-    const it = D.items[id];
-    return it && it.defaultRecipe ? D.recipeById[it.defaultRecipe] || null : null;
-  }
+  const current = (id, state) => GK.calc.recipeFor(id, GK.data.get(), state.choice);
   // the detail header's tags; "não oficial" / "editado" is the rename button (see the header)
   function badges(it, state) {
     const b = [], ed = edited(it, state.overrides);
@@ -607,7 +224,7 @@ GK.ui.recipes = (function () {
         <div class="rc-copy-box" id="rc-copy-box" hidden></div>
       </form>`;
   }
-  // { "<English name>": { "pt": "…", source, confidence } }: ready to merge into data/names.pt-BR.json
+  // { "<English name>": { "pt": "…", source, confidence } }: keyed like the name files in data/
   function namesJson(state) {
     const D = GK.data.get(), out = {};
     for (const [lang, m] of Object.entries(state.overrides || {})) {
@@ -620,360 +237,6 @@ GK.ui.recipes = (function () {
       }
     }
     return JSON.stringify(out, null, 2);
-  }
-  // "Construir no Cemitério" for a build pseudo-station, the plain name otherwise (corte 12)
-  const stationLabel = (s, state) => GK.ui.fmt.buildLabel(s, state.overrides);
-  function runes(o) {
-    return Object.keys(o || {}).map((k) => `<span class="rune rune-${esc(k)}">${esc(t("rune." + k))} <b>${num(o[k])}</b></span>`).join("");
-  }
-  // one tappable line: icon, qty, name, note
-  // opts.noWord: the grade is picked right below (a group card): no grade word under the name
-  function line(l, state, sub, opts) {
-    const D = GK.data.get(), it = D.items[l.item], nm = name(it, state.overrides);
-    const lg = l.anyGrade ? false : l.grade;   // "Alcohol from Any Wine": any grade, no star
-    const q = l.qty == null ? "?" : num(l.qty), g = graded(it, nm, lg);
-    const full = g.grade ? `${g.name} (${g.word})` : nm;
-    const word = g.word && !(opts && opts.noWord) ? `<span class="rc-line-note">${esc(g.word)}</span>` : "";
-    return `<li><button type="button" class="rc-line"${opts && opts.id ? ` id="${esc(opts.id)}"` : ""} data-open="${esc(l.item)}" aria-label="${esc(q + " × " + full + " · " + t("rc.open", { name: nm }))}">
-      ${slot(it, nm, true, lg)}<span class="rc-line-q tabnum">${esc(q)}<small>×</small></span>
-      <span class="rc-line-main"><span class="rc-line-name">${esc(g.name)}</span>${word}${l.note ? `<span class="rc-line-note">${esc(name(l.note))}</span>` : ""}${sub ? `<span class="rc-line-note">${esc(sub)}</span>` : ""}</span>
-      <span class="rc-chev" aria-hidden="true">›</span></button></li>`;
-  }
-  function itemLine(id, state, sub) {
-    const D = GK.data.get(), it = D.items[id], nm = name(it, state.overrides), g = graded(it, nm);
-    if (g.word) sub = sub ? g.word + " · " + sub : g.word;
-    return `<li><button type="button" class="rc-line" data-open="${esc(id)}" aria-label="${esc(t("rc.open", { name: nm }))}">
-      ${slot(it, nm, true)}<span class="rc-line-main"><span class="rc-line-name">${esc(g.name)}${it.hidden ? `<span class="badge badge-hidden">${esc(t(it.unobtainable ? "rc.unobt" : "rc.hidden"))}</span>` : ""}</span>${sub ? `<span class="rc-line-note">${esc(sub)}</span>` : ""}</span>
-      <span class="rc-chev" aria-hidden="true">›</span></button></li>`;
-  }
-  // "Rende 5 com Cozinheiro II" (made_text, exported as out.note; the perk chip lives in the planner's Progresso)
-  function yieldLines(r, state) {
-    const out = [], b = r.out.bonus;
-    if (b && (b.qty != null || b.add != null)) {
-      const perk = b.perks.map((p) => name(GK.data.perks()[p] || { en: p })).join(" + ");
-      const on = GK.calc.isBonusActive(b, state.perks);
-      const txt = b.qty != null ? t("rc.bonusYield", { n: b.qty, perk }) : t("rc.bonusAdd", { n: b.add, perk });
-      out.push(`<span class="${on ? "perk-on" : ""}">${esc(txt)}${on ? ` · ✓ ${esc(t("rc.bonusOn"))}` : ""}</span>`);
-    } else if (r.out.note) out.push(esc(t("rc.makesNote", { note: name(r.out.note) })));
-    if (r.star && (r.star.silver != null || r.star.gold != null)) {
-      out.push(esc(t("rc.star", { silver: r.star.silver != null ? r.star.silver : "?", gold: r.star.gold != null ? r.star.gold : "?" })));
-    }
-    return out;
-  }
-  function unlockLines(r, noMastery) {
-    const out = [];
-    if (r.tech) {
-      const key = r.tech.type === "quest" ? "rc.quest" : r.tech.type === "perk" ? "rc.perk" : "rc.tech";
-      const canLink = r.tech.id && r.tech.type === "technology" && GK.ui.tech && typeof GK.ui.tech.open === "function";
-      const tn = esc(name(r.tech));
-      const txt = esc(t(key, { tech: "\u0000" })).replace("\u0000", canLink ? `<button type="button" class="rc-link" data-tech="${esc(r.tech.id)}">${tn}</button>` : `<b>${tn}</b>`);
-      out.push(txt);
-    }
-    if (r.mastery && !noMastery) out.push(esc(masteryTxt(r)));
-    if (r.ext) out.push(esc(t("rc.ext", { ext: name(r.ext) })));
-    if (r.ticks != null) out.push(esc(t("rc.time", { n: r.ticks })));
-    if (r.energy != null) out.push(esc(r.ticks != null ? t("rc.energyTotal", { n: r.energy, total: num(r.energy * r.ticks) }) : t("rc.energy", { n: r.energy })));
-    return out;
-  }
-  const masteryTxt = (r) => t("rc.mastery", { type: name(r.mastery.type), level: r.mastery.level ? r.mastery.level : "" }).trim();
-  const altNames = (r, state) => r.alt.map((a) => name(a, state.overrides)).join(", ");
-  // "Todas também em: Forno da Cozinha II" once above the cards when every recipe (2+) has the same alternatives
-  function sharedAlt(rs) {
-    if (rs.length < 2 || !rs[0].alt.length) return null;
-    const key = (r) => r.alt.map((a) => a.id).sort().join("|"), k0 = key(rs[0]);
-    return rs.every((r) => key(r) === k0) ? rs[0] : null;
-  }
-  // the recipe's own name under the card's tags ("Placa (Cavalete)"), when it says more than the item. pt: never an
-  // untranslated English name; a "X a partir de Y" name is left out (it only restates the ingredients listed right
-  // below) and so is a "Construir X (Zona)" one (the card's header already says where: "Construir no Pátio"); en keeps
-  // "X from Y" / "Build X (Yard)" as before. A name composed by us (data/names.recipes.pt-BR.json `derived`, tr guess)
-  // gets the "não oficial" badge.
-  const PT_HIDDEN_NAME = / a partir de |^Construir .+ \(.+\)$/i;
-  function recipeName(r, it) {
-    if (!r.name || name(r.name) === name(it)) return "";
-    const en = GK.i18n.lang() === "en";
-    if (!en && (r.name.pt === r.name.en || PT_HIDDEN_NAME.test(name(r.name)))) return "";
-    const badge = !en && UNOFFICIAL[r.name.tr] ? `<span class="badge" title="${esc(t("rc.unofficialTitle"))}">${esc(t("rc.unofficial"))}</span>` : "";
-    return `<p class="rc-rname">${esc(name(r.name))}${badge}</p>`;
-  }
-  // idx: the card's letter ("Receita B"), null = no letter (one card only, or a folded circular one); folded: inside
-  // "Melhorar a qualidade" (its title already says circular: no badge)
-  function recipeCard(r, idx, it, state, cur, many, altShared, folded) {
-    const tags = [];
-    if (r.id === it.defaultRecipe) tags.push(`<span class="badge badge-goal">${esc(t("rc.default"))}</span>`);
-    if (r.example) tags.push(`<span class="badge badge-ex" title="${esc(t("rc.exampleTitle"))}">${esc(t("rc.example"))}</span>`);
-    if (r.noexp) tags.push(`<span class="badge badge-ex">${esc(t("rc.noexp"))}</span>`);
-    if (!r.listed) tags.push(`<span class="badge badge-hidden">${esc(t("rc.hiddenRecipe"))}</span>`);
-    if (r.cyc && !folded) tags.push(`<span class="badge badge-warn">${esc(t("rc.cyc"))}</span>`);
-    const rname = recipeName(r, it);
-    const alt = r.alt.length && !altShared ? `<p class="rc-meta-line">${esc(t("rc.alt", { names: altNames(r, state) }))}</p>` : "";
-    const ins = r.in.length ? `<ul class="rc-lines">${r.in.map((l) => line(l, state)).join("")}</ul>` : `<p class="rc-meta-line">${esc(t("rc.noInputs"))}</p>`;
-    const meta = yieldLines(r, state).concat(unlockLines(r)).map((h) => `<li>${h}</li>`).join("");
-    const rn = r.runes ? `<div class="rc-runes"><span class="rc-k">${esc(t("rc.runesNeed"))}</span> ${runes(r.runes)}</div>` : "";
-    const extra = r.extra.length ? `<div class="rc-extra"><span class="rc-k">${esc(t("rc.extra"))}</span><ul class="rc-lines">${r.extra.map((l) => line(l, state)).join("")}</ul></div>` : "";
-    let act = "";
-    if (cur && cur.id === r.id) act = `<span class="rc-inuse">✓ ${esc(t("rc.inUse"))}</span>`;
-    else if (expandable(r) && (many || !it.defaultRecipe)) act = `<button type="button" class="btn btn-sm" id="rc-use-${GK.util.domId(r.id)}" data-use="${esc(r.id)}">${esc(t("rc.use"))}</button>`;
-    return `<article class="card list rc-recipe">
-      ${cardHead(r, idx, state)}
-      <div class="rc-recipe-body">
-        ${tags.length ? `<div class="rc-tags">${tags.join("")}</div>` : ""}${rname}${alt}${ins}
-        ${meta ? `<ul class="rc-meta">${meta}</ul>` : ""}${rn}${extra}
-        ${act ? `<div class="rc-act">${act}</div>` : ""}
-      </div>
-    </article>`;
-  }
-  function cardHead(r, idx, state) {
-    const stName = stationLabel(r.station, state);
-    const yieldTxt = r.out.qty == null ? t("rc.makesVar") : t("rc.makes", { n: r.out.qty });
-    const letter = idx == null ? "" : `<span class="station-sub">${esc(t("rc.recipeN", { l: String.fromCharCode(65 + (idx % 26)) }))}</span>`;
-    return `<header class="station-h">${slot(r.station, stName, true)}<h4>${letter}${esc(stName)}</h4><span class="rc-yield tabnum">${esc(yieldTxt)}</span></header>`;
-  }
-  // a group card (GK.calc.recipeGroups): the shared lines, then the pick: mode "q" = the grade of one ingredient
-  // (bronze / prata / ouro, each with its own amount or mastery when they differ), mode "alt" = "E mais um destes",
-  // one row per ingredient with its grades. The option in use is checked; a tap sets it in the planner.
-  function groupCard(g, idx, it, state, cur, altShared) {
-    const D = GK.data.get(), r0 = g.recipes[0];
-    const inUse = g.options.find((o) => cur && o.r.id === cur.id) || null;
-    const shown = inUse || g.options[0];
-    const pid = (o) => "rc-pick-" + GK.util.domId(o.r.id);
-    const word = (o) => (o.grade ? t("quality." + o.grade) : "");
-    const baseName = (o) => graded(o.item, name(o.item, state.overrides), o.grade).name;
-    const say = (o) => `${num(o.line.qty)}× ${baseName(o)}${o.grade ? " " + word(o) : ""}`;
-    const radio = (o, cls, inner, label) => `<button type="button" class="qopt${cls}" role="radio" id="${esc(pid(o))}" data-pick="${esc(o.r.id)}" aria-checked="${o === inUse}"${label ? ` aria-label="${esc(label)}"` : ""}>${inner}</button>`;
-    const star = (o) => (o.grade ? `<span class="qstar q-${o.grade[0]}" aria-hidden="true"></span>` : "");
-    const hid = "rc-q-" + GK.util.domId(r0.id);
-    const fixed = (g.fixed || []).map((l) => line(l, state));
-    let pick;
-    if (g.mode === "q") {
-      fixed.push(line(shown.line, state, "", { noWord: true }));
-      const opts = g.options.map((o) => {
-        const d = [g.qtyEach ? num(o.line.qty) + "×" : "", g.masteryEach && o.r.mastery ? `${name(o.r.mastery.type)}${o.r.mastery.level ? " " + o.r.mastery.level : ""}` : ""].filter(Boolean).join(" · ");
-        return radio(o, "", `<span class="qopt-t">${star(o)}${esc(word(o))}</span>${d ? `<span class="qopt-d">${esc(d)}</span>` : ""}`);
-      }).join("");
-      pick = `<div class="qpick" role="radiogroup" aria-labelledby="${esc(hid)}"><p class="qpick-h" id="${esc(hid)}">${esc(t("rc.qPick"))}</p>
-        <div class="qopts">${opts}</div>`;
-    } else {
-      const rows = g.rows.map((row) => {
-        const nm = name(row.item, state.overrides), bn = graded(row.item, nm).name;
-        const os = row.options.map((o) => radio(o, " qopt-sm", `${star(o)}<span class="tabnum">${esc(num(o.line.qty))}×</span>`,
-          `${num(o.line.qty)} ${bn}${o.grade ? " (" + word(o) + ")" : ""}`)).join("");
-        return `<li><button type="button" class="qalt-it" data-open="${esc(row.item.id)}" aria-label="${esc(t("rc.open", { name: nm }))}">${slot(row.item, nm, true, false)}<span class="qalt-n">${esc(bn)}</span></button><span class="qalt-o">${os}</span></li>`;
-      }).join("");
-      pick = `<div class="qpick" role="radiogroup" aria-labelledby="${esc(hid)}"><p class="qpick-h" id="${esc(hid)}">${esc(t("rc.qMore"))}</p>
-        <ul class="qalt">${rows}</ul>`;
-    }
-    const what = inUse ? (g.mode === "q" ? word(inUse) : say(inUse)) : "";
-    pick += `<p class="rc-inuse qpick-use" aria-live="polite">${inUse ? `✓ ${esc(t("rc.inUseQ", { what }))}` : ""}</p></div>`;
-    const tags = [];
-    if (r0.example) tags.push(`<span class="badge badge-ex" title="${esc(t("rc.exampleTitle"))}">${esc(t("rc.example"))}</span>`);
-    if (r0.noexp) tags.push(`<span class="badge badge-ex">${esc(t("rc.noexp"))}</span>`);
-    if (!r0.listed) tags.push(`<span class="badge badge-hidden">${esc(t("rc.hiddenRecipe"))}</span>`);
-    if (r0.cyc) tags.push(`<span class="badge badge-warn">${esc(t("rc.cyc"))}</span>`);
-    const alt = r0.alt.length && !altShared ? `<p class="rc-meta-line">${esc(t("rc.alt", { names: altNames(r0, state) }))}</p>` : "";
-    const meta = yieldLines(r0, state).concat(unlockLines(r0, g.masteryEach)).map((h) => `<li>${h}</li>`).join("");
-    const rn = r0.runes ? `<div class="rc-runes"><span class="rc-k">${esc(t("rc.runesNeed"))}</span> ${runes(r0.runes)}</div>` : "";
-    const extra = r0.extra.length ? `<div class="rc-extra"><span class="rc-k">${esc(t("rc.extra"))}</span><ul class="rc-lines">${r0.extra.map((l) => line(l, state)).join("")}</ul></div>` : "";
-    return `<article class="card list rc-recipe rc-group">
-      ${cardHead(r0, idx, state)}
-      <div class="rc-recipe-body">
-        ${tags.length ? `<div class="rc-tags">${tags.join("")}</div>` : ""}${alt}${fixed.length ? `<ul class="rc-lines">${fixed.join("")}</ul>` : ""}
-        ${pick}
-        ${meta ? `<ul class="rc-meta">${meta}</ul>` : ""}${rn}${extra}
-      </div>
-    </article>`;
-  }
-  /* ---------- facts: "Onde conseguir", use tooltip, stack (data/facts.json via the build) ---------- */
-  const WHERE_CAP = 4, MINUS = "−";
-  const signed = (v) => (v < 0 ? MINUS + num(-v) : "+" + num(v));
-  const refs = () => (GK.data.get().meta.refs || {});
-  const unofficialBadge = (title) => (GK.i18n.lang() !== "en" ? `<span class="badge" title="${esc(title)}">${esc(t("rc.unofficial"))}</span>` : "");
-  // a source name: "@item-id" (the app's item name) or a key of meta.refs.names ("x" or {pt, en, tr})
-  function refName(ref, state) {
-    if (typeof ref !== "string") return { txt: "" };
-    if (ref[0] === "@") { const it = GK.data.item(ref.slice(1)); return { txt: it ? name(it, state.overrides) : ref.slice(1), tr: it && UNOFFICIAL[it.tr] }; }
-    const e = (refs().names || {})[ref];
-    if (e == null) return { txt: ref };
-    return typeof e === "string" ? { txt: e } : { txt: name(e), tr: !!e.tr };
-  }
-  function whereLine(w, state) {
-    const k = w[0], nm = refName(w[1], state);
-    let what = esc(nm.txt), det = "";
-    if (k === "buy") det = w[2] === "talk" ? t("rc.w.talk") : w[2] ? t("rc.w.level", { n: w[2] }) : "";
-    else if (k === "fish" && w.length > 2) {
-      const bait = w[2] === "no-bait" ? t("rc.w.noBait") : name(GK.data.item(w[2]) || { en: w[2] }, state.overrides);
-      what += ", " + esc(bait);
-      det = w[3] === w[4] ? t("rc.w.allDay", { d: num(w[3]) }) : t("rc.w.dayNight", { d: num(w[3]), n: num(w[4]) });
-    } else if (k === "chest") det = t("rc.w.chestOnce");
-    else if (k === "found") det = t("rc.w.once");
-    const badge = nm.tr ? unofficialBadge(t("rc.w.unofficialTitle")) : "";
-    return `<li><b class="rc-where-v">${esc(t("rc.w." + k))}:</b> ${what}${badge}${det ? ` <span class="rc-where-d">${esc(det)}</span>` : ""}</li>`;
-  }
-  function whereHtml(it, rs, state) {
-    const w = Array.isArray(it.where) ? it.where.filter((x) => Array.isArray(x) && x.length > 1) : [];
-    if (!w.length) return "";
-    const shown = whereAll ? w : w.slice(0, WHERE_CAP), rest = w.length - shown.length;
-    const questOnly = !rs.length && w.every((x) => x[0] === "quest");
-    return `<div class="rc-info rc-where"><h3 class="rc-k">${esc(t("rc.where"))}</h3>
-      ${questOnly ? `<p class="rc-where-only"><span class="badge badge-warn" title="${esc(t("rc.questOnlyTitle"))}">${esc(t("rc.questOnly"))}</span></p>` : ""}
-      <ul class="rc-where-list">${shown.map((x) => whereLine(x, state)).join("")}</ul>
-      ${rest > 0 ? `<button type="button" class="btn btn-sm btn-ghost rc-where-more" id="rc-where-more" data-where-more aria-label="${esc(t("rc.whereMoreLabel", { n: rest }))}">${esc(t("rc.whereMore", { n: rest }))}</button>` : ""}
-    </div>`;
-  }
-  function duration(secs) {
-    const m = Math.floor(secs / 60), s = secs % 60;
-    return [m ? `${num(m)} min` : "", s ? `${num(s)} s` : ""].filter(Boolean).join(" ");
-  }
-  function buffName(key) {
-    const b = (refs().buffs || {})[key];
-    return b ? { b, txt: name(b) } : { b: null, txt: key };
-  }
-  // the game's item tooltip: "Efeito de uso: (bolt) +20", the HUD-like energy bar, the boosted value, the buff
-  function tipHtml(it) {
-    const u = it.use;
-    if (!u || typeof u !== "object") return "";
-    const en = typeof u.en === "number" ? u.en : null, ins = typeof u.ins === "number" ? u.ins : null;
-    const vals = [];
-    if (en != null) vals.push(`<span class="gk-val gk-en"><span class="gk-bolt" role="img" aria-label="${esc(t("rc.energyName"))}"></span>${esc(signed(en))}</span>`);
-    if (ins != null) vals.push(`<span class="gk-val gk-ins">${esc(signed(ins))} <small>${esc(t("rc.insanityName"))}</small></span>`);
-    const parts = [];
-    if (vals.length) parts.push(`<p class="gk-eff"><span class="gk-lbl">${esc(t("rc.useLbl"))}</span> ${vals.join(" ")}</p>`);
-    if (en != null && en > 0) {
-      const pct = (v) => Math.max(0, Math.min(100, v)) / 100;
-      const boost = Array.isArray(u.enB) && typeof u.enB[0] === "number" ? u.enB : null;
-      const plus = boost && boost[0] > en ? pct(boost[0]) - pct(en) : 0;
-      parts.push(`<div class="gk-bar" role="img" aria-label="${esc(t("rc.barLabel", { n: en }))}">
-        <span class="gk-bar-ico"><span class="gk-bolt"></span></span>
-        <span class="gk-bar-track"><span class="gk-bar-empty"></span><span class="gk-bar-fill" style="width:calc((100% - 6px) * ${pct(en)})"></span>${plus > 0 ? `<span class="gk-bar-plus" style="left:calc(3px + (100% - 6px) * ${pct(en)});width:calc((100% - 6px) * ${plus.toFixed(3)})"></span>` : ""}<span class="gk-bar-ticks"></span></span>
-      </div>`);
-    }
-    const notes = [];
-    if (en != null && en > 0) notes.push(esc(t("rc.bar", { n: en })));
-    for (const [f, base] of [["enB", en], ["insB", ins]]) {
-      const b = u[f];
-      if (!Array.isArray(b) || typeof b[0] !== "number" || base == null) continue;
-      const bn = buffName(b[1]);
-      notes.push(t("rc.boost", { v: `<b>${esc(f === "enB" ? num(b[0]) : signed(b[0]))}</b>`, buff: `<b${bn.b && bn.b.d ? ` title="${esc(name(bn.b.d))}"` : ""}>${esc(bn.txt)}</b>` }));
-    }
-    if (notes.length) parts.push(`<p class="gk-note">${notes.join(" · ")}</p>`);
-    if (Array.isArray(u.buff) && u.buff.length) {
-      const bn = buffName(u.buff[0]), secs = typeof u.buff[1] === "number" ? u.buff[1] : null;
-      const d = bn.b && bn.b.d ? name(bn.b.d) : "";
-      const time = [secs ? esc(t("rc.lasts", { t: "\u0000" })).replace("\u0000", `<b>${duration(secs)}</b>`) : "", u.buff[2] ? esc(t("rc.restart")) : ""].filter(Boolean).join(" ");
-      if (parts.length) parts.push(`<div class="gk-rule" aria-hidden="true"></div>`);
-      parts.push(`<div class="gk-buff"><span class="gk-buff-ico" aria-hidden="true"></span><div>
-        <p class="gk-buff-name">${esc(bn.txt)}${bn.b && bn.b.tr ? unofficialBadge(t("rc.w.unofficialTitle")) : ""}</p>
-        ${d ? `<p class="gk-buff-d">${esc(d)}${bn.b.dtr ? unofficialBadge(t("rc.descUnofficial")) : ""}</p>` : ""}
-        ${time ? `<p class="gk-buff-t">${time}</p>` : ""}
-      </div></div>`);
-    }
-    return parts.length ? `<div class="gk-tip">${parts.join("")}</div>` : "";
-  }
-  // the big item slot with the stack in its corner (as the game prints the count), + one caption line
-  function stackSlot(it, nm) {
-    const html = slot(it, nm), st = typeof it.stack === "number" && it.stack > 0 ? it.stack : null;
-    if (!st || st < 2) return html;
-    return html.replace(/^<span class="(slot[^"]*)"/, `<span class="$1" title="${esc(t("rc.stackTitle", { n: st }))}"`)
-      .replace(/<\/span>$/, `<span class="stack-n tabnum" aria-hidden="true">${esc(num(st))}</span></span>`);
-  }
-  function stackCap(it) {
-    const st = typeof it.stack === "number" && it.stack > 0 ? it.stack : null;
-    if (!st) return "";
-    return `<p class="stack-cap">${st > 1 ? esc(t("rc.stack", { n: "\u0000" })).replace("\u0000", `<b>${esc(num(st))}</b>`) : esc(t("rc.stackOne"))}</p>`;
-  }
-  /* ---------- "Quem compra", "Estudar", "Pedido em" (ficha completa) ---------- */
-  const int = (v) => (typeof v === "number" && isFinite(v) ? Math.round(v) : 0);
-  // an amount in bronze (1 silver = 100 bronze, 1 gold = 100 silver) as the game's coins: (s)1 (b)37
-  function coins(v) {
-    const parts = [["g", Math.floor(v / 10000)], ["s", Math.floor(v / 100) % 100], ["b", v % 100]].filter((p) => p[1]);
-    return parts.map(([k, n]) => `<span class="coin coin-${k}" aria-hidden="true"></span>${esc(num(n))}<span class="sr-only"> ${esc(t("rc.coin." + k))}</span>`).join(" ");
-  }
-  // lo–hi: one bronze coin when both are under 1 silver ("54–56"), else each amount in full
-  function coinRange(lo, hi) {
-    if (!hi || hi === lo) return coins(lo);
-    if (hi < 100) return `<span class="coin coin-b" aria-hidden="true"></span>${esc(num(lo))}–${esc(num(hi))}<span class="sr-only"> ${esc(t("rc.coin.b"))}</span>`;
-    return `${coins(lo)} – ${coins(hi)}`;
-  }
-  function sellHtml(it, state) {
-    const rows = Array.isArray(it.sell) ? it.sell.filter((e) => Array.isArray(e) && typeof e[0] === "string") : [];
-    if (!rows.length) return "";
-    const base = int(it.price) > 0 ? int(it.price) : 0, fix = !!it.fix && base > 0;
-    const li = rows.map((e) => {
-      const nm = refName(e[0], state), lo = int(e[1]), hi = int(e[2]), likes = int(e[3]), likeLv = int(e[4]), lvl = int(e[5]);
-      let pay = "";
-      if (fix) pay = coins(base);
-      else if (lo > 0) pay = coinRange(lo, hi) + (base > Math.max(lo, hi) ? ` <span class="sell-max">${esc(t("rc.sellUpTo", { v: "\u0000" })).replace("\u0000", coins(base))}</span>` : "");
-      else if (base) pay = `<span class="sell-max">${esc(t("rc.sellUpTo", { v: "\u0000" })).replace("\u0000", coins(base))}</span>`;
-      const d = [];
-      if (fix) d.push(t("rc.sellFix"));
-      if (likes > 0) d.push(likeLv > 1 ? t("rc.sellLikesFrom", { n: num(likes), lv: likeLv }) : t("rc.sellLikes", { n: num(likes) }));
-      else if (likes < 0) d.push(likeLv > 1 ? t("rc.sellLikesAnyFrom", { lv: likeLv }) : t("rc.sellLikesAny"));
-      if (lvl > 1) d.push(t("rc.sellLevel", { n: lvl }));
-      const badge = nm.tr ? unofficialBadge(t("rc.w.unofficialTitle")) : "";
-      return `<li><span class="sell-who">${esc(nm.txt)}${badge}</span><span class="sell-pay tabnum">${pay}</span>${d.length ? `<span class="sell-d">${esc(d.join(" · "))}</span>` : ""}</li>`;
-    }).join("");
-    const note = fix ? esc(t("rc.sellNoteFix", { n: "\u0000" })).replace("\u0000", coins(base)) : esc(t("rc.sellNote"));
-    return `<div class="rc-info rc-sell">
-      <div class="rc-k-row"><h3 class="rc-k" id="rc-sell-h">${esc(t("rc.sell"))}</h3>
-        <details class="rc-i"><summary aria-label="${esc(t("rc.sellInfo"))}" title="${esc(t("rc.sellInfo"))}"><span aria-hidden="true">i</span></summary>
-          <p class="rc-i-p">${note}</p></details></div>
-      <ul class="sell-list" aria-labelledby="rc-sell-h">${li}</ul>
-    </div>`;
-  }
-  function studyHtml(it, state, id) {
-    const st = Array.isArray(it.study) ? it.study.map(int) : [];
-    if (!st.length || !st.some((v) => v > 0)) return "";
-    const [red, green, blue, sci, faith] = [0, 1, 2, 3, 4].map((i) => st[i] || 0);
-    const cost = { red, green, blue };
-    // the point gems of "Tecnologias que faltam" (GK.ui.tech.costHtml)
-    const pts = (red || green || blue) && GK.ui.tech && GK.ui.tech.costHtml ? GK.ui.tech.costHtml(cost, { big: true }) : "";
-    const on = Array.isArray(state.studied) && state.studied.indexOf(id) >= 0;
-    const nm = name(it, state.overrides);
-    const costTxt = sci || faith ? " " + t(faith ? "rc.studyCostFaith" : "rc.studyCost", { sci: num(sci), faith: num(faith) }) : "";
-    return `<div class="rc-info rc-study">
-      <h3 class="rc-k">${esc(t("rc.study"))}</h3>
-      <div class="study-row">${pts}
-        <label class="study-done" for="rc-studied"><span class="tick"><input type="checkbox" id="rc-studied" data-studied="${esc(id)}"${on ? " checked" : ""} aria-label="${esc(t("rc.studiedLabel", { name: nm }))}"></span>${esc(t("rc.studied"))}</label></div>
-      <p class="study-d">${esc(t("rc.studyNote") + costTxt)}</p>
-    </div>`;
-  }
-  function askedLine(mark, qty, nameHtml, note) {
-    return `<li><div class="rc-line rc-line-static"><span class="slot slot-sm asked-mark"><span class="slot-letter" aria-hidden="true">${mark}</span></span><span class="rc-line-q tabnum">${esc(num(qty))}<small>×</small></span>
-      <span class="rc-line-main"><span class="rc-line-name">${nameHtml}</span>${note ? `<span class="rc-line-note">${note}</span>` : ""}</span></div></li>`;
-  }
-  function askedHtml(it, state) {
-    const a = it.asked && typeof it.asked === "object" ? it.asked : {};
-    const rows = (k) => (Array.isArray(a[k]) ? a[k].filter((e) => Array.isArray(e) && typeof e[0] === "string") : []);
-    const nameOf = (ref) => { const nm = refName(ref, state); return esc(nm.txt) + (nm.tr ? unofficialBadge(t("rc.w.unofficialTitle")) : ""); };
-    const q = rows("q"), town = rows("t"), ord = rows("o");
-    const other = town.length + ord.length, total = q.length + other;
-    if (!total) return "";
-    const group = (k) => `<li class="asked-g" aria-hidden="true">${esc(t(k))}</li>`;
-    const lines = [];
-    if (q.length) {
-      lines.push(group("rc.askedQ"));
-      for (const e of q) lines.push(askedLine("!", int(e[1]) || 1, nameOf(e[0]), typeof e[2] === "string" ? nameOf(e[2]) : ""));
-    }
-    if (town.length) {
-      lines.push(group("rc.askedTown"));
-      for (const e of town) lines.push(askedLine("+", int(e[1]) || 1, nameOf(e[0]), ""));
-    }
-    if (ord.length) {
-      lines.push(group("rc.askedOrder"));
-      for (const e of ord) {
-        const d = [int(e[2]) > 1 ? t("rc.askedLevel", { n: int(e[2]) }) : "", int(e[3]) > 0 ? t("rc.askedLikes", { n: num(int(e[3])) }) : ""].filter(Boolean);
-        lines.push(askedLine("+", int(e[1]) || 1, nameOf(e[0]), esc(d.join(" · "))));
-      }
-    }
-    const show = q.length && other ? t("rc.askedShowQO", { n: q.length, o: other }) : q.length ? t("rc.askedShowQ", { n: q.length }) : t("rc.askedShowO", { n: other });
-    return `<section class="rc-sec" aria-labelledby="rc-asked-h">
-      <h3 class="h2" id="rc-asked-h">${esc(t("rc.asked"))} <span class="count">${total}</span></h3>
-      <details class="card list rc-asked" id="rc-asked"${askedOpen ? " open" : ""}>
-        <summary><span class="asked-t"><span class="asked-show">${esc(show)}</span><span class="asked-hide">${esc(t("rc.askedHide"))}</span></span>
-          ${q.length ? `<span class="asked-warn">${esc(t("rc.askedWarn"))}</span>` : ""}<span class="rc-chev" aria-hidden="true">›</span></summary>
-        <ul class="rc-lines">${lines.join("")}</ul>
-      </details>
-    </section>`;
   }
   function detailHtml(id, state) {
     const D = GK.data.get(), it = D.items[id], nm = name(it, state.overrides), lang = GK.i18n.lang();
@@ -997,7 +260,7 @@ GK.ui.recipes = (function () {
     </div>`;
     const info = [];
     const rs = GK.data.recipesFor(id);
-    const where = whereHtml(it, rs, state);
+    const where = whereHtml(it, rs, state, whereAll);
     if (where) info.push(where);
     if (it.obtain && (!rs.length || it.raw || it.unobtainable)) info.push(`<div class="rc-info"><h3 class="rc-k">${esc(t("rc.obtain"))}</h3><p>${esc(name(it.obtain))}</p></div>`);
     if (it.runes) info.push(`<div class="rc-info"><h3 class="rc-k">${esc(t("rc.runes"))}</h3><div class="rc-runes">${runes(it.runes)}</div></div>`);
@@ -1022,7 +285,7 @@ GK.ui.recipes = (function () {
     const cur = current(id, state), many = rs.filter(expandable).length > 1;
     const chosen = state.choice[id] && cur && cur.id === state.choice[id] && cur.id !== it.defaultRecipe;
     // grouped cards (GK.calc.recipeGroups); the circular ones folded at the end; a letter only with 2+ cards;
-    // "Todas também em" above the cards only with 2+ cards (one card says it inside, as before)
+    // "Todas também em" above the cards only with 2+ cards (one card says it inside)
     const G = GK.calc.recipeGroups(rs, D), nCards = G.cards.length;
     const shared = nCards > 1 ? sharedAlt(rs) : null;
     const cards = G.cards.map((c, i) => (c.group ? groupCard(c, nCards > 1 ? i : null, it, state, cur, !!shared)
@@ -1056,7 +319,7 @@ GK.ui.recipes = (function () {
     const outFam = (r) => GK.data.family(D.items[r.out.item]), outRank = (r) => GK.data.GRADE_RANK[D.items[r.out.item].grade];
     GK.data.gradeSort(used, (u) => outFam(u.r), (u) => outRank(u.r), true);
     const usedShow = usedAll ? used : used.slice(0, LIST_CAP);
-    // nothing uses it: no section at all (corte 18)
+    // nothing uses it: no section at all
     const usedHtml = !used.length ? "" : `<section class="rc-sec" aria-labelledby="rc-used-h">
       <h3 class="h2" id="rc-used-h">${esc(t("rc.usedIn"))} <span class="count">${used.length}</span></h3>
       <div class="card list"><ul class="rc-lines rc-lines-card">${usedShow.map((u) => itemLine(u.r.out.item, state,
@@ -1066,7 +329,7 @@ GK.ui.recipes = (function () {
 
     // a station item: what is made there
     let here = "";
-    // bronze, prata, ouro together (Canteiro de Repolho: Repolho, Repolho (prata), Repolho (ouro); consertos.md §17)
+    // bronze, prata, ouro together (Canteiro de Repolho: Repolho, Repolho (prata), Repolho (ouro))
     const made = D.stations[id] ? GK.data.gradeSort((IX.byStation[id] || []).slice(), outFam, outRank, true) : [];
     if (made.length) {
       const list = hereAll ? made : made.slice(0, LIST_CAP);
@@ -1077,7 +340,7 @@ GK.ui.recipes = (function () {
           ${made.length > list.length ? `<button type="button" class="btn btn-ghost rc-more" id="rc-here-more" data-here-more>${esc(t("rc.showAll", { n: made.length }))}</button>` : ""}</div>
       </section>`;
     }
-    return nav + `<div class="rc-detail-grid"><div class="rc-detail-a">${head}</div><div class="rc-detail-b">${recipes}${usedHtml}${askedHtml(it, state)}${here}</div></div>`;
+    return nav + `<div class="rc-detail-grid"><div class="rc-detail-a">${head}</div><div class="rc-detail-b">${recipes}${usedHtml}${askedHtml(it, state, askedOpen)}${here}</div></div>`;
   }
   function renderDetail(state) {
     if (!V.item || !GK.data.item(V.item)) { V.item = null; return false; }
@@ -1089,6 +352,10 @@ GK.ui.recipes = (function () {
   }
 
   /* ---------- navigation ---------- */
+  // another item opens: quantity 1, the long lists short, "Pedido em" and the circular recipes folded, no rename field
+  function resetItemView() {
+    addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false; cycOpen = false; renaming = false; renameDraft = null;
+  }
   const visible = () => GK.router.tab(GK.router.current()).screen === "recipes";
   function showView(state, focusDetail) {
     const hasDetail = V.item && renderDetail(state);
@@ -1106,7 +373,7 @@ GK.ui.recipes = (function () {
     if (V.item === id) return;
     if (fromList || !V.item) { listScroll = browseEl.hidden ? listScroll : window.scrollY; V.stack = []; V.from = null; }
     else { V.stack.push(V.item); if (V.stack.length > 30) V.stack.shift(); }
-    V.item = id; addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false; cycOpen = false; renaming = false; renameDraft = null;
+    V.item = id; resetItemView();
     save();
     if (hist) hist.push();
     showView(GK.store.get(), true);
@@ -1124,7 +391,7 @@ GK.ui.recipes = (function () {
     if (!toList && !V.stack.length && V.from) { backToOrigin(); return; }
     if (toList) V.from = null;
     if (!toList && V.stack.length) {
-      V.item = V.stack.pop(); addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false; cycOpen = false; renaming = false; renameDraft = null;
+      V.item = V.stack.pop(); resetItemView();
       save(); showView(GK.store.get(), true);
       return;
     }
@@ -1143,7 +410,7 @@ GK.ui.recipes = (function () {
     const from = opts && opts.from && opts.from !== "recipes" && cur !== "recipes" ? opts.from : null;
     if (from) fromScroll = window.scrollY;
     if (V.item !== itemId || from || V.stack.length) {
-      V.stack = []; V.item = itemId; addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false; cycOpen = false; renaming = false; renameDraft = null;
+      V.stack = []; V.item = itemId; resetItemView();
       V.from = from;
       save();
     }

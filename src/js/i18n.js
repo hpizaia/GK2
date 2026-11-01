@@ -1,15 +1,17 @@
 /* GK.i18n: languages, the merged dictionary and text lookup.
-   Owns: LANGS, DICT (filled by each module through GK.i18n.add), the current language.
+   Owns: LANGS, DICT (filled by src/js/i18n/<lang>.js through GK.i18n.add), the current language.
    Exposes: GK.i18n.{add, t, name, edited, num, set, detect, lang, meta, LANGS, DICT}.
    t(key, {n}) picks key.one / key.other (Intl.PluralRules; 0 uses .other); missing keys fall back to pt.
-   Add a language: a LANGS entry, its strings in every module's add() call, and data built with --lang xx=...
+   Add a language: a LANGS entry, a src/js/i18n/xx.js (a copy of en.js, translated) listed in src/manifest.json,
+   and data built with --lang xx=...
 */
 GK.i18n = (function () {
   const LANGS = [
     { code: "pt", locale: "pt-BR", label: "PT", name: "Português" },
     { code: "en", locale: "en", label: "EN", name: "English" },
   ];
-  // Each module merges its own strings: GK.i18n.add({ pt: {...}, en: {...} }) at the top of its file.
+  // Every text is in src/js/i18n/pt.js and en.js (one GK.i18n.add({ <lang>: {...} }) each, by screen), loaded
+  // right after this file: every module finds its texts already there.
   const DICT = {};
   LANGS.forEach((l) => { DICT[l.code] = {}; });
   function add(dicts) {

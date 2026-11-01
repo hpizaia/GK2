@@ -76,6 +76,11 @@
       "researched": { "zombie-assistant": true, "oiled-wood": true, "woodworking-ii": true, "circular-saw": true,
         "market-stalls-i": true, "chopping": true, "woodworking-i": true, "the-concept-of-stone": true, "suit-up": true,
         "tool-rack": true, "pottery-i": true }
+    },
+    "gula": {
+      "goals": [{ "item": "wine", "qty": 5 }],
+      "day": "gluttony", "dayNumber": 61, "dayAnchor": { "number": 61, "day": "gluttony" },
+      "ui": { "todayCollapsed": false }
     }
   },
   "casos": [
@@ -99,6 +104,37 @@
     { "nome": "tecnologia-detalhe", "rota": "tech", "estado": "tecnologias", "passos": [{ "clicar": "#tech-list [data-open]" }] },
     { "nome": "dias", "rota": "days", "estado": "curto", "idiomas": ["pt", "en"] },
     { "nome": "creditos", "rota": "credits", "estado": "curto", "idiomas": ["pt", "en"] },
-    { "nome": "changelog", "rota": "changelog", "estado": "curto" }
+    { "nome": "changelog", "rota": "changelog", "estado": "curto" },
+
+    { "nome": "ico-resumo-bruto", "rota": "plan", "estado": "curto", "telas": ["desk-claro"],
+      "passos": [{ "clicar": "[data-panel=\"summary\"] #raw-body [data-recipe-open]" }] },
+    { "nome": "ico-resumo-etapa", "rota": "plan", "estado": "curto", "telas": ["desk-claro"],
+      "passos": [{ "clicar": "[data-panel=\"summary\"] .station [data-recipe-open]" }] },
+    { "nome": "ico-hoje", "rota": "plan", "estado": "gula", "telas": ["desk-claro"],
+      "passos": [{ "clicar": "[data-today-ev]" }, { "clicar": ".today [data-recipe-open]" }] },
+    { "nome": "ico-tech", "rota": "tech", "estado": "tecnologias", "telas": ["desk-claro"],
+      "passos": [{ "clicar": "#tech-list [data-open]" }, { "clicar": "[data-screen=\"tech\"] [data-recipe-open]" }] },
+    { "nome": "ico-dias", "rota": "days", "estado": "gula", "telas": ["desk-claro"],
+      "passos": [{ "clicar": "[data-screen=\"days\"] [data-recipe-open]" }] },
+    { "nome": "dobra-bruto-btn", "rota": "plan", "estado": "curto", "idiomas": ["pt", "en"], "telas": ["desk-claro"],
+      "passos": [{ "clicar": "#fold-raw" }] },
+    { "nome": "dobra-bruto-cab", "rota": "plan", "estado": "curto", "telas": ["desk-claro"],
+      "passos": [{ "clicar": "[data-fold-head=\"raw\"] h2" }] },
+    { "nome": "dobra-etapas-ida-volta", "rota": "plan", "estado": "curto", "telas": ["desk-claro"],
+      "passos": [{ "clicar": "#fold-steps" }, { "clicar": "p[data-fold-head=\"steps\"]" }] },
+    { "nome": "dobra-estacao-btn", "rota": "plan", "estado": "curto", "idiomas": ["pt", "en"], "telas": ["desk-claro"],
+      "passos": [{ "clicar": ".station .fold-btn" }] },
+    { "nome": "dobra-estacao-cab", "rota": "plan", "estado": "curto", "telas": ["desk-claro"],
+      "passos": [{ "clicar": ".station-h h3" }] },
+    { "nome": "dobra-tn-btn", "rota": "plan", "estado": "curto", "idiomas": ["pt", "en"], "telas": ["desk-claro"],
+      "passos": [{ "clicar": "#fold-tn" }] },
+    { "nome": "dobra-tn-ida-volta", "rota": "plan", "estado": "curto", "telas": ["desk-claro"],
+      "passos": [{ "clicar": "#fold-tn" }, { "clicar": "p[data-tn-head]" }] },
+    { "nome": "dobra-hoje-fecha", "rota": "plan", "estado": "hoje", "idiomas": ["pt", "en"], "telas": ["desk-claro"],
+      "passos": [{ "clicar": "#today-tgl" }] },
+    { "nome": "dobra-hoje-abre", "rota": "plan", "estado": "curto", "idiomas": ["pt", "en"], "telas": ["desk-claro"],
+      "passos": [{ "clicar": "#today-tgl" }] },
+    { "nome": "dobra-hoje-cab", "rota": "plan", "estado": "hoje", "telas": ["desk-claro"],
+      "passos": [{ "clicar": "[data-today-head] h2" }] }
   ]
 }

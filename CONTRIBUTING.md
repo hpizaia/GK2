@@ -52,8 +52,8 @@ python3 -I scripts/check.py           # everything before you send: versions, bu
 `check.py` prints one line per check (ok / AVISO / FALHA) and exits 1 if anything failed. Without `data/raw/` (not in git) the technology tests are skipped with a warning.
 
 - **Edit `src/`, never `dist/` or `prototype/`**: they are regenerated on every build.
-- One feature = one module (`src/js/ui/<name>.js`, optional CSS), listed in `src/manifest.json`, with its own i18n strings, route and panel. The contract is in [`scripts/README-build.md`](scripts/README-build.md#adding-a-module-the-contract-for-parallel-work); each file starts with a comment saying what it owns and exposes.
-- Every user-facing string goes through `GK.i18n.add` in **both** `pt` and `en`.
+- One feature = one module (`src/js/ui/<name>.js`, optional CSS), listed in `src/manifest.json`, with its own route and panel. The contract is in [`scripts/README-build.md`](scripts/README-build.md#adding-a-module-the-contract-for-parallel-work); each file starts with a comment saying what it owns and exposes.
+- Every user-facing string is a key in **both** `src/js/i18n/pt.js` and `src/js/i18n/en.js` (same key, same place, under the screen's section), read with `GK.i18n.t("key")`.
 - No new runtime dependencies: the page must stay a single self-contained HTML file that works inside a Claude Artifact (no external images, scripts only from allowed CDNs with pinned versions).
 - User-visible changes get a short line, in `pt` and `en`, in the top entry of `data/changelog.json`. `CHANGELOG.md` is generated.
 - Architecture and data docs (Portuguese): [`docs/arquitetura.md`](docs/arquitetura.md), [`docs/dados.md`](docs/dados.md). Index of every document: [`docs/README.md`](docs/README.md).
@@ -98,6 +98,6 @@ Use o modelo **Bug**: o que você fez, o que esperava e o que aconteceu, mais ce
 
 ### Código
 
-Os comandos e as regras são os da seção [Code](#code) acima: edite `src/` (nunca `dist/` nem `prototype/`), um módulo por função seguindo o contrato do [`scripts/README-build.md`](scripts/README-build.md#adding-a-module-the-contract-for-parallel-work), todo texto em `pt` e `en` via `GK.i18n.add`, nenhuma dependência nova, e uma linha no topo do `data/changelog.json` para cada mudança visível. Rode `python3 -I scripts/build.py` e depois `python3 -I scripts/check.py` antes de mandar.
+Os comandos e as regras são os da seção [Code](#code) acima: edite `src/` (nunca `dist/` nem `prototype/`), um módulo por função seguindo o contrato do [`scripts/README-build.md`](scripts/README-build.md#adding-a-module-the-contract-for-parallel-work), todo texto em `pt` e `en` nos arquivos `src/js/i18n/pt.js` e `src/js/i18n/en.js` (a mesma chave, no mesmo lugar, na seção da tela), nenhuma dependência nova, e uma linha no topo do `data/changelog.json` para cada mudança visível. Rode `python3 -I scripts/build.py` e depois `python3 -I scripts/check.py` antes de mandar.
 
 Ao contribuir com código ou documentação, você concorda que a sua contribuição seja publicada sob a licença do código do projeto, **MIT** (veja o [`LICENSE`](LICENSE)). A licença cobre só o código: os dados do jogo, os nomes, os ícones e as capturas de tela não estão cobertos (veja o aviso de escopo no [`LICENSE`](LICENSE) e o [`docs/dados.md`](docs/dados.md)). As correções de nomes que você mandar entram nos arquivos de nomes em `data/`, que seguem as mesmas regras do resto dos dados do jogo.

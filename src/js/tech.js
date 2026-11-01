@@ -3,7 +3,7 @@
    scripts/build.py), kept raw by GK.data as GK.data.get().techs and normalized here on first use.
    Owns: the normalized tree (techs by id with derived children / recipes, branches in tab order, point colours).
    Exposes: GK.tech.{available, get, all, branches, branch, inBranch, tp, COLORS, ancestors, researchedSet,
-   required, costOf, order, forPlan, isFree, init, columns, pendingColumns, columnOpen}.
+   required, costOf, order, forPlan, signature, isFree, init, columns, pendingColumns, columnOpen}.
 
    A tech = {id, pt, en, tr, branch, column, y, cost: {red, green, blue}, parents[], children[], hidden, given,
              free (cost 0), rep: {who: {pt, en}, level} | null, unlocks: [{item, kind, pt, en, tr, station}],
@@ -19,14 +19,7 @@ GK.tech = (function () {
 
   let seen = undefined;   // the GK.data block `raw` was read from (a new GK.data.load() rebuilds the tree)
 
-  const loc = (v) => {
-    if (v == null || v === "") return null;
-    if (typeof v === "string") return { pt: v, en: v };
-    const o = Object.assign({}, v);
-    if (o.pt == null) o.pt = o.en;
-    if (o.en == null) o.en = o.pt;
-    return o;
-  };
+  const loc = (v) => GK.data.loc(v);
   const num = (v) => (typeof v === "number" && isFinite(v) ? v : 0);
 
   function build(src) {
@@ -109,7 +102,7 @@ GK.tech = (function () {
     return [...cols.entries()].sort((a, b) => a[0] - b[0]).map(([column, techs]) => ({ column, techs }));
   }
   /** pendingColumns(bid, done) → the columns of the branch (in order) with a tech not in `done` (a researchedSet);
-   *  [] when the whole branch is researched. The Tecnologias tab opens these by default (1.8.x). */
+   *  [] when the whole branch is researched. The Tecnologias tab opens these by default. */
   function pendingColumns(bid, done) {
     const set = done instanceof Set ? done : researchedSet(done);
     return columns(bid).filter((g) => g.techs.some((t) => !set.has(t.id))).map((g) => g.column);

@@ -97,11 +97,17 @@ src/
   css/                 tokens, base, header, components, planner, screens, recipes (Receitas), tech (Tecnologias
                        + the planner panel), responsive (keep last)
   js/core.js           window.GK + GK.app.registerPanel (keep FIRST)
-  js/util.js i18n.js data.js store.js calc.js router.js theme.js sync.js
+  js/util.js i18n.js   (i18n.js: GK.i18n, the lookup; no texts)
+  js/i18n/pt.js en.js  every text of the page, by screen (one GK.i18n.add each; en.js = pt.js's keys in the same
+                       order); right after i18n.js, before any module that uses them
+  js/data.js store.js calc.js router.js theme.js sync.js
   js/tech.js           GK.tech: pure functions over the technology tree (prerequisites, missing techs, costs)
   js/ui/fmt.js header.js search.js goals.js summary.js checklist.js changelog.js credits.js footer.js qr.js
        toast.js
-  js/ui/recipes.js     the Receitas screen (#recipes): browse, filters, item detail, "Usado em", add to goals
+  js/ui/recipes.js     the Receitas screen (#recipes): browse, filters, item detail, "Usado em", add to goals,
+                       renaming; its pieces, listed before it: js/ui/recipes-cards.js (GK.ui.rcCards: the recipe
+                       cards and item lines) and js/ui/recipes-facts.js (GK.ui.rcFacts: "Onde conseguir", the use
+                       tooltip, stack, "Quem compra", "Estudar", "Pedido em")
   js/ui/tech.js        the Tecnologias screen (#tech);  js/ui/techneeds.js  planner panel "Tecnologias que faltam"
   js/ui/days.js        the Dias screen (#days: week wheel, day card, week table); js/ui/today.js  planner panel "Hoje"
   js/app.js            boot + render loop (keep LAST: it boots right away)
@@ -116,12 +122,19 @@ source. A `.js` / `.css` file under `src/` that is not in the manifest is report
 ### Adding a module (the contract for parallel work)
 
 A feature lives in its own files (`src/js/ui/<name>.js`, optionally `src/css/<name>.css`), listed in
-`src/manifest.json` (before `js/app.js`; css before `css/responsive.css`). Inside the module, at load time:
+`src/manifest.json` (before `js/app.js`; css before `css/responsive.css`). Its texts go in `src/js/i18n/pt.js`
+and `src/js/i18n/en.js`, under a section of their own (`// ---- Receitas (js/ui/recipes*.js) ----`), the same key
+in both files and in the same place (`scripts/test_calc.mjs` and `scripts/test_build.py` check it):
+
+```js
+// src/js/i18n/pt.js                          // src/js/i18n/en.js
+  "recipes.title": "Receitas",                  "recipes.title": "Recipes",
+```
+
+Inside the module, at load time:
 
 ```js
 /* GK.ui.recipes: what it owns / what it exposes. */
-GK.i18n.add({ pt: { "recipes.title": "Receitas" }, en: { "recipes.title": "Recipes" } });   // its own strings
-
 GK.ui.recipes = (function () {
   let root;
   return {
@@ -187,6 +200,9 @@ localized object. When a name has no translation, `pt` is the English text.
       "recipes": ["<recipe id>", …],     // every recipe whose main output is this item, best first
       "defaultRecipe": "<recipe id>" | null,   // null = leaf (raw, no usable recipe, or trapped in a cycle)
       // optional:
+      "grade": "bronze" | "silver" | "gold",   // a quality variant (from its id) or the plain item of a family with
+                                         // silver / gold and no bronze variant ("wine", "pumpkin": the bronze one)
+      "base": "<item id>",               // kind "quality-variant": the family's plain item ("wine" for wine-silver)
       "members": ["<item id>", …],       // kind "group": the concrete items that can fill it ("Any Newspaper")
       "runes": {"red": 3},               // alchemy rune values
       "stub": true                       // invented by build.py for a dangling reference (hard error)
@@ -202,7 +218,10 @@ localized object. When a name has no translation, `pt` is the English text.
                                                      // note = made_text when it says more than qty
                                                      // ("3 (5 with Cook II)": the page reads the perk bonus)
       "station": "<station-id>" | null,              // null for buildings (built in the world)
-      "in": [ {"item": "<id>", "qty": 2, "note"?: {"pt", "en"}} ],   // duplicate lines are merged
+      "in": [ {"item": "<id>", "qty": 2, "note"?: {"pt", "en"}} ],   // duplicate lines are merged; a line may also
+                                                     // have "grade": "bronze" (the plain input of "<X> from <Y>
+                                                     // (bronze)"), "anyGrade": true ("<X> from Any <Y>") and
+                                                     // "bonus" (below; also on "out" and "extra" lines)
       "tech": {"pt", "en", "id", "type": "technology" | "quest" | "perk"} | null,  // from unlock
       "type": "hand_craft" | "star_craft" | "auto" | "factory" | "building" | "alchemy" | "grow",
       "cd": true,                 // calculator_default (wikily's own pick)
@@ -219,11 +238,20 @@ localized object. When a name has no translation, `pt` is the English text.
       "runes": {"red": 1, …} | null,   // rune_requirement (alchemy)
       "zone": {"pt", "en"} | null,     // building area variant
       "star_quality"?: {"silver": 6, "gold": 10},   // star_craft thresholds (successful ticks; text if not "N successful ticks")
-      "name"?: {"pt", "en"}       // only when it says more than the output name ("Board (Sawhorse)")
+      "name"?: {"pt", "en"},      // only when it says more than the output name ("Board (Sawhorse)")
+      "quality"?: "bronze" | "silver" | "gold"   // the grade of the variant it makes, else the "(grade)" its name
+                                                 // ends with; never from the id ("polished-bronze")
     }
-  ]
+  ],
+  // perk bonuses read from the notes (note_bonus(): "N (M with X)", "N, or M with X", "+N each with X", "M with X"):
+  // the line gets "bonus": {"perk": "Farmer II and Grape Master", "perks": ["farmer-ii", "grape-master"], "qty": M}
+  // (or "add": N); the perks met, in order, with the pt name the notes give and how many lines name them:
+  "perks": { "<perk id>": {"pt": "Cozinheiro II", "en": "Cook II", "uses": 12} }
 }
 ```
+
+The grades and bonuses are set by `apply_grades()` / `apply_bonuses()` in `build.py`; the page shows them as they
+come (`src/js/data.js` only sorts an item's recipes bronze → silver → gold, and the lists by name).
 
 ### How `defaultRecipe` is chosen
 
@@ -261,9 +289,12 @@ optional `key` field.
 ## Page payload (what the page embeds)
 
 `gk2.json` stays the full schema. The embedded copy is smaller: `{pt, en}` objects whose texts are identical become
-one string (obtain texts, notes, zones, categories…), `items[].id` is dropped (it is the key), and
-`meta.collapsed: true` is set. With a sprite (`data/sprite.json` or `--sprite`), `meta.sprite` = `{image, size, cols, rows, icons: {id: [col, row]}}`
-(icons limited to known item/station ids plus the `tech:*`, `tp:*` and `branch:*` ids of the technology tree). `meta.version` and `meta.changelog` carry `VERSION` and
+one string (obtain texts, notes, zones, categories…), `items[].id` is dropped (it is the key), a field holding the
+value the page gives a missing one is left out (`drop_defaults()`: `listed: true`, `cd: false`, `icon: null`, `alt: []`,
+an input's `qty: 1`…; about 140 kB), and `meta.collapsed: true` is set. `gk2.json` keeps every field: it is the public
+file, read without the page's defaults (`test_build.py` puts them back and compares). With a sprite (`data/sprite.json` or `--sprite`), `meta.sprite` = `{image, size, cols, rows, icons: {id: [col, row]}}`
+(icons limited to known item/station ids plus the `tech:*`, `tp:*` and `branch:*` ids of the technology tree; a
+quality variant without an icon of its own gets its base's). `meta.version` and `meta.changelog` carry `VERSION` and
 `data/changelog.json` when they exist, and `meta.data` = `{"wiki": "1.010", "game": "1.011"}` the game versions of the
 two sources (the `wiki` field of `data/game-version.json`; the official names file's `_meta.game_version`, else
 `GAME_TEXT_VERSION`), shown in
@@ -357,7 +388,8 @@ lives in the synced store fields `day` (a day id) and `dayNumber` (the HUD count
    `es=data/names.es.json,data/names.machine.es.json`).
 3. Every localized object then gains an `es` field (English fallback), items and stations gain `tr_es`,
    `meta.langs` becomes `["pt", "es", "en"]`, and `data/report-l10n.es.md` is written.
-4. In the UI, add an `i18n.es` dictionary and read `obj[lang] ?? obj.en`.
+4. In the UI, add a `LANGS` entry in `src/js/i18n.js` and a `src/js/i18n/es.js` (a copy of `en.js` with `es:`, translated)
+   listed in `src/manifest.json` after `js/i18n/en.js`; names already read `obj[lang] ?? obj.en`.
 
 The code needs no other change. To make `--lang es=…` the default, add it to `specs` in `main()`.
 

@@ -4723,7 +4723,8 @@
     "bowl-of-sauerkraut-bronze"
    ],
    "defaultRecipe": "bowl-of-sauerkraut-bronze",
-   "base": "bowl-of-sauerkraut"
+   "base": "bowl-of-sauerkraut",
+   "grade": "bronze"
   },
   "bowl-of-sauerkraut-gold": {
    "id": "bowl-of-sauerkraut-gold",
@@ -4748,7 +4749,8 @@
     "food-enhancement-ii-from-bowl-of-sauerkraut-silver"
    ],
    "defaultRecipe": "bowl-of-sauerkraut-gold",
-   "base": "bowl-of-sauerkraut"
+   "base": "bowl-of-sauerkraut",
+   "grade": "gold"
   },
   "bowl-of-sauerkraut-silver": {
    "id": "bowl-of-sauerkraut-silver",
@@ -4773,7 +4775,8 @@
     "food-enhancement-i-from-bowl-of-sauerkraut-bronze"
    ],
    "defaultRecipe": "bowl-of-sauerkraut-silver",
-   "base": "bowl-of-sauerkraut"
+   "base": "bowl-of-sauerkraut",
+   "grade": "silver"
   },
   "brain": {
    "id": "brain",
@@ -6482,6 +6485,7 @@
    ],
    "defaultRecipe": null,
    "key": "cabbage:1",
+   "grade": "bronze",
    "where": [
     [
      "buy",
@@ -6577,7 +6581,8 @@
     "grow-cabbage-bed-m12"
    ],
    "defaultRecipe": null,
-   "base": "cabbage"
+   "base": "cabbage",
+   "grade": "gold"
   },
   "cabbage-seed": {
    "id": "cabbage-seed",
@@ -6600,6 +6605,7 @@
    "recipes": [],
    "defaultRecipe": null,
    "key": "cabbage_seed:1",
+   "grade": "bronze",
    "where": [
     [
      "buy",
@@ -6664,7 +6670,8 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "base": "cabbage-seed"
+   "base": "cabbage-seed",
+   "grade": "gold"
   },
   "cabbage-seed-silver": {
    "id": "cabbage-seed-silver",
@@ -6686,7 +6693,8 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "base": "cabbage-seed"
+   "base": "cabbage-seed",
+   "grade": "silver"
   },
   "cabbage-silver": {
    "id": "cabbage-silver",
@@ -6710,7 +6718,8 @@
     "grow-cabbage-bed-m10"
    ],
    "defaultRecipe": null,
-   "base": "cabbage"
+   "base": "cabbage",
+   "grade": "silver"
   },
   "cabbage-soup": {
    "id": "cabbage-soup",
@@ -13235,7 +13244,8 @@
    "recipes": [
     "grape-juice-from-grapes-bronze"
    ],
-   "defaultRecipe": "grape-juice-from-grapes-bronze"
+   "defaultRecipe": "grape-juice-from-grapes-bronze",
+   "grade": "bronze"
   },
   "grape-juice-gold": {
    "id": "grape-juice-gold",
@@ -13259,7 +13269,8 @@
     "grape-juice-from-grapes-gold",
     "drink-enhancement-ii-from-grape-juice-silver"
    ],
-   "defaultRecipe": "grape-juice-from-grapes-gold"
+   "defaultRecipe": "grape-juice-from-grapes-gold",
+   "grade": "gold"
   },
   "grape-juice-silver": {
    "id": "grape-juice-silver",
@@ -13283,7 +13294,8 @@
     "grape-juice-from-grapes-silver",
     "drink-enhancement-i-from-grape-juice-bronze"
    ],
-   "defaultRecipe": "grape-juice-from-grapes-silver"
+   "defaultRecipe": "grape-juice-from-grapes-silver",
+   "grade": "silver"
   },
   "grape-pie": {
    "id": "grape-pie",
@@ -13329,6 +13341,7 @@
    "recipes": [],
    "defaultRecipe": null,
    "key": "grape_seed",
+   "grade": "bronze",
    "where": [
     [
      "buy",
@@ -13393,7 +13406,8 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "base": "grape-seeds"
+   "base": "grape-seeds",
+   "grade": "gold"
   },
   "grape-seeds-silver": {
    "id": "grape-seeds-silver",
@@ -13415,7 +13429,8 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "base": "grape-seeds"
+   "base": "grape-seeds",
+   "grade": "silver"
   },
   "grapes": {
    "id": "grapes",
@@ -13440,6 +13455,7 @@
    ],
    "defaultRecipe": null,
    "key": "grape",
+   "grade": "bronze",
    "where": [
     [
      "buy",
@@ -13511,7 +13527,8 @@
     "grow-grapes-bed-m16"
    ],
    "defaultRecipe": null,
-   "base": "grapes"
+   "base": "grapes",
+   "grade": "gold"
   },
   "grapes-silver": {
    "id": "grapes-silver",
@@ -13535,7 +13552,8 @@
     "grow-grapes-bed-m14"
    ],
    "defaultRecipe": null,
-   "base": "grapes"
+   "base": "grapes",
+   "grade": "silver"
   },
   "grated-beets": {
    "id": "grated-beets",
@@ -18834,7 +18852,8 @@
     "printing-press-bronze"
    ],
    "defaultRecipe": "printing-press-bronze",
-   "base": "newspaper"
+   "base": "newspaper",
+   "grade": "bronze"
   },
   "newspaper-gold": {
    "id": "newspaper-gold",
@@ -18859,7 +18878,8 @@
     "improve-newspaper-ii"
    ],
    "defaultRecipe": "printing-press-gold",
-   "base": "newspaper"
+   "base": "newspaper",
+   "grade": "gold"
   },
   "newspaper-silver": {
    "id": "newspaper-silver",
@@ -18884,7 +18904,8 @@
     "improve-newspaper-i"
    ],
    "defaultRecipe": "printing-press-silver",
-   "base": "newspaper"
+   "base": "newspaper",
+   "grade": "silver"
   },
   "newspaper-silver-or-gold": {
    "id": "newspaper-silver-or-gold",
@@ -19188,6 +19209,7 @@
    "runes": {
     "green": 2
    },
+   "grade": "bronze",
    "where": [
     [
      "buy",
@@ -19287,7 +19309,8 @@
     "grow-onion-bed-m14"
    ],
    "defaultRecipe": null,
-   "base": "onion"
+   "base": "onion",
+   "grade": "gold"
   },
   "onion-rings": {
    "id": "onion-rings",
@@ -19350,6 +19373,7 @@
    "recipes": [],
    "defaultRecipe": null,
    "key": "onion_seed:1",
+   "grade": "bronze",
    "where": [
     [
      "buy",
@@ -19420,7 +19444,8 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "base": "onion-seed"
+   "base": "onion-seed",
+   "grade": "gold"
   },
   "onion-seed-silver": {
    "id": "onion-seed-silver",
@@ -19442,7 +19467,8 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "base": "onion-seed"
+   "base": "onion-seed",
+   "grade": "silver"
   },
   "onion-silver": {
    "id": "onion-silver",
@@ -19466,7 +19492,8 @@
     "grow-onion-bed-m12"
    ],
    "defaultRecipe": null,
-   "base": "onion"
+   "base": "onion",
+   "grade": "silver"
   },
   "open-corpse-dumping-point": {
    "id": "open-corpse-dumping-point",
@@ -21449,6 +21476,7 @@
    "runes": {
     "green": 3
    },
+   "grade": "bronze",
    "where": [
     [
      "buy",
@@ -21527,7 +21555,8 @@
     "grow-pumpkin-bed-m16"
    ],
    "defaultRecipe": null,
-   "base": "pumpkin"
+   "base": "pumpkin",
+   "grade": "gold"
   },
   "pumpkin-seeds": {
    "id": "pumpkin-seeds",
@@ -21550,6 +21579,7 @@
    "recipes": [],
    "defaultRecipe": null,
    "key": "pumpkin_seed",
+   "grade": "bronze",
    "where": [
     [
      "buy",
@@ -21607,7 +21637,8 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "base": "pumpkin-seeds"
+   "base": "pumpkin-seeds",
+   "grade": "gold"
   },
   "pumpkin-seeds-silver": {
    "id": "pumpkin-seeds-silver",
@@ -21629,7 +21660,8 @@
    "unobtainable": false,
    "recipes": [],
    "defaultRecipe": null,
-   "base": "pumpkin-seeds"
+   "base": "pumpkin-seeds",
+   "grade": "silver"
   },
   "pumpkin-silver": {
    "id": "pumpkin-silver",
@@ -21653,7 +21685,8 @@
     "grow-pumpkin-bed-m14"
    ],
    "defaultRecipe": null,
-   "base": "pumpkin"
+   "base": "pumpkin",
+   "grade": "silver"
   },
   "pumpkin-soup": {
    "id": "pumpkin-soup",
@@ -25696,7 +25729,8 @@
     "story-bronze"
    ],
    "defaultRecipe": "story-bronze",
-   "base": "story"
+   "base": "story",
+   "grade": "bronze"
   },
   "story-gold": {
    "id": "story-gold",
@@ -25721,7 +25755,8 @@
     "improve-story-ii"
    ],
    "defaultRecipe": "story-gold",
-   "base": "story"
+   "base": "story",
+   "grade": "gold"
   },
   "story-silver": {
    "id": "story-silver",
@@ -25746,7 +25781,8 @@
     "improve-story-i"
    ],
    "defaultRecipe": "story-silver",
-   "base": "story"
+   "base": "story",
+   "grade": "silver"
   },
   "study-table": {
    "id": "study-table",
@@ -28481,7 +28517,8 @@
     "vegetable-salad-bronze"
    ],
    "defaultRecipe": "vegetable-salad-bronze",
-   "base": "vegetable-salad"
+   "base": "vegetable-salad",
+   "grade": "bronze"
   },
   "vegetable-salad-gold": {
    "id": "vegetable-salad-gold",
@@ -28506,7 +28543,8 @@
     "food-enhancement-ii-from-vegetable-salad-silver"
    ],
    "defaultRecipe": "vegetable-salad-gold",
-   "base": "vegetable-salad"
+   "base": "vegetable-salad",
+   "grade": "gold"
   },
   "vegetable-salad-silver": {
    "id": "vegetable-salad-silver",
@@ -28531,7 +28569,8 @@
     "food-enhancement-i-from-vegetable-salad-bronze"
    ],
    "defaultRecipe": "vegetable-salad-silver",
-   "base": "vegetable-salad"
+   "base": "vegetable-salad",
+   "grade": "silver"
   },
   "vegetable-soup": {
    "id": "vegetable-soup",
@@ -29202,6 +29241,7 @@
    ],
    "defaultRecipe": "wine-from-grape-juice-bronze",
    "key": "grape_wine",
+   "grade": "bronze",
    "where": [
     [
      "buy",
@@ -29292,7 +29332,8 @@
     "drink-enhancement-ii-from-wine-silver"
    ],
    "defaultRecipe": "wine-from-grape-juice-gold",
-   "base": "wine"
+   "base": "wine",
+   "grade": "gold"
   },
   "wine-silver": {
    "id": "wine-silver",
@@ -29317,7 +29358,8 @@
     "drink-enhancement-i-from-wine-bronze"
    ],
    "defaultRecipe": "wine-from-grape-juice-silver",
-   "base": "wine"
+   "base": "wine",
+   "grade": "silver"
   },
   "wood-wedge": {
    "id": "wood-wedge",
@@ -31354,6 +31396,13 @@
     "note": {
      "pt": "3 (4 com Engenheiro)",
      "en": "3 (4 with Engineer)"
+    },
+    "bonus": {
+     "perk": "Engineer",
+     "perks": [
+      "engineer"
+     ],
+     "qty": 4
     }
    },
    "station": "iron-anvil",
@@ -32002,6 +32051,13 @@
     "note": {
      "pt": "2 (3 com Vidraceiro)",
      "en": "2 (3 with Glassworker)"
+    },
+    "bonus": {
+     "perk": "Glassworker",
+     "perks": [
+      "glassworker"
+     ],
+     "qty": 3
     }
    },
    "station": "furnace-i",
@@ -33167,13 +33223,21 @@
     "note": {
      "pt": "4 (7 com Destilação em Cubo)",
      "en": "4 (7 with Cube distillations)"
+    },
+    "bonus": {
+     "perk": "Cube distillations",
+     "perks": [
+      "cube-distillations"
+     ],
+     "qty": 7
     }
    },
    "station": "distillation-cube",
    "in": [
     {
      "item": "wine",
-     "qty": 1
+     "qty": 1,
+     "anyGrade": true
     },
     {
      "item": "clay-urn",
@@ -33223,6 +33287,13 @@
     "note": {
      "pt": "1 (2 com Destilação em Cubo)",
      "en": "1 (2 with Cube distillations)"
+    },
+    "bonus": {
+     "perk": "Cube distillations",
+     "perks": [
+      "cube-distillations"
+     ],
+     "qty": 2
     }
    },
    "station": "distillation-cube",
@@ -33279,6 +33350,13 @@
     "note": {
      "pt": "2 (3 com Destilação em Cubo)",
      "en": "2 (3 with Cube distillations)"
+    },
+    "bonus": {
+     "perk": "Cube distillations",
+     "perks": [
+      "cube-distillations"
+     ],
+     "qty": 3
     }
    },
    "station": "distillation-cube",
@@ -33335,6 +33413,13 @@
     "note": {
      "pt": "1 (2 com Destilação em Cubo)",
      "en": "1 (2 with Cube distillations)"
+    },
+    "bonus": {
+     "perk": "Cube distillations",
+     "perks": [
+      "cube-distillations"
+     ],
+     "qty": 2
     }
    },
    "station": "distillation-cube",
@@ -33391,6 +33476,13 @@
     "note": {
      "pt": "2 (3 com Destilação em Cubo)",
      "en": "2 (3 with Cube distillations)"
+    },
+    "bonus": {
+     "perk": "Cube distillations",
+     "perks": [
+      "cube-distillations"
+     ],
+     "qty": 3
     }
    },
    "station": "distillation-cube",
@@ -33447,6 +33539,13 @@
     "note": {
      "pt": "1 (2 com Destilação em Cubo)",
      "en": "1 (2 with Cube distillations)"
+    },
+    "bonus": {
+     "perk": "Cube distillations",
+     "perks": [
+      "cube-distillations"
+     ],
+     "qty": 2
     }
    },
    "station": "distillation-cube",
@@ -33640,6 +33739,13 @@
     "note": {
      "pt": "5 (10 com Cremador)",
      "en": "5 (10 with Cremator)"
+    },
+    "bonus": {
+     "perk": "Cremator",
+     "perks": [
+      "cremator"
+     ],
+     "qty": 10
     }
    },
    "station": "crematorium-i",
@@ -33673,6 +33779,13 @@
      "note": {
       "pt": "1, ou 2 com Cremador",
       "en": "1, or 2 with Cremator"
+     },
+     "bonus": {
+      "perk": "Cremator",
+      "perks": [
+       "cremator"
+      ],
+      "qty": 2
      }
     }
    ],
@@ -33701,6 +33814,13 @@
     "note": {
      "pt": "7 (14 com Cremador)",
      "en": "7 (14 with Cremator)"
+    },
+    "bonus": {
+     "perk": "Cremator",
+     "perks": [
+      "cremator"
+     ],
+     "qty": 14
     }
    },
    "station": "crematorium-ii",
@@ -33729,6 +33849,13 @@
      "note": {
       "pt": "4 com Cremador",
       "en": "4 with Cremator"
+     },
+     "bonus": {
+      "perk": "Cremator",
+      "perks": [
+       "cremator"
+      ],
+      "qty": 4
      }
     }
    ],
@@ -33757,6 +33884,13 @@
     "note": {
      "pt": "5 (7 com Cozinheiro)",
      "en": "5 (7 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 7
     }
    },
    "station": "kitchen-oven",
@@ -33771,6 +33905,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -33811,6 +33952,13 @@
     "note": {
      "pt": "3 (5 com Cozinheiro II)",
      "en": "3 (5 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 5
     }
    },
    "station": "kitchen-oven",
@@ -33825,6 +33973,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -33865,6 +34020,13 @@
     "note": {
      "pt": "2 (3 com Cozinheiro II)",
      "en": "2 (3 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 3
     }
    },
    "station": "kitchen-oven",
@@ -33883,6 +34045,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -33923,6 +34092,13 @@
     "note": {
      "pt": "3 (5 com Cozinheiro)",
      "en": "3 (5 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 5
     }
    },
    "station": "kitchen-oven",
@@ -33937,6 +34113,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -33977,13 +34160,21 @@
     "note": {
      "pt": "2 (3 com Cozinheiro II)",
      "en": "2 (3 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 3
     }
    },
    "station": "kitchen-oven",
    "in": [
     {
      "item": "pumpkin",
-     "qty": 2
+     "qty": 2,
+     "grade": "bronze"
     },
     {
      "item": "fuel",
@@ -33991,6 +34182,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -34025,7 +34223,8 @@
    "name": {
     "pt": "Abóbora assada a partir de Abóbora (bronze)",
     "en": "Baked pumpkin from Pumpkin (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "baked-pumpkin-from-pumpkin-gold",
@@ -34035,6 +34234,13 @@
     "note": {
      "pt": "7 (10 com Cozinheiro II)",
      "en": "7 (10 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 10
     }
    },
    "station": "kitchen-oven",
@@ -34049,6 +34255,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -34083,7 +34296,8 @@
    "name": {
     "pt": "Abóbora assada a partir de Abóbora (ouro)",
     "en": "Baked pumpkin from Pumpkin (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "baked-pumpkin-from-pumpkin-silver",
@@ -34093,6 +34307,13 @@
     "note": {
      "pt": "4 (6 com Cozinheiro II)",
      "en": "4 (6 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 6
     }
    },
    "station": "kitchen-oven",
@@ -34107,6 +34328,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -34141,7 +34369,8 @@
    "name": {
     "pt": "Abóbora assada a partir de Abóbora (prata)",
     "en": "Baked pumpkin from Pumpkin (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "baked-salmon",
@@ -34151,6 +34380,13 @@
     "note": {
      "pt": "3 (5 com Cozinheiro II)",
      "en": "3 (5 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 5
     }
    },
    "station": "kitchen-oven",
@@ -34169,6 +34405,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -34410,6 +34653,13 @@
     "note": {
      "pt": "5 (8 com Cervejeiro)",
      "en": "5 (8 with Brewer)"
+    },
+    "bonus": {
+     "perk": "Brewer",
+     "perks": [
+      "brewer"
+     ],
+     "qty": 8
     }
    },
    "station": "brewing-stand",
@@ -34462,6 +34712,13 @@
     "note": {
      "pt": "2 (3 com Cozinheiro)",
      "en": "2 (3 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 3
     }
    },
    "station": "kitchen-table",
@@ -34592,6 +34849,13 @@
     "note": {
      "pt": "4 (6 com Cozinheiro)",
      "en": "4 (6 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 6
     }
    },
    "station": "kitchen-oven",
@@ -34610,6 +34874,13 @@
      "note": {
       "pt": "10 com Economizador de Calor",
       "en": "10 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 10
      }
     }
    ],
@@ -34650,6 +34921,13 @@
     "note": {
      "pt": "3 (5 com Cozinheiro)",
      "en": "3 (5 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 5
     }
    },
    "station": "kitchen-table",
@@ -34968,6 +35246,13 @@
     "note": {
      "pt": "4 (6 com Carpinteiro)",
      "en": "4 (6 with Carpenter)"
+    },
+    "bonus": {
+     "perk": "Carpenter",
+     "perks": [
+      "carpenter"
+     ],
+     "qty": 6
     }
    },
    "station": "circular-saw",
@@ -35055,6 +35340,13 @@
     "note": {
      "pt": "2 (4 com Cozinheiro)",
      "en": "2 (4 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 4
     }
    },
    "station": "kitchen-table",
@@ -35113,6 +35405,13 @@
     "note": {
      "pt": "2 (4 com Cozinheiro)",
      "en": "2 (4 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 4
     }
    },
    "station": "kitchen-table",
@@ -35165,7 +35464,8 @@
    "name": {
     "pt": "Pote de chucrute",
     "en": "Bowl of sauerkraut"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "bowl-of-sauerkraut-gold",
@@ -35175,6 +35475,13 @@
     "note": {
      "pt": "2 (4 com Cozinheiro)",
      "en": "2 (4 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 4
     }
    },
    "station": "kitchen-table",
@@ -35227,7 +35534,8 @@
    "name": {
     "pt": "Pote de chucrute",
     "en": "Bowl of sauerkraut"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "bowl-of-sauerkraut-silver",
@@ -35237,6 +35545,13 @@
     "note": {
      "pt": "2 (4 com Cozinheiro)",
      "en": "2 (4 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 4
     }
    },
    "station": "kitchen-table",
@@ -35289,7 +35604,8 @@
    "name": {
     "pt": "Pote de chucrute",
     "en": "Bowl of sauerkraut"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "bread",
@@ -35299,6 +35615,13 @@
     "note": {
      "pt": "4 (6 com Cozinheiro)",
      "en": "4 (6 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 6
     }
    },
    "station": "kitchen-oven",
@@ -35313,6 +35636,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -35642,6 +35972,13 @@
     "note": {
      "pt": "6 (9 com Engenheiro)",
      "en": "6 (9 with Engineer)"
+    },
+    "bonus": {
+     "perk": "Engineer",
+     "perks": [
+      "engineer"
+     ],
+     "qty": 9
     }
    },
    "station": "wooden-anvil",
@@ -35692,6 +36029,13 @@
     "note": {
      "pt": "3 (4 com Mestre das engrenagens)",
      "en": "3 (4 with Gear Master)"
+    },
+    "bonus": {
+     "perk": "Gear Master",
+     "perks": [
+      "gear-master"
+     ],
+     "qty": 4
     }
    },
    "station": "iron-anvil",
@@ -35792,6 +36136,13 @@
     "note": {
      "pt": "2 (3 com Foguista)",
      "en": "2 (3 with Fireman)"
+    },
+    "bonus": {
+     "perk": "Fireman",
+     "perks": [
+      "fireman"
+     ],
+     "qty": 3
     }
    },
    "station": "furnace-i",
@@ -35846,6 +36197,13 @@
     "note": {
      "pt": "4 (5 com Foguista)",
      "en": "4 (5 with Fireman)"
+    },
+    "bonus": {
+     "perk": "Fireman",
+     "perks": [
+      "fireman"
+     ],
+     "qty": 5
     }
    },
    "station": "furnace-i",
@@ -35904,6 +36262,13 @@
     "note": {
      "pt": "12 (16 com Ferreiro)",
      "en": "12 (16 with Blacksmith)"
+    },
+    "bonus": {
+     "perk": "Blacksmith",
+     "perks": [
+      "blacksmith"
+     ],
+     "qty": 16
     }
    },
    "station": "wooden-anvil",
@@ -35955,6 +36320,13 @@
     "note": {
      "pt": "6 (8 com Ferreiro)",
      "en": "6 (8 with Blacksmith)"
+    },
+    "bonus": {
+     "perk": "Blacksmith",
+     "perks": [
+      "blacksmith"
+     ],
+     "qty": 8
     }
    },
    "station": "wooden-anvil",
@@ -45743,6 +46115,13 @@
     "note": {
      "pt": "4 (6 com Cozinheiro)",
      "en": "4 (6 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 6
     }
    },
    "station": "kitchen-table",
@@ -45841,13 +46220,21 @@
     "note": {
      "pt": "4 (6 com Cozinheiro II)",
      "en": "4 (6 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 6
     }
    },
    "station": "kitchen-oven",
    "in": [
     {
      "item": "cabbage",
-     "qty": 2
+     "qty": 2,
+     "grade": "bronze"
     },
     {
      "item": "water",
@@ -45859,6 +46246,13 @@
      "note": {
       "pt": "10 com Economizador de Calor",
       "en": "10 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 10
      }
     }
    ],
@@ -45893,7 +46287,8 @@
    "name": {
     "pt": "Sopa de repolho a partir de Repolho (bronze)",
     "en": "Cabbage soup from Cabbage (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "cabbage-soup-from-cabbage-gold",
@@ -45903,6 +46298,13 @@
     "note": {
      "pt": "10 (14 com Cozinheiro II)",
      "en": "10 (14 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 14
     }
    },
    "station": "kitchen-oven",
@@ -45921,6 +46323,13 @@
      "note": {
       "pt": "10 com Economizador de Calor",
       "en": "10 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 10
      }
     }
    ],
@@ -45955,7 +46364,8 @@
    "name": {
     "pt": "Sopa de repolho a partir de Repolho (ouro)",
     "en": "Cabbage soup from Cabbage (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "cabbage-soup-from-cabbage-silver",
@@ -45965,6 +46375,13 @@
     "note": {
      "pt": "7 (10 com Cozinheiro II)",
      "en": "7 (10 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 10
     }
    },
    "station": "kitchen-oven",
@@ -45983,6 +46400,13 @@
      "note": {
       "pt": "10 com Economizador de Calor",
       "en": "10 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 10
      }
     }
    ],
@@ -46017,7 +46441,8 @@
    "name": {
     "pt": "Sopa de repolho a partir de Repolho (prata)",
     "en": "Cabbage soup from Cabbage (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "carpet",
@@ -46062,6 +46487,13 @@
     "note": {
      "pt": "3 (5 com Cozinheiro II)",
      "en": "3 (5 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 5
     }
    },
    "station": "kitchen-oven",
@@ -46076,6 +46508,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -46116,6 +46555,13 @@
     "note": {
      "pt": "5 (7 com Cozinheiro II)",
      "en": "5 (7 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 7
     }
    },
    "station": "kitchen-oven",
@@ -46134,6 +46580,13 @@
      "note": {
       "pt": "10 com Economizador de Calor",
       "en": "10 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 10
      }
     }
    ],
@@ -46667,6 +47120,13 @@
     "note": {
      "pt": "20 (30 com Criador de Papel)",
      "en": "20 (30 with Paper maker)"
+    },
+    "bonus": {
+     "perk": "Paper maker",
+     "perks": [
+      "paper-maker"
+     ],
+     "qty": 30
     }
    },
    "station": "paper-press",
@@ -46715,6 +47175,13 @@
     "note": {
      "pt": "6 (10 com Criador de Papel)",
      "en": "6 (10 with Paper maker)"
+    },
+    "bonus": {
+     "perk": "Paper maker",
+     "perks": [
+      "paper-maker"
+     ],
+     "qty": 10
     }
    },
    "station": "writing-desk",
@@ -47013,6 +47480,13 @@
     "note": {
      "pt": "4 (6 com Cozinheiro II)",
      "en": "4 (6 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 6
     }
    },
    "station": "kitchen-oven",
@@ -47031,6 +47505,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -47071,6 +47552,13 @@
     "note": {
      "pt": "1 (2 com Químico da Compostagem)",
      "en": "1 (2 with Compost Chemist)"
+    },
+    "bonus": {
+     "perk": "Compost Chemist",
+     "perks": [
+      "compost-chemist"
+     ],
+     "qty": 2
     }
    },
    "station": "formulation-bench",
@@ -47262,7 +47750,8 @@
    "name": {
     "pt": "Aprimoramento de Bebidas I a partir de Suco de Uva (bronze)",
     "en": "Drink enhancement I from Grape Juice (bronze)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "drink-enhancement-i-from-wine-bronze",
@@ -47274,7 +47763,8 @@
    "in": [
     {
      "item": "wine",
-     "qty": 1
+     "qty": 1,
+     "grade": "bronze"
     },
     {
      "item": "spices",
@@ -47312,7 +47802,8 @@
    "name": {
     "pt": "Aprimoramento de Bebidas I a partir de Vinho (bronze)",
     "en": "Drink enhancement I from Wine (bronze)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "drink-enhancement-ii-from-grape-juice-silver",
@@ -47362,7 +47853,8 @@
    "name": {
     "pt": "Aprimoramento de Bebidas II a partir de Suco de Uva (prata)",
     "en": "Drink enhancement II from Grape Juice (silver)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "drink-enhancement-ii-from-wine-silver",
@@ -47412,7 +47904,8 @@
    "name": {
     "pt": "Aprimoramento de Bebidas II a partir de Vinho (prata)",
     "en": "Drink enhancement II from Wine (silver)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "dynamite",
@@ -47475,6 +47968,13 @@
     "note": {
      "pt": "1 (2 com Cozinheiro II)",
      "en": "1 (2 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 2
     }
    },
    "station": "kitchen-oven",
@@ -47493,6 +47993,13 @@
      "note": {
       "pt": "10 com Economizador de Calor",
       "en": "10 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 10
      }
     }
    ],
@@ -47581,6 +48088,13 @@
     "note": {
      "pt": "2 (3 com Vidraceiro)",
      "en": "2 (3 with Glassworker)"
+    },
+    "bonus": {
+     "perk": "Glassworker",
+     "perks": [
+      "glassworker"
+     ],
+     "qty": 3
     }
    },
    "station": "furnace-i",
@@ -47631,6 +48145,13 @@
     "note": {
      "pt": "2 (3 com Mestre das engrenagens)",
      "en": "2 (3 with Gear Master)"
+    },
+    "bonus": {
+     "perk": "Gear Master",
+     "perks": [
+      "gear-master"
+     ],
+     "qty": 3
     }
    },
    "station": "furnace-ii",
@@ -47725,6 +48246,13 @@
     "note": {
      "pt": "1 (2 com Alfaiate)",
      "en": "1 (2 with Tailor)"
+    },
+    "bonus": {
+     "perk": "Tailor",
+     "perks": [
+      "tailor"
+     ],
+     "qty": 2
     }
    },
    "station": "assembly-bench-i",
@@ -47779,6 +48307,13 @@
     "note": {
      "pt": "1 (2 com Alfaiate)",
      "en": "1 (2 with Tailor)"
+    },
+    "bonus": {
+     "perk": "Tailor",
+     "perks": [
+      "tailor"
+     ],
+     "qty": 2
     }
    },
    "station": "weaving-loom",
@@ -47940,6 +48475,13 @@
     "note": {
      "pt": "1 (2 com Químico da Compostagem)",
      "en": "1 (2 with Compost Chemist)"
+    },
+    "bonus": {
+     "perk": "Compost Chemist",
+     "perks": [
+      "compost-chemist"
+     ],
+     "qty": 2
     }
    },
    "station": "formulation-bench",
@@ -47997,6 +48539,13 @@
     "note": {
      "pt": "1 (2 com Químico da Compostagem)",
      "en": "1 (2 with Compost Chemist)"
+    },
+    "bonus": {
+     "perk": "Compost Chemist",
+     "perks": [
+      "compost-chemist"
+     ],
+     "qty": 2
     }
    },
    "station": "formulation-bench",
@@ -48054,6 +48603,13 @@
     "note": {
      "pt": "1 (2 com Químico da Compostagem)",
      "en": "1 (2 with Compost Chemist)"
+    },
+    "bonus": {
+     "perk": "Compost Chemist",
+     "perks": [
+      "compost-chemist"
+     ],
+     "qty": 2
     }
    },
    "station": "formulation-bench",
@@ -48155,6 +48711,13 @@
     "note": {
      "pt": "10 (15 com Lenhador)",
      "en": "10 (15 with Axeman)"
+    },
+    "bonus": {
+     "perk": "Axeman",
+     "perks": [
+      "axeman"
+     ],
+     "qty": 15
     }
    },
    "station": "chopping-spot",
@@ -48203,6 +48766,13 @@
     "note": {
      "pt": "10 (15 com Lenhador)",
      "en": "10 (15 with Axeman)"
+    },
+    "bonus": {
+     "perk": "Axeman",
+     "perks": [
+      "axeman"
+     ],
+     "qty": 15
     }
    },
    "station": "chopping-spot",
@@ -48251,6 +48821,13 @@
     "note": {
      "pt": "3 (5 com Cozinheiro II)",
      "en": "3 (5 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 5
     }
    },
    "station": "kitchen-oven",
@@ -48269,6 +48846,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -48309,6 +48893,13 @@
     "note": {
      "pt": "5 (7 com Cozinheiro II)",
      "en": "5 (7 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 7
     }
    },
    "station": "kitchen-oven",
@@ -48327,6 +48918,13 @@
      "note": {
       "pt": "10 com Economizador de Calor",
       "en": "10 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 10
      }
     }
    ],
@@ -48367,6 +48965,13 @@
     "note": {
      "pt": "1 (2 com Cozinheiro II)",
      "en": "1 (2 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 2
     }
    },
    "station": "kitchen-oven",
@@ -48385,6 +48990,13 @@
      "note": {
       "pt": "10 com Economizador de Calor",
       "en": "10 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 10
      }
     }
    ],
@@ -48425,6 +49037,13 @@
     "note": {
      "pt": "4 (6 com Alfaiate)",
      "en": "4 (6 with Tailor)"
+    },
+    "bonus": {
+     "perk": "Tailor",
+     "perks": [
+      "tailor"
+     ],
+     "qty": 6
     }
    },
    "station": "spinning-wheel",
@@ -48469,6 +49088,13 @@
     "note": {
      "pt": "5 (8 com Moleiro)",
      "en": "5 (8 with Miller)"
+    },
+    "bonus": {
+     "perk": "Miller",
+     "perks": [
+      "miller"
+     ],
+     "qty": 8
     }
    },
    "station": "millstone",
@@ -48553,7 +49179,8 @@
    "name": {
     "pt": "Aprimoramento de Alimentos I a partir de Pote de chucrute (bronze)",
     "en": "Food enhancement I from Bowl of sauerkraut (bronze)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "food-enhancement-i-from-vegetable-salad-bronze",
@@ -48603,7 +49230,8 @@
    "name": {
     "pt": "Aprimoramento de Alimentos I a partir de Salada (bronze)",
     "en": "Food enhancement I from Vegetable salad (bronze)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "food-enhancement-ii-from-bowl-of-sauerkraut-silver",
@@ -48653,7 +49281,8 @@
    "name": {
     "pt": "Aprimoramento de Alimentos II a partir de Pote de chucrute (prata)",
     "en": "Food enhancement II from Bowl of sauerkraut (silver)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "food-enhancement-ii-from-vegetable-salad-silver",
@@ -48703,7 +49332,8 @@
    "name": {
     "pt": "Aprimoramento de Alimentos II a partir de Salada (prata)",
     "en": "Food enhancement II from Vegetable salad (silver)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "fragrance",
@@ -48713,6 +49343,13 @@
     "note": {
      "pt": "3 (5 com Destilação em Cubo)",
      "en": "3 (5 with Cube distillations)"
+    },
+    "bonus": {
+     "perk": "Cube distillations",
+     "perks": [
+      "cube-distillations"
+     ],
+     "qty": 5
     }
    },
    "station": "distillation-cube",
@@ -48765,6 +49402,13 @@
     "note": {
      "pt": "1 (2 com Cozinheiro II)",
      "en": "1 (2 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 2
     }
    },
    "station": "kitchen-oven",
@@ -48783,6 +49427,13 @@
      "note": {
       "pt": "10 com Economizador de Calor",
       "en": "10 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 10
      }
     }
    ],
@@ -49054,6 +49705,13 @@
     "note": {
      "pt": "3 (4 com Vidraceiro)",
      "en": "3 (4 with Glassworker)"
+    },
+    "bonus": {
+     "perk": "Glassworker",
+     "perks": [
+      "glassworker"
+     ],
+     "qty": 4
     }
    },
    "station": "furnace-i",
@@ -49302,6 +49960,13 @@
     "note": {
      "pt": "2 (3 com Foguista)",
      "en": "2 (3 with Fireman)"
+    },
+    "bonus": {
+     "perk": "Fireman",
+     "perks": [
+      "fireman"
+     ],
+     "qty": 3
     }
    },
    "station": "furnace-ii",
@@ -49495,7 +50160,8 @@
    "in": [
     {
      "item": "grapes",
-     "qty": 6
+     "qty": 6,
+     "grade": "bronze"
     },
     {
      "item": "empty-bottle",
@@ -49531,7 +50197,8 @@
    "name": {
     "pt": "Suco de Uva a partir de Uvas (bronze)",
     "en": "Grape Juice from Grapes (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "grape-juice-from-grapes-gold",
@@ -49579,7 +50246,8 @@
    "name": {
     "pt": "Suco de Uva a partir de Uvas (ouro)",
     "en": "Grape Juice from Grapes (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "grape-juice-from-grapes-silver",
@@ -49627,7 +50295,8 @@
    "name": {
     "pt": "Suco de Uva a partir de Uvas (prata)",
     "en": "Grape Juice from Grapes (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "grated-beets",
@@ -49637,6 +50306,13 @@
     "note": {
      "pt": "4 (6 com Cozinheiro)",
      "en": "4 (6 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 6
     }
    },
    "station": "kitchen-table",
@@ -49893,6 +50569,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
       "en": "amount varies with the bed; +1 each with Seed Master"
+     },
+     "bonus": {
+      "perk": "Seed Master",
+      "perks": [
+       "seed-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -49946,6 +50629,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II",
       "en": "amount varies with the bed; +1 each with Farmer II"
+     },
+     "bonus": {
+      "perk": "Farmer II",
+      "perks": [
+       "farmer-ii"
+      ],
+      "add": 1
      }
     },
     {
@@ -49962,6 +50652,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
       "en": "amount varies with the bed; +1 each with Seed Master"
+     },
+     "bonus": {
+      "perk": "Seed Master",
+      "perks": [
+       "seed-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -49985,7 +50682,8 @@
     "pt": "Cultivado no Canteiro de Repolho (maestria Agricultura 10)",
     "en": "Grown in a Cabbage Bed (Farming mastery 10)",
     "tr": "guess"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "grow-cabbage-bed-m12",
@@ -50015,6 +50713,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
       "en": "amount varies with the bed; +1 each with Seed Master"
+     },
+     "bonus": {
+      "perk": "Seed Master",
+      "perks": [
+       "seed-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -50038,7 +50743,8 @@
     "pt": "Cultivado no Canteiro de Repolho (maestria Agricultura 12)",
     "en": "Grown in a Cabbage Bed (Farming mastery 12)",
     "tr": "guess"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "grow-cabbage-bed-m8",
@@ -50068,6 +50774,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II",
       "en": "amount varies with the bed; +1 each with Farmer II"
+     },
+     "bonus": {
+      "perk": "Farmer II",
+      "perks": [
+       "farmer-ii"
+      ],
+      "add": 1
      }
     },
     {
@@ -50084,6 +50797,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
       "en": "amount varies with the bed; +1 each with Seed Master"
+     },
+     "bonus": {
+      "perk": "Seed Master",
+      "perks": [
+       "seed-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -50137,6 +50857,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
       "en": "amount varies with the bed; +1 each with Seed Master"
+     },
+     "bonus": {
+      "perk": "Seed Master",
+      "perks": [
+       "seed-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -50190,6 +50917,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
       "en": "amount varies with the bed; +1 each with Seed Master"
+     },
+     "bonus": {
+      "perk": "Seed Master",
+      "perks": [
+       "seed-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -50243,6 +50977,14 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II e Senhor das Uvas",
       "en": "amount varies with the bed; +1 each with Farmer II and Grape Master"
+     },
+     "bonus": {
+      "perk": "Farmer II and Grape Master",
+      "perks": [
+       "farmer-ii",
+       "grape-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -50259,6 +51001,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
       "en": "amount varies with the bed; +1 each with Seed Master"
+     },
+     "bonus": {
+      "perk": "Seed Master",
+      "perks": [
+       "seed-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -50312,6 +51061,14 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II e Senhor das Uvas",
       "en": "amount varies with the bed; +1 each with Farmer II and Grape Master"
+     },
+     "bonus": {
+      "perk": "Farmer II and Grape Master",
+      "perks": [
+       "farmer-ii",
+       "grape-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -50328,6 +51085,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
       "en": "amount varies with the bed; +1 each with Seed Master"
+     },
+     "bonus": {
+      "perk": "Seed Master",
+      "perks": [
+       "seed-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -50351,7 +51115,8 @@
     "pt": "Cultivado no Canteiro de Uvas (maestria Agricultura 14)",
     "en": "Grown in a Grapes Bed (Farming mastery 14)",
     "tr": "guess"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "grow-grapes-bed-m16",
@@ -50381,6 +51146,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
       "en": "amount varies with the bed; +1 each with Seed Master"
+     },
+     "bonus": {
+      "perk": "Seed Master",
+      "perks": [
+       "seed-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -50404,7 +51176,8 @@
     "pt": "Cultivado no Canteiro de Uvas (maestria Agricultura 16)",
     "en": "Grown in a Grapes Bed (Farming mastery 16)",
     "tr": "guess"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "grow-hops-bed-m7",
@@ -50434,6 +51207,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
       "en": "amount varies with the bed; +1 each with Seed Master"
+     },
+     "bonus": {
+      "perk": "Seed Master",
+      "perks": [
+       "seed-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -50487,6 +51267,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II",
       "en": "amount varies with the bed; +1 each with Farmer II"
+     },
+     "bonus": {
+      "perk": "Farmer II",
+      "perks": [
+       "farmer-ii"
+      ],
+      "add": 1
      }
     },
     {
@@ -50503,6 +51290,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
       "en": "amount varies with the bed; +1 each with Seed Master"
+     },
+     "bonus": {
+      "perk": "Seed Master",
+      "perks": [
+       "seed-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -50556,6 +51350,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II",
       "en": "amount varies with the bed; +1 each with Farmer II"
+     },
+     "bonus": {
+      "perk": "Farmer II",
+      "perks": [
+       "farmer-ii"
+      ],
+      "add": 1
      }
     },
     {
@@ -50572,6 +51373,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
       "en": "amount varies with the bed; +1 each with Seed Master"
+     },
+     "bonus": {
+      "perk": "Seed Master",
+      "perks": [
+       "seed-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -50595,7 +51403,8 @@
     "pt": "Cultivado no Canteiro de Cebola (maestria Agricultura 12)",
     "en": "Grown in an Onion Bed (Farming mastery 12)",
     "tr": "guess"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "grow-onion-bed-m14",
@@ -50625,6 +51434,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
       "en": "amount varies with the bed; +1 each with Seed Master"
+     },
+     "bonus": {
+      "perk": "Seed Master",
+      "perks": [
+       "seed-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -50648,7 +51464,8 @@
     "pt": "Cultivado no Canteiro de Cebola (maestria Agricultura 14)",
     "en": "Grown in an Onion Bed (Farming mastery 14)",
     "tr": "guess"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "grow-pumpkin-bed-m12",
@@ -50678,6 +51495,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II",
       "en": "amount varies with the bed; +1 each with Farmer II"
+     },
+     "bonus": {
+      "perk": "Farmer II",
+      "perks": [
+       "farmer-ii"
+      ],
+      "add": 1
      }
     },
     {
@@ -50694,6 +51518,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
       "en": "amount varies with the bed; +1 each with Seed Master"
+     },
+     "bonus": {
+      "perk": "Seed Master",
+      "perks": [
+       "seed-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -50747,6 +51578,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Fazendeiro II",
       "en": "amount varies with the bed; +1 each with Farmer II"
+     },
+     "bonus": {
+      "perk": "Farmer II",
+      "perks": [
+       "farmer-ii"
+      ],
+      "add": 1
      }
     },
     {
@@ -50763,6 +51601,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
       "en": "amount varies with the bed; +1 each with Seed Master"
+     },
+     "bonus": {
+      "perk": "Seed Master",
+      "perks": [
+       "seed-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -50786,7 +51631,8 @@
     "pt": "Cultivado no Canteiro de abóbora (maestria Agricultura 14)",
     "en": "Grown in a Pumpkin Bed (Farming mastery 14)",
     "tr": "guess"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "grow-pumpkin-bed-m16",
@@ -50816,6 +51662,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
       "en": "amount varies with the bed; +1 each with Seed Master"
+     },
+     "bonus": {
+      "perk": "Seed Master",
+      "perks": [
+       "seed-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -50839,7 +51692,8 @@
     "pt": "Cultivado no Canteiro de abóbora (maestria Agricultura 16)",
     "en": "Grown in a Pumpkin Bed (Farming mastery 16)",
     "tr": "guess"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "grow-wheat-bed-m2",
@@ -50869,6 +51723,13 @@
      "note": {
       "pt": "a quantidade varia conforme o canteiro; +1 cada com Mestre sementeiro",
       "en": "amount varies with the bed; +1 each with Seed Master"
+     },
+     "bonus": {
+      "perk": "Seed Master",
+      "perks": [
+       "seed-master"
+      ],
+      "add": 1
      }
     },
     {
@@ -50958,6 +51819,13 @@
     "note": {
      "pt": "1 (2 com Químico da Compostagem)",
      "en": "1 (2 with Compost Chemist)"
+    },
+    "bonus": {
+     "perk": "Compost Chemist",
+     "perks": [
+      "compost-chemist"
+     ],
+     "qty": 2
     }
    },
    "station": "formulation-bench",
@@ -51015,6 +51883,13 @@
     "note": {
      "pt": "1 (2 com Químico da Compostagem)",
      "en": "1 (2 with Compost Chemist)"
+    },
+    "bonus": {
+     "perk": "Compost Chemist",
+     "perks": [
+      "compost-chemist"
+     ],
+     "qty": 2
     }
    },
    "station": "formulation-bench",
@@ -51072,6 +51947,13 @@
     "note": {
      "pt": "1 (2 com Cozinheiro II)",
      "en": "1 (2 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 2
     }
    },
    "station": "kitchen-oven",
@@ -51090,6 +51972,13 @@
      "note": {
       "pt": "10 com Economizador de Calor",
       "en": "10 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 10
      }
     }
    ],
@@ -51234,6 +52123,13 @@
     "note": {
      "pt": "20 (30 com Criador de Papel)",
      "en": "20 (30 with Paper maker)"
+    },
+    "bonus": {
+     "perk": "Paper maker",
+     "perks": [
+      "paper-maker"
+     ],
+     "qty": 30
     }
    },
    "station": "printing-press",
@@ -51276,7 +52172,8 @@
    "name": {
     "pt": "Aprimorar Jornal I",
     "en": "Improve newspaper I"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "improve-newspaper-ii",
@@ -51286,6 +52183,13 @@
     "note": {
      "pt": "20 (30 com Criador de Papel)",
      "en": "20 (30 with Paper maker)"
+    },
+    "bonus": {
+     "perk": "Paper maker",
+     "perks": [
+      "paper-maker"
+     ],
+     "qty": 30
     }
    },
    "station": "printing-press",
@@ -51328,7 +52232,8 @@
    "name": {
     "pt": "Aprimorar Jornal II",
     "en": "Improve newspaper II"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "improve-organ-i-from-any-bones",
@@ -51340,7 +52245,8 @@
    "in": [
     {
      "item": "bones",
-     "qty": 1
+     "qty": 1,
+     "anyGrade": true
     },
     {
      "item": "organ-improver",
@@ -51388,7 +52294,8 @@
    "in": [
     {
      "item": "brain",
-     "qty": 1
+     "qty": 1,
+     "anyGrade": true
     },
     {
      "item": "organ-improver",
@@ -51436,7 +52343,8 @@
    "in": [
     {
      "item": "guts",
-     "qty": 1
+     "qty": 1,
+     "anyGrade": true
     },
     {
      "item": "organ-improver",
@@ -51484,7 +52392,8 @@
    "in": [
     {
      "item": "heart",
-     "qty": 1
+     "qty": 1,
+     "anyGrade": true
     },
     {
      "item": "organ-improver",
@@ -51532,7 +52441,8 @@
    "in": [
     {
      "item": "skin",
-     "qty": 1
+     "qty": 1,
+     "anyGrade": true
     },
     {
      "item": "organ-improver",
@@ -51580,7 +52490,8 @@
    "in": [
     {
      "item": "skull",
-     "qty": 1
+     "qty": 1,
+     "anyGrade": true
     },
     {
      "item": "organ-improver",
@@ -51628,7 +52539,8 @@
    "in": [
     {
      "item": "bones",
-     "qty": 1
+     "qty": 1,
+     "anyGrade": true
     },
     {
      "item": "organ-improver",
@@ -51676,7 +52588,8 @@
    "in": [
     {
      "item": "brain",
-     "qty": 1
+     "qty": 1,
+     "anyGrade": true
     },
     {
      "item": "organ-improver",
@@ -51724,7 +52637,8 @@
    "in": [
     {
      "item": "guts",
-     "qty": 1
+     "qty": 1,
+     "anyGrade": true
     },
     {
      "item": "organ-improver",
@@ -51772,7 +52686,8 @@
    "in": [
     {
      "item": "heart",
-     "qty": 1
+     "qty": 1,
+     "anyGrade": true
     },
     {
      "item": "organ-improver",
@@ -51820,7 +52735,8 @@
    "in": [
     {
      "item": "skin",
-     "qty": 1
+     "qty": 1,
+     "anyGrade": true
     },
     {
      "item": "organ-improver",
@@ -51868,7 +52784,8 @@
    "in": [
     {
      "item": "skull",
-     "qty": 1
+     "qty": 1,
+     "anyGrade": true
     },
     {
      "item": "organ-improver",
@@ -51948,7 +52865,8 @@
    "name": {
     "pt": "Aprimorar História I",
     "en": "Improve story I"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "improve-story-ii",
@@ -51992,7 +52910,8 @@
    "name": {
     "pt": "Aprimorar História II",
     "en": "Improve story II"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "injection-for-corpses",
@@ -52364,6 +53283,13 @@
     "note": {
      "pt": "6 (9 com Engenheiro)",
      "en": "6 (9 with Engineer)"
+    },
+    "bonus": {
+     "perk": "Engineer",
+     "perks": [
+      "engineer"
+     ],
+     "qty": 9
     }
    },
    "station": "iron-anvil",
@@ -52463,6 +53389,13 @@
     "note": {
      "pt": "3 (4 com Foguista)",
      "en": "3 (4 with Fireman)"
+    },
+    "bonus": {
+     "perk": "Fireman",
+     "perks": [
+      "fireman"
+     ],
+     "qty": 4
     }
    },
    "station": "furnace-ii",
@@ -52710,6 +53643,13 @@
     "note": {
      "pt": "12 (16 com Ferreiro)",
      "en": "12 (16 with Blacksmith)"
+    },
+    "bonus": {
+     "perk": "Blacksmith",
+     "perks": [
+      "blacksmith"
+     ],
+     "qty": 16
     }
    },
    "station": "iron-anvil",
@@ -53056,6 +53996,13 @@
     "note": {
      "pt": "1 (2 com Cozinheiro II)",
      "en": "1 (2 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 2
     }
    },
    "station": "kitchen-oven",
@@ -53074,6 +54021,13 @@
      "note": {
       "pt": "10 com Economizador de Calor",
       "en": "10 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 10
      }
     }
    ],
@@ -53154,6 +54108,13 @@
     "note": {
      "pt": "4 (6 com Cozinheiro II)",
      "en": "4 (6 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 6
     }
    },
    "station": "kitchen-oven",
@@ -53172,6 +54133,13 @@
      "note": {
       "pt": "10 com Economizador de Calor",
       "en": "10 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 10
      }
     }
    ],
@@ -53212,6 +54180,13 @@
     "note": {
      "pt": "4 (6 com Criador de Papel)",
      "en": "4 (6 with Paper maker)"
+    },
+    "bonus": {
+     "perk": "Paper maker",
+     "perks": [
+      "paper-maker"
+     ],
+     "qty": 6
     }
    },
    "station": "writing-desk",
@@ -53256,6 +54231,13 @@
     "note": {
      "pt": "2 (3 com Vidraceiro)",
      "en": "2 (3 with Glassworker)"
+    },
+    "bonus": {
+     "perk": "Glassworker",
+     "perks": [
+      "glassworker"
+     ],
+     "qty": 3
     }
    },
    "station": "furnace-i",
@@ -54084,6 +55066,13 @@
     "note": {
      "pt": "5 (8 com Cervejeiro)",
      "en": "5 (8 with Brewer)"
+    },
+    "bonus": {
+     "perk": "Brewer",
+     "perks": [
+      "brewer"
+     ],
+     "qty": 8
     }
    },
    "station": "brewing-stand",
@@ -54136,6 +55125,13 @@
     "note": {
      "pt": "4 (7 com Destilação em Cubo)",
      "en": "4 (7 with Cube distillations)"
+    },
+    "bonus": {
+     "perk": "Cube distillations",
+     "perks": [
+      "cube-distillations"
+     ],
+     "qty": 7
     }
    },
    "station": "distillation-cube",
@@ -54192,6 +55188,13 @@
     "note": {
      "pt": "3 (5 com Destilação em Cubo)",
      "en": "3 (5 with Cube distillations)"
+    },
+    "bonus": {
+     "perk": "Cube distillations",
+     "perks": [
+      "cube-distillations"
+     ],
+     "qty": 5
     }
    },
    "station": "distillation-cube",
@@ -54344,6 +55347,13 @@
     "note": {
      "pt": "4 (6 com Cozinheiro II)",
      "en": "4 (6 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 6
     }
    },
    "station": "kitchen-oven",
@@ -54362,6 +55372,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -54446,6 +55463,13 @@
     "note": {
      "pt": "1 (2 com Peixaria)",
      "en": "1 (2 with Fish Filleter)"
+    },
+    "bonus": {
+     "perk": "Fish Filleter",
+     "perks": [
+      "fish-filleter"
+     ],
+     "qty": 2
     }
    },
    "station": "kitchen-table",
@@ -54496,6 +55520,13 @@
     "note": {
      "pt": "2 (4 com Peixaria)",
      "en": "2 (4 with Fish Filleter)"
+    },
+    "bonus": {
+     "perk": "Fish Filleter",
+     "perks": [
+      "fish-filleter"
+     ],
+     "qty": 4
     }
    },
    "station": "kitchen-table",
@@ -54546,6 +55577,13 @@
     "note": {
      "pt": "3 (6 com Peixaria)",
      "en": "3 (6 with Fish Filleter)"
+    },
+    "bonus": {
+     "perk": "Fish Filleter",
+     "perks": [
+      "fish-filleter"
+     ],
+     "qty": 6
     }
    },
    "station": "kitchen-table",
@@ -54686,13 +55724,21 @@
     "note": {
      "pt": "2 (3 com Cozinheiro II)",
      "en": "2 (3 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 3
     }
    },
    "station": "kitchen-oven",
    "in": [
     {
      "item": "onion",
-     "qty": 3
+     "qty": 3,
+     "grade": "bronze"
     },
     {
      "item": "seed-oil",
@@ -54704,6 +55750,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -54738,7 +55791,8 @@
    "name": {
     "pt": "Anéis de cebola a partir de Cebola (bronze)",
     "en": "Onion rings from Onion (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "onion-rings-from-onion-gold",
@@ -54748,6 +55802,13 @@
     "note": {
      "pt": "7 (10 com Cozinheiro II)",
      "en": "7 (10 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 10
     }
    },
    "station": "kitchen-oven",
@@ -54766,6 +55827,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -54800,7 +55868,8 @@
    "name": {
     "pt": "Anéis de cebola a partir de Cebola (ouro)",
     "en": "Onion rings from Onion (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "onion-rings-from-onion-silver",
@@ -54810,6 +55879,13 @@
     "note": {
      "pt": "4 (6 com Cozinheiro II)",
      "en": "4 (6 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 6
     }
    },
    "station": "kitchen-oven",
@@ -54828,6 +55904,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -54862,7 +55945,8 @@
    "name": {
     "pt": "Anéis de cebola a partir de Cebola (prata)",
     "en": "Onion rings from Onion (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "open-corpse-dumping-point",
@@ -55128,6 +56212,13 @@
     "note": {
      "pt": "2 (4 com Químico da Compostagem)",
      "en": "2 (4 with Compost Chemist)"
+    },
+    "bonus": {
+     "perk": "Compost Chemist",
+     "perks": [
+      "compost-chemist"
+     ],
+     "qty": 4
     }
    },
    "station": "compost-pile",
@@ -55176,6 +56267,13 @@
     "note": {
      "pt": "5 (10 com Químico da Compostagem)",
      "en": "5 (10 with Compost Chemist)"
+    },
+    "bonus": {
+     "perk": "Compost Chemist",
+     "perks": [
+      "compost-chemist"
+     ],
+     "qty": 10
     }
    },
    "station": "compost-pile-ii",
@@ -55418,7 +56516,8 @@
    "name": {
     "pt": "Plantar Semente de Repolho (bronze)",
     "en": "Plant Cabbage seed (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "plant-cabbage-seed-gold",
@@ -55457,7 +56556,8 @@
    "name": {
     "pt": "Plantar Semente de Repolho (ouro)",
     "en": "Plant Cabbage seed (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "plant-cabbage-seed-silver",
@@ -55496,7 +56596,8 @@
    "name": {
     "pt": "Plantar Semente de Repolho (prata)",
     "en": "Plant Cabbage seed (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "plant-carrot-seed",
@@ -55613,7 +56714,8 @@
    "name": {
     "pt": "Plantar Sementes de Uva (bronze)",
     "en": "Plant Grape Seeds (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "plant-grape-seeds-gold",
@@ -55652,7 +56754,8 @@
    "name": {
     "pt": "Plantar Sementes de Uva (ouro)",
     "en": "Plant Grape Seeds (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "plant-grape-seeds-silver",
@@ -55691,7 +56794,8 @@
    "name": {
     "pt": "Plantar Sementes de Uva (prata)",
     "en": "Plant Grape Seeds (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "plant-hop-seeds",
@@ -55769,7 +56873,8 @@
    "name": {
     "pt": "Plantar Semente de Cebola (bronze)",
     "en": "Plant Onion seed (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "plant-onion-seed-gold",
@@ -55808,7 +56913,8 @@
    "name": {
     "pt": "Plantar Semente de Cebola (ouro)",
     "en": "Plant Onion seed (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "plant-onion-seed-silver",
@@ -55847,7 +56953,8 @@
    "name": {
     "pt": "Plantar Semente de Cebola (prata)",
     "en": "Plant Onion seed (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "plant-pumpkin-seeds-bronze",
@@ -55886,7 +56993,8 @@
    "name": {
     "pt": "Plantar Sementes de Abóbora (bronze)",
     "en": "Plant Pumpkin Seeds (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "plant-pumpkin-seeds-gold",
@@ -55925,7 +57033,8 @@
    "name": {
     "pt": "Plantar Sementes de Abóbora (ouro)",
     "en": "Plant Pumpkin Seeds (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "plant-pumpkin-seeds-silver",
@@ -55964,7 +57073,8 @@
    "name": {
     "pt": "Plantar Sementes de Abóbora (prata)",
     "en": "Plant Pumpkin Seeds (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "plant-wheat-seed",
@@ -56681,6 +57791,13 @@
     "note": {
      "pt": "20 (30 com Criador de Papel)",
      "en": "20 (30 with Paper maker)"
+    },
+    "bonus": {
+     "perk": "Paper maker",
+     "perks": [
+      "paper-maker"
+     ],
+     "qty": 30
     }
    },
    "station": "printing-press",
@@ -56737,6 +57854,13 @@
     "note": {
      "pt": "20 (30 com Criador de Papel)",
      "en": "20 (30 with Paper maker)"
+    },
+    "bonus": {
+     "perk": "Paper maker",
+     "perks": [
+      "paper-maker"
+     ],
+     "qty": 30
     }
    },
    "station": "printing-press",
@@ -56783,7 +57907,8 @@
    "name": {
     "pt": "Prensa móvel",
     "en": "Printing Press"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "printing-press-gold",
@@ -56793,6 +57918,13 @@
     "note": {
      "pt": "20 (30 com Criador de Papel)",
      "en": "20 (30 with Paper maker)"
+    },
+    "bonus": {
+     "perk": "Paper maker",
+     "perks": [
+      "paper-maker"
+     ],
+     "qty": 30
     }
    },
    "station": "printing-press",
@@ -56839,7 +57971,8 @@
    "name": {
     "pt": "Prensa móvel",
     "en": "Printing Press"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "printing-press-silver",
@@ -56849,6 +57982,13 @@
     "note": {
      "pt": "20 (30 com Criador de Papel)",
      "en": "20 (30 with Paper maker)"
+    },
+    "bonus": {
+     "perk": "Paper maker",
+     "perks": [
+      "paper-maker"
+     ],
+     "qty": 30
     }
    },
    "station": "printing-press",
@@ -56895,7 +58035,8 @@
    "name": {
     "pt": "Prensa móvel",
     "en": "Printing Press"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "pro-rod",
@@ -57004,13 +58145,21 @@
     "note": {
      "pt": "2 (4 com Cozinheiro II)",
      "en": "2 (4 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 4
     }
    },
    "station": "kitchen-oven",
    "in": [
     {
      "item": "pumpkin",
-     "qty": 2
+     "qty": 2,
+     "grade": "bronze"
     },
     {
      "item": "jug-of-milk",
@@ -57022,6 +58171,13 @@
      "note": {
       "pt": "10 com Economizador de Calor",
       "en": "10 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 10
      }
     }
    ],
@@ -57056,7 +58212,8 @@
    "name": {
     "pt": "Sopa de abóbora a partir de Abóbora (bronze)",
     "en": "Pumpkin soup from Pumpkin (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "pumpkin-soup-from-pumpkin-gold",
@@ -57066,6 +58223,13 @@
     "note": {
      "pt": "4 (8 com Cozinheiro II)",
      "en": "4 (8 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 8
     }
    },
    "station": "kitchen-oven",
@@ -57084,6 +58248,13 @@
      "note": {
       "pt": "10 com Economizador de Calor",
       "en": "10 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 10
      }
     }
    ],
@@ -57118,7 +58289,8 @@
    "name": {
     "pt": "Sopa de abóbora a partir de Abóbora (ouro)",
     "en": "Pumpkin soup from Pumpkin (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "pumpkin-soup-from-pumpkin-silver",
@@ -57128,6 +58300,13 @@
     "note": {
      "pt": "3 (6 com Cozinheiro II)",
      "en": "3 (6 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 6
     }
    },
    "station": "kitchen-oven",
@@ -57146,6 +58325,13 @@
      "note": {
       "pt": "10 com Economizador de Calor",
       "en": "10 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 10
      }
     }
    ],
@@ -57180,7 +58366,8 @@
    "name": {
     "pt": "Sopa de abóbora a partir de Abóbora (prata)",
     "en": "Pumpkin soup from Pumpkin (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "red-techbook",
@@ -57551,6 +58738,13 @@
     "note": {
      "pt": "3 (6 com Peixaria)",
      "en": "3 (6 with Fish Filleter)"
+    },
+    "bonus": {
+     "perk": "Fish Filleter",
+     "perks": [
+      "fish-filleter"
+     ],
+     "qty": 6
     }
    },
    "station": "kitchen-table",
@@ -57601,6 +58795,13 @@
     "note": {
      "pt": "2 (4 com Peixaria)",
      "en": "2 (4 with Fish Filleter)"
+    },
+    "bonus": {
+     "perk": "Fish Filleter",
+     "perks": [
+      "fish-filleter"
+     ],
+     "qty": 4
     }
    },
    "station": "kitchen-table",
@@ -57651,6 +58852,13 @@
     "note": {
      "pt": "4 (8 com Peixaria)",
      "en": "4 (8 with Fish Filleter)"
+    },
+    "bonus": {
+     "perk": "Fish Filleter",
+     "perks": [
+      "fish-filleter"
+     ],
+     "qty": 8
     }
    },
    "station": "kitchen-table",
@@ -57701,6 +58909,13 @@
     "note": {
      "pt": "1 (2 com Peixaria)",
      "en": "1 (2 with Fish Filleter)"
+    },
+    "bonus": {
+     "perk": "Fish Filleter",
+     "perks": [
+      "fish-filleter"
+     ],
+     "qty": 2
     }
    },
    "station": "kitchen-table",
@@ -57820,6 +59035,13 @@
     "note": {
      "pt": "4 (6 com Cozinheiro)",
      "en": "4 (6 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 6
     }
    },
    "station": "kitchen-table",
@@ -58052,6 +59274,13 @@
     "note": {
      "pt": "1 (2 com Peixaria)",
      "en": "1 (2 with Fish Filleter)"
+    },
+    "bonus": {
+     "perk": "Fish Filleter",
+     "perks": [
+      "fish-filleter"
+     ],
+     "qty": 2
     }
    },
    "station": "kitchen-table",
@@ -58102,6 +59331,13 @@
     "note": {
      "pt": "3 (6 com Peixaria)",
      "en": "3 (6 with Fish Filleter)"
+    },
+    "bonus": {
+     "perk": "Fish Filleter",
+     "perks": [
+      "fish-filleter"
+     ],
+     "qty": 6
     }
    },
    "station": "kitchen-table",
@@ -58152,6 +59388,13 @@
     "note": {
      "pt": "2 (4 com Peixaria)",
      "en": "2 (4 with Fish Filleter)"
+    },
+    "bonus": {
+     "perk": "Fish Filleter",
+     "perks": [
+      "fish-filleter"
+     ],
+     "qty": 4
     }
    },
    "station": "kitchen-table",
@@ -58204,7 +59447,8 @@
    "in": [
     {
      "item": "cabbage-seed",
-     "qty": 4
+     "qty": 4,
+     "anyGrade": true
     }
    ],
    "tech": {
@@ -58248,7 +59492,8 @@
    "in": [
     {
      "item": "onion-seed",
-     "qty": 4
+     "qty": 4,
+     "anyGrade": true
     }
    ],
    "tech": {
@@ -58292,7 +59537,8 @@
    "in": [
     {
      "item": "pumpkin-seeds",
-     "qty": 4
+     "qty": 4,
+     "anyGrade": true
     }
    ],
    "tech": {
@@ -58510,6 +59756,13 @@
     "note": {
      "pt": "4 (6 com Carpinteiro)",
      "en": "4 (6 with Carpenter)"
+    },
+    "bonus": {
+     "perk": "Carpenter",
+     "perks": [
+      "carpenter"
+     ],
+     "qty": 6
     }
    },
    "station": "circular-saw",
@@ -58883,6 +60136,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -58921,6 +60181,13 @@
     "note": {
      "pt": "2 (4 com Cozinheiro II)",
      "en": "2 (4 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 4
     }
    },
    "station": "kitchen-oven",
@@ -58939,6 +60206,13 @@
      "note": {
       "pt": "10 com Economizador de Calor",
       "en": "10 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 10
      }
     }
    ],
@@ -59280,6 +60554,13 @@
     "note": {
      "pt": "4 (6 com Engenheiro)",
      "en": "4 (6 with Engineer)"
+    },
+    "bonus": {
+     "perk": "Engineer",
+     "perks": [
+      "engineer"
+     ],
+     "qty": 6
     }
    },
    "station": "steel-anvil",
@@ -59426,6 +60707,13 @@
     "note": {
      "pt": "8 (10 com Ferreiro)",
      "en": "8 (10 with Blacksmith)"
+    },
+    "bonus": {
+     "perk": "Blacksmith",
+     "perks": [
+      "blacksmith"
+     ],
+     "qty": 10
     }
    },
    "station": "steel-anvil",
@@ -60031,7 +61319,8 @@
    "name": {
     "pt": "História",
     "en": "Story"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "story-gold",
@@ -60087,7 +61376,8 @@
    "name": {
     "pt": "História",
     "en": "Story"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "story-silver",
@@ -60143,7 +61433,8 @@
    "name": {
     "pt": "História",
     "en": "Story"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "summon-fairy",
@@ -60429,6 +61720,13 @@
     "note": {
      "pt": "1 (2 com Alfaiate)",
      "en": "1 (2 with Tailor)"
+    },
+    "bonus": {
+     "perk": "Tailor",
+     "perks": [
+      "tailor"
+     ],
+     "qty": 2
     }
    },
    "station": "assembly-bench-ii",
@@ -60526,6 +61824,13 @@
     "note": {
      "pt": "1 (2 com Alfaiate)",
      "en": "1 (2 with Tailor)"
+    },
+    "bonus": {
+     "perk": "Tailor",
+     "perks": [
+      "tailor"
+     ],
+     "qty": 2
     }
    },
    "station": "assembly-bench-iii",
@@ -60708,6 +62013,13 @@
     "note": {
      "pt": "1 (2 com Alfaiate)",
      "en": "1 (2 with Tailor)"
+    },
+    "bonus": {
+     "perk": "Tailor",
+     "perks": [
+      "tailor"
+     ],
+     "qty": 2
     }
    },
    "station": "assembly-bench-i",
@@ -60808,6 +62120,13 @@
     "note": {
      "pt": "1 (2 com Moleiro)",
      "en": "1 (2 with Miller)"
+    },
+    "bonus": {
+     "perk": "Miller",
+     "perks": [
+      "miller"
+     ],
+     "qty": 2
     }
    },
    "station": "kitchen-i",
@@ -61201,7 +62520,8 @@
     },
     {
      "item": "cabbage",
-     "qty": 10
+     "qty": 10,
+     "grade": "bronze"
     }
    ],
    "tech": {
@@ -61238,7 +62558,8 @@
    "name": {
     "pt": "Suprimentos: Conservas I a partir de Repolho (bronze)",
     "en": "Supply: Preserves I from Cabbage (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "supply-preserves-i-from-cabbage-gold",
@@ -61291,7 +62612,8 @@
    "name": {
     "pt": "Suprimentos: Conservas I a partir de Repolho (ouro)",
     "en": "Supply: Preserves I from Cabbage (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "supply-preserves-i-from-cabbage-silver",
@@ -61344,7 +62666,8 @@
    "name": {
     "pt": "Suprimentos: Conservas I a partir de Repolho (prata)",
     "en": "Supply: Preserves I from Cabbage (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "supply-preserves-i-from-carrot",
@@ -61413,7 +62736,8 @@
     },
     {
      "item": "onion",
-     "qty": 10
+     "qty": 10,
+     "grade": "bronze"
     }
    ],
    "tech": {
@@ -61448,7 +62772,8 @@
    "name": {
     "pt": "Suprimentos: Conservas II a partir de Cebola (bronze)",
     "en": "Supply: Preserves II from Onion (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "supply-preserves-ii-from-onion-gold",
@@ -61499,7 +62824,8 @@
    "name": {
     "pt": "Suprimentos: Conservas II a partir de Cebola (ouro)",
     "en": "Supply: Preserves II from Onion (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "supply-preserves-ii-from-onion-silver",
@@ -61550,7 +62876,8 @@
    "name": {
     "pt": "Suprimentos: Conservas II a partir de Cebola (prata)",
     "en": "Supply: Preserves II from Onion (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "supply-preserves-ii-from-pumpkin-bronze",
@@ -61566,7 +62893,8 @@
     },
     {
      "item": "pumpkin",
-     "qty": 4
+     "qty": 4,
+     "grade": "bronze"
     }
    ],
    "tech": {
@@ -61601,7 +62929,8 @@
    "name": {
     "pt": "Suprimentos: Conservas II a partir de Abóbora (bronze)",
     "en": "Supply: Preserves II from Pumpkin (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "supply-preserves-ii-from-pumpkin-gold",
@@ -61652,7 +62981,8 @@
    "name": {
     "pt": "Suprimentos: Conservas II a partir de Abóbora (ouro)",
     "en": "Supply: Preserves II from Pumpkin (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "supply-preserves-ii-from-pumpkin-silver",
@@ -61703,7 +63033,8 @@
    "name": {
     "pt": "Suprimentos: Conservas II a partir de Abóbora (prata)",
     "en": "Supply: Preserves II from Pumpkin (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "supply-steel-tools",
@@ -61816,7 +63147,8 @@
     },
     {
      "item": "cabbage",
-     "qty": 10
+     "qty": 10,
+     "grade": "bronze"
     }
    ],
    "tech": {
@@ -61850,7 +63182,8 @@
    "name": {
     "pt": "Suprimentos: Vegetais a partir de Repolho (bronze)",
     "en": "Supply: Vegetables from Cabbage (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "supply-vegetables-from-cabbage-gold",
@@ -61900,7 +63233,8 @@
    "name": {
     "pt": "Suprimentos: Vegetais a partir de Repolho (ouro)",
     "en": "Supply: Vegetables from Cabbage (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "supply-vegetables-from-cabbage-silver",
@@ -61950,7 +63284,8 @@
    "name": {
     "pt": "Suprimentos: Vegetais a partir de Repolho (prata)",
     "en": "Supply: Vegetables from Cabbage (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "supply-vegetables-from-carrot",
@@ -62016,7 +63351,8 @@
     },
     {
      "item": "onion",
-     "qty": 8
+     "qty": 8,
+     "grade": "bronze"
     }
    ],
    "tech": {
@@ -62050,7 +63386,8 @@
    "name": {
     "pt": "Suprimentos: Vegetais a partir de Cebola (bronze)",
     "en": "Supply: Vegetables from Onion (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "supply-vegetables-from-onion-gold",
@@ -62100,7 +63437,8 @@
    "name": {
     "pt": "Suprimentos: Vegetais a partir de Cebola (ouro)",
     "en": "Supply: Vegetables from Onion (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "supply-vegetables-from-onion-silver",
@@ -62150,7 +63488,8 @@
    "name": {
     "pt": "Suprimentos: Vegetais a partir de Cebola (prata)",
     "en": "Supply: Vegetables from Onion (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "supply-vegetables-from-pumpkin-bronze",
@@ -62166,7 +63505,8 @@
     },
     {
      "item": "pumpkin",
-     "qty": 3
+     "qty": 3,
+     "grade": "bronze"
     }
    ],
    "tech": {
@@ -62200,7 +63540,8 @@
    "name": {
     "pt": "Suprimentos: Vegetais a partir de Abóbora (bronze)",
     "en": "Supply: Vegetables from Pumpkin (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "supply-vegetables-from-pumpkin-gold",
@@ -62250,7 +63591,8 @@
    "name": {
     "pt": "Suprimentos: Vegetais a partir de Abóbora (ouro)",
     "en": "Supply: Vegetables from Pumpkin (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "supply-vegetables-from-pumpkin-silver",
@@ -62300,7 +63642,8 @@
    "name": {
     "pt": "Suprimentos: Vegetais a partir de Abóbora (prata)",
     "en": "Supply: Vegetables from Pumpkin (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "supply-wine-from-wine-bronze",
@@ -62312,7 +63655,8 @@
    "in": [
     {
      "item": "wine",
-     "qty": 8
+     "qty": 8,
+     "grade": "bronze"
     }
    ],
    "tech": {
@@ -62346,7 +63690,8 @@
    "name": {
     "pt": "Suprimento: Vinho a partir de Vinho (bronze)",
     "en": "Supply: Wine from Wine (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "supply-wine-from-wine-gold",
@@ -62392,7 +63737,8 @@
    "name": {
     "pt": "Suprimento: Vinho a partir de Vinho (ouro)",
     "en": "Supply: Wine from Wine (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "supply-wine-from-wine-silver",
@@ -62438,7 +63784,8 @@
    "name": {
     "pt": "Suprimento: Vinho a partir de Vinho (prata)",
     "en": "Supply: Wine from Wine (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "surgeon-s-kit",
@@ -62594,13 +63941,21 @@
     "note": {
      "pt": "2 (3 com Cozinheiro II)",
      "en": "2 (3 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 3
     }
    },
    "station": "kitchen-oven",
    "in": [
     {
      "item": "onion",
-     "qty": 1
+     "qty": 1,
+     "grade": "bronze"
     },
     {
      "item": "dough",
@@ -62612,6 +63967,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -62646,7 +64008,8 @@
    "name": {
     "pt": "Torradas com cebola a partir de Cebola (bronze)",
     "en": "Toast with onions from Onion (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "toast-with-onions-from-onion-gold",
@@ -62656,6 +64019,13 @@
     "note": {
      "pt": "7 (10 com Cozinheiro II)",
      "en": "7 (10 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 10
     }
    },
    "station": "kitchen-oven",
@@ -62674,6 +64044,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -62708,7 +64085,8 @@
    "name": {
     "pt": "Torradas com cebola a partir de Cebola (ouro)",
     "en": "Toast with onions from Onion (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "toast-with-onions-from-onion-silver",
@@ -62718,6 +64096,13 @@
     "note": {
      "pt": "4 (6 com Cozinheiro II)",
      "en": "4 (6 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 6
     }
    },
    "station": "kitchen-oven",
@@ -62736,6 +64121,13 @@
      "note": {
       "pt": "5 com Economizador de Calor",
       "en": "5 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 5
      }
     }
    ],
@@ -62770,7 +64162,8 @@
    "name": {
     "pt": "Torradas com cebola a partir de Cebola (prata)",
     "en": "Toast with onions from Onion (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "tooth",
@@ -63116,6 +64509,13 @@
     "note": {
      "pt": "2 (4 com Cozinheiro)",
      "en": "2 (4 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 4
     }
    },
    "station": "kitchen-table",
@@ -63174,6 +64574,13 @@
     "note": {
      "pt": "2 (4 com Cozinheiro)",
      "en": "2 (4 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 4
     }
    },
    "station": "kitchen-table",
@@ -63226,7 +64633,8 @@
    "name": {
     "pt": "Salada",
     "en": "Vegetable salad"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "vegetable-salad-gold",
@@ -63236,6 +64644,13 @@
     "note": {
      "pt": "2 (4 com Cozinheiro)",
      "en": "2 (4 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 4
     }
    },
    "station": "kitchen-table",
@@ -63288,7 +64703,8 @@
    "name": {
     "pt": "Salada",
     "en": "Vegetable salad"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "vegetable-salad-silver",
@@ -63298,6 +64714,13 @@
     "note": {
      "pt": "2 (4 com Cozinheiro)",
      "en": "2 (4 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 4
     }
    },
    "station": "kitchen-table",
@@ -63350,7 +64773,8 @@
    "name": {
     "pt": "Salada",
     "en": "Vegetable salad"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "vegetable-soup",
@@ -63360,6 +64784,13 @@
     "note": {
      "pt": "5 (7 com Cozinheiro II)",
      "en": "5 (7 with Cook II)"
+    },
+    "bonus": {
+     "perk": "Cook II",
+     "perks": [
+      "cook-ii"
+     ],
+     "qty": 7
     }
    },
    "station": "kitchen-oven",
@@ -63378,6 +64809,13 @@
      "note": {
       "pt": "10 com Economizador de Calor",
       "en": "10 with Heat Saver"
+     },
+     "bonus": {
+      "perk": "Heat Saver",
+      "perks": [
+       "heat-saver"
+      ],
+      "qty": 10
      }
     }
    ],
@@ -63418,6 +64856,13 @@
     "note": {
      "pt": "4 (5 com Vinicultor)",
      "en": "4 (5 with Wine Master)"
+    },
+    "bonus": {
+     "perk": "Wine Master",
+     "perks": [
+      "wine-master"
+     ],
+     "qty": 5
     }
    },
    "station": "wine-barrel",
@@ -63456,7 +64901,8 @@
    "name": {
     "pt": "Vinho a partir de Suco de Uva (bronze)",
     "en": "Wine from Grape Juice (bronze)"
-   }
+   },
+   "quality": "bronze"
   },
   {
    "id": "wine-from-grape-juice-gold",
@@ -63466,6 +64912,13 @@
     "note": {
      "pt": "4 (5 com Vinicultor)",
      "en": "4 (5 with Wine Master)"
+    },
+    "bonus": {
+     "perk": "Wine Master",
+     "perks": [
+      "wine-master"
+     ],
+     "qty": 5
     }
    },
    "station": "wine-barrel",
@@ -63504,7 +64957,8 @@
    "name": {
     "pt": "Vinho a partir de Suco de Uva (ouro)",
     "en": "Wine from Grape Juice (gold)"
-   }
+   },
+   "quality": "gold"
   },
   {
    "id": "wine-from-grape-juice-silver",
@@ -63514,6 +64968,13 @@
     "note": {
      "pt": "4 (5 com Vinicultor)",
      "en": "4 (5 with Wine Master)"
+    },
+    "bonus": {
+     "perk": "Wine Master",
+     "perks": [
+      "wine-master"
+     ],
+     "qty": 5
     }
    },
    "station": "wine-barrel",
@@ -63552,7 +65013,8 @@
    "name": {
     "pt": "Vinho a partir de Suco de Uva (prata)",
     "en": "Wine from Grape Juice (silver)"
-   }
+   },
+   "quality": "silver"
   },
   {
    "id": "wood-wedge",
@@ -63562,6 +65024,13 @@
     "note": {
      "pt": "10 (15 com Lenhador)",
      "en": "10 (15 with Axeman)"
+    },
+    "bonus": {
+     "perk": "Axeman",
+     "perks": [
+      "axeman"
+     ],
+     "qty": 15
     }
    },
    "station": "chopping-spot",
@@ -63606,6 +65075,13 @@
     "note": {
      "pt": "2 (3 com Carpinteiro)",
      "en": "2 (3 with Carpenter)"
+    },
+    "bonus": {
+     "perk": "Carpenter",
+     "perks": [
+      "carpenter"
+     ],
+     "qty": 3
     }
    },
    "station": "circular-saw",
@@ -64080,6 +65556,13 @@
     "note": {
      "pt": "4 (6 com Carpinteiro)",
      "en": "4 (6 with Carpenter)"
+    },
+    "bonus": {
+     "perk": "Carpenter",
+     "perks": [
+      "carpenter"
+     ],
+     "qty": 6
     }
    },
    "station": "circular-saw",
@@ -64261,6 +65744,13 @@
     "note": {
      "pt": "3 (5 com Cozinheiro)",
      "en": "3 (5 with Cook)"
+    },
+    "bonus": {
+     "perk": "Cook",
+     "perks": [
+      "cook"
+     ],
+     "qty": 5
     }
    },
    "station": "kitchen-table",
@@ -64392,5 +65882,117 @@
    "runes": null,
    "zone": null
   }
- ]
+ ],
+ "perks": {
+  "engineer": {
+   "pt": "Engenheiro",
+   "en": "Engineer",
+   "uses": 4
+  },
+  "glassworker": {
+   "pt": "Vidraceiro",
+   "en": "Glassworker",
+   "uses": 4
+  },
+  "cube-distillations": {
+   "pt": "Destilação em Cubo",
+   "en": "Cube distillations",
+   "uses": 9
+  },
+  "cremator": {
+   "pt": "Cremador",
+   "en": "Cremator",
+   "uses": 4
+  },
+  "heat-saver": {
+   "pt": "Economizador de Calor",
+   "en": "Heat Saver",
+   "uses": 37
+  },
+  "cook": {
+   "pt": "Cozinheiro",
+   "en": "Cook",
+   "uses": 18
+  },
+  "cook-ii": {
+   "pt": "Cozinheiro II",
+   "en": "Cook II",
+   "uses": 32
+  },
+  "brewer": {
+   "pt": "Cervejeiro",
+   "en": "Brewer",
+   "uses": 2
+  },
+  "carpenter": {
+   "pt": "Carpinteiro",
+   "en": "Carpenter",
+   "uses": 4
+  },
+  "gear-master": {
+   "pt": "Mestre das engrenagens",
+   "en": "Gear Master",
+   "uses": 2
+  },
+  "fireman": {
+   "pt": "Foguista",
+   "en": "Fireman",
+   "uses": 4
+  },
+  "blacksmith": {
+   "pt": "Ferreiro",
+   "en": "Blacksmith",
+   "uses": 4
+  },
+  "paper-maker": {
+   "pt": "Criador de Papel",
+   "en": "Paper maker",
+   "uses": 9
+  },
+  "compost-chemist": {
+   "pt": "Químico da Compostagem",
+   "en": "Compost Chemist",
+   "uses": 8
+  },
+  "tailor": {
+   "pt": "Alfaiate",
+   "en": "Tailor",
+   "uses": 6
+  },
+  "axeman": {
+   "pt": "Lenhador",
+   "en": "Axeman",
+   "uses": 3
+  },
+  "miller": {
+   "pt": "Moleiro",
+   "en": "Miller",
+   "uses": 2
+  },
+  "seed-master": {
+   "pt": "Mestre sementeiro",
+   "en": "Seed Master",
+   "uses": 17
+  },
+  "farmer-ii": {
+   "pt": "Fazendeiro II",
+   "en": "Farmer II",
+   "uses": 8
+  },
+  "grape-master": {
+   "pt": "Senhor das Uvas",
+   "en": "Grape Master",
+   "uses": 2
+  },
+  "fish-filleter": {
+   "pt": "Peixaria",
+   "en": "Fish Filleter",
+   "uses": 10
+  },
+  "wine-master": {
+   "pt": "Vinicultor",
+   "en": "Wine Master",
+   "uses": 3
+  }
+ }
 }

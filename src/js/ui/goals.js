@@ -1,12 +1,11 @@
 /* GK.ui.goals: the goal list with steppers (press and hold − / + to repeat), the empty state and "Limpar metas"
-   ("Limpar lista" until 1.8.0: too close to "Apagar lista", QA #13).
-   First use (1.6.0, corte 20): one line above the example list, "Exemplo: busque o que quer fabricar e ele substitui
-   esta lista."; an empty list shows only its empty card. The first goal added replaces the example (GK.store addGoal);
-   its "Desfazer" toast now lives in ui/search.js (corte 13). The item icon opens it in Receitas (corte 6, no "i").
-   1.8.x (protos/metas-quantidade, opção 2): "− N +" on the name's line at the right, its right edge on the card's
-   12 px line (the column of the "× N ▾" of Matérias-primas and Etapas), at every width; the name wraps instead. No
-   separate ✕: at quantity 1 the "−" is a red ✕ that removes the goal (same id, so the focus stays on it). The
-   "< 480 px: stepper and ✕ on a second line" layout is gone. Removing shows "Saiu das metas: Vinho · Desfazer"
+   (not "Limpar lista": too close to "Apagar lista").
+   First use: one line above the example list, "Exemplo: busque o que quer fabricar e ele substitui esta lista."; an
+   empty list shows only its empty card. The first goal added replaces the example (GK.store addGoal); its "Desfazer"
+   toast lives in ui/search.js. The item icon opens it in Receitas.
+   "− N +" sits on the name's line at the right, its right edge on the card's 12 px line (the column of the "× N ▾" of
+   Matérias-primas and Etapas), at every width; the name wraps instead. No separate ✕: at quantity 1 the "−" is a red
+   ✕ that removes the goal (same id, so the focus stays on it). Removing shows "Saiu das metas: Vinho · Desfazer"
    (GK.ui.fmt.undoToast): the goal comes back at its place with its quantity (GK.store restoreGoal). "Limpar metas"
    keeps its two-tap confirmation instead.
    Lists (schema 5, css/lists.css): with two or more lists, "Lista: <nome> ▾" under the title opens a menu (each list
@@ -15,89 +14,6 @@
    Switching goes through GK.store.actions.switchList, so every panel re-renders from the new list.
    Owns: [data-panel="goals"]. Exposes: GK.ui.goals.{mount, render}; registered as a panel.
 */
-GK.i18n.add({
-  pt: {
-    "goals.title": "Metas",
-    "goals.clear": "Limpar metas",
-    "goals.confirm": "Confirmar limpeza",
-    "goals.example": "Exemplo: busque o que quer fabricar e ele substitui esta lista.",
-    "goals.empty.title": "Nada planejado ainda",
-    "goals.empty.body": "Busque acima, em português ou inglês, e toque no item para adicioná-lo.",
-    "goals.try": "Experimente:",
-    "goals.dec": "Diminuir quantidade de {name}",
-    "goals.inc": "Aumentar quantidade de {name}",
-    "goals.qty": "Quantidade de {name}",
-    "goals.remove": "Remover {name}",
-    "goals.removed": "Saiu das metas: {name}",
-    "lists.label": "Lista:",
-    "lists.btn": "Lista: {name}. Trocar de lista",
-    "lists.menu": "Trocar de lista",
-    "lists.default": "Minha lista",
-    "lists.goals.one": "{n} meta",
-    "lists.goals.other": "{n} metas",
-    "lists.new": "Nova lista…",
-    "lists.rename": "Renomear “{name}”",
-    "lists.delete": "Apagar “{name}”",
-    "lists.note": "Metas e marcações são de cada lista; tecnologias e Vantagens valem para todas.",
-    "lists.more": "+ Criar outra lista",
-    "lists.newName": "Nome da nova lista",
-    "lists.renameName": "Novo nome da lista",
-    "lists.newDefault": "Lista {n}",
-    "lists.newHint": "Começa vazia. Suas outras listas continuam como estão.",
-    "lists.newHintFirst": "A lista de agora fica como “{name}” (dá para renomear). A nova começa vazia, e o seletor aparece no topo das Metas.",
-    "lists.create": "Criar lista",
-    "lists.save": "Salvar nome",
-    "lists.cancel": "Cancelar",
-    "lists.deleteAsk": "Apagar a lista “{name}”?",
-    "lists.deleteHint": "As metas e marcações dela somem. Tecnologias e Vantagens continuam.",
-    "lists.deleteOk": "Apagar lista",
-    "lists.created": "Lista “{name}” criada",
-    "lists.switched": "Lista: {name}",
-    "lists.deleted": "Lista “{name}” apagada",
-    "lists.full": "Limite de {n} listas",
-  },
-  en: {
-    "goals.title": "Goals",
-    "goals.clear": "Clear goals",
-    "goals.confirm": "Confirm clear",
-    "goals.example": "Example: search for what you want to craft and it replaces this list.",
-    "goals.empty.title": "Nothing planned yet",
-    "goals.empty.body": "Search above, in English or Portuguese, and tap an item to add it.",
-    "goals.try": "Try:",
-    "goals.dec": "Decrease amount of {name}",
-    "goals.inc": "Increase amount of {name}",
-    "goals.qty": "Amount of {name}",
-    "goals.remove": "Remove {name}",
-    "goals.removed": "Removed from goals: {name}",
-    "lists.label": "List:",
-    "lists.btn": "List: {name}. Switch list",
-    "lists.menu": "Switch list",
-    "lists.default": "My list",
-    "lists.goals.one": "{n} goal",
-    "lists.goals.other": "{n} goals",
-    "lists.new": "New list…",
-    "lists.rename": "Rename “{name}”",
-    "lists.delete": "Delete “{name}”",
-    "lists.note": "Goals and checkmarks belong to each list; technologies and Perks apply to all.",
-    "lists.more": "+ Create another list",
-    "lists.newName": "Name of the new list",
-    "lists.renameName": "New name of the list",
-    "lists.newDefault": "List {n}",
-    "lists.newHint": "It starts empty. Your other lists stay as they are.",
-    "lists.newHintFirst": "The current list stays as “{name}” (you can rename it). The new one starts empty, and the list picker shows at the top of Goals.",
-    "lists.create": "Create list",
-    "lists.save": "Save name",
-    "lists.cancel": "Cancel",
-    "lists.deleteAsk": "Delete the list “{name}”?",
-    "lists.deleteHint": "Its goals and checkmarks go away. Technologies and Perks stay.",
-    "lists.deleteOk": "Delete list",
-    "lists.created": "List “{name}” created",
-    "lists.switched": "List: {name}",
-    "lists.deleted": "List “{name}” deleted",
-    "lists.full": "Limit of {n} lists",
-  },
-});
-
 GK.ui.goals = (function () {
   const { t, name } = GK.i18n, { esc, domId } = GK.util;
   const EXAMPLES = ["crate", "master-sword", "furnace-i", "wine", "lantern-i"];
@@ -216,7 +132,7 @@ GK.ui.goals = (function () {
         form = null;
         if (l && A.deleteList(l.id)) GK.ui.toast(t("lists.deleted", { name: nm }));
         else render(GK.store.get());
-        // one list left: no "Lista: …" button, the focus goes to "+ Criar outra lista" (QA #6)
+        // one list left: no "Lista: …" button, the focus goes to "+ Criar outra lista"
         const lb = document.getElementById("list-btn") || document.getElementById("list-more"); if (lb) lb.focus();
         return;
       }

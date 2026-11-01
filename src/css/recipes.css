@@ -1,5 +1,5 @@
-/* recipes.css: the Receitas screen (#recipes, ui/recipes.js): browse (search, filter chips, item rows) and item detail.
-   1.6.0: "Mostrar itens ocultos" at the end of the list (.rc-hidden-end); "Todas também em" once (.rc-alt-all). */
+/* recipes.css: the Receitas screen (#recipes, ui/recipes.js): browse (search, filter chips, item rows) and item detail,
+   "Mostrar itens ocultos" at the end of the list (.rc-hidden-end), "Todas também em" once (.rc-alt-all). */
 .screen-recipes { padding-block: var(--s4) var(--s6); }
 .rc-top { display: grid; gap: var(--s2); margin-bottom: var(--s3); }
 .rc-top .hint { margin: 0; }
@@ -86,7 +86,7 @@
 .rc-sec > .section-head, .rc-sec > .h2 { margin-bottom: var(--s3); }
 .rc-recipes { display: grid; gap: var(--s4); }
 .rc-sec > .rc-alt-all { margin-top: 0; }
-/* the recipe card's band stays a row (icon, name, "rende N"): the planner's column grid (.station-h, 1.8.0) is for
+/* the recipe card's band stays a row (icon, name, "rende N"): the planner's column grid (.station-h) is for
    the planner's stations only */
 .rc-recipe .station-h { display: flex; gap: var(--s3); }
 .rc-recipe .station-h h4 { margin: 0; flex: 1; min-width: 0; font: 800 1.0625rem/1.2 var(--f-body); overflow-wrap: anywhere; }
@@ -119,13 +119,13 @@
 .rune { display: inline-flex; align-items: center; gap: 4px; color: var(--ink-2); }
 .rune::before { content: ""; width: 10px; height: 10px; flex: none; border: 1px solid var(--bevel-lo); }
 .rune b { color: var(--ink); font-variant-numeric: tabular-nums; }
-.rune-red::before { background: #c8453a; }
-.rune-green::before { background: #5f9a3c; }
-.rune-blue::before { background: #3f78c0; }
+.rune-red::before { background: var(--rune-red); }
+.rune-green::before { background: var(--rune-green); }
+.rune-blue::before { background: var(--rune-blue); }
 .rc-act { display: flex; flex-wrap: wrap; gap: var(--s2); padding-top: var(--s1); }
 .rc-act .btn { white-space: normal; text-align: center; }
 .rc-inuse { display: inline-flex; align-items: center; min-height: 36px; font-size: .8125rem; font-weight: 800; color: var(--moss); }
-/* grouped recipes (1.8.0, protos/receitas-agrupadas; GK.calc.recipeGroups): one card per station; the grade of the
+/* grouped recipes (GK.calc.recipeGroups): one card per station; the grade of the
    ingredient is picked inside it (a radio group: a tap sets the planner's recipe) */
 .qpick { display: grid; gap: 6px; }
 .qpick-h { margin: 0; font-size: .8125rem; font-weight: 700; color: var(--ink-2); }
@@ -139,7 +139,6 @@
 .qopt-d { font-size: .75rem; color: var(--ink-2); overflow-wrap: anywhere; }
 .qopt[aria-checked="true"] { border: 2px solid var(--accent); padding: 3px; background: var(--panel-2); box-shadow: inset 0 1px 0 var(--bevel-hi); }
 .qopt:hover { border-color: var(--accent); }
-.qopt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .qpick-use { display: block; min-height: 0; margin: 0; }
 /* "E mais um destes": one row per ingredient (name opens it), its grades as small options with the amount */
 .qalt { list-style: none; margin: 0 calc(var(--s3) * -1); padding: 0; border-block: 1px solid var(--seam); }
@@ -163,7 +162,6 @@
 }
 .rc-cyc > summary::-webkit-details-marker { display: none; }
 .rc-cyc > summary:hover { background: var(--panel-2); }
-.rc-cyc > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .rc-cyc-t { font-weight: 800; font-size: 1rem; }
 .rc-cyc-d { grid-column: 1; font-size: .8125rem; color: var(--ink-2); }
 .rc-cyc > summary .rc-chev { grid-column: 2; grid-row: 1 / span 2; transition: transform .15s; }
@@ -193,19 +191,8 @@
 .rc-where-only .badge { margin-left: 0; }
 .rc-where-more { margin-top: 4px; margin-left: calc(var(--s2) * -1); color: var(--accent); }
 
-/* ---------- item detail: stack in the slot corner + the game's "Efeito de uso" tooltip (ideia 22) ---------- */
-:root {
-  /* game tooltip parchment, dimmed a little on the night theme so it does not glare */
-  --tip-bg: #c9ae7e; --tip-bg-2: #bea171; --tip-ink: #34200f; --tip-lbl: #634a2c; --tip-edge: #7a5a36; --tip-rule: #8d6f48;
-  --en: #2f86d6; --en-hi: #6cb8ff; --en-lo: #1b5a9e; --en-ink: #134680; --ins-ink: #5d2a86;
-  --hud: #262a35; --hud-edge: #4d5263; --hud-track: #12151c;
-  --stack: #f2cb4c; --stack-edge: #2a1606;
-  /* the game's energy bolt (wikily icon, 44x48 pixel art) */
-  --bolt: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAwCAYAAABqkJjhAAAA4ElEQVR42u2ZsQ3CQAxFz4iCASjpaWmQkBgAhsgQGYWOBTIEC1DRMAQlO0BLTtEZy3cWSO93iSLlKXr5chxZrA/JmFeKjXwezNKfBeDWma/23ejE4zoUnc2vX247F8DzNmj3RwmAiw7nDmoOBTgrpXcGJQDOfZmYJar2rtVZlADY2sPaBQ2cdc3XKAHwRA83nXdrzxooAbDWw7/mLHsJgK09bI21t/mmA7hBD0ty7IdrO5uHWQJgrYd353EN30/HorOb/hK6h0AJgL17iejdmTaroATAX+yHvf+WhScMcGDeI8BRYBMuXNAAAAAASUVORK5CYII=");
-}
-@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --tip-bg: #d8bf8f; --tip-bg-2: #ccb07c; } }
-:root[data-theme="light"] { --tip-bg: #d8bf8f; --tip-bg-2: #ccb07c; }
-
+/* ---------- item detail: stack in the slot corner + the game's "Efeito de uso" tooltip ----------
+   Its colours (parchment, energy, HUD bar, buff icon, stack number) are the game palette of tokens.css. */
 .rc-item-h > .slot { position: relative; }
 .stack-n {
   position: absolute; right: 2px; bottom: 0; padding: 0 1px; pointer-events: none;
@@ -221,7 +208,7 @@
   position: relative; min-width: 0; margin-top: 2px; padding: 10px var(--s3) var(--s3);
   background: linear-gradient(180deg, var(--tip-bg), var(--tip-bg-2)); color: var(--tip-ink);
   border: 2px solid var(--tip-edge); border-radius: 4px;
-  box-shadow: inset 0 0 0 1px rgba(255, 244, 220, .35), 0 2px 0 var(--shadow);
+  box-shadow: inset 0 0 0 1px var(--tip-hi), 0 2px 0 var(--shadow);
 }
 .gk-tip::before {
   content: ""; position: absolute; top: -9px; left: 20px; width: 14px; height: 14px;
@@ -242,7 +229,11 @@
 .gk-val small { font: 700 .875rem/1 var(--f-body); }
 .gk-en { color: var(--en-ink); }
 .gk-ins { color: var(--ins-ink); }
-.gk-bolt { display: inline-block; flex: none; width: 22px; height: 24px; background: var(--bolt) center / contain no-repeat; image-rendering: pixelated; }
+/* the game's energy bolt (wikily icon, 44x48 pixel art) */
+.gk-bolt {
+  display: inline-block; flex: none; width: 22px; height: 24px; image-rendering: pixelated;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAwCAYAAABqkJjhAAAA4ElEQVR42u2ZsQ3CQAxFz4iCASjpaWmQkBgAhsgQGYWOBTIEC1DRMAQlO0BLTtEZy3cWSO93iSLlKXr5chxZrA/JmFeKjXwezNKfBeDWma/23ejE4zoUnc2vX247F8DzNmj3RwmAiw7nDmoOBTgrpXcGJQDOfZmYJar2rtVZlADY2sPaBQ2cdc3XKAHwRA83nXdrzxooAbDWw7/mLHsJgK09bI21t/mmA7hBD0ty7IdrO5uHWQJgrYd353EN30/HorOb/hK6h0AJgL17iejdmTaroATAX+yHvf+WhScMcGDeI8BRYBMuXNAAAAAASUVORK5CYII=") center / contain no-repeat;
+}
 
 /* HUD-style energy bar: bolt in a square frame + blue capsule, scaled to the 100-point bar */
 .gk-bar { display: flex; align-items: center; gap: 4px; margin-top: 10px; }
@@ -263,7 +254,7 @@
 .gk-buff { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 2px var(--s3); align-items: start; }
 .gk-buff-ico {
   width: 40px; height: 40px; margin-top: 2px; border-radius: 50%; position: relative;
-  background: radial-gradient(circle at 50% 38%, #f3d77a 0 30%, #c98f2c 31% 62%, #6e4514 63%);
+  background: radial-gradient(circle at 50% 38%, var(--buff-hi) 0 30%, var(--buff) 31% 62%, var(--buff-lo) 63%);
   box-shadow: inset 0 0 0 2px var(--tip-edge), 0 1px 0 var(--shadow);
 }
 .gk-buff-ico::after { /* up arrow: a buff */
@@ -275,7 +266,7 @@
 .gk-buff-t { margin-top: 3px !important; font-size: .875rem; line-height: 1.35; color: var(--tip-lbl); }
 .gk-buff-t b { color: var(--tip-ink); }
 
-/* ---------- item detail, "ficha completa" (protos/ficha-item.html): "Quem compra", "Estudar", "Pedido em" ---------- */
+/* ---------- item detail, "ficha completa": "Quem compra", "Estudar", "Pedido em" ---------- */
 /* block title + the price "i" (a <details>: 44 px target, the note drops below the title row) */
 .rc-k-row { position: relative; display: flex; align-items: center; gap: 4px; margin-bottom: 6px; }
 .rc-k-row .rc-k { margin: 0; }
@@ -303,7 +294,7 @@
 .sell-pay { display: inline-flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 0 4px; font-weight: 800; color: var(--ink); text-align: right; }
 .sell-max { font-weight: 700; font-size: .8125rem; color: var(--ink-3); white-space: nowrap; }
 .sell-d { grid-column: 1 / -1; font-size: .8125rem; color: var(--ink-3); }
-/* coins (1.8.0): our own 8 x 8 pixel coins drawn at 16 px (14 px after "até"), bronze / silver / gold far apart in
+/* coins: our own 8 x 8 pixel coins drawn at 16 px (14 px after "até"), bronze / silver / gold far apart in
    colour, each with a dark outline; the amount after each one has its sr-only word (GK.ui.recipes coins()) */
 .coin { display: inline-block; flex: none; width: 16px; height: 16px; vertical-align: -3px; background: no-repeat center / 100% 100%; image-rendering: pixelated; }
 .coin-b { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Cpath fill='%232a1206' d='M2 0h4v1h-4zM1 1h1v1h-1zM6 1h1v1h-1zM0 2h1v1h-1zM7 2h1v1h-1zM0 3h1v1h-1zM7 3h1v1h-1zM0 4h1v1h-1zM7 4h1v1h-1zM0 5h1v1h-1zM7 5h1v1h-1zM1 6h1v1h-1zM6 6h1v1h-1zM2 7h4v1h-4z'/%3E%3Cpath fill='%23f0a466' d='M2 1h2v1h-2zM1 2h2v1h-2zM1 3h1v1h-1z'/%3E%3Cpath fill='%23b4602a' d='M4 1h2v1h-2zM3 2h3v1h-3zM2 3h4v1h-4zM1 4h5v1h-5zM1 5h4v1h-4z'/%3E%3Cpath fill='%237a3712' d='M6 2h1v1h-1zM6 3h1v1h-1zM6 4h1v1h-1zM5 5h2v1h-2zM2 6h4v1h-4z'/%3E%3C/svg%3E"); }
@@ -316,9 +307,8 @@
 .study-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px var(--s3); }
 .study-done { display: inline-flex; align-items: center; gap: 2px; min-height: var(--tap); padding-right: 4px; font-weight: 700; font-size: .9375rem; color: var(--ink-2); cursor: pointer; white-space: nowrap; }
 /* the box itself is the shared .tick (planner.css); only "Já estudei" pulls its 44 px label 10 px left, so the 24 px
-   box lines up with the card's text (1.7.0 had this on every .tick of the app: 1.8.0 keeps it here) */
+   box lines up with the card's text (only here: elsewhere the .tick keeps its place) */
 .study-done .tick { margin-left: -10px; }
-.tick input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .study-done:has(input:checked) { color: var(--moss); }
 .rc-info .study-d { margin-top: 2px; font-size: .8125rem; color: var(--ink-3); }
 
@@ -347,16 +337,14 @@
 .asked-g:first-child { border-top: 0; }
 .asked-g + li > .rc-line { border-top: 0; }
 @media (prefers-reduced-motion: reduce) { .rc-asked > summary .rc-chev { transition: none; } }
-/* 1.8.x: the name's "não oficial" / "editado" tag in the detail is the rename button (ui/recipes.js); the form is the
+/* the name's "não oficial" / "editado" tag in the detail is the rename button (ui/recipes.js); the form is the
    shared .edit-form (components.css). 44 px hit area around the small tag (::after). */
 .badge-btn { position: relative; background: transparent; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 .badge-btn::after { content: ""; position: absolute; inset: -14px -4px; }
 .badge-btn:hover, .badge-btn[aria-expanded="true"] { color: var(--accent); border-color: var(--accent); }
-.badge-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .badge-pen { margin-left: 4px; letter-spacing: 0; }
 .rc-rename { margin: 0; }
 .rc-rename-more { flex-basis: 100%; margin: 0; }
 .rc-copy-box { flex-basis: 100%; display: grid; gap: var(--s2); }
-.rc-copy-box[hidden] { display: none; }
 .rc-copy-box .hint { margin: 0; }
 .copy-fallback { width: 100%; min-height: 160px; background: var(--bg-2); color: var(--ink); border: 1px solid var(--frame); border-radius: var(--r); padding: var(--s2); font-size: .8125rem; }

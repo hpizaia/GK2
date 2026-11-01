@@ -68,14 +68,24 @@ Cada arquivo de `src/js/` é um módulo `GK.*` que começa com um comentário di
 |---|---|---|
 | Planejador (`#plan`) | `ui/search.js`, `ui/goals.js`, `ui/summary.js`, `ui/checklist.js` | Busca (combobox), metas com −/+ (segurar repete), matérias-primas e etapas por estação ("tenho N de M", grupos, escolha de receita), progresso e vantagens |
 | Tecnologias que faltam | `ui/techneeds.js` (+ `tech.js`) | Painel no Planejador (`slot: "planner-extra"`): tecnologias que faltam para o plano, soma de pontos por cor |
-| Receitas (`#recipes`) | `ui/recipes.js` | Lista com busca e filtros; detalhe do item, "Usado em", adicionar às metas, escolher receita, renomear um nome não oficial (selo) e exportar os nomes editados |
+| Receitas (`#recipes`) | `ui/recipes.js` (+ `ui/recipes-cards.js`, `ui/recipes-facts.js`) | Lista com busca e filtros; detalhe do item, "Usado em", adicionar às metas, escolher receita, renomear um nome não oficial (selo) e exportar os nomes editados. Os cartões de receita ficam em `recipes-cards.js` (`GK.ui.rcCards`); "Onde conseguir", a dica de uso, "Quem compra", "Estudar" e "Pedido em", em `recipes-facts.js` (`GK.ui.rcFacts`) |
 | Tecnologias (`#tech`) | `ui/tech.js` (+ `tech.js`) | Árvore por ramo, busca, "Já pesquisei", detalhe da tecnologia |
+| Dias (`#days`) | `ui/days.js` | A semana de 6 dias como a roda do jogo, o dia de hoje (contador do HUD e calibração), o cartão do dia, a tabela da semana e o "Bilhete do dia". Também tem as funções da semana que o painel Hoje usa |
+| Hoje | `ui/today.js` (+ `ui/days.js`) | Painel no topo do Planejador (`slot: "planner-top"`): os eventos do dia, uma linha cada, com "feito hoje" nas tarefas; "Avançar dia"; dobra numa linha |
 | Histórico (`#changelog`) | `ui/changelog.js` | Tela só de rota (sem aba), a partir de `data/changelog.json` |
-| Créditos (`#credits`) | `ui/credits.js` | Tela só de rota (sem aba), ligada no rodapé: projeto de fã, créditos ao estúdio e ao wiki, feito com IA, sem fins lucrativos |
+| Créditos (`#credits`) | `ui/credits.js` (+ `ui/qr.js`) | Tela só de rota (sem aba), ligada no rodapé: projeto de fã, créditos ao estúdio e ao wiki, feito com IA, sem fins lucrativos. Em tela larga com mouse, um cartão com o QR code do link do app (`GK.ui.qr`, gerador de QR em JS puro) |
 | Cabeçalho e rodapé | `ui/header.js`, `ui/footer.js`, `ui/toast.js` | Abas, tema, idioma; chip de sincronização, versão, créditos; avisos rápidos |
 | Tema | `theme.js` | `data-theme` claro, escuro ou automático |
 | Sincronização | `sync.js` (+ `store.js`) | Documento privado da conta, mesclagem entre aparelhos, armazenamento local por conta |
-| Base | `core.js`, `util.js`, `i18n.js`, `data.js`, `store.js`, `calc.js`, `tech.js`, `router.js`, `ui/fmt.js`, `app.js` | Namespace e registro de painéis, dicionários, carga dos dados, estado, cálculo do plano, árvore de tecnologias, rotas, marcação compartilhada, boot |
+| Textos | `i18n/pt.js`, `i18n/en.js` | Todos os textos da interface, por tela (uma seção por módulo); o `en.js` tem as mesmas chaves do `pt.js`, na mesma ordem. Vêm logo depois do `i18n.js`, antes de qualquer módulo |
+| Base | `core.js`, `util.js`, `i18n.js`, `data.js`, `store.js`, `calc.js`, `tech.js`, `router.js`, `ui/fmt.js`, `app.js` | Namespace e registro de painéis, idiomas e busca de texto, carga dos dados, estado, cálculo do plano, árvore de tecnologias, rotas, marcação compartilhada, boot |
+
+Funções comuns, para não repetir código entre as telas (a lista completa está no comentário do topo de cada arquivo, em "Exposes"):
+
+- `GK.util` (`util.js`): `esc` (escapar HTML), `domId`, `slot` (o ícone do sprite, com a estrela de qualidade), `qstar`, `setSprite`, `copyText`, `debounce`.
+- `GK.data` (`data.js`): além de `load`, `get`, `item`, `recipe`, `recipesFor`, `loc`, `norm`, `words`, `perks`, `spritePos`, as funções de qualidade `GRADE_RANK`, `itemGrade`, `lineGrade`, `family`, `gradeSort` (bronze, prata, ouro juntos e nessa ordem) e `stripGrade`.
+- `GK.calc` (`calc.js`): `plan`, `search`, `howToMake`, `recipeFor`, `expandable`, `orderStations`, `isBonusActive`, `doneCovers`, `rawChecked` / `stepChecked` (a marcação segue a quantidade) e `recipeGroups` (os cartões agrupados do "Como fabricar").
+- `GK.ui.fmt` (`ui/fmt.js`): marcação de nomes, receitas e estações (`badges`, `buildLabel`, `stationOf`, `recipeLabel`, `recipeLabels`, `recipeTag`, `techLine`, `nameBlock`, `otherName`, `graded`, `gradedName`, `UNOFFICIAL`), o ícone que abre a receita (`slotButton` + `recipeClick`), o botão de dobrar (`foldBtn`, `CONTROLS`) e o aviso com "Desfazer" (`undoToast`).
 
 Os módulos puros (`data`, `calc`, `store`, `sync`, `ui/fmt`) têm testes em `scripts/test_calc.mjs`; `tech.js` e a sintaxe de todos os módulos, em `scripts/test_build.py`.
 
@@ -92,7 +102,7 @@ A página publicada é um único HTML hospedado como Claude Artifact, compartilh
 
 ## Nomes e tradução
 
-- Toda string da interface vem de um dicionário `i18n[lang][chave]`. Nomes de item, estação, categoria e tecnologia são objetos `{pt, en}`. A busca casa nos dois idiomas, sem acento.
+- Toda string da interface vem de um dicionário `i18n[lang][chave]`, escrito em `src/js/i18n/pt.js` e `src/js/i18n/en.js` (revisar o português é ler um arquivo só). Nomes de item, estação, categoria e tecnologia são objetos `{pt, en}`. A busca casa nos dois idiomas, sem acento.
 - Os arquivos de nomes usam como chave o **texto inglês exato** do wiki. São três (`names.official`, `names.manual`, `names.machine`), lidos pela mesma busca (`scripts/name_layers.py`) no `build.py`, no `build_techs.py` e no `build_facts.py`: **correção (`fix`) > oficial > à mão > máquina**. Cada nome leva o campo `tr` com o nível que venceu, e a interface marca o que não é oficial.
 - A ponte entre o wiki e o jogo é a **`gameKey`** (chave de localização do jogo, por exemplo `nails_bronze`). Ela fica no `names.machine.pt-BR.json` (veio do mod GK2Thai) e é usada pelo `juntar_nomes.py`.
 - Para acrescentar um idioma: um dicionário novo na interface e um `--lang campo=arquivo` no build. Ver "Adding a language" em `scripts/README-build.md`. A tabela `gk2_textos_todos.json`, fora do git, já tem os 11 idiomas do jogo.

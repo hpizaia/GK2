@@ -5,7 +5,7 @@ jogador vê. Precisa de `node` e do Google Chrome do macOS (outro caminho: vari�
 
 ```sh
 python3 -I scripts/build.py --built AAAA-MM-DD      # primeiro o build: compara o dist/preview.html do disco
-python3 -I scripts/shots/compare.py                 # HEAD × árvore de trabalho (~30 s); exit 0 = tudo igual
+python3 -I scripts/shots/compare.py                 # HEAD × árvore de trabalho (~40 s); exit 0 = tudo igual
 python3 -I scripts/shots/compare.py --ref v1.8.4    # contra outra ref (commit, tag)
 python3 -I scripts/shots/compare.py --filtro receitas,busca   # só alguns casos
 python3 -I scripts/shots/compare.py --tolerancia 1  # diferença de cor de até 1/255 conta como igual (e é contada)
@@ -42,7 +42,9 @@ para baixar de novo).
 
 Plano de exemplo (primeira visita), plano curto (nas 4 telas), plano longo, Hoje aberto, qualidade (Vinho prata,
 "tenho", marcado), duas listas, Letra grande, busca (recentes, "vinho", "wine"), Receitas (lista, ficha do Vinho
-prata, ficha da Abóbora), Tecnologias (árvore e detalhe), Dias, Créditos e Histórico. Hoje = 1º de novembro de 2026,
+prata, ficha da Abóbora), Tecnologias (árvore e detalhe), Dias, Créditos e Histórico; e casos de clique (só
+desktop claro): o ícone que abre a receita no Resumo, no Hoje, nas Tecnologias e nos Dias (`ico-*`), e dobrar e
+desdobrar cada seção do Planejador e o Hoje, pelo botão e pelo título (`dobra-*`). Hoje = 1º de novembro de 2026,
 dia 61 (Ira). Cada estado é o `localStorage["gk2-companion"]` de um jogador no schema de `schemaVersion` (o `SCHEMA`
 de `src/js/store.js`); o `capture.mjs` avisa se a página estiver noutro schema e acusa ERRO se o app descartar o
 estado semeado. Para um caso novo, copie um parecido; os passos possíveis estão no comentário do topo do arquivo.

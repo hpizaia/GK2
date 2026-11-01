@@ -1,13 +1,13 @@
-/* screens.css: secondary screens (update history, credits), footer, sync chip, toast (+ the undo toast).
-   1.6.0: the older versions of the update history fold into one 44 px row each (.cl-old, .cl-toggle). */
-/* footer + toast */
+/* screens.css: secondary screens (update history, credits with its QR card), footer, sync chip, toast (+ the undo toast).
+   In the update history the older versions fold into one 44 px row each (.cl-old, .cl-toggle). */
+/* footer (ui/footer.js): [Letra grande] (+ sync chip with an account) / the three links / one quiet version line /
+   stale notice */
 .foot { padding-block: var(--s5) var(--s6); font-size: .8125rem; color: var(--ink-3); border-top: 1px solid var(--seam); }
 .foot p { margin: 0 0 4px; }
-/* "Letra grande" switch (ui/footer.js): the first line of the footer, a 44 px pressed-state button */
+.foot .foot-top { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s3); margin: 0; }
+/* "Letra grande" switch: the first line of the footer, a 44 px pressed-state button */
 .big-toggle { gap: var(--s2); font-size: .875rem; }
 .big-aa { font: 800 1.15em/1 var(--f-body); letter-spacing: 0; }
-.foot .foot-version { margin-top: var(--s3); color: var(--ink-2); }
-.foot .foot-version a { font-weight: 700; }
 .sync-chip {
   display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 2px 10px 2px 8px;
   border: 1px solid var(--seam); border-radius: var(--r); background: var(--bg-2); color: var(--ink-2);
@@ -18,6 +18,23 @@
 .sync-chip[data-state="syncing"]::before, .sync-chip[data-state="loading"]::before { background: var(--accent); }
 .sync-chip[data-state="error"] { border-color: var(--blood); color: var(--ink); }
 .sync-chip[data-state="error"]::before { background: var(--blood); }
+/* footer links: a wrapping row of 44 px tap targets; the credit link inside the text gets the same height through
+   padding that does not change the line (negative margins), nothing else is clickable around it */
+.foot-links { display: flex; flex-wrap: wrap; gap: 0 var(--s4); margin: var(--s1) 0 0 calc(var(--s2) * -1); }
+.foot-links a { display: inline-flex; align-items: center; min-height: var(--tap); padding: 0 var(--s2); font-weight: 700; font-size: .875rem; }
+.foot .foot-version { margin: 0; color: var(--ink-3); font-size: .75rem; }
+.foot .foot-stale { display: flex; align-items: center; gap: 2px; margin: var(--s1) 0 0; color: var(--ink-2); }
+/* the stale notice's "i": 44 px hit area; the
+   negative margins keep the line as tall as the text */
+.info-ico {
+  display: inline-grid; place-items: center; vertical-align: middle; width: var(--tap); height: var(--tap); margin: -12px -10px -12px -6px;
+  border: 0; background: transparent; color: var(--ink-3); cursor: pointer; border-radius: var(--r); line-height: 1; padding: 0;
+}
+.info-ico:hover, .info-ico:focus-visible { color: var(--accent); background: var(--panel-2); }
+.foot .foot-stale .info-ico { margin: -12px -10px; }
+.foot .foot-stale-note { margin: var(--s1) 0 0; max-width: 60ch; color: var(--ink-2); }
+
+/* toast */
 .toast {
   position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
   z-index: 50; width: max-content; max-width: calc(100% - 32px); padding: 10px 16px; border-radius: var(--r);
@@ -26,7 +43,6 @@
 }
 /* toast with "Desfazer" (GK.ui.fmt.undoToast): same look, sits above the plain toast when both show */
 .toast-undo { display: flex; align-items: center; gap: var(--s3); padding: 4px 4px 4px 16px; width: max-content; }
-.toast-undo[hidden] { display: none; }
 .toast-undo .toast-msg { min-width: 0; overflow-wrap: break-word; }
 .toast-undo .toast-undo-btn { flex: none; color: var(--accent); border-color: var(--gold); }
 #toast:not([hidden]) ~ .toast-undo { bottom: calc(90px + env(safe-area-inset-bottom, 0px)); }
@@ -43,19 +59,17 @@
 .cl-date { font-size: .875rem; font-weight: 700; color: var(--ink-3); }
 .cl-notes { margin: 0; padding-left: 1.25em; color: var(--ink-2); }
 .cl-notes li { margin: 2px 0; overflow-wrap: anywhere; }
-/* older versions (corte 16): "Versão 1.5.0  31 de outubro · 8 novidades  ›", a full-width button that opens the notes */
+/* older versions: "Versão 1.5.0  31 de outubro · 8 novidades  ›", a full-width button that opens the notes */
 .cl-head-old { margin: 0; font-size: 1rem; }
 .cl-toggle {
   display: flex; align-items: center; flex-wrap: wrap; gap: 2px var(--s2); width: 100%; min-height: var(--tap); padding: 4px 0;
   border: 0; background: transparent; color: var(--ink); font: inherit; text-align: left; cursor: pointer;
 }
 .cl-toggle:hover .cl-version { color: var(--accent); }
-.cl-toggle:focus-visible { outline-offset: 2px; }
 .cl-toggle .cl-version { font-weight: 800; }
 .cl-toggle .cl-chev { margin-left: auto; padding-left: var(--s2); color: var(--accent); font-size: 1.25rem; line-height: 1; transition: transform .15s; }
 .cl-toggle[aria-expanded="true"] .cl-chev { transform: rotate(90deg); }
 .cl-old .cl-notes { margin-top: var(--s2); }
-.cl-notes[hidden] { display: none; }
 @media (prefers-reduced-motion: reduce) { .cl-toggle .cl-chev { transition: none; } }
 
 /* credits (#credits, ui/credits.js): the .cl-card / .cl-back look, short sections with a seam between them */
@@ -69,3 +83,14 @@
 .cr-sec a { font-weight: 700; }
 .cr-thanks { margin: var(--s4) 0 0; padding-top: var(--s3); border-top: 1px solid var(--seam); color: var(--ink); font-weight: 700; }
 .cr-version { margin: var(--s2) 0 0; font-size: .8125rem; color: var(--ink-3); }
+/* the QR card beside the credits card, only on a wide screen with a mouse (ui/credits.js draws it then) */
+.cr-qr { display: none; }
+@media (min-width: 900px) and (pointer: fine) {
+  .cr-grid.has-qr { display: grid; grid-template-columns: minmax(0, 720px) 260px; gap: var(--s5); align-items: start; }
+  .cr-qr { display: grid; gap: var(--s2); justify-items: center; padding: var(--s4); text-align: center; position: sticky; top: calc(var(--hdr-h, 72px) + 16px); }
+}
+.cr-qr .cr-head { margin: 0; justify-self: stretch; }
+.cr-qr-box { width: 196px; padding: 12px; background: var(--qr-paper); border: 1px solid var(--frame); border-radius: var(--r); }
+.cr-qr-box svg { display: block; width: 100%; height: auto; }
+.cr-qr-say { margin: 0; color: var(--ink); font-weight: 700; font-size: .9375rem; line-height: 1.35; }
+.cr-qr-url { margin: 0; color: var(--ink-3); font-size: .75rem; overflow-wrap: anywhere; }

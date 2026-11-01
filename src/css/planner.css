@@ -1,10 +1,10 @@
-/* planner.css: the planner screen: layout, goals, progress, raw/step rows, station cards, the planner-extra slot.
-   1.6.0: a step's "×2 ▾" quantity button (.qty-btn), the "Por execução … ▾" recipe selector (.step-pick), the folded
-   perks line (.perks-sum); gone: the progress card's count line (.stats) and the example note (.example-note).
-   1.6.x spacing pass (docs/revisao-ux/shots-espacos): the controls at a row's right end on one line, 12 px (--s3)
-   inside the card (section and station toggles, "×2 ▾", "Já tenho"); section toggles 8 px above their card; a row's
-   icon and tick at the top, beside the name; 8 px between a raw row's quantity and its "Já tenho".
-   1.8.0 grade única: Matérias-primas, Etapas (rows and station header) and "Tecnologias que faltam" share one set of
+/* planner.css: the planner screen: layout, goals, progress, raw/step rows, station cards, the planner-extra slot,
+   a step's "×2 ▾" quantity button (.qty-btn), the "Por execução … ▾" recipe selector (.step-pick), the folded perks
+   line (.perks-sum).
+   Spacing: the controls at a row's right end sit on one line, 12 px (--s3) inside the card (section and station
+   toggles, "×2 ▾", "Já tenho"); section toggles 8 px above their card; a row's icon and tick at the top, beside the
+   name; 8 px between a raw row's quantity and its "Já tenho".
+   One grid: Matérias-primas, Etapas (rows and station header) and "Tecnologias que faltam" share one set of
    columns: 12 px | checkbox 24 px (station number centred on it) | 8 px | icon 40 px (station icon centred on it) |
    text | quantity / ⌄ ending on the card's 12 px line. The checkbox keeps a 44 px target (its label reaches into the
    12 px margin and the gap). Raw rows: name and "como obter" as one block centred on the icon. */
@@ -12,7 +12,7 @@
 .planner { display: grid; gap: var(--s5); padding-block: var(--s4) var(--s6); }
 .col-plan { display: grid; gap: var(--s5); min-width: 0; }
 /* an empty panel (the progress card of an empty list) takes no grid row, so no gap above the next card: the right
-   column's first card lines up with the Hoje panel on the left (QA 2026-11 #12, 1280 px with an empty list) */
+   column's first card lines up with the Hoje panel on the left (desktop, empty list) */
 .col-plan > :empty { display: none; }
 /* phones (one column): Hoje (one line) → Metas → Matérias-primas → Etapas → Tecnologias que faltam → Progresso
    and Vantagens last. The DOM keeps the desktop order (progress on top of the right column). */
@@ -27,7 +27,7 @@
 .goal-list { margin-top: var(--s3); }
 .goals-intro { margin: var(--s2) 0 0; font-size: .9375rem; line-height: 1.35; color: var(--ink-2); max-width: 60ch; }
 .goals-intro + .goal-list { margin-top: var(--s2); }
-/* one line at every width (1.8.x, protos/metas-quantidade opção 2): icon | name (wraps, 2-3 lines on a 360 px
+/* one line at every width: icon | name (wraps, 2-3 lines on a 360 px
    phone) | "− N +" centred on the name block, its right edge on the card's 12 px line, the column of the "× N ▾" of
    Matérias-primas and Etapas. The stepper's "−" is a red ✕ at quantity 1 (ui/goals.js). */
 .goal {
@@ -86,7 +86,7 @@
    icon). The 44 px icon button's -2px margin puts its frame 2 px above the name's line, its 32 px picture level with
    the letters; the tick's 24 px box shares the icon's centre line. */
 .station .row > .tick, .station .row > .slot { align-self: start; }
-/* the planner grid (1.8.0): see the header. The label is 44 px wide from the card's inner edge; its box sits at its
+/* the planner grid: see the header. The label is 44 px wide from the card's inner edge; its box sits at its
    right end, 12 px in. */
 .summary-grid .row, .tn-card .tn-row { grid-template-columns: 26px 40px minmax(0, 1fr) auto; padding-left: var(--s3); padding-right: var(--s3); }
 .tn-card .tn-row { grid-template-columns: 26px 40px minmax(0, 1fr) 16px; }
@@ -105,7 +105,7 @@
 .row-sub { display: block; font-size: .8125rem; color: var(--ink-2); line-height: 1.35; margin-top: 2px; }
 .row-in { display: block; font-size: .9375rem; line-height: 1.35; color: var(--ink-2); margin-top: 2px; } /* read while crafting */
 .row-in b { color: var(--ink); font-weight: 700; }
-/* a step with other recipes (1.6.0, corte 3): the line "Por execução: 1 Tora → 3 ▾" is the selector. The <select>
+/* a step with other recipes: the line "Por execução: 1 Tora → 3 ▾" is the selector. The <select>
    is transparent over the whole box (a tap anywhere opens the native list; it keeps its aria-label); ▾ in amber.
    fit-content + max-width 100%: never wider than the row (360 px phones) */
 .step-pick {
@@ -123,10 +123,10 @@
 .step-pick:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
 .row-qty { font-weight: 800; font-size: 1.375rem; color: var(--accent); font-variant-numeric: tabular-nums lining-nums; text-align: right; padding-left: var(--s2); white-space: nowrap; }
 .row-qty small { font-size: .875rem; color: var(--ink-3); font-weight: 700; margin-right: 1px; }
-/* a step's "×2 ▾" (1.6.0, corte 1): the quantity is the 44 px button that opens "Tenho __ de 2" (still amber, top
-   right); a goal step keeps the plain number. The field opens in the row's actions line. No negative margins (1.6.x):
+/* a step's "×2 ▾": the quantity is the 44 px button that opens "Tenho __ de 2" (still amber, top
+   right); a goal step keeps the plain number. The field opens in the row's actions line. No negative margins:
    its top sits 8 px under the station band (16 px from the station toggle), its right edge on the row's 12 px line;
-   4 px less on its left (12 px from the text, with the column gap) keep the text column as wide as before. */
+   4 px less on its left (12 px from the text, with the column gap) keep the text column wide. */
 .row-qty.qty-btn {
   justify-self: end; align-self: start; display: inline-flex; align-items: center; gap: 2px;
   min-height: var(--tap); min-width: var(--tap); margin: 0 0 0 var(--s1); padding: 0 6px 0 8px;
@@ -136,12 +136,11 @@
 }
 .qty-btn:hover, .qty-btn[aria-expanded="true"] { border-color: var(--accent); }
 .qty-btn:active { box-shadow: inset 0 2px 0 var(--bevel-lo); }
-.qty-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .qty-chev { margin-left: 2px; font-size: .75rem; color: var(--ink-3); }
 .qty-btn[aria-expanded="true"] .qty-chev { color: var(--accent); }
 .row-actions { grid-column: 3 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); margin-top: var(--s2); }
-/* raw rows (1.8.0): line 1 = name, line 2 = "como obter" on ONE line, 2 px under it; the two as one block centred
-   on the icon, with the checkbox and the "× 98 ▾" quantity (corte 9: it opens "Tenho __ de 98") centred beside it.
+/* raw rows: line 1 = name, line 2 = "como obter" on ONE line, 2 px under it; the two as one block centred
+   on the icon, with the checkbox and the "× 98 ▾" quantity (it opens "Tenho __ de 98") centred beside it.
    Choosers ("Usar:", "Fabricar com") and the "Tenho N de M" field go on a line of their own below (.row-more). */
 .row-raw { padding-block: 6px; row-gap: 2px; min-height: 0; }
 .row-raw > .tick, .row-raw > .slot { grid-row: 1 / span 2; align-self: center; }
@@ -150,7 +149,7 @@
 .row-line2 { grid-column: 3; grid-row: 2; align-self: start; display: flex; min-width: 0; }
 .row-line2 .row-sub { flex: 1 1 auto; min-width: 0; margin: 0; }
 .row-obtain { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-/* min-width 0 + max-width 100%: a recipe selector never makes the row wider than the screen (1.4.1) */
+/* min-width 0 + max-width 100%: a recipe selector never makes the row wider than the screen */
 .row-raw > .row-more { grid-column: 3 / -1; grid-row: 3; margin-top: 4px; min-width: 0; max-width: 100%; }
 .row.is-done .row-name, .row.is-done .row-qty { text-decoration: line-through; text-decoration-thickness: 2px; color: var(--ink-3); }
 .row.is-done .slot { opacity: .5; }
@@ -164,7 +163,7 @@
 .select-wrap select {
   min-height: var(--tap); max-width: 100%; min-width: 0; padding: 0 28px 0 8px; border: 1px solid var(--frame); border-radius: var(--r);
   background: var(--panel-2); color: var(--ink); font-size: .8125rem; font-weight: 700;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; /* a long option is cut with "…" (QA #10) */
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; /* a long option is cut with "…" */
 }
 .tech { font-size: .8125rem; color: var(--ink-3); }
 .raw-group-label { padding: var(--s2) var(--s4) 0; font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); border-top: 1px solid var(--seam); }
@@ -183,7 +182,7 @@
   display: inline-grid; place-items: center; flex: none; min-width: 28px; height: 28px; padding: 0 4px;
   font: 800 1rem/1 var(--f-body); color: var(--ink); background: var(--bg-2); border: 1px solid var(--gold); border-radius: var(--r);
 }
-/* the grid (1.8.0): the number centred over the rows' checkboxes (24 px box at 12 px; the number is 28 px wide), the
+/* the grid: the number centred over the rows' checkboxes (24 px box at 12 px; the number is 28 px wide), the
    station's 32 px icon centred in the icons' 40 px column */
 .station-h > .station-n { justify-self: start; margin-left: -2px; }
 .station-h > .slot { justify-self: center; }
@@ -202,7 +201,7 @@
 .row-group { color: var(--ink-2); font-style: italic; }
 .row-in i.perk-on, .row-extra i.perk-on { color: var(--moss); font-style: normal; font-weight: 700; }
 
-/* perk toggles in the progress card: folded into "Vantagens: 0 de 10 ligadas ›" (1.6.0, corte 8), a tap opens them */
+/* perk toggles in the progress card: folded into "Vantagens: 0 de 10 ligadas ›", a tap opens them */
 .perks-fold { display: grid; gap: var(--s2); }
 .perks-sum {
   display: flex; align-items: center; gap: 6px; width: 100%; min-height: var(--tap); padding: 0; border: 0; background: transparent;
@@ -213,10 +212,8 @@
 .perks-chev { margin-left: auto; padding: 0 var(--s2); color: var(--accent); font-size: 1.375rem; line-height: 1; transition: transform .15s ease; }
 .perks-sum[aria-expanded="true"] .perks-chev { transform: rotate(90deg); }
 .perks-sum:hover b, .perks-sum:hover .perks-chev { color: var(--accent); }
-.perks-sum:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .perks-chev { transition: none; } }
 .perks { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
-.perks[hidden] { display: none; }
 .perks-label { font-size: .8125rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); margin-right: 2px; }
 
 /* future planner modules mount here (GK.app.registerPanel(m, { slot: "planner-extra" })); empty = no gap */
@@ -225,8 +222,9 @@
 #planner-top:empty { display: none; }
 #planner-top { display: grid; gap: var(--s5); min-width: 0; margin-bottom: var(--s5); }
 #planner-extra { display: grid; gap: var(--s5); min-width: 0; }
-/* small labels on the slate header bands: --ink-3 / --gold measure ~4.1–4.3:1 on --slate (dark), --ink-2 passes */
-.station-h .station-sub, .tn-total .tech-d-label { color: var(--ink-2); }
+/* small labels on the slate header bands: --ink-3 / --gold measure ~4.1–4.3:1 on --slate (dark), --ink-2 passes
+   (the same on the "Tecnologias que faltam" band: tech.css) */
+.station-h .station-sub { color: var(--ink-2); }
 
 /* collapsible parts (ui/summary.js, ui/today.js; state in GK.store ui, per device): a 44 px toggle at the header's
    right with a pixel chevron (▾ open, ▸ folded); a tap on the header text toggles too */
@@ -234,7 +232,7 @@
 .fold-head .h2 { flex: 1; min-width: 0; }
 /* Matérias-primas / Etapas: the section header sits 8 px above its card */
 .summary-grid .fold-head { margin-bottom: var(--s2); }
-/* a SECTION's toggle (1.8.x, seta das seções opção A: Matérias-primas, Etapas, Tecnologias que faltam, Hoje open):
+/* a SECTION's toggle (Matérias-primas, Etapas, Tecnologias que faltam, Hoje open):
    no box, only a thin quiet chevron (9 px, 1.5 px stroke, --ink-3 ≥ 4.8:1) at the card's right edge; the invisible
    44 px target reaches 10 px into the page margin. Turned › when folded. A STATION card keeps the boxed .fold-btn
    below, so the two toggles never share a look or an x column (section chevron centre ≈ 7 px in from the card edge,
@@ -253,11 +251,6 @@
 }
 [aria-expanded="false"] > .sec-chev { transform: translateX(-2px) rotate(-45deg); }
 @media (prefers-reduced-motion: reduce) { .sec-chev { transition: none; } }
-/* "Tecnologias que faltam" folds too: its header like the sections above; folded = "Total de pontos: …" */
-.tn .fold-head { margin-bottom: var(--s2); }
-.tn #tn-body > .hint { margin-top: 0; }
-.fold-sum .tp-cost { display: inline-flex; vertical-align: middle; }
-.fold-sum .tn-sum-l { margin-right: 6px; }
 .fold-btn { flex: none; width: var(--tap); padding: 0; color: var(--ink-2); }
 .fold-btn::before {
   content: ""; width: 8px; height: 8px; border-right: 3px solid currentColor; border-bottom: 3px solid currentColor;
@@ -268,40 +261,9 @@
 @media (prefers-reduced-motion: reduce) { .fold-btn::before { transition: none; } }
 .fold-sum { margin-bottom: 0; cursor: pointer; }
 .station-h[data-fold-head] { cursor: pointer; -webkit-tap-highlight-color: transparent; }
-/* the toggle ends on the rows' 12 px line (it sat 4 px from the card edge, 5 px off the section toggle above); the
-   8 px this costs come back from the gaps after the icon and after "0/1" (12 -> 8 px), so station names wrap as before */
+/* the toggle ends on the rows' 12 px line, in line with the section toggle above; the 8 px this costs come back from
+   the gaps after the icon and after "0/1" (8 px), so station names keep their width */
 .station-h .fold-btn, .station-h > h3 { margin-left: calc(var(--s1) * -1); }
 .station-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex: none; }
 .station-done { font-size: .8125rem; font-weight: 800; color: var(--ink); white-space: nowrap; }
 .station.is-folded .station-h { border-bottom: 0; }
-
-/* "Hoje" without a day, folded: one quiet row "Marcar o dia do jogo" (ui/today.js) */
-.today-mark .today-head { min-height: 52px; padding-left: var(--s3); }
-.today-mark .today-line b { font-weight: 700; color: var(--ink); }
-/* day picker: the sin's name under each medallion (6 columns, fits 360 px) */
-.today-ask .today-picks { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; }
-.today-pick-cell { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; cursor: pointer; }
-.today-pick-name { max-width: 100%; font-size: .75rem; font-weight: 700; line-height: 1.2; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.today-pick-cell:hover .today-pick-name { color: var(--ink); }
-
-/* ---------- footer (with its stale-data line) and the credits QR card (1.4.1) ----------
-   These rules belong with screens.css but live here by file ownership while other work runs in parallel; selectors
-   are a notch more specific than the older .foot rules of screens.css, which load later. */
-/* footer: [Letra grande] (+ sync chip with an account) / the three links / one quiet version line / stale notice */
-footer.foot .foot-top { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s3); margin: 0; }
-.sync-chip[hidden] { display: none; }
-footer.foot .foot-version { margin: 0; color: var(--ink-3); font-size: .75rem; }
-footer.foot .foot-stale { display: flex; align-items: center; gap: 2px; margin: var(--s1) 0 0; color: var(--ink-2); }
-footer.foot .foot-stale .info-ico { margin: -12px -10px; }
-footer.foot .foot-stale-note { margin: var(--s1) 0 0; max-width: 60ch; color: var(--ink-2); }
-/* Créditos: the QR card beside the credits card, only on a wide screen with a mouse (ui/credits.js draws it then) */
-.cr-qr { display: none; }
-@media (min-width: 900px) and (pointer: fine) {
-  .cr-grid.has-qr { display: grid; grid-template-columns: minmax(0, 720px) 260px; gap: var(--s5); align-items: start; }
-  .cr-qr { display: grid; gap: var(--s2); justify-items: center; padding: var(--s4); text-align: center; position: sticky; top: calc(var(--hdr-h, 72px) + 16px); }
-}
-.cr-qr .cr-head { margin: 0; justify-self: stretch; }
-.cr-qr-box { width: 196px; padding: 12px; background: #fffaf0; border: 1px solid var(--frame); border-radius: var(--r); }
-.cr-qr-box svg { display: block; width: 100%; height: auto; }
-.cr-qr-say { margin: 0; color: var(--ink); font-weight: 700; font-size: .9375rem; line-height: 1.35; }
-.cr-qr-url { margin: 0; color: var(--ink-3); font-size: .75rem; overflow-wrap: anywhere; }

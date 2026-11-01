@@ -37,7 +37,7 @@ python3 -I scripts/check.py            # testes + build reprodutível + versões
 python3 -I scripts/check.py --release  # versão mais rígida, antes de publicar
 python3 -I scripts/build.py                      # build do dia a dia (usa a data da última release; ver "meta.built")
 python3 -I scripts/test_build.py && python3 -I scripts/test_techs.py && node scripts/test_calc.mjs
-python3 -I scripts/shots/compare.py    # depois do build: o app de HEAD × o atual, pixel a pixel (~30 s); antes de refatorar
+python3 -I scripts/shots/compare.py    # depois do build: o app de HEAD × o atual, pixel a pixel (~45 s); antes de refatorar
 ```
 Ver o app: servidor `dist` do `.claude/launch.json` → http://127.0.0.1:8766/preview.html.
 Detalhe de cada script em `scripts/README.md`; opções do build em `scripts/README-build.md`.

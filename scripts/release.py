@@ -144,7 +144,7 @@ Só o Claude (Artifact tool), depois do push:
   [ ] site: listar os arquivos publicados de {SITE_URL} e republicar site/index.html (só a versão mudou)
   [ ] abrir os dois e conferir v{v} no rodapé
   [ ] docs/projeto/BACKLOG.md (linha "Publicado") + commit "Backlog: {v} publicada" + push
-  [ ] docs/revisao-ux/README.md (interno) e memória do projeto
+  [ ] notas internas (fora do git) e memória do projeto
 """)
     return 0
 

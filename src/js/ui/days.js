@@ -5,8 +5,7 @@
    selected day's card (name, "N coisas", events grouped by kind, "não confirmado" for medium/low confidence, source in
    the tooltip, unlock quest, detail, the official game text) with "Hoje é este dia" when it is not today already
    (the HOJE badge says it), a compact 6-row week table, and "Como funciona" (folded, at the top; it also says that
-   the short lines are the app's own). 1.6.0 cut the fixed hint, the "Ira · Wrath" line, the permanent "Calibrado com
-   o dia 61 = Ira…" sentence (the toast after calibrating says it once) and the wiki credit line (it is in Créditos).
+   the short lines are the app's own). Calibrating is said once, in a toast; the wiki credit is in Créditos.
    Each medallion on the wheel carries its short name ("Gula", "Ira"), so two similar reds never depend on colour
    alone. Under its header the day card holds that
    weekday's "Bilhete do dia" (one short note, GK.store dayNotes; noteBox below, shared with ui/today.js).
@@ -21,134 +20,9 @@
    numberToast(anchorBefore), noteBox(prefix, rerender)}.
    ui/today.js (the planner "Hoje" panel) uses the helpers. An event's `task` (data/days.json; absent = true) says
    whether the Hoje panel gives it a "feito hoje" tick.
-   1.8.0 (backlog 2.5): the folded game text opens from a small quote mark “ (its label, "Texto do jogo", is for
-   screen readers and the tooltip), no longer an underlined word that read like a link.
+   The folded game text opens from a small quote mark “ (its label, "Texto do jogo", is for screen readers and the
+   tooltip), not an underlined word that would read like a link.
 */
-GK.i18n.add({
-  pt: {
-    "tab.days": "Dias",
-    "days.title": "Dias da semana",
-    "days.wheel": "Roda da semana",
-    "days.med": "{name}: {n} coisas",
-    "days.medToday": "{name} (hoje): {n} coisas",
-    "days.todayBadge": "hoje",
-    "days.counter": "dia {n}",
-    "days.todayIs": "Hoje: {name}",
-    "days.todayUnset": "Qual dia é hoje no jogo?",
-    "days.todayUnsetHint": "Toque na roda o símbolo que a seta aponta no jogo e use “Hoje é este dia”, ou digite o contador se já calibrou.",
-    "days.nothing": "Nada especial registrado para este dia.",
-    "days.setToday": "Hoje é este dia",
-    "days.advance": "Avançar dia",
-    "days.forget": "Esquecer o dia",
-    "days.adjust": "Ajustar o dia",
-    "days.number": "Contador do jogo",
-    "days.numberPh": "nº",
-    "days.recalibrate": "Recalibrar",
-    "days.calibrateHint": "Para calibrar, informe uma vez o dia de hoje e o número do canto da tela (ex.: dia 60 = Orgulho); depois basta digitar o número.",
-    "days.setToast": "Hoje: {name}",
-    "days.setToastN": "Hoje: {name} · dia {n}",
-    "days.calToast": "Calibrado: dia {n} = {name}",
-    "days.numToast": "Dia {n}: {name}",
-    "days.advToast": "Avançou para {name}",
-    "days.advToastN": "Avançou para {name} · dia {n}",
-    "days.forgotToast": "Dia de hoje esquecido",
-    "days.recalToast": "Calibração apagada. Informe o dia e o número de novo.",
-    "days.week": "A semana",
-    "days.how": "Como funciona",
-    "days.orderUnsure": "A ordem dos dias vem de guias e da wiki; o jogo não a escreve.",
-    "days.machineNote": "As frases curtas foram escritas para este app; o texto oficial do jogo abre nas aspas “ de cada evento.",
-    "days.unconfirmed": "não confirmado",
-    "days.conf.medium": "Confiança média: só a wiki ou um guia diz isso",
-    "days.conf.low": "Confiança baixa: um único guia, não verificado",
-    "days.source": "Fonte: {src}",
-    "days.also": "também: {src}",
-    "days.who": "com {who}",
-    "days.unlockQuest": "depois da missão “{q}”",
-    "days.quote": "Texto do jogo",
-    "days.items": "Itens:",
-    "days.empty": "Os dados dos dias da semana não estão nesta página.",
-    "days.kind.npc": "Pessoas",
-    "days.kind.merchant": "Comércio",
-    "days.kind.church": "Igreja",
-    "days.kind.battle": "Combate",
-    "days.kind.quest": "Missões",
-    "days.kind.event": "Eventos",
-    "days.kind.other": "Outros",
-    "days.count.one": "{n} coisa",
-    "days.count.other": "{n} coisas",
-    "days.note.label": "Bilhete",
-    "days.note.add": "Deixar um bilhete para este dia",
-    "days.note.edit": "Editar",
-    "days.note.editX": "Editar o bilhete de {name}",
-    "days.note.ta": "Bilhete para {name}",
-    "days.note.ph": "ex.: levar 3 peixes para o Pescador",
-    "days.note.count": "{n}/{max} · Enter salva",
-    "days.note.saved": "Bilhete salvo: {name}",
-    "days.note.cleared": "Bilhete apagado: {name}",
-  },
-  en: {
-    "tab.days": "Days",
-    "days.title": "Days of the week",
-    "days.wheel": "Week wheel",
-    "days.med": "{name}: {n} things",
-    "days.medToday": "{name} (today): {n} things",
-    "days.todayBadge": "today",
-    "days.counter": "day {n}",
-    "days.todayIs": "Today: {name}",
-    "days.todayUnset": "Which day is it in the game?",
-    "days.todayUnsetHint": "Tap on the wheel the symbol the arrow points at in the game and use “Today is this day”, or type the counter once calibrated.",
-    "days.nothing": "Nothing special recorded for this day.",
-    "days.setToday": "Today is this day",
-    "days.advance": "Next day",
-    "days.forget": "Forget the day",
-    "days.adjust": "Adjust the day",
-    "days.number": "Game counter",
-    "days.numberPh": "no.",
-    "days.recalibrate": "Recalibrate",
-    "days.calibrateHint": "To calibrate, give today's day and the number in the screen corner once (e.g. day 60 = Pride); after that, just type the number.",
-    "days.setToast": "Today: {name}",
-    "days.setToastN": "Today: {name} · day {n}",
-    "days.calToast": "Calibrated: day {n} = {name}",
-    "days.numToast": "Day {n}: {name}",
-    "days.advToast": "Moved on to {name}",
-    "days.advToastN": "Moved on to {name} · day {n}",
-    "days.forgotToast": "Today's day forgotten",
-    "days.recalToast": "Calibration cleared. Give the day and the number again.",
-    "days.week": "The week",
-    "days.how": "How it works",
-    "days.orderUnsure": "The order of the days comes from guides and the wiki; the game never writes it.",
-    "days.machineNote": "The short lines were written for this app; the official game text opens from each event’s quote mark “.",
-    "days.unconfirmed": "unconfirmed",
-    "days.conf.medium": "Medium confidence: only the wiki or a guide says so",
-    "days.conf.low": "Low confidence: a single unverified guide",
-    "days.source": "Source: {src}",
-    "days.also": "also: {src}",
-    "days.who": "with {who}",
-    "days.unlockQuest": "after the quest “{q}”",
-    "days.quote": "Game text",
-    "days.items": "Items:",
-    "days.empty": "The days of the week data is not in this page.",
-    "days.kind.npc": "People",
-    "days.kind.merchant": "Merchants",
-    "days.kind.church": "Church",
-    "days.kind.battle": "Battle",
-    "days.kind.quest": "Quests",
-    "days.kind.event": "Events",
-    "days.kind.other": "Other",
-    "days.count.one": "{n} thing",
-    "days.count.other": "{n} things",
-    "days.note.label": "Note",
-    "days.note.add": "Leave a note for this day",
-    "days.note.edit": "Edit",
-    "days.note.editX": "Edit the note for {name}",
-    "days.note.ta": "Note for {name}",
-    "days.note.ph": "e.g. bring 3 fish to the Fisherman",
-    "days.note.count": "{n}/{max} · Enter saves",
-    "days.note.saved": "Note saved: {name}",
-    "days.note.cleared": "Note removed: {name}",
-  },
-});
-
 GK.ui.days = (function () {
   const { t, name, num } = GK.i18n, { esc } = GK.util;
   const KINDS = ["npc", "merchant", "church", "battle", "quest", "event", "other"];
@@ -202,11 +76,7 @@ GK.ui.days = (function () {
   }
   const kindIcon = (kind, px) => `<svg class="days-kind-ico" width="${px || 16}" height="${px || 16}" viewBox="0 0 9 9" aria-hidden="true" focusable="false" shape-rendering="crispEdges" fill="currentColor"><path d="${gridPath(KINDS.indexOf(kind) >= 0 ? kind : "other")}"/></svg>`;
   // the official medallion in the sprite ("day:<id>", else the day's own sprite id)
-  function spritePos(d) {
-    const sp = GK.data.get().meta && GK.data.get().meta.sprite;
-    if (!sp || !sp.icons) return null;
-    return sp.icons["day:" + d.id] || (d.sprite && sp.icons[d.sprite]) || null;
-  }
+  const spritePos = (d) => GK.data.spritePos("day:" + d.id) || (d.sprite && GK.data.spritePos(d.sprite)) || null;
   // medallion art at about px: the sprite cell scaled so its 25 px disc (centred in a 32 px cell) is px wide,
   // else the drawn glyph
   function medal(d, px) {
@@ -222,7 +92,7 @@ GK.ui.days = (function () {
 
   // ---- the week, normalized once per payload ----
   let weekSrc, weekCache = null;
-  const locOf = (v) => (v == null || v === "" ? null : typeof v === "string" ? { pt: v, en: v } : v);
+  const { loc } = GK.data;   // {pt, en} | "same text" -> {pt, en}
   const HEX = /^#[0-9a-f]{3}([0-9a-f]{3})?([0-9a-f]{2})?$/i;
   function week() {
     const raw = GK.data.get().days;
@@ -231,9 +101,9 @@ GK.ui.days = (function () {
     if (!raw || !Array.isArray(raw.days) || !raw.days.length) return null;
     const meta = raw.meta || {};
     const days = raw.days.filter((d) => d && typeof d.id === "string" && d.id).map((d, i) => {
-      const sin = locOf(d.sin) || { pt: d.id, en: d.id };
+      const sin = loc(d.sin) || { pt: d.id, en: d.id };
       return {
-        id: d.id, order: typeof d.order === "number" ? d.order : i, sin, name: locOf(d.name) || sin, tr: d.tr || "official",
+        id: d.id, order: typeof d.order === "number" ? d.order : i, sin, name: loc(d.name) || sin, tr: d.tr || "official",
         sprite: d.sprite || null, glyph: d.glyph || null, glyphPt: d.glyph_pt || null,
         color: typeof d.color === "string" && HEX.test(d.color) ? d.color : null,
         events: (Array.isArray(d.events) ? d.events : []).filter((e) => e && (e.en || e.pt)).map((e) => ({
@@ -245,7 +115,7 @@ GK.ui.days = (function () {
           items: Array.isArray(e.items) ? e.items.filter((x) => typeof x === "string") : [],
           unlock: e.unlock && (e.unlock.en || e.unlock.pt) ? e.unlock : null,
           short: e.short && (e.short.en || e.short.pt) ? { en: e.short.en || e.short.pt, pt: e.short.pt || e.short.en } : null,   // hand-written line title (Hoje)
-          detail: locOf(e.detail), quote: e.quote && (e.quote.en || e.quote.pt) ? e.quote : null,
+          detail: loc(e.detail), quote: e.quote && (e.quote.en || e.quote.pt) ? e.quote : null,
         })),
       };
     });
@@ -255,7 +125,7 @@ GK.ui.days = (function () {
     days.sort((a, b) => rank(a) - rank(b));
     weekCache = {
       days,
-      meta: { notes: locOf(meta.notes), orderNote: locOf(meta.order_note), greed: meta.greed ? locOf(meta.greed.note) : null,
+      meta: { notes: loc(meta.notes), orderNote: loc(meta.order_note), greed: meta.greed ? loc(meta.greed.note) : null,
         orderConfidence: meta.order_confidence || null },
     };
     return weekCache;
@@ -576,8 +446,7 @@ GK.ui.days = (function () {
     notes.bind(root);
     root.addEventListener("click", (e) => {
       if (e.target.closest("[data-note-edit]")) return;   // noteBox
-      const ro = e.target.closest("[data-recipe-open]");
-      if (ro) { GK.ui.recipes.open(ro.dataset.recipeOpen, { from: "days" }); return; }
+      if (GK.ui.fmt.recipeClick(e, "days")) return;
       const s = e.target.closest("[data-set-day]");
       if (s) { setToday(s.dataset.setDay); return; }
       if (e.target.closest("[data-advance]")) { advance(); return; }

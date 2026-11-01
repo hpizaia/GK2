@@ -19,7 +19,7 @@
                                       recents by union, the newer side's order first (max 12);
                                       stamp it newer than both and push it
      - no base yet (first sync)       the newer updatedAt wins (an EPOCH plan is pushed only to an empty account)
-   dayDone / dayNotes (1.3.4), recents and studied ("Já estudei", ficha do item: item ids, merged by union) (GK.store.LATE) are
+   dayDone / dayNotes, recents and studied ("Já estudei": item ids, merged by union) (GK.store.LATE) are
    absent from docs written by older pages, and absent is not "empty":
      - the account wins but its doc has no such key   keep this device's value (keepLate), stamp, push
      - same updatedAt, the doc has them, we don't     adopt the doc's (adoptLate; an older page carried them along)
@@ -29,7 +29,7 @@
    One subscription (recreated once, with backoff, after it dies; again on `online`), one write in flight,
    1.5 s debounce, writes only when the payload changed, one retry with jitter after a failed write.
    Without the capabilities: "this device only".
-   Exposes: GK.sync.{start, onStore, status, syncedAt, subscribe}. Its status texts live in ui/footer.js.
+   Exposes: GK.sync.{start, onStore, status, syncedAt, subscribe}. Its status texts (sync.*) are shown by ui/footer.js.
 */
 GK.sync = (function () {
   const DEBOUNCE = 1500, LOAD_TIMEOUT = 10000, MAX_BYTES = 250000;   // db limit is 256 KiB a doc

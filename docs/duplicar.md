@@ -146,19 +146,19 @@ O lado dos dados:
 O lado da interface:
 
 4. Acrescente uma entrada em `LANGS` no `src/js/i18n.js` (`{ code: "es", locale: "es", label: "ES", name: "Español" }`).
-5. Acrescente um bloco `es: {...}` em cada chamada `GK.i18n.add({ pt: {...}, en: {...} })` (16 módulos: `grep -rl "GK.i18n.add" src/js`). Chave que faltar cai no português.
+5. Copie `src/js/i18n/en.js` para `src/js/i18n/es.js`, troque `en:` por `es:` na linha do `GK.i18n.add` e traduza os textos; liste o arquivo no `src/manifest.json`, logo depois do `js/i18n/en.js`. Chave que faltar cai no português.
 6. Monte de novo. Detalhes: "Adding a language" em [`scripts/README-build.md`](../scripts/README-build.md#adding-a-language-for-example-spanish).
 
 ## 9. Mude o visual
 
 - **Cores, fontes, espaçamento:** `src/css/tokens.css`. O escuro (noite) fica no `:root` puro; o claro (pergaminho) está definido duas vezes, em `@media (prefers-color-scheme: light)` e em `:root[data-theme="light"]`. Mude os dois blocos do claro juntos.
 - **Fontes:** `--f-display` e `--f-body` nos tokens; o link do Google Fonts está em `src/index.html`.
-- **Nome do app:** `<title>` em `src/index.html` e `app.title*` em `src/js/ui/header.js` (nos dois idiomas).
+- **Nome do app:** `<title>` em `src/index.html` e `app.title*` em `src/js/i18n/pt.js` e `src/js/i18n/en.js`.
 - Por que o visual é assim: [`docs/projeto/DESIGN.md`](projeto/DESIGN.md). Monte de novo depois de qualquer mudança em `src/`; nunca edite `dist/` nem `prototype/`.
 
 ## 10. Acrescente uma função
 
-Cada função é um módulo próprio (`src/js/ui/<nome>.js`, e opcionalmente `src/css/<nome>.css`), listado em `src/manifest.json`, com os próprios textos (`GK.i18n.add`), a própria rota (`GK.router.register`) e o próprio painel (`GK.app.registerPanel`). O contrato, com exemplo, está em "Adding a module" no [`scripts/README-build.md`](../scripts/README-build.md#adding-a-module-the-contract-for-parallel-work). Foi isso que deixou vários agentes do Claude Code criarem funções em paralelo sem mexer nos arquivos uns dos outros.
+Cada função é um módulo próprio (`src/js/ui/<nome>.js`, e opcionalmente `src/css/<nome>.css`), listado em `src/manifest.json`, com os próprios textos (uma seção em `src/js/i18n/pt.js` e `en.js`), a própria rota (`GK.router.register`) e o próprio painel (`GK.app.registerPanel`). O contrato, com exemplo, está em "Adding a module" no [`scripts/README-build.md`](../scripts/README-build.md#adding-a-module-the-contract-for-parallel-work). Foi isso que deixou vários agentes do Claude Code criarem funções em paralelo sem mexer nos arquivos uns dos outros.
 
 ## Problemas comuns
 

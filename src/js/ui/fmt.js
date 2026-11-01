@@ -1,70 +1,27 @@
 /* GK.ui.fmt: shared bits of markup for item names, recipes and stations (badges, recipe labels,
    tech lines, the name block) and the "Desfazer" toast. No state, no panel.
-   Exposes: GK.ui.fmt.{badges, buildLabel, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, slotButton, undoToast, otherName, gradedName}.
-   slotButton(item, name): the item's icon as a 44 px button (data-recipe-open) that opens it in Receitas; every planner
-   panel that shows one handles the click itself (GK.ui.recipes.open(id, {from: "plan"})).
-   1.6.0: the "i" button left the planner names (corte 6: the icon opens the recipe); techLine(r, state) drops the
-   words "Requer" / "Maestria:" / "Extensão:" and the technologies already researched (corte 2); stationOf reads
-   "Construir no Cemitério" (buildLabel, corte 12); recipeLabels can leave out one station (corte 3).
+   Exposes: GK.ui.fmt.{badges, buildLabel, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, slotButton, undoToast, otherName, graded, gradedName, foldBtn, CONTROLS,
+   recipeClick, UNOFFICIAL}.
+   slotButton(item, name): the item's icon as a 44 px button (data-recipe-open) that opens it in Receitas; every
+   panel that shows one sends the click to recipeClick(e, from) (from = "plan", "tech", "days").
+   techLine(r, state) leaves out the words "Requer" / "Maestria:" / "Extensão:" and the technologies already
+   researched; stationOf reads "Construir no Cemitério" (buildLabel); recipeLabels can leave out one station.
    undoToast(msg, onUndo): a toast with a "Desfazer" button (its own #toast-undo element, created on first use, after
    #toast in <body>; it sits above #toast when both show). 6 s, paused while it holds the focus or the pointer.
-   "Desfazer" also hides the plain toast (QA #7: "Adicionado às metas" no longer stays after the undo).
-   slotButton keeps the quality star of a graded item (GK.util.slot's has-q, 1.8.0).
-   otherName(item) (1.8.0, backlog 2.2 / D3): two items with the same name in the page's language ("Tinta" = Ink and
+   "Desfazer" also hides the plain toast ("Adicionado às metas" must not stay after the undo).
+   slotButton keeps the quality star of a graded item (GK.util.slot's has-q).
+   otherName(item): two items with the same name in the page's language ("Tinta" = Ink and
    Paint) show the other language's name, small, beside it (search, Receitas list, goals); "" for any other item.
 */
-GK.i18n.add({
-  pt: {
-    "recipe.hidden": "oculta",
-    "recipe.cyc": "circular",
-    "station.build": "Construção (no local)",
-    "station.buildIn.m": "Construir no {place}",
-    "station.buildIn.f": "Construir na {place}",
-    "station.buildIn.fp": "Construir nas {place}",
-    "station.buildList": "Construir em: {places}",
-    "station.buildAnywhere": "Construir em qualquer lugar",
-    "badge.unofficial": "não oficial",
-    "badge.unofficialTitle": "Tradução não oficial do nome",
-    "quality.bronze": "bronze",
-    "quality.silver": "prata",
-    "quality.gold": "ouro",
-    "badge.edited": "editado",
-    "badge.editedTitle": "Nome editado por você",
-    "info.label": "Abrir {name} em Receitas",
-    "info.title": "Ver em Receitas",
-    "undo.button": "Desfazer",
-  },
-  en: {
-    "recipe.hidden": "hidden",
-    "recipe.cyc": "circular",
-    "station.build": "Built in place",
-    "station.buildIn.m": "Build at {place}",
-    "station.buildIn.f": "Build at {place}",
-    "station.buildIn.fp": "Build at {place}",
-    "station.buildList": "Build at: {places}",
-    "station.buildAnywhere": "Build anywhere",
-    "badge.unofficial": "unofficial",
-    "badge.unofficialTitle": "Unofficial name translation",
-    "quality.bronze": "bronze",
-    "quality.silver": "silver",
-    "quality.gold": "gold",
-    "badge.edited": "edited",
-    "badge.editedTitle": "Name edited by you",
-    "info.label": "Open {name} in Recipes",
-    "info.title": "See in Recipes",
-    "undo.button": "Undo",
-  },
-});
-
 GK.ui.fmt = (function () {
   const { t, name, edited, num } = GK.i18n, { esc } = GK.util;
-  const UNOFFICIAL = { guess: 1, machine: 1, missing: 1 };
+  const UNOFFICIAL = { guess: 1, machine: 1, missing: 1 };   // the name's tr values that get the "não oficial" badge
   function badges(it, overrides) {
     if (edited(it, overrides)) return `<span class="badge badge-edited" title="${esc(t("badge.editedTitle"))}">${esc(t("badge.edited"))}</span>`;
     if (GK.i18n.lang() !== "en" && UNOFFICIAL[it.tr]) return `<span class="badge" title="${esc(t("badge.unofficialTitle"))}">${esc(t("badge.unofficial"))}</span>`;
     return "";
   }
-  // "Construir no Cemitério" / "Build at Graveyard" (corte 12, 1.6.0): the label of a build pseudo-station
+  // "Construir no Cemitério" / "Build at Graveyard": the label of a build pseudo-station
   // (GK.data zoneStation: build: true + the zone's {pt, en}). pt needs the gender of the place; a zone that lists
   // several places ("Pátio, Cemitério, …") reads "Construir em: …"; the generic one (no zone) keeps "station.build".
   // A regular station returns its plain name.
@@ -91,7 +48,7 @@ GK.ui.fmt = (function () {
   }
   // what sets a recipe apart from its siblings: its own name ("Board (Sawhorse)"). "<X> from <Y>" names only restate
   // the inputs the label already lists: left out. recipeLabels adds the name back when two options would otherwise
-  // read the same. 1.9: no grade word: the graded ingredient ("2 Abóbora (ouro)") already sets a quality recipe apart,
+  // read the same. No grade word: the graded ingredient ("2 Abóbora (ouro)") already sets a quality recipe apart,
   // and the grade of the result is the item's own (its name and star).
   function recipeTag(r) {
     return r.name && !/ from /i.test(r.name.en || "") ? name(r.name) : "";
@@ -102,7 +59,7 @@ GK.ui.fmt = (function () {
     if (b.qty != null) return b.qty;
     return b.add != null && base != null ? base + b.add : base;
   }
-  // short, in the UI language, ingredients first (1.3.4: no letter, no English recipe name), so a closed <select>
+  // short, in the UI language, ingredients first (no letter, no English recipe name), so a closed <select>
   // cut at ~180 px still shows what goes in: "1 Tora → 4 · Cavalete",
   // "2 Abóbora (ouro) + 10 Combustível → 7 · Forno da Cozinha (oculta, circular)".
   // opts.noStation: leave the station out (every option of the list uses the same one: the card already says it).
@@ -120,9 +77,9 @@ GK.ui.fmt = (function () {
   // labels for a list of options (`all` = the item's full list, kept for callers). The station is left out when
   // every option uses the same one, or (opts.omitStation = a station id) on the options made at that station: the
   // step's card already names it. Two options never read the same: a repeat gets a short tag, then a number.
-  // The tag is the recipe's own name cut before " from " (1.4.1): "Improve organ I from Any Skin" made the Pele
+  // The tag is the recipe's own name cut before " from ": the whole "Improve organ I from Any Skin" would make the Pele
   // selector 440-640 px wide on a 390 px phone; the cut keeps "Improve organ I" / "Improve organ II" apart.
-  // pt (data/names.recipes.pt-BR.json) cuts before " a partir de " the same way: "Aprimorar Órgão I".
+  // A pt recipe name is cut before " a partir de " the same way: "Aprimorar Órgão I".
   function shortTag(r) {
     const n = r.name ? name(r.name) : "";
     const cut = n.split(/ from | a partir de /i)[0].trim();
@@ -140,7 +97,7 @@ GK.ui.fmt = (function () {
     nth.forEach((x, k) => { out[k] += x; });
     return out;
   }
-  // what a recipe needs, short (1.6.0, corte 2): "Olaria I · Engenharia 2 · Foles de ferraria". No "Requer",
+  // what a recipe needs, short: "Olaria I · Engenharia 2 · Foles de ferraria". No "Requer",
   // "Maestria:" or "Extensão:"; quests and perks keep "Missão:" / "Vantagem:" (their names alone read like items).
   // A technology already researched (GK.tech.researchedSet: marked + ancestors) is left out; a mastery of level 0
   // shows only its type. state is optional (no state: nothing is left out).
@@ -168,7 +125,7 @@ GK.ui.fmt = (function () {
     if (r.ext) out.push(name(r.ext));
     return out.filter(Boolean);
   }
-  // the item's icon as a button (1.6.0, corte 6, in place of the "i"): opens the item on the Receitas screen. Same
+  // the item's icon as a button: opens the item on the Receitas screen. Same
   // markup as GK.util.slot, in a <button> with the "Abrir X em Receitas" label; a plain icon when there is no Receitas.
   function slotButton(it, nm) {
     const s = GK.util.slot(it, nm), m = /^<span class="slot( has-q)?">/.exec(s);
@@ -176,8 +133,25 @@ GK.ui.fmt = (function () {
     return `<button type="button" class="slot slot-btn${m[1] || ""}" data-recipe-open="${esc(it.id)}" title="${esc(t("info.title"))}" aria-label="${esc(t("info.label", { name: nm }))}">` +
       s.slice(m[0].length, -"</span>".length) + "</button>";
   }
-  // the name (plain text: only the checkbox and its 44 px .tick box toggle "done", AUDITORIA U3) and its badges.
-  // 1.8.x: no ✎ pencil or inline rename form here; renaming is in the item's Receitas detail (ui/recipes.js).
+  // the 44 px fold toggle at a header's right (Matérias-primas, Etapas and their station cards, Hoje, Tecnologias que
+  // faltam). attrs = its stable id and data-* hook (`id="fold-raw" data-fold="raw"`), so the focus survives a
+  // re-render. sec = a section: the thin chevron with no box (.sec-fold > .sec-chev); else the boxed .fold-btn of a
+  // card (chevron drawn in CSS)
+  function foldBtn(attrs, open, label, bodyId, sec) {
+    return `<button type="button" class="${sec ? "sec-fold" : "btn fold-btn"}" ${attrs} aria-expanded="${open}" aria-controls="${bodyId}" title="${esc(t(open ? "fold.collapse" : "fold.expand"))}" aria-label="${esc(t(open ? "fold.collapseX" : "fold.expandX", { name: label }))}">${sec ? `<span class="sec-chev" aria-hidden="true"></span>` : ""}</button>`;
+  }
+  // a tap on a fold header folds it, unless it lands on one of these
+  const CONTROLS = "button, a, input, select, textarea, label";
+  // a click on one of those icons (or any [data-recipe-open], the Dias item chips too): opens the item in Receitas,
+  // with "‹ Voltar" to `from` (the route the click came from). true when it was one (the caller stops there)
+  function recipeClick(e, from) {
+    const ro = e.target.closest("[data-recipe-open]");
+    if (!ro) return false;
+    GK.ui.recipes.open(ro.dataset.recipeOpen, { from });
+    return true;
+  }
+  // the name (plain text: only the checkbox and its 44 px .tick box toggle "done") and its badges. Renaming is in
+  // the item's Receitas detail (ui/recipes.js), not here.
   function nameBlock(it, nm, extraBadges, overrides) {
     return `<span class="row-name"><span class="row-label">${esc(nm)}</span>${extraBadges || ""}${badges(it, overrides)}</span>`;
   }
@@ -230,11 +204,18 @@ GK.ui.fmt = (function () {
     if (!it || !dupSet(lang).has(it.id) || !it[other] || it[other] === it[lang]) return "";
     return ` <span class="name-other" lang="${other === "pt" ? "pt-BR" : "en"}">${esc(it[other])}</span>`;
   }
+  // a graded item in a list (search, Receitas): the name without "(prata)" and the grade word for the line below (the
+  // star is on the icon; colour alone is not enough). grade = a recipe line's own grade (the bronze plain Repolho);
+  // false = none (an "Any X" line). The plain item of a graded family is the bronze one (build.py apply_grades)
+  function graded(it, nm, grade) {
+    const g = grade === false ? null : grade || GK.data.itemGrade(it);
+    return g ? { name: GK.data.stripGrade(nm) || nm, word: t("quality." + g), grade: g } : { name: nm, word: "", grade: null };
+  }
   // the whole name of a graded item where it shows on one line (the Recentes, the Receitas detail title): "Abóbora
-  // (prata)" is already that; the plain bronze one gets its word too, "Abóbora (bronze)" (2026-11, consertos.md §17)
+  // (prata)" is already that; the plain bronze one gets its word too, "Abóbora (bronze)"
   function gradedName(it, nm) {
     const g = GK.data.itemGrade(it);
     return g && GK.data.stripGrade(nm) === nm ? `${nm} (${t("quality." + g)})` : nm;
   }
-  return { badges, buildLabel, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, slotButton, undoToast, otherName, gradedName };
+  return { badges, buildLabel, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, slotButton, undoToast, otherName, graded, gradedName, foldBtn, CONTROLS, recipeClick, UNOFFICIAL };
 })();

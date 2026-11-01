@@ -1,39 +1,13 @@
 /* GK.ui.checklist: progress bar and the perk toggles ("Vantagens"). On phones this card comes last in the planner
    (planner.css, CSS order).
-   1.6.0 (corte 8): no "20 matérias-primas · 41 etapas · 26 estações" line (the section titles count them); the perks
-   fold into one line "Vantagens: 0 de 10 ligadas ›" that opens the toggles (folded by default; this module's state).
-   1.8.0 (C3): ticks follow the quantity (GK.calc rawChecked / stepChecked); a step's tick saves its quantity; a raw
-   row's tick is "tenho tudo" (ui/summary.js).
-   1.8.x: no "Copiar lista", "Limpar marcações" or "Editar nomes" here any more: the card is the bar and the perks.
-   Renaming an item lives in its Receitas detail (tap the "não oficial" / "editado" tag; ui/recipes.js).
+   No count line (the section titles count rows and stations); the perks fold into one line "Vantagens: 0 de 10
+   ligadas ›" that opens the toggles (folded by default; this module's state).
+   Ticks follow the quantity (GK.calc rawChecked / stepChecked); a step's tick saves its quantity; a raw row's tick is
+   "tenho tudo" (ui/summary.js). The card is only the bar and the perks: renaming an item lives in its Receitas detail
+   (tap the "não oficial" / "editado" tag; ui/recipes.js).
    Owns: [data-panel="checklist"] and the change handler of the steps' [data-done] checkboxes on the planner.
    Exposes: GK.ui.checklist.{mount, render}; registered as a panel.
 */
-GK.i18n.add({
-  pt: {
-    "progress.title": "Progresso",
-    "progress.count": "{done} de {total} marcados",
-    "perks.title": "Vantagens",
-    "perks.sumLabel": "Vantagens:",
-    "perks.sum": "{on} de {total} ligadas",
-    "perks.hint": "Vantagens que mudam quantidades neste plano. Ligue as que você já tem no jogo.",
-    "perks.toggle": "Vantagem {name}: {state}",
-    "perks.on": "ligada",
-    "perks.off": "desligada",
-  },
-  en: {
-    "progress.title": "Progress",
-    "progress.count": "{done} of {total} checked",
-    "perks.title": "Perks",
-    "perks.sumLabel": "Perks:",
-    "perks.sum": "{on} of {total} on",
-    "perks.hint": "Perks that change amounts in this plan. Turn on the ones you already have in the game.",
-    "perks.toggle": "Perk {name}: {state}",
-    "perks.on": "on",
-    "perks.off": "off",
-  },
-});
-
 GK.ui.checklist = (function () {
   const { t, name, num } = GK.i18n, { esc } = GK.util;
   let root, perksOpen = false;   // "Vantagens: 0 de 10 ligadas ›" opened (this device, this session)

@@ -1,7 +1,7 @@
 /* GK.store: the single serializable app state, persistence in localStorage and schema migrations.
    Owns: state {schemaVersion, lang, theme, lists, listsGone, goals, choice, have, done, example, legacyOf, overrides,
    showHidden, researched, studied, groupChoice, perks, day, dayNumber, dayAnchor, dayDone, dayNotes, recents, ui, updatedAt, syncBase}.
-   Lists (schema 5, "listas separadas"): state.lists = [{id, name, createdAt, updatedAt, goals, choice, have, done,
+   Lists (schema 5): state.lists = [{id, name, createdAt, updatedAt, goals, choice, have, done,
    example}] holds every plan; ui.activeList (per device, never synced) says which one is open. The top-level goals /
    choice / have / done / example are the WORKING COPY of the open list: every module reads and edits them exactly as
    before schema 5, and update() writes them back into that list after every change (stamping the list's updatedAt).
@@ -10,7 +10,7 @@
    Global (shared by every list): overrides, researched, studied, groupChoice, perks, the day fields, recents, theme, lang, ui.
    Exposes: GK.store.{get, load, subscribe, actions, update, clampQty, SCHEMA, THEMES, ISO, SYNCED, PER_LIST, MIRROR,
    syncPayload, syncKey, legacyMirror, sanitizeRemote, hasContent, mergeSynced, stamp, useAccount, setSyncBase, storageKey,
-   activeList, LIST_NAME_MAX, LISTS_MAX, RECENTS_MAX, DAY_IDS, dayOrder, dayFromNumber, doneToday, NOTE_MAX, LATE, keepLate, adoptLate}.
+   gradeMoves, activeList, LIST_NAME_MAX, LISTS_MAX, RECENTS_MAX, DAY_IDS, dayOrder, dayFromNumber, doneToday, NOTE_MAX, LATE, keepLate, adoptLate}.
    Every change goes through an action (or update(fn, meta) for module-owned fields); subscribers get (state, meta).
    localStorage: "gk2-companion" (no account) or "gk2-companion:<user id>" once GK.sync knows the account
    (useAccount); the anonymous copy moves into the first account that opens it, once, and is then removed, so a
@@ -35,7 +35,7 @@ GK.store = (function () {
   const MIRROR = PER_LIST.concat(["legacyOf"]);
   const MAIN = "main";                       // id of the list a schema ≤ 4 plan becomes (same on every device)
   const LIST_NAME_MAX = 30, LISTS_MAX = 30, GONE_MAX = 100;
-  // synced fields added after schema 4 (1.3.4, optional, no migration): a doc written by an older page has no such
+  // synced fields added after schema 4 (optional, no migration): a doc written by an older page has no such
   // key at all, which GK.sync must not read as "cleared" (keepLate / adoptLate below)
   const LATE = ["dayDone", "dayNotes", "recents", "studied"];
   // "Recentes" (ui/search.js): the items last added to goals, newest first, at most RECENTS_MAX ids (the search shows
@@ -107,9 +107,8 @@ GK.store = (function () {
     return order[(((i + num - a.number) % L) + L) % L];
   }
   // ui: which planner panels are collapsed. stationCollapsed keys come from ui/summary.js ("<station id>[#repeat]").
-  // "Hoje" starts folded (one line) until the player opens it (1.3.4). (1.8.x: the flag of the "Editar nomes" mode
-  // is gone; an old saved one is dropped here. Renaming is in the Receitas detail, GK.store overrides.)
-  // 1.8.x (seta das seções, opção A): "Tecnologias que faltam" folds too (tnCollapsed); techCols = the columns of the
+  // "Hoje" starts folded (one line) until the player opens it. Unknown flags (e.g. the old "Editar nomes" mode) are
+  // dropped here. "Tecnologias que faltam" folds too (tnCollapsed); techCols = the columns of the
   // Tecnologias tab the player opened or folded by hand, per branch: {branchId: {column: true (open) | false}}; a
   // column with no entry follows the rule of ui/tech.js (every column with something left starts open, a done one folded)
   const UI_FLAGS = ["todayCollapsed", "stepsCollapsed", "rawCollapsed", "tnCollapsed", "bigText"]; // bigText = "Letra grande" (ui/footer.js, GK.theme.big; absent = off)
@@ -151,7 +150,7 @@ GK.store = (function () {
     goals: [],           // [{ item, qty }]
     choice: {},          // itemId -> recipeId (absent = item.defaultRecipe)
     have: {},            // itemId -> true ("Já tenho": don't expand) | number ("tenho N de M": N subtracted from demand)
-    done: {},            // "raw:<id>" | "step:<id>" -> true (before 1.8.0) | the quantity ticked (C3)
+    done: {},            // "raw:<id>" | "step:<id>" -> true (a tick saved before 1.8.0) | the quantity ticked
     example: false,      // goals are the seeded example
     legacyOf: MAIN,      // the list the working copy belongs to
     overrides: {},       // lang -> { itemId: "nome editado" }
@@ -163,10 +162,10 @@ GK.store = (function () {
     day: null,           // current weekday id as set by the player ("wrath"; Dias tab, synced)
     dayNumber: null,     // the HUD day counter (e.g. 60), optional; null = not given (synced)
     dayAnchor: null,     // {number, day}: calibration "HUD day N was <day>"; a counter alone then gives the day (synced)
-    dayDone: null,       // {day, number, ids: [event index]}: "Feito hoje" ticks; reset when the day changes (synced, 1.3.4)
-    dayNotes: {},        // dayId -> "levar 3 peixes para o Pescador": "Bilhete do dia", ≤ NOTE_MAX chars (synced, 1.3.4)
+    dayDone: null,       // {day, number, ids: [event index]}: "Feito hoje" ticks; reset when the day changes (synced)
+    dayNotes: {},        // dayId -> "levar 3 peixes para o Pescador": "Bilhete do dia", ≤ NOTE_MAX chars (synced)
     recents: [],         // [itemId]: last added to goals, newest first, ≤ RECENTS_MAX ("Recentes" in the search; synced)
-    ui: freshUi(),       // planner panels the player collapsed, Letra grande, the open list (per device, never synced; 1.3.1)
+    ui: freshUi(),       // planner panels the player collapsed, Letra grande, the open list (per device, never synced)
     updatedAt: "",       // ISO time of the last change to a SYNCED field ("" = never touched; schema 4)
     syncBase: "",        // updatedAt of the last version both this device and the account held (GK.sync; local)
   });
@@ -198,7 +197,7 @@ GK.store = (function () {
   // have: true (everything) or a whole number ≥ 1 (partial); anything else is dropped
   const clampHave = (v) => (v === true ? true : typeof v === "number" && isFinite(v) && v >= 1 ? Math.min(999999, Math.round(v)) : null);
   const haveMap = (o) => { const out = {}; for (const [k, v] of Object.entries(obj(o))) { const c = clampHave(v); if (c != null) out[k] = c; } return out; };
-  // done (1.8.0, C3): true (a tick saved before 1.8.0: no quantity) or the quantity the row asked for when it was
+  // done: true (a tick saved before 1.8.0: no quantity) or the quantity the row asked for when it was
   // ticked (a whole number ≥ 1): a step ticked at 3 is pending again when the plan asks for 10 (GK.calc.doneCovers).
   // A page older than 1.8.0 reads any truthy value as true: the tick stays, only the number is lost.
   const doneMap = (o) => { const out = {}; for (const [k, v] of Object.entries(obj(o))) { if (!v) continue; const c = typeof v === "number" ? clampHave(v) : null; out[k] = c == null ? true : c; } return out; };
@@ -223,13 +222,42 @@ GK.store = (function () {
   // a list name: one line, at most LIST_NAME_MAX characters ("" = the default name, shown translated)
   const cleanName = (v) => (typeof v === "string" ? Array.from(v.replace(/\s+/g, " ").trim()).slice(0, LIST_NAME_MAX).join("").trim() : "");
   const isoOr = (v, d) => (typeof v === "string" && ISO.test(v) ? v : d);
-  // 1.9 (qualidade): a plan saved before the build kept the grades planned "Vinho (prata)" as the goal "wine" with the
-  // Barril's silver recipe chosen; GK.data.gradeMoves turns it into the goal "wine-silver" (choice and step tick too).
+  /**
+   * A plan saved up to 1.8.1, when the data dropped the grade of Vinho / Uvas / Repolho…: "Vinho" had the three Barril
+   * recipes and the two improvements, so a silver or gold one was planned as the goal "wine" with the recipe chosen
+   * (choice.wine = "wine-from-grape-juice-silver"). Since 1.9 that recipe makes "wine-silver": the choice moves to the
+   * item it makes, and a goal of the plain item planned with it becomes that grade (what the plan made), with its step
+   * tick. Ids never change: "wine" is the bronze one, "wine-silver" / "cabbage-gold" the ids the page already used.
+   * goals [{item, qty}], choice {item: recipe}, done {key: tick} → {goals, choice, done} (new objects) or null (no change).
+   */
+  function gradeMoves(goals, choice, done) {
+    const D = GK.data && GK.data.get ? GK.data.get() : null;
+    if (!D || !D.recipes.length || !choice) return null;
+    let gs = null, ch = null, dn = null;
+    for (const [id, rid] of Object.entries(choice)) {
+      const r = D.recipeById[rid], to = r && D.items[r.out.item];
+      if (!to || to.id === id || !GK.data.itemGrade(to) || GK.data.family(to) !== id) continue;
+      ch = ch || Object.assign({}, choice);
+      delete ch[id];
+      if (ch[to.id] == null) ch[to.id] = rid;
+      gs = gs || (goals || []).map((g) => ({ item: g.item, qty: g.qty }));
+      const i = gs.findIndex((g) => g.item === id);
+      if (i < 0) continue;
+      const j = gs.findIndex((g) => g.item === to.id);
+      gs[i] = { item: to.id, qty: gs[i].qty + (j >= 0 ? gs[j].qty : 0) };   // at the old goal's place
+      if (j >= 0) gs.splice(j, 1);
+      const k = "step:" + id;
+      if (done && done[k] != null) { dn = dn || Object.assign({}, done); if (dn["step:" + to.id] == null) dn["step:" + to.id] = dn[k]; delete dn[k]; }
+    }
+    return ch ? { goals: gs, choice: ch, done: dn || done } : null;
+  }
+  // A plan saved before 1.9 (when the data had no graded items) planned "Vinho (prata)" as the goal "wine" with the
+  // Barril's silver recipe chosen; gradeMoves turns it into the goal "wine-silver" (choice and step tick too).
   // Every copy (local, account doc, legacy flat plan) passes here, once the data is loaded; a plan without such a
   // choice is returned as it was.
   function listContent(o) {
     const c = { goals: cleanGoals(o.goals), choice: strMap(o.choice), have: haveMap(o.have), done: doneMap(o.done), example: !!o.example };
-    const m = GK.data && GK.data.gradeMoves ? GK.data.gradeMoves(c.goals, c.choice, c.done) : null;
+    const m = gradeMoves(c.goals, c.choice, c.done);
     if (m) { c.goals = m.goals.map((g) => ({ item: g.item, qty: clampQty(g.qty) })); c.choice = m.choice; c.done = m.done; }
     return c;
   }
@@ -463,7 +491,7 @@ GK.store = (function () {
     timer = setTimeout(persistNow, 120);
   }
   if (typeof window !== "undefined" && window.addEventListener) {
-    // a pending write must not be lost when the tab closes or goes to the background (AUDITORIA S6)
+    // a pending write must not be lost when the tab closes or goes to the background
     window.addEventListener("pagehide", () => { if (timer) persistNow(); });
     if (typeof document !== "undefined" && document.addEventListener) {
       document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden" && timer) persistNow(); });
@@ -562,10 +590,10 @@ GK.store = (function () {
     // yield bonuses ("Vantagens"): perk id on / off
     setPerk(id, on) { update((s) => { if (on) s.perks[id] = true; else delete s.perks[id]; }, { from: "perk" }); },
     chooseRecipe(item, rid) { update((s) => { if (rid) s.choice[item] = rid; else delete s.choice[item]; }); },
-    // a step's tick keeps the quantity it was ticked at (qty; none = true): GK.calc.doneCovers (C3)
+    // a step's tick keeps the quantity it was ticked at (qty; none = true): GK.calc.doneCovers
     toggleDone(key, on, qty) { update((s) => { if (on) { const c = clampHave(qty); s.done[key] = c == null ? true : c; } else delete s.done[key]; }); },
-    // a raw row's tick is "tenho tudo" (1.8.0, corte 9): have = the quantity the row asks for (so it is pending again
-    // when the plan asks for more, C3); unticking forgets what the row had (and a tick saved before 1.8.0)
+    // a raw row's tick is "tenho tudo": have = the quantity the row asks for (so it is pending again
+    // when the plan asks for more); unticking forgets what the row had (and a tick saved before 1.8.0)
     checkRaw(item, qty, on) {
       update((s) => {
         delete s.done["raw:" + item];
@@ -734,5 +762,5 @@ GK.store = (function () {
   };
   return { get: () => state, load, subscribe: (fn) => subs.push(fn), actions, update, clampQty, SCHEMA, THEMES, ISO, SYNCED,
     PER_LIST, MIRROR, syncPayload, syncKey, legacyMirror, sanitizeRemote, hasContent, mergeSynced, stamp, useAccount, setSyncBase,
-    storageKey: () => key, activeList: (s) => activeList(s || state), LIST_NAME_MAX, LISTS_MAX, RECENTS_MAX, DAY_IDS, dayOrder, dayFromNumber, doneToday, NOTE_MAX, LATE, keepLate, adoptLate };
+    storageKey: () => key, gradeMoves, activeList: (s) => activeList(s || state), LIST_NAME_MAX, LISTS_MAX, RECENTS_MAX, DAY_IDS, dayOrder, dayFromNumber, doneToday, NOTE_MAX, LATE, keepLate, adoptLate };
 })();

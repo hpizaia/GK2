@@ -1,27 +1,27 @@
 /* GK.data: loads and normalizes the embedded JSON (the gk2-data script block, schema 1, see
-   scripts/README-build.md). Accepts collapsed localized values: a plain string stands for {pt: s, en: s}.
+   scripts/README-build.md). Accepts collapsed localized values: a plain string stands for {pt: s, en: s}, and a
+   field the build left out holds its default value (build.py drop_defaults: listed true, cd false, icon null…).
    Owns: items, stations, recipes and their indexes (byOut, usedIn, search index); meta (built, version,
-   changelog, sprite); the perk list parsed from recipe notes (D.perks); the payload's technology tree block as
-   D.techs (raw; GK.tech normalizes it).
-   Exposes: GK.data.{load, get, item, recipe, recipesFor, norm, words, parseBonus, perks} (+ the grade helpers below).
-   Load-time enrichments (no build change needed):
-   - bonus: input / by-product / output notes shaped "N (M with X)", "N, or M with X", "+N each with X" or
-     "M with X" become line.bonus = {perk: "X" (en), perks: [perkId], qty: M | null, add: N | null}; the perk
-     names (en + pt, the pt one read from note.pt with the mirrored pattern) are collected in D.perks.
-   - quality (1.9): recipe.quality = "bronze" | "silver" | "gold" = the grade of the graded item it makes (Barril with
-     silver Grape Juice → Vinho (prata); "Wine (bronze) + Spices" → Vinho (prata) too), else the grade its name gives the
-     input ("Cabbage soup from Cabbage (gold)"); never read from the id alone (Bronze Polido has none).
-   - grades kept by the build (1.9, docs/revisao-ux/consertos.md "Qualidade"): "Wine (silver)" is the item wine-silver
-     (base: wine) in the payload; the plain item is the bronze one. gradeMoves() moves a plan saved before that.
-   - grades (1.8.0, receitas agrupadas): item.grade = "bronze" | "silver" | "gold" on a quality variant (its id ends in
-     -bronze / -silver / -gold); line.grade on the input a "<X> from <Y> (grade)" recipe names, also where the item stays
-     the plain one (bronze: the common <Y> is the bronze one; a circular recipe: the input is the output itself). Shown
-     as the star in the icon corner (GK.util.slot). The recipes of an item, by family (same id but the grade suffix),
-     always come bronze, silver, gold (gradeSort keeps the positions the family holds in the list).
-   - bronze plain (2026-11, consertos.md §17): the plain item of a family the build keeps silver / gold of ("pumpkin",
-     "wine", "cabbage-seed"…) is the bronze one, so it gets item.grade = "bronze" too (bronzePlain); an "Any X" input
-     line takes any grade (line.anyGrade: no star on it). lineGrade(line) = the grade a line shows.
-   Also exposes GK.data.{GRADE_RANK, itemGrade, lineGrade, family, gradeSort, stripGrade, gradeMoves}.
+   changelog, sprite); the perk list (D.perks); the payload's technology tree block as D.techs (raw; GK.tech
+   normalizes it).
+   Exposes: GK.data.{load, get, item, recipe, recipesFor, loc, norm, words, perks, spritePos} (+ the grade helpers below).
+   loc(v): a localized value ({pt, en} or one string for every language) as {pt, en, …}, a missing language filled
+   from en (else pt); null for none. Also read by GK.tech and GK.ui.days for their blocks of the payload.
+   Read as the build sets them (scripts/build.py apply_grades / apply_bonuses; data/README-data.md "Quality grades"):
+   - item.grade = "bronze" | "silver" | "gold": a quality variant ("wine-silver", base "wine") and the plain item of a
+     family with silver / gold (the bronze one: "wine", "pumpkin", "cabbage-seed"). Shown as the star in the icon
+     corner (GK.util.slot); a variant without its own icon draws its base's (meta.sprite.icons).
+   - recipe.quality = the grade of the variant it makes, else the "(grade)" its name ends with ("Cabbage soup from
+     Cabbage (gold)"); never read from the id alone (Bronze Polido has none). null: no grade.
+   - line.grade: the plain input a "<X> from <Y> (bronze)" recipe names; line.anyGrade: the input of "<X> from Any
+     <Y>" (any grade, no star). lineGrade(line) = the grade a line shows.
+   - line.bonus = {perk: "X" (en), perks: [perkId], qty: M | null, add: N | null} on the input / by-product / output
+     notes shaped "N (M with X)", "N, or M with X", "+N each with X" or "M with X"; D.perks = {id: {id, en, pt, uses}}.
+   Still done here: the recipes of an item, by family (same id but the grade suffix), always come bronze, silver,
+   gold (gradeSort keeps the positions the family holds in the list); the item lists sort by name with the family
+   together (gradeSort, together = true: it depends on the language and the player's renames). A plan saved before
+   the grades were kept is moved by GK.store (gradeMoves).
+   Also exposes GK.data.{GRADE_RANK, itemGrade, lineGrade, family, gradeSort, stripGrade}.
 */
 GK.data = (function () {
   const D = {
@@ -73,70 +73,6 @@ GK.data = (function () {
     o.hidden = !o.listed || o.unobtainable || !!HIDDEN_KINDS[o.kind];
     return o;
   }
-  // ---- perk bonuses in notes ----------------------------------------------------------------------
-  // [en regex, pt regex, kind]: groups are (base?, qty|add, perk)
-  const BONUS = [
-    [/^(\d+(?:\.\d+)?) \((\d+(?:\.\d+)?) with (.+)\)$/i, /^(\d+(?:[.,]\d+)?) \((\d+(?:[.,]\d+)?) com (.+)\)$/i, "qty"],
-    [/^(\d+(?:\.\d+)?), or (\d+(?:\.\d+)?) with (.+)$/i, /^(\d+(?:[.,]\d+)?), ou (\d+(?:[.,]\d+)?) com (.+)$/i, "qty"],
-    [/^()\+(\d+(?:\.\d+)?) each with (.+)$/i, /^()\+(\d+(?:[.,]\d+)?) cada com (.+)$/i, "add"],
-    [/^()(\d+(?:\.\d+)?) with (.+)$/i, /^()(\d+(?:[.,]\d+)?) com (.+)$/i, "qty"],
-  ];
-  const slug = (s) => String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-  /** note {pt, en, …} → {perk, perks: [id], qty, add, names: [{id, en, pt}]} | null (first segment with a bonus) */
-  function parseBonus(note) {
-    if (!note || !note.en) return null;
-    const en = String(note.en).split(";").map((x) => x.trim()), pt = String(note.pt || "").split(";").map((x) => x.trim());
-    for (let k = 0; k < en.length; k++) {
-      for (const [rx, rxPt, kind] of BONUS) {
-        const m = rx.exec(en[k]);
-        if (!m) continue;
-        const v = +m[2];
-        if (!(v >= 0)) continue;
-        const enNames = m[3].split(/\s+and\s+/i).map((x) => x.trim()).filter(Boolean);
-        const mp = pt[k] && rxPt.exec(pt[k]);
-        const ptNames = mp ? mp[3].split(/\s+e\s+/).map((x) => x.trim()) : [];
-        const names = enNames.map((e, i) => ({ id: slug(e), en: e, pt: ptNames.length === enNames.length ? ptNames[i] : e }));
-        return { perk: m[3].trim(), perks: names.map((x) => x.id), qty: kind === "qty" ? v : null, add: kind === "add" ? v : null, names };
-      }
-    }
-    return null;
-  }
-  function addBonus(line) {
-    const b = line && line.note && parseBonus(line.note);
-    if (!b) return;
-    line.bonus = { perk: b.perk, perks: b.perks, qty: b.qty, add: b.add };
-    for (const n of b.names) {
-      const p = D.perks[n.id] || (D.perks[n.id] = { id: n.id, en: n.en, pt: n.pt, uses: 0 });
-      LANGS.forEach((l) => { if (p[l] == null) p[l] = l === "pt" ? n.pt : n.en; });
-      if (p.pt === p.en && n.pt !== n.en) p.pt = n.pt;   // prefer a real pt name when one note has it
-      p.uses++;
-    }
-  }
-  // a recipe's grade (1.9, qualidade): the grade of what it MAKES when the output is a graded item ("Wine (silver)" from
-  // the Barrel with silver Grape Juice, and from "Wine (bronze) + Spices"); else the grade its name gives the input it
-  // changes ("Cabbage soup from Cabbage (gold)"). Never from the id alone: "polished-bronze" is not a grade.
-  const gradeOf = (r) => {
-    const out = D.items[r.out.item];
-    if (out && out.grade) return out.grade;
-    const m = r.name && /\((bronze|silver|gold)\)\s*$/i.exec(r.name.en || "");
-    return m ? m[1].toLowerCase() : null;
-  };
-  // "<X> from <Y> (bronze|silver|gold)": mark the <Y> input with the grade (line.grade, shown only)
-  function qualityInputs() {
-    for (const r of D.recipes) {
-      if (!r.name) continue;
-      const m = /^.+? from (.+?) \((bronze|silver|gold)\)\s*$/i.exec(r.name.en || "");
-      if (!m) continue;
-      const grade = m[2].toLowerCase(), want = norm(m[1]);
-      const line = r.in.find((l) => D.items[l.item] && norm(D.items[l.item].en) === want);
-      if (!line) continue;
-      const base = D.items[line.item];
-      if (base.kind === "quality-variant" || base.members) continue;
-      // since 1.9 the build keeps the grade (silver / gold inputs are their own items): what is left here is the plain
-      // item read as bronze ("Wine (bronze)" in "Drink enhancement I", "Cabbage (bronze)" in a soup)
-      line.grade = grade;
-    }
-  }
   // ---- grades: bronze, silver, gold (see the header) ------------------------------------------------
   const GRADE_RANK = { bronze: 0, silver: 1, gold: 2 };
   const GRADE_SUFFIX = /-(bronze|silver|gold)$/;
@@ -150,7 +86,7 @@ GK.data = (function () {
   }
   // reorder, in place, the members of each family to bronze, silver, gold, in the positions the family holds
   // (everything else stays where it is). famOf(x) → family key or null; rankOf(x) → 0..2.
-  // together (the item lists and the search, 2026-11): the family also comes in one run, where its first member was
+  // together (the item lists and the search): the family also comes in one run, where its first member was
   // (Abóbora, Abóbora (prata), Abóbora (ouro), with no "Abóbora assada" in between); the rest keeps its order
   function gradeSort(list, famOf, rankOf, together) {
     const fams = new Map();
@@ -174,72 +110,6 @@ GK.data = (function () {
     }
     return list;
   }
-  /**
-   * A plan saved up to 1.8.1, when the data dropped the grade of Vinho / Uvas / Repolho…: "Vinho" had the three Barril
-   * recipes and the two improvements, so a silver or gold one was planned as the goal "wine" with the recipe chosen
-   * (choice.wine = "wine-from-grape-juice-silver"). Since 1.9 that recipe makes "wine-silver": the choice moves to the
-   * item it makes, and a goal of the plain item planned with it becomes that grade (what the plan made), with its step
-   * tick. Ids never change: "wine" is the bronze one, "wine-silver" / "cabbage-gold" the ids the page already used.
-   * goals [{item, qty}], choice {item: recipe}, done {key: tick} → {goals, choice, done} (new objects) or null (no change).
-   */
-  function gradeMoves(goals, choice, done) {
-    if (!D.recipes.length || !choice) return null;
-    let gs = null, ch = null, dn = null;
-    for (const [id, rid] of Object.entries(choice)) {
-      const r = D.recipeById[rid], to = r && D.items[r.out.item];
-      if (!to || to.id === id || !itemGrade(to) || family(to) !== id) continue;
-      ch = ch || Object.assign({}, choice);
-      delete ch[id];
-      if (ch[to.id] == null) ch[to.id] = rid;
-      gs = gs || (goals || []).map((g) => ({ item: g.item, qty: g.qty }));
-      const i = gs.findIndex((g) => g.item === id);
-      if (i < 0) continue;
-      const j = gs.findIndex((g) => g.item === to.id);
-      gs[i] = { item: to.id, qty: gs[i].qty + (j >= 0 ? gs[j].qty : 0) };   // at the old goal's place
-      if (j >= 0) gs.splice(j, 1);
-      const k = "step:" + id;
-      if (done && done[k] != null) { dn = dn || Object.assign({}, done); if (dn["step:" + to.id] == null) dn["step:" + to.id] = dn[k]; delete dn[k]; }
-    }
-    return ch ? { goals: gs, choice: ch, done: dn || done } : null;
-  }
-  /**
-   * The plain item of a family is its bronze grade (1.9, data/README-data.md "Quality grades"): "pumpkin" next to
-   * "pumpkin-silver" / "pumpkin-gold" (base: pumpkin). It gets item.grade = "bronze", so it shows as bronze wherever a
-   * grade shows (the star in GK.util.slot, the word under the name, the bronze / silver / gold order). Only a family
-   * with a silver or gold item that names it as its base and no bronze item of its own: História has "story-bronze"
-   * (the plain História is the one the prayers ask for), Suco de Uva has no plain item, and the families the build
-   * leaves without grades (organs, Beer, Bronze Polido, the "Any X" groups) have no graded item at all. Ids, the data
-   * and the saved plans do not change; neither does recipe.quality (set before this).
-   * 2026-11: Abóbora, Sementes de Abóbora, Repolho, Semente de Repolho, Cebola, Semente de Cebola, Uvas, Sementes de
-   * Uva, Vinho.
-   */
-  function bronzePlain() {
-    const fams = {};
-    for (const it of Object.values(D.items)) {
-      const g = itemGrade(it);
-      if (!g || !it.base) continue;
-      (fams[it.base] = fams[it.base] || {})[g] = true;
-    }
-    for (const [id, gs] of Object.entries(fams)) {
-      const it = D.items[id];
-      if (gs.bronze || !(gs.silver || gs.gold) || !it || it.stub || it.grade || it.members || it.kind === "quality-variant" || it.kind === "group") continue;
-      it.grade = "bronze";
-    }
-  }
-  /**
-   * "Alcohol from Any Wine", "Seed oil from Any Cabbage seed": the wiki points "Any X" to the plain item (the bronze
-   * one), but the recipe takes X of any grade. The line gets anyGrade = true: no star nor grade word on it
-   * (lineGrade → null), and a group card keeps it with the plain ingredients.
-   */
-  function anyLines() {
-    for (const r of D.recipes) {
-      const m = r.name && /\bfrom Any (.+?)\s*$/i.exec(r.name.en || "");
-      if (!m) continue;
-      const want = norm(m[1]);
-      const line = r.in.find((l) => D.items[l.item] && norm(D.items[l.item].en) === want);
-      if (line && !line.grade) line.anyGrade = true;
-    }
-  }
   // the grade a recipe line shows: its own ("… from Cabbage (bronze)"), else its item's; none on an "Any X" line
   const lineGrade = (line) => (!line || line.anyGrade ? null : line.grade || itemGrade(D.items[line.item]));
   // "Suco de Uva (prata)" → "Suco de Uva" (the grade word in either language, at the end of a shown name)
@@ -253,6 +123,14 @@ GK.data = (function () {
     const line = { item, qty: q != null && q > 0 ? q : null };
     const note = loc(x.note);
     if (note) line.note = note;
+    return withGrade(line, x);
+  }
+  // the build's line.grade / line.anyGrade / line.bonus (see the header), copied onto a normalized line
+  function withGrade(line, x) {
+    if (x.grade) line.grade = x.grade;
+    if (x.anyGrade) line.anyGrade = true;
+    const b = x.bonus;
+    if (b) line.bonus = { perk: b.perk, perks: b.perks, qty: b.qty != null ? b.qty : null, add: b.add != null ? b.add : null };
     return line;
   }
   function normRecipe(r, idx) {
@@ -270,6 +148,7 @@ GK.data = (function () {
     const outNote = typeof r.out === "object" ? loc(r.out.note) || loc(r.made) : loc(r.made);
     const out = { item: outItem, qty: num(r.out.qty) };
     if (outNote) out.note = outNote;
+    if (typeof r.out === "object") withGrade(out, r.out);
     return {
       id: r.id || outItem + "#" + idx,
       out,
@@ -293,6 +172,7 @@ GK.data = (function () {
       star_quality: typeof r.star_quality === "string" ? r.star_quality : null,
       // star craft thresholds {silver: 6, gold: 10} (successful ticks; a value may be text)
       star: starOf(r.star_quality),
+      quality: GRADE_RANK[r.quality] != null ? r.quality : null,
     };
   }
   function starOf(v) {
@@ -326,22 +206,7 @@ GK.data = (function () {
       const nr = normRecipe(r, i);
       if (nr && !D.recipeById[nr.id]) { D.recipes.push(nr); D.recipeById[nr.id] = nr; }
     });
-    const icons = D.meta.sprite && D.meta.sprite.icons;
-    qualityInputs();
-    for (const it of Object.values(D.items)) {
-      const m = it.kind === "quality-variant" && GRADE_SUFFIX.exec(it.id);
-      if (!m) continue;
-      it.grade = m[1];
-      // a grade the build kept ("wine-silver", base "wine") draws its family's icon (the star tells the grade)
-      if (icons && it.base && !icons[it.id] && icons[it.base]) icons[it.id] = icons[it.base];
-    }
-    for (const r of D.recipes) {
-      r.quality = gradeOf(r);
-      r.in.forEach(addBonus); r.extra.forEach(addBonus); addBonus(r.out);
-    }
-    // after the recipes' quality (that stays as it was: the planner reads it), the plain bronze ones and "Any X"
-    bronzePlain();
-    anyLines();
+    for (const [id, p] of Object.entries(j.perks || {})) D.perks[id] = { id, en: p.en, pt: p.pt != null ? p.pt : p.en, uses: p.uses || 0 };
     // byOut keeps each item's best-first order (item.recipes); usedIn = consumers
     D.byOut = {}; D.usedIn = {};
     const tmp = {};
@@ -369,8 +234,13 @@ GK.data = (function () {
     if (D.meta.sprite) GK.util.setSprite(D.meta.sprite);
     return D;
   }
+  // [col, row] of a sprite id (item / station id, "tech:<slug>", "tp:<colour>", "day:<id>") in meta.sprite; null if absent
+  const spritePos = (id) => {
+    const sp = D.meta && D.meta.sprite;
+    return sp && sp.icons && id ? sp.icons[id] : null;
+  };
   return {
-    load, norm, words, parseBonus, GRADE_RANK, itemGrade, lineGrade, family, gradeSort, stripGrade, gradeMoves,
+    load, loc, norm, words, spritePos, GRADE_RANK, itemGrade, lineGrade, family, gradeSort, stripGrade,
     get: () => D,
     perks: () => D.perks,
     item: (id) => D.items[id],

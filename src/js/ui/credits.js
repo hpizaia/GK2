@@ -1,67 +1,12 @@
 /* GK.ui.credits: the "Créditos" screen (#credits), a route-only screen (not in the tab bar) reached from the
    footer: who made the app and why (a non-profit fan project), the game's rights, where the data comes from,
-   that it was made with AI, the source code, thanks, and the app version (meta.version). Since 1.4.1 it also holds
-   what left the footer: the base-amounts note and the data's game versions (the wikily credit was already here; no build date since 1.8.x).
+   that it was made with AI, the source code, thanks, the app version (meta.version), the base-amounts note and the
+   data's game versions (no build date).
    Wide screens with a mouse (min-width 900px and pointer: fine): a card beside it with a QR code of the app's link
    ("Aponte a câmera do celular…"), drawn by GK.ui.qr only then, when the screen opens; phones never get it.
-   Owns: the "credits" route and its screen section (created by GK.router.ensureScreens), the credits.* texts.
+   Owns: the "credits" route and its screen section (created by GK.router.ensureScreens); it shows the credits.* texts.
    Exposes: GK.ui.credits.{mount, render, APP_URL}; registered as a panel.
 */
-GK.i18n.add({
-  pt: {
-    "credits.title": "Créditos",
-    "credits.back": "← Voltar ao planejador",
-    "credits.fan.h": "Um projeto de fã",
-    "credits.fan.p1": "Feito por Hugo Pizaia, um fã brasileiro de Graveyard Keeper, para deixar o jogo ainda mais divertido de jogar.",
-    "credits.fan.p2": "É gratuito: sem anúncios, sem compras, nada à venda e nenhum dado vendido. Ninguém lucra com ele, de forma nenhuma.",
-    "credits.fan.p3": "Não tem afiliação, apoio nem qualquer ligação com a Lazy Bear Games ou a tinyBuild.",
-    "credits.game.h": "O jogo",
-    "credits.game.p1": "Graveyard Keeper 2 © Lazy Bear Games / tinyBuild. Os ícones, a arte dos itens, os nomes e os textos são deles e aparecem aqui como conteúdo de fã, sem fins comerciais e com o devido crédito.",
-    "credits.game.p2": "Se você tem direitos sobre algo mostrado aqui e quer que seja retirado ou alterado, é só avisar pelo GitHub que será feito.",
-    "credits.data.h": "Dados",
-    "credits.data.p1": "Receitas, itens, estações e tecnologias vêm do {link} (© NX Software).",
-    "credits.data.link": "Graveyard Keeper 2 Wiki no Wikily",
-    "credits.data.p2": "Os nomes oficiais em português do Brasil saem dos próprios arquivos de texto do jogo; os marcados “não oficial” são traduções provisórias.",
-    "credits.data.p3": "As quantidades são as de base; ligue suas Vantagens no Progresso para somar os bônus.",
-    "credits.data.p4": "Receitas da wiki (jogo {wiki}) · textos do jogo {game}.",
-    "credits.qr.h": "Abrir no celular",
-    "credits.qr.say": "Aponte a câmera do celular para abrir o app lá.",
-    "credits.qr.alt": "QR code do endereço do app",
-    "credits.ai.h": "Feito com IA",
-    "credits.ai.p1": "Este app foi feito com o Claude Code, da Anthropic. Código, visual, cálculos e traduções foram produzidos com a IA, sob a direção do fã, que testou no jogo.",
-    "credits.ai.p2": "Os erros são responsabilidade do fã, não do estúdio.",
-    "credits.code.h": "Código aberto",
-    "credits.code.p": "Código e documentação no {link}.",
-    "credits.thanks": "Obrigado à Lazy Bear Games pelo jogo e a todo mundo que contribui com o wiki no Wikily.",
-  },
-  en: {
-    "credits.title": "Credits",
-    "credits.back": "← Back to the planner",
-    "credits.fan.h": "A fan project",
-    "credits.fan.p1": "Made by Hugo Pizaia, a Brazilian fan of Graveyard Keeper, to make playing the game even more fun.",
-    "credits.fan.p2": "It's free: no ads, no purchases, nothing for sale and no data sold. Nobody profits from it in any way.",
-    "credits.fan.p3": "Not affiliated with, endorsed by or connected to Lazy Bear Games or tinyBuild.",
-    "credits.game.h": "The game",
-    "credits.game.p1": "Graveyard Keeper 2 © Lazy Bear Games / tinyBuild. The icons, item art, names and texts belong to them and appear here as fan content, non-commercial and with credit.",
-    "credits.game.p2": "If you hold rights to something shown here and want it removed or changed, say so on GitHub and it will be done.",
-    "credits.data.h": "Data",
-    "credits.data.p1": "Recipes, items, stations and technologies come from the {link} (© NX Software).",
-    "credits.data.link": "Graveyard Keeper 2 Wiki on Wikily",
-    "credits.data.p2": "Official Brazilian Portuguese names come from the game's own text files; names marked “não oficial” (unofficial) are provisional translations.",
-    "credits.data.p3": "Amounts are the base ones; switch on your Perks in Progress to add the bonuses.",
-    "credits.data.p4": "Wiki recipes (game {wiki}) · game texts {game}.",
-    "credits.qr.h": "Open on your phone",
-    "credits.qr.say": "Point your phone's camera here to open the app there.",
-    "credits.qr.alt": "QR code of the app's address",
-    "credits.ai.h": "Made with AI",
-    "credits.ai.p1": "This app was built with Claude Code, by Anthropic. The code, design, calculations and translations were produced with the AI under the fan's direction, and the fan tested it in the game.",
-    "credits.ai.p2": "Any mistakes are the fan's responsibility, not the studio's.",
-    "credits.code.h": "Open source",
-    "credits.code.p": "Code and documentation on {link}.",
-    "credits.thanks": "Thanks to Lazy Bear Games for the game, and to everyone who contributes to the wiki on Wikily.",
-  },
-});
-
 GK.ui.credits = (function () {
   const { t } = GK.i18n, { esc } = GK.util;
   const WIKI = "https://wikily.gg/graveyard-keeper-2", REPO = "https://github.com/hpizaia/GK2";
@@ -110,7 +55,7 @@ GK.ui.credits = (function () {
     const m = GK.data.get().meta, d = m.data || {};
     const version = m.version
       ? `<p class="cr-version">${esc(t("footer.version", { app: t("app.titlePlain"), version: m.version }))}</p>` : "";
-    // the data's game versions (meta.data), not the build date (QA 2026-11 #8: it changed with every build)
+    // the data's game versions (meta.data), not the build date (it would change with every build)
     const dataDate = d.wiki ? esc(t("credits.data.p4", { wiki: d.wiki, game: d.game || d.wiki })) : "";
     const qr = qrCard();
     root.innerHTML = `<div class="cr-grid${qr ? " has-qr" : ""}"><div class="card cl-card cr-card">

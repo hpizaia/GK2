@@ -1,10 +1,10 @@
 /* GK.util: small shared helpers (HTML escaping, DOM ids, icon slots from the sprite, clipboard, debounce).
    Owns: the icon sprite <style> rule and the broken-image fallback listener.
-   Exposes: GK.util.{esc, domId, slot, setSprite, copyText, debounce}.
-   slot(ent, label, small, grade) (1.8.0): an item with a quality grade (item.grade, or the grade a recipe line gives
+   Exposes: GK.util.{esc, domId, slot, qstar, setSprite, copyText, debounce}.
+   slot(ent, label, small, grade): an item with a quality grade (item.grade, or the grade a recipe line gives
    it: the bronze Cabbage of "… from Cabbage (bronze)") gets the pixel star in its icon's top-left corner (.qstar
    q-b / q-s / q-g, components.css), out of the way of a stack number. The one place that draws it. The plain item of
-   a graded family is the bronze one (item.grade "bronze", GK.data bronzePlain); grade = false draws no star (an
+   a graded family is the bronze one (item.grade "bronze", set by build.py apply_grades); grade = false draws no star (an
    "Any X" line, or a row that stands for the whole family).
 */
 GK.util = (function () {
@@ -24,13 +24,14 @@ GK.util = (function () {
   }
   const letterTile = (cls, letter) => `<span class="${cls}"><span class="slot-letter" aria-hidden="true">${letter}</span></span>`;
   const STAR = { bronze: "q-b", silver: "q-s", gold: "q-g" };
+  // the pixel star of a grade ("bronze" | "silver" | "gold"; anything else: "")
+  const qstar = (grade) => (STAR[grade] ? `<span class="qstar ${STAR[grade]}" aria-hidden="true"></span>` : "");
   // ent = item or station ({id, icon}); label = shown name (for the letter fallback); grade = a line's grade (else
   // ent.grade; false = no star)
   function slot(ent, label, small, grade) {
     const letter = esc((String(label || "?").trim()[0] || "?").toUpperCase());
-    const q = grade === false ? "" : STAR[grade || (ent && ent.grade)] || "";
-    const cls = "slot" + (small ? " slot-sm" : "") + (q ? " has-q" : "");
-    const star = q ? `<span class="qstar ${q}" aria-hidden="true"></span>` : "";
+    const g = grade === false ? null : grade || (ent && ent.grade);
+    const star = qstar(g), cls = "slot" + (small ? " slot-sm" : "") + (star ? " has-q" : "");
     const pos = ent && sprite && sprite.icons[ent.id];
     if (pos) return `<span class="${cls}"><span class="ico" style="--x:${+pos[0]};--y:${+pos[1]}"></span>${star}</span>`;
     const icon = ent && ent.icon;
@@ -61,5 +62,5 @@ GK.util = (function () {
     } catch (e) { return false; }
   }
   function debounce(fn, ms) { let t = null; return function () { const a = arguments; clearTimeout(t); t = setTimeout(() => fn.apply(null, a), ms); }; }
-  return { esc, domId, slot, setSprite, copyText, debounce };
+  return { esc, domId, slot, qstar, setSprite, copyText, debounce };
 })();

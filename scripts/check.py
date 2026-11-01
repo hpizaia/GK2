@@ -5,7 +5,8 @@
     python3 -I scripts/check.py --release   # + exige changelog datado e nenhum teste pulado (data/raw/ presente)
 
 Confere: versões (VERSION, topo de data/changelog.json, `const VERSION` e #ver do site), build reprodutível,
-site/preview.html, data/days.json, os 3 testes (test_build.py, test_techs.py, test_calc.mjs) e o e-mail do git.
+site/preview.html, data/days.json, os 3 testes (test_build.py, test_techs.py, test_calc.mjs), que nenhum arquivo
+versionado cite as pastas internas (docs/revisao-ux/, historico/) e o e-mail do git.
 Uma linha por conferência (ok / AVISO / FALHA); embaixo, o log só de quem falhou. Exit 1 se houver FALHA.
 
 Não grava nada no repositório: o build roda numa pasta temporária (apagada no fim) e é comparado byte a byte
@@ -124,6 +125,51 @@ def check_test(cmd, release, hint=""):
     return True, count, ""
 
 
+# Pastas internas (fora do git, CLAUDE.md regra 3): um arquivo versionado não aponta para nada lá dentro, porque
+# quem clona o repositório não tem essas pastas. A busca é por texto, em cada linha.
+INTERNAL = ("docs/revisao-ux/", "historico/")
+# Únicos lugares que podem citar as pastas: os que dizem que elas são internas ou as mantêm fora do git.
+# {arquivo: trechos}: com None, o arquivo inteiro; senão, só as linhas que contêm um dos trechos.
+INTERNAL_OK = {
+    ".gitignore": None,                    # é quem tira as pastas do git
+    "CLAUDE.md": None,                     # a regra 3 e o mapa das pastas
+    ".claude/agents/gk2-worker.md": None,  # as mesmas regras, para os agentes
+    "scripts/git-hooks/pre-push": None,    # a trava do push lista os caminhos proibidos
+    "scripts/check.py": None,              # esta conferência
+    "docs/README.md": ("está no `.gitignore`", "Fora do repositório público"),
+    "docs/arquitetura.md": ("está no `.gitignore`",),
+    "docs/atualizacao.md": ("não devem aparecer", "está no `.gitignore`"),
+    "scripts/release.py": ("não podem aparecer",),
+}
+
+
+def tracked_files():
+    """Arquivos versionados + novos que o .gitignore não tira (os que entrariam num `git add -A`)."""
+    rc, out = sh(["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"])
+    if rc != 0:
+        raise RuntimeError("git ls-files falhou: " + out.strip()[:200])
+    return sorted({f for f in out.split("\0") if f and (ROOT / f).is_file()})
+
+
+def check_internal_refs():
+    hits = []
+    for f in tracked_files():
+        ok = INTERNAL_OK.get(f, ())
+        if ok is None:
+            continue
+        try:
+            text = (ROOT / f).read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue   # binário
+        for n, ln in enumerate(text.splitlines(), 1):
+            if any(s in ln for s in INTERNAL) and not any(s in ln for s in ok):
+                hits.append(f"{f}:{n}: {ln.strip()[:160]}")
+    if hits:
+        return False, (f"{len(hits)} linha(s) citam {' ou '.join(INTERNAL)} (pasta interna, fora do git); "
+                       "tire a citação ou, se a linha só descreve a pasta, ponha em INTERNAL_OK"), "\n".join(hits)
+    return True, f"nenhum arquivo versionado cita {' ou '.join(INTERNAL)}", ""
+
+
 def check_identity():
     _, email = sh(["git", "config", "user.email"])
     email = email.strip()
@@ -159,6 +205,7 @@ def main(argv=None):
         ("test_build.py", lambda: check_test(PY + ["scripts/test_build.py"], args.release, node_hint or raw_hint)),
         ("test_techs.py", lambda: check_test(PY + ["scripts/test_techs.py"], args.release, raw_hint)),
         ("test_calc.mjs", lambda: check_test(["node", "scripts/test_calc.mjs"], args.release)),
+        ("citação interna", check_internal_refs),
         ("identidade git", check_identity),
     ]
     results, t0 = [], time.time()

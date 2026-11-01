@@ -1,9 +1,8 @@
 /* GK.calc: pure planning and search functions (no DOM, no state).
-   Exposes: GK.calc.{plan, search, howToMake, orderStations, isBonusActive, doneCovers, rawChecked, stepChecked,
-   recipeGroups}.
-   1.8.0: search results of one quality family come bronze, silver, gold (GK.data.gradeSort; 2026-11: in one run, the
-   plain bronze item first); recipeGroups(rs, D) is
-   the "Como fabricar" grouping rule of the Receitas detail (see the function).
+   Exposes: GK.calc.{plan, search, howToMake, recipeFor, expandable, orderStations, isBonusActive, doneCovers, rawChecked,
+   stepChecked, recipeGroups}.
+   Search results of one quality family come bronze, silver, gold, in one run (GK.data.gradeSort); recipeGroups(rs, D)
+   is the "Como fabricar" grouping rule of the Receitas detail (see the function).
 */
 GK.calc = (function () {
   // a bonus line ({perks, qty, add}) is active when every perk it names is on
@@ -24,14 +23,22 @@ GK.calc = (function () {
    * and noexp=false to expand; an input equal to the output is netted out, refused when net ≤ 0.
    * have[id] === true is a leaf ("Já tenho" everything); a number is partial stock, handled by plan().
    */
+  // a recipe that can actually expand (≥1 input, not noexp); zero-input "zombie production" and grow recipes only
+  // describe where a raw material comes from (the planner's recipe pickers, the Receitas "Usar")
+  const expandable = (r) => r.in.length > 0 && !r.noexp;
+  // the recipe the planner uses for an item: the player's choice (when it still makes the item), else the default
+  // one; null = none (also the Receitas detail's "Em uso")
+  function recipeFor(id, D, choice) {
+    const c = choice && choice[id] && D.recipeById[choice[id]];
+    if (c && c.out.item === id) return c;
+    const it = D.items[id];
+    return it && it.defaultRecipe ? D.recipeById[it.defaultRecipe] || null : null;
+  }
   function howToMake(id, D, choice, have, perks) {
     const it = D.items[id];
     if (!it) return { leaf: "raw" };
     if (have && have[id] === true) return { leaf: "have" };
-    let r = null;
-    const c = choice && choice[id] && D.recipeById[choice[id]];
-    if (c && c.out.item === id) r = c;
-    else if (it.defaultRecipe) r = D.recipeById[it.defaultRecipe] || null;
+    const r = recipeFor(id, D, choice);
     if (!r) return { leaf: it.members ? "group" : "raw" };
     if (r.noexp) return { leaf: "noexp", r };
     if (!r.in.length) return { leaf: "free", r };
@@ -120,7 +127,7 @@ GK.calc = (function () {
    * need = max(0, demand − stock − have), runs = ceil(need / yield), each input += runs × qty.
    * A group item with a chosen member (groupChoice[group] = member) is replaced by that member everywhere,
    * so its demand merges with any other demand for the member.
-   * Cycle cut (AUDITORIA C5): the back edge found first by the DFS (goal order) becomes the leaf, so [A, B]
+   * Cycle cut: the back edge found first by the DFS (goal order) becomes the leaf, so [A, B]
    * and [B, A] can differ on a user-made cycle. The default recipe graph has none.
    */
   function plan(goals, D, opt) {
@@ -289,8 +296,7 @@ GK.calc = (function () {
     return { results: out.slice(0, (opt && opt.limit) || 10), hiddenCount };
   }
   /**
-   * recipeGroups(rs, D) → { cards: [entry], cyc: [recipe] }: how the Receitas detail lays out an item's recipes
-   * (1.8.0, receitas agrupadas; docs/revisao-ux/consertos.md §10).
+   * recipeGroups(rs, D) → { cards: [entry], cyc: [recipe] }: how the Receitas detail lays out an item's recipes.
    *   cyc    the circular recipes, folded at the end ("Melhorar a qualidade"), only when the item has another recipe.
    *   entry  { r } = a card of its own, or a group card:
    *          { group: true, mode, recipes, fixed: [line], options: [opt], rows: [{ base, item, options }], masteryEach, qtyEach }
@@ -383,7 +389,7 @@ GK.calc = (function () {
     cards.sort((a, b) => pos(a) - pos(b));
     return { cards, cyc };
   }
-  // Ticks follow the quantity (1.8.0, C3 + corte 9). A saved tick is true (before 1.8.0: no quantity, always ticked) or
+  // Ticks follow the quantity. A saved tick is true (before 1.8.0: no quantity, always ticked) or
   // the quantity the row asked for when it was ticked: still ticked while it covers what the row asks for now.
   const doneCovers = (v, n) => v === true || (typeof v === "number" && v > 0 && v >= (n || 0));
   // a raw row (plan().raw) is ticked = "tenho tudo": have true, or a number covering its whole demand; or a tick
@@ -391,5 +397,5 @@ GK.calc = (function () {
   const rawChecked = (r, have, done) => doneCovers(have && have[r.item], r.demand || r.qty) || doneCovers(done && done["raw:" + r.item], r.demand || r.qty);
   // a step (plan().steps) is ticked "feito" while its tick covers what it needs now
   const stepChecked = (s, done) => doneCovers(done && done["step:" + s.item], s.need);
-  return { plan, search, howToMake, orderStations, isBonusActive: active, doneCovers, rawChecked, stepChecked, recipeGroups };
+  return { plan, search, howToMake, recipeFor, expandable, orderStations, isBonusActive: active, doneCovers, rawChecked, stepChecked, recipeGroups };
 })();

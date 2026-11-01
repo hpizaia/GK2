@@ -38,3 +38,6 @@ docs/revisao-ux/
 # instruções privadas do Claude e configuração local do Claude Code (não versionar)
 CLAUDE.local.md
 .claude/settings.local.json
+
+# cópias isoladas (git worktree) dos agentes do Claude Code
+.claude/worktrees/
