@@ -51,15 +51,17 @@ ORDER = {"buy": 0, "fish": 1, "gather": 2}
 ITEM_HREF = ("/items/", "/crafting-stations/", "/buildings/")
 
 # Hand glossary for source names the game text table does not have (tr "machine": the page marks them
-# "não oficial"). Vocabulary follows the app's pt obtain texts ("jazidas de pedra", "pilhas de sucata"...).
+# "não oficial"). Vocabulary follows the app's pt obtain texts ("pilhas de sucata"...); 2026-11 (consertos.md §18,
+# docs/revisao-ux/revisao-nomes-wiki.md): 7 names follow the wiki PT / the game's own words ("Depósito de pedra",
+# "Madeira trazida pela maré", "Cogumelos pantaneiros", "Buraco de areia", "Prateleira quebrada").
 MT = {
-    "Tree": "Árvore", "Creepy tree": "Árvore sinistra", "Dead tree": "Árvore morta", "Driftwood": "Madeira flutuante",
-    "Tree stump": "Toco de árvore", "Bush": "Arbusto", "Stone deposit": "Jazida de pedra",
-    "Iron ore deposit": "Jazida de minério de ferro", "Marble deposit": "Jazida de mármore",
-    "Copper vein": "Veio de cobre", "Clay spot": "Ponto de argila", "Sand pit": "Areal", "Junk pile": "Pilha de sucata",
-    "Trash pile": "Pilha de lixo", "Broken barrel": "Barril quebrado", "Broken shelf": "Estante quebrada",
+    "Tree": "Árvore", "Creepy tree": "Árvore sinistra", "Dead tree": "Árvore morta", "Driftwood": "Madeira trazida pela maré",
+    "Tree stump": "Toco de árvore", "Bush": "Arbusto", "Stone deposit": "Depósito de pedra",
+    "Iron ore deposit": "Depósito de minério de ferro", "Marble deposit": "Depósito de mármore",
+    "Copper vein": "Veio de cobre", "Clay spot": "Ponto de argila", "Sand pit": "Buraco de areia", "Junk pile": "Pilha de sucata",
+    "Trash pile": "Pilha de lixo", "Broken barrel": "Barril quebrado", "Broken shelf": "Prateleira quebrada",
     "Red mushrooms": "Cogumelos vermelhos", "Brown mushrooms": "Cogumelos marrons",
-    "Swamp mushrooms": "Cogumelos do pântano", "Wild beehive": "Colmeia selvagem",
+    "Swamp mushrooms": "Cogumelos pantaneiros", "Wild beehive": "Colmeia selvagem",
     "Goddess of Nature statue": "Estátua da Deusa da Natureza", "Bodies": "Corpos",
     "Burying a corpse": "Enterrar um corpo", "Sermons": "Sermões", "The prologue": "O prólogo",
     "The Keeper's tool belt": "Cinto de ferramentas do Coveiro", "Pre-order bonus": "Bônus da pré-venda",

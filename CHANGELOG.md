@@ -3,6 +3,12 @@
 
 # Histórico de atualizações — Companheiro GK2
 
+## 1.8.4 — 2026-11-01
+
+- Bronze na lista: Abóbora, Vinho, Repolho, Cebola, Uvas e as sementes comuns aparecem como bronze, com estrela, e bronze, prata e ouro vêm juntos e nessa ordem; os Canteiros viram um cartão com a escolha da qualidade
+- Receitas em português: os 231 nomes que apareciam em inglês agora vêm da wiki em português ou são montados com os nomes oficiais do jogo (com o selo “não oficial”); o seletor “Fabricar com” fica curto (“Aprimorar Órgão I”) e o cartão não repete nomes do tipo “X a partir de Y” nem “Construir …”
+- Nomes revisados pela wiki: 9 categorias com os termos do jogo (Jardim, Pátio, Casernas, Túmulos, Povoado…), “Consertar” no lugar de “Reparar”, 7 lugares de coleta, e “Canteiro de Trigo” no lugar do erro “Canteiro de Trigorigo”
+
 ## 1.8.3 — 2026-11-01
 
 - Aba Tecnologias: todas as colunas que ainda têm algo a pesquisar começam abertas; só as completas (✓) começam recolhidas
@@ -140,6 +146,12 @@
 ---
 
 # Update history — GK2 Companion
+
+## 1.8.4 — 2026-11-01
+
+- Bronze in lists: plain Pumpkin, Wine, Cabbage, Onion, Grapes and their seeds show as bronze, with a star, and bronze, silver and gold come together in that order; the Beds become one card with the quality picker
+- Portuguese recipe names: the 231 names that showed in English now come from the Portuguese wiki or are built from the game's official names (marked “unofficial”); English is unchanged
+- Names checked against the wiki: 9 categories use the game's terms, “Consertar” instead of “Reparar”, 7 gathering places, and “Canteiro de Trigo” instead of the typo “Canteiro de Trigorigo” (Portuguese only)
 
 ## 1.8.3 — 2026-11-01
 

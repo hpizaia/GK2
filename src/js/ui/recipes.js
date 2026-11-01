@@ -22,6 +22,10 @@
    the end ("Melhorar a qualidade · N"). A graded item shows its name without "(prata)", the star on its icon
    (GK.util.slot) and the grade word on the line below (list rows, ingredient lines, "Usado em"); bronze, prata, ouro
    in that order (GK.data.gradeSort). "Quem compra": pixel coins (recipes.css).
+   2026-11 (consertos.md §17): the plain item of a graded family is the bronze one (Abóbora, Vinho, Uvas, the seeds…):
+   the bronze star and word like the others, the list and the search keep the family in one run (bronze, prata, ouro),
+   the detail title reads "Abóbora (bronze)" (GK.ui.fmt.gradedName). An "Any X" line ("Álcool de Qualquer Vinho") and
+   a row of "E mais um destes" (it stands for the whole ingredient) show no star.
    1.8.x, renomear: the detail's "não oficial" / "editado" tag is a button ("Renomear <nome>") that opens the name's
    field under the header (Salvar / Cancelar, "Voltar ao nome original" once edited). It writes GK.store overrides
    (lang -> {itemId: name}, synced like before); the planner's "Editar nomes" mode and its ✎ pencils are gone. The
@@ -474,7 +478,7 @@ GK.ui.recipes = (function () {
     const label = {};
     for (const id in IX.rows) label[id] = name(D.items[id], state.overrides);
     const ids = Object.keys(IX.rows).sort((a, b) => coll.compare(label[a], label[b]));
-    GK.data.gradeSort(ids, (id) => GK.data.family(D.items[id]), (id) => GK.data.GRADE_RANK[D.items[id].grade]);
+    GK.data.gradeSort(ids, (id) => GK.data.family(D.items[id]), (id) => GK.data.GRADE_RANK[D.items[id].grade], true);
     sortCache = { key, ids };
     return sortCache.ids;
   }
@@ -508,9 +512,10 @@ GK.ui.recipes = (function () {
     return `<div class="chip-group" role="group" aria-labelledby="rc-${kind}-h"><h3 class="chip-h" id="rc-${kind}-h">${esc(t(kind === "cat" ? "rc.cat" : "rc.station"))}</h3><div class="chips">${html}${more}</div></div>`;
   }
   // a graded item in a list: the name without "(prata)" and the grade word for the line below (the star is on the
-  // icon; colour alone is not enough). grade = a recipe line's own grade (the bronze plain Repolho)
+  // icon; colour alone is not enough). grade = a recipe line's own grade (the bronze plain Repolho); false = none (an
+  // "Any X" line). The plain item of a graded family is the bronze one (GK.data bronzePlain, consertos.md §17)
   function graded(it, nm, grade) {
-    const g = grade || GK.data.itemGrade(it);
+    const g = grade === false ? null : grade || GK.data.itemGrade(it);
     return g ? { name: GK.data.stripGrade(nm) || nm, word: t("quality." + g), grade: g } : { name: nm, word: "", grade: null };
   }
   function rowHtml(row, state) {
@@ -627,11 +632,12 @@ GK.ui.recipes = (function () {
   // opts.noWord: the grade is picked right below (a group card): no grade word under the name
   function line(l, state, sub, opts) {
     const D = GK.data.get(), it = D.items[l.item], nm = name(it, state.overrides);
-    const q = l.qty == null ? "?" : num(l.qty), g = graded(it, nm, l.grade);
+    const lg = l.anyGrade ? false : l.grade;   // "Alcohol from Any Wine": any grade, no star
+    const q = l.qty == null ? "?" : num(l.qty), g = graded(it, nm, lg);
     const full = g.grade ? `${g.name} (${g.word})` : nm;
     const word = g.word && !(opts && opts.noWord) ? `<span class="rc-line-note">${esc(g.word)}</span>` : "";
     return `<li><button type="button" class="rc-line"${opts && opts.id ? ` id="${esc(opts.id)}"` : ""} data-open="${esc(l.item)}" aria-label="${esc(q + " × " + full + " · " + t("rc.open", { name: nm }))}">
-      ${slot(it, nm, true, l.grade)}<span class="rc-line-q tabnum">${esc(q)}<small>×</small></span>
+      ${slot(it, nm, true, lg)}<span class="rc-line-q tabnum">${esc(q)}<small>×</small></span>
       <span class="rc-line-main"><span class="rc-line-name">${esc(g.name)}</span>${word}${l.note ? `<span class="rc-line-note">${esc(name(l.note))}</span>` : ""}${sub ? `<span class="rc-line-note">${esc(sub)}</span>` : ""}</span>
       <span class="rc-chev" aria-hidden="true">›</span></button></li>`;
   }
@@ -679,6 +685,19 @@ GK.ui.recipes = (function () {
     const key = (r) => r.alt.map((a) => a.id).sort().join("|"), k0 = key(rs[0]);
     return rs.every((r) => key(r) === k0) ? rs[0] : null;
   }
+  // the recipe's own name under the card's tags ("Placa (Cavalete)"), when it says more than the item. pt: never an
+  // untranslated English name; a "X a partir de Y" name is left out (it only restates the ingredients listed right
+  // below) and so is a "Construir X (Zona)" one (the card's header already says where: "Construir no Pátio"); en keeps
+  // "X from Y" / "Build X (Yard)" as before. A name composed by us (data/names.recipes.pt-BR.json `derived`, tr guess)
+  // gets the "não oficial" badge.
+  const PT_HIDDEN_NAME = / a partir de |^Construir .+ \(.+\)$/i;
+  function recipeName(r, it) {
+    if (!r.name || name(r.name) === name(it)) return "";
+    const en = GK.i18n.lang() === "en";
+    if (!en && (r.name.pt === r.name.en || PT_HIDDEN_NAME.test(name(r.name)))) return "";
+    const badge = !en && UNOFFICIAL[r.name.tr] ? `<span class="badge" title="${esc(t("rc.unofficialTitle"))}">${esc(t("rc.unofficial"))}</span>` : "";
+    return `<p class="rc-rname">${esc(name(r.name))}${badge}</p>`;
+  }
   // idx: the card's letter ("Receita B"), null = no letter (one card only, or a folded circular one); folded: inside
   // "Melhorar a qualidade" (its title already says circular: no badge)
   function recipeCard(r, idx, it, state, cur, many, altShared, folded) {
@@ -688,7 +707,7 @@ GK.ui.recipes = (function () {
     if (r.noexp) tags.push(`<span class="badge badge-ex">${esc(t("rc.noexp"))}</span>`);
     if (!r.listed) tags.push(`<span class="badge badge-hidden">${esc(t("rc.hiddenRecipe"))}</span>`);
     if (r.cyc && !folded) tags.push(`<span class="badge badge-warn">${esc(t("rc.cyc"))}</span>`);
-    const rname = r.name && name(r.name) !== name(it) && (GK.i18n.lang() === "en" || r.name.pt !== r.name.en) ? `<p class="rc-rname">${esc(name(r.name))}</p>` : "";
+    const rname = recipeName(r, it);
     const alt = r.alt.length && !altShared ? `<p class="rc-meta-line">${esc(t("rc.alt", { names: altNames(r, state) }))}</p>` : "";
     const ins = r.in.length ? `<ul class="rc-lines">${r.in.map((l) => line(l, state)).join("")}</ul>` : `<p class="rc-meta-line">${esc(t("rc.noInputs"))}</p>`;
     const meta = yieldLines(r, state).concat(unlockLines(r)).map((h) => `<li>${h}</li>`).join("");
@@ -741,7 +760,7 @@ GK.ui.recipes = (function () {
         const nm = name(row.item, state.overrides), bn = graded(row.item, nm).name;
         const os = row.options.map((o) => radio(o, " qopt-sm", `${star(o)}<span class="tabnum">${esc(num(o.line.qty))}×</span>`,
           `${num(o.line.qty)} ${bn}${o.grade ? " (" + word(o) + ")" : ""}`)).join("");
-        return `<li><button type="button" class="qalt-it" data-open="${esc(row.item.id)}" aria-label="${esc(t("rc.open", { name: nm }))}">${slot(row.item, nm, true)}<span class="qalt-n">${esc(bn)}</span></button><span class="qalt-o">${os}</span></li>`;
+        return `<li><button type="button" class="qalt-it" data-open="${esc(row.item.id)}" aria-label="${esc(t("rc.open", { name: nm }))}">${slot(row.item, nm, true, false)}<span class="qalt-n">${esc(bn)}</span></button><span class="qalt-o">${os}</span></li>`;
       }).join("");
       pick = `<div class="qpick" role="radiogroup" aria-labelledby="${esc(hid)}"><p class="qpick-h" id="${esc(hid)}">${esc(t("rc.qMore"))}</p>
         <ul class="qalt">${rows}</ul>`;
@@ -856,7 +875,7 @@ GK.ui.recipes = (function () {
   function stackSlot(it, nm) {
     const html = slot(it, nm), st = typeof it.stack === "number" && it.stack > 0 ? it.stack : null;
     if (!st || st < 2) return html;
-    return html.replace(/^<span class="slot"/, `<span class="slot" title="${esc(t("rc.stackTitle", { n: st }))}"`)
+    return html.replace(/^<span class="(slot[^"]*)"/, `<span class="$1" title="${esc(t("rc.stackTitle", { n: st }))}"`)
       .replace(/<\/span>$/, `<span class="stack-n tabnum" aria-hidden="true">${esc(num(st))}</span></span>`);
   }
   function stackCap(it) {
@@ -993,7 +1012,7 @@ GK.ui.recipes = (function () {
 
     const head = `<article class="card rc-item">
       <header class="rc-item-h">${stackSlot(it, nm)}<div class="rc-item-t">
-        <h2 class="rc-name" id="rc-detail-h" tabindex="-1">${esc(nm)}</h2>
+        <h2 class="rc-name" id="rc-detail-h" tabindex="-1">${esc(GK.ui.fmt.gradedName(it, nm))}</h2>
         ${other && other !== nm ? `<p class="rc-other" lang="${lang === "en" ? "pt-BR" : "en"}">${esc(other)}</p>` : ""}
         ${catTxt ? `<p class="rc-cat">${esc(catTxt)}</p>` : ""}
         ${badges(it, state) ? `<div class="rc-badges">${badges(it, state)}</div>` : ""}
@@ -1036,7 +1055,8 @@ GK.ui.recipes = (function () {
     const loc = GK.i18n.meta(lang).locale;
     used.sort((a, b) => (D.items[a.r.out.item].hidden - D.items[b.r.out.item].hidden) ||
       name(D.items[a.r.out.item], state.overrides).localeCompare(name(D.items[b.r.out.item], state.overrides), loc));
-    GK.data.gradeSort(used, (u) => GK.data.family(D.items[u.r.out.item]), (u) => GK.data.GRADE_RANK[D.items[u.r.out.item].grade]);
+    const outFam = (r) => GK.data.family(D.items[r.out.item]), outRank = (r) => GK.data.GRADE_RANK[D.items[r.out.item].grade];
+    GK.data.gradeSort(used, (u) => outFam(u.r), (u) => outRank(u.r), true);
     const usedShow = usedAll ? used : used.slice(0, LIST_CAP);
     // nothing uses it: no section at all (corte 18)
     const usedHtml = !used.length ? "" : `<section class="rc-sec" aria-labelledby="rc-used-h">
@@ -1048,7 +1068,8 @@ GK.ui.recipes = (function () {
 
     // a station item: what is made there
     let here = "";
-    const made = D.stations[id] ? IX.byStation[id] || [] : [];
+    // bronze, prata, ouro together (Canteiro de Repolho: Repolho, Repolho (prata), Repolho (ouro); consertos.md §17)
+    const made = D.stations[id] ? GK.data.gradeSort((IX.byStation[id] || []).slice(), outFam, outRank, true) : [];
     if (made.length) {
       const list = hereAll ? made : made.slice(0, LIST_CAP);
       here = `<section class="rc-sec" aria-labelledby="rc-here-h">

@@ -278,11 +278,13 @@ await test("gold/silver recipes consume the graded input and read differently", 
   // 1.4.1: two same-input recipes (Pele: "Improve organ I/II from Any Skin") are told apart by a short tag, not the
   // whole English name, so the raw-row selector stays narrow on a phone
   const skin = GK.ui.fmt.recipeLabels(GK.data.recipesFor("skin").filter((r) => r.in.length && !r.noexp), st, GK.data.recipesFor("skin"));
-  check(skin.length === 2 && skin[0] !== skin[1] && skin.every((l) => !/ from /i.test(l) && l.length <= 70), "short distinct Pele labels: " + skin.join(" | "));
+  check(skin.length === 2 && skin[0] !== skin[1] && skin.every((l) => !/ from | a partir de /i.test(l) && l.length <= 70), "short distinct Pele labels: " + skin.join(" | "));
+  // fase 2 (data/names.recipes.pt-BR.json): in pt the tag is the pt name cut before " a partir de "
+  eq(skin.map((l) => l.split(" — ")[1]), ["Aprimorar Órgão I", "Aprimorar Órgão II"], "Pele (pt): tags Aprimorar Órgão I / II");
   let longTag = [];
   for (const it of Object.values(D.items)) {
     const list = GK.data.recipesFor(it.id).filter((r) => r.in.length && !r.noexp);
-    if (list.length > 1) GK.ui.fmt.recipeLabels(list, st, list).forEach((l) => { const tag = l.split(" — ")[1]; if (tag && (tag.length > 34 || / from /i.test(tag))) longTag.push(l); });
+    if (list.length > 1) GK.ui.fmt.recipeLabels(list, st, list).forEach((l) => { const tag = l.split(" — ")[1]; if (tag && (tag.length > 34 || / from | a partir de /i.test(tag))) longTag.push(l); });
   }
   eq(longTag, [], "dedupe tags stay short");
   const lab = GK.ui.fmt.recipeLabels([g], st, GK.data.recipesFor("baked-pumpkin"))[0];
@@ -1041,7 +1043,7 @@ await test("ficha do item: sell / price / study / asked reach the page", () => {
 await test("grades: the star's grade on items and lines, always bronze, silver, gold (1.8.0)", () => {
   const G = GK.data, R = G.GRADE_RANK;
   eq(["grape-juice-bronze", "grape-juice-silver", "grape-juice-gold", "cabbage-silver", "cabbage", "wine", "wine-gold"].map((id) => G.itemGrade(D.items[id])),
-    ["bronze", "silver", "gold", "silver", null, null, "gold"], "item grades (the plain item has none: its lines carry bronze)");
+    ["bronze", "silver", "gold", "silver", "bronze", "bronze", "gold"], "item grades (2026-11: the plain item of a graded family is the bronze one)");
   const lineOf = (rid, item) => D.recipeById[rid].in.find((l) => l.item === item);
   eq(lineOf("supply-vegetables-from-cabbage-bronze", "cabbage").grade, "bronze", "bronze keeps the plain Repolho, with the bronze star");
   check(!!lineOf("supply-vegetables-from-cabbage-gold", "cabbage-gold"), "gold points to the variant");
@@ -1090,9 +1092,12 @@ await test("receitas agrupadas: GK.calc.recipeGroups (1.8.0, consertos.md §10)"
   eq(sg.fixed.map((l) => [l.item, l.qty]), [["crate", 1]], "shared line: 1 Caixote");
   eq(sg.rows.map((r) => r.item.id + ":" + r.options.map((o) => (o.grade || "-") + o.line.qty).join(",")),
     ["beet:-12", "carrot:-16", "cabbage:bronze10,silver8,gold6", "onion:bronze8,silver6,gold4", "pumpkin:bronze3,silver2,gold1"], "rows and options");
-  // yield differs (Sopa de repolho 4 / 7 / 10): three cards; a mastery-only difference with the same input (Canteiro): three cards
+  // yield differs (Sopa de repolho 4 / 7 / 10): three cards. Canteiro de Repolho: since 1.9 each grade plants its own
+  // seed, and since 2026-11 the plain seed is the bronze one: one card, the seed's grade picked, mastery 8 / 10 / 12
   eq(groups("cabbage-soup").cards.map((c) => !!c.group), [false, false, false], "Sopa de repolho: yields differ, separate");
-  eq(groups("cabbage-bed").cards.filter((c) => c.group).length, 0, "Canteiro de Repolho: same input, separate");
+  const cb = groups("cabbage-bed").cards.filter((c) => c.group);
+  eq(cb.map((c) => [c.mode, c.masteryEach, c.options.map((o) => o.grade + ":" + o.line.item + "@" + o.r.mastery.level).join(",")]),
+    [["q", true, "bronze:cabbage-seed@8,silver:cabbage-seed-silver@10,gold:cabbage-seed-gold@12"]], "Canteiro de Repolho: one card, seed bronze / prata / ouro, mastery each");
   eq(groups("cabbage-bed").cyc.length, 0, "no circular: nothing folded");
   // all recipes circular (Pele): nothing folded, they stay cards
   const skin = groups("skin");
@@ -1114,8 +1119,9 @@ await test("receitas agrupadas: GK.calc.recipeGroups (1.8.0, consertos.md §10)"
     const gs = GK.calc.recipeGroups(D.byOut[id], D).cards.filter((c) => c.group);
     if (gs.length) { items++; recipes += gs.reduce((n, c) => n + c.recipes.length, 0); }
   }
-  // 1.9: Vinho left the count (its three Barril recipes now make three items): 7 items, 39 recipes
-  eq([items, recipes], [7, 39], "7 items have a group card; 39 recipes in them");
+  // 1.9: Vinho left the count (its three Barril recipes now make three items): 7 items, 39 recipes. 2026-11: the four
+  // Canteiros (Repolho, Cebola, Abóbora, Uvas: bronze seed = the plain one) join: 11 items, 51 recipes
+  eq([items, recipes], [11, 51], "11 items have a group card; 51 recipes in them");
 });
 
 // ---------------------------------------------------------------- 1.9: qualidade (docs/revisao-ux/consertos.md "Qualidade")
@@ -1184,7 +1190,9 @@ await test("qualidade: star crafts make every grade (História, Jornal, Salada, 
 await test("qualidade: Bronze Polido has no grade; no grade word in the recipe labels; no grade badge in the steps", () => {
   const pb = D.recipeById["polished-bronze"];
   eq([pb.quality, GK.data.itemGrade(D.items["polished-bronze"]), GK.data.family(pb), GK.data.family(D.items["polished-bronze"])], [null, null, null, null], "Bronze Polido: no quality");
-  eq(Object.values(D.items).filter((it) => it.grade && !/-(bronze|silver|gold)$/.test(it.id)).length, 0, "a grade only on graded ids");
+  eq(Object.values(D.items).filter((it) => it.grade && !/-(bronze|silver|gold)$/.test(it.id)).map((it) => it.id).sort(),
+    ["cabbage", "cabbage-seed", "grape-seeds", "grapes", "onion", "onion-seed", "pumpkin", "pumpkin-seeds", "wine"],
+    "a grade only on graded ids, and on the plain bronze item of a graded family (2026-11)");
   const st = GK.store.get();
   const labs = GK.ui.fmt.recipeLabels(GK.data.recipesFor("grape-juice-silver"), st, GK.data.recipesFor("grape-juice-silver"));
   eq(labs.length, 2, "Suco de Uva (prata): two options");
@@ -1223,6 +1231,173 @@ await test("qualidade: a plan saved up to 1.8.1 opens (goal wine + the Barril pr
   // the account doc (sanitizeRemote) goes through the same move
   const f = S.sanitizeRemote({ goals: [{ item: "wine", qty: 2 }], choice: { wine: "wine-from-grape-juice-gold" } });
   eq([f.lists[0].goals, f.lists[0].choice], [[{ item: "wine-gold", qty: 2 }], { "wine-gold": "wine-from-grape-juice-gold" }], "account doc: moved as well");
+});
+
+// ---------------------------------------------------------------- 2026-11: the plain item is the bronze one (consertos.md §17)
+const BRONZE_PLAIN = ["cabbage", "cabbage-seed", "grape-seeds", "grapes", "onion", "onion-seed", "pumpkin", "pumpkin-seeds", "wine"];
+await test("bronze comum: the plain item of a family with silver / gold is bronze; the rest is left alone", () => {
+  const G = GK.data;
+  for (const id of BRONZE_PLAIN) {
+    const it = D.items[id];
+    eq([G.itemGrade(it), G.family(it), G.family(D.items[id + "-silver"]), G.family(D.items[id + "-gold"])], ["bronze", id, id, id], id + ": bronze, one family with -silver / -gold");
+    eq([it.kind, it.base, D.items[id + "-bronze"]], ["item", undefined, undefined], id + ": the same item (id, kind), no -bronze item");
+  }
+  // not bronze: a family with its own bronze item (História: the plain one is what the prayers ask for), no plain item
+  // (Suco de Uva), the families the build keeps without grades (organs, Beer, Bronze Polido), the groups
+  for (const id of ["story", "newspaper", "vegetable-salad", "bowl-of-sauerkraut", "polished-bronze", "bones", "skin", "beer", "carrot", "beet-seed"])
+    eq(G.itemGrade(D.items[id]), null, id + ": no grade");
+  check(!D.items["grape-juice"] || !D.items["grape-juice"].grade, "Suco de Uva: no plain item graded");
+  eq(Object.values(D.items).filter((it) => it.members && it.grade).length, 0, "no group (\"Qualquer X\") is graded");
+  // the recipes' quality did not move (the planner reads it): the canteiro of the bronze seed, the Barril bronze
+  eq([D.recipeById["grow-pumpkin-bed-m12"].quality, D.recipeById["wine-from-grape-juice-bronze"].quality, D.recipeById["alcohol-from-any-wine"].quality], [null, "bronze", null], "recipe.quality unchanged");
+  // the planner: same plan as before (ids unchanged; the plain Abóbora / Vinho are still the raw / made item)
+  const p = plan([{ item: "pumpkin-soup", qty: 1 }, { item: "wine", qty: 1 }]);
+  check(p.raw.some((r) => r.item === "pumpkin" || r.item === "pumpkin-silver" || r.item === "pumpkin-gold") && p.raw.every((r) => !/-bronze$/.test(r.item) || /^grape-juice/.test(r.item)), "plan: the plain items as before");
+});
+
+await test("bronze comum: lines (\"Any X\" has no grade), search in one run bronze / prata / ouro, the star and the word", () => {
+  const G = GK.data, lineOf = (rid, item) => D.recipeById[rid].in.find((l) => l.item === item);
+  // "… from Pumpkin (bronze)": bronze (its own grade); "Alcohol from Any Wine" / "Seed oil from Any Cabbage seed": any grade
+  eq(G.lineGrade(lineOf("pumpkin-soup-from-pumpkin-bronze", "pumpkin")), "bronze", "Sopa de abóbora (bronze): the bronze Abóbora");
+  eq(G.lineGrade(lineOf("sandwich", "cabbage")), "bronze", "Sanduíche: the plain Repolho is the bronze one");
+  eq([lineOf("alcohol-from-any-wine", "wine").anyGrade, G.lineGrade(lineOf("alcohol-from-any-wine", "wine"))], [true, null], "Álcool de Qualquer Vinho: no grade");
+  eq(["cabbage-seed", "onion-seed", "pumpkin-seeds"].map((s) => G.lineGrade(lineOf("seed-oil-from-any-" + (s === "pumpkin-seeds" ? "pumpkin-seeds" : s), s))), [null, null, null], "Óleo de semente de Qualquer semente: no grade");
+  const so = GK.calc.recipeGroups(G.recipesFor("seed-oil"), D).cards.filter((c) => c.group);
+  eq(so.map((c) => [c.mode, c.options.every((o) => !o.grade), c.rows.length]), [["alt", true, 7]], "Óleo de semente: the same 7 plain rows as before");
+  // search (Receitas and the top box): the family in one run, bronze first, wherever the family's best hit was
+  for (const [q, lang, fam] of [["abóbora", "pt", "pumpkin"], ["vinho", "pt", "wine"], ["uvas", "pt", "grapes"], ["pumpkin", "en", "pumpkin"], ["sementes de abóbora", "pt", "pumpkin-seeds"]]) {
+    const ids = GK.calc.search(q, D, { lang, limit: 1000 }).results.map((r) => r.id), i = ids.indexOf(fam);
+    eq(ids.slice(i, i + 3), [fam, fam + "-silver", fam + "-gold"], `search "${q}": ${fam} bronze, prata, ouro together`);
+  }
+  // gradeSort(…, together): the run where the family's first member was; the others keep their order
+  const list = ["x", "a-gold", "y", "a-bronze", "z", "a-silver"];
+  G.gradeSort(list, (k) => (k.startsWith("a-") ? "a" : null), (k) => G.GRADE_RANK[k.slice(2)], true);
+  eq(list, ["x", "a-bronze", "a-silver", "a-gold", "y", "z"], "gradeSort together");
+  // the star (GK.util.slot): bronze on the plain item; none with grade false; the whole name on one line
+  check(/qstar q-b/.test(GK.util.slot(D.items.pumpkin, "Abóbora")) && /has-q/.test(GK.util.slot(D.items.wine, "Vinho", true)), "slot: bronze star on Abóbora / Vinho");
+  check(!/qstar/.test(GK.util.slot(D.items.wine, "Vinho", true, false)), "slot(…, false): no star");
+  check(!/qstar/.test(GK.util.slot(D.items["polished-bronze"], "Bronze Polido")), "Bronze Polido: no star");
+  eq([GK.ui.fmt.gradedName(D.items.pumpkin, "Abóbora"), GK.ui.fmt.gradedName(D.items["pumpkin-silver"], "Abóbora (prata)"), GK.ui.fmt.gradedName(D.items.carrot, "Cenoura")],
+    ["Abóbora (bronze)", "Abóbora (prata)", "Cenoura"], "gradedName (Recentes, detail title)");
+});
+
+await test("bronze comum: the Receitas list, the detail and the lines (ui/recipes.js)", () => {
+  const env = makeEnv(), G = env.GK, ctx = env.ctx;
+  G.data.load(JSON.parse(JSON.stringify(PAYLOAD)));
+  const fake = () => {
+    const kids = {}, ls = {};
+    return { hidden: false, innerHTML: "", value: "", open: false, classList: { add() {} }, ls, children: [],
+      querySelector: (q) => (kids[q] = kids[q] || fake()), querySelectorAll: () => [], addEventListener: (t, f) => { (ls[t] = ls[t] || []).push(f); },
+      contains: () => true, focus() {}, blur() {}, setAttribute() {}, appendChild() {}, insertAdjacentHTML() {} };
+  };
+  ctx.sessionStorage = { getItem: () => null, setItem() {} };
+  ctx.scrollTo = () => {}; ctx.scrollY = 0; ctx.location = { hash: "recipes" }; ctx.CSS = { escape: (x) => x };
+  G.router = { current: () => "recipes", tab: () => ({ screen: "recipes" }), TABS: [], register() {}, onChange() {}, detailHistory: () => ({ push() {}, pop() {} }) };
+  G.app = { registerPanel() {} };
+  G.ui.toast = () => {};
+  vm.runInContext(fs.readFileSync(path.join(ROOT, "src/js/ui/recipes.js"), "utf8"), ctx, { filename: "recipes.js" });
+  const R = G.ui.recipes, root = fake();
+  R.mount(root);
+  R.open("crate");   // builds the list's index (lazy)
+  const input = root.querySelector("#rc-q"), listEl = root.querySelector(".rc-list");
+  const find = (q) => { input.value = q; input.ls.keydown.forEach((f) => f({ key: "Enter", preventDefault() {} })); return listEl.innerHTML; };
+  const rows = (h) => [...h.matchAll(/data-open="([^"]+)"[^>]*>\s*<span class="slot([^"]*)">[\s\S]*?<span class="rc-row-name">([^<]*)[\s\S]*?<span class="rc-row-sub">([^<]*)<\/span>/g)]
+    .map((m) => [m[1], /has-q/.test(m[2]), m[3], m[4].split(" · ")[0]]);
+  let rs = rows(find("abóbora"));
+  const i = rs.findIndex((r) => r[0] === "pumpkin");
+  eq(rs.slice(i, i + 3), [["pumpkin", true, "Abóbora", "bronze"], ["pumpkin-silver", true, "Abóbora", "prata"], ["pumpkin-gold", true, "Abóbora", "ouro"]],
+    "lista buscando abóbora: Abóbora bronze, prata, ouro juntas, com estrela e a palavra");
+  check(/<span class="qstar q-b"/.test(listEl.innerHTML), "the bronze star in the list");
+  rs = rows(find("vinho"));
+  eq(rs.slice(0, 3).map((r) => r[0] + ":" + r[3]), ["wine:bronze", "wine-silver:prata", "wine-gold:ouro"], "lista buscando vinho: bronze, prata, ouro");
+  // the browse list (no query): the families in one run, bronze first
+  rs = rows(find(""));
+  let seen = 0;
+  for (const id of BRONZE_PLAIN) { const k = rs.findIndex((r) => r[0] === id); if (k >= 0) { seen++; eq(rs.slice(k, k + 3).map((r) => r[0]), [id, id + "-silver", id + "-gold"], "lista: " + id + " together"); } }
+  check(rs.length > 20 && seen > 0, `lista: rows read (${rs.length}), families on the first page (${seen})`);
+  // the detail: the title with "(bronze)", the bronze star on the big icon
+  R.open("pumpkin");
+  const h = root.querySelector(".rc-detail").innerHTML;
+  check(/class="rc-name" id="rc-detail-h" tabindex="-1">Abóbora \(bronze\)</.test(h), "detail: Abóbora (bronze)");
+  check(/<header class="rc-item-h"><span class="slot has-q" title="[^"]+"><span class="ico"[^>]*><\/span><span class="qstar q-b"/.test(h), "detail: the bronze star on the icon (and the stack title kept)");
+  // Canteiro de Repolho: "Fabricado aqui" bronze, prata, ouro (the data lists the bronze bed last)
+  R.open("cabbage-bed");
+  const here = root.querySelector(".rc-detail").innerHTML.split('id="rc-here-h"')[1] || "";
+  eq([...here.matchAll(/data-open="([^"]+)"/g)].map((m) => m[1]), ["cabbage", "cabbage-silver", "cabbage-gold"], "Canteiro de Repolho: Fabricado aqui bronze, prata, ouro");
+  // Álcool: the "Qualquer Vinho" line shows Vinho with no star and no grade word
+  R.open("alcohol");
+  const a = root.querySelector(".rc-detail").innerHTML;
+  const wl = /<button type="button" class="rc-line"[^>]*data-open="wine"[^>]*>([\s\S]*?)<\/button>/.exec(a);
+  check(!!wl && !/qstar/.test(wl[1]) && !/bronze/.test(wl[1]), "Álcool: the Qualquer Vinho line has no star nor word");
+  // Sopa de abóbora (bronze): the Abóbora line has the bronze star and word
+  R.open("pumpkin-soup");
+  const ps = /<button type="button" class="rc-line"[^>]*data-open="pumpkin"[^>]*>([\s\S]*?)<\/button>/.exec(root.querySelector(".rc-detail").innerHTML);
+  check(!!ps && /qstar q-b/.test(ps[1]) && /rc-line-note">bronze</.test(ps[1]), "Sopa de abóbora: the bronze Abóbora line");
+  // the Recentes (one line) use the whole name
+  check(/GK\.ui\.fmt\.gradedName\(it, nm\)/.test(fs.readFileSync(path.join(ROOT, "src/js/ui/search.js"), "utf8").split("function renderRecent")[1].split("\n  }\n")[0]), "Recentes: gradedName");
+});
+
+await test("nomes de receita em pt (fase 2): none left in English, grade as (ouro), Canteiro de Trigo, composed ones unofficial", () => {
+  const env = makeEnv(), G = env.GK;
+  G.data.load(JSON.parse(JSON.stringify(PAYLOAD)));
+  const D = G.data.get(), named = D.recipes.filter((r) => r.name);
+  check(named.length > 200, "recipes with their own name: " + named.length);
+  eq(named.filter((r) => r.name.pt === r.name.en).map((r) => r.id), [], "no recipe name left in English in pt");
+  // decision 1: the grade like the rest of the app, "(ouro)", never the wiki's "(qualidade ouro)"
+  eq(named.filter((r) => /qualidade/i.test(r.name.pt)).map((r) => r.id), [], "no \"(qualidade …)\" in a pt recipe name");
+  const W = { bronze: "bronze", silver: "prata", gold: "ouro" };
+  const graded = named.filter((r) => /\((bronze|silver|gold)\)$/.test(r.name.en));
+  check(graded.length >= 60 && graded.every((r) => r.name.pt.endsWith("(" + W[/\((\w+)\)$/.exec(r.name.en)[1]] + ")")), "graded names end in (bronze|prata|ouro): " + graded.length);
+  eq(G.data.recipe("wine-from-grape-juice-gold").name.pt, "Vinho a partir de Suco de Uva (ouro)", "Vinho (ouro): the pt name");
+  // decision 3: the official "Canteiro de Trigorigo" is fixed by a names layer, not official any more (no badge either)
+  const wb = D.items["wheat-bed"];
+  eq([wb.pt, wb.tr], ["Canteiro de Trigo", "likely"], "Wheat Bed: Canteiro de Trigo, tr likely");
+  eq(D.stations["wheat-bed"] && D.stations["wheat-bed"].pt, "Canteiro de Trigo", "the Wheat Bed station too");
+  check(!/Trigorigo/.test(JSON.stringify(PAYLOAD)), "no Trigorigo left in the payload");
+  eq(G.data.recipe("grow-wheat-bed-m2").name.pt, "Cultivado no Canteiro de Trigo (maestria Agricultura 2)", "the wheat bed recipe name");
+  // composed by us (Construir X (Zona), Cultivado no Canteiro…, X (fórmula de alquimia)): tr guess; the wiki's and
+  // the game's: no tr. "Especiarias" (official) not the wiki's "Especiaria"
+  const ours = (r) => /^(Build |Grown in )|\(alchemy formula\)$/.test(r.name.en);
+  eq(named.filter((r) => ours(r) !== (r.name.tr === "guess")).map((r) => r.id), [], "tr guess exactly on the names we composed");
+  eq(G.data.recipe("alchemy-spices").name.pt, "Especiarias (fórmula de alquimia)", "Especiarias, the official word");
+  eq(G.data.recipe("build-lantern-i--yard").name.pt, "Construir Lanterna I (Pátio)", "Construir Lanterna I (Pátio)");
+});
+
+await test("nomes de receita: the card hides \"X a partir de Y\" and \"Construir X (Zona)\" in pt, keeps the others (badge on ours); en unchanged (ui/recipes.js)", () => {
+  const env = makeEnv(), G = env.GK, ctx = env.ctx;
+  G.data.load(JSON.parse(JSON.stringify(PAYLOAD)));
+  const fake = () => {
+    const kids = {}, ls = {};
+    return { hidden: false, innerHTML: "", value: "", open: false, classList: { add() {} }, ls, children: [],
+      querySelector: (q) => (kids[q] = kids[q] || fake()), querySelectorAll: () => [], addEventListener: (t, f) => { (ls[t] = ls[t] || []).push(f); },
+      contains: () => true, focus() {}, blur() {}, setAttribute() {}, appendChild() {}, insertAdjacentHTML() {} };
+  };
+  ctx.sessionStorage = { getItem: () => null, setItem() {} };
+  ctx.scrollTo = () => {}; ctx.scrollY = 0; ctx.location = { hash: "recipes" }; ctx.CSS = { escape: (x) => x };
+  G.router = { current: () => "recipes", tab: () => ({ screen: "recipes" }), TABS: [], register() {}, onChange() {}, detailHistory: () => ({ push() {}, pop() {} }) };
+  G.app = { registerPanel() {} };
+  G.ui.toast = () => {};
+  vm.runInContext(fs.readFileSync(path.join(ROOT, "src/js/ui/recipes.js"), "utf8"), ctx, { filename: "recipes.js" });
+  const R = G.ui.recipes, root = fake();
+  R.mount(root);
+  const names = (id) => { R.open(id); return [...root.querySelector(".rc-detail").innerHTML.matchAll(/<p class="rc-rname">([\s\S]*?)<\/p>/g)].map((m) => m[1]); };
+  const plain = (h) => h.replace(/<span class="badge"[^>]*>([^<]*)<\/span>/, " [$1]");
+  // decision 2: Vinho, Pele, Lenha: "X a partir de Y" names left out of the card in pt
+  for (const id of ["wine", "wine-gold", "skin", "firewood"]) eq(names(id).filter((n) => / a partir de /.test(n)), [], id + " (pt): no \"a partir de\" name on the card");
+  eq(names("wine-gold"), [], "Vinho (ouro) (pt): no recipe name line");
+  // names that say more stay: the station of the sibling recipe, ours with the "não oficial" badge
+  check(names("board").includes("Placa (Cavalete)"), "Placa (pt): Placa (Cavalete) stays, no badge");
+  // "Construir X (Zona)" left out in pt too (the card's header already says the zone: "Construir no Pátio")
+  eq(names("lantern-i"), [], "Lanterna I (pt): no \"Construir … (Zona)\" name on the card");
+  for (const id of ["lantern-i", "firewood-shed-i", "firewood-shed-ii"]) eq(names(id).filter((n) => /^Construir /.test(n)), [], id + " (pt): no \"Construir …\" name");
+  eq(names("wheat").map(plain), ["Cultivado no Canteiro de Trigo (maestria Agricultura 2) [não oficial]"], "Trigo (pt): Cultivado no Canteiro de Trigo, with the badge");
+  eq(names("healing-potion").map(plain), ["Poção de Cura (fórmula de alquimia) [não oficial]"], "Poção de Cura (pt): the alchemy formula name, with the badge");
+  // en: as before, "X from Y" shown, no badge
+  G.i18n.set("en");
+  eq(names("wine-gold"), ["Wine from Grape Juice (gold)", "Drink enhancement II from Wine (silver)"], "Wine (gold) (en): the names as before");
+  eq(names("healing-potion"), ["Healing Potion (alchemy formula)"], "Healing Potion (en): no badge");
+  check(names("lantern-i").some((n) => /^Build Lantern I \(Yard\)$/.test(n)), "Lantern I (en): \"Build Lantern I (Yard)\" as before: " + names("lantern-i").join(" | "));
+  check(names("skin").every((n) => / from /.test(n)) && names("skin").length === 2, "Skin (en): both names as before");
 });
 
 await test("renomear no detalhe (Receitas): the \"não oficial\" tag opens the name's field; Salvar / Voltar ao nome original", () => {

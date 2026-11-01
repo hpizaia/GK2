@@ -1,0 +1,90 @@
+{
+ "_meta": {
+  "what": "Hand pt-BR names that follow the wiki PT (wikily.gg locale=pt-br) and the game's own words where the machine layers chose other ones. Key = exact English name. Read by scripts/build.py (default --names, after names.recipes). See data/README-l10n.md and docs/revisao-ux/revisao-nomes-wiki.md.",
+  "built": "2026-11-01: the 9 category swaps recommended in revisao-nomes-wiki.md, approved by the owner. Not applied (to check in the game first): Building: Metalwork, Book writing, Any Story, Dig.",
+  "legend": {
+   "wikily-pt/likely": "the wiki PT word, which is the game's own (field `game`: where the game uses it)"
+  }
+ },
+ "Building: Garden": {
+  "pt": "Construção: jardim",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "Jardim (builder_garden, wz_garden)"
+ },
+ "Building: Garden tablets": {
+  "pt": "Construção: placas do jardim",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "Jardim"
+ },
+ "Building: Yard": {
+  "pt": "Construção: pátio",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "Pátio (builder_yard, wz_yard)"
+ },
+ "Building: Barracks": {
+  "pt": "Construção: casernas",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "Casernas (builder_military_base)"
+ },
+ "Building: Graves and columbaria": {
+  "pt": "Construção: túmulos e columbários",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "\"Tutorial: Túmulos\", \"Columbários I\""
+ },
+ "Building: Assembly benches": {
+  "pt": "Construção: bancos de montagem",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "\"Banco de Montagem\" (II/III; \"Bancada de Montagem I\" também existe)"
+ },
+ "Building: Crafting station": {
+  "pt": "Construção: estação de produção",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "crafting = \"produção\" (tut_craft_hdr)"
+ },
+ "Crafting materials": {
+  "pt": "Materiais de produção",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "crafting = \"produção\" (tut_craft_hdr)"
+ },
+ "Town supplies": {
+  "pt": "Suprimentos do Povoado",
+  "source": "wikily-pt",
+  "confidence": "likely",
+  "kind": [
+   "category"
+  ],
+  "game": "Town = \"Povoado\" (wz_town, \"Armazém do Povoado\")"
+ }
+}

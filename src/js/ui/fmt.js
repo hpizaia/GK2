@@ -1,6 +1,6 @@
 /* GK.ui.fmt: shared bits of markup for item names, recipes and stations (badges, recipe labels,
    tech lines, the name block) and the "Desfazer" toast. No state, no panel.
-   Exposes: GK.ui.fmt.{badges, buildLabel, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, slotButton, undoToast, otherName}.
+   Exposes: GK.ui.fmt.{badges, buildLabel, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, slotButton, undoToast, otherName, gradedName}.
    slotButton(item, name): the item's icon as a 44 px button (data-recipe-open) that opens it in Receitas; every planner
    panel that shows one handles the click itself (GK.ui.recipes.open(id, {from: "plan"})).
    1.6.0: the "i" button left the planner names (corte 6: the icon opens the recipe); techLine(r, state) drops the
@@ -122,9 +122,10 @@ GK.ui.fmt = (function () {
   // step's card already names it. Two options never read the same: a repeat gets a short tag, then a number.
   // The tag is the recipe's own name cut before " from " (1.4.1): "Improve organ I from Any Skin" made the Pele
   // selector 440-640 px wide on a 390 px phone; the cut keeps "Improve organ I" / "Improve organ II" apart.
+  // pt (data/names.recipes.pt-BR.json) cuts before " a partir de " the same way: "Aprimorar Órgão I".
   function shortTag(r) {
     const n = r.name ? name(r.name) : "";
-    const cut = n.split(/ from /i)[0].trim();
+    const cut = n.split(/ from | a partir de /i)[0].trim();
     return cut.length > 28 ? cut.slice(0, 27).trimEnd() + "…" : cut;
   }
   function recipeLabels(list, state, all, opts) {
@@ -229,5 +230,11 @@ GK.ui.fmt = (function () {
     if (!it || !dupSet(lang).has(it.id) || !it[other] || it[other] === it[lang]) return "";
     return ` <span class="name-other" lang="${other === "pt" ? "pt-BR" : "en"}">${esc(it[other])}</span>`;
   }
-  return { badges, buildLabel, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, slotButton, undoToast, otherName };
+  // the whole name of a graded item where it shows on one line (the Recentes, the Receitas detail title): "Abóbora
+  // (prata)" is already that; the plain bronze one gets its word too, "Abóbora (bronze)" (2026-11, consertos.md §17)
+  function gradedName(it, nm) {
+    const g = GK.data.itemGrade(it);
+    return g && GK.data.stripGrade(nm) === nm ? `${nm} (${t("quality." + g)})` : nm;
+  }
+  return { badges, buildLabel, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, slotButton, undoToast, otherName, gradedName };
 })();

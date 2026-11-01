@@ -21,7 +21,10 @@
      the plain one (bronze: the common <Y> is the bronze one; a circular recipe: the input is the output itself). Shown
      as the star in the icon corner (GK.util.slot). The recipes of an item, by family (same id but the grade suffix),
      always come bronze, silver, gold (gradeSort keeps the positions the family holds in the list).
-   Also exposes GK.data.{GRADE_RANK, itemGrade, family, gradeSort, stripGrade, gradeMoves}.
+   - bronze plain (2026-11, consertos.md §17): the plain item of a family the build keeps silver / gold of ("pumpkin",
+     "wine", "cabbage-seed"…) is the bronze one, so it gets item.grade = "bronze" too (bronzePlain); an "Any X" input
+     line takes any grade (line.anyGrade: no star on it). lineGrade(line) = the grade a line shows.
+   Also exposes GK.data.{GRADE_RANK, itemGrade, lineGrade, family, gradeSort, stripGrade, gradeMoves}.
 */
 GK.data = (function () {
   const D = {
@@ -171,8 +174,10 @@ GK.data = (function () {
     return itemGrade(x) ? x.base || x.id.replace(GRADE_SUFFIX, "") : null;
   }
   // reorder, in place, the members of each family to bronze, silver, gold, in the positions the family holds
-  // (everything else stays where it is). famOf(x) → family key or null; rankOf(x) → 0..2
-  function gradeSort(list, famOf, rankOf) {
+  // (everything else stays where it is). famOf(x) → family key or null; rankOf(x) → 0..2.
+  // together (the item lists and the search, 2026-11): the family also comes in one run, where its first member was
+  // (Abóbora, Abóbora (prata), Abóbora (ouro), with no "Abóbora assada" in between); the rest keeps its order
+  function gradeSort(list, famOf, rankOf, together) {
     const fams = new Map();
     list.forEach((x, i) => {
       const k = famOf(x), g = rankOf(x);
@@ -180,10 +185,17 @@ GK.data = (function () {
       if (!fams.has(k)) fams.set(k, []);
       fams.get(k).push(i);
     });
+    const moved = new Map();   // first index of a family → its members in order; the other indexes are dropped
     for (const idx of fams.values()) {
       if (idx.length < 2) continue;
       const xs = idx.map((i) => list[i]).sort((a, b) => rankOf(a) - rankOf(b));
-      idx.forEach((i, j) => { list[i] = xs[j]; });
+      if (together) { moved.set(idx[0], xs); idx.slice(1).forEach((i) => moved.set(i, null)); }
+      else idx.forEach((i, j) => { list[i] = xs[j]; });
+    }
+    if (moved.size) {
+      const out = [];
+      list.forEach((x, i) => { const m = moved.get(i); if (m === undefined) out.push(x); else if (m) out.push(...m); });
+      out.forEach((x, i) => { list[i] = x; });
     }
     return list;
   }
@@ -215,6 +227,46 @@ GK.data = (function () {
     }
     return ch ? { goals: gs, choice: ch, done: dn || done } : null;
   }
+  /**
+   * The plain item of a family is its bronze grade (1.9, data/README-data.md "Quality grades"): "pumpkin" next to
+   * "pumpkin-silver" / "pumpkin-gold" (base: pumpkin). It gets item.grade = "bronze", so it shows as bronze wherever a
+   * grade shows (the star in GK.util.slot, the word under the name, the bronze / silver / gold order). Only a family
+   * with a silver or gold item that names it as its base and no bronze item of its own: História has "story-bronze"
+   * (the plain História is the one the prayers ask for), Suco de Uva has no plain item, and the families the build
+   * leaves without grades (organs, Beer, Bronze Polido, the "Any X" groups) have no graded item at all. Ids, the data
+   * and the saved plans do not change; neither does recipe.quality (set before this).
+   * 2026-11: Abóbora, Sementes de Abóbora, Repolho, Semente de Repolho, Cebola, Semente de Cebola, Uvas, Sementes de
+   * Uva, Vinho.
+   */
+  function bronzePlain() {
+    const fams = {};
+    for (const it of Object.values(D.items)) {
+      const g = itemGrade(it);
+      if (!g || !it.base) continue;
+      (fams[it.base] = fams[it.base] || {})[g] = true;
+    }
+    for (const [id, gs] of Object.entries(fams)) {
+      const it = D.items[id];
+      if (gs.bronze || !(gs.silver || gs.gold) || !it || it.stub || it.grade || it.members || it.kind === "quality-variant" || it.kind === "group") continue;
+      it.grade = "bronze";
+    }
+  }
+  /**
+   * "Alcohol from Any Wine", "Seed oil from Any Cabbage seed": the wiki points "Any X" to the plain item (the bronze
+   * one), but the recipe takes X of any grade. The line gets anyGrade = true: no star nor grade word on it
+   * (lineGrade → null), and a group card keeps it with the plain ingredients.
+   */
+  function anyLines() {
+    for (const r of D.recipes) {
+      const m = r.name && /\bfrom Any (.+?)\s*$/i.exec(r.name.en || "");
+      if (!m) continue;
+      const want = norm(m[1]);
+      const line = r.in.find((l) => D.items[l.item] && norm(D.items[l.item].en) === want);
+      if (line && !line.grade) line.anyGrade = true;
+    }
+  }
+  // the grade a recipe line shows: its own ("… from Cabbage (bronze)"), else its item's; none on an "Any X" line
+  const lineGrade = (line) => (!line || line.anyGrade ? null : line.grade || itemGrade(D.items[line.item]));
   // "Suco de Uva (prata)" → "Suco de Uva" (the grade word in either language, at the end of a shown name)
   const stripGrade = (s) => String(s == null ? "" : s).replace(/\s*\((bronze|prata|ouro|silver|gold)\)\s*$/i, "");
   function normLine(x) {
@@ -312,6 +364,9 @@ GK.data = (function () {
       r.quality = gradeOf(r);
       r.in.forEach(addBonus); r.extra.forEach(addBonus); addBonus(r.out);
     }
+    // after the recipes' quality (that stays as it was: the planner reads it), the plain bronze ones and "Any X"
+    bronzePlain();
+    anyLines();
     // byOut keeps each item's best-first order (item.recipes); usedIn = consumers
     D.byOut = {}; D.usedIn = {};
     const tmp = {};
@@ -340,7 +395,7 @@ GK.data = (function () {
     return D;
   }
   return {
-    load, norm, words, parseBonus, GRADE_RANK, itemGrade, family, gradeSort, stripGrade, gradeMoves,
+    load, norm, words, parseBonus, GRADE_RANK, itemGrade, lineGrade, family, gradeSort, stripGrade, gradeMoves,
     get: () => D,
     perks: () => D.perks,
     item: (id) => D.items[id],

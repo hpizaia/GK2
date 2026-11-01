@@ -73,7 +73,9 @@ Cada arquivo de nomes é um objeto com chave = **texto inglês exato** e valor `
 | prioridade | camada | arquivo | conteúdo |
 |---|---|---|---|
 | 1 | **oficial** (`game-files`, `official`) | `data/names.official.pt-BR.json` | 1.004 nomes: 972 ligados pela `gameKey` + 32 ligados à mão pelo texto inglês (zonas, perks, Suco de Uva, 4 nomes com ícone no meio). Gerado por `juntar_nomes.py` |
-| 2 | **derivado** (`derived`, `likely`) | sintético, dentro do `build.py` | Montado a partir de partes oficiais: "X (ouro)", "A ou B", "Qualquer X", "Abrir (X)". 29 itens |
+| 1b | **receitas** (`wikily-pt` `likely`, `derived` `guess`, `game-files` `official`) + **correções** (`fix`) | `data/names.recipes.pt-BR.json` | Os 231 nomes de receita ("Vinho a partir de Suco de Uva (ouro)", "Construir Lanterna I (Pátio)"): 159 da wiki em pt (`locale=pt-br`, montados com nomes oficiais; grau escrito "(ouro)" como no app), 67 compostos por nós (construir, plantio, fórmula de alquimia: selo "não oficial"), 5 textos inteiros do jogo. E as correções de erro do texto oficial: uma entrada com `fix` vence qualquer camada e nível e fica `likely` (sem selo, mas sem dizer "oficial"); hoje só "Wheat Bed" → "Canteiro de Trigo" (o jogo diz "Canteiro de Trigorigo"). Escrito à mão a partir de `data/raw/pt/proposta-nomes-receita.json` (`docs/revisao-ux/traducao-receitas.md`) |
+| 1c | **wiki à mão** (`wikily-pt`, `likely`) | `data/names.wiki.pt-BR.json` | 9 categorias com a palavra do jogo (jardim, pátio, casernas, produção, Povoado…), no lugar da de máquina (`docs/revisao-ux/revisao-nomes-wiki.md`) |
+| 2 | **derivado** (`derived`, `likely`) | sintético, dentro do `build.py` | Montado a partir de partes oficiais: "X (ouro)", "A ou B", "Qualquer X", "Abrir (X)", "Consertar (X)". 29 itens |
 | 3 | **GK1** (`gk1-wiki`, `likely`) | `data/names.pt-BR.json` | 77 nomes da wiki do GK1. O mesmo arquivo traz as `gameKey` |
 | 4 | **máquina** (`machine`, `guess`) | `data/names.pt-BR.json` (988) e `data/names.machine.pt-BR.json` (1.065 nomes + 725 textos `__obtain`) | Tradução do Claude, com glossário consistente. Só aparece onde não há nada melhor |
 
@@ -88,7 +90,7 @@ Resultado hoje: itens com 785 nomes oficiais, 29 derivados e 6 de máquina. Tecn
 - **Alquimia é combinatória.** As entradas são só uma mistura sugerida (`example: true`).
 - **Plantio** tem rendimento desconhecido (`out.qty: null`).
 - **Reparos não são receitas.** Estações que vêm de consertar algo (Forno da Cozinha...) aparecem como matéria-prima.
-- **Nomes de receita** (232) quase todos sem pt. A qualidade das receitas "X a partir de Y (ouro)" é deduzida pela página, pelo nome e pelo id da receita (`GK.data`). **Categorias** (45 de 53) ainda de máquina. Também de máquina: 3 maestrias e 21 notas (`data/report-l10n.md`).
+- **Nomes de receita**: todos em pt desde a camada `data/names.recipes.pt-BR.json` (11/2026); 67 são compostos por nós e levam o selo "não oficial". A qualidade das receitas "X a partir de Y (ouro)" é deduzida pela página, pelo nome e pelo id da receita (`GK.data`). **Categorias** (36 de 53) ainda de máquina (9 trocadas pela palavra do jogo em `names.wiki.pt-BR.json`). Também de máquina: 3 maestrias e 21 notas (`data/report-l10n.md`).
 - **Nomes pt repetidos** entre itens diferentes ("Tinta" = Ink e Paint).
 - **Oficiais estranhos** vindos do próprio jogo: "Banco de Montagem II" × "Bancada de Montagem I", caixa inconsistente.
 - **`names.machine.pt-BR.json` não tem gerador** no repositório. Itens novos ficam sem a camada de máquina até alguém traduzir.

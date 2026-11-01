@@ -15,8 +15,8 @@
    "multiRecipeItems": 71,
    "noexpRecipes": 17,
    "tr": {
-    "official": 785,
-    "likely": 47,
+    "official": 784,
+    "likely": 48,
     "guess": 0,
     "machine": 6,
     "missing": 0
@@ -27,8 +27,10 @@
   },
   "sources": [
    "derived",
+   "fix",
    "game-files",
    "gk1-wiki",
+   "wikily-pt",
    "wikily.gg"
   ],
   "refs": {
@@ -149,7 +151,7 @@
     },
     "broken-shelf": {
      "en": "Broken shelf",
-     "pt": "Estante quebrada",
+     "pt": "Prateleira quebrada",
      "tr": "machine"
     },
     "brown-mushrooms": {
@@ -271,7 +273,7 @@
     },
     "driftwood": {
      "en": "Driftwood",
-     "pt": "Madeira flutuante",
+     "pt": "Madeira trazida pela maré",
      "tr": "machine"
     },
     "dungeons-and-that-s-it-probably": {
@@ -473,7 +475,7 @@
     },
     "iron-ore-deposit": {
      "en": "Iron ore deposit",
-     "pt": "Jazida de minério de ferro",
+     "pt": "Depósito de minério de ferro",
      "tr": "machine"
     },
     "jack": {
@@ -543,7 +545,7 @@
     },
     "marble-deposit": {
      "en": "Marble deposit",
-     "pt": "Jazida de mármore",
+     "pt": "Depósito de mármore",
      "tr": "machine"
     },
     "market-square-purge": {
@@ -677,7 +679,7 @@
     },
     "sand-pit": {
      "en": "Sand pit",
-     "pt": "Areal",
+     "pt": "Buraco de areia",
      "tr": "machine"
     },
     "sawmill": {
@@ -732,7 +734,7 @@
     },
     "stone-deposit": {
      "en": "Stone deposit",
-     "pt": "Jazida de pedra",
+     "pt": "Depósito de pedra",
      "tr": "machine"
     },
     "strings-and-sinners": {
@@ -753,7 +755,7 @@
     },
     "swamp-mushrooms": {
      "en": "Swamp mushrooms",
-     "pt": "Cogumelos do pântano",
+     "pt": "Cogumelos pantaneiros",
      "tr": "machine"
     },
     "sweet-dreams": {
@@ -1487,7 +1489,7 @@
    "pt": "Frascos de Alquimia I",
    "en": "Alchemy Flasks I",
    "cat": {
-    "pt": "Materiais de fabricação",
+    "pt": "Materiais de produção",
     "en": "Crafting materials"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/05447405-00d1-46c0-94e3-5457251bc35b-i_glass_1.png",
@@ -1531,7 +1533,7 @@
    "pt": "Frascos de Alquimia II",
    "en": "Alchemy Flasks II",
    "cat": {
-    "pt": "Materiais de fabricação",
+    "pt": "Materiais de produção",
     "en": "Crafting materials"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/6f12be27-22d0-4dbc-bf38-5b3cbc52cf79-i_glass_2.png",
@@ -1631,7 +1633,7 @@
    "pt": "Bancada de Alquimia",
    "en": "Alchemy Workbench",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/29b5d663-0ab4-4127-9d59-730002d5e9b9-i_b_alchemical-bench.png",
@@ -2120,7 +2122,7 @@
    "pt": "Macieira",
    "en": "Apple Tree",
    "cat": {
-    "pt": "Construção: horta",
+    "pt": "Construção: jardim",
     "en": "Building: Garden"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/918e14c4-b103-421b-9e4b-d7a7b3422d27-i_b_apple_tree.png",
@@ -2348,7 +2350,7 @@
    "pt": "Banco de Montagem",
    "en": "Assembly bench",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/829081e8-ce2e-4c43-84c1-ce02092ab69b-i_z_repair_sign.png",
@@ -2370,7 +2372,7 @@
    "pt": "Banco de Montagem: Martelo Automático",
    "en": "Assembly bench: Auto-hammer",
    "cat": {
-    "pt": "Construção: bancadas de montagem",
+    "pt": "Construção: bancos de montagem",
     "en": "Building: Assembly benches"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/f204dfe5-b6b3-468a-be79-6a6e0b877e40-i_b_conveyor_workbench_hummer.png",
@@ -2394,7 +2396,7 @@
    "pt": "Banco de Montagem: Furadeira",
    "en": "Assembly bench: Drill press",
    "cat": {
-    "pt": "Construção: bancadas de montagem",
+    "pt": "Construção: bancos de montagem",
     "en": "Building: Assembly benches"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/5827bf59-4e8e-48b5-b303-8c9b1a66e547-i_b_conveyor_workbench_drill.png",
@@ -2418,7 +2420,7 @@
    "pt": "Bancada de Montagem I",
    "en": "Assembly bench I",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/c44bf8a1-e804-4d2e-8af2-baaf0a03a6f9-i_b_conveyor_workbench_1.png",
@@ -2442,7 +2444,7 @@
    "pt": "Banco de Montagem II",
    "en": "Assembly bench II",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/9eff883e-27d2-4d7b-ba7c-8fdbd3c3738c-i_b_conveyor_workbench_2.png",
@@ -2466,7 +2468,7 @@
    "pt": "Banco de Montagem III",
    "en": "Assembly bench III",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/219e878c-cd7c-4239-92c4-9d8b7ee6f9b7-i_b_conveyor_workbench_3.png",
@@ -2490,7 +2492,7 @@
    "pt": "Banco de Montagem: Tomo",
    "en": "Assembly bench: Lathe",
    "cat": {
-    "pt": "Construção: bancadas de montagem",
+    "pt": "Construção: bancos de montagem",
     "en": "Building: Assembly benches"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/9c6cd6a8-dacb-4d08-9fb9-cd56c00fa4e2-i_b_conveyor_workbench_lathe.png",
@@ -2514,7 +2516,7 @@
    "pt": "Banco de Montagem: Máquina de Costura",
    "en": "Assembly bench: Sewing machine",
    "cat": {
-    "pt": "Construção: bancadas de montagem",
+    "pt": "Construção: bancos de montagem",
     "en": "Building: Assembly benches"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/faadaa11-b0b2-4347-9ff0-6711b0931373-i_b_conveyor_workbench_sewing.png",
@@ -2538,7 +2540,7 @@
    "pt": "Banco de Montagem: Roda de Fiar",
    "en": "Assembly bench: Spinning wheel",
    "cat": {
-    "pt": "Construção: bancadas de montagem",
+    "pt": "Construção: bancos de montagem",
     "en": "Building: Assembly benches"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/b47a06b0-7ba9-4ea6-a2e2-25693da4f32b-i_b_conveyor_workbench_spinning_wheel.png",
@@ -2562,7 +2564,7 @@
    "pt": "Mesa de Autópsia I",
    "en": "Autopsy Table I",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/5291c28d-4f8d-4fbe-b4fb-db1ba93404c0-i_b_corpse_separate.png",
@@ -2586,7 +2588,7 @@
    "pt": "Mesa de Autópsia II",
    "en": "Autopsy Table II",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/e39b2de1-e2d9-48df-8b88-1e677df82c57-i_b_corpse_separate2.png",
@@ -3126,7 +3128,7 @@
    "pt": "Colmeia",
    "en": "Beehive",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/f82686fc-cdf8-4f30-aef5-f31861b7dd01-i_b_beegarden_table_broken.png",
@@ -3351,7 +3353,7 @@
    "pt": "Canteiro de Beterraba",
    "en": "Beet Bed",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/9b0a2662-0481-4ea4-bab7-a3ab98aa1635-i_b_garden_tablet_beet.png",
@@ -3538,7 +3540,7 @@
    "pt": "Arbusto de Frutinhas",
    "en": "Berry Bush",
    "cat": {
-    "pt": "Construção: horta",
+    "pt": "Construção: jardim",
     "en": "Building: Garden"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/abe00c85-1753-4b7c-b103-89b519208a77-i_b_barry_bush.png",
@@ -3953,7 +3955,7 @@
    "pt": "Biorreator",
    "en": "Bioreactor",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/2601f567-7f42-43ce-84c1-cb2d34b84db6-i_b_conveyor_bioreactor.png",
@@ -4355,7 +4357,7 @@
    "pt": "Arbusto de mirtilo",
    "en": "Blueberry Bush",
    "cat": {
-    "pt": "Construção: horta",
+    "pt": "Construção: jardim",
     "en": "Building: Garden"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/abe00c85-1753-4b7c-b103-89b519208a77-i_b_barry_bush.png",
@@ -4975,7 +4977,7 @@
    "pt": "Fogareiro de Fermentação",
    "en": "Brewing Stand",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/3ffa722e-3374-40cf-b22f-315541c994a8-i_b_brewing_stand.png",
@@ -6532,7 +6534,7 @@
    "pt": "Canteiro de Repolho",
    "en": "Cabbage Bed",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/c155fe63-eddb-4a75-957b-cadab5fcd690-i_b_garden_tablet_cabbage.png",
@@ -7057,7 +7059,7 @@
    "pt": "Canteiro de Cenoura",
    "en": "Carrot Bed",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/53a69760-7801-4a63-aec1-2264a1c3962c-i_b_garden_tablet_carrot.png",
@@ -7679,7 +7681,7 @@
    "pt": "Baú",
    "en": "Chest",
    "cat": {
-    "pt": "Construção: quintal",
+    "pt": "Construção: pátio",
     "en": "Building: Yard"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/fd246768-75a9-4cfa-9538-dfab39544fe2-i_b_chest_2.png",
@@ -7820,7 +7822,7 @@
    "pt": "Lugar de Cortar Madeira",
    "en": "Chopping Spot",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/7257a37e-cec3-4f4e-8881-7b96349d2adb-i_b_chunk_1.png",
@@ -8011,7 +8013,7 @@
    "pt": "Serra Circular",
    "en": "Circular Saw",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/cebf5acf-6ab3-4f16-b35c-6ad7c62446ec-i_b_tablesaw_1.png",
@@ -8076,7 +8078,7 @@
    "pt": "Banca de Extração de Argila",
    "en": "Clay Digger Stand",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/285848a1-7326-4ad7-bfbe-b48a0025c6aa-i_b_z_clay_zombie_crafter.png",
@@ -8349,7 +8351,7 @@
    "pt": "Columbário I",
    "en": "Columbarium I",
    "cat": {
-    "pt": "Construção: covas e columbários",
+    "pt": "Construção: túmulos e columbários",
     "en": "Building: Graves and columbaria"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/c9fec022-179e-436b-9ac3-a8faa972516d-i_b_graveyard_columbarium_1.png",
@@ -8373,7 +8375,7 @@
    "pt": "Columbário II",
    "en": "Columbarium II",
    "cat": {
-    "pt": "Construção: covas e columbários",
+    "pt": "Construção: túmulos e columbários",
     "en": "Building: Graves and columbaria"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/c59cda13-b879-41a8-9ade-f08e89b3bf55-i_b_graveyard_columbarium_2.png",
@@ -8532,7 +8534,7 @@
    "pt": "Monte de Compostagem",
    "en": "Compost Pile",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/0ecf43e2-a6ff-4ff1-9019-0838eb8e5a0e-i_b_compost_pile_1.png",
@@ -8556,7 +8558,7 @@
    "pt": "Monte de Compostagem II",
    "en": "Compost Pile II",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/85c39031-933d-42b9-8227-1c042d6fe67c-i_b_compost_pile_2.png",
@@ -8578,7 +8580,7 @@
    "pt": "Melhoria do Monte de Compostagem",
    "en": "Compost Pile Upgrade",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/1326b5f6-1eb2-45f4-be02-fc77ea64fd17-i_b_garden_compost_pile_upgrade.png",
@@ -8989,7 +8991,7 @@
    "pt": "Local de descarte de cadáveres",
    "en": "Corpse Dumping Point",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/68f8f970-44fd-47c7-819a-3aa2de8dca11-i_b_blockage.png",
@@ -9090,7 +9092,7 @@
    "pt": "Crematório I",
    "en": "Crematorium I",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/3b45a7bb-c9bf-43d5-8079-e828e2174382-i_b_crematorium_1.png",
@@ -9114,7 +9116,7 @@
    "pt": "Crematório II",
    "en": "Crematorium II",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/f1102a36-16fa-4e32-b331-2d7f6cdf2359-i_b_crematorium_2.png",
@@ -9291,7 +9293,7 @@
    "pt": "Cripta",
    "en": "Crypt",
    "cat": {
-    "pt": "Construção: covas e columbários",
+    "pt": "Construção: túmulos e columbários",
     "en": "Building: Graves and columbaria"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/f0e74e5d-522e-402b-ba4c-0e0e2c4772c3-i_b_graveyard_crypt.png",
@@ -9589,7 +9591,7 @@
    "pt": "Cubo de Destilação",
    "en": "Distillation Cube",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/3ffa722e-3374-40cf-b22f-315541c994a8-i_b_brewing_stand.png",
@@ -10001,7 +10003,7 @@
    "pt": "Mesa de Embalsamamento I",
    "en": "Embalming Table I",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/26994775-b777-46d2-9e22-48223b900183-i_b_mf_balsamation_1.png",
@@ -10025,7 +10027,7 @@
    "pt": "Mesa de Embalsamamento II",
    "en": "Embalming Table II",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/92517bed-2395-412d-b7d7-a6d0e2d95709-i_b_mf_balsamation_2.png",
@@ -10122,7 +10124,7 @@
    "pt": "Garrafa de Vidro Vazia",
    "en": "Empty Glass Bottle",
    "cat": {
-    "pt": "Materiais de fabricação",
+    "pt": "Materiais de produção",
     "en": "Crafting materials"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/7a8b0209-19a6-4e7e-99fd-4276cb1b7d7a-i_glass_bottle_empty.png",
@@ -10145,7 +10147,7 @@
    "pt": "Túmulo Vazio",
    "en": "Empty Grave",
    "cat": {
-    "pt": "Construção: covas e columbários",
+    "pt": "Construção: túmulos e columbários",
     "en": "Building: Graves and columbaria"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/b2841e38-4e54-407e-b5b1-c7afb2d27bd8-i_b_grave_place.png",
@@ -10481,7 +10483,7 @@
    "pt": "Expandir a Zona de Construção Militar",
    "en": "Expand Military Building Area",
    "cat": {
-    "pt": "Construção: quartel",
+    "pt": "Construção: casernas",
     "en": "Building: Barracks"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/cc5c0637-4466-4134-8d23-e75bc44d17fa-i_b_unlock_barracks_zone_1.png",
@@ -10610,7 +10612,7 @@
    "pt": "Tecido",
    "en": "Fabric",
    "cat": {
-    "pt": "Materiais de fabricação",
+    "pt": "Materiais de produção",
     "en": "Crafting materials"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/a2ffa330-100a-4850-8f3d-fb0995d59fe7-i_fabric_flax.png",
@@ -11035,7 +11037,7 @@
    "pt": "Barril de Fermentação",
    "en": "Fermentation Barrel",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/6fb3487a-4aad-43f2-b45f-9b8067dacbe2-i_b_barrel2.png",
@@ -11209,7 +11211,7 @@
    "pt": "Lenheiro I",
    "en": "Firewood shed I",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/32e5343f-c199-4e15-bd4f-861f4055f511-i_b_firewood_shed_1.png",
@@ -11234,7 +11236,7 @@
    "pt": "Lenheiro II",
    "en": "Firewood shed II",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/f7f08000-c423-413f-b4a0-832bab417f4d-i_b_firewood_shed_2.png",
@@ -11462,7 +11464,7 @@
    "pt": "Prateleira de frascos",
    "en": "Flask shelf",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/942f7414-b2ac-4f8d-bf05-f5d51f973011-i_b_boock_alchemical_cabinet.png",
@@ -11537,7 +11539,7 @@
    "pt": "Canteiro de Linho",
    "en": "Flax Bed",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/b7bbdf9e-3083-48c3-945b-848c865d9b6e-i_b_garden_tablet_flax.png",
@@ -11624,7 +11626,7 @@
    "pt": "Fio de Linho",
    "en": "Flax Thread",
    "cat": {
-    "pt": "Materiais de fabricação",
+    "pt": "Materiais de produção",
     "en": "Crafting materials"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/1f5c7d3b-089e-474b-8e21-1f5ede4ff1ad-i_thread_flax.png",
@@ -11993,7 +11995,7 @@
    "pt": "Mesa de Formulações",
    "en": "Formulation Bench",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/a124dc7c-b19a-433a-89ac-41378201d1d8-i_b_alchemy_gear.png",
@@ -12281,7 +12283,7 @@
    "pt": "Fornalha I",
    "en": "Furnace I",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/04eec898-3dac-4698-8e0a-78a15e5415c4-i_b_furnace_1.png",
@@ -12305,7 +12307,7 @@
    "pt": "Fornalha II",
    "en": "Furnace II",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/afc91558-f099-46de-8ec3-49f1d1fcade0-i_b_furnace_2.png",
@@ -12558,7 +12560,7 @@
    "pt": "Canteiro do Jardim",
    "en": "Garden Bed",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/48901794-ed6e-4c4d-b562-3a7e4c513251-i_b_beds.png",
@@ -12630,7 +12632,7 @@
    "pt": "Melhoria do Jardim I",
    "en": "Garden Upgrade I",
    "cat": {
-    "pt": "Construção: horta",
+    "pt": "Construção: jardim",
     "en": "Building: Garden"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/f8d34862-7a55-4483-9b09-43f5937e31dc-i_b_garden_farming_base_1.png",
@@ -12654,7 +12656,7 @@
    "pt": "Melhoria do Jardim II",
    "en": "Garden Upgrade II",
    "cat": {
-    "pt": "Construção: horta",
+    "pt": "Construção: jardim",
     "en": "Building: Garden"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/b7bde992-70be-48cc-b1a8-51fbb5531259-i_b_garden_farming_base_2.png",
@@ -12678,7 +12680,7 @@
    "pt": "Poço do Jardim II",
    "en": "Garden Well II",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/37957998-dae3-46de-b71a-df7ae8cc5670-i_b_well_upgrade.png",
@@ -12700,7 +12702,7 @@
    "pt": "Melhoria do Poço do Jardim",
    "en": "Garden Well Upgrade",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/37957998-dae3-46de-b71a-df7ae8cc5670-i_b_well_upgrade.png",
@@ -12724,7 +12726,7 @@
    "pt": "Banca do Jardineiro",
    "en": "Gardener Stand",
    "cat": {
-    "pt": "Construção: horta",
+    "pt": "Construção: jardim",
     "en": "Building: Garden"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/c978fd6c-96e2-4f3e-9865-73e35c91b472-i_b_garden_crafter.png",
@@ -12793,7 +12795,7 @@
    "pt": "Vidro",
    "en": "Glass",
    "cat": {
-    "pt": "Materiais de fabricação",
+    "pt": "Materiais de produção",
     "en": "Crafting materials"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/016813eb-e253-4810-9876-3f0c5931703d-i_glass_0.png",
@@ -13466,7 +13468,7 @@
    "pt": "Canteiro de Uvas",
    "en": "Grapes Bed",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/2f45a6e6-2f90-45b8-8c5e-a4a4d1c4763b-i_b_garden_tablet_grape.png",
@@ -14699,7 +14701,7 @@
    "pt": "Canteiro de Lúpulo",
    "en": "Hops Bed",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/92d99abc-5584-46be-898c-3cd5e12d5dfc-i_b_garden_tablet_hop.png",
@@ -15254,7 +15256,7 @@
    "pt": "Bigorna de ferro",
    "en": "Iron Anvil",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/181165fb-92c2-4aba-92aa-da41a8ff851c-i_b_anvil_2.png",
@@ -16048,7 +16050,7 @@
    "pt": "Mesa de Joias",
    "en": "Jewelry Table",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/d444eacb-3eaa-4220-bf30-eb41fc5216e0-i_b_jeweler_table.png",
@@ -16361,7 +16363,7 @@
    "pt": "Forno",
    "en": "Kiln",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/f2a9a0f9-594e-45c0-ad98-717f7a0df697-i_b_firing_kiln_1.png",
@@ -16420,7 +16422,7 @@
    "pt": "Cozinha I",
    "en": "Kitchen I",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/93270be4-ae53-48ce-b1c4-706a19cf3896-i_b_conveyor_kitchen_1.png",
@@ -16444,7 +16446,7 @@
    "pt": "Cozinha II",
    "en": "Kitchen II",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/0d03d80d-00af-4ae8-8870-68eaad339ae2-i_b_conveyor_kitchen_2.png",
@@ -16492,7 +16494,7 @@
    "pt": "Forno da Cozinha",
    "en": "Kitchen Oven",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/8783259c-2fc2-4690-b9a7-c1c12f22a47c-i_b_home_furnase_1.png",
@@ -16514,7 +16516,7 @@
    "pt": "Forno da Cozinha II",
    "en": "Kitchen Oven II",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/fb8d6f42-5427-4505-8e1a-d258ab1fb550-i_b_home_furnase_2.png",
@@ -16586,7 +16588,7 @@
    "pt": "Mesa da Cozinha",
    "en": "Kitchen Table",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/77dce0aa-f18f-4fc5-8b72-3862055243e6-i_b_home_table_1.png",
@@ -16608,7 +16610,7 @@
    "pt": "Mesa da Cozinha II",
    "en": "Kitchen Table II",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/9e189012-f51a-4925-abb0-2e84da305764-i_b_home_table_2.png",
@@ -16879,7 +16881,7 @@
    "pt": "Renda",
    "en": "Lace",
    "cat": {
-    "pt": "Materiais de fabricação",
+    "pt": "Materiais de produção",
     "en": "Crafting materials"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/d049d5db-7c38-45e0-b3aa-1ae2e9504498-i_frill.png",
@@ -17061,7 +17063,7 @@
    "pt": "Baú Grande",
    "en": "Large Chest",
    "cat": {
-    "pt": "Construção: quintal",
+    "pt": "Construção: pátio",
     "en": "Building: Yard"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/808d5875-d0da-4434-8c39-ce0e8345f5df-i_b_chest_3.png",
@@ -17264,7 +17266,7 @@
    "pt": "Guindaste",
    "en": "Lifting Crane",
    "cat": {
-    "pt": "Construção: horta",
+    "pt": "Construção: jardim",
     "en": "Building: Garden"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/bd6179d5-995f-4bdd-9946-8bfd739e2150-i_b_lifting_crane.png",
@@ -17374,7 +17376,7 @@
    "pt": "Porta trancada",
    "en": "Locked door",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/67c39f80-82ec-43f6-9843-0cb781ed6d8f-i_b_base_locked_door_tower.png",
@@ -17396,7 +17398,7 @@
    "pt": "Escotilha trancada",
    "en": "Locked hatch",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/829081e8-ce2e-4c43-84c1-ce02092ab69b-i_z_repair_sign.png",
@@ -17503,7 +17505,7 @@
    "pt": "Banca de Lenhador",
    "en": "Lumberjack stand",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/5d8bd4e2-6eca-4549-996f-a57933468183-i_b_z_sawmill_wood_crafter.png",
@@ -18219,7 +18221,7 @@
    "pt": "Pedra de Moinho",
    "en": "Millstone",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/420c38d7-6cfc-45a8-9c83-898e6bb790ec-i_b_grinder.png",
@@ -19117,7 +19119,7 @@
    "pt": "Porta Antiga",
    "en": "Old door",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/829081e8-ce2e-4c43-84c1-ce02092ab69b-i_z_repair_sign.png",
@@ -19242,7 +19244,7 @@
    "pt": "Canteiro de Cebola",
    "en": "Onion Bed",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/7d3575e1-2711-4ad0-af07-43fa938ef929-i_b_garden_tablet_onion.png",
@@ -19532,7 +19534,7 @@
    "pt": "Pomar",
    "en": "Orchard",
    "cat": {
-    "pt": "Construção: horta",
+    "pt": "Construção: jardim",
     "en": "Building: Garden"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/5ae9a7bd-f6a5-45c3-a709-d499e99fa624-i_b_garden_extension_trees_bushes.png",
@@ -19814,7 +19816,7 @@
    "pt": "Prensa de papel",
    "en": "Paper Press",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/3d9e4cf2-de82-4bdb-b66a-32fe0f2c5979-i_b_paper_press.png",
@@ -20357,7 +20359,7 @@
    "pt": "Pasta de Polimento",
    "en": "Polishing Paste",
    "cat": {
-    "pt": "Materiais de fabricação",
+    "pt": "Materiais de produção",
     "en": "Crafting materials"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/03d110c2-7863-4b0f-b220-ff92b58f9462-i_polishing_paste.png",
@@ -20680,7 +20682,7 @@
    "pt": "Torno de Oleiro",
    "en": "Potter's Wheel",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/d120f249-6675-4f3b-9979-a2ec524c4748-i_b_potters_wheel_1.png",
@@ -20742,7 +20744,7 @@
    "pt": "Máquina de RP I",
    "en": "PR Machine I",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/578ff6c9-63f4-4f88-b8c2-ad53b52bda9b-i_b_pr_machine.png",
@@ -20766,7 +20768,7 @@
    "pt": "Máquina de RP II",
    "en": "PR Machine II",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/578ff6c9-63f4-4f88-b8c2-ad53b52bda9b-i_b_pr_machine.png",
@@ -20790,7 +20792,7 @@
    "pt": "Máquina de RP III",
    "en": "PR Machine III",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/578ff6c9-63f4-4f88-b8c2-ad53b52bda9b-i_b_pr_machine.png",
@@ -20814,7 +20816,7 @@
    "pt": "Máquina de RP IV",
    "en": "PR Machine IV",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/578ff6c9-63f4-4f88-b8c2-ad53b52bda9b-i_b_pr_machine.png",
@@ -20838,7 +20840,7 @@
    "pt": "Máquina de RP V",
    "en": "PR Machine V",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/578ff6c9-63f4-4f88-b8c2-ad53b52bda9b-i_b_pr_machine.png",
@@ -21318,7 +21320,7 @@
    "pt": "Prensa móvel",
    "en": "Printing Press",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/835a4368-4dec-4b2f-bb70-650ccf3eba94-i_b_printing_press.png",
@@ -21482,7 +21484,7 @@
    "pt": "Canteiro de abóbora",
    "en": "Pumpkin Bed",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/278ab6ae-347f-43d0-a843-badf8201b601-i_b_garden_tablet_pumpkin.png",
@@ -22133,7 +22135,7 @@
   },
   "repair-resurrection-device": {
    "id": "repair-resurrection-device",
-   "pt": "Reparar (Dispositivo de Ressurreição)",
+   "pt": "Consertar (Dispositivo de Ressurreição)",
    "en": "Repair (Resurrection device)",
    "cat": {
     "pt": "(ação / efeito, não é um item)",
@@ -22153,7 +22155,7 @@
   },
   "repair-underground-well": {
    "id": "repair-underground-well",
-   "pt": "Reparar (Poço Subterrâneo)",
+   "pt": "Consertar (Poço Subterrâneo)",
    "en": "Repair (Underground well)",
    "cat": {
     "pt": "(ação / efeito, não é um item)",
@@ -22199,7 +22201,7 @@
    "pt": "Dispositivo de Ressurreição",
    "en": "Resurrection device",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/829081e8-ce2e-4c43-84c1-ce02092ab69b-i_z_repair_sign.png",
@@ -22250,7 +22252,7 @@
    "pt": "Mesa de Ressurreição I",
    "en": "Resurrection Table I",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/91371d19-d0c6-4ddc-a30d-ee16f03762ab-i_b_resurrection_table_1.png",
@@ -22309,7 +22311,7 @@
    "pt": "Arbusto de Rododendro",
    "en": "Rhododendron Bush",
    "cat": {
-    "pt": "Construção: horta",
+    "pt": "Construção: jardim",
     "en": "Building: Garden"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/8243c2aa-8697-432e-8cee-6f911a4857ec-i_b_flower_bush.png",
@@ -23048,7 +23050,7 @@
    "pt": "Banca de Extração de Areia",
    "en": "Sand Digger Stand",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/b53a4801-f496-4461-890b-fdcb3a0d0741-i_b_z_sand_zombie_crafter.png",
@@ -23111,7 +23113,7 @@
    "pt": "Cavalete",
    "en": "Sawhorse",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/0eb74a86-ad52-4238-806b-8fbf12e02068-i_b_rack_1.png",
@@ -23562,7 +23564,7 @@
    "pt": "Mesa de Costura",
    "en": "Sewing Table",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/3ccb680c-09ca-4de5-b2fb-a0e693add71a-i_b_sewing_table.png",
@@ -23913,7 +23915,7 @@
    "pt": "Baú Simples",
    "en": "Simple Chest",
    "cat": {
-    "pt": "Construção: quintal",
+    "pt": "Construção: pátio",
     "en": "Building: Yard"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/994ebd56-ab90-4096-8cf3-e884ba5963cd-i_b_chest_1.png",
@@ -24153,7 +24155,7 @@
    "pt": "Calha de Lavagem",
    "en": "Sluice Box",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/0394e6aa-1443-4060-8b8d-944b33cb6807-i_b_sifter_tin_1.png",
@@ -24283,7 +24285,7 @@
    "pt": "Forja I",
    "en": "Smithy I",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/526d99fd-11b5-4043-bbf2-77fd3b921adc-i_b_conveyor_furnace_1.png",
@@ -24307,7 +24309,7 @@
    "pt": "Forja II",
    "en": "Smithy II",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/71b7e74d-4d77-40b5-8248-60bea8e1b886-i_b_conveyor_furnace_2.png",
@@ -24773,7 +24775,7 @@
    "pt": "Roda de Fiar",
    "en": "Spinning Wheel",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/b2bef3f9-ceae-475d-be20-ec3b89f66329-i_b_spinning_wheel.png",
@@ -24828,7 +24830,7 @@
    "pt": "Bigorna de aço",
    "en": "Steel Anvil",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/6185c1f3-c26e-4ef0-b4e6-09484e08ce96-i_b_anvil_3.png",
@@ -25632,7 +25634,7 @@
    "pt": "Bancada do Canteiro",
    "en": "Stonemason's Workbench",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/d922935c-9df5-4574-88cd-da54dc7cd94b-i_b_masonry_1.png",
@@ -25796,7 +25798,7 @@
    "pt": "Suprimentos: Aparelhagem I",
    "en": "Supply: Appliances I",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/18d22ef8-9db8-4928-b029-532ad736de54-i_box_appliances_1.png",
@@ -25837,7 +25839,7 @@
    "pt": "Suprimentos: Aparelhagem II",
    "en": "Supply: Appliances II",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/7222a8f2-4f96-46ca-a2f0-ed01bea19dbe-i_box_appliances_2.png",
@@ -25878,7 +25880,7 @@
    "pt": "Suprimento: Cerveja",
    "en": "Supply: Beer",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/2d5a0c14-a148-4251-86f5-64bfcf795891-i_box_beer.png",
@@ -25913,7 +25915,7 @@
    "pt": "Suprimentos: Materiais de Construção I",
    "en": "Supply: Building materials I",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/478d19f6-5937-4795-a5fa-67db21a2c6ec-i_box_building_kit_1.png",
@@ -25954,7 +25956,7 @@
    "pt": "Suprimentos: Materiais de Construção II",
    "en": "Supply: Building materials II",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/a985eb86-38a7-4cce-8639-ddc96de46306-i_box_building_kit_2.png",
@@ -25989,7 +25991,7 @@
    "pt": "Suprimentos: Roupas I",
    "en": "Supply: Clothes I",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/91108e36-4f87-45c7-8695-80ff096472f5-i_box_clothes_1.png",
@@ -26031,7 +26033,7 @@
    "pt": "Suprimentos: Roupas II",
    "en": "Supply: Clothes II",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/5b8e3b97-3fe6-4d21-a495-eb0ae7169c47-i_box_clothes_2.png",
@@ -26066,7 +26068,7 @@
    "pt": "Suprimentos: Talheres I",
    "en": "Supply: Cutlery I",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/ac6a0e4e-8e5f-4b01-9b1d-dcbc86857ce0-i_box_cutlery_1.png",
@@ -26101,7 +26103,7 @@
    "pt": "Suprimentos: Talheres II",
    "en": "Supply: Cutlery II",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/6bb8b354-febd-47d3-be13-67eb8f640caf-i_box_cutlery_2.png",
@@ -26142,7 +26144,7 @@
    "pt": "Suprimentos: Mecanismo de Engenharia",
    "en": "Supply: Engineering Mechanism",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/d935dcb3-1ad5-418d-869f-278b17e4f234-i_box_engineering_mechanism.png",
@@ -26195,7 +26197,7 @@
    "pt": "Suprimentos: Tecido",
    "en": "Supply: Fabric",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/62e115b9-c4d7-4bb3-912f-4b5d8582b1a6-i_box_fabric.png",
@@ -26237,7 +26239,7 @@
    "pt": "Suprimentos: Saco de Farinha",
    "en": "Supply: Flour Sack",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/63bbe30d-94b2-4ec3-a8e5-192a6f4c42f3-i_box_flour.png",
@@ -26272,7 +26274,7 @@
    "pt": "Suprimentos: Mobília I",
    "en": "Supply: Furniture I",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/5af61e29-907b-4408-908d-4896bf258f46-i_box_furniture_1.png",
@@ -26307,7 +26309,7 @@
    "pt": "Suprimentos: Mobília II",
    "en": "Supply: Furniture II",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/df5fb7b8-6b23-4afb-9991-b6d3c38009bd-i_box_furniture_2.png",
@@ -26342,7 +26344,7 @@
    "pt": "Suprimento: Ferro",
    "en": "Supply: Iron",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/51ca6d00-fa83-45d9-a629-d38abe585823-i_box_iron.png",
@@ -26391,7 +26393,7 @@
    "pt": "Suprimentos: Ferramentas de Ferro",
    "en": "Supply: Iron Tools",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/7bfb3bcd-b282-44ea-8659-ab8261c861f6-i_box_tools_iron.png",
@@ -26444,7 +26446,7 @@
    "pt": "Suprimentos: Utensílios de Cozinha",
    "en": "Supply: Kitchen Utensils",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/8a3d58cc-a615-4462-84ec-bb7dc95eedca-i_box_kitchen_utensils.png",
@@ -26539,7 +26541,7 @@
    "pt": "Suprimentos: Conservas I",
    "en": "Supply: Preserves I",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/77dd0f3d-ce0e-4ac2-b550-52e14da1385c-i_box_preserves_1.png",
@@ -26590,7 +26592,7 @@
    "pt": "Suprimentos: Conservas II",
    "en": "Supply: Preserves II",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/d2d4d857-c67a-4be7-8ab3-674b618f2f52-i_box_preserves_2.png",
@@ -26654,7 +26656,7 @@
    "pt": "Suprimentos: Ferramentas de Aço",
    "en": "Supply: Steel Tools",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/3b973146-2c11-4813-b4c5-e98733c8775d-i_box_tools_steel.png",
@@ -26695,7 +26697,7 @@
    "pt": "Suprimentos: Vegetais",
    "en": "Supply: Vegetables",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/af3b7fa1-3fde-46f3-9e45-6b1916c60724-i_box_vegetables.png",
@@ -26740,7 +26742,7 @@
    "pt": "Suprimento: Vinho",
    "en": "Supply: Wine",
    "cat": {
-    "pt": "Suprimentos da cidade",
+    "pt": "Suprimentos do Povoado",
     "en": "Town supplies"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/552907ce-e5db-42b6-aa11-2eb6d9072831-i_box_vine.png",
@@ -26934,7 +26936,7 @@
    "pt": "Placa \"Beterraba\"",
    "en": "Tablet \"Beet\"",
    "cat": {
-    "pt": "Construção: placas da horta",
+    "pt": "Construção: placas do jardim",
     "en": "Building: Garden tablets"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/9b0a2662-0481-4ea4-bab7-a3ab98aa1635-i_b_garden_tablet_beet.png",
@@ -26958,7 +26960,7 @@
    "pt": "Placa \"Repolho\"",
    "en": "Tablet \"Cabbage\"",
    "cat": {
-    "pt": "Construção: placas da horta",
+    "pt": "Construção: placas do jardim",
     "en": "Building: Garden tablets"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/c155fe63-eddb-4a75-957b-cadab5fcd690-i_b_garden_tablet_cabbage.png",
@@ -26982,7 +26984,7 @@
    "pt": "Placa \"Cenoura\"",
    "en": "Tablet \"Carrot\"",
    "cat": {
-    "pt": "Construção: placas da horta",
+    "pt": "Construção: placas do jardim",
     "en": "Building: Garden tablets"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/53a69760-7801-4a63-aec1-2264a1c3962c-i_b_garden_tablet_carrot.png",
@@ -27006,7 +27008,7 @@
    "pt": "Placa \"Linho\"",
    "en": "Tablet \"Flax\"",
    "cat": {
-    "pt": "Construção: placas da horta",
+    "pt": "Construção: placas do jardim",
     "en": "Building: Garden tablets"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/b7bbdf9e-3083-48c3-945b-848c865d9b6e-i_b_garden_tablet_flax.png",
@@ -27030,7 +27032,7 @@
    "pt": "Placa \"Uvas\"",
    "en": "Tablet \"Grapes\"",
    "cat": {
-    "pt": "Construção: placas da horta",
+    "pt": "Construção: placas do jardim",
     "en": "Building: Garden tablets"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/2f45a6e6-2f90-45b8-8c5e-a4a4d1c4763b-i_b_garden_tablet_grape.png",
@@ -27054,7 +27056,7 @@
    "pt": "Placa \"Lúpulo\"",
    "en": "Tablet \"Hops\"",
    "cat": {
-    "pt": "Construção: placas da horta",
+    "pt": "Construção: placas do jardim",
     "en": "Building: Garden tablets"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/92d99abc-5584-46be-898c-3cd5e12d5dfc-i_b_garden_tablet_hop.png",
@@ -27078,7 +27080,7 @@
    "pt": "Placa \"Cebola\"",
    "en": "Tablet \"Onion\"",
    "cat": {
-    "pt": "Construção: placas da horta",
+    "pt": "Construção: placas do jardim",
     "en": "Building: Garden tablets"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/7d3575e1-2711-4ad0-af07-43fa938ef929-i_b_garden_tablet_onion.png",
@@ -27102,7 +27104,7 @@
    "pt": "Placa \"Abóbora\"",
    "en": "Tablet \"Pumpkin\"",
    "cat": {
-    "pt": "Construção: placas da horta",
+    "pt": "Construção: placas do jardim",
     "en": "Building: Garden tablets"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/278ab6ae-347f-43d0-a843-badf8201b601-i_b_garden_tablet_pumpkin.png",
@@ -27126,7 +27128,7 @@
    "pt": "Placa \"Trigo\"",
    "en": "Tablet \"Wheat\"",
    "cat": {
-    "pt": "Construção: placas da horta",
+    "pt": "Construção: placas do jardim",
     "en": "Building: Garden tablets"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/a15fd318-6fad-4635-b848-09d29db17e66-i_b_garden_tablet_wheat.png",
@@ -28101,7 +28103,7 @@
    "pt": "Poço Subterrâneo",
    "en": "Underground well",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/829081e8-ce2e-4c43-84c1-ce02092ab69b-i_z_repair_sign.png",
@@ -28663,7 +28665,7 @@
    "pt": "Prensa de Vinho",
    "en": "Vine Press",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/04874827-aaaf-41fa-9ec4-6e547e55755a-i_b_mf_vine_press.png",
@@ -28687,7 +28689,7 @@
    "pt": "Treliça de Videira",
    "en": "Vine Trellis",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/5b3894af-33fb-4d5b-9af8-4fa1b6f2a0a5-i_b_vineyard_bed_0.png",
@@ -28711,7 +28713,7 @@
    "pt": "Ponte do Vinhedo",
    "en": "Vineyard Bridge",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/829081e8-ce2e-4c43-84c1-ce02092ab69b-i_z_repair_sign.png",
@@ -29010,7 +29012,7 @@
    "pt": "Tear",
    "en": "Weaving Loom",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/0e84d19b-d29c-4c88-877d-e517cd26b380-i_b_weaving_loom.png",
@@ -29105,14 +29107,14 @@
   },
   "wheat-bed": {
    "id": "wheat-bed",
-   "pt": "Canteiro de Trigorigo",
+   "pt": "Canteiro de Trigo",
    "en": "Wheat Bed",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/a15fd318-6fad-4635-b848-09d29db17e66-i_b_garden_tablet_wheat.png",
-   "tr": "official",
+   "tr": "likely",
    "raw": false,
    "obtain": {
     "pt": "O Canteiro de trigo é um Canteiro plantado com 4 Semente de trigo. Produz Trigo, Semente de trigo e Folha por conta própria.",
@@ -29248,7 +29250,7 @@
    "pt": "Barril de Vinho",
    "en": "Wine Barrel",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/f0a381f3-bfef-4e66-93cc-62e77c0ca497-i_b_barrel.png",
@@ -29353,7 +29355,7 @@
    "pt": "Bigorna de Madeira",
    "en": "Wooden Anvil",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/459a22d8-c2f9-49d8-8f36-83b391954fd7-i_b_anvil_1.png",
@@ -29447,7 +29449,7 @@
    "pt": "Tarugo de Madeira",
    "en": "Wooden Billet",
    "cat": {
-    "pt": "Materiais de fabricação",
+    "pt": "Materiais de produção",
     "en": "Crafting materials"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/a681b7db-ab8c-4b06-aba3-cbec3d21d714-question_mark_icon.png",
@@ -29993,7 +29995,7 @@
    "pt": "Bancada de Carpintaria I",
    "en": "Woodworking Workbench I",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/260d5fd5-17a6-4c11-897c-bed43ffdbfa9-i_b_woodwork_bench_1.png",
@@ -30017,7 +30019,7 @@
    "pt": "Bancada de Carpintaria II",
    "en": "Woodworking Workbench II",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/47c5887c-1909-456b-b911-5a06a19725aa-i_b_woodwork_bench_2.png",
@@ -30064,7 +30066,7 @@
    "pt": "Escrivaninha",
    "en": "Writing Desk",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/5332f0a5-6f53-4aa2-8559-ead6835036d7-i_b_desk_1.png",
@@ -30324,7 +30326,7 @@
    "pt": "Pedreira Zumbi: Mármore",
    "en": "Zombie Marble Quarry",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/f3fe9167-47c9-4925-a19e-a6ec31960e0d-i_b_z_quarry_marble_scaffolding.png",
@@ -30379,7 +30381,7 @@
    "pt": "Mineiro Zumbi",
    "en": "Zombie Miner",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/8102c492-3bf8-4624-8207-b44480fd136b-i_b_z_mine_ore_coal_crafter.png",
@@ -30601,7 +30603,7 @@
    "pt": "Pedreira Zumbi: Pedra",
    "en": "Zombie Stone Quarry",
    "cat": {
-    "pt": "Construção: estação de fabricação",
+    "pt": "Construção: estação de produção",
     "en": "Building: Crafting station"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/14f3296b-6691-47d9-8e65-5a94194f440c-i_b_z_quarry_stone_scaffolding.png",
@@ -30625,7 +30627,7 @@
    "pt": "Posto de Suprimentos Zumbi",
    "en": "Zombie Supplier Station",
    "cat": {
-    "pt": "Construção: quintal",
+    "pt": "Construção: pátio",
     "en": "Building: Yard"
    },
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/de7c0cea-a1be-4cbe-850f-af335d7c1b56-i_b_z_supplier_station.png",
@@ -31092,9 +31094,9 @@
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/0e84d19b-d29c-4c88-877d-e517cd26b380-i_b_weaving_loom.png"
   },
   "wheat-bed": {
-   "pt": "Canteiro de Trigorigo",
+   "pt": "Canteiro de Trigo",
    "en": "Wheat Bed",
-   "tr": "official",
+   "tr": "likely",
    "icon": "https://media.wikily.gg/44c3d800-a707-461b-bd60-cfecbe25cd73/2026-09-22/a15fd318-6fad-4635-b848-09d29db17e66-i_b_garden_tablet_wheat.png"
   },
   "wine-barrel": {
@@ -31539,8 +31541,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Alkali (alchemy formula)",
-    "en": "Alkali (alchemy formula)"
+    "pt": "Alcalino (fórmula de alquimia)",
+    "en": "Alkali (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -31595,8 +31598,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Berserker Potion (alchemy formula)",
-    "en": "Berserker Potion (alchemy formula)"
+    "pt": "Poção de Fúria (fórmula de alquimia)",
+    "en": "Berserker Potion (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -31651,8 +31655,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Berserker Potion II (alchemy formula)",
-    "en": "Berserker Potion II (alchemy formula)"
+    "pt": "Poção de Fúria II (fórmula de alquimia)",
+    "en": "Berserker Potion II (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -31704,8 +31709,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Berserker Potion III (alchemy formula)",
-    "en": "Berserker Potion III (alchemy formula)"
+    "pt": "Poção de Fúria III (fórmula de alquimia)",
+    "en": "Berserker Potion III (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -31760,8 +31766,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Damage Potion (alchemy formula)",
-    "en": "Damage Potion (alchemy formula)"
+    "pt": "Poção de Dano (fórmula de alquimia)",
+    "en": "Damage Potion (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -31816,8 +31823,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Damage Potion II (alchemy formula)",
-    "en": "Damage Potion II (alchemy formula)"
+    "pt": "Poção de Dano II (fórmula de alquimia)",
+    "en": "Damage Potion II (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -31867,8 +31875,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Damage Potion III (alchemy formula)",
-    "en": "Damage Potion III (alchemy formula)"
+    "pt": "Poção de Dano III (fórmula de alquimia)",
+    "en": "Damage Potion III (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -31923,8 +31932,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Dream Dust (alchemy formula)",
-    "en": "Dream Dust (alchemy formula)"
+    "pt": "Pó dos Sonhos (fórmula de alquimia)",
+    "en": "Dream Dust (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -31979,8 +31989,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Explosive Dust (alchemy formula)",
-    "en": "Explosive Dust (alchemy formula)"
+    "pt": "Pó Explosivo (fórmula de alquimia)",
+    "en": "Explosive Dust (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -32139,8 +32150,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Healing Potion (alchemy formula)",
-    "en": "Healing Potion (alchemy formula)"
+    "pt": "Poção de Cura (fórmula de alquimia)",
+    "en": "Healing Potion (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -32191,8 +32203,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Healing Potion II (alchemy formula)",
-    "en": "Healing Potion II (alchemy formula)"
+    "pt": "Poção de Cura II (fórmula de alquimia)",
+    "en": "Healing Potion II (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -32242,8 +32255,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Healing Potion III (alchemy formula)",
-    "en": "Healing Potion III (alchemy formula)"
+    "pt": "Poção de Cura III (fórmula de alquimia)",
+    "en": "Healing Potion III (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -32294,8 +32308,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Lacquer (alchemy formula)",
-    "en": "Lacquer (alchemy formula)"
+    "pt": "Verniz (fórmula de alquimia)",
+    "en": "Lacquer (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -32354,8 +32369,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Miracle growth elixir (alchemy formula)",
-    "en": "Miracle growth elixir (alchemy formula)"
+    "pt": "Elixir de Crescimento Milagroso (fórmula de alquimia)",
+    "en": "Miracle growth elixir (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -32410,8 +32426,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Organ Improver (alchemy formula)",
-    "en": "Organ Improver (alchemy formula)"
+    "pt": "Aprimorador de Órgãos (fórmula de alquimia)",
+    "en": "Organ Improver (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -32462,8 +32479,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Paint (alchemy formula)",
-    "en": "Paint (alchemy formula)"
+    "pt": "Tinta (fórmula de alquimia)",
+    "en": "Paint (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -32512,8 +32530,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Philosopher Stone (alchemy formula)",
-    "en": "Philosopher Stone (alchemy formula)"
+    "pt": "Pedra Filosofal (fórmula de alquimia)",
+    "en": "Philosopher Stone (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -32568,8 +32587,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Preservative (alchemy formula)",
-    "en": "Preservative (alchemy formula)"
+    "pt": "Conservante (fórmula de alquimia)",
+    "en": "Preservative (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -32626,8 +32646,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Reanimation Liquid (alchemy formula)",
-    "en": "Reanimation Liquid (alchemy formula)"
+    "pt": "Líquido de reanimação (fórmula de alquimia)",
+    "en": "Reanimation Liquid (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -32682,8 +32703,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Rich growth elixir (alchemy formula)",
-    "en": "Rich growth elixir (alchemy formula)"
+    "pt": "Elixir de Crescimento Forte (fórmula de alquimia)",
+    "en": "Rich growth elixir (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -32734,8 +32756,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Spices (alchemy formula)",
-    "en": "Spices (alchemy formula)"
+    "pt": "Especiarias (fórmula de alquimia)",
+    "en": "Spices (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -32792,8 +32815,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Tannin Liquid (alchemy formula)",
-    "en": "Tannin Liquid (alchemy formula)"
+    "pt": "Líquido de Tanino (fórmula de alquimia)",
+    "en": "Tannin Liquid (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -32852,8 +32876,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Third Eye Salt (alchemy formula)",
-    "en": "Third Eye Salt (alchemy formula)"
+    "pt": "Sal do Terceiro Olho (fórmula de alquimia)",
+    "en": "Third Eye Salt (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -32906,8 +32931,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Umami (alchemy formula)",
-    "en": "Umami (alchemy formula)"
+    "pt": "Umami (fórmula de alquimia)",
+    "en": "Umami (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -32962,8 +32988,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Weak growth elixir (alchemy formula)",
-    "en": "Weak growth elixir (alchemy formula)"
+    "pt": "Elixir de Crescimento Fraco (fórmula de alquimia)",
+    "en": "Weak growth elixir (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -33018,8 +33045,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Zombie Motivator Potion (alchemy formula)",
-    "en": "Zombie Motivator Potion (alchemy formula)"
+    "pt": "Poção Motivadora de Zumbis (fórmula de alquimia)",
+    "en": "Zombie Motivator Potion (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -33074,8 +33102,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Zombie Motivator Potion II (alchemy formula)",
-    "en": "Zombie Motivator Potion II (alchemy formula)"
+    "pt": "Poção Motivadora de Zumbis II (fórmula de alquimia)",
+    "en": "Zombie Motivator Potion II (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -33125,8 +33154,9 @@
    },
    "zone": null,
    "name": {
-    "pt": "Zombie Motivator Potion III (alchemy formula)",
-    "en": "Zombie Motivator Potion III (alchemy formula)"
+    "pt": "Poção Motivadora de Zumbis III (fórmula de alquimia)",
+    "en": "Zombie Motivator Potion III (alchemy formula)",
+    "tr": "guess"
    }
   },
   {
@@ -33181,7 +33211,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Alcohol from Any Wine",
+    "pt": "Álcool a partir de qualquer Vinho",
     "en": "Alcohol from Any Wine"
    }
   },
@@ -33237,7 +33267,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Alcohol from Apple Cider",
+    "pt": "Álcool a partir de Cidra de maçã",
     "en": "Alcohol from Apple Cider"
    }
   },
@@ -33293,7 +33323,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Alcohol from Beer",
+    "pt": "Álcool a partir de Cerveja",
     "en": "Alcohol from Beer"
    }
   },
@@ -33349,7 +33379,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Alcohol from Berry Cider",
+    "pt": "Álcool a partir de Cidra de frutinha",
     "en": "Alcohol from Berry Cider"
    }
   },
@@ -33405,7 +33435,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Alcohol from Blueberry Cider",
+    "pt": "Álcool a partir de Cidra de Mirtilo",
     "en": "Alcohol from Blueberry Cider"
    }
   },
@@ -33461,7 +33491,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Alcohol from Mead",
+    "pt": "Álcool a partir de Hidromel",
     "en": "Alcohol from Mead"
    }
   },
@@ -33659,7 +33689,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Ash (Crematorium I)",
+    "pt": "Cinzas (Crematório I)",
     "en": "Ash (Crematorium I)"
    }
   },
@@ -33715,7 +33745,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Ash (Crematorium II)",
+    "pt": "Cinzas (Crematório II)",
     "en": "Ash (Crematorium II)"
    }
   },
@@ -33993,7 +34023,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Baked pumpkin from Pumpkin (bronze)",
+    "pt": "Abóbora assada a partir de Abóbora (bronze)",
     "en": "Baked pumpkin from Pumpkin (bronze)"
    }
   },
@@ -34051,7 +34081,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Baked pumpkin from Pumpkin (gold)",
+    "pt": "Abóbora assada a partir de Abóbora (ouro)",
     "en": "Baked pumpkin from Pumpkin (gold)"
    }
   },
@@ -34109,7 +34139,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Baked pumpkin from Pumpkin (silver)",
+    "pt": "Abóbora assada a partir de Abóbora (prata)",
     "en": "Baked pumpkin from Pumpkin (silver)"
    }
   },
@@ -34969,7 +34999,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Board (Circular Saw)",
+    "pt": "Placa (Serra Circular)",
     "en": "Board (Circular Saw)"
    }
   },
@@ -35013,7 +35043,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Board (Sawhorse)",
+    "pt": "Placa (Cavalete)",
     "en": "Board (Sawhorse)"
    }
   },
@@ -35401,7 +35431,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Brick (Kiln)",
+    "pt": "Bloco (Forno)",
     "en": "Brick (Kiln)"
    }
   },
@@ -35451,7 +35481,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Brick (Smithy I)",
+    "pt": "Bloco (Forja I)",
     "en": "Brick (Smithy I)"
    }
   },
@@ -35804,7 +35834,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Bronze Ingot from Bronze Scrap",
+    "pt": "Lingote de Bronze a partir de Sucata de Cobre",
     "en": "Bronze Ingot from Bronze Scrap"
    }
   },
@@ -35862,7 +35892,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Bronze Ingot from Copper Nugget",
+    "pt": "Lingote de Bronze a partir de Pepita de Cobre",
     "en": "Bronze Ingot from Copper Nugget"
    }
   },
@@ -35913,7 +35943,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Bronze Nails from Bronze Ingot",
+    "pt": "Pregos de Bronze a partir de Lingote de Bronze",
     "en": "Bronze Nails from Bronze Ingot"
    }
   },
@@ -35964,7 +35994,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Bronze Nails from Bronze Scrap",
+    "pt": "Pregos de Bronze a partir de Sucata de Cobre",
     "en": "Bronze Nails from Bronze Scrap"
    }
   },
@@ -39257,8 +39287,9 @@
     "en": "Barracks"
    },
    "name": {
-    "pt": "Build Expand Military Building Area (Barracks)",
-    "en": "Build Expand Military Building Area (Barracks)"
+    "pt": "Expandir a Zona de Construção Militar (Casernas)",
+    "en": "Build Expand Military Building Area (Barracks)",
+    "tr": "guess"
    }
   },
   {
@@ -39293,8 +39324,9 @@
     "en": "Barracks"
    },
    "name": {
-    "pt": "Build Expand Military Building Area (Barracks)",
-    "en": "Build Expand Military Building Area (Barracks)"
+    "pt": "Expandir a Zona de Construção Militar (Casernas)",
+    "en": "Build Expand Military Building Area (Barracks)",
+    "tr": "guess"
    }
   },
   {
@@ -39329,8 +39361,9 @@
     "en": "Barracks"
    },
    "name": {
-    "pt": "Build Expand Military Building Area (Barracks)",
-    "en": "Build Expand Military Building Area (Barracks)"
+    "pt": "Expandir a Zona de Construção Militar (Casernas)",
+    "en": "Build Expand Military Building Area (Barracks)",
+    "tr": "guess"
    }
   },
   {
@@ -39619,8 +39652,9 @@
     "en": "Yard"
    },
    "name": {
-    "pt": "Build Firewood shed I (Yard)",
-    "en": "Build Firewood shed I (Yard)"
+    "pt": "Construir Lenheiro I (Pátio)",
+    "en": "Build Firewood shed I (Yard)",
+    "tr": "guess"
    }
   },
   {
@@ -39664,8 +39698,9 @@
     "en": "Home, Alchemy Lab, Vineyard Basement"
    },
    "name": {
-    "pt": "Build Firewood shed I (Home, Alchemy Lab, Vineyard Basement)",
-    "en": "Build Firewood shed I (Home, Alchemy Lab, Vineyard Basement)"
+    "pt": "Construir Lenheiro I (Casa, Laboratório de Alquimia, Adega do Vinhedo)",
+    "en": "Build Firewood shed I (Home, Alchemy Lab, Vineyard Basement)",
+    "tr": "guess"
    }
   },
   {
@@ -39713,8 +39748,9 @@
     "en": "Yard"
    },
    "name": {
-    "pt": "Build Firewood shed II (Yard)",
-    "en": "Build Firewood shed II (Yard)"
+    "pt": "Construir Lenheiro II (Pátio)",
+    "en": "Build Firewood shed II (Yard)",
+    "tr": "guess"
    }
   },
   {
@@ -39762,8 +39798,9 @@
     "en": "Home, Alchemy Lab, Vineyard Basement"
    },
    "name": {
-    "pt": "Build Firewood shed II (Home, Alchemy Lab, Vineyard Basement)",
-    "en": "Build Firewood shed II (Home, Alchemy Lab, Vineyard Basement)"
+    "pt": "Construir Lenheiro II (Casa, Laboratório de Alquimia, Adega do Vinhedo)",
+    "en": "Build Firewood shed II (Home, Alchemy Lab, Vineyard Basement)",
+    "tr": "guess"
    }
   },
   {
@@ -40572,8 +40609,9 @@
     "en": "Garden"
    },
    "name": {
-    "pt": "Build Gardener Stand (Garden)",
-    "en": "Build Gardener Stand (Garden)"
+    "pt": "Construir Banca do Jardineiro (Jardim)",
+    "en": "Build Gardener Stand (Garden)",
+    "tr": "guess"
    }
   },
   {
@@ -40621,8 +40659,9 @@
     "en": "Vineyard"
    },
    "name": {
-    "pt": "Build Gardener Stand (Vineyard)",
-    "en": "Build Gardener Stand (Vineyard)"
+    "pt": "Construir Banca do Jardineiro (Vinhedo)",
+    "en": "Build Gardener Stand (Vineyard)",
+    "tr": "guess"
    }
   },
   {
@@ -41700,8 +41739,9 @@
     "en": "Graveyard"
    },
    "name": {
-    "pt": "Build Lantern I (Graveyard)",
-    "en": "Build Lantern I (Graveyard)"
+    "pt": "Construir Lanterna I (Cemitério)",
+    "en": "Build Lantern I (Graveyard)",
+    "tr": "guess"
    }
   },
   {
@@ -41749,8 +41789,9 @@
     "en": "Yard"
    },
    "name": {
-    "pt": "Build Lantern I (Yard)",
-    "en": "Build Lantern I (Yard)"
+    "pt": "Construir Lanterna I (Pátio)",
+    "en": "Build Lantern I (Yard)",
+    "tr": "guess"
    }
   },
   {
@@ -41798,8 +41839,9 @@
     "en": "Graveyard"
    },
    "name": {
-    "pt": "Build Lantern II (Graveyard)",
-    "en": "Build Lantern II (Graveyard)"
+    "pt": "Construir Lanterna II (Cemitério)",
+    "en": "Build Lantern II (Graveyard)",
+    "tr": "guess"
    }
   },
   {
@@ -41847,8 +41889,9 @@
     "en": "Yard"
    },
    "name": {
-    "pt": "Build Lantern II (Yard)",
-    "en": "Build Lantern II (Yard)"
+    "pt": "Construir Lanterna II (Pátio)",
+    "en": "Build Lantern II (Yard)",
+    "tr": "guess"
    }
   },
   {
@@ -42414,8 +42457,9 @@
     "en": "Supply Storage"
    },
    "name": {
-    "pt": "Build Porter Station (Supply Storage)",
-    "en": "Build Porter Station (Supply Storage)"
+    "pt": "Construir Posto de Carregadores (Depósito de Suprimentos)",
+    "en": "Build Porter Station (Supply Storage)",
+    "tr": "guess"
    }
   },
   {
@@ -42459,8 +42503,9 @@
     "en": "Old Mine"
    },
    "name": {
-    "pt": "Build Porter Station (Old Mine)",
-    "en": "Build Porter Station (Old Mine)"
+    "pt": "Construir Posto de Carregadores (Mina Antiga)",
+    "en": "Build Porter Station (Old Mine)",
+    "tr": "guess"
    }
   },
   {
@@ -42504,8 +42549,9 @@
     "en": "Quarry"
    },
    "name": {
-    "pt": "Build Porter Station (Quarry)",
-    "en": "Build Porter Station (Quarry)"
+    "pt": "Construir Posto de Carregadores (Pedreira)",
+    "en": "Build Porter Station (Quarry)",
+    "tr": "guess"
    }
   },
   {
@@ -42549,8 +42595,9 @@
     "en": "Riverside"
    },
    "name": {
-    "pt": "Build Porter Station (Riverside)",
-    "en": "Build Porter Station (Riverside)"
+    "pt": "Construir Posto de Carregadores (Margem do Rio)",
+    "en": "Build Porter Station (Riverside)",
+    "tr": "guess"
    }
   },
   {
@@ -42594,8 +42641,9 @@
     "en": "Sawmill"
    },
    "name": {
-    "pt": "Build Porter Station (Sawmill)",
-    "en": "Build Porter Station (Sawmill)"
+    "pt": "Construir Posto de Carregadores (Serraria)",
+    "en": "Build Porter Station (Sawmill)",
+    "tr": "guess"
    }
   },
   {
@@ -42634,8 +42682,9 @@
     "en": "Sawmill"
    },
    "name": {
-    "pt": "Build Porter Station (Sawmill)",
-    "en": "Build Porter Station (Sawmill)"
+    "pt": "Construir Posto de Carregadores (Serraria)",
+    "en": "Build Porter Station (Sawmill)",
+    "tr": "guess"
    }
   },
   {
@@ -42678,8 +42727,9 @@
     "en": "Supply Storage"
    },
    "name": {
-    "pt": "Build Porter Station (Supply Storage)",
-    "en": "Build Porter Station (Supply Storage)"
+    "pt": "Construir Posto de Carregadores (Depósito de Suprimentos)",
+    "en": "Build Porter Station (Supply Storage)",
+    "tr": "guess"
    }
   },
   {
@@ -42723,8 +42773,9 @@
     "en": "Vineyard"
    },
    "name": {
-    "pt": "Build Porter Station (Vineyard)",
-    "en": "Build Porter Station (Vineyard)"
+    "pt": "Construir Posto de Carregadores (Vinhedo)",
+    "en": "Build Porter Station (Vineyard)",
+    "tr": "guess"
    }
   },
   {
@@ -42763,8 +42814,9 @@
     "en": "Vineyard Basement"
    },
    "name": {
-    "pt": "Build Porter Station (Vineyard Basement)",
-    "en": "Build Porter Station (Vineyard Basement)"
+    "pt": "Construir Posto de Carregadores (Adega do Vinhedo)",
+    "en": "Build Porter Station (Vineyard Basement)",
+    "tr": "guess"
    }
   },
   {
@@ -44334,8 +44386,9 @@
     "en": "Yard"
    },
    "name": {
-    "pt": "Build Timber stockpile (Yard)",
-    "en": "Build Timber stockpile (Yard)"
+    "pt": "Construir Reserva de Madeira (Pátio)",
+    "en": "Build Timber stockpile (Yard)",
+    "tr": "guess"
    }
   },
   {
@@ -44379,8 +44432,9 @@
     "en": "Sawmill"
    },
    "name": {
-    "pt": "Build Timber stockpile (Sawmill)",
-    "en": "Build Timber stockpile (Sawmill)"
+    "pt": "Construir Reserva de Madeira (Serraria)",
+    "en": "Build Timber stockpile (Sawmill)",
+    "tr": "guess"
    }
   },
   {
@@ -45434,8 +45488,9 @@
     "en": "Yard, Quarry, Vineyard Basement, Writing Basement, Alchemy Lab"
    },
    "name": {
-    "pt": "Build Zombie Supplier Station (Yard, Quarry, Vineyard Basement, Writing Basement, Alchemy Lab)",
-    "en": "Build Zombie Supplier Station (Yard, Quarry, Vineyard Basement, Writing Basement, Alchemy Lab)"
+    "pt": "Construir Posto de Suprimentos Zumbi (Pátio, Pedreira, Adega do Vinhedo, Porão de Escrita, Laboratório de Alquimia)",
+    "en": "Build Zombie Supplier Station (Yard, Quarry, Vineyard Basement, Writing Basement, Alchemy Lab)",
+    "tr": "guess"
    }
   },
   {
@@ -45479,8 +45534,9 @@
     "en": "Home"
    },
    "name": {
-    "pt": "Build Zombie Supplier Station (Home)",
-    "en": "Build Zombie Supplier Station (Home)"
+    "pt": "Construir Posto de Suprimentos Zumbi (Casa)",
+    "en": "Build Zombie Supplier Station (Home)",
+    "tr": "guess"
    }
   },
   {
@@ -45578,7 +45634,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Building Kit I (Assembly bench I)",
+    "pt": "Kit de Construção I (Bancada de Montagem I)",
     "en": "Building Kit I (Assembly bench I)"
    }
   },
@@ -45631,7 +45687,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Building Kit I (Woodworking Workbench I)",
+    "pt": "Kit de Construção I (Bancada de Carpintaria I)",
     "en": "Building Kit I (Woodworking Workbench I)"
    }
   },
@@ -45835,7 +45891,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Cabbage soup from Cabbage (bronze)",
+    "pt": "Sopa de repolho a partir de Repolho (bronze)",
     "en": "Cabbage soup from Cabbage (bronze)"
    }
   },
@@ -45897,7 +45953,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Cabbage soup from Cabbage (gold)",
+    "pt": "Sopa de repolho a partir de Repolho (ouro)",
     "en": "Cabbage soup from Cabbage (gold)"
    }
   },
@@ -45959,7 +46015,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Cabbage soup from Cabbage (silver)",
+    "pt": "Sopa de repolho a partir de Repolho (prata)",
     "en": "Cabbage soup from Cabbage (silver)"
    }
   },
@@ -46647,7 +46703,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Clean Paper (Paper Press)",
+    "pt": "Papel em Branco (Prensa de papel)",
     "en": "Clean Paper (Paper Press)"
    }
   },
@@ -46695,7 +46751,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Clean Paper (Writing Desk)",
+    "pt": "Papel em Branco (Escrivaninha)",
     "en": "Clean Paper (Writing Desk)"
    }
   },
@@ -47204,7 +47260,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Drink enhancement I from Grape Juice (bronze)",
+    "pt": "Aprimoramento de Bebidas I a partir de Suco de Uva (bronze)",
     "en": "Drink enhancement I from Grape Juice (bronze)"
    }
   },
@@ -47254,7 +47310,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Drink enhancement I from Wine (bronze)",
+    "pt": "Aprimoramento de Bebidas I a partir de Vinho (bronze)",
     "en": "Drink enhancement I from Wine (bronze)"
    }
   },
@@ -47304,7 +47360,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Drink enhancement II from Grape Juice (silver)",
+    "pt": "Aprimoramento de Bebidas II a partir de Suco de Uva (prata)",
     "en": "Drink enhancement II from Grape Juice (silver)"
    }
   },
@@ -47354,7 +47410,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Drink enhancement II from Wine (silver)",
+    "pt": "Aprimoramento de Bebidas II a partir de Vinho (prata)",
     "en": "Drink enhancement II from Wine (silver)"
    }
   },
@@ -47711,7 +47767,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Fabric (Assembly bench I)",
+    "pt": "Tecido (Bancada de Montagem I)",
     "en": "Fabric (Assembly bench I)"
    }
   },
@@ -47759,7 +47815,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Fabric (Weaving Loom)",
+    "pt": "Tecido (Tear)",
     "en": "Fabric (Weaving Loom)"
    }
   },
@@ -48135,7 +48191,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Firewood from Short Log",
+    "pt": "Lenha a partir de Tora Pequena",
     "en": "Firewood from Short Log"
    }
   },
@@ -48183,7 +48239,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Firewood from Stick",
+    "pt": "Lenha a partir de Vareta",
     "en": "Firewood from Stick"
    }
   },
@@ -48495,7 +48551,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Food enhancement I from Bowl of sauerkraut (bronze)",
+    "pt": "Aprimoramento de Alimentos I a partir de Pote de chucrute (bronze)",
     "en": "Food enhancement I from Bowl of sauerkraut (bronze)"
    }
   },
@@ -48545,7 +48601,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Food enhancement I from Vegetable salad (bronze)",
+    "pt": "Aprimoramento de Alimentos I a partir de Salada (bronze)",
     "en": "Food enhancement I from Vegetable salad (bronze)"
    }
   },
@@ -48595,7 +48651,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Food enhancement II from Bowl of sauerkraut (silver)",
+    "pt": "Aprimoramento de Alimentos II a partir de Pote de chucrute (prata)",
     "en": "Food enhancement II from Bowl of sauerkraut (silver)"
    }
   },
@@ -48645,7 +48701,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Food enhancement II from Vegetable salad (silver)",
+    "pt": "Aprimoramento de Alimentos II a partir de Salada (prata)",
     "en": "Food enhancement II from Vegetable salad (silver)"
    }
   },
@@ -48845,7 +48901,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Furniture Kit I (Assembly bench II)",
+    "pt": "Kit de Mobília I (Banco de Montagem II)",
     "en": "Furniture Kit I (Assembly bench II)"
    }
   },
@@ -48893,7 +48949,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Furniture Kit I (Woodworking Workbench II)",
+    "pt": "Kit de Mobília I (Bancada de Carpintaria II)",
     "en": "Furniture Kit I (Woodworking Workbench II)"
    }
   },
@@ -49040,7 +49096,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Glass (Furnace I)",
+    "pt": "Vidro (Fornalha I)",
     "en": "Glass (Furnace I)"
    }
   },
@@ -49090,7 +49146,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Glass (Smithy I)",
+    "pt": "Vidro (Forja I)",
     "en": "Glass (Smithy I)"
    }
   },
@@ -49186,7 +49242,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Gold transmutation from Iron Ingot",
+    "pt": "Transmutação de Ouro a partir de Lingote de Ferro",
     "en": "Gold transmutation from Iron Ingot"
    }
   },
@@ -49234,7 +49290,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Gold transmutation from Iron Ore",
+    "pt": "Transmutação de Ouro a partir de Minério de Ferro",
     "en": "Gold transmutation from Iron Ore"
    }
   },
@@ -49473,7 +49529,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grape Juice from Grapes (bronze)",
+    "pt": "Suco de Uva a partir de Uvas (bronze)",
     "en": "Grape Juice from Grapes (bronze)"
    }
   },
@@ -49521,7 +49577,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grape Juice from Grapes (gold)",
+    "pt": "Suco de Uva a partir de Uvas (ouro)",
     "en": "Grape Juice from Grapes (gold)"
    }
   },
@@ -49569,7 +49625,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grape Juice from Grapes (silver)",
+    "pt": "Suco de Uva a partir de Uvas (prata)",
     "en": "Grape Juice from Grapes (silver)"
    }
   },
@@ -49857,8 +49913,9 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grown in a Beet Bed (Farming mastery 6)",
-    "en": "Grown in a Beet Bed (Farming mastery 6)"
+    "pt": "Cultivado no Canteiro de Beterraba (maestria Agricultura 6)",
+    "en": "Grown in a Beet Bed (Farming mastery 6)",
+    "tr": "guess"
    }
   },
   {
@@ -49925,8 +49982,9 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grown in a Cabbage Bed (Farming mastery 10)",
-    "en": "Grown in a Cabbage Bed (Farming mastery 10)"
+    "pt": "Cultivado no Canteiro de Repolho (maestria Agricultura 10)",
+    "en": "Grown in a Cabbage Bed (Farming mastery 10)",
+    "tr": "guess"
    }
   },
   {
@@ -49977,8 +50035,9 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grown in a Cabbage Bed (Farming mastery 12)",
-    "en": "Grown in a Cabbage Bed (Farming mastery 12)"
+    "pt": "Cultivado no Canteiro de Repolho (maestria Agricultura 12)",
+    "en": "Grown in a Cabbage Bed (Farming mastery 12)",
+    "tr": "guess"
    }
   },
   {
@@ -50045,8 +50104,9 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grown in a Cabbage Bed (Farming mastery 8)",
-    "en": "Grown in a Cabbage Bed (Farming mastery 8)"
+    "pt": "Cultivado no Canteiro de Repolho (maestria Agricultura 8)",
+    "en": "Grown in a Cabbage Bed (Farming mastery 8)",
+    "tr": "guess"
    }
   },
   {
@@ -50097,8 +50157,9 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grown in a Carrot Bed (Farming mastery 4)",
-    "en": "Grown in a Carrot Bed (Farming mastery 4)"
+    "pt": "Cultivado no Canteiro de Cenoura (maestria Agricultura 4)",
+    "en": "Grown in a Carrot Bed (Farming mastery 4)",
+    "tr": "guess"
    }
   },
   {
@@ -50149,8 +50210,9 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grown in a Flax Bed (Farming mastery 5)",
-    "en": "Grown in a Flax Bed (Farming mastery 5)"
+    "pt": "Cultivado no Canteiro de Linho (maestria Agricultura 5)",
+    "en": "Grown in a Flax Bed (Farming mastery 5)",
+    "tr": "guess"
    }
   },
   {
@@ -50217,8 +50279,9 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grown in a Grapes Bed (Farming mastery 12)",
-    "en": "Grown in a Grapes Bed (Farming mastery 12)"
+    "pt": "Cultivado no Canteiro de Uvas (maestria Agricultura 12)",
+    "en": "Grown in a Grapes Bed (Farming mastery 12)",
+    "tr": "guess"
    }
   },
   {
@@ -50285,8 +50348,9 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grown in a Grapes Bed (Farming mastery 14)",
-    "en": "Grown in a Grapes Bed (Farming mastery 14)"
+    "pt": "Cultivado no Canteiro de Uvas (maestria Agricultura 14)",
+    "en": "Grown in a Grapes Bed (Farming mastery 14)",
+    "tr": "guess"
    }
   },
   {
@@ -50337,8 +50401,9 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grown in a Grapes Bed (Farming mastery 16)",
-    "en": "Grown in a Grapes Bed (Farming mastery 16)"
+    "pt": "Cultivado no Canteiro de Uvas (maestria Agricultura 16)",
+    "en": "Grown in a Grapes Bed (Farming mastery 16)",
+    "tr": "guess"
    }
   },
   {
@@ -50389,8 +50454,9 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grown in a Hops Bed (Farming mastery 7)",
-    "en": "Grown in a Hops Bed (Farming mastery 7)"
+    "pt": "Cultivado no Canteiro de Lúpulo (maestria Agricultura 7)",
+    "en": "Grown in a Hops Bed (Farming mastery 7)",
+    "tr": "guess"
    }
   },
   {
@@ -50457,8 +50523,9 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grown in an Onion Bed (Farming mastery 10)",
-    "en": "Grown in an Onion Bed (Farming mastery 10)"
+    "pt": "Cultivado no Canteiro de Cebola (maestria Agricultura 10)",
+    "en": "Grown in an Onion Bed (Farming mastery 10)",
+    "tr": "guess"
    }
   },
   {
@@ -50525,8 +50592,9 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grown in an Onion Bed (Farming mastery 12)",
-    "en": "Grown in an Onion Bed (Farming mastery 12)"
+    "pt": "Cultivado no Canteiro de Cebola (maestria Agricultura 12)",
+    "en": "Grown in an Onion Bed (Farming mastery 12)",
+    "tr": "guess"
    }
   },
   {
@@ -50577,8 +50645,9 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grown in an Onion Bed (Farming mastery 14)",
-    "en": "Grown in an Onion Bed (Farming mastery 14)"
+    "pt": "Cultivado no Canteiro de Cebola (maestria Agricultura 14)",
+    "en": "Grown in an Onion Bed (Farming mastery 14)",
+    "tr": "guess"
    }
   },
   {
@@ -50645,8 +50714,9 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grown in a Pumpkin Bed (Farming mastery 12)",
-    "en": "Grown in a Pumpkin Bed (Farming mastery 12)"
+    "pt": "Cultivado no Canteiro de abóbora (maestria Agricultura 12)",
+    "en": "Grown in a Pumpkin Bed (Farming mastery 12)",
+    "tr": "guess"
    }
   },
   {
@@ -50713,8 +50783,9 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grown in a Pumpkin Bed (Farming mastery 14)",
-    "en": "Grown in a Pumpkin Bed (Farming mastery 14)"
+    "pt": "Cultivado no Canteiro de abóbora (maestria Agricultura 14)",
+    "en": "Grown in a Pumpkin Bed (Farming mastery 14)",
+    "tr": "guess"
    }
   },
   {
@@ -50765,8 +50836,9 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grown in a Pumpkin Bed (Farming mastery 16)",
-    "en": "Grown in a Pumpkin Bed (Farming mastery 16)"
+    "pt": "Cultivado no Canteiro de abóbora (maestria Agricultura 16)",
+    "en": "Grown in a Pumpkin Bed (Farming mastery 16)",
+    "tr": "guess"
    }
   },
   {
@@ -50817,8 +50889,9 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Grown in a Wheat Bed (Farming mastery 2)",
-    "en": "Grown in a Wheat Bed (Farming mastery 2)"
+    "pt": "Cultivado no Canteiro de Trigo (maestria Agricultura 2)",
+    "en": "Grown in a Wheat Bed (Farming mastery 2)",
+    "tr": "guess"
    }
   },
   {
@@ -51201,7 +51274,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Improve newspaper I",
+    "pt": "Aprimorar Jornal I",
     "en": "Improve newspaper I"
    }
   },
@@ -51253,7 +51326,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Improve newspaper II",
+    "pt": "Aprimorar Jornal II",
     "en": "Improve newspaper II"
    }
   },
@@ -51301,7 +51374,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Improve organ I from Any Bones",
+    "pt": "Aprimorar Órgão I a partir de quaisquer Ossos",
     "en": "Improve organ I from Any Bones"
    }
   },
@@ -51349,7 +51422,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Improve organ I from Any Brain",
+    "pt": "Aprimorar Órgão I a partir de qualquer Cérebro",
     "en": "Improve organ I from Any Brain"
    }
   },
@@ -51397,7 +51470,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Improve organ I from Any Guts",
+    "pt": "Aprimorar Órgão I a partir de quaisquer Entranhas",
     "en": "Improve organ I from Any Guts"
    }
   },
@@ -51445,7 +51518,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Improve organ I from Any Heart",
+    "pt": "Aprimorar Órgão I a partir de qualquer Coração",
     "en": "Improve organ I from Any Heart"
    }
   },
@@ -51493,7 +51566,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Improve organ I from Any Skin",
+    "pt": "Aprimorar Órgão I a partir de qualquer Pele",
     "en": "Improve organ I from Any Skin"
    }
   },
@@ -51541,7 +51614,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Improve organ I from Any Skull",
+    "pt": "Aprimorar Órgão I a partir de qualquer Caveira",
     "en": "Improve organ I from Any Skull"
    }
   },
@@ -51589,7 +51662,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Improve organ II from Any Bones",
+    "pt": "Aprimorar Órgão II a partir de quaisquer Ossos",
     "en": "Improve organ II from Any Bones"
    }
   },
@@ -51637,7 +51710,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Improve organ II from Any Brain",
+    "pt": "Aprimorar Órgão II a partir de qualquer Cérebro",
     "en": "Improve organ II from Any Brain"
    }
   },
@@ -51685,7 +51758,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Improve organ II from Any Guts",
+    "pt": "Aprimorar Órgão II a partir de quaisquer Entranhas",
     "en": "Improve organ II from Any Guts"
    }
   },
@@ -51733,7 +51806,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Improve organ II from Any Heart",
+    "pt": "Aprimorar Órgão II a partir de qualquer Coração",
     "en": "Improve organ II from Any Heart"
    }
   },
@@ -51781,7 +51854,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Improve organ II from Any Skin",
+    "pt": "Aprimorar Órgão II a partir de qualquer Pele",
     "en": "Improve organ II from Any Skin"
    }
   },
@@ -51829,7 +51902,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Improve organ II from Any Skull",
+    "pt": "Aprimorar Órgão II a partir de qualquer Caveira",
     "en": "Improve organ II from Any Skull"
    }
   },
@@ -51873,7 +51946,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Improve story I",
+    "pt": "Aprimorar História I",
     "en": "Improve story I"
    }
   },
@@ -51917,7 +51990,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Improve story II",
+    "pt": "Aprimorar História II",
     "en": "Improve story II"
    }
   },
@@ -52430,7 +52503,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Iron Ingot (Furnace II)",
+    "pt": "Lingote de Ferro (Fornalha II)",
     "en": "Iron Ingot (Furnace II)"
    }
   },
@@ -52480,7 +52553,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Iron Ingot (Smithy I)",
+    "pt": "Lingote de Ferro (Forja I)",
     "en": "Iron Ingot (Smithy I)"
    }
   },
@@ -52529,7 +52602,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Iron Kit I (Iron Anvil)",
+    "pt": "Kit de Ferro I (Bigorna de ferro)",
     "en": "Iron Kit I (Iron Anvil)"
    }
   },
@@ -52578,7 +52651,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Iron Kit I (Smithy I)",
+    "pt": "Kit de Ferro I (Forja I)",
     "en": "Iron Kit I (Smithy I)"
    }
   },
@@ -53228,7 +53301,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Lens (Furnace I)",
+    "pt": "Lente (Fornalha I)",
     "en": "Lens (Furnace I)"
    }
   },
@@ -53279,7 +53352,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Lens (Smithy II)",
+    "pt": "Lente (Forja II)",
     "en": "Lens (Smithy II)"
    }
   },
@@ -54107,7 +54180,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Melted Fat from Fat",
+    "pt": "Gordura Derretida a partir de Gordura",
     "en": "Melted Fat from Fat"
    }
   },
@@ -54163,7 +54236,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Melted Fat from Seed oil",
+    "pt": "Gordura Derretida a partir de Óleo de semente",
     "en": "Melted Fat from Seed oil"
    }
   },
@@ -54411,7 +54484,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Mysterious fish fillet from Goldfish",
+    "pt": "Filé de Peixe Misterioso a partir de Peixinho-dourado",
     "en": "Mysterious fish fillet from Goldfish"
    }
   },
@@ -54461,7 +54534,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Mysterious fish fillet from Silverfin",
+    "pt": "Filé de Peixe Misterioso a partir de Prateado",
     "en": "Mysterious fish fillet from Silverfin"
    }
   },
@@ -54511,7 +54584,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Mysterious fish fillet from Swamp Ghost",
+    "pt": "Filé de Peixe Misterioso a partir de Fantasma do Pântano",
     "en": "Mysterious fish fillet from Swamp Ghost"
    }
   },
@@ -54663,7 +54736,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Onion rings from Onion (bronze)",
+    "pt": "Anéis de cebola a partir de Cebola (bronze)",
     "en": "Onion rings from Onion (bronze)"
    }
   },
@@ -54725,7 +54798,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Onion rings from Onion (gold)",
+    "pt": "Anéis de cebola a partir de Cebola (ouro)",
     "en": "Onion rings from Onion (gold)"
    }
   },
@@ -54787,7 +54860,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Onion rings from Onion (silver)",
+    "pt": "Anéis de cebola a partir de Cebola (prata)",
     "en": "Onion rings from Onion (silver)"
    }
   },
@@ -54908,7 +54981,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Open the door",
+    "pt": "Abra a porta",
     "en": "Open the door"
    }
   },
@@ -54995,7 +55068,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Paper glop from Flax",
+    "pt": "Mistureba de papel a partir de Linho",
     "en": "Paper glop from Flax"
    }
   },
@@ -55043,7 +55116,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Paper glop from Wheat",
+    "pt": "Mistureba de papel a partir de Trigo",
     "en": "Paper glop from Wheat"
    }
   },
@@ -55091,7 +55164,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Peat (Compost Pile)",
+    "pt": "Turfa (Monte de Compostagem)",
     "en": "Peat (Compost Pile)"
    }
   },
@@ -55134,7 +55207,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Peat (Compost Pile II)",
+    "pt": "Turfa (Monte de Compostagem II)",
     "en": "Peat (Compost Pile II)"
    }
   },
@@ -55226,7 +55299,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Place Alchemy Flasks I",
+    "pt": "Posicionar Frascos de alquimia I",
     "en": "Place Alchemy Flasks I"
    }
   },
@@ -55265,7 +55338,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Place Alchemy Flasks II",
+    "pt": "Posicionar Frascos de alquimia II",
     "en": "Place Alchemy Flasks II"
    }
   },
@@ -55304,7 +55377,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Plant Beet Seed",
+    "pt": "Plantar Semente de Beterraba",
     "en": "Plant Beet Seed"
    }
   },
@@ -55343,7 +55416,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Plant Cabbage seed (bronze)",
+    "pt": "Plantar Semente de Repolho (bronze)",
     "en": "Plant Cabbage seed (bronze)"
    }
   },
@@ -55382,7 +55455,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Plant Cabbage seed (gold)",
+    "pt": "Plantar Semente de Repolho (ouro)",
     "en": "Plant Cabbage seed (gold)"
    }
   },
@@ -55421,7 +55494,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Plant Cabbage seed (silver)",
+    "pt": "Plantar Semente de Repolho (prata)",
     "en": "Plant Cabbage seed (silver)"
    }
   },
@@ -55460,7 +55533,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Plant Carrot seed",
+    "pt": "Plantar Semente de Cenoura",
     "en": "Plant Carrot seed"
    }
   },
@@ -55499,7 +55572,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Plant Flax Seed",
+    "pt": "Plantar Semente de linho",
     "en": "Plant Flax Seed"
    }
   },
@@ -55538,7 +55611,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Plant Grape Seeds (bronze)",
+    "pt": "Plantar Sementes de Uva (bronze)",
     "en": "Plant Grape Seeds (bronze)"
    }
   },
@@ -55577,7 +55650,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Plant Grape Seeds (gold)",
+    "pt": "Plantar Sementes de Uva (ouro)",
     "en": "Plant Grape Seeds (gold)"
    }
   },
@@ -55616,7 +55689,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Plant Grape Seeds (silver)",
+    "pt": "Plantar Sementes de Uva (prata)",
     "en": "Plant Grape Seeds (silver)"
    }
   },
@@ -55655,7 +55728,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Plant Hop Seeds",
+    "pt": "Plantar Sementes de Lúpulo",
     "en": "Plant Hop Seeds"
    }
   },
@@ -55694,7 +55767,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Plant Onion seed (bronze)",
+    "pt": "Plantar Semente de Cebola (bronze)",
     "en": "Plant Onion seed (bronze)"
    }
   },
@@ -55733,7 +55806,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Plant Onion seed (gold)",
+    "pt": "Plantar Semente de Cebola (ouro)",
     "en": "Plant Onion seed (gold)"
    }
   },
@@ -55772,7 +55845,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Plant Onion seed (silver)",
+    "pt": "Plantar Semente de Cebola (prata)",
     "en": "Plant Onion seed (silver)"
    }
   },
@@ -55811,7 +55884,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Plant Pumpkin Seeds (bronze)",
+    "pt": "Plantar Sementes de Abóbora (bronze)",
     "en": "Plant Pumpkin Seeds (bronze)"
    }
   },
@@ -55850,7 +55923,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Plant Pumpkin Seeds (gold)",
+    "pt": "Plantar Sementes de Abóbora (ouro)",
     "en": "Plant Pumpkin Seeds (gold)"
    }
   },
@@ -55889,7 +55962,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Plant Pumpkin Seeds (silver)",
+    "pt": "Plantar Sementes de Abóbora (prata)",
     "en": "Plant Pumpkin Seeds (silver)"
    }
   },
@@ -55928,7 +56001,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Plant Wheat seed",
+    "pt": "Plantar Semente de Trigo",
     "en": "Plant Wheat seed"
    }
   },
@@ -56981,7 +57054,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Pumpkin soup from Pumpkin (bronze)",
+    "pt": "Sopa de abóbora a partir de Abóbora (bronze)",
     "en": "Pumpkin soup from Pumpkin (bronze)"
    }
   },
@@ -57043,7 +57116,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Pumpkin soup from Pumpkin (gold)",
+    "pt": "Sopa de abóbora a partir de Abóbora (ouro)",
     "en": "Pumpkin soup from Pumpkin (gold)"
    }
   },
@@ -57105,7 +57178,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Pumpkin soup from Pumpkin (silver)",
+    "pt": "Sopa de abóbora a partir de Abóbora (prata)",
     "en": "Pumpkin soup from Pumpkin (silver)"
    }
   },
@@ -57516,7 +57589,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "River fish fillet from Bream or Carp",
+    "pt": "Filé de Peixe de Água Doce a partir de Brema ou Carpa",
     "en": "River fish fillet from Bream or Carp"
    }
   },
@@ -57566,7 +57639,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "River fish fillet from Crucian or Herring",
+    "pt": "Filé de Peixe de Água Doce a partir de Cruciana ou Leucisco",
     "en": "River fish fillet from Crucian or Herring"
    }
   },
@@ -57616,7 +57689,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "River fish fillet from Pike or Catfish",
+    "pt": "Filé de Peixe de Água Doce a partir de Lúcio ou Bagre",
     "en": "River fish fillet from Pike or Catfish"
    }
   },
@@ -57666,7 +57739,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "River fish fillet from Roach or Gudgeon",
+    "pt": "Filé de Peixe de Água Doce a partir de Rutilo ou Gróbio",
     "en": "River fish fillet from Roach or Gudgeon"
    }
   },
@@ -58017,7 +58090,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Sea fish fillet from Anchovy or Mackerel",
+    "pt": "Filé de Peixe de Água Salgada a partir de Anchova ou Cavala",
     "en": "Sea fish fillet from Anchovy or Mackerel"
    }
   },
@@ -58067,7 +58140,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Sea fish fillet from Eel or Trout",
+    "pt": "Filé de Peixe de Água Salgada a partir de Enguia ou Truta",
     "en": "Sea fish fillet from Eel or Trout"
    }
   },
@@ -58117,7 +58190,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Sea fish fillet from Tuna or Salmon",
+    "pt": "Filé de Peixe de Água Salgada a partir de Atum ou Salmão",
     "en": "Sea fish fillet from Tuna or Salmon"
    }
   },
@@ -58161,7 +58234,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Seed oil from Any Cabbage seed",
+    "pt": "Óleo de semente a partir de qualquer Semente de Repolho",
     "en": "Seed oil from Any Cabbage seed"
    }
   },
@@ -58205,7 +58278,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Seed oil from Any Onion seed",
+    "pt": "Óleo de semente a partir de qualquer Semente de Cebola",
     "en": "Seed oil from Any Onion seed"
    }
   },
@@ -58249,7 +58322,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Seed oil from Any Pumpkin Seeds",
+    "pt": "Óleo de semente a partir de quaisquer Sementes de Abóbora",
     "en": "Seed oil from Any Pumpkin Seeds"
    }
   },
@@ -58293,7 +58366,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Seed oil from Beet Seed",
+    "pt": "Óleo de semente a partir de Semente de Beterraba",
     "en": "Seed oil from Beet Seed"
    }
   },
@@ -58337,7 +58410,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Seed oil from Carrot seed",
+    "pt": "Óleo de semente a partir de Semente de Cenoura",
     "en": "Seed oil from Carrot seed"
    }
   },
@@ -58381,7 +58454,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Seed oil from Flax Seed",
+    "pt": "Óleo de semente a partir de Semente de linho",
     "en": "Seed oil from Flax Seed"
    }
   },
@@ -58425,7 +58498,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Seed oil from Wheat seed",
+    "pt": "Óleo de semente a partir de Semente de Trigo",
     "en": "Seed oil from Wheat seed"
    }
   },
@@ -58468,7 +58541,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Short Log (Circular Saw)",
+    "pt": "Tora Pequena (Serra Circular)",
     "en": "Short Log (Circular Saw)"
    }
   },
@@ -58512,7 +58585,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Short Log (Sawhorse)",
+    "pt": "Tora Pequena (Cavalete)",
     "en": "Short Log (Sawhorse)"
    }
   },
@@ -59750,7 +59823,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Stone Kit (Assembly bench I)",
+    "pt": "Kit de Pedra (Bancada de Montagem I)",
     "en": "Stone Kit (Assembly bench I)"
    }
   },
@@ -59801,7 +59874,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Stone Kit (Stonemason's Workbench)",
+    "pt": "Kit de Pedra (Bancada do Canteiro)",
     "en": "Stone Kit (Stonemason's Workbench)"
    }
   },
@@ -60397,7 +60470,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Clothes I (Assembly bench II)",
+    "pt": "Suprimentos: Roupas I (Banco de Montagem II)",
     "en": "Supply: Clothes I (Assembly bench II)"
    }
   },
@@ -60441,7 +60514,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Clothes I (Sewing Table)",
+    "pt": "Suprimentos: Roupas I (Mesa de Costura)",
     "en": "Supply: Clothes I (Sewing Table)"
    }
   },
@@ -60677,7 +60750,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Fabric (Assembly bench I)",
+    "pt": "Suprimentos: Tecido (Bancada de Montagem I)",
     "en": "Supply: Fabric (Assembly bench I)"
    }
   },
@@ -60723,7 +60796,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Fabric (Woodworking Workbench I)",
+    "pt": "Suprimentos: Tecido (Bancada de Carpintaria I)",
     "en": "Supply: Fabric (Woodworking Workbench I)"
    }
   },
@@ -60911,7 +60984,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Iron (Assembly bench I)",
+    "pt": "Suprimento: Ferro (Bancada de Montagem I)",
     "en": "Supply: Iron (Assembly bench I)"
    }
   },
@@ -61011,7 +61084,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Iron (Woodworking Workbench I)",
+    "pt": "Suprimento: Ferro (Bancada de Carpintaria I)",
     "en": "Supply: Iron (Woodworking Workbench I)"
    }
   },
@@ -61110,7 +61183,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Preserves I from Beet",
+    "pt": "Suprimentos: Conservas I a partir de Beterraba",
     "en": "Supply: Preserves I from Beet"
    }
   },
@@ -61163,7 +61236,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Preserves I from Cabbage (bronze)",
+    "pt": "Suprimentos: Conservas I a partir de Repolho (bronze)",
     "en": "Supply: Preserves I from Cabbage (bronze)"
    }
   },
@@ -61216,7 +61289,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Preserves I from Cabbage (gold)",
+    "pt": "Suprimentos: Conservas I a partir de Repolho (ouro)",
     "en": "Supply: Preserves I from Cabbage (gold)"
    }
   },
@@ -61269,7 +61342,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Preserves I from Cabbage (silver)",
+    "pt": "Suprimentos: Conservas I a partir de Repolho (prata)",
     "en": "Supply: Preserves I from Cabbage (silver)"
    }
   },
@@ -61322,7 +61395,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Preserves I from Carrot",
+    "pt": "Suprimentos: Conservas I a partir de Cenoura",
     "en": "Supply: Preserves I from Carrot"
    }
   },
@@ -61373,7 +61446,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Preserves II from Onion (bronze)",
+    "pt": "Suprimentos: Conservas II a partir de Cebola (bronze)",
     "en": "Supply: Preserves II from Onion (bronze)"
    }
   },
@@ -61424,7 +61497,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Preserves II from Onion (gold)",
+    "pt": "Suprimentos: Conservas II a partir de Cebola (ouro)",
     "en": "Supply: Preserves II from Onion (gold)"
    }
   },
@@ -61475,7 +61548,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Preserves II from Onion (silver)",
+    "pt": "Suprimentos: Conservas II a partir de Cebola (prata)",
     "en": "Supply: Preserves II from Onion (silver)"
    }
   },
@@ -61526,7 +61599,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Preserves II from Pumpkin (bronze)",
+    "pt": "Suprimentos: Conservas II a partir de Abóbora (bronze)",
     "en": "Supply: Preserves II from Pumpkin (bronze)"
    }
   },
@@ -61577,7 +61650,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Preserves II from Pumpkin (gold)",
+    "pt": "Suprimentos: Conservas II a partir de Abóbora (ouro)",
     "en": "Supply: Preserves II from Pumpkin (gold)"
    }
   },
@@ -61628,7 +61701,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Preserves II from Pumpkin (silver)",
+    "pt": "Suprimentos: Conservas II a partir de Abóbora (prata)",
     "en": "Supply: Preserves II from Pumpkin (silver)"
    }
   },
@@ -61725,7 +61798,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Vegetables from Beet",
+    "pt": "Suprimentos: Vegetais a partir de Beterraba",
     "en": "Supply: Vegetables from Beet"
    }
   },
@@ -61775,7 +61848,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Vegetables from Cabbage (bronze)",
+    "pt": "Suprimentos: Vegetais a partir de Repolho (bronze)",
     "en": "Supply: Vegetables from Cabbage (bronze)"
    }
   },
@@ -61825,7 +61898,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Vegetables from Cabbage (gold)",
+    "pt": "Suprimentos: Vegetais a partir de Repolho (ouro)",
     "en": "Supply: Vegetables from Cabbage (gold)"
    }
   },
@@ -61875,7 +61948,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Vegetables from Cabbage (silver)",
+    "pt": "Suprimentos: Vegetais a partir de Repolho (prata)",
     "en": "Supply: Vegetables from Cabbage (silver)"
    }
   },
@@ -61925,7 +61998,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Vegetables from Carrot",
+    "pt": "Suprimentos: Vegetais a partir de Cenoura",
     "en": "Supply: Vegetables from Carrot"
    }
   },
@@ -61975,7 +62048,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Vegetables from Onion (bronze)",
+    "pt": "Suprimentos: Vegetais a partir de Cebola (bronze)",
     "en": "Supply: Vegetables from Onion (bronze)"
    }
   },
@@ -62025,7 +62098,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Vegetables from Onion (gold)",
+    "pt": "Suprimentos: Vegetais a partir de Cebola (ouro)",
     "en": "Supply: Vegetables from Onion (gold)"
    }
   },
@@ -62075,7 +62148,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Vegetables from Onion (silver)",
+    "pt": "Suprimentos: Vegetais a partir de Cebola (prata)",
     "en": "Supply: Vegetables from Onion (silver)"
    }
   },
@@ -62125,7 +62198,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Vegetables from Pumpkin (bronze)",
+    "pt": "Suprimentos: Vegetais a partir de Abóbora (bronze)",
     "en": "Supply: Vegetables from Pumpkin (bronze)"
    }
   },
@@ -62175,7 +62248,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Vegetables from Pumpkin (gold)",
+    "pt": "Suprimentos: Vegetais a partir de Abóbora (ouro)",
     "en": "Supply: Vegetables from Pumpkin (gold)"
    }
   },
@@ -62225,7 +62298,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Vegetables from Pumpkin (silver)",
+    "pt": "Suprimentos: Vegetais a partir de Abóbora (prata)",
     "en": "Supply: Vegetables from Pumpkin (silver)"
    }
   },
@@ -62271,7 +62344,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Wine from Wine (bronze)",
+    "pt": "Suprimento: Vinho a partir de Vinho (bronze)",
     "en": "Supply: Wine from Wine (bronze)"
    }
   },
@@ -62317,7 +62390,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Wine from Wine (gold)",
+    "pt": "Suprimento: Vinho a partir de Vinho (ouro)",
     "en": "Supply: Wine from Wine (gold)"
    }
   },
@@ -62363,7 +62436,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Supply: Wine from Wine (silver)",
+    "pt": "Suprimento: Vinho a partir de Vinho (prata)",
     "en": "Supply: Wine from Wine (silver)"
    }
   },
@@ -62571,7 +62644,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Toast with onions from Onion (bronze)",
+    "pt": "Torradas com cebola a partir de Cebola (bronze)",
     "en": "Toast with onions from Onion (bronze)"
    }
   },
@@ -62633,7 +62706,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Toast with onions from Onion (gold)",
+    "pt": "Torradas com cebola a partir de Cebola (ouro)",
     "en": "Toast with onions from Onion (gold)"
    }
   },
@@ -62695,7 +62768,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Toast with onions from Onion (silver)",
+    "pt": "Torradas com cebola a partir de Cebola (prata)",
     "en": "Toast with onions from Onion (silver)"
    }
   },
@@ -63381,7 +63454,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Wine from Grape Juice (bronze)",
+    "pt": "Vinho a partir de Suco de Uva (bronze)",
     "en": "Wine from Grape Juice (bronze)"
    }
   },
@@ -63429,7 +63502,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Wine from Grape Juice (gold)",
+    "pt": "Vinho a partir de Suco de Uva (ouro)",
     "en": "Wine from Grape Juice (gold)"
    }
   },
@@ -63477,7 +63550,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Wine from Grape Juice (silver)",
+    "pt": "Vinho a partir de Suco de Uva (prata)",
     "en": "Wine from Grape Juice (silver)"
    }
   },
@@ -63847,7 +63920,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Wooden Kit I from Bronze Nails (Assembly bench I)",
+    "pt": "Kit de Madeira I a partir de Pregos de Bronze (Bancada de Montagem I)",
     "en": "Wooden Kit I from Bronze Nails (Assembly bench I)"
    }
   },
@@ -63897,7 +63970,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Wooden Kit I from Log (Assembly bench I)",
+    "pt": "Kit de Madeira I a partir de Tora (Bancada de Montagem I)",
     "en": "Wooden Kit I from Log (Assembly bench I)"
    }
   },
@@ -63950,7 +64023,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Wooden Kit I (Woodworking Workbench I)",
+    "pt": "Kit de Madeira I (Bancada de Carpintaria I)",
     "en": "Wooden Kit I (Woodworking Workbench I)"
    }
   },
@@ -64038,7 +64111,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Wooden Plank (Circular Saw)",
+    "pt": "Placa de Madeira (Serra Circular)",
     "en": "Wooden Plank (Circular Saw)"
    }
   },
@@ -64084,7 +64157,7 @@
    "runes": null,
    "zone": null,
    "name": {
-    "pt": "Wooden Plank (Woodworking Workbench I)",
+    "pt": "Placa de Madeira (Bancada de Carpintaria I)",
     "en": "Wooden Plank (Woodworking Workbench I)"
    }
   },

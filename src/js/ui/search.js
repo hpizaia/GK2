@@ -13,6 +13,8 @@
    its own, in the same "+ X" form as the plain toast (the data has no item gender, so no participle).
    1.8.0: a graded item (GK.data.itemGrade) reads "Suco de Uva" with "prata · …" below and the star on its icon; the
    one-line Recentes keep the full name ("Suco de Uva (prata)"): there is no line below for the word.
+   2026-11 (consertos.md §17): the plain item of a graded family is the bronze one ("Abóbora": "bronze · …", the
+   bronze star; in the Recentes "Abóbora (bronze)", GK.ui.fmt.gradedName); a family comes in one run, bronze first.
    Owns: [data-panel="search"]. Exposes: GK.ui.search.{mount, render, add}; registered as a panel.
 */
 GK.i18n.add({
@@ -126,7 +128,7 @@ GK.ui.search = (function () {
     list.innerHTML = ids.map((id, k) => {
       const it = GK.data.item(id), nm = name(it, st.overrides);
       return `<li class="result result-recent" role="option" id="q-opt-${k}" aria-selected="false" data-add="${esc(id)}">
-        ${slot(it, nm)}<span class="result-name">${esc(nm)}${GK.ui.fmt.otherName(it)}</span><span class="result-add" aria-hidden="true">${esc(t("search.add"))}</span>
+        ${slot(it, nm)}<span class="result-name">${esc(GK.ui.fmt.gradedName(it, nm))}${GK.ui.fmt.otherName(it)}</span><span class="result-add" aria-hidden="true">${esc(t("search.add"))}</span>
       </li>`;
     }).join("");
     status.textContent = "";

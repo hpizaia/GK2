@@ -3,7 +3,9 @@
    Exposes: GK.util.{esc, domId, slot, setSprite, copyText, debounce}.
    slot(ent, label, small, grade) (1.8.0): an item with a quality grade (item.grade, or the grade a recipe line gives
    it: the bronze Cabbage of "… from Cabbage (bronze)") gets the pixel star in its icon's top-left corner (.qstar
-   q-b / q-s / q-g, components.css), out of the way of a stack number. The one place that draws it.
+   q-b / q-s / q-g, components.css), out of the way of a stack number. The one place that draws it. The plain item of
+   a graded family is the bronze one (item.grade "bronze", GK.data bronzePlain); grade = false draws no star (an
+   "Any X" line, or a row that stands for the whole family).
 */
 GK.util = (function () {
   const ESC = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
@@ -22,10 +24,11 @@ GK.util = (function () {
   }
   const letterTile = (cls, letter) => `<span class="${cls}"><span class="slot-letter" aria-hidden="true">${letter}</span></span>`;
   const STAR = { bronze: "q-b", silver: "q-s", gold: "q-g" };
-  // ent = item or station ({id, icon}); label = shown name (for the letter fallback); grade = a line's grade (else ent.grade)
+  // ent = item or station ({id, icon}); label = shown name (for the letter fallback); grade = a line's grade (else
+  // ent.grade; false = no star)
   function slot(ent, label, small, grade) {
     const letter = esc((String(label || "?").trim()[0] || "?").toUpperCase());
-    const q = STAR[grade || (ent && ent.grade)] || "";
+    const q = grade === false ? "" : STAR[grade || (ent && ent.grade)] || "";
     const cls = "slot" + (small ? " slot-sm" : "") + (q ? " has-q" : "");
     const star = q ? `<span class="qstar ${q}" aria-hidden="true"></span>` : "";
     const pos = ent && sprite && sprite.icons[ent.id];

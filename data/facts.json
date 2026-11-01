@@ -171,7 +171,7 @@
   },
   "broken-shelf": {
    "en": "Broken shelf",
-   "pt": "Estante quebrada",
+   "pt": "Prateleira quebrada",
    "tr": "machine"
   },
   "brown-mushrooms": {
@@ -311,7 +311,7 @@
   },
   "driftwood": {
    "en": "Driftwood",
-   "pt": "Madeira flutuante",
+   "pt": "Madeira trazida pela maré",
    "tr": "machine"
   },
   "dungeons-and-that-s-it-probably": {
@@ -561,7 +561,7 @@
   },
   "iron-ore-deposit": {
    "en": "Iron ore deposit",
-   "pt": "Jazida de minério de ferro",
+   "pt": "Depósito de minério de ferro",
    "tr": "machine"
   },
   "jack": {
@@ -646,7 +646,7 @@
   },
   "marble-deposit": {
    "en": "Marble deposit",
-   "pt": "Jazida de mármore",
+   "pt": "Depósito de mármore",
    "tr": "machine"
   },
   "market-square-purge": {
@@ -806,7 +806,7 @@
   },
   "sand-pit": {
    "en": "Sand pit",
-   "pt": "Areal",
+   "pt": "Buraco de areia",
    "tr": "machine"
   },
   "sawmill": {
@@ -871,7 +871,7 @@
   },
   "stone-deposit": {
    "en": "Stone deposit",
-   "pt": "Jazida de pedra",
+   "pt": "Depósito de pedra",
    "tr": "machine"
   },
   "strings-and-sinners": {
@@ -896,7 +896,7 @@
   },
   "swamp-mushrooms": {
    "en": "Swamp mushrooms",
-   "pt": "Cogumelos do pântano",
+   "pt": "Cogumelos pantaneiros",
    "tr": "machine"
   },
   "sweet-dreams": {

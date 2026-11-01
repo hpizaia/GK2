@@ -1,7 +1,8 @@
 /* GK.calc: pure planning and search functions (no DOM, no state).
    Exposes: GK.calc.{plan, search, howToMake, orderStations, isBonusActive, doneCovers, rawChecked, stepChecked,
    recipeGroups}.
-   1.8.0: search results of one quality family come bronze, silver, gold (GK.data.gradeSort); recipeGroups(rs, D) is
+   1.8.0: search results of one quality family come bronze, silver, gold (GK.data.gradeSort; 2026-11: in one run, the
+   plain bronze item first); recipeGroups(rs, D) is
    the "Como fabricar" grouping rule of the Receitas detail (see the function).
 */
 GK.calc = (function () {
@@ -284,7 +285,7 @@ GK.calc = (function () {
     }
     const label = (id) => ov[id] || D.items[id][lang] || D.items[id].en;
     out.sort((a, b) => b.score - a.score || label(a.id).localeCompare(label(b.id)));
-    GK.data.gradeSort(out, (x) => GK.data.family(D.items[x.id]), (x) => GK.data.GRADE_RANK[D.items[x.id].grade]);
+    GK.data.gradeSort(out, (x) => GK.data.family(D.items[x.id]), (x) => GK.data.GRADE_RANK[D.items[x.id].grade], true);
     return { results: out.slice(0, (opt && opt.limit) || 10), hiddenCount };
   }
   /**
@@ -350,7 +351,7 @@ GK.calc = (function () {
       if (g.recipes.length < 2) { one(); continue; }
       const opts = g.recipes.map((r, i) => {
         const line = g.vars[i], item = items[line.item];
-        const grade = line.grade || G.itemGrade(item);
+        const grade = G.lineGrade(line);   // none on an "Any X" line (Óleo de semente)
         const base = item && item.base ? item.base : grade && item && item.kind === "quality-variant" ? G.family(item) : line.item;
         return { r, line, item, grade, base };
       });

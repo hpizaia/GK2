@@ -7,11 +7,11 @@ Built 2026-11-01. Names with `tr` = missing, machine or guess, most-used first (
 | Items | 838 | 0 | 6 | 0 |
 | Stations (same names-file key as the station item) | 79 | 0 | 0 | 0 |
 | Station extensions | 15 | 0 | 0 | 0 |
-| Categories | 53 | 0 | 45 | 0 |
+| Categories | 53 | 0 | 36 | 0 |
 | Technologies / unlocks | 231 | 0 | 3 | 0 |
 | Masteries | 5 | 0 | 3 | 0 |
 | Zones | 23 | 0 | 1 | 0 |
-| Recipe names (when different from the output item) | 235 | 231 | 0 | 0 |
+| Recipe names (when different from the output item) | 235 | 0 | 0 | 67 |
 | Recipe notes (input / by-product, free text) | 75 | 1 | 74 | 0 |
 
 ## Items: needs review (machine / guess) (6)
@@ -25,19 +25,16 @@ Built 2026-11-01. Names with `tr` = missing, machine or guess, most-used first (
 | 1 | +80 zombie limit for 5 weeks | +80 no limite de zumbis por 5 semanas | machine | `80-zombie-limit-for-5-weeks` |
 | 1 | Village toilet | Banheiro da vila | machine | `village-toilet` |
 
-## Categories: needs review (machine / guess) (45)
+## Categories: needs review (machine / guess) (36)
 
 | uses | English | current pt | tr |
 |---:|---|---|---|
 | 355 | Building materials | Materiais de construção | machine |
 | 272 | Metals & ores | Metais e minérios | machine |
 | 102 | Resources | Recursos | machine |
-| 85 | Building: Crafting station | Construção: estação de fabricação | machine |
 | 70 | (no wiki item page) | (sem página de item na wiki) | machine |
 | 64 | Foraging | Coleta | machine |
-| 57 | Crafting materials | Materiais de fabricação | machine |
 | 49 | Books & paper | Livros e papel | machine |
-| 46 | Town supplies | Suprimentos da cidade | machine |
 | 43 | Food | Comida | machine |
 | 40 | Potions | Poções | machine |
 | 31 | Drinks | Bebidas | machine |
@@ -50,22 +47,16 @@ Built 2026-11-01. Names with `tr` = missing, machine or guess, most-used first (
 | 11 | Building: Factory | Construção: fábrica | machine |
 | 11 | Building: Graveyard areas | Construção: áreas do cemitério | machine |
 | 11 | Building: Supply Storage | Construção: depósito de suprimentos | machine |
-| 10 | Building: Garden | Construção: horta | machine |
-| 9 | Building: Garden tablets | Construção: placas da horta | machine |
 | 8 | Building: Alchemy Lab | Construção: laboratório de alquimia | machine |
 | 8 | Fish | Peixes | machine |
 | 7 | Building: Benches and lanterns | Construção: bancos e lanternas | machine |
 | 7 | Fishing gear | Equipamento de pesca | machine |
 | 6 | Building: Graveyard | Construção: cemitério | machine |
 | 6 | Building: Monuments and flower beds | Construção: monumentos e canteiros de flores | machine |
-| 5 | Building: Assembly benches | Construção: bancadas de montagem | machine |
 | 5 | Building: Morgue | Construção: necrotério | machine |
-| 5 | Building: Yard | Construção: quintal | machine |
-| 4 | Building: Graves and columbaria | Construção: covas e columbários | machine |
 | 4 | Building: Home | Construção: casa | machine |
 | 4 | Building: Smithies | Construção: forjas | machine |
 | 4 | Building: Workshop | Construção: oficina | machine |
-| 3 | Building: Barracks | Construção: quartel | machine |
 | 3 | Building: Kitchens | Construção: cozinhas | machine |
 | 3 | Building: Metalwork | Construção: metalurgia | machine |
 | 1 | Building: Farming | Construção: agricultura | machine |
@@ -97,241 +88,77 @@ Built 2026-11-01. Names with `tr` = missing, machine or guess, most-used first (
 |---:|---|---|---|
 | 5 | Anywhere | Qualquer lugar | machine |
 
-## Recipe names (when different from the output item): missing (English shown) (231)
+## Recipe names (when different from the output item): needs review (machine / guess) (67)
 
 | uses | English | current pt | tr |
 |---:|---|---|---|
-| 3 | Build Expand Military Building Area (Barracks) |  | missing |
-| 2 | Build Porter Station (Sawmill) |  | missing |
-| 2 | Build Porter Station (Supply Storage) |  | missing |
-| 1 | Alcohol from Any Wine |  | missing |
-| 1 | Alcohol from Apple Cider |  | missing |
-| 1 | Alcohol from Beer |  | missing |
-| 1 | Alcohol from Berry Cider |  | missing |
-| 1 | Alcohol from Blueberry Cider |  | missing |
-| 1 | Alcohol from Mead |  | missing |
-| 1 | Alkali (alchemy formula) |  | missing |
-| 1 | Ash (Crematorium I) |  | missing |
-| 1 | Ash (Crematorium II) |  | missing |
-| 1 | Baked pumpkin from Pumpkin (bronze) |  | missing |
-| 1 | Baked pumpkin from Pumpkin (gold) |  | missing |
-| 1 | Baked pumpkin from Pumpkin (silver) |  | missing |
-| 1 | Berserker Potion (alchemy formula) |  | missing |
-| 1 | Berserker Potion II (alchemy formula) |  | missing |
-| 1 | Berserker Potion III (alchemy formula) |  | missing |
-| 1 | Board (Circular Saw) |  | missing |
-| 1 | Board (Sawhorse) |  | missing |
-| 1 | Brick (Kiln) |  | missing |
-| 1 | Brick (Smithy I) |  | missing |
-| 1 | Bronze Ingot from Bronze Scrap |  | missing |
-| 1 | Bronze Ingot from Copper Nugget |  | missing |
-| 1 | Bronze Nails from Bronze Ingot |  | missing |
-| 1 | Bronze Nails from Bronze Scrap |  | missing |
-| 1 | Build Firewood shed I (Home, Alchemy Lab, Vineyard Basement) |  | missing |
-| 1 | Build Firewood shed I (Yard) |  | missing |
-| 1 | Build Firewood shed II (Home, Alchemy Lab, Vineyard Basement) |  | missing |
-| 1 | Build Firewood shed II (Yard) |  | missing |
-| 1 | Build Gardener Stand (Garden) |  | missing |
-| 1 | Build Gardener Stand (Vineyard) |  | missing |
-| 1 | Build Lantern I (Graveyard) |  | missing |
-| 1 | Build Lantern I (Yard) |  | missing |
-| 1 | Build Lantern II (Graveyard) |  | missing |
-| 1 | Build Lantern II (Yard) |  | missing |
-| 1 | Build Porter Station (Old Mine) |  | missing |
-| 1 | Build Porter Station (Quarry) |  | missing |
-| 1 | Build Porter Station (Riverside) |  | missing |
-| 1 | Build Porter Station (Vineyard Basement) |  | missing |
-| 1 | Build Porter Station (Vineyard) |  | missing |
-| 1 | Build Timber stockpile (Sawmill) |  | missing |
-| 1 | Build Timber stockpile (Yard) |  | missing |
-| 1 | Build Zombie Supplier Station (Home) |  | missing |
-| 1 | Build Zombie Supplier Station (Yard, Quarry, Vineyard Basement, Writing Basement, Alchemy Lab) |  | missing |
-| 1 | Building Kit I (Assembly bench I) |  | missing |
-| 1 | Building Kit I (Woodworking Workbench I) |  | missing |
-| 1 | Cabbage soup from Cabbage (bronze) |  | missing |
-| 1 | Cabbage soup from Cabbage (gold) |  | missing |
-| 1 | Cabbage soup from Cabbage (silver) |  | missing |
-| 1 | Clean Paper (Paper Press) |  | missing |
-| 1 | Clean Paper (Writing Desk) |  | missing |
-| 1 | Damage Potion (alchemy formula) |  | missing |
-| 1 | Damage Potion II (alchemy formula) |  | missing |
-| 1 | Damage Potion III (alchemy formula) |  | missing |
-| 1 | Dream Dust (alchemy formula) |  | missing |
-| 1 | Drink enhancement I from Grape Juice (bronze) |  | missing |
-| 1 | Drink enhancement I from Wine (bronze) |  | missing |
-| 1 | Drink enhancement II from Grape Juice (silver) |  | missing |
-| 1 | Drink enhancement II from Wine (silver) |  | missing |
-| 1 | Explosive Dust (alchemy formula) |  | missing |
-| 1 | Fabric (Assembly bench I) |  | missing |
-| 1 | Fabric (Weaving Loom) |  | missing |
-| 1 | Firewood from Short Log |  | missing |
-| 1 | Firewood from Stick |  | missing |
-| 1 | Food enhancement I from Bowl of sauerkraut (bronze) |  | missing |
-| 1 | Food enhancement I from Vegetable salad (bronze) |  | missing |
-| 1 | Food enhancement II from Bowl of sauerkraut (silver) |  | missing |
-| 1 | Food enhancement II from Vegetable salad (silver) |  | missing |
-| 1 | Furniture Kit I (Assembly bench II) |  | missing |
-| 1 | Furniture Kit I (Woodworking Workbench II) |  | missing |
-| 1 | Glass (Furnace I) |  | missing |
-| 1 | Glass (Smithy I) |  | missing |
-| 1 | Gold transmutation from Iron Ingot |  | missing |
-| 1 | Gold transmutation from Iron Ore |  | missing |
-| 1 | Grape Juice from Grapes (bronze) |  | missing |
-| 1 | Grape Juice from Grapes (gold) |  | missing |
-| 1 | Grape Juice from Grapes (silver) |  | missing |
-| 1 | Grown in a Beet Bed (Farming mastery 6) |  | missing |
-| 1 | Grown in a Cabbage Bed (Farming mastery 10) |  | missing |
-| 1 | Grown in a Cabbage Bed (Farming mastery 12) |  | missing |
-| 1 | Grown in a Cabbage Bed (Farming mastery 8) |  | missing |
-| 1 | Grown in a Carrot Bed (Farming mastery 4) |  | missing |
-| 1 | Grown in a Flax Bed (Farming mastery 5) |  | missing |
-| 1 | Grown in a Grapes Bed (Farming mastery 12) |  | missing |
-| 1 | Grown in a Grapes Bed (Farming mastery 14) |  | missing |
-| 1 | Grown in a Grapes Bed (Farming mastery 16) |  | missing |
-| 1 | Grown in a Hops Bed (Farming mastery 7) |  | missing |
-| 1 | Grown in a Pumpkin Bed (Farming mastery 12) |  | missing |
-| 1 | Grown in a Pumpkin Bed (Farming mastery 14) |  | missing |
-| 1 | Grown in a Pumpkin Bed (Farming mastery 16) |  | missing |
-| 1 | Grown in a Wheat Bed (Farming mastery 2) |  | missing |
-| 1 | Grown in an Onion Bed (Farming mastery 10) |  | missing |
-| 1 | Grown in an Onion Bed (Farming mastery 12) |  | missing |
-| 1 | Grown in an Onion Bed (Farming mastery 14) |  | missing |
-| 1 | Healing Potion (alchemy formula) |  | missing |
-| 1 | Healing Potion II (alchemy formula) |  | missing |
-| 1 | Healing Potion III (alchemy formula) |  | missing |
-| 1 | Improve newspaper I |  | missing |
-| 1 | Improve newspaper II |  | missing |
-| 1 | Improve organ I from Any Bones |  | missing |
-| 1 | Improve organ I from Any Brain |  | missing |
-| 1 | Improve organ I from Any Guts |  | missing |
-| 1 | Improve organ I from Any Heart |  | missing |
-| 1 | Improve organ I from Any Skin |  | missing |
-| 1 | Improve organ I from Any Skull |  | missing |
-| 1 | Improve organ II from Any Bones |  | missing |
-| 1 | Improve organ II from Any Brain |  | missing |
-| 1 | Improve organ II from Any Guts |  | missing |
-| 1 | Improve organ II from Any Heart |  | missing |
-| 1 | Improve organ II from Any Skin |  | missing |
-| 1 | Improve organ II from Any Skull |  | missing |
-| 1 | Improve story I |  | missing |
-| 1 | Improve story II |  | missing |
-| 1 | Iron Ingot (Furnace II) |  | missing |
-| 1 | Iron Ingot (Smithy I) |  | missing |
-| 1 | Iron Kit I (Iron Anvil) |  | missing |
-| 1 | Iron Kit I (Smithy I) |  | missing |
-| 1 | Lacquer (alchemy formula) |  | missing |
-| 1 | Lens (Furnace I) |  | missing |
-| 1 | Lens (Smithy II) |  | missing |
-| 1 | Melted Fat from Fat |  | missing |
-| 1 | Melted Fat from Seed oil |  | missing |
-| 1 | Miracle growth elixir (alchemy formula) |  | missing |
-| 1 | Mysterious fish fillet from Goldfish |  | missing |
-| 1 | Mysterious fish fillet from Silverfin |  | missing |
-| 1 | Mysterious fish fillet from Swamp Ghost |  | missing |
-| 1 | Onion rings from Onion (bronze) |  | missing |
-| 1 | Onion rings from Onion (gold) |  | missing |
-| 1 | Onion rings from Onion (silver) |  | missing |
-| 1 | Open the door |  | missing |
-| 1 | Organ Improver (alchemy formula) |  | missing |
-| 1 | Paint (alchemy formula) |  | missing |
-| 1 | Paper glop from Flax |  | missing |
-| 1 | Paper glop from Wheat |  | missing |
-| 1 | Peat (Compost Pile II) |  | missing |
-| 1 | Peat (Compost Pile) |  | missing |
-| 1 | Philosopher Stone (alchemy formula) |  | missing |
-| 1 | Place Alchemy Flasks I |  | missing |
-| 1 | Place Alchemy Flasks II |  | missing |
-| 1 | Plant Beet Seed |  | missing |
-| 1 | Plant Cabbage seed (bronze) |  | missing |
-| 1 | Plant Cabbage seed (gold) |  | missing |
-| 1 | Plant Cabbage seed (silver) |  | missing |
-| 1 | Plant Carrot seed |  | missing |
-| 1 | Plant Flax Seed |  | missing |
-| 1 | Plant Grape Seeds (bronze) |  | missing |
-| 1 | Plant Grape Seeds (gold) |  | missing |
-| 1 | Plant Grape Seeds (silver) |  | missing |
-| 1 | Plant Hop Seeds |  | missing |
-| 1 | Plant Onion seed (bronze) |  | missing |
-| 1 | Plant Onion seed (gold) |  | missing |
-| 1 | Plant Onion seed (silver) |  | missing |
-| 1 | Plant Pumpkin Seeds (bronze) |  | missing |
-| 1 | Plant Pumpkin Seeds (gold) |  | missing |
-| 1 | Plant Pumpkin Seeds (silver) |  | missing |
-| 1 | Plant Wheat seed |  | missing |
-| 1 | Preservative (alchemy formula) |  | missing |
-| 1 | Pumpkin soup from Pumpkin (bronze) |  | missing |
-| 1 | Pumpkin soup from Pumpkin (gold) |  | missing |
-| 1 | Pumpkin soup from Pumpkin (silver) |  | missing |
-| 1 | Reanimation Liquid (alchemy formula) |  | missing |
-| 1 | Rich growth elixir (alchemy formula) |  | missing |
-| 1 | River fish fillet from Bream or Carp |  | missing |
-| 1 | River fish fillet from Crucian or Herring |  | missing |
-| 1 | River fish fillet from Pike or Catfish |  | missing |
-| 1 | River fish fillet from Roach or Gudgeon |  | missing |
-| 1 | Sea fish fillet from Anchovy or Mackerel |  | missing |
-| 1 | Sea fish fillet from Eel or Trout |  | missing |
-| 1 | Sea fish fillet from Tuna or Salmon |  | missing |
-| 1 | Seed oil from Any Cabbage seed |  | missing |
-| 1 | Seed oil from Any Onion seed |  | missing |
-| 1 | Seed oil from Any Pumpkin Seeds |  | missing |
-| 1 | Seed oil from Beet Seed |  | missing |
-| 1 | Seed oil from Carrot seed |  | missing |
-| 1 | Seed oil from Flax Seed |  | missing |
-| 1 | Seed oil from Wheat seed |  | missing |
-| 1 | Short Log (Circular Saw) |  | missing |
-| 1 | Short Log (Sawhorse) |  | missing |
-| 1 | Spices (alchemy formula) |  | missing |
-| 1 | Stone Kit (Assembly bench I) |  | missing |
-| 1 | Stone Kit (Stonemason's Workbench) |  | missing |
-| 1 | Supply: Clothes I (Assembly bench II) |  | missing |
-| 1 | Supply: Clothes I (Sewing Table) |  | missing |
-| 1 | Supply: Fabric (Assembly bench I) |  | missing |
-| 1 | Supply: Fabric (Woodworking Workbench I) |  | missing |
-| 1 | Supply: Iron (Assembly bench I) |  | missing |
-| 1 | Supply: Iron (Woodworking Workbench I) |  | missing |
-| 1 | Supply: Preserves I from Beet |  | missing |
-| 1 | Supply: Preserves I from Cabbage (bronze) |  | missing |
-| 1 | Supply: Preserves I from Cabbage (gold) |  | missing |
-| 1 | Supply: Preserves I from Cabbage (silver) |  | missing |
-| 1 | Supply: Preserves I from Carrot |  | missing |
-| 1 | Supply: Preserves II from Onion (bronze) |  | missing |
-| 1 | Supply: Preserves II from Onion (gold) |  | missing |
-| 1 | Supply: Preserves II from Onion (silver) |  | missing |
-| 1 | Supply: Preserves II from Pumpkin (bronze) |  | missing |
-| 1 | Supply: Preserves II from Pumpkin (gold) |  | missing |
-| 1 | Supply: Preserves II from Pumpkin (silver) |  | missing |
-| 1 | Supply: Vegetables from Beet |  | missing |
-| 1 | Supply: Vegetables from Cabbage (bronze) |  | missing |
-| 1 | Supply: Vegetables from Cabbage (gold) |  | missing |
-| 1 | Supply: Vegetables from Cabbage (silver) |  | missing |
-| 1 | Supply: Vegetables from Carrot |  | missing |
-| 1 | Supply: Vegetables from Onion (bronze) |  | missing |
-| 1 | Supply: Vegetables from Onion (gold) |  | missing |
-| 1 | Supply: Vegetables from Onion (silver) |  | missing |
-| 1 | Supply: Vegetables from Pumpkin (bronze) |  | missing |
-| 1 | Supply: Vegetables from Pumpkin (gold) |  | missing |
-| 1 | Supply: Vegetables from Pumpkin (silver) |  | missing |
-| 1 | Supply: Wine from Wine (bronze) |  | missing |
-| 1 | Supply: Wine from Wine (gold) |  | missing |
-| 1 | Supply: Wine from Wine (silver) |  | missing |
-| 1 | Tannin Liquid (alchemy formula) |  | missing |
-| 1 | Third Eye Salt (alchemy formula) |  | missing |
-| 1 | Toast with onions from Onion (bronze) |  | missing |
-| 1 | Toast with onions from Onion (gold) |  | missing |
-| 1 | Toast with onions from Onion (silver) |  | missing |
-| 1 | Umami (alchemy formula) |  | missing |
-| 1 | Weak growth elixir (alchemy formula) |  | missing |
-| 1 | Wine from Grape Juice (bronze) |  | missing |
-| 1 | Wine from Grape Juice (gold) |  | missing |
-| 1 | Wine from Grape Juice (silver) |  | missing |
-| 1 | Wooden Kit I (Woodworking Workbench I) |  | missing |
-| 1 | Wooden Kit I from Bronze Nails (Assembly bench I) |  | missing |
-| 1 | Wooden Kit I from Log (Assembly bench I) |  | missing |
-| 1 | Wooden Plank (Circular Saw) |  | missing |
-| 1 | Wooden Plank (Woodworking Workbench I) |  | missing |
-| 1 | Zombie Motivator Potion (alchemy formula) |  | missing |
-| 1 | Zombie Motivator Potion II (alchemy formula) |  | missing |
-| 1 | Zombie Motivator Potion III (alchemy formula) |  | missing |
+| 3 | Build Expand Military Building Area (Barracks) | Expandir a Zona de Construção Militar (Casernas) | guess |
+| 2 | Build Porter Station (Sawmill) | Construir Posto de Carregadores (Serraria) | guess |
+| 2 | Build Porter Station (Supply Storage) | Construir Posto de Carregadores (Depósito de Suprimentos) | guess |
+| 1 | Alkali (alchemy formula) | Alcalino (fórmula de alquimia) | guess |
+| 1 | Berserker Potion (alchemy formula) | Poção de Fúria (fórmula de alquimia) | guess |
+| 1 | Berserker Potion II (alchemy formula) | Poção de Fúria II (fórmula de alquimia) | guess |
+| 1 | Berserker Potion III (alchemy formula) | Poção de Fúria III (fórmula de alquimia) | guess |
+| 1 | Build Firewood shed I (Home, Alchemy Lab, Vineyard Basement) | Construir Lenheiro I (Casa, Laboratório de Alquimia, Adega do Vinhedo) | guess |
+| 1 | Build Firewood shed I (Yard) | Construir Lenheiro I (Pátio) | guess |
+| 1 | Build Firewood shed II (Home, Alchemy Lab, Vineyard Basement) | Construir Lenheiro II (Casa, Laboratório de Alquimia, Adega do Vinhedo) | guess |
+| 1 | Build Firewood shed II (Yard) | Construir Lenheiro II (Pátio) | guess |
+| 1 | Build Gardener Stand (Garden) | Construir Banca do Jardineiro (Jardim) | guess |
+| 1 | Build Gardener Stand (Vineyard) | Construir Banca do Jardineiro (Vinhedo) | guess |
+| 1 | Build Lantern I (Graveyard) | Construir Lanterna I (Cemitério) | guess |
+| 1 | Build Lantern I (Yard) | Construir Lanterna I (Pátio) | guess |
+| 1 | Build Lantern II (Graveyard) | Construir Lanterna II (Cemitério) | guess |
+| 1 | Build Lantern II (Yard) | Construir Lanterna II (Pátio) | guess |
+| 1 | Build Porter Station (Old Mine) | Construir Posto de Carregadores (Mina Antiga) | guess |
+| 1 | Build Porter Station (Quarry) | Construir Posto de Carregadores (Pedreira) | guess |
+| 1 | Build Porter Station (Riverside) | Construir Posto de Carregadores (Margem do Rio) | guess |
+| 1 | Build Porter Station (Vineyard Basement) | Construir Posto de Carregadores (Adega do Vinhedo) | guess |
+| 1 | Build Porter Station (Vineyard) | Construir Posto de Carregadores (Vinhedo) | guess |
+| 1 | Build Timber stockpile (Sawmill) | Construir Reserva de Madeira (Serraria) | guess |
+| 1 | Build Timber stockpile (Yard) | Construir Reserva de Madeira (Pátio) | guess |
+| 1 | Build Zombie Supplier Station (Home) | Construir Posto de Suprimentos Zumbi (Casa) | guess |
+| 1 | Build Zombie Supplier Station (Yard, Quarry, Vineyard Basement, Writing Basement, Alchemy Lab) | Construir Posto de Suprimentos Zumbi (Pátio, Pedreira, Adega do Vinhedo, Porão de Escrita, Laboratório de Alquimia) | guess |
+| 1 | Damage Potion (alchemy formula) | Poção de Dano (fórmula de alquimia) | guess |
+| 1 | Damage Potion II (alchemy formula) | Poção de Dano II (fórmula de alquimia) | guess |
+| 1 | Damage Potion III (alchemy formula) | Poção de Dano III (fórmula de alquimia) | guess |
+| 1 | Dream Dust (alchemy formula) | Pó dos Sonhos (fórmula de alquimia) | guess |
+| 1 | Explosive Dust (alchemy formula) | Pó Explosivo (fórmula de alquimia) | guess |
+| 1 | Grown in a Beet Bed (Farming mastery 6) | Cultivado no Canteiro de Beterraba (maestria Agricultura 6) | guess |
+| 1 | Grown in a Cabbage Bed (Farming mastery 10) | Cultivado no Canteiro de Repolho (maestria Agricultura 10) | guess |
+| 1 | Grown in a Cabbage Bed (Farming mastery 12) | Cultivado no Canteiro de Repolho (maestria Agricultura 12) | guess |
+| 1 | Grown in a Cabbage Bed (Farming mastery 8) | Cultivado no Canteiro de Repolho (maestria Agricultura 8) | guess |
+| 1 | Grown in a Carrot Bed (Farming mastery 4) | Cultivado no Canteiro de Cenoura (maestria Agricultura 4) | guess |
+| 1 | Grown in a Flax Bed (Farming mastery 5) | Cultivado no Canteiro de Linho (maestria Agricultura 5) | guess |
+| 1 | Grown in a Grapes Bed (Farming mastery 12) | Cultivado no Canteiro de Uvas (maestria Agricultura 12) | guess |
+| 1 | Grown in a Grapes Bed (Farming mastery 14) | Cultivado no Canteiro de Uvas (maestria Agricultura 14) | guess |
+| 1 | Grown in a Grapes Bed (Farming mastery 16) | Cultivado no Canteiro de Uvas (maestria Agricultura 16) | guess |
+| 1 | Grown in a Hops Bed (Farming mastery 7) | Cultivado no Canteiro de Lúpulo (maestria Agricultura 7) | guess |
+| 1 | Grown in a Pumpkin Bed (Farming mastery 12) | Cultivado no Canteiro de abóbora (maestria Agricultura 12) | guess |
+| 1 | Grown in a Pumpkin Bed (Farming mastery 14) | Cultivado no Canteiro de abóbora (maestria Agricultura 14) | guess |
+| 1 | Grown in a Pumpkin Bed (Farming mastery 16) | Cultivado no Canteiro de abóbora (maestria Agricultura 16) | guess |
+| 1 | Grown in a Wheat Bed (Farming mastery 2) | Cultivado no Canteiro de Trigo (maestria Agricultura 2) | guess |
+| 1 | Grown in an Onion Bed (Farming mastery 10) | Cultivado no Canteiro de Cebola (maestria Agricultura 10) | guess |
+| 1 | Grown in an Onion Bed (Farming mastery 12) | Cultivado no Canteiro de Cebola (maestria Agricultura 12) | guess |
+| 1 | Grown in an Onion Bed (Farming mastery 14) | Cultivado no Canteiro de Cebola (maestria Agricultura 14) | guess |
+| 1 | Healing Potion (alchemy formula) | Poção de Cura (fórmula de alquimia) | guess |
+| 1 | Healing Potion II (alchemy formula) | Poção de Cura II (fórmula de alquimia) | guess |
+| 1 | Healing Potion III (alchemy formula) | Poção de Cura III (fórmula de alquimia) | guess |
+| 1 | Lacquer (alchemy formula) | Verniz (fórmula de alquimia) | guess |
+| 1 | Miracle growth elixir (alchemy formula) | Elixir de Crescimento Milagroso (fórmula de alquimia) | guess |
+| 1 | Organ Improver (alchemy formula) | Aprimorador de Órgãos (fórmula de alquimia) | guess |
+| 1 | Paint (alchemy formula) | Tinta (fórmula de alquimia) | guess |
+| 1 | Philosopher Stone (alchemy formula) | Pedra Filosofal (fórmula de alquimia) | guess |
+| 1 | Preservative (alchemy formula) | Conservante (fórmula de alquimia) | guess |
+| 1 | Reanimation Liquid (alchemy formula) | Líquido de reanimação (fórmula de alquimia) | guess |
+| 1 | Rich growth elixir (alchemy formula) | Elixir de Crescimento Forte (fórmula de alquimia) | guess |
+| 1 | Spices (alchemy formula) | Especiarias (fórmula de alquimia) | guess |
+| 1 | Tannin Liquid (alchemy formula) | Líquido de Tanino (fórmula de alquimia) | guess |
+| 1 | Third Eye Salt (alchemy formula) | Sal do Terceiro Olho (fórmula de alquimia) | guess |
+| 1 | Umami (alchemy formula) | Umami (fórmula de alquimia) | guess |
+| 1 | Weak growth elixir (alchemy formula) | Elixir de Crescimento Fraco (fórmula de alquimia) | guess |
+| 1 | Zombie Motivator Potion (alchemy formula) | Poção Motivadora de Zumbis (fórmula de alquimia) | guess |
+| 1 | Zombie Motivator Potion II (alchemy formula) | Poção Motivadora de Zumbis II (fórmula de alquimia) | guess |
+| 1 | Zombie Motivator Potion III (alchemy formula) | Poção Motivadora de Zumbis III (fórmula de alquimia) | guess |
 
 ## Recipe notes (75: 6 from a text map, 68 by pattern, 0 by pattern with an English name left, 1 untranslated)
 

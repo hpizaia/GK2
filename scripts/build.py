@@ -2,7 +2,8 @@
 """Build the GK2 crafting-planner dataset.
 
 Reads   data/items.en.json, data/recipes.en.json and the translation layers
-        (data/names.official.pt-BR.json, data/names.pt-BR.json, data/names.machine.pt-BR.json; all optional),
+        (data/names.official.pt-BR.json, data/names.recipes.pt-BR.json, data/names.wiki.pt-BR.json,
+        data/names.pt-BR.json, data/names.machine.pt-BR.json; all optional),
 writes  data/gk2.json, data/gk2.min.json, data/report-l10n.md, data/report-build.md
 and builds the page:
   - default (src/manifest.json exists, no --inject): assembles src/index.html + src/css/* + src/js/* in
@@ -174,7 +175,11 @@ def text_or_none(v):
 # --------------------------------------------------------------------------- translations
 
 class Layer:
-    """One names file: { "<English>": {pt, source, confidence}, "__obtain": {"<English text>": "<pt>"} }."""
+    """One names file: { "<English>": {pt, source, confidence}, "__obtain": {"<English text>": "<pt>"} }.
+
+    An entry with a non-empty `fix` (the reason, e.g. a typo of the official game text) is a correction: it wins
+    over every layer and tier (Translator.name), keeping its own confidence (data/names.recipes.pt-BR.json:
+    "Wheat Bed" -> "Canteiro de Trigo", likely, where the game says "Canteiro de Trigorigo")."""
 
     def __init__(self, path, data, log, machine):
         self.path = Path(path)
@@ -182,6 +187,7 @@ class Layer:
         self.names = {}    # norm key -> (pt, tier, source, original key)
         self.texts = {}    # norm key -> pt (free text: obtain, notes)
         self.keys = {}     # norm key -> game localisation key ("gameKey"), when the file has one
+        self.fixes = {}    # norm key -> (pt, tier, source, original key): `fix` entries, they beat every tier
         if data is None:
             return
         if isinstance(data, dict) and isinstance(data.get("names"), dict):
@@ -229,6 +235,8 @@ class Layer:
                 log.coerce("names: unknown confidence -> guess", f"{k!r}: {v.get('confidence')!r}")
                 tier = "guess"
             nk = norm_key(k)
+            if isinstance(v.get("fix"), str) and v["fix"].strip() and nk not in self.fixes:
+                self.fixes[nk] = (pt.strip(), tier, source, k)
             gk = v.get("gameKey")
             if isinstance(gk, str) and gk.strip() and nk not in self.keys:
                 self.keys[nk] = gk.strip()
@@ -252,6 +260,10 @@ class Translator:
             return None, "missing", None
         nk = norm_key(en)
         self.looked_up.add(nk)
+        for layer in self.layers:   # a correction (`fix`) beats every tier, first file first
+            if nk in layer.fixes:
+                pt, tier, source, _ = layer.fixes[nk]
+                return pt, tier, source
         best = None
         for li, layer in enumerate(self.layers):
             hit = layer.names.get(nk)
@@ -618,7 +630,7 @@ class Builder:
         self.produced = produced
         return self
 
-    # ---- derived pt names (quality grades, "A or B" groups, "Any X", "Open (X)", "Repair (X)")
+    # ---- derived pt names (quality grades, "A or B" groups, "Any X", "Open (X)", "Repair (X)" -> "Consertar (X)")
     DERIVED_GRADE = {"bronze": "bronze", "silver": "prata", "gold": "ouro", "silver or gold": "prata ou ouro"}
     DERIVED_TIERS = ("official", "likely")   # a derived name is built only from names at these tiers
 
@@ -635,14 +647,8 @@ class Builder:
         def part(en):
             if not en:
                 return None
-            nk = norm_key(en)
-            t.looked_up.add(nk)   # a key used only as a part is not "unused"
-            best = None
-            for ly in t.layers:
-                hit = ly.names.get(nk)
-                if hit and (best is None or TIER_RANK[hit[1]] < TIER_RANK[best[1]]):
-                    best = hit
-            return best[0] if best and best[1] in self.DERIVED_TIERS else None
+            pt, tier, _ = t.name(en)   # also marks the key as looked up (a part only is not "unused")
+            return pt if tier in self.DERIVED_TIERS else None
 
         def lower_first(s):
             return s[:1].lower() + s[1:] if s else s
@@ -675,7 +681,9 @@ class Builder:
                 if m:
                     x = part(m.group(2))
                     if x:
-                        pt = ("Abrir" if m.group(1) == "Open" else "Reparar") + f" ({x})"
+                        # "Consertar", as every concrete repair of the game ("Consertar Casa", "Consertar ponte") and
+                        # the wiki PT; "Reparar" is only the generic button (revisao-nomes-wiki.md, consertos.md §18)
+                        pt = ("Abrir" if m.group(1) == "Open" else "Consertar") + f" ({x})"
             if pt:
                 layer.names[nk] = (pt, "likely", "derived", name)
                 made += 1
@@ -876,7 +884,13 @@ class Builder:
         # keep the recipe's own name only when it says more than the output name
         # ("Board (Sawhorse)", "Alcohol from Beer"), not for "Build <output>"
         if rname and norm_key(rname) not in (oname, "build " + oname):
-            nr["name"] = self.loc_obj(rname, "recipe", rname)
+            nm, tiers = self.loc(rname, "recipe", rname)
+            # a name composed by us (data/names.recipes.pt-BR.json `derived`, guess) or machine-made carries its
+            # tier, so the page can show the "não oficial" badge next to it
+            tier = tiers.get(self.langs[0].field) if self.langs else None
+            if tier in ("guess", "machine"):
+                nm = dict(nm, tr=tier)
+            nr["name"] = nm
         return nr
 
     def recipe_sort_key(self, r):
@@ -1673,7 +1687,9 @@ def main(argv=None):
     ap.add_argument("--recipes", default=str(DATA / "recipes.en.json"))
     ap.add_argument("--names", action="append", default=None, metavar="PATH",
                     help="pt names layer(s), repeatable, best first "
-                         "(default: data/names.official.pt-BR.json data/names.pt-BR.json data/names.machine.pt-BR.json). "
+                         "(default: data/names.official.pt-BR.json data/names.recipes.pt-BR.json data/names.wiki.pt-BR.json "
+                         "data/names.pt-BR.json "
+                         "data/names.machine.pt-BR.json). "
                          "A file whose name contains '.machine.' is treated as the machine layer.")
     ap.add_argument("--lang", action="append", default=[], metavar="FIELD=PATH[,PATH]",
                     help="extra language, e.g. es=data/names.es.json (output field `es`, `tr_es`)")
@@ -1735,7 +1751,8 @@ def main(argv=None):
     log = Log()
     raw_items = as_list(load_json(args.items, "items", log), "items", log, ("items", "data"))
     raw_recipes = as_list(load_json(args.recipes, "recipes", log), "recipes", log, ("recipes", "data"))
-    names = args.names or [str(DATA / "names.official.pt-BR.json"), str(DATA / "names.pt-BR.json"),
+    names = args.names or [str(DATA / "names.official.pt-BR.json"), str(DATA / "names.recipes.pt-BR.json"),
+                           str(DATA / "names.wiki.pt-BR.json"), str(DATA / "names.pt-BR.json"),
                            str(DATA / "names.machine.pt-BR.json")]
     specs = ["pt=" + ",".join(names)] + list(args.lang)
     langs = parse_lang_specs(specs, log)

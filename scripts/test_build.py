@@ -1811,7 +1811,7 @@ console.log(JSON.stringify({ n: M.length, sha: require("crypto").createHash("sha
         self.assertIn('class="row-actions row-more"', self.read("js/ui/summary.js"))
         self.assertIn(".row-actions .select-wrap select { flex: 1 1 0; width: 0; }", css)
         self.assertRegex(css, r"\.select-wrap select \{[^}]*max-width: 100%")
-        self.assertIn("n.split(/ from /i)[0].trim()", f)
+        self.assertIn("n.split(/ from | a partir de /i)[0].trim()", f)
         self.assertNotIn('" [" + list[k].id + "]"', f)
 
 
@@ -2355,6 +2355,155 @@ class Quality19(unittest.TestCase):
         f = (ROOT / "src" / "js" / "ui" / "fmt.js").read_text(encoding="utf-8")
         self.assertNotIn('r.quality ? " · " + t("quality." + r.quality)', f)
 
+
+
+class BronzePlain17(unittest.TestCase):
+    """2026-11 (consertos.md §17): the plain item of a graded family ("pumpkin" next to "pumpkin-silver" / "-gold") is
+    the bronze one and shows as bronze: the payload's families, the page's rule and where it is drawn. (The behaviour
+    itself, list, search, detail, lines: test_calc.mjs "bronze comum".)"""
+
+    def test_payload_families(self):
+        it = read_json(ROOT / "data" / "gk2.json")["items"]
+        fams = {}
+        for k, v in it.items():
+            if v.get("kind") == "quality-variant" and v.get("base"):
+                fams.setdefault(v["base"], set()).add(k.rsplit("-", 1)[1])
+        plain = sorted(b for b, gs in fams.items() if "bronze" not in gs)
+        self.assertEqual(plain, ["cabbage", "cabbage-seed", "grape-seeds", "grapes", "onion", "onion-seed", "pumpkin",
+                                 "pumpkin-seeds", "wine"])
+        for b in plain:
+            self.assertEqual(it[b]["kind"], "item")          # the same item, no id change
+            self.assertNotIn(b + "-bronze", it)
+        for b in ("story", "newspaper", "vegetable-salad", "bowl-of-sauerkraut"):
+            self.assertIn("bronze", fams[b])                  # their own bronze item: the plain one is not bronze
+
+    def test_page_rule_and_display(self):
+        src = lambda f: (ROOT / "src" / f).read_text(encoding="utf-8")
+        data = src("js/data.js")
+        for needle in ("function bronzePlain()", "function anyLines()", "const lineGrade = (line) =>", "function gradeSort(list, famOf, rankOf, together)"):
+            self.assertIn(needle, data)
+        self.assertIn('const q = grade === false ? "" : STAR[grade || (ent && ent.grade)] || "";', src("js/util.js"))
+        self.assertIn("function gradedName(it, nm)", src("js/ui/fmt.js"))
+        self.assertIn("GK.ui.fmt.gradedName(it, nm)", src("js/ui/search.js"))
+        rc = src("js/ui/recipes.js")
+        self.assertIn("GK.ui.fmt.gradedName(it, nm))}</h2>", rc)
+        self.assertIn("GK.data.GRADE_RANK[D.items[id].grade], true);", rc)
+        self.assertIn("GK.data.GRADE_RANK[D.items[x.id].grade], true);", src("js/calc.js"))
+        page = ROOT / "dist" / "preview.html"
+        if page.exists():
+            self.assertIn("function bronzePlain()", page.read_text(encoding="utf-8"))
+
+
+
+class RecipeNamesPt18(unittest.TestCase):
+    """2026-11 (consertos.md §18, traducao-receitas.md fase 2): the recipe names layer data/names.recipes.pt-BR.json,
+    read by default; the owner's 3 decisions: grade as "(ouro)", "X a partir de Y" left out of the pt card,
+    "Canteiro de Trigorigo" fixed by a `fix` entry. (The page behaviour: test_calc.mjs "nomes de receita".)"""
+    LAYER = ROOT / "data" / "names.recipes.pt-BR.json"
+
+    def test_layer_file(self):
+        d = read_json(self.LAYER)
+        rows = {k: v for k, v in d.items() if not k.startswith("_")}
+        recs = {k: v for k, v in rows.items() if not v.get("fix")}
+        self.assertEqual(len(recs), 231)
+        kinds = {}
+        for k, v in recs.items():
+            kinds[(v["source"], v["confidence"])] = kinds.get((v["source"], v["confidence"]), 0) + 1
+            self.assertNotIn("qualidade", v["pt"], k)                       # decision 1
+            m = re.search(r"\((bronze|silver|gold)\)$", k)
+            if m:
+                self.assertTrue(v["pt"].endswith("(%s)" % {"bronze": "bronze", "silver": "prata", "gold": "ouro"}[m.group(1)]), k)
+            # composed by us -> guess (the "não oficial" badge)
+            ours = k.startswith(("Build ", "Grown in ")) or k.endswith("(alchemy formula)")
+            self.assertEqual(v["confidence"] == "guess", ours, k)
+            self.assertNotIn("Trigorigo", v["pt"])
+        self.assertEqual(kinds, {("wikily-pt", "likely"): 159, ("derived", "guess"): 67, ("game-files", "official"): 5})
+        self.assertEqual(recs["Spices (alchemy formula)"]["pt"], "Especiarias (fórmula de alquimia)")   # official word
+        self.assertEqual(recs["Wine from Grape Juice (gold)"]["pt"], "Vinho a partir de Suco de Uva (ouro)")
+        fix = rows["Wheat Bed"]                                              # decision 3
+        self.assertEqual((fix["pt"], fix["source"], fix["confidence"]), ("Canteiro de Trigo", "fix", "likely"))
+        self.assertTrue(fix["fix"].strip())
+        self.assertIn("Canteiro de Trigorigo", read_json(ROOT / "data" / "game-texts" / "gk2_textos.json")["garden_wheat"]["pt"])
+
+    def test_fix_beats_every_tier(self):
+        log = build.Log()
+        off = build.Layer("o.json", {"Wheat Bed": {"pt": "Canteiro de Trigorigo", "source": "game-files", "confidence": "official"},
+                                     "Log": {"pt": "Tora", "source": "game-files", "confidence": "official"}}, log, False)
+        fx = build.Layer("r.json", {"Wheat Bed": {"pt": "Canteiro de Trigo", "source": "fix", "confidence": "likely", "fix": "typo"},
+                                    "Log": {"pt": "Lenho", "source": "x", "confidence": "likely"}}, log, False)
+        for layers in ([off, fx], [fx, off]):
+            t = build.Translator("pt", layers)
+            self.assertEqual(t.name("Wheat Bed"), ("Canteiro de Trigo", "likely", "fix"))
+            self.assertEqual(t.name("Log")[0], "Tora")                       # without `fix`, official still wins
+
+    def test_default_layer_and_report(self):
+        src = (ROOT / "scripts" / "build.py").read_text(encoding="utf-8")
+        self.assertIn('str(DATA / "names.official.pt-BR.json"), str(DATA / "names.recipes.pt-BR.json"),', src)
+        rep = (ROOT / "data" / "report-l10n.md").read_text(encoding="utf-8")
+        row = next(l for l in rep.splitlines() if l.startswith("| Recipe names"))
+        cells = [c.strip() for c in row.strip("|").split("|")]
+        self.assertEqual(cells[2:5], ["0", "0", "67"])                       # missing 0, machine 0, guess 67 (ours)
+        self.assertIn("names.recipes.pt-BR.json", (ROOT / "data" / "report-build.md").read_text(encoding="utf-8"))
+        ds = read_json(ROOT / "data" / "gk2.json")
+        self.assertEqual((ds["items"]["wheat-bed"]["pt"], ds["items"]["wheat-bed"]["tr"]), ("Canteiro de Trigo", "likely"))
+        R = {r["id"]: r for r in ds["recipes"]}
+        self.assertEqual(R["grow-wheat-bed-m2"]["name"]["tr"], "guess")
+        self.assertNotIn("tr", R["board-sawhorse"]["name"])
+        self.assertNotIn("Trigorigo", json.dumps(ds, ensure_ascii=False))
+
+    def test_page_code(self):
+        fmt = (ROOT / "src" / "js" / "ui" / "fmt.js").read_text(encoding="utf-8")
+        self.assertIn("n.split(/ from | a partir de /i)[0]", fmt)
+        rc = (ROOT / "src" / "js" / "ui" / "recipes.js").read_text(encoding="utf-8")
+        self.assertIn("function recipeName(r, it)", rc)
+        self.assertIn("const PT_HIDDEN_NAME = / a partir de |^Construir .+ \\(.+\\)$/i;", rc)
+        self.assertIn("PT_HIDDEN_NAME.test(name(r.name))", rc)
+        self.assertIn("const rname = recipeName(r, it);", rc)
+        page = ROOT / "dist" / "preview.html"
+        if page.exists():
+            self.assertIn("function recipeName(r, it)", page.read_text(encoding="utf-8"))
+
+
+class WikiNames18(unittest.TestCase):
+    """2026-11 (consertos.md §18, revisao-nomes-wiki.md): the 18 swaps approved by the owner. 9 categories in the hand
+    layer data/names.wiki.pt-BR.json (read by default), "Repair (X)" derived as "Consertar (X)", 7 source names of the
+    MT glossary (build_facts.py). The 4 marked "conferir no jogo" stay as they were."""
+    CATS = {"Building: Garden": "Construção: jardim", "Building: Garden tablets": "Construção: placas do jardim",
+            "Building: Yard": "Construção: pátio", "Building: Barracks": "Construção: casernas",
+            "Building: Graves and columbaria": "Construção: túmulos e columbários",
+            "Building: Assembly benches": "Construção: bancos de montagem",
+            "Building: Crafting station": "Construção: estação de produção",
+            "Crafting materials": "Materiais de produção", "Town supplies": "Suprimentos do Povoado"}
+    SOURCES = {"swamp-mushrooms": "Cogumelos pantaneiros", "driftwood": "Madeira trazida pela maré",
+               "iron-ore-deposit": "Depósito de minério de ferro", "stone-deposit": "Depósito de pedra",
+               "marble-deposit": "Depósito de mármore", "sand-pit": "Buraco de areia", "broken-shelf": "Prateleira quebrada"}
+
+    def test_layer_and_default(self):
+        d = read_json(ROOT / "data" / "names.wiki.pt-BR.json")
+        rows = {k: v for k, v in d.items() if not k.startswith("_")}
+        self.assertEqual({k: v["pt"] for k, v in rows.items()}, self.CATS)
+        self.assertTrue(all((v["source"], v["confidence"]) == ("wikily-pt", "likely") for v in rows.values()))
+        self.assertIn('str(DATA / "names.wiki.pt-BR.json"), str(DATA / "names.pt-BR.json"),',
+                      (ROOT / "scripts" / "build.py").read_text(encoding="utf-8"))
+
+    def test_dataset(self):
+        ds = read_json(ROOT / "data" / "gk2.json")
+        cats = {it["cat"]["en"]: it["cat"]["pt"] for it in ds["items"].values() if it.get("cat")}
+        for en, pt in self.CATS.items():
+            self.assertEqual(cats.get(en), pt, en)
+        self.assertEqual(cats.get("Building: Metalwork"), "Construção: metalurgia")   # conferir no jogo: unchanged
+        it = ds["items"]
+        self.assertEqual(it["repair-resurrection-device"]["pt"], "Consertar (Dispositivo de Ressurreição)")
+        self.assertEqual(it["repair-underground-well"]["pt"], "Consertar (Poço Subterrâneo)")
+        self.assertFalse([k for k, v in it.items() if v["pt"].startswith("Reparar")])
+        self.assertEqual(it["any-story"]["pt"], "Qualquer história")                     # conferir no jogo: unchanged
+        refs = ds["meta"]["refs"]["names"]
+        for k, pt in self.SOURCES.items():
+            self.assertEqual(refs[k]["pt"], pt, k)
+        self.assertEqual(refs["dig"]["pt"], "Dig")                                       # conferir no jogo: unchanged
+        facts = (ROOT / "scripts" / "build_facts.py").read_text(encoding="utf-8")
+        for old in ("Jazida de pedra", "Areal", "Estante quebrada", "Cogumelos do pântano", "Madeira flutuante"):
+            self.assertNotIn('"%s"' % old, facts)
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
