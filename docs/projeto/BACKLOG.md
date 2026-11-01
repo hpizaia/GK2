@@ -16,8 +16,8 @@ Esforço: **P** até 2 h · **M** meio dia a um dia · **G** vários dias. Quand
 - **1.5.1:** o cartão "Próximo passo" (ideia 5, que entrou na 1.5.0) saiu a seu pedido: na prática atrapalhava no topo do Planejador. A lista de etapas continua igual.
 
 **Esperando a sua decisão:**
-1. ~~Os 16 cortes~~ **Aprovados todos em 31/10 à noite**, pelos protótipos (rodada 1 pode começar). As 18 dúvidas de detalhe das páginas do protótipo ficaram sem resposta: na implementação, usar a opção mostrada no "Depois" e perguntar só se travar.
-2. O **plano de UI com a cara do jogo** (`docs/projeto/PLANO-UI-JOGO.md`): a primeira versão do protótipo (janelas de couro e madeira) foi recusada por pesada em 31/10; a regra passou a ser "limpo e minimalista, só sinais do jogo". Plano e protótipo refeitos nessa direção aguardam o seu olhar (rodada 4).
+1. ~~Os 16 cortes~~ **Aprovados todos em 31/10 à noite**, pelos protótipos. **Implementação iniciada em 31/10 à noite (1.6.0), junto com o conserto do "Recentes" (2.7).** As 18 dúvidas de detalhe das páginas do protótipo ficaram sem resposta: na implementação, usar a opção mostrada no "Depois" e perguntar só se travar.
+2. O **plano de UI** (`docs/projeto/PLANO-UI-JOGO.md`): a primeira versão (janelas de couro e madeira) foi recusada por pesada em 31/10; a regra passou a ser "limpo e minimalista, só sinais do jogo". Decisão de 31/10 à noite: **primeiro os cortes e os consertos; a UI volta depois, com o plano atual como base** (rodada 4).
 3. As **ideias ainda sem decisão**: 6, 7 (missão como meta, rodada 3), 15, 16, 18, 19 e 20 (rodada 6).
 
 **Feito em 31/10 à noite (depois da 1.5.1):**

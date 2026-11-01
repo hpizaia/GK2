@@ -24,7 +24,6 @@ Pastas, pipeline de build, telas e módulos, limites do artifact e camadas de no
 | `historico/` | Transcrições e arquivos de sessões passadas, só no disco local | não (está no `.gitignore`; o histórico fica no repositório privado `hpizaia/GK2-historico`) |
 | `VERSION`, `CHANGELOG.md` | Versão atual. O changelog é gerado a partir de `data/changelog.json` | sim |
 | `.claude/launch.json` | Servidores locais `prototype` (porta 8765) e `dist` (porta 8766) | sim |
-| `tradução windows/` | Sobra da cópia do Windows: só a `.venv` do exportador (`gk2_textos_en/.venv`, 54 MB). O link de compatibilidade que havia nela já não existe | não |
 
 ## Pipeline
 

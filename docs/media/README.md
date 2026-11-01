@@ -32,5 +32,5 @@ Nenhum `.md` do repositório aponta para estes arquivos:
 |---|---|---|
 | `gif-reddit-demo-en.gif`, `reddit-demo-en.mp4` | 540 px / 720 px de largura, ~18 s | Clipe de demonstração em inglês feito para o post no Reddit. Como foi gravado: [`README-reddit-demo.md`](README-reddit-demo.md) |
 | `social-preview.png` | 1280×640 | Imagem de prévia para links (o tamanho que o GitHub pede em Settings → Social preview, onde ela é enviada à mão) |
-| `planner-desktop-dark-pt.png` | 2880×1800 (2,3 MB) | Original em 2x da captura de computador, tema escuro. A versão usada nos READMEs é a `-small` |
-| `planner-desktop-light-pt.png` | 2880×1800 (2,0 MB) | Mesma captura no tema claro |
+
+Removidos em 31/10/2026 (ficam no histórico do git, commit anterior a este): `planner-desktop-dark-pt.png` e `planner-desktop-light-pt.png`, os originais em 2x (2,3 e 2,0 MB) da captura de computador; a versão usada nos READMEs é a `-small`.
