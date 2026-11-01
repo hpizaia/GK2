@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/media/hero-en.gif" width="280" alt="Searching for a sword, adding it as a goal and scrolling to the raw materials and the steps per station">
+  <img src="docs/media/hero-en.gif" width="280" alt="Searching for a sword, adding it as a goal, ticking one raw material as owned and scrolling to the steps per station">
 </p>
 
 - **Free, no ads, no account needed.** Open the link and use it, on phone or desktop. If you are signed in to Claude, your plan syncs between your devices; if not, it stays in that browser.
@@ -33,10 +33,10 @@ Made by **Hugo Pizaia**, a Brazilian player who is not a programmer, with [Claud
 
 #### Goals, raw materials and steps
 
-<p align="center"><img src="docs/media/planner-overview-phone-en.png" width="280" alt="Planner with three goals, the Today bar and the progress card"></p>
+<p align="center"><img src="docs/media/planner-overview-phone-en.png" width="280" alt="Planner with the Today line, three goals and the raw materials"></p>
 
 - **Goals.** Search in English or Portuguese, accents optional (`swor` finds *Sword*). Set quantities with − / + (hold to repeat).
-- **Raw materials.** Everything to gather, buy or already have in a chest, with totals.
+- **Raw materials.** Everything to gather, buy or already have in a chest, with totals. Tick one when you have it all and it moves to "You already have".
 - **Steps per station.** What to craft at each bench, how many runs, yield and leftovers. Follow top to bottom: no station depends on one further down.
 - **Perks** that change yields ("Cook II") recalculate the plan.
 
@@ -44,7 +44,7 @@ Made by **Hugo Pizaia**, a Brazilian player who is not a programmer, with [Claud
 
 <p align="center"><img src="docs/media/planner-steps-phone-pt.png" width="280" alt="Steps per station with alternative recipe selectors"></p>
 
-- **Alternative recipes.** When an item can be made several ways, pick one; silver/gold quality recipes are labelled.
+- **Alternative recipes.** When an item can be made several ways, pick one. Items with a quality show a bronze, silver or gold star, and recipes that only swap one ingredient are grouped in one card.
 - **Groups** like "Bream or carp": choose which member you will use.
 - **Checklist** with a progress bar, per raw material and per step.
 
@@ -52,13 +52,13 @@ Made by **Hugo Pizaia**, a Brazilian player who is not a programmer, with [Claud
 
 <p align="center"><img src="docs/media/gif-have-n-of-m-pt.gif" width="280" alt="Marking I have 5 of 9 iron ore, then marking all sticks as owned"></p>
 
-Type how many you already own and the totals drop. "All" removes the item from the plan.
+Tap the quantity (**× 9 ▾**) and type how many you already own: the totals drop. In the steps, "All" removes the item from the plan.
 
 #### Collapse what you are done with
 
 <p align="center"><img src="docs/media/gif-collapse-sections-pt.gif" width="280" alt="Collapsing the Today panel, raw materials, two stations and the steps section"></p>
 
-Collapse the Today panel, raw materials, steps and each station. The app remembers, per device.
+Collapse the Today panel, raw materials, steps, each station and the technologies still needed. The app remembers, per device.
 
 (Most images show the app in Portuguese; one tap switches it to English.)
 
@@ -70,9 +70,9 @@ Below the plan, the app lists every technology you have not researched yet that 
 
 ### Recipes tab
 
-<p align="center"><img src="docs/media/recipe-detail-phone-pt.png" width="280" alt="Recipe detail for Master Sword"></p>
+<p align="center"><img src="docs/media/recipe-detail-phone-pt.png" width="280" alt="Item detail for Wine (bronze): quality star, where to get it, who buys it and study points"></p>
 
-Every item in the game, with search and filters by category and station. Each item shows **all its recipes** (ingredients, station, technology, mastery, time, energy, silver/gold thresholds, by-products), how to obtain it and **"Used in"**. Add it to your goals or choose which recipe the planner uses.
+Every item in the game, with search and filters by category and station. Each item shows **all its recipes** (ingredients, station, technology, mastery, time, energy, silver/gold thresholds, by-products), how to obtain it, who buys it and for how much, and **"Used in"**. Add it to your goals or choose which recipe the planner uses.
 
 ### Technologies tab
 
@@ -86,7 +86,7 @@ All **226 technologies** in 6 branches, with cost, prerequisites, what each one 
 
 The game has a 6-day week shown as a wheel in the HUD. The **Days** tab reproduces it and lists what happens on each day (battles, trade ship, resurrection, town orders, mass…). Tap today's symbol, hit **"Today is this day"**, and a **Today** panel appears at the top of the planner. Tap **Next day** when you sleep in the game. **Calibrate** once with the in-game day counter ("day 60 = Pride") and from then on just type the number. Events that come only from guides, not from the game text, are marked *unconfirmed*.
 
-Each of today's events has a **"done today"** checkbox (it resets when the day changes and syncs across devices), the panel previews **tomorrow** so you can prepare before sleeping, and you can leave one short **note per weekday** ("bring 3 fish to the Fisherman") that comes back on that day. A **Large text** switch in the footer makes everything easier to read from a distance, and the app follows your phone's text-size setting.
+The panel shows one short line per event (tap it for the full text); today's tasks have a **"done today"** checkbox (it resets when the day changes and syncs across devices), and you can leave one short **note per weekday** ("bring 3 fish to the Fisherman") that comes back on that day. A **Large text** switch in the footer makes everything easier to read from a distance, and the app follows your phone's text-size setting.
 
 ### Languages and themes
 
@@ -97,7 +97,7 @@ Each of today's events has a **"done today"** checkbox (it resets when the day c
 </tr>
 </table>
 
-- **EN / PT** switches everything, item names included. Names come from the **official game files** in both languages; the few that do not are tagged *unofficial*, and you can edit any name (the edit is tagged *edited*).
+- **EN / PT** switches everything, item and recipe names included. Item names come from the **official game files** in both languages and Portuguese recipe names from the wiki or built from the official names; the few that are not official are tagged *unofficial*, and you can rename them from that tag (the edit is tagged *edited*).
 - **Theme:** dark (night), light (parchment) or automatic.
 - **Per-account sync:** goals, quantities, chosen recipes, "have", checks, edited names, researched techs, perks and the current day follow your Claude account. Two devices editing offline are merged field by field when they reconnect.
 - **Update history** in the footer, with the version number.

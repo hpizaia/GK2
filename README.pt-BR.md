@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/media/gif-search-add-goal-pt.gif" width="280" alt="Buscando uma espada, adicionando às metas e descendo até as matérias-primas e as etapas por estação">
+  <img src="docs/media/gif-search-add-goal-pt.gif" width="280" alt="Buscando uma espada, adicionando às metas, marcando uma matéria-prima como já tenho e descendo até as etapas por estação">
 </p>
 
 - **Grátis, sem anúncios e sem precisar de conta.** É só abrir o link, no celular ou no computador. Com login no Claude, o plano sincroniza entre os seus aparelhos; sem login, fica naquele navegador.
@@ -33,10 +33,10 @@ Feito por **Hugo Pizaia**, jogador brasileiro e não programador, com o [Claude 
 
 #### Metas, matérias-primas e etapas
 
-<p align="center"><img src="docs/media/planner-overview-phone-pt.png" width="280" alt="Planejador com três metas, a barra Hoje e o cartão de progresso"></p>
+<p align="center"><img src="docs/media/planner-overview-phone-pt.png" width="280" alt="Planejador com a linha Hoje, três metas e as matérias-primas"></p>
 
 - **Metas.** Busca em português ou inglês, sem precisar de acento (`caix` acha *Caixote*). Quantidade com − / + (segure para repetir).
-- **Matérias-primas.** Tudo o que coletar, comprar ou já ter no baú, com o total.
+- **Matérias-primas.** Tudo o que coletar, comprar ou já ter no baú, com o total. Marque a caixinha quando tiver tudo e o item vai para "Você já tem".
 - **Etapas por estação.** O que fabricar em cada bancada, quantas execuções, rendimento e sobra. Siga de cima para baixo: nenhuma estação depende de outra mais abaixo.
 - **Vantagens** (perks) que mudam o rendimento ("Cozinheiro II") recalculam o plano.
 
@@ -44,7 +44,7 @@ Feito por **Hugo Pizaia**, jogador brasileiro e não programador, com o [Claude 
 
 <p align="center"><img src="docs/media/planner-steps-phone-pt.png" width="280" alt="Etapas por estação com seletores de receita alternativa"></p>
 
-- **Receitas alternativas.** Quando um item pode ser feito de mais de um jeito, escolha qual; receitas de qualidade prata/ouro vêm marcadas.
+- **Receitas alternativas.** Quando um item pode ser feito de mais de um jeito, escolha qual. Itens com qualidade mostram uma estrela de bronze, prata ou ouro, e receitas que só trocam um ingrediente ficam juntas num cartão.
 - **Grupos** como "Brema ou carpa": escolha qual item vai usar.
 - **Checklist** com barra de progresso, por matéria-prima e por etapa.
 
@@ -52,13 +52,13 @@ Feito por **Hugo Pizaia**, jogador brasileiro e não programador, com o [Claude 
 
 <p align="center"><img src="docs/media/gif-have-n-of-m-pt.gif" width="280" alt="Marcando tenho 5 de 9 minérios de ferro e depois todas as varetas"></p>
 
-Digite quantos você já tem e os totais caem. "Tudo" tira o item do plano.
+Toque na quantidade (**× 9 ▾**) e digite quantos você já tem: os totais caem. Nas etapas, "Tudo" tira o item do plano.
 
 #### Recolha o que já resolveu
 
 <p align="center"><img src="docs/media/gif-collapse-sections-pt.gif" width="280" alt="Recolhendo o painel Hoje, as matérias-primas, duas estações e as etapas"></p>
 
-Recolha o painel Hoje, as matérias-primas, as etapas e cada estação. O app lembra, em cada aparelho.
+Recolha o painel Hoje, as matérias-primas, as etapas, cada estação e as tecnologias que faltam. O app lembra, em cada aparelho.
 
 ### Tecnologias que faltam
 
@@ -68,9 +68,9 @@ Abaixo do plano, o app lista todas as tecnologias ainda não pesquisadas que o p
 
 ### Aba Receitas
 
-<p align="center"><img src="docs/media/recipe-detail-phone-pt.png" width="280" alt="Detalhe da receita da Espada Mestra"></p>
+<p align="center"><img src="docs/media/recipe-detail-phone-pt.png" width="280" alt="Detalhe do Vinho (bronze): estrela de qualidade, onde conseguir, quem compra e pontos de estudo"></p>
 
-Todos os itens do jogo, com busca e filtros por categoria e estação. Cada item mostra **todas as receitas** (ingredientes, estação, tecnologia, maestria, tempo, energia, limites de prata/ouro, subprodutos), como obter e **"Usado em"**. Adicione às metas ou escolha a receita que o Planejador usa.
+Todos os itens do jogo, com busca e filtros por categoria e estação. Cada item mostra **todas as receitas** (ingredientes, estação, tecnologia, maestria, tempo, energia, limites de prata/ouro, subprodutos), como obter, quem compra e por quanto, e **"Usado em"**. Adicione às metas ou escolha a receita que o Planejador usa.
 
 ### Aba Tecnologias
 
@@ -84,7 +84,7 @@ As **226 tecnologias** nos 6 ramos, com custo, pré-requisitos, o que cada uma d
 
 O jogo tem uma semana de 6 dias, mostrada como uma roda no canto da tela. A aba **Dias** reproduz a roda e diz o que acontece em cada dia (batalhas, navio mercante, ressurreição, pedidos do povoado, missa…). Toque no símbolo de hoje, em **"Hoje é este dia"**, e o painel **Hoje** aparece no topo do Planejador. Toque em **Avançar dia** quando dormir no jogo. **Calibre** uma vez com o contador do jogo ("dia 60 = Orgulho") e depois é só digitar o número. Eventos que vêm só de guias, e não do texto do jogo, levam o selo *não confirmado*.
 
-Cada evento de hoje tem uma caixinha de **"feito hoje"** (zera quando o dia muda e sincroniza entre aparelhos), o painel mostra uma prévia de **amanhã** para você preparar antes de dormir, e dá para deixar um **bilhete por dia da semana** ("levar 3 peixes para o Pescador") que volta sempre naquele dia. O botão **Letra grande** no rodapé deixa tudo mais fácil de ler de longe, e o app acompanha o tamanho de letra do celular.
+O painel mostra uma linha curta por evento (toque para ler o texto completo); as tarefas de hoje têm uma caixinha de **"feito hoje"** (zera quando o dia muda e sincroniza entre aparelhos), e dá para deixar um **bilhete por dia da semana** ("levar 3 peixes para o Pescador") que volta sempre naquele dia. O botão **Letra grande** no rodapé deixa tudo mais fácil de ler de longe, e o app acompanha o tamanho de letra do celular.
 
 ### Idiomas e temas
 
@@ -95,7 +95,7 @@ Cada evento de hoje tem uma caixinha de **"feito hoje"** (zera quando o dia muda
 </tr>
 </table>
 
-- **PT / EN** troca tudo, inclusive os nomes dos itens. Os nomes vêm dos **arquivos oficiais do jogo** nos dois idiomas; os poucos que não vêm levam o selo *não oficial*, e você pode editar qualquer nome (a edição leva o selo *editado*).
+- **PT / EN** troca tudo, inclusive os nomes dos itens e das receitas. Os nomes dos itens vêm dos **arquivos oficiais do jogo** nos dois idiomas, e os das receitas em português vêm da wiki ou são montados com os nomes oficiais; os poucos que não são oficiais levam o selo *não oficial*, e você pode renomeá-los por esse selo (a edição leva o selo *editado*).
 - **Tema:** escuro (noite), claro (pergaminho) ou automático.
 - **Sincronização por conta:** metas, quantidades, receitas escolhidas, "tenho", marcações, nomes editados, tecnologias pesquisadas, vantagens e o dia atual acompanham a sua conta do Claude. Dois aparelhos mexendo sem internet são mesclados campo a campo quando voltam a conectar.
 - **Histórico de atualizações** no rodapé, com o número da versão.
