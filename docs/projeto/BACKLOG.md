@@ -1,6 +1,6 @@
 # Backlog — Companheiro GK2
 
-01/11/2026 · versão atual **1.8.0**, publicada (app, site e release v1.8.0 no GitHub)
+01/11/2026 · versão atual **1.8.1**, publicada (app, site e release v1.8.1 no GitHub)
 
 Este arquivo substitui o backlog anterior (Etapas 0 a 5). O histórico do que já foi feito está no [CHANGELOG.md](../../CHANGELOG.md).
 
@@ -8,9 +8,10 @@ Esforço: **P** até 2 h · **M** meio dia a um dia · **G** vários dias. Quand
 
 ## Onde estamos
 
-**Publicado:** 1.8.0 (01/11, manhã): app versão 13, site versão 11, release v1.8.0 com o arquivo único. Antes dela, a 1.7.0 (01/11, 05:50).
+**Publicado:** 1.8.1 (01/11, manhã): app versão 14, site versão 12, release v1.8.1 com o arquivo único. Antes dela, a 1.8.0 (mesma manhã).
 
 **Saiu hoje:**
+- **1.8.1:** Metas com o "− N +" à direita, na mesma coluna das outras quantidades (opção 2 do protótipo https://claude.ai/artifact/TCXVjz1GN9sXqReLQw5URs); com quantidade 1 o "−" vira ✕ e a remoção tem "Saiu das metas · Desfazer". Comparação: https://claude.ai/artifact/N1oUu9Uy69HF9FaSzhLFVG.
 - **1.8.0:** **receitas agrupadas** (um cartão por estação quando só muda um ingrediente; qualidade bronze/prata/ouro como escolha que troca a receita do planejador; circulares recolhidas em "Melhorar a qualidade"), **estrela de qualidade** no ícone em todo o app (nome sem "(prata)" nas listas, palavra embaixo), **moedas em pixel** no "Quem compra" (unidade conferida: bronze, 100/100), **cortes 9 e 19**, **C3** (marcação acompanha a quantidade), **grade única no Planejador** (pedido do Hugo: número da estação na coluna das caixinhas, ícone da estação na coluna dos ícones), 2.1 a 2.5, QA #5 #6 #7 #9 #13, 2.8 no site, caixinhas de Tecnologias e Hoje de volta ao lugar. Comparação: https://claude.ai/artifact/VwmRF7TjJeNBRknDMZgC6w · protótipo: https://claude.ai/artifact/T4QxsVK8UVetbF7n8xnVmE. Relatório interno: `docs/revisao-ux/consertos.md`.
 - **1.4.0:** o painel Hoje ganhou "feito hoje", a prévia de amanhã, o bilhete por dia e a opção "Letra grande". No celular, o Planejador mostra Matérias-primas e Etapas logo depois das Metas, as abas ficam fixas e as linhas ficaram mais baixas; site e READMEs revisados.
 - **1.5.0:** listas separadas ("Lista: Igreja ▾") e recentes na busca. O detalhe do item ganhou "Onde conseguir", energia e efeito no estilo do jogo; rodapé enxuto, QR nos Créditos e aviso de dados velhos.
@@ -81,7 +82,8 @@ Objetivo: tirar os defeitos que atrapalham o uso de todo dia, antes de qualquer 
 | ✓ 2.3 | (1.8.0) "Marcado" acompanha a quantidade: marcar 3 e pedir 10 volta a pendente (C3) | P | — |
 | ✓ 2.4 | (1.8.0) "Sem receita" na lista de Receitas vira "Coleta ou compra" (`app.md`, Receitas 4) | P\* | — |
 | ✓ 2.5 | (1.8.0) "Texto do jogo" nos Dias parece link: trocar por um ícone de aspas pequeno (`app.md`, Dias 2) | P\* | — |
-| 2.6 | Testar num iPhone e num Android reais: atalho na tela de início e teclado cobrindo o aviso | P\* | um celular de cada |
+| 2.6 | Testar num iPhone e num Android reais: ~~atalho na tela de início no iPhone~~ (funciona, 01/11); falta Android, teclado cobrindo o aviso e o gesto de voltar da 1.8.0 | P\* | um celular de cada |
+| 2.11 | Ícone da tela inicial: vem do Claude (símbolo de uma lista de 155 + cor que o Claude guarda; não dá cruz nem cores do jogo). Hugo decidiu manter o livro por ora; candidato: Fantasma (https://claude.ai/artifact/WDZ87vMxubgBWboYMbUvty) | P | sua decisão |
 | 2.7 | QA de 31/10 (`docs/revisao-ux/qa-2026-11.md`): ~~"Recentes" abre sozinho depois de adicionar (médio)~~ feito na 1.6.0; ~~foco perdido ao fechar o aviso e ao apagar lista; aviso "Adicionado" fica após Desfazer; "Anatomia 0"; rótulo da Pele cortado; "Limpar lista" × "Apagar lista"~~ feitos na 1.8.0. Sobram: "Dados de 2026-11-01" nos Créditos (#8), aspas retas no changelog (#11), cartão vazio desalinhado em 1280 (#12) | P cada | — |
 | 2.9 | Etapas: o selo da receita ("BRONZE") aparece ao lado de "Suco de Uva (prata)" e confunde; reescrever | P\* | — |
 | 2.10 | Metas fora da grade nova (sem caixinha; decidido manter) e quantidade das Etapas no topo da linha: só mexer se incomodar | P\* | — |
