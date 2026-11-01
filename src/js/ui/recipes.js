@@ -13,6 +13,15 @@
    Ficha completa (docs/revisao-ux/protos/ficha-item.html): "Quem compra" (items[].sell / .price / .fix),
    "Estudar" (items[].study + the global "Já estudei", state.studied) and "Pedido em" (items[].asked: quests, town
    restorations and orders), folded by default (spoiler). Each block only when the item has the data.
+   1.8.0: the phone's back gesture closes the detail (GK.router.detailHistory: an entry per item opened on this
+   screen; "← Voltar" and "Ver lista" drop them); a list row with no recipe says "Coleta ou compra" (rc.raw); a name
+   shared by two items shows the other language's name small (GK.ui.fmt.otherName); mastery level 0 shows no "0".
+   1.8.0, receitas agrupadas (protos/receitas-agrupadas): "Como fabricar" follows GK.calc.recipeGroups: one card for
+   the recipes that differ only in one ingredient (its grade picked in the card: bronze / prata / ouro, or "E mais um
+   destes" rows); a tap on an option sets the planner's recipe (no "Usar" button there); the circular recipes fold at
+   the end ("Melhorar a qualidade · N"). A graded item shows its name without "(prata)", the star on its icon
+   (GK.util.slot) and the grade word on the line below (list rows, ingredient lines, "Usado em"); bronze, prata, ouro
+   in that order (GK.data.gradeSort). "Quem compra": pixel coins (recipes.css).
 */
 GK.i18n.add({
   pt: {
@@ -42,7 +51,7 @@ GK.i18n.add({
     "rc.hiddenNone": "Mostrar itens ocultos",
     "rc.recipes.one": "{n} receita",
     "rc.recipes.other": "{n} receitas",
-    "rc.raw": "Sem receita",
+    "rc.raw": "Coleta ou compra",
     "rc.open": "Ver receitas de {name}",
     "rc.back": "← Voltar à lista",
     "rc.backTo": "← Voltar: {name}",
@@ -73,6 +82,11 @@ GK.i18n.add({
     "rc.runes": "Runas",
     "rc.recipesTitle": "Como fabricar",
     "rc.noRecipes": "Nenhuma receita fabrica este item: ele é coletado, comprado ou obtido de outra forma.",
+    "rc.qPick": "Qualidade do ingrediente",
+    "rc.qMore": "E mais um destes",
+    "rc.inUseQ": "Em uso no planejador: {what}",
+    "rc.cycT": "Melhorar a qualidade",
+    "rc.cycD": "Receitas que usam o próprio {name}",
     "rc.recipeN": "Receita {l}",
     "rc.makes": "rende {n}",
     "rc.makesVar": "rendimento varia",
@@ -144,7 +158,7 @@ GK.i18n.add({
     "rc.hiddenNone": "Show hidden items",
     "rc.recipes.one": "{n} recipe",
     "rc.recipes.other": "{n} recipes",
-    "rc.raw": "No recipe",
+    "rc.raw": "Gather or buy",
     "rc.open": "See the recipes for {name}",
     "rc.back": "← Back to the list",
     "rc.backTo": "← Back: {name}",
@@ -175,6 +189,11 @@ GK.i18n.add({
     "rc.runes": "Runes",
     "rc.recipesTitle": "How to make it",
     "rc.noRecipes": "No recipe makes this item: it is gathered, bought or obtained some other way.",
+    "rc.qPick": "Ingredient quality",
+    "rc.qMore": "Plus one of these",
+    "rc.inUseQ": "Used by the planner: {what}",
+    "rc.cycT": "Improve quality",
+    "rc.cycD": "Recipes that use the {name} itself",
     "rc.recipeN": "Recipe {l}",
     "rc.makes": "makes {n}",
     "rc.makesVar": "yield varies",
@@ -374,6 +393,8 @@ GK.ui.recipes = (function () {
   let shown = PAGE, results = [], expanded = { cat: false, st: false };
   let addQty = 1, usedAll = false, hereAll = false, whereAll = false, listScroll = 0, sortCache = { key: "", ids: [] };
   let askedOpen = false;         // "Pedido em" unfolded (folded again when another item opens)
+  let cycOpen = false;           // "Melhorar a qualidade" unfolded (idem)
+  let hist = null;               // GK.router.detailHistory: the back gesture closes the detail (mount)
 
   /* ---------- persistence ---------- */
   function save() {
@@ -425,7 +446,9 @@ GK.ui.recipes = (function () {
     const D = GK.data.get(), coll = new Intl.Collator(GK.i18n.meta(lang).locale, { sensitivity: "base", numeric: true });
     const label = {};
     for (const id in IX.rows) label[id] = name(D.items[id], state.overrides);
-    sortCache = { key, ids: Object.keys(IX.rows).sort((a, b) => coll.compare(label[a], label[b])) };
+    const ids = Object.keys(IX.rows).sort((a, b) => coll.compare(label[a], label[b]));
+    GK.data.gradeSort(ids, (id) => GK.data.family(D.items[id]), (id) => GK.data.GRADE_RANK[D.items[id].grade]);
+    sortCache = { key, ids };
     return sortCache.ids;
   }
   function compute(state) {
@@ -457,6 +480,12 @@ GK.ui.recipes = (function () {
     const more = total > CHIPS ? `<button type="button" class="chip chip-more" data-chip-more="${kind}" aria-expanded="${open}">${esc(open ? t("rc.less") : t("rc.all", { n: total }))}</button>` : "";
     return `<div class="chip-group" role="group" aria-labelledby="rc-${kind}-h"><h3 class="chip-h" id="rc-${kind}-h">${esc(t(kind === "cat" ? "rc.cat" : "rc.station"))}</h3><div class="chips">${html}${more}</div></div>`;
   }
+  // a graded item in a list: the name without "(prata)" and the grade word for the line below (the star is on the
+  // icon; colour alone is not enough). grade = a recipe line's own grade (the bronze plain Repolho)
+  function graded(it, nm, grade) {
+    const g = grade || GK.data.itemGrade(it);
+    return g ? { name: GK.data.stripGrade(nm) || nm, word: t("quality." + g), grade: g } : { name: nm, word: "", grade: null };
+  }
   function rowHtml(row, state) {
     const D = GK.data.get(), it = D.items[row.id], nm = name(it, state.overrides);
     let sub;
@@ -467,8 +496,9 @@ GK.ui.recipes = (function () {
       sub = GK.ui.fmt.buildLabel(s, state.overrides) + (row.n > 1 ? " · " + t("rc.recipes", { n: row.n }) : "");
     }
     const hid = row.hidden ? `<span class="badge badge-hidden">${esc(t(it.unobtainable ? "rc.unobt" : "rc.hidden"))}</span>` : "";
+    const g = graded(it, nm);
     return `<button type="button" class="rc-row" id="rc-row-${GK.util.domId(row.id)}" data-open="${esc(row.id)}" aria-label="${esc(t("rc.open", { name: nm }))}">
-      ${slot(it, nm)}<span class="rc-row-main"><span class="rc-row-name">${esc(nm)}${hid}</span><span class="rc-row-sub">${esc(sub)}</span></span><span class="rc-chev" aria-hidden="true">›</span></button>`;
+      ${slot(it, nm)}<span class="rc-row-main"><span class="rc-row-name">${esc(g.name)}${GK.ui.fmt.otherName(it)}${hid}</span><span class="rc-row-sub">${esc(g.word ? g.word + " · " + sub : sub)}</span></span><span class="rc-chev" aria-hidden="true">›</span></button>`;
   }
   function renderMore() {
     const left = results.length - shown;
@@ -536,18 +566,22 @@ GK.ui.recipes = (function () {
     return Object.keys(o || {}).map((k) => `<span class="rune rune-${esc(k)}">${esc(t("rune." + k))} <b>${num(o[k])}</b></span>`).join("");
   }
   // one tappable line: icon, qty, name, note
-  function line(l, state, sub) {
+  // opts.noWord: the grade is picked right below (a group card): no grade word under the name
+  function line(l, state, sub, opts) {
     const D = GK.data.get(), it = D.items[l.item], nm = name(it, state.overrides);
-    const q = l.qty == null ? "?" : num(l.qty);
-    return `<li><button type="button" class="rc-line" data-open="${esc(l.item)}" aria-label="${esc(q + " × " + nm + " · " + t("rc.open", { name: nm }))}">
-      ${slot(it, nm, true)}<span class="rc-line-q tabnum">${esc(q)}<small>×</small></span>
-      <span class="rc-line-main"><span class="rc-line-name">${esc(nm)}</span>${l.note ? `<span class="rc-line-note">${esc(name(l.note))}</span>` : ""}${sub ? `<span class="rc-line-note">${esc(sub)}</span>` : ""}</span>
+    const q = l.qty == null ? "?" : num(l.qty), g = graded(it, nm, l.grade);
+    const full = g.grade ? `${g.name} (${g.word})` : nm;
+    const word = g.word && !(opts && opts.noWord) ? `<span class="rc-line-note">${esc(g.word)}</span>` : "";
+    return `<li><button type="button" class="rc-line"${opts && opts.id ? ` id="${esc(opts.id)}"` : ""} data-open="${esc(l.item)}" aria-label="${esc(q + " × " + full + " · " + t("rc.open", { name: nm }))}">
+      ${slot(it, nm, true, l.grade)}<span class="rc-line-q tabnum">${esc(q)}<small>×</small></span>
+      <span class="rc-line-main"><span class="rc-line-name">${esc(g.name)}</span>${word}${l.note ? `<span class="rc-line-note">${esc(name(l.note))}</span>` : ""}${sub ? `<span class="rc-line-note">${esc(sub)}</span>` : ""}</span>
       <span class="rc-chev" aria-hidden="true">›</span></button></li>`;
   }
   function itemLine(id, state, sub) {
-    const D = GK.data.get(), it = D.items[id], nm = name(it, state.overrides);
+    const D = GK.data.get(), it = D.items[id], nm = name(it, state.overrides), g = graded(it, nm);
+    if (g.word) sub = sub ? g.word + " · " + sub : g.word;
     return `<li><button type="button" class="rc-line" data-open="${esc(id)}" aria-label="${esc(t("rc.open", { name: nm }))}">
-      ${slot(it, nm, true)}<span class="rc-line-main"><span class="rc-line-name">${esc(nm)}${it.hidden ? `<span class="badge badge-hidden">${esc(t(it.unobtainable ? "rc.unobt" : "rc.hidden"))}</span>` : ""}</span>${sub ? `<span class="rc-line-note">${esc(sub)}</span>` : ""}</span>
+      ${slot(it, nm, true)}<span class="rc-line-main"><span class="rc-line-name">${esc(g.name)}${it.hidden ? `<span class="badge badge-hidden">${esc(t(it.unobtainable ? "rc.unobt" : "rc.hidden"))}</span>` : ""}</span>${sub ? `<span class="rc-line-note">${esc(sub)}</span>` : ""}</span>
       <span class="rc-chev" aria-hidden="true">›</span></button></li>`;
   }
   // "Rende 5 com Cozinheiro II" (made_text, exported as out.note; the perk chip lives in the planner's Progresso)
@@ -564,7 +598,7 @@ GK.ui.recipes = (function () {
     }
     return out;
   }
-  function unlockLines(r) {
+  function unlockLines(r, noMastery) {
     const out = [];
     if (r.tech) {
       const key = r.tech.type === "quest" ? "rc.quest" : r.tech.type === "perk" ? "rc.perk" : "rc.tech";
@@ -573,12 +607,13 @@ GK.ui.recipes = (function () {
       const txt = esc(t(key, { tech: "\u0000" })).replace("\u0000", canLink ? `<button type="button" class="rc-link" data-tech="${esc(r.tech.id)}">${tn}</button>` : `<b>${tn}</b>`);
       out.push(txt);
     }
-    if (r.mastery) out.push(esc(t("rc.mastery", { type: name(r.mastery.type), level: r.mastery.level == null ? "" : r.mastery.level })));
+    if (r.mastery && !noMastery) out.push(esc(masteryTxt(r)));
     if (r.ext) out.push(esc(t("rc.ext", { ext: name(r.ext) })));
     if (r.ticks != null) out.push(esc(t("rc.time", { n: r.ticks })));
     if (r.energy != null) out.push(esc(r.ticks != null ? t("rc.energyTotal", { n: r.energy, total: num(r.energy * r.ticks) }) : t("rc.energy", { n: r.energy })));
     return out;
   }
+  const masteryTxt = (r) => t("rc.mastery", { type: name(r.mastery.type), level: r.mastery.level ? r.mastery.level : "" }).trim();
   const altNames = (r, state) => r.alt.map((a) => name(a, state.overrides)).join(", ");
   // "Todas também em: Forno da Cozinha II" once above the cards when every recipe (2+) has the same alternatives
   function sharedAlt(rs) {
@@ -586,14 +621,15 @@ GK.ui.recipes = (function () {
     const key = (r) => r.alt.map((a) => a.id).sort().join("|"), k0 = key(rs[0]);
     return rs.every((r) => key(r) === k0) ? rs[0] : null;
   }
-  function recipeCard(r, idx, it, state, cur, many, altShared) {
-    const D = GK.data.get(), stName = stationLabel(r.station, state);
+  // idx: the card's letter ("Receita B"), null = no letter (one card only, or a folded circular one); folded: inside
+  // "Melhorar a qualidade" (its title already says circular: no badge)
+  function recipeCard(r, idx, it, state, cur, many, altShared, folded) {
     const tags = [];
     if (r.id === it.defaultRecipe) tags.push(`<span class="badge badge-goal">${esc(t("rc.default"))}</span>`);
     if (r.example) tags.push(`<span class="badge badge-ex" title="${esc(t("rc.exampleTitle"))}">${esc(t("rc.example"))}</span>`);
     if (r.noexp) tags.push(`<span class="badge badge-ex">${esc(t("rc.noexp"))}</span>`);
     if (!r.listed) tags.push(`<span class="badge badge-hidden">${esc(t("rc.hiddenRecipe"))}</span>`);
-    if (r.cyc) tags.push(`<span class="badge badge-warn">${esc(t("rc.cyc"))}</span>`);
+    if (r.cyc && !folded) tags.push(`<span class="badge badge-warn">${esc(t("rc.cyc"))}</span>`);
     const rname = r.name && name(r.name) !== name(it) && (GK.i18n.lang() === "en" || r.name.pt !== r.name.en) ? `<p class="rc-rname">${esc(name(r.name))}</p>` : "";
     const alt = r.alt.length && !altShared ? `<p class="rc-meta-line">${esc(t("rc.alt", { names: altNames(r, state) }))}</p>` : "";
     const ins = r.in.length ? `<ul class="rc-lines">${r.in.map((l) => line(l, state)).join("")}</ul>` : `<p class="rc-meta-line">${esc(t("rc.noInputs"))}</p>`;
@@ -603,13 +639,72 @@ GK.ui.recipes = (function () {
     let act = "";
     if (cur && cur.id === r.id) act = `<span class="rc-inuse">✓ ${esc(t("rc.inUse"))}</span>`;
     else if (expandable(r) && (many || !it.defaultRecipe)) act = `<button type="button" class="btn btn-sm" id="rc-use-${GK.util.domId(r.id)}" data-use="${esc(r.id)}">${esc(t("rc.use"))}</button>`;
-    const yieldTxt = r.out.qty == null ? t("rc.makesVar") : t("rc.makes", { n: r.out.qty });
     return `<article class="card list rc-recipe">
-      <header class="station-h">${slot(r.station, stName, true)}<h4><span class="station-sub">${esc(t("rc.recipeN", { l: String.fromCharCode(65 + (idx % 26)) }))}</span>${esc(stName)}</h4><span class="rc-yield tabnum">${esc(yieldTxt)}</span></header>
+      ${cardHead(r, idx, state)}
       <div class="rc-recipe-body">
         ${tags.length ? `<div class="rc-tags">${tags.join("")}</div>` : ""}${rname}${alt}${ins}
         ${meta ? `<ul class="rc-meta">${meta}</ul>` : ""}${rn}${extra}
         ${act ? `<div class="rc-act">${act}</div>` : ""}
+      </div>
+    </article>`;
+  }
+  function cardHead(r, idx, state) {
+    const stName = stationLabel(r.station, state);
+    const yieldTxt = r.out.qty == null ? t("rc.makesVar") : t("rc.makes", { n: r.out.qty });
+    const letter = idx == null ? "" : `<span class="station-sub">${esc(t("rc.recipeN", { l: String.fromCharCode(65 + (idx % 26)) }))}</span>`;
+    return `<header class="station-h">${slot(r.station, stName, true)}<h4>${letter}${esc(stName)}</h4><span class="rc-yield tabnum">${esc(yieldTxt)}</span></header>`;
+  }
+  // a group card (GK.calc.recipeGroups): the shared lines, then the pick: mode "q" = the grade of one ingredient
+  // (bronze / prata / ouro, each with its own amount or mastery when they differ), mode "alt" = "E mais um destes",
+  // one row per ingredient with its grades. The option in use is checked; a tap sets it in the planner.
+  function groupCard(g, idx, it, state, cur, altShared) {
+    const D = GK.data.get(), r0 = g.recipes[0];
+    const inUse = g.options.find((o) => cur && o.r.id === cur.id) || null;
+    const shown = inUse || g.options[0];
+    const pid = (o) => "rc-pick-" + GK.util.domId(o.r.id);
+    const word = (o) => (o.grade ? t("quality." + o.grade) : "");
+    const baseName = (o) => graded(o.item, name(o.item, state.overrides), o.grade).name;
+    const say = (o) => `${num(o.line.qty)}× ${baseName(o)}${o.grade ? " " + word(o) : ""}`;
+    const radio = (o, cls, inner, label) => `<button type="button" class="qopt${cls}" role="radio" id="${esc(pid(o))}" data-pick="${esc(o.r.id)}" aria-checked="${o === inUse}"${label ? ` aria-label="${esc(label)}"` : ""}>${inner}</button>`;
+    const star = (o) => (o.grade ? `<span class="qstar q-${o.grade[0]}" aria-hidden="true"></span>` : "");
+    const hid = "rc-q-" + GK.util.domId(r0.id);
+    const fixed = (g.fixed || []).map((l) => line(l, state));
+    let pick;
+    if (g.mode === "q") {
+      fixed.push(line(shown.line, state, "", { noWord: true }));
+      const opts = g.options.map((o) => {
+        const d = [g.qtyEach ? num(o.line.qty) + "×" : "", g.masteryEach && o.r.mastery ? `${name(o.r.mastery.type)}${o.r.mastery.level ? " " + o.r.mastery.level : ""}` : ""].filter(Boolean).join(" · ");
+        return radio(o, "", `<span class="qopt-t">${star(o)}${esc(word(o))}</span>${d ? `<span class="qopt-d">${esc(d)}</span>` : ""}`);
+      }).join("");
+      pick = `<div class="qpick" role="radiogroup" aria-labelledby="${esc(hid)}"><p class="qpick-h" id="${esc(hid)}">${esc(t("rc.qPick"))}</p>
+        <div class="qopts">${opts}</div>`;
+    } else {
+      const rows = g.rows.map((row) => {
+        const nm = name(row.item, state.overrides), bn = graded(row.item, nm).name;
+        const os = row.options.map((o) => radio(o, " qopt-sm", `${star(o)}<span class="tabnum">${esc(num(o.line.qty))}×</span>`,
+          `${num(o.line.qty)} ${bn}${o.grade ? " (" + word(o) + ")" : ""}`)).join("");
+        return `<li><button type="button" class="qalt-it" data-open="${esc(row.item.id)}" aria-label="${esc(t("rc.open", { name: nm }))}">${slot(row.item, nm, true)}<span class="qalt-n">${esc(bn)}</span></button><span class="qalt-o">${os}</span></li>`;
+      }).join("");
+      pick = `<div class="qpick" role="radiogroup" aria-labelledby="${esc(hid)}"><p class="qpick-h" id="${esc(hid)}">${esc(t("rc.qMore"))}</p>
+        <ul class="qalt">${rows}</ul>`;
+    }
+    const what = inUse ? (g.mode === "q" ? word(inUse) : say(inUse)) : "";
+    pick += `<p class="rc-inuse qpick-use" aria-live="polite">${inUse ? `✓ ${esc(t("rc.inUseQ", { what }))}` : ""}</p></div>`;
+    const tags = [];
+    if (r0.example) tags.push(`<span class="badge badge-ex" title="${esc(t("rc.exampleTitle"))}">${esc(t("rc.example"))}</span>`);
+    if (r0.noexp) tags.push(`<span class="badge badge-ex">${esc(t("rc.noexp"))}</span>`);
+    if (!r0.listed) tags.push(`<span class="badge badge-hidden">${esc(t("rc.hiddenRecipe"))}</span>`);
+    if (r0.cyc) tags.push(`<span class="badge badge-warn">${esc(t("rc.cyc"))}</span>`);
+    const alt = r0.alt.length && !altShared ? `<p class="rc-meta-line">${esc(t("rc.alt", { names: altNames(r0, state) }))}</p>` : "";
+    const meta = yieldLines(r0, state).concat(unlockLines(r0, g.masteryEach)).map((h) => `<li>${h}</li>`).join("");
+    const rn = r0.runes ? `<div class="rc-runes"><span class="rc-k">${esc(t("rc.runesNeed"))}</span> ${runes(r0.runes)}</div>` : "";
+    const extra = r0.extra.length ? `<div class="rc-extra"><span class="rc-k">${esc(t("rc.extra"))}</span><ul class="rc-lines">${r0.extra.map((l) => line(l, state)).join("")}</ul></div>` : "";
+    return `<article class="card list rc-recipe rc-group">
+      ${cardHead(r0, idx, state)}
+      <div class="rc-recipe-body">
+        ${tags.length ? `<div class="rc-tags">${tags.join("")}</div>` : ""}${alt}${fixed.length ? `<ul class="rc-lines">${fixed.join("")}</ul>` : ""}
+        ${pick}
+        ${meta ? `<ul class="rc-meta">${meta}</ul>` : ""}${rn}${extra}
       </div>
     </article>`;
   }
@@ -851,13 +946,22 @@ GK.ui.recipes = (function () {
 
     const cur = current(id, state), many = rs.filter(expandable).length > 1;
     const chosen = state.choice[id] && cur && cur.id === state.choice[id] && cur.id !== it.defaultRecipe;
-    const shared = sharedAlt(rs);
+    // grouped cards (GK.calc.recipeGroups); the circular ones folded at the end; a letter only with 2+ cards;
+    // "Todas também em" above the cards only with 2+ cards (one card says it inside, as before)
+    const G = GK.calc.recipeGroups(rs, D), nCards = G.cards.length;
+    const shared = nCards > 1 ? sharedAlt(rs) : null;
+    const cards = G.cards.map((c, i) => (c.group ? groupCard(c, nCards > 1 ? i : null, it, state, cur, !!shared)
+      : recipeCard(c.r, nCards > 1 ? i : null, it, state, cur, many, !!shared))).join("");
+    const cyc = G.cyc.length ? `<details class="rc-cyc" id="rc-cyc"${cycOpen ? " open" : ""}>
+        <summary><span class="rc-cyc-t">${esc(t("rc.cycT"))} <span class="count">${G.cyc.length}</span></span><span class="rc-cyc-d">${esc(t("rc.cycD", { name: nm }))}</span><span class="rc-chev" aria-hidden="true">›</span></summary>
+        <div class="rc-recipes">${G.cyc.map((r) => recipeCard(r, null, it, state, cur, many, !!shared, true)).join("")}</div>
+      </details>` : "";
     // a group with no recipe of its own: its members (in the header card) already say how to get it
     const recipes = !rs.length && it.members ? "" : `<section class="rc-sec" aria-labelledby="rc-recipes-h">
-      <div class="section-head"><h3 class="h2" id="rc-recipes-h">${esc(t("rc.recipesTitle"))} <span class="count">${rs.length || ""}</span></h3>
+      <div class="section-head"><h3 class="h2" id="rc-recipes-h">${esc(t("rc.recipesTitle"))} <span class="count">${nCards > 1 ? nCards : ""}</span></h3>
         ${chosen ? `<button type="button" class="btn btn-sm btn-ghost" id="rc-use-default" data-use-default>${esc(t("rc.useDefault"))}</button>` : ""}</div>
       ${shared ? `<p class="hint rc-alt-all">${esc(t("rc.altAll", { names: altNames(shared, state) }))}</p>` : ""}
-      ${rs.length ? `<div class="rc-recipes">${rs.map((r, i) => recipeCard(r, i, it, state, cur, many, !!shared)).join("")}</div>` : `<p class="hint">${esc(t("rc.noRecipes"))}</p>`}
+      ${rs.length ? `<div class="rc-recipes">${cards}</div>${cyc}` : `<p class="hint">${esc(t("rc.noRecipes"))}</p>`}
     </section>`;
 
     // used in: direct consumers, then recipes that take a group this item belongs to
@@ -874,6 +978,7 @@ GK.ui.recipes = (function () {
     const loc = GK.i18n.meta(lang).locale;
     used.sort((a, b) => (D.items[a.r.out.item].hidden - D.items[b.r.out.item].hidden) ||
       name(D.items[a.r.out.item], state.overrides).localeCompare(name(D.items[b.r.out.item], state.overrides), loc));
+    GK.data.gradeSort(used, (u) => GK.data.family(D.items[u.r.out.item]), (u) => GK.data.GRADE_RANK[D.items[u.r.out.item].grade]);
     const usedShow = usedAll ? used : used.slice(0, LIST_CAP);
     // nothing uses it: no section at all (corte 18)
     const usedHtml = !used.length ? "" : `<section class="rc-sec" aria-labelledby="rc-used-h">
@@ -921,8 +1026,9 @@ GK.ui.recipes = (function () {
     if (V.item === id) return;
     if (fromList || !V.item) { listScroll = browseEl.hidden ? listScroll : window.scrollY; V.stack = []; V.from = null; }
     else { V.stack.push(V.item); if (V.stack.length > 30) V.stack.shift(); }
-    V.item = id; addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false;
+    V.item = id; addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false; cycOpen = false; cycOpen = false;
     save();
+    if (hist) hist.push();
     showView(GK.store.get(), true);
   }
   // back to the screen that opened the detail (GK.ui.recipes.open(id, {from})), where it was
@@ -938,7 +1044,7 @@ GK.ui.recipes = (function () {
     if (!toList && !V.stack.length && V.from) { backToOrigin(); return; }
     if (toList) V.from = null;
     if (!toList && V.stack.length) {
-      V.item = V.stack.pop(); addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false;
+      V.item = V.stack.pop(); addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false; cycOpen = false;
       save(); showView(GK.store.get(), true);
       return;
     }
@@ -957,7 +1063,7 @@ GK.ui.recipes = (function () {
     const from = opts && opts.from && opts.from !== "recipes" && cur !== "recipes" ? opts.from : null;
     if (from) fromScroll = window.scrollY;
     if (V.item !== itemId || from || V.stack.length) {
-      V.stack = []; V.item = itemId; addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false;
+      V.stack = []; V.item = itemId; addQty = 1; usedAll = false; hereAll = false; whereAll = false; askedOpen = false; cycOpen = false;
       V.from = from;
       save();
     }
@@ -973,8 +1079,8 @@ GK.ui.recipes = (function () {
     if (!el || !root.contains(el)) return;
     const d = el.dataset;
     if (d.open) { openItem(d.open, !!el.closest(".rc-browse")); return; }
-    if ("back" in d) { back(false); return; }
-    if ("tolist" in d) { back(true); return; }
+    if ("back" in d) { back(false); if (hist) hist.pop(false); return; }
+    if ("tolist" in d) { back(true); if (hist) hist.pop(true); return; }
     if (d.chip) {
       const k = d.key, f = d.chip === "cat" ? "cat" : "st";
       V[f] = V[f] === k ? null : k;
@@ -1005,6 +1111,13 @@ GK.ui.recipes = (function () {
       const r = GK.data.recipe(d.use); if (!r) return;
       A.chooseRecipe(r.out.item, r.id === GK.data.item(r.out.item).defaultRecipe ? null : r.id);
       GK.ui.toast(t("rc.used", { station: name(r.station, GK.store.get().overrides), name: name(GK.data.item(r.out.item), GK.store.get().overrides) }));
+      return;
+    }
+    // a grade / ingredient option of a group card: the planner uses it from now on (the "✓ Em uso" line says so)
+    if (d.pick) {
+      const r = GK.data.recipe(d.pick); if (!r || el.getAttribute("aria-checked") === "true") return;
+      A.chooseRecipe(r.out.item, r.id === GK.data.item(r.out.item).defaultRecipe ? null : r.id);
+      const b = document.getElementById(el.id); if (b) b.focus({ preventScroll: true });
       return;
     }
     if ("useDefault" in d) { A.chooseRecipe(V.item, null); GK.ui.toast(t("rc.usedDefault", { name: name(GK.data.item(V.item), GK.store.get().overrides) })); return; }
@@ -1058,6 +1171,7 @@ GK.ui.recipes = (function () {
       else if (e.key === "Enter") { e.preventDefault(); V.q = input.value; save(); updateList(true); input.blur(); }
     });
     root.addEventListener("click", onClick);
+    hist = GK.router.detailHistory("recipes", () => { if (V.item && !detailEl.hidden) back(false); });
     // back on the screen that opened the detail: its old scroll position, focus on the opener (after its render)
     GK.router.onChange((id) => {
       if (!returnTo || id !== returnTo.route) { if (id !== "recipes") returnTo = null; return; }
@@ -1081,7 +1195,7 @@ GK.ui.recipes = (function () {
       }
     });
     // "Pedido em" stays open across re-renders of the same item (toggle does not bubble: capture)
-    root.addEventListener("toggle", (e) => { if (e.target.id === "rc-asked") askedOpen = e.target.open; }, true);
+    root.addEventListener("toggle", (e) => { if (e.target.id === "rc-asked") askedOpen = e.target.open; if (e.target.id === "rc-cyc") cycOpen = e.target.open; }, true);
     // the price "i": one open at a time; a tap anywhere else closes it
     document.addEventListener("click", (e) => {
       if (!root) return;
@@ -1089,6 +1203,13 @@ GK.ui.recipes = (function () {
     });
     root.addEventListener("keydown", (e) => {
       if (e.key === "Enter" && e.target.id === "rc-qty") { e.preventDefault(); const b = document.getElementById("rc-add"); if (b) b.click(); }
+      // the grade options: the arrows move between them (a radio group); Enter / Space picks
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      if (step && e.target.getAttribute && e.target.getAttribute("role") === "radio" && e.target.closest(".qpick")) {
+        const all = [...e.target.closest(".qpick").querySelectorAll('[role="radio"]')], i = all.indexOf(e.target);
+        const next = all[(i + step + all.length) % all.length];
+        if (next) { e.preventDefault(); next.focus(); }
+      }
     });
   }
   let wasHere = false;

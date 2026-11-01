@@ -134,7 +134,7 @@ GK.store = (function () {
     goals: [],           // [{ item, qty }]
     choice: {},          // itemId -> recipeId (absent = item.defaultRecipe)
     have: {},            // itemId -> true ("Já tenho": don't expand) | number ("tenho N de M": N subtracted from demand)
-    done: {},            // "raw:<id>" | "step:<id>" -> true
+    done: {},            // "raw:<id>" | "step:<id>" -> true (before 1.8.0) | the quantity ticked (C3)
     example: false,      // goals are the seeded example
     legacyOf: MAIN,      // the list the working copy belongs to
     overrides: {},       // lang -> { itemId: "nome editado" }
@@ -181,6 +181,10 @@ GK.store = (function () {
   // have: true (everything) or a whole number ≥ 1 (partial); anything else is dropped
   const clampHave = (v) => (v === true ? true : typeof v === "number" && isFinite(v) && v >= 1 ? Math.min(999999, Math.round(v)) : null);
   const haveMap = (o) => { const out = {}; for (const [k, v] of Object.entries(obj(o))) { const c = clampHave(v); if (c != null) out[k] = c; } return out; };
+  // done (1.8.0, C3): true (a tick saved before 1.8.0: no quantity) or the quantity the row asked for when it was
+  // ticked (a whole number ≥ 1): a step ticked at 3 is pending again when the plan asks for 10 (GK.calc.doneCovers).
+  // A page older than 1.8.0 reads any truthy value as true: the tick stays, only the number is lost.
+  const doneMap = (o) => { const out = {}; for (const [k, v] of Object.entries(obj(o))) { if (!v) continue; const c = typeof v === "number" ? clampHave(v) : null; out[k] = c == null ? true : c; } return out; };
   const strMap = (o) => { const out = {}; for (const [k, v] of Object.entries(obj(o))) if (typeof v === "string" && v) out[k] = v; return out; };
   const cleanGoals = (g) => (Array.isArray(g) ? g : []).filter((x) => x && typeof x.item === "string").slice(0, 500)
     .map((x) => ({ item: x.item, qty: clampQty(x.qty) }));
@@ -202,7 +206,7 @@ GK.store = (function () {
   // a list name: one line, at most LIST_NAME_MAX characters ("" = the default name, shown translated)
   const cleanName = (v) => (typeof v === "string" ? Array.from(v.replace(/\s+/g, " ").trim()).slice(0, LIST_NAME_MAX).join("").trim() : "");
   const isoOr = (v, d) => (typeof v === "string" && ISO.test(v) ? v : d);
-  const listContent = (o) => ({ goals: cleanGoals(o.goals), choice: strMap(o.choice), have: haveMap(o.have), done: trueMap(o.done), example: !!o.example });
+  const listContent = (o) => ({ goals: cleanGoals(o.goals), choice: strMap(o.choice), have: haveMap(o.have), done: doneMap(o.done), example: !!o.example });
   const contentKey = (l) => JSON.stringify([l.goals, l.choice, l.have, l.done, !!l.example]);
   function cleanList(o) {
     if (!o || typeof o !== "object" || Array.isArray(o) || !validId(o.id)) return null;
@@ -506,7 +510,7 @@ GK.store = (function () {
     // "Desfazer" after the example was replaced: the example goals and checks come back, still flagged as example
     restoreExample(snap) {
       if (!snap || !Array.isArray(snap.goals)) return;
-      update((s) => { s.goals = cleanGoals(snap.goals); s.done = trueMap(snap.done); s.example = s.goals.length > 0; }, { from: "example" });
+      update((s) => { s.goals = cleanGoals(snap.goals); s.done = doneMap(snap.done); s.example = s.goals.length > 0; }, { from: "example" });
     },
     setQty(item, qty, meta) { update((s) => { touchGoals(s); const g = s.goals.find((x) => x.item === item); if (g) g.qty = clampQty(qty); }, meta); },
     bumpQty(item, d) { update((s) => { touchGoals(s); const g = s.goals.find((x) => x.item === item); if (g) g.qty = clampQty(g.qty + d); }); },
@@ -522,8 +526,18 @@ GK.store = (function () {
     // yield bonuses ("Vantagens"): perk id on / off
     setPerk(id, on) { update((s) => { if (on) s.perks[id] = true; else delete s.perks[id]; }, { from: "perk" }); },
     chooseRecipe(item, rid) { update((s) => { if (rid) s.choice[item] = rid; else delete s.choice[item]; }); },
-    toggleDone(key, on) { update((s) => { if (on) s.done[key] = true; else delete s.done[key]; }); },
-    clearDone() { update((s) => { s.done = {}; }); },
+    // a step's tick keeps the quantity it was ticked at (qty; none = true): GK.calc.doneCovers (C3)
+    toggleDone(key, on, qty) { update((s) => { if (on) { const c = clampHave(qty); s.done[key] = c == null ? true : c; } else delete s.done[key]; }); },
+    // a raw row's tick is "tenho tudo" (1.8.0, corte 9): have = the quantity the row asks for (so it is pending again
+    // when the plan asks for more, C3); unticking forgets what the row had (and a tick saved before 1.8.0)
+    checkRaw(item, qty, on) {
+      update((s) => {
+        delete s.done["raw:" + item];
+        if (on) { const c = clampHave(qty); s.have[item] = c == null ? true : c; } else delete s.have[item];
+      });
+    },
+    // "Limpar marcações": every tick, and the "tenho tudo" of the raw rows listed in haveIds (partial numbers stay)
+    clearDone(haveIds) { update((s) => { s.done = {}; (haveIds || []).forEach((id) => { delete s.have[id]; }); }); },
     setLang(code) { update((s) => { s.lang = code; }, { from: "lang" }); },
     setTheme(mode) { update((s) => { s.theme = THEMES.indexOf(mode) >= 0 ? mode : "auto"; }, { from: "theme" }); },
     setShowHidden(on) { update((s) => { s.showHidden = !!on; }, { from: "search-toggle" }); },

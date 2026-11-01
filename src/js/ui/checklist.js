@@ -3,7 +3,9 @@
    tool, off by default). On phones this card comes last in the planner (planner.css, CSS order).
    1.6.0 (corte 8): no "20 matérias-primas · 41 etapas · 26 estações" line (the section titles count them); the perks
    fold into one line "Vantagens: 0 de 10 ligadas ›" that opens the toggles (folded by default; this module's state).
-   Owns: [data-panel="checklist"] and the change handler of every [data-done] checkbox on the planner.
+   1.8.0 (C3): ticks follow the quantity (GK.calc rawChecked / stepChecked); a step's tick saves its quantity; a raw
+   row's tick is "tenho tudo" (ui/summary.js), and "Limpar marcações" also forgets it (GK.store clearDone(haveIds)).
+   Owns: [data-panel="checklist"] and the change handler of the steps' [data-done] checkboxes on the planner.
    Exposes: GK.ui.checklist.{mount, render, asText, exportNames}; registered as a panel.
 */
 GK.i18n.add({
@@ -60,18 +62,24 @@ GK.i18n.add({
 GK.ui.checklist = (function () {
   const { t, name, num } = GK.i18n, { esc } = GK.util;
   let root, perksOpen = false;   // "Vantagens: 0 de 10 ligadas ›" opened (this device, this session)
-  const keysOf = (plan) => plan.raw.map((r) => "raw:" + r.item).concat(plan.steps.map((s) => "step:" + s.item));
+  const C = GK.calc;
+  // ticked rows of the plan: raw rows ("tenho tudo") and steps, each still covering what the plan asks for now
+  const rawTicked = (plan, state) => plan.raw.filter((r) => C.rawChecked(r, state.have, state.done));
+  const stepTicked = (plan, state) => plan.steps.filter((s) => C.stepChecked(s, state.done));
   function asText(state, plan) {
     const D = GK.data.get(), nm = (id) => name(D.items[id], state.overrides);
-    const box = (k) => (state.done[k] ? "[x]" : "[ ]");
+    const box = (on) => (on ? "[x]" : "[ ]");
     const lines = [t("copy.header"), "", t("copy.goals") + ":"];
     state.goals.forEach((g) => lines.push(`- ${num(g.qty)}× ${nm(g.item)}`));
     lines.push("", t("raw.title") + ":");
-    plan.raw.forEach((r) => lines.push(`${box("raw:" + r.item)} ${num(r.qty)} ${nm(r.item)}${r.have && !r.haveQty ? " (" + t("raw.have") + ")" : r.haveQty ? " (" + t("copy.haveN", { n: r.haveQty }) + ")" : ""}`));
+    plan.raw.forEach((r) => {
+      const on = C.rawChecked(r, state.have, state.done);
+      lines.push(`${box(on)} ${num(r.qty)} ${nm(r.item)}${!on && r.haveQty ? " (" + t("copy.haveN", { n: r.haveQty }) + ")" : ""}`);
+    });
     lines.push("", t("steps.title") + ":");
     plan.stations.forEach((g) => {
       lines.push(`# ${name(g.station, state.overrides)}`);
-      g.steps.forEach((s) => lines.push(`${box("step:" + s.item)} ${nm(s.item)} ×${num(s.need)} (${t("steps.runs", { n: s.runs })})`));
+      g.steps.forEach((s) => lines.push(`${box(C.stepChecked(s, state.done))} ${nm(s.item)} ×${num(s.need)} (${t("steps.runs", { n: s.runs })})`));
     });
     return lines.join("\n");
   }
@@ -101,12 +109,16 @@ GK.ui.checklist = (function () {
     root = el;
     planRoot.addEventListener("change", (e) => {
       const cb = e.target.closest("[data-done]");
-      if (cb) GK.store.actions.toggleDone(cb.dataset.done, cb.checked);
+      if (cb) GK.store.actions.toggleDone(cb.dataset.done, cb.checked, +cb.dataset.qty);
     });
     root.addEventListener("click", (e) => {
       const b = e.target.closest("button");
       if (!b) return;
-      if (b.id === "clear-done") { GK.store.actions.clearDone(); GK.ui.toast(t("progress.cleared")); }
+      if (b.id === "clear-done") {
+        // the raw rows ticked through "have" (true or a number covering them) come back to the list too
+        const st = GK.store.get(), ids = GK.app.plan().raw.filter((r) => C.doneCovers(st.have[r.item], r.demand || r.qty)).map((r) => r.item);
+        GK.store.actions.clearDone(ids); GK.ui.toast(t("progress.cleared"));
+      }
       if (b.id === "copy-list") copyOrShow(asText(GK.store.get(), GK.app.plan()), t("progress.copied"), "progress.copyFail");
       if (b.id === "export-names") copyOrShow(exportNames(GK.store.get()), t("export.copied"), "export.fail");
       if (b.id === "perks-tgl") { perksOpen = !perksOpen; render(GK.store.get(), {}, GK.app.plan()); const tg = document.getElementById("perks-tgl"); if (tg) tg.focus(); return; }
@@ -131,7 +143,7 @@ GK.ui.checklist = (function () {
     if (meta && meta.from === "search-toggle") return;
     const nEdited = editedCount(state);
     if (!state.goals.length && !nEdited) { root.innerHTML = ""; return; }
-    const keys = keysOf(plan), total = keys.length, done = keys.filter((k) => state.done[k]).length;
+    const total = plan.raw.length + plan.steps.length, done = rawTicked(plan, state).length + stepTicked(plan, state).length;
     const pct = total ? Math.round((done / total) * 100) : 0;
     const exportBtn = nEdited ? `<button type="button" class="btn btn-sm btn-ghost" id="export-names">${esc(t("export.button", { n: nEdited }))}</button>` : "";
     const namesOn = !!(state.ui && state.ui.editNames);

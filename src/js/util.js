@@ -1,6 +1,9 @@
 /* GK.util: small shared helpers (HTML escaping, DOM ids, icon slots from the sprite, clipboard, debounce).
    Owns: the icon sprite <style> rule and the broken-image fallback listener.
    Exposes: GK.util.{esc, domId, slot, setSprite, copyText, debounce}.
+   slot(ent, label, small, grade) (1.8.0): an item with a quality grade (item.grade, or the grade a recipe line gives
+   it: the bronze Cabbage of "… from Cabbage (bronze)") gets the pixel star in its icon's top-left corner (.qstar
+   q-b / q-s / q-g, components.css), out of the way of a stack number. The one place that draws it.
 */
 GK.util = (function () {
   const ESC = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
@@ -18,17 +21,20 @@ GK.util = (function () {
     document.head.appendChild(st);
   }
   const letterTile = (cls, letter) => `<span class="${cls}"><span class="slot-letter" aria-hidden="true">${letter}</span></span>`;
-  // ent = item or station ({id, icon}); label = shown name (for the letter fallback)
-  function slot(ent, label, small) {
+  const STAR = { bronze: "q-b", silver: "q-s", gold: "q-g" };
+  // ent = item or station ({id, icon}); label = shown name (for the letter fallback); grade = a line's grade (else ent.grade)
+  function slot(ent, label, small, grade) {
     const letter = esc((String(label || "?").trim()[0] || "?").toUpperCase());
-    const cls = "slot" + (small ? " slot-sm" : "");
+    const q = STAR[grade || (ent && ent.grade)] || "";
+    const cls = "slot" + (small ? " slot-sm" : "") + (q ? " has-q" : "");
+    const star = q ? `<span class="qstar ${q}" aria-hidden="true"></span>` : "";
     const pos = ent && sprite && sprite.icons[ent.id];
-    if (pos) return `<span class="${cls}"><span class="ico" style="--x:${+pos[0]};--y:${+pos[1]}"></span></span>`;
+    if (pos) return `<span class="${cls}"><span class="ico" style="--x:${+pos[0]};--y:${+pos[1]}"></span>${star}</span>`;
     const icon = ent && ent.icon;
     if (icon && !failedIcons.has(icon)) {
-      return `<span class="${cls}"><img src="${esc(icon)}" alt="" loading="lazy" decoding="async" width="32" height="32" data-fb="${letter}"></span>`;
+      return `<span class="${cls}"><img src="${esc(icon)}" alt="" loading="lazy" decoding="async" width="32" height="32" data-fb="${letter}">${star}</span>`;
     }
-    return letterTile(cls, letter);
+    return star ? `<span class="${cls}"><span class="slot-letter" aria-hidden="true">${letter}</span>${star}</span>` : letterTile(cls, letter);
   }
   // Broken remote icons (blocked host, 404, offline) fall back to the letter tile.
   document.addEventListener("error", (e) => {

@@ -3,6 +3,19 @@
 
 # Histórico de atualizações — Companheiro GK2
 
+## 1.8.0 — 2026-11-01
+
+- Receitas agrupadas: receitas que só trocam um ingrediente viram um cartão só. No Vinho, um “Barril de Vinho” com bronze / prata / ouro (cada um com a sua maestria); nos Suprimentos: Vegetais, “E mais um destes” com cada vegetal; tocar numa qualidade já troca a receita do planejador
+- As receitas que melhoram o próprio item ficam recolhidas no fim, em “Melhorar a qualidade”
+- Estrela de qualidade (bronze, prata, ouro) no ícone dos itens com qualidade, em todo o app; nas listas o nome sai sem “(prata)” e a qualidade aparece escrita embaixo; a ordem é sempre bronze, prata, ouro
+- “Quem compra”: moedas desenhadas em pixel, com bronze, prata e ouro fáceis de distinguir
+- Matérias-primas: a caixinha agora quer dizer “já tenho tudo” e leva o item para “Você já tem” (com Desfazer); para só uma parte, toque na quantidade (“× 98 ▾”, igual à das Etapas). O botão “Já tenho” saiu
+- A marcação acompanha a quantidade: um item marcado com 3 volta para a lista se o plano passar a pedir 10 (vale também para as Etapas)
+- Planejador alinhado: caixinhas, ícones, número da estação e botões da direita na mesma coluna; nome e “como obter” juntos e linhas mais baixas nas Matérias-primas
+- No celular, o gesto de voltar fecha o detalhe de Receitas e de Tecnologias
+- Nomes iguais em português (“Tinta”) mostram o nome em inglês pequeno ao lado; “Coleta ou compra” no lugar de “Sem receita”; o texto do jogo nos Dias abre nas aspas “; “Maestria: Anatomia” sem o “0”; “Limpar metas” no lugar de “Limpar lista”; a Pele sem o seletor “Fabricar com” circular
+- Consertos: caixinhas de Tecnologias e do Hoje de volta ao lugar; o foco do teclado não se perde ao fechar o aviso de dados nem ao apagar uma lista; “Desfazer” também esconde o aviso de “Adicionado”
+
 ## 1.7.0 — 2026-11-01
 
 - Ficha completa do item (no detalhe das Receitas): “Quem compra” mostra cada comerciante com o preço que paga por 1 com o estoque normal, o “até” do preço base, as curtidas por semana e um “i” que explica como o preço varia; “Estudar” mostra os pontos de cada cor na Mesa de Estudo, o custo em Ciência e Fé e a caixa “Já estudei” (sincronizada entre aparelhos); “Pedido em” fica recolhido, com aviso de spoiler, e lista missões (nome, quantidade e quem pede), restauração e encomendas do povoado
@@ -107,6 +120,19 @@
 ---
 
 # Update history — GK2 Companion
+
+## 1.8.0 — 2026-11-01
+
+- Grouped recipes: recipes that only swap one ingredient are now one card. Wine shows one “Wine Barrel” with bronze / silver / gold (each with its own mastery); Supply: Vegetables shows “Plus one of these” with each vegetable; tapping a quality switches the planner's recipe right away
+- Recipes that improve the item itself are folded at the end, under “Improve quality”
+- Quality star (bronze, silver, gold) on the icon of graded items across the app; lists show the name without “(silver)” and the quality written below; the order is always bronze, silver, gold
+- “Who buys it”: pixel coins, with bronze, silver and gold easy to tell apart
+- Raw materials: the checkbox now means “I have it all” and moves the item to “You already have” (with Undo); for only part of it, tap the amount (“× 98 ▾”, like the steps'). The “Have it” button is gone
+- Checks follow the amount: an item checked at 3 comes back to the list if the plan now needs 10 (steps too)
+- Aligned planner: checkboxes, icons, station numbers and right-hand buttons in one column; name and “how to get” together and shorter rows in Raw materials
+- On phones, the back gesture closes the Recipes and Technologies detail
+- Items sharing a Portuguese name show the English name small beside it; “Gather or buy” instead of “No recipe”; game text in Days opens from the “ quote mark; “Mastery: Anatomy” without the “0”; “Clear goals” instead of “Clear list”; Skin without the circular “Craft with” chooser
+- Fixes: Technologies and Today checkboxes back in place; keyboard focus is kept when closing the data notice or deleting a list; “Undo” also hides the “Added” notice
 
 ## 1.7.0 — 2026-11-01
 

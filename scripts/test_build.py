@@ -1740,11 +1740,12 @@ console.log(JSON.stringify({ n: M.length, sha: require("crypto").createHash("sha
         self.assertEqual(out["long"], "throws")
 
     def test_raw_row_phone_fixes(self):
-        """The quantity no longer touches "Já tenho"; a recipe selector never widens a raw row past the screen."""
+        """A recipe selector never widens a raw row past the screen (1.8.0: choosers and the "Tenho N de M" field
+        sit on a line of their own, .row-more, under "como obter")."""
         css, f = self.read("css/planner.css"), self.read("js/ui/fmt.js")
-        self.assertIn(".row-raw { padding-block: 4px 5px; row-gap: var(--s2); min-height: 0; }", css)
-        self.assertIn(".row-line2 > .row-actions > .btn:only-child { margin-block: 0 -2px; }", css)
-        self.assertRegex(css, r"\.row-line2 \.row-actions \{[^}]*min-width: 0; max-width: 100%;")
+        self.assertIn(".row-raw { padding-block: 6px; row-gap: 2px; min-height: 0; }", css)
+        self.assertRegex(css, r"\.row-raw > \.row-more \{[^}]*min-width: 0; max-width: 100%;")
+        self.assertIn('class="row-actions row-more"', self.read("js/ui/summary.js"))
         self.assertIn(".row-actions .select-wrap select { flex: 1 1 0; width: 0; }", css)
         self.assertRegex(css, r"\.select-wrap select \{[^}]*max-width: 100%")
         self.assertIn("n.split(/ from /i)[0].trim()", f)
@@ -1943,8 +1944,10 @@ class FactsBuild(unittest.TestCase):
             for k in (".sell", ".study", ".asked", "studied"):
                 self.assertNotIn(k, src, f"{f} reads {k}")
         css = (ROOT / "src" / "css" / "recipes.css").read_text(encoding="utf-8")
-        for needle in (".sell-list", ".study-done", ".tick input:checked", ".rc-asked > summary", ".coin-s", ".coin-g"):
+        for needle in (".sell-list", ".study-done", ".study-done .tick { margin-left: -10px; }", ".rc-asked > summary", ".coin-s", ".coin-g"):
             self.assertIn(needle, css)
+        # 1.8.0: the -10px of "Já estudei" no longer moves every checkbox of the app (Tecnologias, Hoje, Planejador)
+        self.assertNotRegex(css, r"(^|\n)\.tick \{[^}]*margin-left")
         store = (ROOT / "src" / "js" / "store.js").read_text(encoding="utf-8")
         self.assertIn('"researched", "studied",', store)
         self.assertIn('const LATE = ["dayDone", "dayNotes", "recents", "studied"];', store)
@@ -1993,8 +1996,21 @@ class Cuts160(unittest.TestCase):
         qty = re.search(r"\.row-qty\.qty-btn \{([^}]*)\}", css).group(1)
         self.assertIn("margin: 0 0 0 var(--s1);", qty)
         self.assertIn("min-height: var(--tap); min-width: var(--tap);", qty)
-        self.assertIn(".row-raw > .tick, .row-raw > .slot, .station .row > .tick, .station .row > .slot { align-self: start; }", css)
-        self.assertRegex(css, r"\.row-raw \{[^}]*row-gap: var\(--s2\)")
+        self.assertIn(".station .row > .tick, .station .row > .slot { align-self: start; }", css)
+        # 1.8.0 grade única: the raw rows, the steps (rows + station header) and "Tecnologias que faltam" share the
+        # columns 12 px | 26 px (24 px checkbox) | 8 px | 40 px icon | text | controls on the 12 px line; the checkbox
+        # label stays 44 px wide; raw rows: name and "como obter" 2 px apart, centred on the icon
+        self.assertIn(".summary-grid .row, .tn-card .tn-row { grid-template-columns: 26px 40px minmax(0, 1fr) auto; padding-left: var(--s3); padding-right: var(--s3); }", css)
+        self.assertIn(".summary-grid .row > .tick, .tn-card .tn-row > .tick { margin-left: calc(var(--s3) * -1); place-items: center end; padding-right: var(--s2); }", css)
+        self.assertRegex(css, r"\.station-h \{[^}]*grid-template-columns: 26px 40px minmax\(0, 1fr\) auto auto;[^}]*column-gap: var\(--s2\)")
+        self.assertIn(".station-h > .station-n { justify-self: start; margin-left: -2px; }", css)
+        self.assertIn(".station-h > .slot { justify-self: center; }", css)
+        self.assertIn(".row-raw > .tick, .row-raw > .slot { grid-row: 1 / span 2; align-self: center; }", css)
+        self.assertIn(".row-raw > .row-qty { grid-column: 4; grid-row: 1 / span 2; align-self: center; line-height: 1; }", css)
+        self.assertRegex(css, r"\.row-raw \{[^}]*row-gap: 2px")
+        self.assertRegex(css, r"\.tick \{[^}]*width: var\(--tap\); height: var\(--tap\)")
+        # the raw rows' quantity is the steps' "× N ▾"
+        self.assertIn("qtyButton(r.item, nm, r.qty, open, true)", self.read("js/ui/summary.js"))
         self.assertRegex(css, r"\.fold-btn \{[^}]*width: var\(--tap\)")
 
     def test_planner_general(self):
@@ -2002,7 +2018,7 @@ class Cuts160(unittest.TestCase):
         the example-replaced toast moved to search.js."""
         g, c, f, comp = self.read("js/ui/goals.js"), self.read("js/ui/checklist.js"), self.read("js/ui/fmt.js"), self.read("css/components.css")
         self.assertIn("function slotButton(", f)
-        self.assertIn('class="slot slot-btn"', f)
+        self.assertIn('class="slot slot-btn${m[1] || ""}"', f)   # 1.8.0: keeps the quality star's has-q
         self.assertIn("GK.ui.fmt.slotButton(", g)
         for gone in ("exampleGone", '"goals.intro"', "example-note", "GK.store.subscribe", "infoButton"):
             self.assertNotIn(gone, g, gone)
@@ -2097,6 +2113,44 @@ console.log(JSON.stringify(out));
         self.assertEqual(out["lineNoState"], ["Olaria I", "Engenharia 2", "Foles"])
         self.assertEqual(out["level0"], ["Anatomia"])
         self.assertEqual(out["quest"], ["Missão: A missão"])
+
+class GroupedRecipes180(unittest.TestCase):
+    """1.8.0, receitas agrupadas (docs/revisao-ux/protos/receitas-agrupadas, consertos.md §10): the quality star is drawn
+    in one place (GK.util.slot); the Receitas detail uses GK.calc.recipeGroups; a tap on an option sets the planner's
+    recipe; the circular recipes fold; pixel coins; texts in pt and en. (The rule itself: test_calc.mjs.)"""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.read = lambda self, f: (ROOT / "src" / f).read_text(encoding="utf-8")
+
+    def test_star_in_one_place(self):
+        util = self.read("js/util.js")
+        self.assertIn("function slot(ent, label, small, grade)", util)
+        self.assertIn('<span class="qstar ${q}" aria-hidden="true"></span>', util)
+        for f in ("js/ui/summary.js", "js/ui/goals.js", "js/ui/search.js", "js/ui/today.js", "js/ui/days.js", "js/ui/fmt.js"):
+            self.assertNotIn("qstar", self.read(f), f)   # they all go through GK.util.slot / GK.ui.fmt.slotButton
+        comp = self.read("css/components.css")
+        for needle in (".slot.has-q { position: relative; }", ".slot > .qstar { position: absolute; left: 1px; top: 1px;", ".q-b {", ".q-s {", ".q-g {"):
+            self.assertIn(needle, comp)
+
+    def test_detail_groups_and_pick(self):
+        js = self.read("js/ui/recipes.js")
+        for needle in ("GK.calc.recipeGroups(rs, D)", "function groupCard(", 'role="radiogroup"', 'role="radio"', "data-pick=",
+                       "A.chooseRecipe(r.out.item, r.id === GK.data.item(r.out.item).defaultRecipe ? null : r.id)",
+                       '<details class="rc-cyc" id="rc-cyc"', '"rc.cycT": "Melhorar a qualidade"', '"rc.cycT": "Improve quality"',
+                       '"rc.qMore": "E mais um destes"', '"rc.qMore": "Plus one of these"', '"rc.inUseQ": "Em uso no planejador: {what}"',
+                       "GK.data.gradeSort(ids,", "GK.data.stripGrade("):
+            self.assertIn(needle, js)
+        group = js.split("function groupCard(", 1)[1].split("\n  function ", 1)[0]
+        self.assertNotIn("data-use=", group)   # no "Usar esta receita" button in a group card: the options do it
+
+    def test_coins_pixel(self):
+        css = self.read("css/recipes.css")
+        self.assertRegex(css, r"\.coin \{[^}]*width: 16px; height: 16px;")
+        self.assertIn(".sell-max .coin { width: 14px; height: 14px;", css)
+        self.assertNotIn("radial-gradient(circle at 35% 35%", css)
+        self.assertIn('<span class="sr-only"> ${esc(t("rc.coin." + k))}</span>', self.read("js/ui/recipes.js"))
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

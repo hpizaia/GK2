@@ -12,26 +12,24 @@
    with other recipes, the "Por execução: 1 Tora → 3 ▾" line itself is the recipe <select>; the number of crafts
    shows only when it is more than 1 and differs from the quantity; the item icon opens Receitas (no "i"); no fixed hints above the
    two sections; a folded section says only "0/20 marcados" ("26 estações · 0/41 marcados" for the steps).
+   1.8.0 (corte 9 + C3): a raw row's checkbox is "tenho tudo" (GK.store checkRaw: have = the quantity it asks for), the
+   row goes to "Você já tem" with an undo toast; its quantity "20 ▾" opens "Tenho __ de 20" for a partial number (no
+   "Já tenho" button, no "Tudo" there). Grade única: name and "como obter" as one block centred on the icon; the
+   quantity is the steps' "× 20 ▾"; choosers and the field go on a line of their own (.row-more). Ticks follow the quantity (GK.calc rawChecked / stepChecked): a row ticked at 3
+   is pending again when the plan asks for 10. A step's tick keeps its quantity (toggleDone(key, on, need)).
+   Corte 19: no "Fabricar com" when every recipe left is circular (Pele).
    Owns: [data-panel="summary"]. Exposes: GK.ui.summary.{mount, render, stationKey}; registered as a panel.
 */
 GK.i18n.add({
   pt: {
     "raw.title": "Matérias-primas",
     "raw.haveGroup": "Você já tem",
-    "raw.have": "Já tenho",
-    "raw.hadBadge": "✓ tenho",
-    "raw.expand": "Fabricar",
-    "raw.expandLabel": "Voltar a fabricar {name}",
-    "raw.check": "Marcar {name} como coletado",
     "raw.cycle": "receita circular",
     "raw.refused": "receita sem ganho",
     "raw.noexp": "colheita: rendimento varia",
     "raw.members": "Serve qualquer um: {names}",
     "raw.asRaw": "Matéria-prima (não fabricar)",
     "raw.recipe": "Fabricar com",
-    "raw.unhave": "Ainda preciso",
-    "raw.unhaveLabel": "Ainda preciso de {name}",
-    "raw.haveLabel": "Já tenho {name}",
     "raw.use": "Usar:",
     "raw.useLabel": "Qual item usar para {name}",
     "raw.useAny": "Qualquer um ({names})",
@@ -84,20 +82,12 @@ GK.i18n.add({
   en: {
     "raw.title": "Raw materials",
     "raw.haveGroup": "You already have",
-    "raw.have": "Have it",
-    "raw.hadBadge": "✓ have it",
-    "raw.expand": "Craft it",
-    "raw.expandLabel": "Craft {name} again",
-    "raw.check": "Mark {name} as collected",
     "raw.cycle": "circular recipe",
     "raw.refused": "no net gain",
     "raw.noexp": "harvest: yield varies",
     "raw.members": "Any of: {names}",
     "raw.asRaw": "Raw material (don't craft)",
     "raw.recipe": "Craft with",
-    "raw.unhave": "Still need it",
-    "raw.unhaveLabel": "I still need {name}",
-    "raw.haveLabel": "I have {name}",
     "raw.use": "Use:",
     "raw.useLabel": "Which item to use for {name}",
     "raw.useAny": "Any ({names})",
@@ -208,9 +198,7 @@ GK.ui.summary = (function () {
       const hc = e.target.closest("[data-have-cancel]");
       if (hc) { const id = hc.dataset.haveCancel; haveOpen = null; rerender(); focusId("have-" + domId(id)); return; }
       const hx = e.target.closest("[data-have-clear]");
-      if (hx) { haveOpen = null; A.setHave(hx.dataset.haveClear, null); return; }
-      const b = e.target.closest("[data-have]");
-      if (b) A.toggleHave(b.dataset.have);
+      if (hx) { haveOpen = null; A.setHave(hx.dataset.haveClear, null); }
     });
     root.addEventListener("submit", (e) => {
       const hf = e.target.closest("[data-have-form]");
@@ -229,6 +217,8 @@ GK.ui.summary = (function () {
       if (e.key === "Escape" && e.target.closest("[data-have-form]")) { const id = e.target.closest("[data-have-form]").dataset.haveForm; haveOpen = null; rerender(); focusId("have-" + domId(id)); }
     });
     root.addEventListener("change", (e) => {
+      const rc = e.target.closest("[data-raw-check]");
+      if (rc) { rawTick(rc); return; }
       const s = e.target.closest("[data-choice]");
       if (s) { GK.store.actions.chooseRecipe(s.dataset.choice, s.value); return; }
       const g = e.target.closest("[data-group]");
@@ -241,19 +231,43 @@ GK.ui.summary = (function () {
   const rerender = () => render(GK.store.get(), {}, GK.app.plan());
   // "Tudo": the row leaves the list (or moves to "Você já tem"), so the focus goes to the row that followed it
   // (its checkbox; else the item's own "↺" button), and a toast offers "Desfazer" (the previous have value back)
+  // the checkboxes of the rows after this one (ids: they survive the re-render)
+  const nextTicks = (el) => {
+    const rows = [...root.querySelectorAll(".row")], at = rows.indexOf(el.closest(".row"));
+    return rows.slice(at + 1).map((r) => r.querySelector(".tick input")).filter(Boolean).map((cb) => cb.id);
+  };
   function haveAll(btn) {
     const A = GK.store.actions, id = btn.dataset.haveAll, d = domId(id);
     const prev = GK.store.get().have[id];
-    const rows = [...root.querySelectorAll(".row")], at = rows.indexOf(btn.closest(".row"));
-    const next = rows.slice(at + 1).map((r) => r.querySelector("[data-done]")).filter(Boolean).map((cb) => cb.id);
+    const next = nextTicks(btn);
     haveOpen = null;
     A.setHave(id, true);
     const target = next.map((x) => document.getElementById(x)).find((el) => el && el.id !== "cb-raw-" + d && el.id !== "cb-step-" + d) ||
-      document.getElementById("unhave-" + d);
+      document.getElementById("cb-raw-" + d);
     if (target) target.focus();
     GK.ui.fmt.undoToast(t("have.allToast", { name: name(GK.data.item(id), GK.store.get().overrides) }), () => {
       A.setHave(id, prev === undefined ? null : prev);
       const back = document.getElementById("have-" + d) || document.getElementById("have-n-" + d);
+      if (back) back.focus();
+    });
+  }
+  // a raw row's checkbox = "tenho tudo" (corte 9): ticked, the row moves to "Você já tem", so the focus goes to the
+  // row that followed it and a toast offers "Desfazer"; unticked, it comes back to the list (focus stays on it)
+  function rawTick(cb) {
+    const A = GK.store.actions, st = GK.store.get(), id = cb.dataset.rawCheck, d = domId(id);
+    if (!cb.checked) { haveOpen = null; A.checkRaw(id, null, false); return; }
+    const prev = { have: st.have[id], done: st.done["raw:" + id] };
+    const next = nextTicks(cb);
+    haveOpen = null;
+    A.checkRaw(id, +cb.dataset.qty, true);
+    const target = next.map((x) => document.getElementById(x)).find((el) => el && el.id !== "cb-raw-" + d && !el.checked);
+    if (target) target.focus();
+    GK.ui.fmt.undoToast(t("have.allToast", { name: name(GK.data.item(id), GK.store.get().overrides) }), () => {
+      GK.store.update((s) => {
+        if (prev.have === undefined) delete s.have[id]; else s.have[id] = prev.have;
+        if (prev.done === undefined) delete s.done["raw:" + id]; else s.done["raw:" + id] = prev.done;
+      });
+      const back = document.getElementById("cb-raw-" + d);
       if (back) back.focus();
     });
   }
@@ -265,6 +279,8 @@ GK.ui.summary = (function () {
     const id = domId(itemId), D = GK.data.get(), nm = name(D.items[itemId], state.overrides);
     const all = GK.data.recipesFor(itemId);
     const shown = all.filter((r) => expandable(r) || (current && r.id === current.id));
+    // corte 19: as a raw material, with only circular recipes to offer (Pele), the selector has nothing to give
+    if (withRaw && !current && shown.every((r) => r.cyc)) return "";
     const labels = F.recipeLabels(shown, state, all);
     const opts = (withRaw ? `<option value=""${current ? "" : " selected"}>${esc(t("raw.asRaw"))}</option>` : "") +
       shown.map((r, k) => `<option value="${esc(r.id)}"${current && r.id === current.id ? " selected" : ""}>${esc(labels[k])}</option>`).join("");
@@ -292,60 +308,66 @@ GK.ui.summary = (function () {
       members.map((m) => `<option value="${esc(m)}"${m === current ? " selected" : ""}>${esc(name(D.items[m], state.overrides))}</option>`).join("");
     return `<span class="select-wrap"><label for="group-${id}">${esc(t("raw.use"))}</label><select id="group-${id}" data-group="${esc(groupId)}" aria-label="${esc(t("raw.useLabel", { name: nm }))}">${opts}</select></span>`;
   }
-  // "Tenho [ 3 ] de 10": opened from "Já tenho" (with Tudo / OK / Fechar) or kept on the row (live, with Limpar)
-  function haveField(itemId, nm, total, value, live) {
+  // "Tenho [ 3 ] de 10": opened from the quantity (with Tudo / OK / Fechar) or kept on the row (live, with Limpar).
+  // A raw row has no "Tudo" (its checkbox is "tenho tudo"): noAll
+  function haveField(itemId, nm, total, value, live, noAll) {
     const id = domId(itemId), max = 999999;
     // empty field (no "0" placeholder that reads like a value); "Tudo" first (the common case), Fechar as a small ✕
     const input = `<input id="have-n-${id}" name="n" data-have-n="${esc(itemId)}"${live ? ' data-have-live="1"' : ""} type="number" inputmode="numeric" min="0" max="${max}" step="1" value="${value == null ? "" : esc(value)}" aria-label="${esc(t("have.inputLabel", { name: nm, n: total }))}">`;
-    const all = live ? "" : `<button type="button" class="btn btn-sm" id="have-all-${id}" data-have-all="${esc(itemId)}" aria-label="${esc(t("have.allLabel", { name: nm, n: total }))}">${esc(t("have.all"))}</button>`;
+    const all = live || noAll ? "" : `<button type="button" class="btn btn-sm" id="have-all-${id}" data-have-all="${esc(itemId)}" aria-label="${esc(t("have.allLabel", { name: nm, n: total }))}">${esc(t("have.all"))}</button>`;
     const btns = live
       ? `<button type="button" class="btn btn-sm btn-ghost" id="have-x-${id}" data-have-clear="${esc(itemId)}" aria-label="${esc(t("have.clearLabel", { name: nm }))}">${esc(t("have.clear"))}</button>`
       : `<button type="submit" class="btn btn-sm" id="have-ok-${id}">${esc(t("have.ok"))}</button>` +
         `<button type="button" class="btn btn-sm btn-ghost have-close" id="have-c-${id}" data-have-cancel="${esc(itemId)}" title="${esc(t("have.cancel"))}" aria-label="${esc(t("have.cancel"))}">✕</button>`;
     return `<form class="have-form" data-have-form="${esc(itemId)}">${all}<label for="have-n-${id}">${esc(t("have.label"))}</label>${input}<span class="have-of tabnum">${esc(t("have.of", { n: num(total) }))}</span>${btns}</form>`;
   }
-  // the have controls of a row: [Já tenho] | the opened field | the kept field | (have all) ↺
-  function haveControls(itemId, nm, total, state, craftable) {
-    const v = state.have[itemId], id = domId(itemId);
-    if (v === true) {
-      const lbl = craftable ? t("raw.expandLabel", { name: nm }) : t("raw.unhaveLabel", { name: nm });
-      return `<button type="button" class="btn btn-sm" id="unhave-${id}" data-have="${esc(itemId)}" aria-label="${esc(lbl)}">↺ ${esc(t(craftable ? "raw.expand" : "raw.unhave"))}</button>`;
-    }
+  // the "tenho N de M" field of a row: kept (a number) or just opened from the quantity; else nothing
+  function haveControls(itemId, nm, total, state, noAll) {
+    const v = state.have[itemId];
     if (typeof v === "number") return haveField(itemId, nm, total, v, true);
-    if (haveOpen === itemId) return haveField(itemId, nm, total, null, false);
-    return `<button type="button" class="btn btn-sm toggle" id="have-${id}" data-have-open="${esc(itemId)}" aria-label="${esc(t("raw.haveLabel", { name: nm }))}">${esc(t("raw.have"))}</button>`;
+    if (haveOpen === itemId) return haveField(itemId, nm, total, null, false, noAll);
+    return "";
+  }
+  // the quantity as the button that opens "Tenho __ de M" (steps: "×2 ▾"; raw rows: "20 ▾")
+  function qtyButton(itemId, nm, n, open, times) {
+    return `<button type="button" class="row-qty qty-btn" id="have-${domId(itemId)}" data-have-open="${esc(itemId)}" aria-expanded="${open}" aria-label="${esc(t("steps.qtyLabel", { name: nm, n: num(n) }))}">${times ? "<small>×</small>" : ""}${num(n)}<span class="qty-chev" aria-hidden="true">▾</span></button>`;
   }
   function rawRow(r, state, D) {
-    const it = D.items[r.item], nm = name(it, state.overrides), key = "raw:" + r.item, cb = "cb-raw-" + domId(r.item);
-    const done = !!state.done[key];
+    const it = D.items[r.item], nm = name(it, state.overrides), cb = "cb-raw-" + domId(r.item);
+    const done = GK.calc.rawChecked(r, state.have, state.done), total = r.demand || r.qty;
     const craftable = GK.data.recipesFor(r.item).some(expandable);
     const sub = [];
     if (r.via) sub.push(`<span class="row-group">${esc(r.via.map((g) => t("raw.group", { name: name(D.items[g], state.overrides) })).join(" · "))}</span>`);
-    let full = "";   // "como obter": cut to one line on the row, the whole text in its title (and in the "i" detail)
-    if (r.have && r.covered) { /* the field says it */ }
-    else if (r.have) sub.push(`<span class="badge badge-have">${esc(t("raw.hadBadge"))}</span>`);
-    else if (r.cycle) sub.push(`<span class="badge badge-warn">${esc(t("raw.cycle"))}</span>`);
+    let full = "";   // "como obter": cut to one line on the row, the whole text in its title (and in the item's detail)
+    if (r.cycle) sub.push(`<span class="badge badge-warn">${esc(t("raw.cycle"))}</span>`);
     else if (r.reason === "refused") sub.push(`<span class="badge badge-warn">${esc(t("raw.refused"))}</span>`);
     else if (r.reason === "noexp") sub.push(`<span class="badge badge-ex">${esc(t("raw.noexp"))}</span>`);
     else if (it.members && r.reason !== "group") sub.push(esc(t("raw.members", { names: it.members.map((m) => name(D.items[m], state.overrides)).join(", ") })));
     else if (it.obtain && !r.via) { full = name(it.obtain); sub.push(esc(full)); }
     const actions = [];
-    if (r.reason === "group" && it.members) actions.push(groupChooser(r.item, null, state, D));
-    if (r.via) r.via.forEach((g) => actions.push(groupChooser(g, r.item, state, D)));
-    if (!r.have && craftable && state.have[r.item] !== true) {
-      const h = GK.calc.howToMake(r.item, D, state.choice, state.have, state.perks);
-      const cur = h.r && (h.leaf !== "free" && h.leaf !== "noexp") ? h.r : null;
-      actions.push(chooser(r.item, cur, state, !it.defaultRecipe, "raw.recipe"));
+    if (!done) {
+      if (r.reason === "group" && it.members) actions.push(groupChooser(r.item, null, state, D));
+      if (r.via) r.via.forEach((g) => actions.push(groupChooser(g, r.item, state, D)));
+      if (!r.have && craftable && state.have[r.item] !== true) {
+        const h = GK.calc.howToMake(r.item, D, state.choice, state.have, state.perks);
+        const cur = h.r && (h.leaf !== "free" && h.leaf !== "noexp") ? h.r : null;
+        actions.push(chooser(r.item, cur, state, !it.defaultRecipe, "raw.recipe"));
+      }
     }
-    actions.push(haveControls(r.item, nm, r.demand || r.qty, state, craftable));
+    // choosers and "Tenho [ 3 ] de 10": a line of their own under "como obter", as wide as the name and the quantity
+    if (!done) actions.push(haveControls(r.item, nm, total, state, true));
+    const more = actions.join("");
     const goal = r.isGoal ? `<span class="badge badge-goal">${esc(t("steps.goal"))}</span>` : "";
-    const qty = `<span class="row-qty">${num(r.qty)}</span>`;
+    // unticked: the quantity "× 20 ▾" (the same button as the steps') opens "Tenho __ de 20"; ticked: "× 20"
+    const open = haveOpen === r.item || typeof state.have[r.item] === "number";
+    const qty = done ? `<span class="row-qty"><small>×</small>${num(r.qty)}</span>` : qtyButton(r.item, nm, r.qty, open, true);
     return `<div class="row row-raw${done ? " is-done" : ""}">
-      <label class="tick"><input type="checkbox" id="${cb}" data-done="${esc(key)}"${done ? " checked" : ""} aria-label="${esc(t("raw.check", { name: nm }))}"></label>
+      <label class="tick"><input type="checkbox" id="${cb}" data-raw-check="${esc(r.item)}" data-qty="${total}"${done ? " checked" : ""} aria-label="${esc(t("have.allLabel", { name: nm, n: num(total) }))}"></label>
       ${F.slotButton(it, nm)}
       <div class="row-main">${F.nameBlock(it, nm, cb, editing === r.item, goal, state.overrides, canEdit(state))}</div>
       ${qty}
-      <div class="row-line2">${sub.length ? `<span class="row-sub row-obtain"${full ? ` title="${esc(full)}"` : ""}>${sub.join(" ")}</span>` : ""}<div class="row-actions">${actions.join("")}</div></div>
+      <div class="row-line2">${sub.length ? `<span class="row-sub row-obtain"${full ? ` title="${esc(full)}"` : ""}>${sub.join(" ")}</span>` : ""}</div>
+      ${more ? `<div class="row-actions row-more">${more}</div>` : ""}
     </div>`;
   }
   const perkName = (b) => (b && b.perks ? b.perks.map((p) => name(GK.data.perks()[p] || { en: p })).join(" + ") : "");
@@ -358,7 +380,7 @@ GK.ui.summary = (function () {
   }
   function stepRow(s, state, D) {
     const it = D.items[s.item], nm = name(it, state.overrides), key = "step:" + s.item, cb = "cb-step-" + domId(s.item);
-    const done = !!state.done[key], r = s.recipe;
+    const done = GK.calc.stepChecked(s, state.done), r = s.recipe;
     // crafts only when they say something the quantity does not: no "1 execução", no "24 execuções" beside "×24"
     const meta = s.runs > 1 && s.runs !== s.need ? [t("steps.runs", { n: s.runs })] : [];
     if (s.outBonus) meta.push(t("steps.yieldPerk", { n: s.yield, perk: perkName(s.outBonus) }));
@@ -368,12 +390,12 @@ GK.ui.summary = (function () {
     if (s.leftover > 0) meta.push(t("steps.left", { n: s.leftover }));
     // "×2 ▾" opens "Tenho __ de 2" (the field shows under the row while open or while a number is kept); a goal step
     // has no "Já tenho": a plain number. "Tenho tudo" makes the item a raw material, so no step row shows it.
-    const actions = [], v = state.have[s.item], d = domId(s.item);
+    const actions = [], v = state.have[s.item];
     let qty = `<span class="row-qty"><small>×</small>${num(s.need)}</span>`;
     if (!s.isGoal) {
       const open = haveOpen === s.item || typeof v === "number";
-      qty = `<button type="button" class="row-qty qty-btn" id="have-${d}" data-have-open="${esc(s.item)}" aria-expanded="${open}" aria-label="${esc(t("steps.qtyLabel", { name: nm, n: num(s.need) }))}"><small>×</small>${num(s.need)}<span class="qty-chev" aria-hidden="true">▾</span></button>`;
-      if (open || v === true) actions.push(haveControls(s.item, nm, s.demand, state, true));
+      qty = qtyButton(s.item, nm, s.need, open, true);
+      if (open) actions.push(haveControls(s.item, nm, s.demand, state, false));
     }
     const tech = F.techLine(r, state);
     if (tech.length) actions.push(`<span class="tech">${esc(tech.join(" · "))}</span>`);
@@ -385,7 +407,7 @@ GK.ui.summary = (function () {
     const alt = r.alt.length ? `<span class="row-alt">${esc(t("steps.alt", { names: r.alt.map((a) => name(a, state.overrides)).join(", ") }))}</span>` : "";
     const extra = r.extra.length ? `<span class="row-extra">${esc(t("steps.extra"))} ${extraList(r.extra, state, D)}</span>` : "";
     return `<div class="row${done ? " is-done" : ""}">
-      <label class="tick"><input type="checkbox" id="${cb}" data-done="${esc(key)}"${done ? " checked" : ""} aria-label="${esc(t("steps.check", { name: nm }))}"></label>
+      <label class="tick"><input type="checkbox" id="${cb}" data-done="${esc(key)}" data-qty="${s.need}"${done ? " checked" : ""} aria-label="${esc(t("steps.check", { name: nm }))}"></label>
       ${F.slotButton(it, nm)}
       <div class="row-main">
         ${F.nameBlock(it, nm, cb, editing === s.item, extraBadges, state.overrides, canEdit(state))}
@@ -412,12 +434,13 @@ GK.ui.summary = (function () {
     if (!state.goals.length) { root.innerHTML = `<div class="card empty plan-empty"><p>${esc(t("plan.empty"))}</p></div>`; return; }
     const loc = GK.i18n.meta(GK.i18n.lang()).locale;
     const byName = (a, b) => name(D.items[a.item], state.overrides).localeCompare(name(D.items[b.item], state.overrides), loc);
-    const plain = plan.raw.filter((r) => !r.have).sort(byName), had = plan.raw.filter((r) => r.have).sort(byName);
+    const ticked = (r) => GK.calc.rawChecked(r, state.have, state.done);
+    const plain = plan.raw.filter((r) => !ticked(r)).sort(byName), had = plan.raw.filter(ticked).sort(byName);
     const nmList = (ids) => ids.map((id) => name(D.items[id], state.overrides)).join(", ");
     const warn = (plan.cycles.length ? `<div class="warn" role="note">${esc(t("cycle.warn", { names: nmList(plan.cycles) }))}</div>` : "") +
       (plan.refused.length ? `<div class="warn" role="note">${esc(t("refused.warn", { names: nmList(plan.refused) }))}</div>` : "");
     const U = ui(state), shut = U.stationCollapsed || {};
-    const doneOf = (keys) => keys.filter((k) => state.done[k]).length;
+    const doneOf = (steps) => steps.filter((s) => GK.calc.stepChecked(s, state.done)).length;
     const doneBadge = (done, total, cls) => `<span class="${cls} tabnum"><span aria-hidden="true">${num(done)}/${num(total)}</span><span class="sr-only">${esc(t("fold.doneSr", { done, total }))}</span></span>`;
     const nSt = plan.stations.length;
     const stations = U.stepsCollapsed ? "" : plan.stations.map((g, gi) => {
@@ -428,13 +451,13 @@ GK.ui.summary = (function () {
       const sub = g.station.build && !g.station.i18n ? `<span class="station-sub">${esc(t("station.build"))}</span>` : "";
       const again = g.repeat > 1 ? ` <span class="badge badge-again" title="${esc(t("steps.againTitle"))}">${esc(t("steps.again"))}</span>` : "";
       const k = stationKey(g), fk = "st:" + k, open = !shut[k], body = "st-body-" + domId(k);
-      const nDone = doneOf(g.steps.map((s) => "step:" + s.item));
+      const nDone = doneOf(g.steps);
       return `<article class="card list station${open ? "" : " is-folded"}">
         <header class="station-h" data-fold-head="${esc(fk)}">${numBox}${slot(g.station, stName, true)}<h3>${numSr}${sub}${esc(stName)}${again}</h3><span class="station-meta">${doneBadge(nDone, g.steps.length, "station-done" + (nDone === g.steps.length ? " is-all" : ""))}</span>${foldBtn(fk, open, stName, body)}</header>
         ${open ? `<div class="station-rows" id="${body}">${g.steps.map((s) => stepRow(s, state, D)).join("")}</div>` : `<div id="${body}" hidden></div>`}
       </article>`;
     }).join("");
-    const rawDone = doneOf(plan.raw.map((r) => "raw:" + r.item)), stepDone = doneOf(plan.steps.map((s) => "step:" + s.item));
+    const rawDone = had.length, stepDone = doneOf(plan.steps);
     // folded: the count is in the title already ("Matérias-primas 20"), the line says only what is checked
     const rawSum = t("fold.done", { done: rawDone, total: plan.raw.length });
     const stepSum = `${t("fold.stations", { n: plan.stations.length })} · ${t("fold.done", { done: stepDone, total: plan.steps.length })}`;

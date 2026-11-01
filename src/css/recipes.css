@@ -86,6 +86,9 @@
 .rc-sec > .section-head, .rc-sec > .h2 { margin-bottom: var(--s3); }
 .rc-recipes { display: grid; gap: var(--s4); }
 .rc-sec > .rc-alt-all { margin-top: 0; }
+/* the recipe card's band stays a row (icon, name, "rende N"): the planner's column grid (.station-h, 1.8.0) is for
+   the planner's stations only */
+.rc-recipe .station-h { display: flex; gap: var(--s3); }
 .rc-recipe .station-h h4 { margin: 0; flex: 1; min-width: 0; font: 800 1.0625rem/1.2 var(--f-body); overflow-wrap: anywhere; }
 .rc-yield { font-size: .8125rem; font-weight: 800; color: var(--accent); white-space: nowrap; }
 .rc-recipe-body { display: grid; gap: var(--s2); padding: var(--s2) 0 var(--s3); }
@@ -122,6 +125,51 @@
 .rc-act { display: flex; flex-wrap: wrap; gap: var(--s2); padding-top: var(--s1); }
 .rc-act .btn { white-space: normal; text-align: center; }
 .rc-inuse { display: inline-flex; align-items: center; min-height: 36px; font-size: .8125rem; font-weight: 800; color: var(--moss); }
+/* grouped recipes (1.8.0, protos/receitas-agrupadas; GK.calc.recipeGroups): one card per station; the grade of the
+   ingredient is picked inside it (a radio group: a tap sets the planner's recipe) */
+.qpick { display: grid; gap: 6px; }
+.qpick-h { margin: 0; font-size: .8125rem; font-weight: 700; color: var(--ink-2); }
+.qopts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.qopt {
+  display: grid; place-content: center; justify-items: center; gap: 2px; min-height: 52px; min-width: var(--tap); padding: 4px;
+  background: var(--bg-2); color: var(--ink); border: 1px solid var(--frame); border-radius: var(--r); cursor: pointer;
+  box-shadow: inset 0 2px 0 var(--bevel-lo); font: 400 .875rem/1.2 var(--f-body); text-align: center;
+}
+.qopt-t { display: inline-flex; align-items: center; gap: 4px; font-weight: 800; }
+.qopt-d { font-size: .75rem; color: var(--ink-2); overflow-wrap: anywhere; }
+.qopt[aria-checked="true"] { border: 2px solid var(--accent); padding: 3px; background: var(--panel-2); box-shadow: inset 0 1px 0 var(--bevel-hi); }
+.qopt:hover { border-color: var(--accent); }
+.qopt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.qpick-use { display: block; min-height: 0; margin: 0; }
+/* "E mais um destes": one row per ingredient (name opens it), its grades as small options with the amount */
+.qalt { list-style: none; margin: 0 calc(var(--s3) * -1); padding: 0; border-block: 1px solid var(--seam); }
+.qalt li { display: flex; align-items: center; gap: 6px; min-height: 56px; padding: 6px var(--s3); }
+.qalt li + li { border-top: 1px solid var(--seam); }
+.qalt-it {
+  display: flex; align-items: center; gap: var(--s2); flex: 1; min-width: 0; min-height: var(--tap); padding: 0; border: 0;
+  background: transparent; color: var(--ink); text-align: left; cursor: pointer; font: 700 1rem/1.2 var(--f-body);
+}
+.qalt-it:hover .qalt-n { color: var(--accent); }
+.qalt-it .slot { margin: 0; align-self: center; }
+.qalt-n { min-width: 0; overflow-wrap: anywhere; }
+.qalt-o { display: flex; gap: 4px; flex: none; }
+.qopt-sm { display: inline-flex; align-items: center; justify-content: center; gap: 3px; min-height: var(--tap); width: 54px; padding: 0 2px; font-weight: 800; font-size: .9375rem; }
+.qopt-sm[aria-checked="true"] { padding: 0 1px; }
+/* the circular recipes, folded at the end of "Como fabricar" ("Melhorar a qualidade · N") */
+.rc-cyc { margin-top: var(--s2); }
+.rc-cyc > summary {
+  list-style: none; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 0 var(--s2);
+  min-height: 56px; padding: 8px var(--s3); cursor: pointer; background: var(--panel); border: 1px solid var(--frame-soft); border-radius: var(--r);
+}
+.rc-cyc > summary::-webkit-details-marker { display: none; }
+.rc-cyc > summary:hover { background: var(--panel-2); }
+.rc-cyc > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.rc-cyc-t { font-weight: 800; font-size: 1rem; }
+.rc-cyc-d { grid-column: 1; font-size: .8125rem; color: var(--ink-2); }
+.rc-cyc > summary .rc-chev { grid-column: 2; grid-row: 1 / span 2; transition: transform .15s; }
+.rc-cyc[open] > summary .rc-chev { transform: rotate(90deg); }
+.rc-cyc[open] > .rc-recipes { margin-top: var(--s2); }
+@media (prefers-reduced-motion: reduce) { .rc-cyc > summary .rc-chev { transition: none; } }
 
 @media (min-width: 900px) {
   .rc-layout { grid-template-columns: minmax(240px, 300px) minmax(0, 1fr); align-items: start; }
@@ -255,25 +303,21 @@
 .sell-pay { display: inline-flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 0 4px; font-weight: 800; color: var(--ink); text-align: right; }
 .sell-max { font-weight: 700; font-size: .8125rem; color: var(--ink-3); white-space: nowrap; }
 .sell-d { grid-column: 1 / -1; font-size: .8125rem; color: var(--ink-3); }
-/* drawn coins (not the game's icons): bronze, silver, gold */
-.coin {
-  display: inline-block; flex: none; width: 12px; height: 12px; border-radius: 50%; vertical-align: -1px; margin-right: 2px;
-  background: radial-gradient(circle at 35% 35%, #f3c08a 0 18%, #c8763a 45%, #7a3f16 100%);
-  box-shadow: inset 0 0 0 1px rgba(60, 25, 5, .55);
-}
-.coin-s { background: radial-gradient(circle at 35% 35%, #ffffff 0 18%, #b9bec6 45%, #5d636c 100%); box-shadow: inset 0 0 0 1px rgba(30, 34, 40, .55); }
-.coin-g { background: radial-gradient(circle at 35% 35%, #fff2b0 0 18%, #e0ad2c 45%, #7d5508 100%); box-shadow: inset 0 0 0 1px rgba(70, 45, 0, .55); }
-.sell-max .coin { width: 10px; height: 10px; margin-left: 2px; }
+/* coins (1.8.0): our own 8 x 8 pixel coins drawn at 16 px (14 px after "até"), bronze / silver / gold far apart in
+   colour, each with a dark outline; the amount after each one has its sr-only word (GK.ui.recipes coins()) */
+.coin { display: inline-block; flex: none; width: 16px; height: 16px; vertical-align: -3px; background: no-repeat center / 100% 100%; image-rendering: pixelated; }
+.coin-b { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Cpath fill='%232a1206' d='M2 0h4v1h-4zM1 1h1v1h-1zM6 1h1v1h-1zM0 2h1v1h-1zM7 2h1v1h-1zM0 3h1v1h-1zM7 3h1v1h-1zM0 4h1v1h-1zM7 4h1v1h-1zM0 5h1v1h-1zM7 5h1v1h-1zM1 6h1v1h-1zM6 6h1v1h-1zM2 7h4v1h-4z'/%3E%3Cpath fill='%23f0a466' d='M2 1h2v1h-2zM1 2h2v1h-2zM1 3h1v1h-1z'/%3E%3Cpath fill='%23b4602a' d='M4 1h2v1h-2zM3 2h3v1h-3zM2 3h4v1h-4zM1 4h5v1h-5zM1 5h4v1h-4z'/%3E%3Cpath fill='%237a3712' d='M6 2h1v1h-1zM6 3h1v1h-1zM6 4h1v1h-1zM5 5h2v1h-2zM2 6h4v1h-4z'/%3E%3C/svg%3E"); }
+.coin-s { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Cpath fill='%231d2026' d='M2 0h4v1h-4zM1 1h1v1h-1zM6 1h1v1h-1zM0 2h1v1h-1zM7 2h1v1h-1zM0 3h1v1h-1zM7 3h1v1h-1zM0 4h1v1h-1zM7 4h1v1h-1zM0 5h1v1h-1zM7 5h1v1h-1zM1 6h1v1h-1zM6 6h1v1h-1zM2 7h4v1h-4z'/%3E%3Cpath fill='%23ffffff' d='M2 1h2v1h-2zM1 2h2v1h-2zM1 3h1v1h-1z'/%3E%3Cpath fill='%23c6cdd6' d='M4 1h2v1h-2zM3 2h3v1h-3zM2 3h4v1h-4zM1 4h5v1h-5zM1 5h4v1h-4z'/%3E%3Cpath fill='%237f8893' d='M6 2h1v1h-1zM6 3h1v1h-1zM6 4h1v1h-1zM5 5h2v1h-2zM2 6h4v1h-4z'/%3E%3C/svg%3E"); }
+.coin-g { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Cpath fill='%232e1e00' d='M2 0h4v1h-4zM1 1h1v1h-1zM6 1h1v1h-1zM0 2h1v1h-1zM7 2h1v1h-1zM0 3h1v1h-1zM7 3h1v1h-1zM0 4h1v1h-1zM7 4h1v1h-1zM0 5h1v1h-1zM7 5h1v1h-1zM1 6h1v1h-1zM6 6h1v1h-1zM2 7h4v1h-4z'/%3E%3Cpath fill='%23fff4a6' d='M2 1h2v1h-2zM1 2h2v1h-2zM1 3h1v1h-1z'/%3E%3Cpath fill='%23f2c12e' d='M4 1h2v1h-2zM3 2h3v1h-3zM2 3h4v1h-4zM1 4h5v1h-5zM1 5h4v1h-4z'/%3E%3Cpath fill='%23b37f08' d='M6 2h1v1h-1zM6 3h1v1h-1zM6 4h1v1h-1zM5 5h2v1h-2zM2 6h4v1h-4z'/%3E%3C/svg%3E"); }
+.sell-pay > .sr-only + .coin { margin-left: 6px; }
+.sell-max .coin { width: 14px; height: 14px; vertical-align: -2px; margin-left: 2px; }
 
 /* study points (GK.ui.tech.costHtml) + "Já estudei" (a 44 px box) */
 .study-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px var(--s3); }
 .study-done { display: inline-flex; align-items: center; gap: 2px; min-height: var(--tap); padding-right: 4px; font-weight: 700; font-size: .9375rem; color: var(--ink-2); cursor: pointer; white-space: nowrap; }
-.tick { display: grid; place-items: center; width: var(--tap); height: var(--tap); margin-left: -10px; cursor: pointer; }
-.tick input {
-  appearance: none; -webkit-appearance: none; margin: 0; width: 24px; height: 24px; cursor: pointer;
-  border: 2px solid var(--gold); border-radius: 2px; background: var(--bg-2); box-shadow: inset 0 2px 0 var(--bevel-lo);
-}
-.tick input:checked { background: var(--moss); border-color: var(--moss); box-shadow: inset 0 0 0 3px var(--bg-2); }
+/* the box itself is the shared .tick (planner.css); only "Já estudei" pulls its 44 px label 10 px left, so the 24 px
+   box lines up with the card's text (1.7.0 had this on every .tick of the app: 1.8.0 keeps it here) */
+.study-done .tick { margin-left: -10px; }
 .tick input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .study-done:has(input:checked) { color: var(--moss); }
 .rc-info .study-d { margin-top: 2px; font-size: .8125rem; color: var(--ink-3); }

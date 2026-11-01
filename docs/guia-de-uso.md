@@ -12,7 +12,7 @@ No topo ficam as abas **Planejador**, **Receitas** e **Tecnologias**, o botão d
 1. Na busca, digite o nome do que quer fabricar, em português ou inglês. Não precisa de acento nem do nome inteiro: "caix" acha "Caixote".
 2. Toque no resultado (ou em "+ Adicionar"). Ele entra em **Metas** com quantidade 1.
 3. Ajuste a quantidade com − e +. **Segure** o botão para a conta correr sozinha, ou digite o número.
-4. O ✕ tira uma meta. "Limpar lista" tira todas (pede confirmação).
+4. O ✕ tira uma meta. "Limpar metas" tira todas (pede confirmação).
 
 Na primeira visita aparece uma lista de exemplo. Mude as quantidades ou limpe a lista para começar a sua.
 
@@ -23,16 +23,14 @@ Itens ocultos (que a wiki esconde, que não existem na versão atual do jogo ou 
 - **Etapas por estação:** o que fabricar em cada bancada, forno etc., com quantas vezes rodar a receita ("3 execuções"), quanto cada uma rende e o que sobra. **Siga de cima para baixo:** nenhuma estação depende de outra que aparece mais abaixo. Se uma estação precisa ser usada de novo depois de outra, ela aparece duas vezes, marcada "de novo".
 - Cada etapa diz também a tecnologia, a maestria ou a extensão que a receita exige.
 
-### "Já tenho" e "tenho N de M"
+### "Tenho tudo" e "tenho N de M"
 
 <img src="media/gif-have-n-of-m-pt.gif" width="260" alt="Marcando tenho 5 de 9 e depois Tudo">
 
-Em qualquer matéria-prima ou etapa, toque em **Já tenho**. Abre um campo "Tenho [ ] de M":
-- digite quantos você já tem e toque em **OK**: o plano desconta só esses;
-- ou toque em **Tudo**: o item sai da conta (e, se for fabricável, deixa de ser fabricado);
-- **Fechar** desiste; depois, **Limpar** esquece o número.
-
-Um item fabricável marcado como "tudo" vai para "Você já tem". Para voltar a fabricá-lo, toque em **↺ Fabricar**.
+- **Matéria-prima:** marcar a caixinha quer dizer "já tenho tudo". O item vai para "Você já tem" e aparece um aviso com **Desfazer**. Desmarcar devolve o item à lista.
+- **Só uma parte:** toque na quantidade (**× 98 ▾**), na matéria-prima ou na etapa. Abre um campo "Tenho [ ] de M": digite quantos você já tem e toque em **OK**; o plano desconta só esses. **✕** fecha; depois, **Limpar** esquece o número.
+- **Etapa:** no mesmo campo, **Tudo** tira o item da conta (deixa de ser fabricado e vai para "Você já tem" nas matérias-primas; desmarcar a caixinha ali volta a fabricá-lo).
+- A marcação acompanha a quantidade: um item marcado quando o plano pedia 3 volta para a lista se o plano passar a pedir 10.
 
 ### Grupos ("Brema ou carpa")
 Algumas receitas aceitam qualquer item de um grupo, como "Brema ou carpa" ou "Qualquer jornal". No item do grupo aparece **Usar:**, onde você escolhe qual vai usar. O plano passa a contar esse item. "Qualquer um" volta ao grupo. A escolha fica guardada para os próximos planos.
@@ -41,7 +39,7 @@ Algumas receitas aceitam qualquer item de um grupo, como "Brema ou carpa" ou "Qu
 Quando um item pode ser feito de mais de um jeito, a etapa mostra **Receita** com um seletor. Cada opção mostra os ingredientes, a estação e, nas receitas de qualidade, "prata" ou "ouro" (a de ouro pede o ingrediente de ouro). A escolha vale para esse item em todos os planos. A tela Receitas também deixa escolher.
 
 ### Progresso e vantagens
-- Marque a caixinha de cada matéria-prima coletada e de cada etapa feita. A barra de progresso acompanha. "Limpar marcações" desmarca tudo.
+- Marque a caixinha de cada matéria-prima que você já tem toda e de cada etapa feita. A barra de progresso acompanha. "Limpar marcações" desmarca tudo.
 - Só a caixinha marca. Tocar no nome não marca nada.
 - **Vantagens:** as vantagens (perks) do jogo que mudam quantidades neste plano, como "Cozinheiro II". Ligue as que você já tem: o plano recalcula rendimentos e ingredientes.
 - **Copiar lista** copia o plano como texto, para colar nas notas do celular ou mandar para alguém.

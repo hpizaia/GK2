@@ -379,6 +379,56 @@ await test("store migration keeps have=true, partial numbers and unknown local f
   env.GK.store.actions.setPerk("heat-saver", true); eq(env.GK.store.get().perks, { "heat-saver": true }, "setPerk");
 });
 
+await test("ticks follow the quantity (1.8.0: corte 9 + C3), old ticks kept", () => {
+  const C = GK.calc, S = GK.store;
+  // a copy saved before 1.8.0: ticks are plain true; they stay ticked whatever the quantity (no number to compare)
+  const env = makeEnv();
+  env.localStorage.setItem("gk2-companion", JSON.stringify({ schemaVersion: 5, lists: [{ id: "main", name: "", createdAt: "1970-01-01T00:00:00.000Z",
+    updatedAt: "2026-10-31T12:00:00.000Z", goals: [{ item: "crate", qty: 3 }], choice: {}, have: { fat: 1 },
+    done: { "raw:log": true, "step:fuel": true, "raw:clay": 0 }, example: false }], listsGone: {}, ui: { activeList: "main" }, updatedAt: "2026-10-31T12:00:00.000Z" }));
+  check(env.GK.store.load(), "old copy loaded");
+  const A = env.GK.store.actions, st = () => env.GK.store.get();
+  eq(st().done, { "raw:log": true, "step:fuel": true }, "old ticks kept (a 0 is not a tick)");
+  const rowOf = (p, id) => p.raw.find((r) => r.item === id);
+  let p3 = plan([{ item: "crate", qty: 3 }], { have: st().have }), p10 = plan([{ item: "crate", qty: 10 }], { have: st().have });
+  check(C.rawChecked(rowOf(p3, "log"), st().have, st().done) && C.rawChecked(rowOf(p10, "log"), st().have, st().done), "old raw tick: ticked at any quantity");
+  check(C.stepChecked(stepOf(p3, "fuel"), st().done) && C.stepChecked(stepOf(p10, "fuel"), st().done), "old step tick: ticked at any quantity");
+  // a raw row's tick = "tenho tudo": have = the quantity asked (3 Toras); the plan asking for more makes it pending
+  A.checkRaw("log", 3, true);
+  eq([st().have.log, "raw:log" in st().done], [3, false], "checkRaw: have = 3, old tick gone");
+  p3 = plan([{ item: "crate", qty: 3 }], { have: st().have }); p10 = plan([{ item: "crate", qty: 10 }], { have: st().have });
+  const l3 = rowOf(p3, "log"), l10 = rowOf(p10, "log");
+  check(C.rawChecked(l3, st().have, st().done) && l3.covered, "3 of 3: ticked (listed with what you have)");
+  check(!C.rawChecked(l10, st().have, st().done), "goal ×10: the 3 Toras no longer cover it, pending again");
+  eq([l10.qty, l10.haveQty, l10.demand], [l10.demand - 3, 3, l10.demand], "pending row keeps the 3 as 'tenho 3 de N'");
+  A.checkRaw("log", 0, true); eq(st().have.log, true, "no quantity: true (everything)");
+  A.checkRaw("log", null, false); eq(["log" in st().have, "raw:log" in st().done], [false, false], "untick forgets have and the tick");
+  // a step's tick keeps its quantity
+  A.toggleDone("step:fuel", true, stepOf(p3, "fuel").need);
+  eq(st().done["step:fuel"], stepOf(p3, "fuel").need, "step tick = its need");
+  check(C.stepChecked(stepOf(p3, "fuel"), st().done), "step ticked at its need");
+  check(stepOf(p10, "fuel").need > stepOf(p3, "fuel").need && !C.stepChecked(stepOf(p10, "fuel"), st().done), "step pending when the need grows");
+  A.toggleDone("step:fuel", true); eq(st().done["step:fuel"], true, "no quantity: true");
+  A.toggleDone("step:fuel", false); check(!("step:fuel" in st().done), "untick");
+  // Limpar marcações: every tick, plus the raw rows' "tenho tudo" listed; partial numbers stay
+  A.checkRaw("log", 3, true); A.setHave("fat", 1); A.toggleDone("step:fuel", true, 50);
+  A.clearDone(["log"]);
+  eq([st().done, st().have], [{}, { fat: 1 }], "clearDone(haveIds)");
+  // doneCovers
+  eq([C.doneCovers(true, 99), C.doneCovers(3, 3), C.doneCovers(3, 4), C.doneCovers(undefined, 1), C.doneCovers(0, 0)], [true, true, false, false, false], "doneCovers");
+  // sanitize (account doc / local copy): numbers kept, other truthy values become true, falsy dropped
+  const r = S.sanitizeRemote({ goals: [], done: { "step:a": 7, "step:b": 2.4, "raw:c": true, "step:d": 0, "step:e": "x", "step:f": 5e9 } });
+  eq(r.lists[0].done, { "step:a": 7, "step:b": 2, "raw:c": true, "step:e": true, "step:f": 999999 }, "done sanitized");
+  const m = S.mergeSynced({ goals: [], done: { "step:a": 4 } }, { goals: [{ item: "crate", qty: 1 }], done: { "step:b": 9 } }).lists[0];
+  eq(m.done, { "step:a": 4, "step:b": 9 }, "merge keeps the numbers");
+  // restoreExample keeps numbered ticks
+  const e2 = makeEnv(); const A2 = e2.GK.store.actions;
+  A2.seedExample([{ item: "crate", qty: 3 }]); A2.toggleDone("step:fuel", true, 50);
+  const metas = []; e2.GK.store.subscribe((s2, mm) => metas.push(mm));
+  A2.addGoal("wine", 1); A2.restoreExample(metas[metas.length - 1].exampleReplaced);
+  eq(e2.GK.store.get().done, { "step:fuel": 50 }, "restoreExample keeps the quantity");
+});
+
 await test("store: current weekday (day, dayNumber)", () => {
   const S = GK.store;
   eq(S.SYNCED.indexOf("day") >= 0 && S.SYNCED.indexOf("dayNumber") >= 0 && S.SYNCED.indexOf("dayAnchor") >= 0, true, "day fields are synced");
@@ -962,6 +1012,81 @@ await test("ficha do item: sell / price / study / asked reach the page", () => {
       if (k === "q" && e[2]) check(names[e[2]] != null, `${it.id}: quest giver ${e[2]} is in meta.refs.names`);
     }
   }
+});
+
+await test("grades: the star's grade on items and lines, always bronze, silver, gold (1.8.0)", () => {
+  const G = GK.data, R = G.GRADE_RANK;
+  eq(["grape-juice-bronze", "grape-juice-silver", "grape-juice-gold", "cabbage-silver", "cabbage", "wine"].map((id) => G.itemGrade(D.items[id])),
+    ["bronze", "silver", "gold", "silver", null, null], "item grades (real and synthetic variants; the plain item has none)");
+  const lineOf = (rid, item) => D.recipeById[rid].in.find((l) => l.item === item);
+  eq(lineOf("supply-vegetables-from-cabbage-bronze", "cabbage").grade, "bronze", "bronze keeps the plain Repolho, with the bronze star");
+  eq(lineOf("supply-vegetables-from-cabbage-gold", "cabbage-gold").grade, "gold", "gold points to the variant");
+  eq(lineOf("drink-enhancement-i-from-wine-bronze", "wine").grade, "bronze", "circular: Vinho (bronze) stays Vinho");
+  eq(lineOf("drink-enhancement-ii-from-wine-silver", "wine").grade, "silver", "circular: Vinho (silver) stays Vinho");
+  check(!lineOf("grape-juice-from-grapes-bronze", "grapes").grade, "the output's grade (Suco de Uva (bronze) from Uvas) does not mark the Uvas");
+  // every list of recipes of an item: a family (same id but the grade) in bronze, silver, gold order
+  let fams = 0;
+  for (const [id, rs] of Object.entries(D.byOut)) {
+    const seen = {};
+    for (const r of rs) {
+      const f = G.family(r); if (!f) continue;
+      if (seen[f] != null) { check(R[r.quality] > seen[f], `${id}: ${r.id} after a higher grade`); fams++; }
+      seen[f] = R[r.quality];
+    }
+  }
+  check(fams > 20, "families checked: " + fams);
+  eq(D.byOut.wine.slice(0, 3).map((r) => r.quality), ["bronze", "silver", "gold"], "Vinho: bronze, prata, ouro");
+  eq(GK.calc.search("suco de uva", D, { lang: "pt" }).results.map((r) => r.id).filter((id) => /^grape-juice-/.test(id)),
+    ["grape-juice-bronze", "grape-juice-silver", "grape-juice-gold"], "search: bronze, prata, ouro (alphabetical would be bronze, ouro, prata)");
+  eq(GK.calc.search("uva", D, { lang: "en" }).results.map((r) => r.id).filter((id) => /^grape-juice-/.test(id)),
+    ["grape-juice-bronze", "grape-juice-silver", "grape-juice-gold"], "search en: bronze, silver, gold");
+  const list = ["x", "a-gold", "y", "a-bronze", "a-silver"];
+  G.gradeSort(list, (k) => (k.startsWith("a-") ? "a" : null), (k) => R[k.slice(2)]);
+  eq(list, ["x", "a-bronze", "y", "a-silver", "a-gold"], "gradeSort keeps the family's positions and the others in place");
+  eq([G.stripGrade("Suco de Uva (prata)"), G.stripGrade("Grape Juice (gold)"), G.stripGrade("Bronze Polido")], ["Suco de Uva", "Grape Juice", "Bronze Polido"], "stripGrade");
+});
+
+await test("receitas agrupadas: GK.calc.recipeGroups (1.8.0, consertos.md §10)", () => {
+  const groups = (id) => GK.calc.recipeGroups(GK.data.recipesFor(id), D);
+  // Vinho: the three Barril recipes in one card (mode q: same ingredient, grades), mastery per grade; the 2 circular folded
+  const w = groups("wine");
+  eq(w.cards.length, 1, "Vinho: one card");
+  const g = w.cards[0];
+  eq([g.group, g.mode, g.masteryEach, g.qtyEach], [true, "q", true, false], "Vinho: grades of one ingredient, mastery per grade");
+  eq(g.options.map((o) => [o.grade, o.line.qty, o.r.mastery.level]), [["bronze", 4, 10], ["silver", 4, 12], ["gold", 4, 14]], "Vinho: bronze/prata/ouro 4× Suco de Uva, Agricultura 10/12/14");
+  eq(g.fixed, [], "Vinho: no shared line");
+  eq(w.cyc.map((r) => r.id), ["drink-enhancement-i-from-wine-bronze", "drink-enhancement-ii-from-wine-silver"], "Vinho: circular ones folded");
+  // Suprimentos: Vegetais: 11 recipes, one card, mode alt, rows: plain ones first, then the graded ones
+  const s = groups("supply-vegetables"), sg = s.cards[0];
+  eq([s.cards.length, sg.mode, sg.recipes.length, sg.masteryEach], [1, "alt", 11, false], "Suprimentos: Vegetais: one card of 11");
+  eq(sg.fixed.map((l) => [l.item, l.qty]), [["crate", 1]], "shared line: 1 Caixote");
+  eq(sg.rows.map((r) => r.item.id + ":" + r.options.map((o) => (o.grade || "-") + o.line.qty).join(",")),
+    ["beet:-12", "carrot:-16", "cabbage:bronze10,silver8,gold6", "onion:bronze8,silver6,gold4", "pumpkin:bronze3,silver2,gold1"], "rows and options");
+  // yield differs (Sopa de repolho 4 / 7 / 10): three cards; a mastery-only difference with the same input (Canteiro): three cards
+  eq(groups("cabbage-soup").cards.map((c) => !!c.group), [false, false, false], "Sopa de repolho: yields differ, separate");
+  eq(groups("cabbage-bed").cards.filter((c) => c.group).length, 0, "Canteiro de Repolho: same input, separate");
+  eq(groups("cabbage-bed").cyc.length, 0, "no circular: nothing folded");
+  // all recipes circular (Pele): nothing folded, they stay cards
+  const skin = groups("skin");
+  check(skin.cyc.length === 0 && skin.cards.length === GK.data.recipesFor("skin").length, "Pele: every recipe circular, none folded");
+  // synthetic cases: one line changes but so does the tech / the yield / a second line → no group; two grades with
+  // different mastery in mode alt → no group
+  const base = D.recipeById["supply-vegetables-from-cabbage-bronze"];
+  const mk = (id, patch) => Object.assign({}, base, { id, name: null }, patch);
+  const a = mk("t-a", {}), b = mk("t-b", { in: [{ item: "crate", qty: 1 }, { item: "carrot", qty: 16 }] });
+  eq(GK.calc.recipeGroups([a, b], D).cards.length, 1, "one line differs: grouped");
+  eq(GK.calc.recipeGroups([a, mk("t-c", { in: b.in, tech: { id: "other", en: "Other", pt: "Outra" } })], D).cards.length, 2, "tech differs: separate");
+  eq(GK.calc.recipeGroups([a, mk("t-d", { in: b.in, out: { item: base.out.item, qty: 2 } })], D).cards.length, 2, "yield differs: separate");
+  eq(GK.calc.recipeGroups([a, mk("t-e", { in: [{ item: "log", qty: 1 }, { item: "carrot", qty: 16 }] })], D).cards.length, 2, "two lines differ: separate");
+  eq(GK.calc.recipeGroups([a, mk("t-f", { in: b.in, ticks: 9 })], D).cards.length, 2, "time differs: separate");
+  eq(GK.calc.recipeGroups([a, mk("t-g", { in: b.in, mastery: { type: base.mastery.type, level: 9 } })], D).cards.length, 2, "mode alt with different mastery: separate");
+  // counts over the whole data (the report's numbers)
+  let items = 0, recipes = 0;
+  for (const id of Object.keys(D.byOut)) {
+    const gs = GK.calc.recipeGroups(D.byOut[id], D).cards.filter((c) => c.group);
+    if (gs.length) { items++; recipes += gs.reduce((n, c) => n + c.recipes.length, 0); }
+  }
+  eq([items, recipes], [8, 42], "8 items have a group card; 42 recipes in them");
 });
 
 // ---------------------------------------------------------------- done

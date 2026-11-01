@@ -145,7 +145,12 @@ GK.ui.footer = (function () {
       if (tabs) tabs.after(band); else if (main) main.before(band);
       band.addEventListener("click", (e) => {
         const x = e.target.closest("[data-notice-close]");
-        if (x) closeBand(x.dataset.noticeClose);
+        if (!x) return;
+        closeBand(x.dataset.noticeClose);
+        // the ✕ is gone: the focus goes to the tab of this screen, right above where the band was (QA #5); there is a
+        // tab bar in the header (wide screens) and one in the band (phones): the one on display
+        const tab = [...document.querySelectorAll('.tab[aria-current="page"]')].find((a) => a.getClientRects().length);
+        if (tab) tab.focus({ preventScroll: true });
       });
       GK.sync.subscribe(chip);
       setInterval(() => { if (GK.sync.status() === "synced") chip(); }, 30000);

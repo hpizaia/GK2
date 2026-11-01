@@ -123,7 +123,14 @@ button.days-item:hover { border-color: var(--accent); }
 .days-ctl { padding-bottom: var(--s3); }
 .days-ev-detail { font-size: .8125rem; color: var(--ink-2); line-height: 1.35; }
 .days-quote { font-size: .8125rem; color: var(--ink-2); }
-.days-quote summary { display: inline-flex; align-items: center; min-height: var(--tap); margin: -8px 0; cursor: pointer; font-weight: 700; color: var(--accent); }
+/* the game text opens from a small quote mark (1.8.0): a 44 px target, the mark at its left edge, quiet until open */
+.days-quote summary {
+  display: inline-flex; align-items: center; min-width: var(--tap); min-height: var(--tap); margin: -10px 0 -8px;
+  list-style: none; cursor: pointer; font: 800 1.5rem/1 var(--f-body); color: var(--ink-3);
+}
+.days-quote summary::-webkit-details-marker { display: none; }
+.days-quote summary:hover, .days-quote[open] summary { color: var(--accent); }
+.days-quote summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -6px; }
 .days-quote q { display: block; padding: 2px 0 4px var(--s2); border-left: 2px solid var(--gold); font-style: italic; }
 
 /* compact week table */

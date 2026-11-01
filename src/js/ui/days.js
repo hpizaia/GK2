@@ -21,6 +21,8 @@
    numberToast(anchorBefore), noteBox(prefix, rerender)}.
    ui/today.js (the planner "Hoje" panel) uses the helpers. An event's `task` (data/days.json; absent = true) says
    whether the Hoje panel gives it a "feito hoje" tick.
+   1.8.0 (backlog 2.5): the folded game text opens from a small quote mark “ (its label, "Texto do jogo", is for
+   screen readers and the tooltip), no longer an underlined word that read like a link.
 */
 GK.i18n.add({
   pt: {
@@ -54,7 +56,7 @@ GK.i18n.add({
     "days.week": "A semana",
     "days.how": "Como funciona",
     "days.orderUnsure": "A ordem dos dias vem de guias e da wiki; o jogo não a escreve.",
-    "days.machineNote": "As frases curtas foram escritas para este app; o texto oficial do jogo fica em “Texto do jogo”.",
+    "days.machineNote": "As frases curtas foram escritas para este app; o texto oficial do jogo abre nas aspas “ de cada evento.",
     "days.unconfirmed": "não confirmado",
     "days.conf.medium": "Confiança média: só a wiki ou um guia diz isso",
     "days.conf.low": "Confiança baixa: um único guia, não verificado",
@@ -115,7 +117,7 @@ GK.i18n.add({
     "days.week": "The week",
     "days.how": "How it works",
     "days.orderUnsure": "The order of the days comes from guides and the wiki; the game never writes it.",
-    "days.machineNote": "The short lines were written for this app; the official game text is under “Game text”.",
+    "days.machineNote": "The short lines were written for this app; the official game text opens from each event’s quote mark “.",
     "days.unconfirmed": "unconfirmed",
     "days.conf.medium": "Medium confidence: only the wiki or a guide says so",
     "days.conf.low": "Low confidence: a single unverified guide",
@@ -464,7 +466,7 @@ GK.ui.days = (function () {
     const unlock = ev.unlock ? (ev.unlock.key ? t("days.unlockQuest", { q: name(ev.unlock) }) : name(ev.unlock)) : "";
     const sub = [who ? t("days.who", { who }) : "", unlock].filter(Boolean).join(" · ");
     const quote = !ev.quote ? "" : quoteOpen ? `<span class="days-quote is-open"><span class="days-quote-l">${esc(t("days.quote"))}</span><q>${esc(name(ev.quote))}</q></span>`
-      : `<details class="days-quote"><summary>${esc(t("days.quote"))}</summary><q>${esc(name(ev.quote))}</q></details>`;
+      : `<details class="days-quote"><summary title="${esc(t("days.quote"))}" aria-label="${esc(t("days.quote"))}"><span aria-hidden="true">“</span></summary><q>${esc(name(ev.quote))}</q></details>`;
     return `${sub ? `<span class="days-ev-who">${esc(sub)}</span>` : ""}
       ${ev.detail ? `<span class="days-ev-detail">${esc(name(ev.detail))}</span>` : ""}
       ${itemChips(ev.items, state)}

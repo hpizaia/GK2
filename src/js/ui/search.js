@@ -11,6 +11,8 @@
    that replaces the example list (GK.store meta.exampleReplaced, from any screen: this module subscribes) gets ONE
    toast with "Desfazer" (GK.ui.fmt.undoToast): "+ Tábua reforçada · exemplo removido"; add() then skips
    its own, in the same "+ X" form as the plain toast (the data has no item gender, so no participle).
+   1.8.0: a graded item (GK.data.itemGrade) reads "Suco de Uva" with "prata · …" below and the star on its icon; the
+   one-line Recentes keep the full name ("Suco de Uva (prata)"): there is no line below for the word.
    Owns: [data-panel="search"]. Exposes: GK.ui.search.{mount, render, add}; registered as a panel.
 */
 GK.i18n.add({
@@ -101,9 +103,11 @@ GK.ui.search = (function () {
     list.innerHTML = results.map((r, k) => {
       const it = D.items[r.id], nm = name(it, st.overrides), g = st.goals.find((x) => x.item === r.id);
       const hid = r.hidden ? `<span class="badge badge-hidden" title="${esc(t("search.hiddenTitle"))}">${esc(t("search.hiddenTag"))}</span>` : "";
+      // a graded item: the name without "(prata)", the grade word first on the line below (the star is on the icon)
+      const gr = GK.data.itemGrade(it), shown = gr ? GK.data.stripGrade(nm) || nm : nm, word = gr ? t("quality." + gr) + " · " : "";
       return `<li class="result" role="option" id="q-opt-${k}" aria-selected="false" data-add="${esc(r.id)}">
         ${slot(it, nm)}
-        <span><span class="result-name">${esc(nm)}${GK.ui.fmt.badges(it, st.overrides)}${hid}</span><span class="result-sub">${esc(GK.ui.fmt.stationOf(r.id, st))}${g ? " · " + esc(t("search.inList", { n: g.qty })) : ""}</span></span>
+        <span><span class="result-name">${esc(shown)}${GK.ui.fmt.otherName(it)}${GK.ui.fmt.badges(it, st.overrides)}${hid}</span><span class="result-sub">${esc(word)}${esc(GK.ui.fmt.stationOf(r.id, st))}${g ? " · " + esc(t("search.inList", { n: g.qty })) : ""}</span></span>
         <span class="result-add" aria-hidden="true">${esc(t("search.add"))}</span>
       </li>`;
     }).join("");
@@ -122,7 +126,7 @@ GK.ui.search = (function () {
     list.innerHTML = ids.map((id, k) => {
       const it = GK.data.item(id), nm = name(it, st.overrides);
       return `<li class="result result-recent" role="option" id="q-opt-${k}" aria-selected="false" data-add="${esc(id)}">
-        ${slot(it, nm)}<span class="result-name">${esc(nm)}</span><span class="result-add" aria-hidden="true">${esc(t("search.add"))}</span>
+        ${slot(it, nm)}<span class="result-name">${esc(nm)}${GK.ui.fmt.otherName(it)}</span><span class="result-add" aria-hidden="true">${esc(t("search.add"))}</span>
       </li>`;
     }).join("");
     status.textContent = "";

@@ -1,4 +1,5 @@
-/* GK.ui.goals: the goal list with steppers (press and hold − / + to repeat), the empty state and "Limpar lista".
+/* GK.ui.goals: the goal list with steppers (press and hold − / + to repeat), the empty state and "Limpar metas"
+   ("Limpar lista" until 1.8.0: too close to "Apagar lista", QA #13).
    First use (1.6.0, corte 20): one line above the example list, "Exemplo: busque o que quer fabricar e ele substitui
    esta lista."; an empty list shows only its empty card. The first goal added replaces the example (GK.store addGoal);
    its "Desfazer" toast now lives in ui/search.js (corte 13). The item icon opens it in Receitas (corte 6, no "i").
@@ -13,7 +14,7 @@
 GK.i18n.add({
   pt: {
     "goals.title": "Metas",
-    "goals.clear": "Limpar lista",
+    "goals.clear": "Limpar metas",
     "goals.confirm": "Confirmar limpeza",
     "goals.example": "Exemplo: busque o que quer fabricar e ele substitui esta lista.",
     "goals.empty.title": "Nada planejado ainda",
@@ -52,7 +53,7 @@ GK.i18n.add({
   },
   en: {
     "goals.title": "Goals",
-    "goals.clear": "Clear list",
+    "goals.clear": "Clear goals",
     "goals.confirm": "Confirm clear",
     "goals.example": "Example: search for what you want to craft and it replaces this list.",
     "goals.empty.title": "Nothing planned yet",
@@ -193,7 +194,8 @@ GK.ui.goals = (function () {
         form = null;
         if (l && A.deleteList(l.id)) GK.ui.toast(t("lists.deleted", { name: nm }));
         else render(GK.store.get());
-        const lb = document.getElementById("list-btn"); if (lb) lb.focus();
+        // one list left: no "Lista: …" button, the focus goes to "+ Criar outra lista" (QA #6)
+        const lb = document.getElementById("list-btn") || document.getElementById("list-more"); if (lb) lb.focus();
         return;
       }
       if ((b.dataset.dec || b.dataset.inc) && swallowClick) { swallowClick = false; return; }
@@ -293,7 +295,7 @@ GK.ui.goals = (function () {
       const it = D.items[g.item], nm = name(it, state.overrides), id = domId(g.item);
       return `<div class="goal">
         ${GK.ui.fmt.slotButton(it, nm)}
-        <div class="goal-main"><div class="goal-name">${esc(nm)}${GK.ui.fmt.badges(it, state.overrides)}</div><div class="goal-sub">${esc(GK.ui.fmt.stationOf(g.item, state))}</div></div>
+        <div class="goal-main"><div class="goal-name">${esc(nm)}${GK.ui.fmt.otherName(it)}${GK.ui.fmt.badges(it, state.overrides)}</div><div class="goal-sub">${esc(GK.ui.fmt.stationOf(g.item, state))}</div></div>
         <div class="goal-ctl">
           <div class="stepper">
             <button type="button" id="dec-${id}" data-dec="${esc(g.item)}" aria-label="${esc(t("goals.dec", { name: nm }))}">−</button>

@@ -9,6 +9,8 @@
    Unlocked items (data-item="<item id>") are buttons that open the item in Receitas (GK.ui.recipes.open).
    1.6.0 (cortes 7, 17): shorter top hint; the detail drops "Libera N receitas do Planejador" and shows "Marcar
    pré-requisitos como pesquisados" only when 2+ of them are missing (with 1, tapping it is the same thing).
+   1.8.0: the phone's back gesture closes a detail opened on this screen (GK.router.detailHistory: one entry when the
+   detail opens over the list; "‹ Voltar à lista" drops it).
 */
 GK.i18n.add({
   pt: {
@@ -144,6 +146,7 @@ GK.ui.tech = (function () {
   let dirty = true;       // a store change happened while the screen was hidden
   let pendingFocus = false;   // open() switched routes: show the detail after the route's render
   let detailFrom = null, fromScroll = 0, returnTo = null;   // the route that opened the detail (open(id, {from}))
+  let hist = null;        // GK.router.detailHistory (mount): the back gesture closes the detail
   const isOn = () => GK.router.current() === "tech";
 
   // ---- shared bits (also used by ui/techneeds.js) ----
@@ -396,6 +399,7 @@ GK.ui.tech = (function () {
   function open(id, opts) {
     const tc = TK.get(id);
     if (!tc) return;
+    const over = !detail && isOn();   // a detail over the list of this screen: the back gesture closes it
     detail = id;
     if (!query.trim()) branchSel = tc.branch;
     asking = false;
@@ -404,6 +408,7 @@ GK.ui.tech = (function () {
       fromScroll = window.scrollY;
       dirty = true; pendingFocus = true; location.hash = "#tech"; return;
     }
+    if (over && hist) hist.push();
     rerender();
     showDetail(false);
   }
@@ -445,14 +450,14 @@ GK.ui.tech = (function () {
       const S = GK.store;
       const o = e.target.closest("[data-open]");
       if (o) { open(o.dataset.open); return; }
-      if (e.target.closest("[data-close]")) { close(); return; }
+      if (e.target.closest("[data-close]")) { close(); if (hist) hist.pop(false); return; }
       if (e.target.closest("[data-back-route]")) { backToOrigin(); return; }
       const ro = e.target.closest("[data-recipe-open]");
       if (ro) { GK.ui.recipes.open(ro.dataset.recipeOpen, { from: "tech" }); return; }
       const b = e.target.closest("[data-branch]");
       if (b) {
         branchSel = b.dataset.branch; query = "";
-        if (detail && TK.get(detail) && TK.get(detail).branch !== branchSel) { detail = null; detailFrom = null; }
+        if (detail && TK.get(detail) && TK.get(detail).branch !== branchSel) { detail = null; detailFrom = null; if (hist) hist.pop(false); }
         rerender();
         const nb = root.querySelector(`[data-branch="${CSS.escape(branchSel)}"]`);
         if (nb) nb.focus({ preventScroll: true });
@@ -485,8 +490,9 @@ GK.ui.tech = (function () {
     root.addEventListener("input", (e) => { if (e.target.id === "tech-q") onInput(e.target.value); });
     root.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && e.target.id === "tech-q" && query) { e.preventDefault(); query = ""; e.target.value = ""; renderList(); }
-      else if (e.key === "Escape" && detail) close();
+      else if (e.key === "Escape" && detail) { close(); if (hist) hist.pop(false); }
     });
+    hist = GK.router.detailHistory("tech", () => { if (detail && !detailFrom) close(); });
   }
   return { mount, render, open, costHtml, techSlot, badges };
 })();

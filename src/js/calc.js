@@ -1,5 +1,8 @@
 /* GK.calc: pure planning and search functions (no DOM, no state).
-   Exposes: GK.calc.{plan, search, howToMake, orderStations, isBonusActive}.
+   Exposes: GK.calc.{plan, search, howToMake, orderStations, isBonusActive, doneCovers, rawChecked, stepChecked,
+   recipeGroups}.
+   1.8.0: search results of one quality family come bronze, silver, gold (GK.data.gradeSort); recipeGroups(rs, D) is
+   the "Como fabricar" grouping rule of the Receitas detail (see the function).
 */
 GK.calc = (function () {
   // a bonus line ({perks, qty, add}) is active when every perk it names is on
@@ -281,7 +284,111 @@ GK.calc = (function () {
     }
     const label = (id) => ov[id] || D.items[id][lang] || D.items[id].en;
     out.sort((a, b) => b.score - a.score || label(a.id).localeCompare(label(b.id)));
+    GK.data.gradeSort(out, (x) => GK.data.family(D.items[x.id]), (x) => GK.data.GRADE_RANK[D.items[x.id].grade]);
     return { results: out.slice(0, (opt && opt.limit) || 10), hiddenCount };
   }
-  return { plan, search, howToMake, orderStations, isBonusActive: active };
+  /**
+   * recipeGroups(rs, D) → { cards: [entry], cyc: [recipe] }: how the Receitas detail lays out an item's recipes
+   * (1.8.0, receitas agrupadas; docs/revisao-ux/consertos.md §10).
+   *   cyc    the circular recipes, folded at the end ("Melhorar a qualidade"), only when the item has another recipe.
+   *   entry  { r } = a card of its own, or a group card:
+   *          { group: true, mode, recipes, fixed: [line], options: [opt], rows: [{ base, item, options }], masteryEach, qtyEach }
+   *          opt = { r, line, item, grade, base }   (line = the one input that changes)
+   * Rule: recipes of the item are put in one card when they are the same in everything but ONE input line: same
+   * station and alternatives, yield (and its perk note), technology, type, time, energy, by-products, runes, star
+   * thresholds, extension, hidden / example / no-expand flags, and every other input (item and amount). The line that
+   * changes has no note. Then
+   *   mode "q"   (one ingredient, Vinho): it is the same item in different grades (each option a grade of its own);
+   *              the amount and the mastery may change with the grade (shown on each option);
+   *   mode "alt" (several ingredients, Suprimentos: Vegetais): one row per ingredient, the grades of one ingredient
+   *              each with its own amount; the mastery has to be the same for all.
+   * Anything else stays a card of its own.
+   */
+  function recipeGroups(rs, D) {
+    const G = GK.data, items = D.items;
+    const list = (rs || []).slice();
+    const hasMain = list.some((r) => !r.cyc);
+    const cyc = hasMain ? list.filter((r) => r.cyc) : [];
+    const main = hasMain ? list.filter((r) => !r.cyc) : list;
+    const sig = (l) => l.item + "\u00d7" + l.qty + (l.note ? "|" + (l.note.en || "") : "");
+    const tx = (o) => (o ? o.en || o.pt || "" : null);
+    const key = (r) => JSON.stringify([r.station && r.station.id, r.alt.map((a) => a.id).sort(), r.out.qty, tx(r.out.note),
+      r.out.bonus || null, r.tech ? r.tech.id || tx(r.tech) : null, r.type, r.ticks, r.energy, r.listed, r.noexp, r.cyc, r.example,
+      tx(r.ext), r.extra.map(sig), r.runes || null, r.star || null, r.in.length]);
+    const mkey = (r) => (r.mastery ? tx(r.mastery.type) + " " + r.mastery.level : "");
+    // the lines of `a` left over after taking out the multiset `common` (signatures)
+    const minus = (lines, common) => {
+      const left = common.slice(), out = [];
+      for (const l of lines) { const k = left.indexOf(sig(l)); if (k >= 0) left.splice(k, 1); else out.push(l); }
+      return out;
+    };
+    const buckets = [];
+    for (const r of main) {
+      const k = key(r);
+      let put = false;
+      if (r.in.length) {
+        for (const g of buckets) {
+          if (g.key !== k) continue;
+          if (g.recipes.length === 1) {
+            const a = g.recipes[0], ra = minus(a.in, r.in.map(sig)), rb = minus(r.in, a.in.map(sig));
+            if (ra.length !== 1 || rb.length !== 1 || ra[0].note || rb[0].note) continue;
+            g.fixed = a.in.filter((l) => l !== ra[0]);
+            g.vars = [ra[0], rb[0]];
+          } else {
+            const rb = minus(r.in, g.fixed.map(sig));
+            if (rb.length !== 1 || rb[0].note || g.vars.some((v) => sig(v) === sig(rb[0]))) continue;
+            g.vars.push(rb[0]);
+          }
+          g.recipes.push(r); put = true; break;
+        }
+      }
+      if (!put) buckets.push({ key: k, recipes: [r], fixed: null, vars: null });
+    }
+    const cards = [];
+    for (const g of buckets) {
+      const one = () => g.recipes.forEach((r) => cards.push({ r }));
+      if (g.recipes.length < 2) { one(); continue; }
+      const opts = g.recipes.map((r, i) => {
+        const line = g.vars[i], item = items[line.item];
+        const grade = line.grade || G.itemGrade(item);
+        const base = item && item.base ? item.base : grade && item && item.kind === "quality-variant" ? G.family(item) : line.item;
+        return { r, line, item, grade, base };
+      });
+      const bases = [];
+      for (const o of opts) if (bases.indexOf(o.base) < 0) bases.push(o.base);
+      const rank = (o) => (o.grade ? G.GRADE_RANK[o.grade] : -1);
+      const distinct = (os) => os.every((o) => o.grade) && new Set(os.map((o) => o.grade)).size === os.length;
+      const masteryEach = new Set(g.recipes.map(mkey)).size > 1;
+      let ok, mode;
+      if (bases.length === 1) { mode = "q"; ok = distinct(opts); }
+      else {
+        mode = "alt";
+        ok = !masteryEach && bases.every((b) => { const os = opts.filter((o) => o.base === b); return os.length === 1 || distinct(os); });
+      }
+      if (!ok) { one(); continue; }
+      opts.sort((a, b) => bases.indexOf(a.base) - bases.indexOf(b.base) || rank(a) - rank(b));
+      const rows = bases.map((b) => {
+        const os = opts.filter((o) => o.base === b);
+        return { base: b, item: items[b] && !items[b].stub ? items[b] : os[0].item, options: os };
+      });
+      // plain ingredients first, then the graded ones (each in the order of the item's list)
+      rows.sort((a, b) => (a.options.some((o) => o.grade) ? 1 : 0) - (b.options.some((o) => o.grade) ? 1 : 0));
+      const ordered = [].concat(...rows.map((x) => x.options));
+      cards.push({ group: true, mode, recipes: ordered.map((o) => o.r), fixed: g.fixed, options: ordered, rows,
+        masteryEach, qtyEach: new Set(ordered.map((o) => o.line.qty)).size > 1 });
+    }
+    // cards keep the order of their first recipe in the item's list
+    const pos = (e) => list.indexOf(e.group ? e.recipes.reduce((m, r) => (list.indexOf(r) < list.indexOf(m) ? r : m)) : e.r);
+    cards.sort((a, b) => pos(a) - pos(b));
+    return { cards, cyc };
+  }
+  // Ticks follow the quantity (1.8.0, C3 + corte 9). A saved tick is true (before 1.8.0: no quantity, always ticked) or
+  // the quantity the row asked for when it was ticked: still ticked while it covers what the row asks for now.
+  const doneCovers = (v, n) => v === true || (typeof v === "number" && v > 0 && v >= (n || 0));
+  // a raw row (plan().raw) is ticked = "tenho tudo": have true, or a number covering its whole demand; or a tick
+  // saved before 1.8.0 (done["raw:<id>"])
+  const rawChecked = (r, have, done) => doneCovers(have && have[r.item], r.demand || r.qty) || doneCovers(done && done["raw:" + r.item], r.demand || r.qty);
+  // a step (plan().steps) is ticked "feito" while its tick covers what it needs now
+  const stepChecked = (s, done) => doneCovers(done && done["step:" + s.item], s.need);
+  return { plan, search, howToMake, orderStations, isBonusActive: active, doneCovers, rawChecked, stepChecked, recipeGroups };
 })();

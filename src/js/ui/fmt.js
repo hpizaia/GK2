@@ -1,6 +1,6 @@
 /* GK.ui.fmt: shared bits of markup for item names, recipes and stations (badges, recipe labels,
    tech lines, the editable name block) and the "Desfazer" toast. No state, no panel.
-   Exposes: GK.ui.fmt.{badges, buildLabel, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, slotButton, undoToast}.
+   Exposes: GK.ui.fmt.{badges, buildLabel, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, slotButton, undoToast, otherName}.
    slotButton(item, name): the item's icon as a 44 px button (data-recipe-open) that opens it in Receitas; every planner
    panel that shows one handles the click itself (GK.ui.recipes.open(id, {from: "plan"})).
    1.6.0: the "i" button left the planner names (corte 6: the icon opens the recipe); techLine(r, state) drops the
@@ -8,6 +8,10 @@
    "Construir no Cemitério" (buildLabel, corte 12); recipeLabels can leave out one station (corte 3).
    undoToast(msg, onUndo): a toast with a "Desfazer" button (its own #toast-undo element, created on first use, after
    #toast in <body>; it sits above #toast when both show). 6 s, paused while it holds the focus or the pointer.
+   "Desfazer" also hides the plain toast (QA #7: "Adicionado às metas" no longer stays after the undo).
+   slotButton keeps the quality star of a graded item (GK.util.slot's has-q, 1.8.0).
+   otherName(item) (1.8.0, backlog 2.2 / D3): two items with the same name in the page's language ("Tinta" = Ink and
+   Paint) show the other language's name, small, beside it (search, Receitas list, goals); "" for any other item.
 */
 GK.i18n.add({
   pt: {
@@ -183,10 +187,10 @@ GK.ui.fmt = (function () {
   // the item's icon as a button (1.6.0, corte 6, in place of the "i"): opens the item on the Receitas screen. Same
   // markup as GK.util.slot, in a <button> with the "Abrir X em Receitas" label; a plain icon when there is no Receitas.
   function slotButton(it, nm) {
-    const s = GK.util.slot(it, nm);
-    if (!it || !GK.ui.recipes || typeof GK.ui.recipes.open !== "function" || !/^<span class="slot">/.test(s)) return s;
-    return `<button type="button" class="slot slot-btn" data-recipe-open="${esc(it.id)}" title="${esc(t("info.title"))}" aria-label="${esc(t("info.label", { name: nm }))}">` +
-      s.slice('<span class="slot">'.length, -"</span>".length) + "</button>";
+    const s = GK.util.slot(it, nm), m = /^<span class="slot( has-q)?">/.exec(s);
+    if (!it || !GK.ui.recipes || typeof GK.ui.recipes.open !== "function" || !m) return s;
+    return `<button type="button" class="slot slot-btn${m[1] || ""}" data-recipe-open="${esc(it.id)}" title="${esc(t("info.title"))}" aria-label="${esc(t("info.label", { name: nm }))}">` +
+      s.slice(m[0].length, -"</span>".length) + "</button>";
   }
   // name + pencil + inline edit form when editing. The name is plain text: only the checkbox (and its 44 px
   // .tick box) toggles "done" (AUDITORIA U3). labelFor is kept for callers; it is no longer used.
@@ -220,6 +224,8 @@ GK.ui.fmt = (function () {
       el.addEventListener("click", (e) => {
         if (!e.target.closest("[data-undo]")) return;
         const f = el._undo; hide();
+        const plain = document.getElementById("toast");
+        if (plain) plain.hidden = true;
         if (typeof f === "function") f();
       });
       // WCAG 2.2.1: no time-out while the player is on it
@@ -234,5 +240,23 @@ GK.ui.fmt = (function () {
     if (plain) plain.hidden = true;
     arm();
   }
-  return { badges, buildLabel, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, slotButton, undoToast };
+  // names shared by 2+ items in a language (the data's own names; stubs left out), built on first use per language
+  const dupMemo = {};
+  function dupSet(lang) {
+    if (dupMemo[lang]) return dupMemo[lang];
+    const seen = {}, out = new Set();
+    for (const it of Object.values(GK.data.get().items || {})) {
+      if (it.stub) continue;
+      const k = String(it[lang] || it.en || "").trim().toLowerCase();
+      if (!k) continue;
+      if (seen[k]) { out.add(seen[k]); out.add(it.id); } else seen[k] = it.id;
+    }
+    return (dupMemo[lang] = out);
+  }
+  function otherName(it) {
+    const lang = GK.i18n.lang(), other = lang === "en" ? "pt" : "en";
+    if (!it || !dupSet(lang).has(it.id) || !it[other] || it[other] === it[lang]) return "";
+    return ` <span class="name-other" lang="${other === "pt" ? "pt-BR" : "en"}">${esc(it[other])}</span>`;
+  }
+  return { badges, buildLabel, stationOf, recipeLabel, recipeLabels, recipeTag, techLine, nameBlock, slotButton, undoToast, otherName };
 })();
